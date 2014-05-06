@@ -1,10 +1,8 @@
 /*
- * This script was written to unify both RAM and RAMFF segments into a single RAM segment.
+ * This script was written to replace negative RAM references (i.e., trying to move 0xFFFFDEF2 into a word)
+ * with manual definitions to existing RAM labels minus $1000000 (NEG_RAM_OFFSET)
  * This way, RAM offsets always point to the same segment with no doubles.
- * 
- * The script changes references to the old RAMFF segment so that they now point to the RAM segment adequately.
- *
- * This script should not need to be executed again.
+
  * If a RAM offset reference has to be changed, do it manually with the "manual operand" command (Atl-F1).
  * Example : ((byte_FFF7A8-$1000000)).w
  *
@@ -12,18 +10,62 @@
 
 #include <idc.idc>
 
+static ReplaceNegRamOffset(ea, n)
+{
+	auto optype, opvalue, addrname, sizetype;
+	
+	optype = GetOpType(ea, n);
+	
+	if (optype == 2)
+	{
+		opvalue = GetOperandValue(ea, n);
+		sizetype = "w";
+		
+		if (opvalue < 0)
+		//	sizetype = "w";
+		{	
+			Message("EA %x, Operand %d = %s (value %x) (type %d) (flags %x) (sizetype %s)\n", ea, n, GetOpnd(ea, n), opvalue, GetOpType(ea, n), GetFlags(ea), sizetype);
+			opvalue = opvalue & 0x00ffffff;
+			addrname = Name(opvalue);
+			if (addrname != "")
+				OpAlt(ea, n, form("((%s + %s)).%s", addrname, "NRO", sizetype));
+			else
+				Message("Skipped because no name defined\n");
+			//OpOff(ea, n, opvalue);
+			//OpSign(ea, n);
+			//OpOffEx(ea, n, REF_OFF32, -1, opvalue, -2);
+			//OpOffEx(addr, 1, 0x0100, 10, 20, 30);
+		}
+	}
+	
+	return;
+}
+
 static main(void) 
 {
 
 	auto addr, dref, next, action, opnd, before, after;
-
+	auto optype0, optype1;
+	auto opvalue0, opvalue1;
+	auto addrname;
+	
+	//Jump(0x21e);
+	
 	addr = ScreenEA();
 	
 	Message("\n-------------------------\n");
-	Message("Running ram-migration.idc starting at address %d\n", addr);
+	Message("Running ram-neg-offsets.idc starting at address ROM:%x\n", addr);
 	//Message(form("addr %d\n",addr));
 
-	for (addr = addr; addr != BADADDR; addr=addr+1)
+	//addr_lbl = LocByName("FADING_COUNTER_MAX");
+	
+	Message("%s\n", Name(0x00ffdef2)); // prints "FADING_COUNTER_MAX"
+	
+	ReplaceNegRamOffset(addr, 0);
+	ReplaceNegRamOffset(addr, 1);
+
+	
+	/*for (addr = addr; addr != BADADDR; addr=addr+1)
 	{
 		
 		if(addr < 0xFFFF8000)
@@ -78,7 +120,7 @@ static main(void)
 		
 		//if (action==-1) break;
 		
-	}
+	}*/
 
 	Message("End of execution\n");
 	Message("-------------------------\n\n");
