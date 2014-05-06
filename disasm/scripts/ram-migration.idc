@@ -38,6 +38,12 @@ static ReplaceNegRamOffset(addr, dref, n)
 	return;
 }
 
+// helper function for convenience to test xrefs from, not used but do not remove, could be useful
+static PrintFirstXrefFrom(addr)
+{
+	Message("DREF From 0x%x to 0x%x, isRef %d \n", addr, Dfirst(addr), isRef(GetFlags(addr)));
+}
+
 static main(void) 
 {
 
