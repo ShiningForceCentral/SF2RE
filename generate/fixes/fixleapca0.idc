@@ -47,7 +47,8 @@ static main(void) {
 		
 			Jump(addr);
 		
-			action = AskYN(1,form("Change representation from lea %s to lea %s(pc), a0 ?",opnd, opnd));
+			//action = AskYN(1,form("Change representation from lea %s to lea %s(pc), a0 ?",opnd, opnd));
+			action = 1;
 		
 			if (action==-1) break;
 			if (action==1){

@@ -47,8 +47,8 @@ static main(void) {
 		
 			Jump(addr);
 		
-			action = AskYN(1,form("Change representation from jmp %s to jmp %s(pc) ?",opnd, opnd));
-		
+			//action = AskYN(1,form("Change representation from jmp %s to jmp %s(pc) ?",opnd, opnd));
+			action = 1;		
 			if (action==-1) break;
 			if (action==1){
 				Message(form("\n0x%d : jmp %s changed to jmp %s(pc)",addr,opnd, opnd));
