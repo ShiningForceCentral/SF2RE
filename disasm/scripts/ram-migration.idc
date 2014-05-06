@@ -18,17 +18,35 @@
 
 #include <idc.idc>
 
+static ReplaceNegRamOffset(addr, dref, n)
+{
+	auto opnd, before, after;
+	
+	opnd = GetOperandValue(dref, n);
+	
+	if (opnd == addr)
+	{
+		before = GetOpnd(dref, n);
+		OpOffEx(dref, n, REF_OFF32, GetOperandValue(dref, n) - 0xFF000000, 0x0, 0xFF000000);
+		add_dref(dref, GetOperandValue(dref, n) - 0xFF000000, fl_F | XREF_USER);
+		after = GetOpnd(dref, n);
+		
+		if (before != after)
+			Message("addr 0x%x, dref 0x%x, opnd %d, from %s to %s\n", addr, dref, n, before, after);
+	}
+	
+	return;
+}
+
 static main(void) 
 {
 
-	auto addr, dref, next, action, opnd, before, after;
+	auto addr, dref, next;
 
-	//addr = ScreenEA();
 	addr = 0xFFFF0000;
 	
 	Message("\n-------------------------\n");
-	Message("Running ram-migration.idc starting at address %d\n", addr);
-	//Message(form("addr %d\n",addr));
+	Message("Running ram-migration.idc starting at address 0x%x\n", addr);
 
 	for (addr = addr; addr != BADADDR; addr=addr+1)
 	{
@@ -36,55 +54,11 @@ static main(void)
 		if(addr < 0xFFFF8000)
 			addr = 0xFFFF8000;
 		
-		Jump(addr);
-		//Message(form("\naddr %s",ltoa(addr,16)));
-		
-		for(dref=DfirstB(addr);dref!=-1;dref=DnextB(addr,dref)){
-		
-			Jump(dref);
-		
-			Message(form("\naddr %s, dref %s, ",ltoa(addr,16), ltoa(dref,16)));
-			
-			//action = AskYN(1,form("addr %s, dref %s, ",ltoa(addr,16), ltoa(dref,16)));
-			action = 1;
-			//if (action==-1) break;
-			if (action==1){
-			
-				opnd = GetOperandValue(dref,0);
-				if(opnd==addr){
-					before = GetOpnd(dref,0);
-					OpOffEx(ScreenEA(),0,REF_OFF32,GetOperandValue(ScreenEA(),0)-0xFF000000,0x0,0xFF000000);
-					add_dref(ScreenEA(),GetOperandValue(ScreenEA(),0)-0xFF000000,fl_F | XREF_USER);
-					after = GetOpnd(dref,0);
-					Message(form("from %s to %s",before,after));
-					//action = AskYN(1,"Ok ?");
-					//if (action!=1) break;
-				}
-				else{
-					opnd = GetOperandValue(dref,1);
-					if(opnd==addr){
-						before = GetOpnd(dref,1);
-						OpOffEx(ScreenEA(),1,REF_OFF32,GetOperandValue(ScreenEA(),1)-0xFF000000,0x0,0xFF000000);
-						add_dref(ScreenEA(),GetOperandValue(ScreenEA(),1)-0xFF000000,fl_F | XREF_USER);
-						after = GetOpnd(dref,1);	
-						Message(form("from %s to %s",before,after));	
-						//action = AskYN(1,"Ok ?");
-						//if (action!=1) break;			
-					}
-					else{
-						Message(form("opnd not found ?"));
-						//action = AskYN(1,form("addr %s, dref %s",ltoa(addr,16), ltoa(dref,16)));
-						if (action==-1) break;
-					}
-				}
-			}
-			else{
-				Message("passed");
-			}
+		for(dref=DfirstB(addr);dref!=-1;dref=DnextB(addr,dref))
+		{
+			ReplaceNegRamOffset(addr, dref, 0);
+			ReplaceNegRamOffset(addr, dref, 1);
 		}
-		
-		//if (action==-1) break;
-		
 	}
 
 	Message("End of execution\n");
