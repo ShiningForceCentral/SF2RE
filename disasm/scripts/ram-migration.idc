@@ -4,7 +4,13 @@
  * 
  * The script changes references to the old RAMFF segment so that they now point to the RAM segment adequately.
  *
- * This script should not need to be executed again.
+ * This script should be executed after a new IDB is formed.
+ *
+ * How it works:
+ * 1) Begin crawling the RAMFF space at (0xFFFF0000) one byte at a time.
+ * 2) Iterate through all xrefs to the current addr pointer.
+ * 3) Use the OpOffEx command to change the xref line's operand to be in terms of an offset from 0xFFFF0000.
+ *
  * If a RAM offset reference has to be changed, do it manually with the "manual operand" command (Atl-F1).
  * Example : ((byte_FFF7A8-$1000000)).w
  *
@@ -17,7 +23,8 @@ static main(void)
 
 	auto addr, dref, next, action, opnd, before, after;
 
-	addr = ScreenEA();
+	//addr = ScreenEA();
+	addr = 0xFFFF0000;
 	
 	Message("\n-------------------------\n");
 	Message("Running ram-migration.idc starting at address %d\n", addr);
@@ -30,7 +37,7 @@ static main(void)
 			addr = 0xFFFF8000;
 		
 		Jump(addr);
-		Message(form("\naddr %s",ltoa(addr,16)));
+		//Message(form("\naddr %s",ltoa(addr,16)));
 		
 		for(dref=DfirstB(addr);dref!=-1;dref=DnextB(addr,dref)){
 		
@@ -66,7 +73,7 @@ static main(void)
 					}
 					else{
 						Message(form("opnd not found ?"));
-						action = AskYN(1,form("addr %s, dref %s",ltoa(addr,16), ltoa(dref,16)));
+						//action = AskYN(1,form("addr %s, dref %s",ltoa(addr,16), ltoa(dref,16)));
 						if (action==-1) break;
 					}
 				}
