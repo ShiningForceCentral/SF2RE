@@ -62,6 +62,7 @@ static ExportFunctionComments(H_File_Name)
 			
 		//Message("Next function at %x (%s)\n", func_addr, GetFunctionName(func_addr));
 		func_rcmt = GetFunctionCmt(func_addr, 1);
+		func_rcmt = str_replace(func_rcmt, "\"", "\\\"");
 		func_rcmt = str_replace(func_rcmt, "\n", "\\n\\\n");
 		func_cmt = GetFunctionCmt(func_addr, 0);
 		func_name = GetFunctionName(func_addr);
