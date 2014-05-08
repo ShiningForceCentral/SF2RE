@@ -1,5 +1,29 @@
 
-
+/*
+ *	FIXES SCRIPT 
+ *	This script will contain all instruction for fixes
+ *	on the IDB after the main IDC script has been applied.
+ *
+ *
+ *	TABLE FIXES :
+ * 	IDA's IDC export function does not properly export 
+ *	the following structures, when they
+ *	are located after address 0xFFFF :
+ *	- Relative Jump Tables (RJT, labeled with prefix "rjt_")
+ *	- Branch Tables (BT, labeled with prefix "bt_")
+ *	- Relative Pointer Tables (RPT, labeled with prefix "rpt_")
+ *	This script contains the needed instructions to 
+ *	fix all the RJTs/BTs/RPTs that are defined in the IDB. 
+ *	Beware :
+ *	Everytime a new RJT/BT/RPT is defined after 0xFFFF, 
+ *	it also has	to be defined in this script.
+ *
+ *	
+ *	INSTRUCTION FIXES :
+ *	Some instructions are not properly represented by IDA.
+ *	Details in more comments below.
+ *
+ */
 
 #include <idc.idc>
 
