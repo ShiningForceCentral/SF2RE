@@ -21,6 +21,7 @@ while(addr!=end&&action==1){
 	index = ltoa(i,10);
 	if(strlen(index)==1)index=form("0%s",index);
 	
+	MakeNameEx(dref,"",0);
 	MakeNameEx(dref,form("battlesceneGround%s",index),0);
 	
 	MakeData(dref, FF_WORD, 0x2, 0);

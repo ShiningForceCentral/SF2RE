@@ -39,6 +39,9 @@ while(addr!=0x1AB982&&action==1){
 	//action = AskYN(1,"Ok ?");
 }
 
+	MakeAlign(0x1ABE52, 0x1AC000-0x1ABE52,12);
+
+
 fclose(file);
 
 }

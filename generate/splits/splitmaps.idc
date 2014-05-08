@@ -22,6 +22,13 @@ while(addr!=0x94CC6&&action==1){
 	
 	MakeNameEx(dref,form("Map%s",index),0);
 	writestr(file,form("#dir\tmaps/map%s\n",index));
+	MakeData(dref, FF_BYTE, 0x1, 0);
+	MakeData(dref+1, FF_BYTE, 0x1, 0);
+	MakeData(dref+2, FF_BYTE, 0x1, 0);
+	MakeData(dref+3, FF_BYTE, 0x1, 0);
+	MakeData(dref+4, FF_BYTE, 0x1, 0);
+	MakeData(dref+5, FF_BYTE, 0x1, 0);
+		
 	for(s=0;s!=10;s++){
 	
 		section = Dfirst(dref+6+4*s);

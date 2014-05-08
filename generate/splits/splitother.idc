@@ -5,6 +5,23 @@ static main(void) {
 	auto start,base,addr,end,dref,section,action,file;
 
 	file = fopen("splitother.txt","w");
+	
+	// Template : split(0x,0x,"","",file);
+	
+	split(0x1B6DDA,0x1B6DFA,"plt_endKiss","misc/specialscreens/endingkisspalette.bin",file);
+	split(0x1B6DFA,0x1B7C9A,"endKissPicture","misc/specialscreens/endingkisstiles.bin",file);
+	MakeAlign(0x1B7C9A, 0x1B8000-0x1B7C9A,14);
+
+	
+	split(0x1BEE38,0x1BEEE0,"plt_BattleSceneWeaponColors","sprites/weapons/weaponspalette.bin",file);
+
+	split(0x1C46C2,0x1C4702,"plt_Witch","misc/specialscreens/witchpalette.bin",file);
+	split(0x1C4702,0x1C4E88,"witchLayout","misc/specialscreens/witchlayout.bin",file);
+	split(0x1C4E88,0x1C67C4,"witchTiles","misc/specialscreens/witchtiles.bin",file);
+	split(0x1C67C4,0x1C67E4,"plt_WitchEnd","misc/specialscreens/endingwitchpalette.bin",file);
+	split(0x1C67E4,0x1C6F2C,"witchEndLayout","misc/specialscreens/endingwitchlayout.bin",file);
+	split(0x1C6F2C,0x1C7F7C,"witchEndTiles","misc/specialscreens/endingwitchtiles.bin",file);
+	MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);	
 
 
 	split(0x1D8004,0x1DFA44,"Icons","icons/icons.bin",file);
