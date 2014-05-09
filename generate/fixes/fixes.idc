@@ -34,6 +34,8 @@ static main(void) {
 	fixBTs();
 	
 	fixInstructionRepresentations();
+	
+	Batch(0);
 
 }
 
