@@ -23,11 +23,17 @@ static splitAll(){
 
 	file = fopen("sf2splits.txt","w");
 
+	initFile(file);
+
 	splitPTs(file);
 	splitSingleChunks(file);	
 	splitMaps(file);
 	splitBattleSceneGrounds(file);
 	splitScriptbanks(file);
+	
+	
+	writestr(file,"\nsplit	0x0,0x0,\\0x0 - .bin\n");
+	
 
 	fclose(file);
 
@@ -45,8 +51,8 @@ static splitPTs(file){
 	splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "maps/palettes/", "mappalette", 2, 0, file);		
 	splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_EntitySprites", "EntitySprite", "sprites/entities/", "entitysprite", 3, 15, file);	
 	splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "backgrounds/", "background", 2, 0, file);
-	splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattleSprites", "EnemyBattleSprite", "sprites/battlesprites/enemies/", "enemybattlesprite", 3, 15, file);
-	splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattleSprites", "AllyBattleSprite", "sprites/battlesprites/allies/", "allybattlesprite", 3, 0, file);
+	splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattleSprites", "EnemyBattleSprite", "sprites/battlesprites/enemies/", "enemybattlesprite", 2, 15, file);
+	splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattleSprites", "AllyBattleSprite", "sprites/battlesprites/allies/", "allybattlesprite", 2, 0, file);
 	splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AlliesAnimations", "AllyAnimation", "battles/animations/allies/", "allyanimation", 3, 0, file);
 	splitPT(0x1AB79E, 0x1AB982, 0x1ABE52, 0x1AC000, "pt_EnemyAnimations", "EnemyAnimation", "battles/animations/enemies/", "enemyanimation", 3, 14, file);
 	splitPT(0x1AD104, 0x1AD1B8, 0x1B120A, 0x1B120A, "pt_BattleTerrainData", "BattleTerrain", "battles/terrains/", "battleterrain", 2, 0, file);
@@ -461,3 +467,41 @@ static undefineByte(addr){
 		SetManualInsn(addr,"");
 }
 
+
+
+static initFile(file){
+writestr(file,"/***********************Directories***************************/\n");
+writestr(file,"#dir	sound/\n");
+writestr(file,"#dir	sound/driver\n");
+writestr(file,"#dir	sound/pcm\n");
+writestr(file,"#dir	sound/music\n");
+writestr(file,"#dir	scriptbanks/\n");
+writestr(file,"#dir	battles/\n");
+writestr(file,"#dir	battles/entitysetups/\n");
+writestr(file,"#dir	battles/terrains/\n");
+writestr(file,"#dir	battles/animations/\n");
+writestr(file,"#dir	battles/animations/enemies/\n");
+writestr(file,"#dir	battles/animations/allies/\n");
+writestr(file,"#dir	battles/animations/invocations/\n");
+writestr(file,"#dir	battles/grounds/\n");
+writestr(file,"#dir	maps/\n");
+writestr(file,"#dir	maps/tilesets\n");
+writestr(file,"#dir	maps/palettes\n");
+writestr(file,"#dir	sprites/\n");
+writestr(file,"#dir	sprites/entities\n");
+writestr(file,"#dir	backgrounds/\n");
+writestr(file,"#dir	sprites/battlesprites\n");
+writestr(file,"#dir	sprites/battlesprites/enemies\n");
+writestr(file,"#dir	sprites/battlesprites/allies\n");
+writestr(file,"#dir	sprites/weapons\n");
+writestr(file,"#dir	spells/\n");
+writestr(file,"#dir	portraits/\n");
+writestr(file,"#dir	icons/\n");
+writestr(file,"#dir	misc/\n");
+writestr(file,"#dir	misc/specialscreens/\n");
+writestr(file,"#dir	chardata/\n");
+writestr(file,"#dir	chardata/stats/\n");
+writestr(file,"\n");
+writestr(file,"/***********************Data***************************/\n");
+writestr(file,"\n");
+}
