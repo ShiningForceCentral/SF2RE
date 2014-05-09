@@ -97,7 +97,7 @@ static main(void) {
 		addr=addr+4;
 		i++;
 		
-		action = AskYN(1,"Ok ?");
+		//action = AskYN(1,"Ok ?");
 	}
 
 	MakeAlign(lastEntryDataEnd, chunkEnd-lastEntryDataEnd,15);

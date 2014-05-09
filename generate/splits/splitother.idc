@@ -37,7 +37,7 @@ static main(void) {
 	MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);	
 
 
-	split(0x1D8004,0x1DFA44,"Icons","icons/icons.bin",file);
+	split(0x1D8004,0x1DFA46,"Icons","icons/icons.bin",file);
 	MakeAlign(0x1DFA46, 0x1E0000-0x1DFA46,15);	
 
 	split(0x1E0000,0x1E8000,"","sound/pcm/bank0.bin",file);
