@@ -35,6 +35,8 @@ static main(void) {
 	
 	fixInstructionRepresentations();
 	
+	fixSingleInstructions();
+	
 	Batch(0);
 
 }
@@ -60,6 +62,7 @@ static fixRPTs() {
 	makeRpt(0x47A88,0x47AE8);
 	makeRpt(0x47B2C,0x47B8C);
 	makeRpt(0x47BE8,0x47C48);
+	makeRpt(0x47CF4,0x47D54);
 }
 
 static fixBTs() {
@@ -108,6 +111,7 @@ static fixInstructionRepresentations(){
 	
 	Batch(0);
 	batch = AskYN(1,"Fix Instruction Represensations : BATCH MODE ?");
+	if (batch==-1) return;
 	Batch(batch);
 	
 	fix("4E 66","move.l  a6,usp","move a6,usp","move.l a6,usp");
@@ -125,6 +129,16 @@ static fixInstructionRepresentations(){
 	fix("4B FA","lea     %s(pc), a5","lea loc, a5","lea loc(pc),a5");
 	fix("4D FA","lea     %s(pc), a6","lea loc, a6","lea loc(pc),a6");
 	fix("4F FA","lea     %s(pc), a7","lea loc, a7","lea loc(pc),a7");
+
+}
+
+
+static fixSingleInstructions(){
+
+	OpHex(0x128C0,1);
+	OpHex(0x27982,1);
+	OpHex(0x27A36,1);
+	OpHex(0x27B16,0);
 
 }
 

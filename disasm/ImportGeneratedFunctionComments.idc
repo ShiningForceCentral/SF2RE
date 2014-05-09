@@ -194,7 +194,7 @@ returns a1 = window tiles end, d0 = window slot", 1);
 
     // esc00_wait
     SetFunctionCmt(0x4fbc, 
-        "wait for 00xx VInts", 1);
+        "clear timer and parse next command", 1);
 
     // esc01_waitUntilDestination
     SetFunctionCmt(0x4fd4, 
@@ -202,10 +202,10 @@ returns a1 = window tiles end, d0 = window slot", 1);
 
     // esc02_
     SetFunctionCmt(0x4ff8, 
-        "related to controlling character", 1);
+        "update next entity", 1);
 
-    // sub_55C8
-    SetFunctionCmt(0x55c8, 
+    // esc04_moveToRelativeDest
+    SetFunctionCmt(0x53fe, 
         "related to moving an entity", 1);
 
     // checkIfSameDestForOtherEntity
@@ -297,17 +297,9 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5d48, 
         "directly go to next command 4 bytes forward", 1);
 
-    // esc_clearTimerGoToNextCommand
-    SetFunctionCmt(0x5d4e, 
-        "clear timer and parse next command", 1);
-
     // esc_clearTimerGoToNextEntity
     SetFunctionCmt(0x5d5a, 
         "clear timer and update next entity", 1);
-
-    // esc_goToNextEntity
-    SetFunctionCmt(0x5d5e, 
-        "update next entity", 1);
 
     // LoadMapEntitySprites
     SetFunctionCmt(0x6024, 
@@ -1372,7 +1364,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x4779e, 
         "returns map setup address in a0", 1);
 
-    // sub_47A50
+    // j_ExecuteBattleCutscene_Intro_0
     SetFunctionCmt(0x47a50, 
         "cutscene before the battle begins", 1);
 
