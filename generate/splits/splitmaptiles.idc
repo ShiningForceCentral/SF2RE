@@ -5,11 +5,11 @@ static main(void) {
 	auto start,end,lastEntryDataEnd,chunkEnd,addr,dataEnd,from,dref,section,action,file;
 	
 	i = 0;
-	start = 0x94B8A;
-	end = 0x94CC6;
+	start = 0x6400C;
+	end = 0x641D8;
 	addr = start;
-	lastEntryDataEnd = 0xC7ECC;
-	chunkEnd = 0xC8000;
+	lastEntryDataEnd = 0x9494A;
+	chunkEnd = 0x9494A;
 	
 	action=1;
 	
@@ -17,7 +17,7 @@ static main(void) {
 	
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
 	
-	MakeNameEx(addr,"pt_MapData",0);
+	MakeNameEx(addr,"pt_MapTiles",0);
 	
 	while(addr<end&&action==1){
 		
@@ -28,24 +28,10 @@ static main(void) {
 		Jump(dref);
 		
 		index = ltoa(i,10);
-		if(strlen(index)==1)index=form("0%s",index);
+		if(strlen(index)==1)index=form("00%s",index);
+		if(strlen(index)==2)index=form("0%s",index);
 		
-		MakeNameEx(dref,form("Map%s",index),0);
-		writestr(file,form("#dir\tmaps/map%s\n",index));
-		MakeData(dref, FF_BYTE, 0x1, 0);
-		MakeData(dref+1, FF_BYTE, 0x1, 0);
-		MakeData(dref+2, FF_BYTE, 0x1, 0);
-		MakeData(dref+3, FF_BYTE, 0x1, 0);
-		MakeData(dref+4, FF_BYTE, 0x1, 0);
-		MakeData(dref+5, FF_BYTE, 0x1, 0);
-		
-		for(s=0;s!=10;s++){
-			from = dref+6+4*s;
-			MakeDword(from);
-			section = Dword(from);
-			add_dref(from,section,dr_O);
-			MakeNameEx(section,form("Map%sSection%d",index,s),0);
-		} 
+		MakeNameEx(dref,form("MapTiles%s",index),0);
 		
 		addr=addr+4;
 		i++;
@@ -60,15 +46,9 @@ static main(void) {
 		dref = Dfirst(addr);		
 		Jump(dref); 
 			
-		for(s=0;s!=10;s++){
-		
-			section = Dfirst(dref+6+4*s);
-			
-			if(section!=BADADDR){
-			
 				dataEnd = 0;
 				
-				j = section+1;
+				j = dref+1;
 				while(dataEnd==0){
 					from = DfirstB(j);
 					while(from!=BADADDR){
@@ -82,25 +62,21 @@ static main(void) {
 				}
 				
 				index = ltoa(i,10);
-				if(strlen(index)==1)index=form("0%s",index);
+				if(strlen(index)==1)index=form("00%s",index);
+				if(strlen(index)==2)index=form("0%s",index);
 				
-				Message(form("section %s, dataEnd %s\n",ltoa(section,16),ltoa(dataEnd,16)));
+				Message(form("dref %s, dataEnd %s\n",ltoa(dref,16),ltoa(dataEnd,16)));
 				
-				MakeData(section,FF_BYTE,dataEnd-section,1);
-				SetManualInsn   (section, form("incbin \"maps/map%s/section%d.bin\"",index,s));
-				writestr(file,form("#split\t0x%s,0x%s,maps/map%s/section%d.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,s));
-			
-			}
-		
-		}
+				MakeData(dref,FF_BYTE,dataEnd-dref,1);
+				SetManualInsn   (dref, form("incbin \"maps/tilesets/tileset%s.bin\"",index));
+				writestr(file,form("#split\t0x%s,0x%s,maps/tilesets/tileset%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),index));
 			
 		addr=addr+4;
 		i++;
 		
-		action = AskYN(1,"Ok ?");
+		//action = AskYN(1,"Ok ?");
 	}
 
-	MakeAlign(lastEntryDataEnd, chunkEnd-lastEntryDataEnd,15);
 	fclose(file);
 
 }

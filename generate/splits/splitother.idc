@@ -8,6 +8,19 @@ static main(void) {
 	
 	// Template : split(0x,0x,"","",file);
 	
+	MakeAlign(0x6348C, 0x64000-0x6348C,14);
+	
+	split(0x1002BE,0x10033E,"plt_TitleScreen","misc/specialscreens/titlepalettes.bin",file);
+	split(0x10033E,0x1014E0,"titleScreenTiles","misc/specialscreens/titletiles.bin",file);
+	split(0x1014E0,0x101BE0,"titleScreenLayoutA","misc/specialscreens/titlelayoutA.bin",file);
+	split(0x101BE0,0x101EE0,"titleScreenLayoutB","misc/specialscreens/titlelayoutB.bin",file);
+
+	split(0x12A308,0x12CD26,"invocationSpriteDao","battles/animations/invocations/dao.bin",file);
+	split(0x12CD26,0x12D9CA,"invocationSpriteApollo","battles/animations/invocations/apollo.bin",file);
+	split(0x12D9CA,0x12E988,"invocationSpriteNeptun","battles/animations/invocations/neptun.bin",file);
+	split(0x12E988,0x12FADE,"invocationSpriteAtlas","battles/animations/invocations/atlas.bin",file);
+	MakeAlign(0x12FADE, 0x130000-0x12FADE,15);
+	
 	split(0x1B6DDA,0x1B6DFA,"plt_endKiss","misc/specialscreens/endingkisspalette.bin",file);
 	split(0x1B6DFA,0x1B7C9A,"endKissPicture","misc/specialscreens/endingkisstiles.bin",file);
 	MakeAlign(0x1B7C9A, 0x1B8000-0x1B7C9A,14);
@@ -89,6 +102,6 @@ static split(start, end, nameString, binPath, splitFile){
 	MakeNameEx(start,nameString,0);
 	SetManualInsn   (start, form("incbin \"%s\"",binPath));
 	writestr(splitFile,form("#split\t0x%s,0x%s,%s\n",ltoa(start,16),ltoa(end,16),binPath));
-
+	Jump(start);
 
 }
