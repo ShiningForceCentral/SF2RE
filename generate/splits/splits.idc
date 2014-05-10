@@ -21,22 +21,26 @@ static main(void){
 static splitAll(){
 	auto file;
 
+	Message("SPLITTING...\n");
 	file = fopen("sf2splits.txt","w");
-
 	initFile(file);
 
+	Message("Pointer Tables...");
 	splitPTs(file);
+	Message(" DONE.\nSingle Chunks...");	
 	splitSingleChunks(file);	
+	Message(" DONE.\nMaps ...");
 	splitMaps(file);
+	Message(" DONE.\nBattleSceneGrounds...");	
 	splitBattleSceneGrounds(file);
+	Message(" DONE.\nScriptBanks...");	
 	splitScriptbanks(file);
-	
+	Message(" DONE.\n");	
 	
 	writestr(file,"\nsplit	0x0,0x0,\\0x0 - .bin\n");
-	
-
 	fclose(file);
-
+	Message("END OF SPLITS.\n");	
+	
 }
 
 /*
@@ -240,13 +244,13 @@ static splitSingleChunks(file) {
 
 static splitSingleChunk(start, end, nameString, binPath, splitFile){
 	auto j;
-	Message("Cleaning from %a to %a ...\n",start,end);
+	//Message("Cleaning from %a to %a ...\n",start,end);
 	for(j=start+1;j<end;j++){undefineByte(j);}
 	MakeData(start,FF_BYTE,end-start,1);
 	MakeNameEx(start,nameString,0);
 	SetManualInsn   (start, form("incbin \"%s\"",binPath));
 	writestr(splitFile,form("#split\t0x%s,0x%s,%s\n",ltoa(start,16),ltoa(end,16),binPath));
-	Jump(start);
+	//Jump(start);
 }
 
 
@@ -260,7 +264,7 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 	addr = start;
 	action=1;
 	// Cleaning whole chunk
-	Message("Cleaning from %a to %a ...\n",start,chunkEnd);
+	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
 	// Naming pointer table
 	MakeNameEx(addr,ptName,0);
@@ -270,7 +274,7 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 		dref = Dword(addr);
 		add_dref(addr,dref,dr_O);
 		dref = Dfirst(addr);		
-		Jump(dref);
+		//Jump(dref);
 		index = ltoa(i,10);
 		while(strlen(index)<indexLength){
 			index=form("0%s",index);
@@ -287,7 +291,7 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 	addr = start;
 	while(addr!=end&&action==1){
 		dref = Dfirst(addr);		
-		Jump(dref); 
+		//Jump(dref); 
 		dataEnd = 0;
 		j = dref+1;
 		// Finding entry's data end
@@ -306,7 +310,7 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 		while(strlen(index)<indexLength){
 			index=form("0%s",index);
 		}
-		Message(form("Processing entry %s%s from %s, to %s\n",entryName,index,ltoa(dref,16),ltoa(dataEnd,16)));
+		//Message(form("Processing entry %s%s from %s, to %s\n",entryName,index,ltoa(dref,16),ltoa(dataEnd,16)));
 		MakeData(dref,FF_BYTE,dataEnd-dref,1);
 		SetManualInsn   (dref, form("incbin \"%s%s%s.bin\"",binDir,binName,index));
 		writestr(file,form("#split\t0x%s,0x%s,%s%s%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),binDir,binName,index));
@@ -329,7 +333,7 @@ static splitMaps(file) {
 	lastEntryDataEnd = 0xC7ECC;
 	chunkEnd = 0xC8000;
 	action=1;
-	Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
+	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
 	MakeNameEx(addr,"pt_MapData",0);
 	while(addr<end&&action==1){
@@ -337,7 +341,7 @@ static splitMaps(file) {
 		dref = Dword(addr);
 		add_dref(addr,dref,dr_O);
 		dref = Dfirst(addr);		
-		Jump(dref);
+		//Jump(dref);
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
 		MakeNameEx(dref,form("Map%s",index),0);
@@ -362,7 +366,7 @@ static splitMaps(file) {
 	addr = start;
 	while(addr!=end&&action==1){
 		dref = Dfirst(addr);		
-		Jump(dref); 
+		//Jump(dref); 
 		for(s=0;s!=10;s++){
 			section = Dfirst(dref+6+4*s);
 			if(section!=BADADDR){
@@ -381,7 +385,7 @@ static splitMaps(file) {
 				}
 				index = ltoa(i,10);
 				if(strlen(index)==1)index=form("0%s",index);
-				Message(form("Processing Map%s section%d at %s, dataEnd %s\n",index,s,ltoa(section,16),ltoa(dataEnd,16)));
+				//Message(form("Processing Map%s section%d at %s, dataEnd %s\n",index,s,ltoa(section,16),ltoa(dataEnd,16)));
 				MakeData(section,FF_BYTE,dataEnd-section,1);
 				SetManualInsn   (section, form("incbin \"maps/map%s/section%d.bin\"",index,s));
 				writestr(file,form("#split\t0x%s,0x%s,maps/map%s/section%d.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,s));
@@ -406,7 +410,7 @@ static splitBattleSceneGrounds(file) {
 	lastEntryDataEnd = 0x1B9A9A;
 	chunkEnd = 0x1B9A9A;
 	action=1;
-	Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
+	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
 	MakeNameEx(addr,"pt_BattleSceneGrounds",0);
 	while(addr<end&&action==1){
@@ -414,7 +418,7 @@ static splitBattleSceneGrounds(file) {
 		dref = Dword(addr);
 		add_dref(addr,dref,dr_O);
 		dref = Dfirst(addr);		
-		Jump(dref);
+		//Jump(dref);
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
 		MakeNameEx(dref,form("battlesceneGround%s",index),0);
@@ -427,7 +431,7 @@ static splitBattleSceneGrounds(file) {
 		OpOffEx(base, -1, REF_OFF32, -1, base, 0);
 		section = Word(base) + base;
 		add_dref(base,section,dr_O);
-		Message("base %a, section %a\n",base, section);
+		//Message("base %a, section %a\n",base, section);
 		MakeNameEx(section,form("groundTiles%s",index),0);
 		addr=addr+4;
 		i++;
@@ -438,7 +442,7 @@ static splitBattleSceneGrounds(file) {
 		dref = Dfirst(addr);
 		base = dref+6;
 		dref = Word(base) + base;	
-		Jump(dref); 
+		//Jump(dref); 
 				dataEnd = 0;
 				j = dref+1;
 				while(dataEnd==0){
@@ -454,7 +458,7 @@ static splitBattleSceneGrounds(file) {
 				}
 				index = ltoa(i,10);
 				if(strlen(index)==1)index=form("0%s",index);
-				Message(form("Processing ground%s at %s, dataEnd %s\n",index,ltoa(dref,16),ltoa(dataEnd,16)));
+				//Message(form("Processing ground%s at %s, dataEnd %s\n",index,ltoa(dref,16),ltoa(dataEnd,16)));
 				MakeData(dref,FF_BYTE,dataEnd-dref,1);
 				SetManualInsn   (dref, form("incbin \"battles/grounds/ground%s.bin\"",index));
 				writestr(file,form("#split\t0x%s,0x%s,battles/grounds/ground%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),index));
@@ -475,7 +479,7 @@ static splitScriptbanks(file) {
 	lastEntryDataEnd = 0x41FDA;
 	chunkEnd = 0x4201E;
 	action=1;
-	Message("Cleaning from %a to %a ...\n",start,chunkEnd);		
+	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);		
 	for(j=0x2EB34;j<chunkEnd;j++){undefineByte(j);}
 	MakeNameEx(addr,"pt_ScriptBanks",0);
 	while(addr<end&&action==1){
@@ -483,7 +487,7 @@ static splitScriptbanks(file) {
 		dref = Dword(addr);
 		add_dref(addr,dref,dr_O);
 		dref = Dfirst(addr);		
-		Jump(dref);
+		//Jump(dref);
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
 		MakeNameEx(dref,form("ScriptBank%s",index),0);
@@ -494,7 +498,7 @@ static splitScriptbanks(file) {
 	addr = start;
 	while(addr!=end&&action==1){
 		dref = Dfirst(addr);		
-		Jump(dref); 
+		//Jump(dref); 
 		dataEnd = 0;
 		j = dref+1;
 		while(dataEnd==0){
@@ -510,7 +514,7 @@ static splitScriptbanks(file) {
 		}
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
-		Message(form("dref %s, dataEnd %s\n",ltoa(dref,16),ltoa(dataEnd,16)));
+		//Message(form("dref %s, dataEnd %s\n",ltoa(dref,16),ltoa(dataEnd,16)));
 		MakeData(dref,FF_BYTE,dataEnd-dref,1);
 		SetManualInsn   (dref, form("incbin \"scriptbanks/scriptbank%s.bin\"",index));
 		writestr(file,form("#split\t0x%s,0x%s,scriptbanks/scriptbank%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),index));
@@ -535,13 +539,13 @@ static undefineByte(addr){
 		auto from;
 		from = DfirstB(addr);
 		while(from!=BADADDR){
-			Message(form("Removed DATA XRef at addr %a, from %a\n",addr, from));
+			//Message(form("Removed DATA XRef at addr %a, from %a\n",addr, from));
       del_dref(from,addr);
       from=DnextB(addr,from);
 		}		
 		from = RfirstB(addr);
 		while(from!=BADADDR){
-			Message(form("Removed Code XRrf at addr %a, from %a\n",addr, from));
+			//Message(form("Removed Code XRrf at addr %a, from %a\n",addr, from));
       DelCodeXref(from,addr,1);
       from=RnextB(addr,from);      
 		}				
