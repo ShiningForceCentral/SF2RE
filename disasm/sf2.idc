@@ -1734,17 +1734,27 @@ static Bytes_0(void) {
 	MakeCode	(x=0X14C6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(0X14E2);
+	MakeDword	(x=0X14E2);
+	OpDecimal	(x,	0);
 	MakeName	(0X14E2,	"PowersOfTen");
-	MakeDword	(0X14E6);
-	MakeDword	(0X14EA);
-	MakeDword	(0X14EE);
-	MakeDword	(0X14F2);
-	MakeDword	(0X14F6);
-	MakeDword	(0X14FA);
-	MakeDword	(0X14FE);
-	MakeDword	(0X1502);
-	MakeDword	(0X1506);
+	MakeDword	(x=0X14E6);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14EA);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14EE);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14F2);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14F6);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14FA);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X14FE);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X1502);
+	OpDecimal	(x,	0);
+	MakeDword	(x=0X1506);
+	OpDecimal	(x,	0);
 	MakeCode	(0X150A);
 	MakeName	(0X150A,	"nullsub_3");
 	MakeCode	(0X150C);
@@ -4946,10 +4956,6 @@ static Bytes_0(void) {
 	MakeCode	(0X5FD6);
 	MakeCode	(0X5FE4);
 	MakeCode	(0X5FF6);
-	MakeCode	(0X6008);
-	MakeCode	(0X601A);
-	MakeCode	(0X6024);
-	MakeName	(0X6024,	"LoadMapEntitySprites");
 }
 
 //------------------------------------------------------------------------
@@ -4959,6 +4965,10 @@ static Bytes_1(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X6008);
+	MakeCode	(0X601A);
+	MakeCode	(0X6024);
+	MakeName	(0X6024,	"LoadMapEntitySprites");
 	MakeCode	(x=0X6028);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -9477,15 +9487,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0XEDBE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(x=0XEDC4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeCode	(0XEDD6);
-	MakeCode	(x=0XEDDA);
-	OpSign		(x,	1);
-	MakeCode	(x=0XEDF0);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -9495,6 +9496,15 @@ static Bytes_2(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0XEDC4);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeCode	(0XEDD6);
+	MakeCode	(x=0XEDDA);
+	OpSign		(x,	1);
+	MakeCode	(x=0XEDF0);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0XEDFC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -14855,6 +14865,15 @@ static Bytes_2(void) {
 	MakeCode	(x=0X18A0E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X18A2A);
 	MakeCode	(x=0X18A3C);
 	OpOff		(x,	1,	0X0);
@@ -14865,15 +14884,6 @@ static Bytes_2(void) {
 	MakeCode	(x=0X18A48);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X18A4C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -16693,9 +16703,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1AA1E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X1AA28);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1AA28);
 	MakeCode	(0X1AA40);
 	MakeWord	(x=0X1AA42);
 	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
@@ -16858,9 +16866,6 @@ static Bytes_3(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X1ADA4);
 	MakeCode	(x=0X1ADB4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeCode	(x=0X1ADB8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1ADE2);
@@ -17675,7 +17680,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1B928);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeWord	(0X1B930);
 	MakeCode	(0X1B93A);
 	MakeName	(0X1B93A,	"nullsub_13");
 	MakeCode	(x=0X1B93C);
@@ -17783,9 +17787,7 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X1BE1C);
-	MakeDword	(x=0X1BE82);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1BE82);
 	MakeCode	(x=0X1BE9E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18013,9 +18015,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1CBA8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1CBDE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1CBDE);
 	MakeCode	(x=0X1CC56);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18059,12 +18059,8 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1CE02);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1CE0C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1CE2A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1CE0C);
+	MakeByte	(0X1CE2A);
 	MakeCode	(x=0X1CE50);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18147,9 +18143,7 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X1D0F4);
-	MakeDword	(x=0X1D0F6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1D0F6);
 	MakeCode	(x=0X1D0FE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18192,9 +18186,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1D298);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1D2AA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1D2AA);
 	MakeCode	(x=0X1D2E6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18246,9 +18238,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1D460);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1D4C8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1D4C8);
 	MakeCode	(x=0X1D4E6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18355,12 +18345,8 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1D9B2);
-	MakeDword	(x=0X1D9DE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1D9EA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1D9DE);
+	MakeByte	(0X1D9EA);
 	MakeCode	(x=0X1D9FC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18542,9 +18528,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1DF96);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X1DFCE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1DFCE);
 	MakeCode	(x=0X1DFD4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18617,7 +18601,7 @@ static Bytes_3(void) {
 	MakeCode	(0X1E23E);
 	MakeCode	(0X1E240);
 	MakeWord	(x=0X1E242);
-	OpEnumEx		(x,	0,	GetEnum("Sfx"),1);
+	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
 	MakeCode	(0X1E244);
 	MakeCode	(0X1E25E);
 	MakeCode	(x=0X1E260);
@@ -18750,9 +18734,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1E77C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1E78E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1E78E);
 	MakeCode	(x=0X1E7B2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18795,9 +18777,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1E8D6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1E8F2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1E8F2);
 	MakeCode	(x=0X1E958);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18882,9 +18862,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1EB7A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1EB90);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1EB90);
 	MakeCode	(x=0X1EBBA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18919,12 +18897,8 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1EC90);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1ECAA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1ECBC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1ECAA);
+	MakeByte	(0X1ECBC);
 	MakeCode	(x=0X1ECC8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19326,7 +19300,6 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1F3C8);
-	MakeByte	(0X1F3CC);
 	MakeCode	(0X1F3DC);
 	MakeCode	(0X1F3E0);
 	MakeCode	(0X1F422);
@@ -19357,9 +19330,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1F502);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X1F528);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1F528);
 	MakeCode	(x=0X1F540);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19375,218 +19346,34 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1F56C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X1F6B6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1F6B6);
 	MakeRptCmt	(0X1F806,	"table : class -> sprite");
-	MakeDword	(x=0X1F806);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1F806);
+	MakeArray	(0X1F806,	0X10D);
 	MakeName	(0X1F806,	"tbl_CharacterBattleSprites");
-	MakeRptCmt	(0X1F80E,	"end of first entry");
-	MakeRptCmt	(0X1F80F,	"class index");
-	MakeRptCmt	(0X1F810,	"battlescene sprite index");
-	MakeRptCmt	(0X1F914,	"end of class -> battlescene sprite table");
-	MakeWord	(0X1F914);
-	MakeName	(0X1F914,	"tbl_MonsterBattleSprites");
-	MakeWord	(0X1F916);
-	MakeWord	(0X1F918);
-	MakeWord	(0X1F91A);
-	MakeWord	(0X1F91C);
-	MakeWord	(0X1F91E);
-	MakeWord	(0X1F920);
-	MakeWord	(0X1F922);
-	MakeWord	(0X1F924);
-	MakeWord	(0X1F926);
-	MakeWord	(0X1F928);
-	MakeWord	(0X1F92A);
-	MakeWord	(0X1F92C);
-	MakeWord	(0X1F92E);
-	MakeWord	(0X1F930);
-	MakeWord	(0X1F932);
-	MakeWord	(0X1F934);
-	MakeWord	(0X1F936);
-	MakeWord	(0X1F938);
-	MakeWord	(0X1F93A);
-	MakeWord	(0X1F93C);
-	MakeWord	(0X1F93E);
-	MakeWord	(0X1F940);
-	MakeWord	(0X1F942);
-	MakeWord	(0X1F944);
-	MakeWord	(0X1F946);
-	MakeWord	(0X1F948);
-	MakeWord	(0X1F94A);
-	MakeWord	(0X1F94C);
-	MakeWord	(0X1F94E);
-	MakeWord	(0X1F950);
-	MakeWord	(0X1F952);
-	MakeWord	(0X1F954);
-	MakeWord	(0X1F956);
-	MakeWord	(0X1F958);
-	MakeWord	(0X1F95A);
-	MakeWord	(0X1F95C);
-	MakeWord	(0X1F95E);
-	MakeWord	(0X1F960);
-	MakeWord	(0X1F962);
-	MakeWord	(0X1F964);
-	MakeWord	(0X1F966);
-	MakeWord	(0X1F968);
-	MakeWord	(0X1F96A);
-	MakeWord	(0X1F96C);
-	MakeWord	(0X1F96E);
-	MakeWord	(0X1F970);
-	MakeWord	(0X1F972);
-	MakeWord	(0X1F974);
-	MakeWord	(0X1F976);
-	MakeWord	(0X1F978);
-	MakeWord	(0X1F97A);
-	MakeWord	(0X1F97C);
-	MakeWord	(0X1F97E);
-	MakeWord	(0X1F980);
-	MakeWord	(0X1F982);
-	MakeWord	(0X1F984);
-	MakeWord	(0X1F986);
-	MakeWord	(0X1F988);
-	MakeWord	(0X1F98A);
-	MakeWord	(0X1F98C);
-	MakeWord	(0X1F98E);
-	MakeWord	(0X1F990);
-	MakeWord	(0X1F992);
-	MakeWord	(0X1F994);
-	MakeWord	(0X1F996);
-	MakeWord	(0X1F998);
-	MakeWord	(0X1F99A);
-	MakeWord	(0X1F99C);
-	MakeWord	(0X1F99E);
-	MakeWord	(0X1F9A0);
-	MakeWord	(0X1F9A2);
-	MakeWord	(0X1F9A4);
-	MakeWord	(0X1F9A6);
-	MakeWord	(0X1F9A8);
-	MakeWord	(0X1F9AA);
-	MakeWord	(0X1F9AC);
-	MakeWord	(0X1F9AE);
-	MakeWord	(0X1F9B0);
-	MakeWord	(0X1F9B2);
-	MakeWord	(0X1F9B4);
-	MakeWord	(0X1F9B6);
-	MakeWord	(0X1F9B8);
-	MakeWord	(0X1F9BA);
-	MakeWord	(0X1F9BC);
-	MakeWord	(0X1F9BE);
-	MakeWord	(0X1F9C0);
-	MakeWord	(0X1F9C2);
-	MakeWord	(0X1F9C4);
-	MakeWord	(0X1F9C6);
-	MakeWord	(0X1F9C8);
-	MakeWord	(0X1F9CA);
-	MakeWord	(0X1F9CC);
-	MakeWord	(0X1F9CE);
-	MakeWord	(0X1F9D0);
-	MakeWord	(0X1F9D2);
-	MakeWord	(0X1F9D4);
-	MakeWord	(0X1F9D6);
-	MakeWord	(0X1F9D8);
-	MakeWord	(0X1F9DA);
-	MakeWord	(0X1F9DC);
-	MakeWord	(0X1F9DE);
-	MakeWord	(0X1F9E0);
-	MakeWord	(0X1F9E2);
+	MakeRptCmt	(0X1F80E,	"table : class -> sprite");
+	MakeRptCmt	(0X1F80F,	"table : class -> sprite");
+	MakeRptCmt	(0X1F810,	"table : class -> sprite");
+	MakeByte	(0X1F913);
+	MakeArray	(0X1F913,	0XCF);
+	MakeName	(0X1F913,	"tbl_MonsterBattleSprites");
+	MakeByte	(0X1F9E2);
+	MakeArray	(0X1F9E2,	0XA8);
 	MakeName	(0X1F9E2,	"tbl_ItemBattleSprites");
-	MakeWord	(0X1F9E4);
-	MakeWord	(0X1F9E6);
-	MakeWord	(0X1F9E8);
-	MakeWord	(0X1F9EA);
-	MakeWord	(0X1F9EC);
-	MakeWord	(0X1F9EE);
-	MakeWord	(0X1F9F0);
-	MakeWord	(0X1F9F2);
-	MakeWord	(0X1F9F4);
-	MakeWord	(0X1F9F6);
-	MakeWord	(0X1F9F8);
-	MakeWord	(0X1F9FA);
-	MakeWord	(0X1F9FC);
-	MakeWord	(0X1F9FE);
-	MakeWord	(0X1FA00);
-	MakeWord	(0X1FA02);
-	MakeWord	(0X1FA04);
-	MakeWord	(0X1FA06);
-	MakeWord	(0X1FA08);
-	MakeWord	(0X1FA0A);
-	MakeWord	(0X1FA0C);
-	MakeWord	(0X1FA0E);
-	MakeWord	(0X1FA10);
-	MakeWord	(0X1FA12);
-	MakeWord	(0X1FA14);
-	MakeWord	(0X1FA16);
-	MakeWord	(0X1FA18);
-	MakeWord	(0X1FA1A);
-	MakeWord	(0X1FA1C);
-	MakeWord	(0X1FA1E);
-	MakeWord	(0X1FA20);
-	MakeWord	(0X1FA22);
-	MakeWord	(0X1FA24);
-	MakeWord	(0X1FA26);
-	MakeWord	(0X1FA28);
-	MakeWord	(0X1FA2A);
-	MakeWord	(0X1FA2C);
-	MakeWord	(0X1FA2E);
-	MakeWord	(0X1FA30);
-	MakeWord	(0X1FA32);
-	MakeWord	(0X1FA34);
-	MakeWord	(0X1FA36);
-	MakeWord	(0X1FA38);
-	MakeWord	(0X1FA3A);
-	MakeWord	(0X1FA3C);
-	MakeWord	(0X1FA3E);
-	MakeWord	(0X1FA40);
-	MakeWord	(0X1FA42);
-	MakeWord	(0X1FA44);
-	MakeWord	(0X1FA46);
-	MakeWord	(0X1FA48);
-	MakeWord	(0X1FA4A);
-	MakeWord	(0X1FA4C);
-	MakeWord	(0X1FA4E);
-	MakeWord	(0X1FA50);
-	MakeWord	(0X1FA52);
-	MakeWord	(0X1FA54);
-	MakeWord	(0X1FA56);
-	MakeWord	(0X1FA58);
-	MakeWord	(0X1FA5A);
-	MakeWord	(0X1FA5C);
-	MakeWord	(0X1FA5E);
-	MakeWord	(0X1FA60);
-	MakeWord	(0X1FA62);
-	MakeWord	(0X1FA64);
-	MakeWord	(0X1FA66);
-	MakeWord	(0X1FA68);
-	MakeWord	(0X1FA6A);
-	MakeWord	(0X1FA6C);
-	MakeWord	(0X1FA6E);
-	MakeWord	(0X1FA70);
-	MakeWord	(0X1FA72);
-	MakeWord	(0X1FA74);
-	MakeWord	(0X1FA76);
-	MakeWord	(0X1FA78);
-	MakeWord	(0X1FA7A);
-	MakeWord	(0X1FA7C);
-	MakeWord	(0X1FA7E);
-	MakeWord	(0X1FA80);
-	MakeWord	(0X1FA82);
-	MakeWord	(0X1FA84);
-	MakeWord	(0X1FA86);
-	MakeWord	(0X1FA88);
+	MakeByte	(0X1FA8A);
+	MakeArray	(0X1FA8A,	0X2E);
 	MakeName	(0X1FA8A,	"tbl_CustomBackgrounds");
-	MakeDword	(x=0X1FAB8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X1FAB8);
 	MakeRptCmt	(0X1FAD6,	"list of ally battle sprite indeces who do not animate while idle");
+	MakeByte	(0X1FAD6);
+	MakeArray	(0X1FAD6,	0X7);
 	MakeName	(0X1FAD6,	"tbl_AllyBSpriteIdleAnimate");
 	MakeRptCmt	(0X1FADD,	"list of enemy battle sprite indeces who do not animate while idle");
+	MakeByte	(0X1FADD);
+	MakeArray	(0X1FADD,	0XD);
 	MakeName	(0X1FADD,	"tbl_EnemyBSpriteIdleAnimate");
 	MakeStr		(0X1FAEA,	0X1FAFC);
 	MakeName	(0X1FAEA,	"somePlaneALayout");
-	MakeByte	(0X1FDEC);
 	MakeArray	(0X1FDEC,	0X214);
 	MakeCode	(0X20000);
 	MakeName	(0X20000,	"j_ShopActions");
@@ -19741,7 +19528,7 @@ static Bytes_3(void) {
 	MakeCode	(0X2028A);
 	MakeRptCmt	(0X202A4,	"cursed item");
 	MakeWord	(x=0X202A4);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X202A6);
 	MakeCode	(x=0X202AC);
 	OpHex		(x,	0);
@@ -19965,7 +19752,7 @@ static Bytes_3(void) {
 	MakeCode	(0X20786);
 	MakeCode	(0X20788);
 	MakeWord	(x=0X207A2);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X207A4);
 	MakeCode	(x=0X207AA);
 	OpOff		(x,	1,	0X0);
@@ -20065,7 +19852,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X20B18);
 	OpHex		(x,	0);
 	MakeWord	(x=0X20B28);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X20B2A);
 	MakeCode	(x=0X20B30);
 	OpHex		(x,	0);
@@ -20239,7 +20026,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X20F7A);
 	OpHex		(x,	0);
 	MakeWord	(x=0X20F92);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X20F94);
 	MakeCode	(x=0X20FA2);
 	OpOff		(x,	1,	0X0);
@@ -20284,8 +20071,9 @@ static Bytes_3(void) {
 	MakeCode	(0X21030);
 	MakeWord	(0X21040);
 	MakeCode	(0X21042);
+	MakeByte	(0X21046);
+	MakeArray	(0X21046,	0X2C);
 	MakeName	(0X21046,	"promotion_data");
-	MakeRptCmt	(0X21047,	"promotion data");
 	MakeCode	(0X21072);
 	MakeCode	(x=0X21080);
 	OpOff		(x,	0,	0X0);
@@ -20386,15 +20174,6 @@ static Bytes_3(void) {
 	MakeCode	(0X21336);
 	MakeWord	(x=0X21338);
 	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X2133A);
 	MakeWord	(0X2133C);
 	MakeCode	(0X2133E);
@@ -20521,7 +20300,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X2160C);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X2160E);
 	MakeRptCmt	(0X21610,	"{LEADER}!  You can't{N}unequip the {ITEM}.{N}It's cursed!{W2}");
 	MakeWord	(0X21610);
@@ -20531,7 +20310,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X21650);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X21652);
 	MakeRptCmt	(0X21654,	"{LEADER}!  You can't{N}unequip the {ITEM}.{N}It's cursed!{W2}");
 	MakeWord	(0X21654);
@@ -20560,6 +20339,15 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X216E0,	"{NAME} changed hands{N}to hold the {ITEM}.{W2}");
 	MakeWord	(0X216E0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X216E2);
 	MakeCode	(x=0X216E4);
 	OpOff		(x,	1,	0X0);
@@ -20575,7 +20363,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X21746);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X21748);
 	MakeRptCmt	(0X2174A,	"{LEADER}!  You can't{N}unequip the {ITEM}.{N}It's cursed!{W2}");
 	MakeWord	(0X2174A);
@@ -20587,7 +20375,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X21790);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X21792);
 	MakeRptCmt	(0X21794,	"{LEADER}!  You can't{N}unequip the {ITEM}.{N}It's cursed!{W2}");
 	MakeWord	(0X21794);
@@ -20660,7 +20448,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X21950);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X21952);
 	MakeRptCmt	(0X21954,	"{LEADER}!  You can't{N}unequip the {ITEM}.{N}It's cursed!{W2}");
 	MakeWord	(0X21954);
@@ -20802,7 +20590,7 @@ static Bytes_4(void) {
 	MakeCode	(0X21C98);
 	MakeCode	(0X21C9A);
 	MakeWord	(x=0X21CB4);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X21CB6);
 	MakeCode	(x=0X21CBA);
 	OpOff		(x,	1,	0X0);
@@ -20914,10 +20702,11 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X21F52);
-	MakeDword	(x=0X21F62);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X21F62);
+	MakeArray	(0X21F62,	0X30);
 	MakeName	(0X21F62,	"tbl_MithrilWeaponClassLists");
+	MakeByte	(0X21F92);
+	MakeArray	(0X21F92,	0X40);
 	MakeName	(0X21F92,	"tbl_MithrilWeaponLists");
 	MakeCode	(0X21FD2);
 	MakeName	(0X21FD2,	"CaravanActions");
@@ -21397,7 +21186,7 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X2294C);
 	MakeWord	(x=0X22968);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X2296A);
 	MakeCode	(x=0X22972);
 	OpOff		(x,	1,	0X0);
@@ -22025,33 +21814,19 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeDword	(0X2358C);
 	MakeDword	(0X23590);
-	MakeDword	(x=0X23594);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X23594);
 	MakeDword	(0X23598);
-	MakeDword	(x=0X2359C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X2359C);
 	MakeDword	(0X235A0);
-	MakeDword	(x=0X235A4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235A4);
 	MakeDword	(0X235A8);
-	MakeDword	(x=0X235AC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235AC);
 	MakeDword	(0X235B0);
-	MakeDword	(x=0X235B4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235B4);
 	MakeDword	(0X235B8);
-	MakeDword	(x=0X235BC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235BC);
 	MakeDword	(0X235C0);
-	MakeDword	(x=0X235C4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235C4);
 	MakeDword	(0X235C8);
 	MakeDword	(0X235CC);
 	MakeDword	(0X235D0);
@@ -22061,21 +21836,13 @@ static Bytes_4(void) {
 	MakeDword	(0X235E0);
 	MakeDword	(0X235E4);
 	MakeDword	(0X235E8);
-	MakeDword	(x=0X235EC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235EC);
 	MakeDword	(0X235F0);
-	MakeDword	(x=0X235F4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235F4);
 	MakeDword	(0X235F8);
-	MakeDword	(x=0X235FC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X235FC);
 	MakeDword	(0X23600);
-	MakeDword	(x=0X23604);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X23604);
 	MakeDword	(0X23608);
 	MakeDword	(0X2360C);
 	MakeDword	(0X23610);
@@ -22234,20 +22001,33 @@ static Bytes_4(void) {
 	MakeCode	(x=0X239A6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeWord	(0X239AE);
+	MakeWord	(x=0X239AE);
+	OpDecimal	(x,	0);
 	MakeName	(0X239AE,	"GoldAmounts");
-	MakeWord	(0X239B0);
-	MakeWord	(0X239B2);
-	MakeWord	(0X239B4);
-	MakeWord	(0X239B6);
-	MakeWord	(0X239B8);
-	MakeWord	(0X239BA);
-	MakeWord	(0X239BC);
-	MakeWord	(0X239BE);
-	MakeWord	(0X239C0);
-	MakeWord	(0X239C2);
-	MakeWord	(0X239C4);
-	MakeWord	(0X239C6);
+	MakeWord	(x=0X239B0);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239B2);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239B4);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239B6);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239B8);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239BA);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239BC);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239BE);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239C0);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239C2);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239C4);
+	OpDecimal	(x,	0);
+	MakeWord	(x=0X239C6);
+	OpDecimal	(x,	0);
 	MakeCode	(0X239C8);
 	MakeCode	(x=0X239CA);
 	OpOff		(x,	1,	0X0);
@@ -22256,7 +22036,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X239E2);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X239E4);
 	MakeWord	(0X239E6);
 	MakeCode	(0X239E8);
@@ -22269,7 +22049,7 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(x=0X23A10);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X23A12);
 	MakeWord	(0X23A14);
 	MakeCode	(0X23A16);
@@ -22287,7 +22067,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X23A54);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X23A56);
 	MakeWord	(0X23A58);
 	MakeCode	(0X23A5A);
@@ -23103,14 +22883,14 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X24C94);
 	MakeWord	(x=0X24CBA);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X24CBC);
 	MakeRptCmt	(0X24CBE,	"Gosh!  The curse prohibits{N}you from exchanging{N}equipment!{W2}");
 	MakeWord	(0X24CBE);
 	MakeCode	(0X24CC0);
 	MakeCode	(0X24CC4);
 	MakeWord	(x=0X24CDC);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(x=0X24CDE);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -23156,7 +22936,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X24E14);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X24E16);
 	MakeRptCmt	(0X24E18,	"The equipment is cursed.{W1}");
 	MakeWord	(0X24E18);
@@ -23192,7 +22972,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X24F02);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X24F04);
 	MakeRptCmt	(0X24F06,	"The equipment is cursed.{W1}");
 	MakeWord	(0X24F06);
@@ -23230,7 +23010,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X24FE6);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X24FE8);
 	MakeRptCmt	(0X24FEA,	"The equipment is cursed.{W1}");
 	MakeWord	(0X24FEA);
@@ -23309,7 +23089,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X25116);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X25118);
 	MakeWord	(0X2511A);
 	MakeCode	(0X2511C);
@@ -23329,7 +23109,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X2514C);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X2514E);
 	MakeWord	(0X25150);
 	MakeCode	(0X25152);
@@ -24046,92 +23826,26 @@ static Bytes_4(void) {
 	MakeCode	(x=0X25DCA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeWord	(0X25DF6);
+	MakeByte	(0X25DF6);
+	MakeArray	(0X25DF6,	0X3B0);
 	MakeName	(0X25DF6,	"specialSprites_Taros");
-	MakeWord	(0X25DF8);
-	MakeWord	(0X25DFA);
-	MakeWord	(0X25DFC);
-	MakeWord	(0X25DFE);
-	MakeWord	(0X25E00);
-	MakeWord	(0X25E02);
-	MakeWord	(0X25E04);
-	MakeWord	(0X25E06);
-	MakeWord	(0X25E08);
-	MakeWord	(0X25E0A);
-	MakeWord	(0X25E0C);
-	MakeWord	(0X25E0E);
-	MakeWord	(0X25E10);
-	MakeWord	(0X25E12);
-	MakeWord	(0X25E14);
-	MakeByte	(0X25E47);
-	MakeWord	(0X261A6);
+	MakeByte	(0X261A6);
+	MakeArray	(0X261A6,	0X3AC);
 	MakeName	(0X261A6,	"specialSprites_Kraken");
-	MakeWord	(0X261A8);
-	MakeWord	(0X261AA);
-	MakeWord	(0X261AC);
-	MakeWord	(0X261AE);
-	MakeWord	(0X261B0);
-	MakeWord	(0X261B2);
-	MakeWord	(0X261B4);
-	MakeWord	(0X261B6);
-	MakeWord	(0X261B8);
-	MakeWord	(0X261BA);
-	MakeWord	(0X261BC);
-	MakeWord	(0X261BE);
-	MakeWord	(0X261C0);
-	MakeWord	(0X261C2);
-	MakeWord	(0X261C4);
-	MakeWord	(0X26552);
+	MakeByte	(0X26552);
+	MakeArray	(0X26552,	0X3A0);
 	MakeName	(0X26552,	"specialSprites_NazcaShip");
-	MakeWord	(0X26554);
-	MakeWord	(0X26556);
-	MakeWord	(0X26558);
-	MakeWord	(0X2655A);
-	MakeWord	(0X2655C);
-	MakeWord	(0X2655E);
-	MakeWord	(0X26560);
-	MakeWord	(0X26562);
-	MakeWord	(0X26564);
-	MakeWord	(0X26566);
-	MakeWord	(0X26568);
-	MakeWord	(0X2656A);
-	MakeWord	(0X2656C);
-	MakeWord	(0X2656E);
-	MakeWord	(0X26570);
-	MakeWord	(0X268F2);
+	MakeByte	(0X268F2);
+	MakeArray	(0X268F2,	0X4C6);
 	MakeName	(0X268F2,	"specialSprites_EvilSpirit");
-	MakeWord	(0X268F4);
-	MakeWord	(0X268F6);
-	MakeWord	(0X268F8);
-	MakeWord	(0X268FA);
-	MakeWord	(0X268FC);
-	MakeWord	(0X268FE);
-	MakeWord	(0X26900);
-	MakeWord	(0X26902);
-	MakeWord	(0X26904);
-	MakeWord	(0X26906);
-	MakeWord	(0X26908);
-	MakeWord	(0X2690A);
-	MakeWord	(0X2690C);
-	MakeWord	(0X2690E);
-	MakeWord	(0X26910);
-	MakeWord	(0X27264);
+	MakeByte	(0X26DB8);
+	MakeArray	(0X26DB8,	0X4AC);
+	MakeName	(0X26DB8,	"specialSprites_EvilSpiritAlt");
+	MakeByte	(0X27264);
+	MakeArray	(0X27264,	0X5E8);
 	MakeName	(0X27264,	"specialSprites_Zeon");
-	MakeWord	(0X27266);
-	MakeWord	(0X27268);
-	MakeWord	(0X2726A);
-	MakeWord	(0X2726C);
-	MakeWord	(0X2726E);
-	MakeWord	(0X27270);
-	MakeWord	(0X27272);
-	MakeWord	(0X27274);
-	MakeWord	(0X27276);
-	MakeWord	(0X27278);
-	MakeWord	(0X2727A);
-	MakeWord	(0X2727C);
-	MakeWord	(0X2727E);
-	MakeWord	(0X27280);
-	MakeWord	(0X27282);
+	MakeByte	(0X2784C);
+	MakeByte	(0X27850);
 	MakeByte	(0X2790A);
 	MakeCode	(0X2791C);
 	MakeName	(0X2791C,	"SuspendGame");
@@ -24545,9 +24259,7 @@ static Bytes_4(void) {
 	MakeName	(0X28186,	"checkStartButtonAtSegaLogo");
 	MakeCode	(x=0X281A6);
 	OpHex		(x,	0);
-	MakeDword	(x=0X281AA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeDword	(0X281AA);
 	MakeWord	(0X281AE);
 	MakeName	(0X281AE,	"segaLogoColors");
 	MakeWord	(0X281B0);
@@ -24679,7 +24391,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X28FAA);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X28FAC);
 	MakeCode	(0X28FAE);
 	MakeCode	(x=0X28FB0);
@@ -24699,7 +24411,7 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X28FDE);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X28FE0);
 	MakeCode	(0X28FE2);
 	MakeCode	(x=0X28FE4);
@@ -25024,7 +24736,6 @@ static Bytes_4(void) {
 	MakeByte	(0X4201E);
 	MakeArray	(0X4201E,	0X5C9);
 	MakeName	(0X4201E,	"GameStaff");
-	MakeByte	(0X425E7);
 	MakeArray	(0X425E7,	0X1A19);
 	MakeCode	(0X44000);
 	MakeCode	(0X44004);
@@ -25180,6 +24891,8 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X44282);
+	MakeByte	(0X4428A);
+	MakeArray	(0X4428A,	0XE);
 	MakeName	(0X4428A,	"OverworldMaps");
 	MakeComm	(0X44298,	"new granseal headquarters");
 	MakeCode	(x=0X44298);
@@ -25476,36 +25189,8 @@ static Bytes_4(void) {
 	MakeCode	(0X44A4E);
 	MakeRptCmt	(0X44A5E,	"sprite IDs for each force character in battle");
 	MakeByte	(0X44A5E);
+	MakeArray	(0X44A5E,	0X1E);
 	MakeName	(0X44A5E,	"t_AllySprites");
-	MakeByte	(0X44A5F);
-	MakeByte	(0X44A60);
-	MakeByte	(0X44A61);
-	MakeByte	(0X44A62);
-	MakeByte	(0X44A63);
-	MakeByte	(0X44A64);
-	MakeByte	(0X44A65);
-	MakeByte	(0X44A66);
-	MakeByte	(0X44A67);
-	MakeByte	(0X44A68);
-	MakeByte	(0X44A69);
-	MakeByte	(0X44A6A);
-	MakeByte	(0X44A6B);
-	MakeByte	(0X44A6C);
-	MakeByte	(0X44A6D);
-	MakeByte	(0X44A6E);
-	MakeByte	(0X44A6F);
-	MakeByte	(0X44A70);
-	MakeByte	(0X44A71);
-	MakeByte	(0X44A72);
-	MakeByte	(0X44A73);
-	MakeByte	(0X44A74);
-	MakeByte	(0X44A75);
-	MakeByte	(0X44A76);
-	MakeByte	(0X44A77);
-	MakeByte	(0X44A78);
-	MakeByte	(0X44A79);
-	MakeByte	(0X44A7A);
-	MakeByte	(0X44A7B);
 	MakeCode	(0X44A7C);
 	MakeName	(0X44A7C,	"GetCombatantSpriteIdx");
 	MakeCode	(0X44A8E);
@@ -25513,18 +25198,10 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X44AA4);
+	MakeArray	(0X44AA4,	0XA6);
 	MakeName	(0X44AA4,	"t_MonsterSprites");
 	MakeCode	(0X44B4A);
 	MakeName	(0X44B4A,	"setEntityActscript");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X44B5C);
 	MakeName	(0X44B5C,	"setControlledEntityActScript");
 	MakeCode	(x=0X44B64);
@@ -25814,6 +25491,15 @@ static Bytes_5(void) {
 	MakeByte	(0X44EA9);
 	MakeByte	(0X44EAA);
 	MakeByte	(0X44EAB);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X44EAC);
 	MakeByte	(0X44EAD);
 	MakeByte	(0X44EAE);
@@ -26731,9 +26417,7 @@ static Bytes_5(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X45284,	"mapscript");
-	MakeDword	(x=0X45284);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45284);
 	MakeDword	(x=0X45288);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -26744,24 +26428,14 @@ static Bytes_5(void) {
 	MakeDword	(x=0X4529E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X452A4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X452B2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X452A4);
+	MakeByte	(0X452B2);
 	MakeName	(0X452B2,	"eas_452B2");
-	MakeDword	(x=0X452BA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X452BA);
 	MakeName	(0X452BA,	"eas_452BA");
-	MakeDword	(x=0X45308);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45308);
 	MakeRptCmt	(0X45316,	"following actscript maybe");
-	MakeDword	(x=0X45316);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45316);
 	MakeCode	(0X45322);
 	MakeCode	(x=0X45328);
 	OpOff		(x,	0,	0X0);
@@ -26772,24 +26446,16 @@ static Bytes_5(void) {
 	MakeCode	(x=0X45340);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X45348);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45348);
 	MakeDword	(x=0X4534C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X4535A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X45360);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X45368);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4536C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45360);
+	MakeByte	(0X45368);
+	MakeByte	(0X4536C);
 	MakeName	(0X4536C,	"eas_4536C");
 	MakeCode	(0X453C6);
 	MakeCode	(x=0X453D4);
@@ -26804,24 +26470,16 @@ static Bytes_5(void) {
 	MakeCode	(x=0X453EA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X453F2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X453F2);
 	MakeDword	(x=0X453F6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X45404);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4540C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X45426);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X45434);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4540C);
+	MakeByte	(0X45426);
+	MakeByte	(0X45434);
 	MakeCode	(0X45440);
 	MakeCode	(x=0X4544A);
 	OpOff		(x,	1,	0X0);
@@ -26835,21 +26493,15 @@ static Bytes_5(void) {
 	MakeCode	(x=0X45468);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X45470);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45470);
 	MakeDword	(x=0X45474);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X45482);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X45488);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4548C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45488);
+	MakeByte	(0X4548C);
 	MakeWord	(0X4549C);
 	MakeWord	(0X4549E);
 	MakeCode	(0X454AC);
@@ -26895,16 +26547,12 @@ static Bytes_5(void) {
 	MakeCode	(x=0X45538);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X45546);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45546);
 	MakeDword	(x=0X4554A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X45550);
-	MakeDword	(x=0X45556);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45556);
 	MakeCode	(0X455AC);
 	MakeCode	(x=0X455B2);
 	OpOff		(x,	0,	0X0);
@@ -26915,15 +26563,11 @@ static Bytes_5(void) {
 	MakeCode	(x=0X455CA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X455D2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X455D2);
 	MakeDword	(x=0X455D6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X455DC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X455DC);
 	MakeCode	(0X45634);
 	MakeCode	(0X45638);
 	MakeName	(0X45638,	"GetEntityPortraitAndSpeechSound");
@@ -26937,136 +26581,16 @@ static Bytes_5(void) {
 	MakeCode	(0X45662);
 	MakeRptCmt	(0X4566C,	"default portrait and blip");
 	MakeRptCmt	(0X4567A,	"bowie");
-	MakeDword	(x=0X4567A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4567A);
+	MakeArray	(0X4567A,	0X1DE);
 	MakeName	(0X4567A,	"tbl_SpriteToPortraitnBlip");
-	MakeRptCmt	(0X4567E,	"bowie (promotion)");
-	MakeDword	(0X4567E);
-	MakeRptCmt	(0X45682,	"sarah");
-	MakeDword	(0X45682);
-	MakeRptCmt	(0X45686,	"sarah (promotion)");
-	MakeDword	(0X45686);
-	MakeRptCmt	(0X4568A,	"sarah (special promotion)");
-	MakeDword	(0X4568A);
-	MakeRptCmt	(0X4568E,	".");
-	MakeDword	(0X4568E);
-	MakeRptCmt	(0X45692,	".");
-	MakeDword	(0X45692);
-	MakeRptCmt	(0X45696,	".");
-	MakeDword	(0X45696);
-	MakeDword	(0X4569A);
-	MakeDword	(0X4569E);
-	MakeDword	(0X456A2);
-	MakeDword	(0X456A6);
-	MakeDword	(0X456AA);
-	MakeDword	(0X456AE);
-	MakeDword	(0X456B2);
-	MakeDword	(0X456B6);
-	MakeDword	(0X456BA);
-	MakeDword	(0X456BE);
-	MakeDword	(0X456C2);
-	MakeDword	(0X456C6);
-	MakeDword	(0X456CA);
-	MakeDword	(0X456CE);
-	MakeDword	(0X456D2);
-	MakeDword	(0X456D6);
-	MakeDword	(0X456DA);
-	MakeDword	(0X456DE);
-	MakeDword	(0X456E2);
-	MakeDword	(0X456E6);
-	MakeDword	(0X456EA);
-	MakeDword	(0X456EE);
-	MakeDword	(0X456F2);
-	MakeDword	(0X456F6);
-	MakeDword	(0X456FA);
-	MakeDword	(0X456FE);
-	MakeDword	(0X45702);
-	MakeDword	(0X45706);
-	MakeDword	(0X4570A);
-	MakeDword	(0X4570E);
-	MakeDword	(0X45712);
-	MakeDword	(0X45716);
-	MakeDword	(0X4571A);
-	MakeDword	(0X4571E);
-	MakeDword	(0X45722);
-	MakeDword	(0X45726);
-	MakeDword	(0X4572A);
-	MakeDword	(0X4572E);
-	MakeDword	(0X45732);
-	MakeDword	(0X45736);
-	MakeDword	(0X4573A);
-	MakeDword	(0X4573E);
-	MakeDword	(0X45742);
-	MakeDword	(0X45746);
-	MakeDword	(0X4574A);
-	MakeDword	(0X4574E);
-	MakeDword	(0X45752);
-	MakeDword	(0X45756);
-	MakeDword	(0X4575A);
-	MakeDword	(0X4575E);
-	MakeDword	(0X45762);
-	MakeDword	(0X45766);
-	MakeDword	(0X4576A);
-	MakeDword	(0X4576E);
-	MakeDword	(0X45772);
-	MakeDword	(0X45776);
-	MakeDword	(0X4577A);
-	MakeDword	(0X4577E);
-	MakeDword	(0X45782);
-	MakeDword	(0X45786);
-	MakeDword	(0X4578A);
-	MakeDword	(0X4578E);
-	MakeDword	(0X45792);
-	MakeDword	(0X45796);
-	MakeDword	(0X4579A);
-	MakeDword	(0X4579E);
-	MakeDword	(0X457A2);
-	MakeDword	(0X457A6);
-	MakeDword	(0X457AA);
-	MakeDword	(0X457AE);
-	MakeDword	(0X457B2);
-	MakeDword	(0X457B6);
-	MakeDword	(0X457BA);
-	MakeDword	(0X457BE);
-	MakeDword	(0X457C2);
-	MakeDword	(0X457C6);
-	MakeDword	(0X457CA);
-	MakeDword	(0X457CE);
-	MakeDword	(0X457D2);
-	MakeDword	(0X457D6);
-	MakeDword	(0X457DA);
-	MakeDword	(0X457DE);
-	MakeDword	(0X457E2);
-	MakeDword	(0X457E6);
-	MakeDword	(0X457EA);
-	MakeDword	(0X457EE);
-	MakeDword	(0X457F2);
-	MakeDword	(0X457F6);
-	MakeDword	(0X457FA);
-	MakeDword	(0X457FE);
-	MakeDword	(0X45802);
-	MakeDword	(0X45806);
-	MakeDword	(0X4580A);
-	MakeDword	(0X4580E);
-	MakeDword	(0X45812);
-	MakeDword	(0X45816);
-	MakeDword	(0X4581A);
-	MakeDword	(0X4581E);
-	MakeDword	(0X45822);
-	MakeDword	(0X45826);
-	MakeDword	(0X4582A);
-	MakeDword	(0X4582E);
-	MakeDword	(0X45832);
-	MakeDword	(0X45836);
-	MakeDword	(0X4583A);
-	MakeDword	(0X4583E);
-	MakeDword	(0X45842);
-	MakeDword	(0X45846);
-	MakeDword	(0X4584A);
-	MakeDword	(0X4584E);
-	MakeDword	(0X45852);
-	MakeWord	(0X45856);
+	MakeRptCmt	(0X4567E,	"bowie");
+	MakeRptCmt	(0X45682,	"bowie");
+	MakeRptCmt	(0X45686,	"bowie");
+	MakeRptCmt	(0X4568A,	"bowie");
+	MakeRptCmt	(0X4568E,	"bowie");
+	MakeRptCmt	(0X45692,	"bowie");
+	MakeRptCmt	(0X45696,	"bowie");
 	MakeCode	(0X45858);
 	MakeCode	(x=0X4585C);
 	OpSign		(x,	1);
@@ -27089,9 +26613,7 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X45C38);
-	MakeDword	(x=0X45C6A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X45C6A);
 	MakeCode	(0X45C82);
 	MakeCode	(0X45C94);
 	MakeCode	(0X45CA6);
@@ -28996,7 +28518,7 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X4681A);
 	OpOff		(x,	1,	0X4681A);
 	OpOff		(x,	129,	0X4681A);
-	MakeName	(0X4681A,	"rjt_4681A");
+	MakeName	(0X4681A,	"rjt_EntityMoveCommands");
 	MakeWord	(x=0X4681C);
 	OpOff		(x,	0,	0X4681A);
 	OpOff		(x,	128,	0X4681A);
@@ -30950,6 +30472,7 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X47C8E);
+	MakeArray	(0X47C8E,	0X2E);
 	MakeName	(0X47C8E,	"EnemyLeaderPresence");
 	MakeCode	(0X47CBC);
 	MakeCode	(x=0X47CC2);
@@ -30989,15 +30512,6 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X47CF4);
 	OpOff		(x,	1,	0X47CF4);
 	OpOff		(x,	129,	0X47CF4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X47CFE);
 	OpOff		(x,	0,	0X47CF4);
 	OpOff		(x,	128,	0X47CF4);
@@ -31444,6 +30958,15 @@ static Bytes_6(void) {
 	MakeByte	(0X47FEB);
 	MakeByte	(0X47FEC);
 	MakeByte	(0X47FED);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X47FEE);
 	MakeByte	(0X47FEF);
 	MakeByte	(0X47FF0);
@@ -36506,9 +36029,7 @@ static Bytes_6(void) {
 	MakeByte	(0X494B9);
 	MakeByte	(0X494BA);
 	MakeByte	(0X494BB);
-	MakeDword	(x=0X494BC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X494BC);
 	MakeName	(0X494BC,	"bbcs_01");
 	MakeDword	(x=0X494CA);
 	OpOff		(x,	0,	0X0);
@@ -36525,9 +36046,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X495A2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49694);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49694);
 	MakeDword	(x=0X4969E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36552,9 +36071,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X496D6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X496DC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X496DC);
 	MakeDword	(x=0X496F4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36573,23 +36090,23 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49808);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4980E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4980E);
 	MakeName	(0X4980E,	"bbcs_03");
 	MakeCode	(x=0X49816);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X4981E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4981E);
 	MakeName	(0X4981E,	"bbcs_04");
 	MakeDword	(x=0X4982C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4989E);
+	MakeDword	(x=0X49834);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X49844);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4989E);
 	MakeDword	(x=0X498A8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36617,9 +36134,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X498E8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X498EE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X498EE);
 	MakeDword	(x=0X498FC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36650,6 +36165,9 @@ static Bytes_6(void) {
 	MakeDword	(x=0X499B4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X499DC);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X499F6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36659,9 +36177,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49A1E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49A6A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49A6A);
 	MakeDword	(x=0X49A74);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36686,9 +36202,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49AAC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49AB2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49AB2);
 	MakeDword	(x=0X49AC6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36704,9 +36218,10 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49B18);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49B48);
+	MakeDword	(x=0X49B2E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49B48);
 	MakeDword	(x=0X49B50);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36719,9 +36234,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49B94);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49BCA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49BCA);
 	MakeName	(0X49BCA,	"bbcs_06");
 	MakeDword	(x=0X49BD8);
 	OpOff		(x,	0,	0X0);
@@ -36753,9 +36266,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49CA4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49CBA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49CBA);
 	MakeDword	(x=0X49CC4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36768,9 +36279,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49CDC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49CE2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49CE2);
 	MakeName	(0X49CE2,	"bbcs_07");
 	MakeDword	(x=0X49CF6);
 	OpOff		(x,	0,	0X0);
@@ -36841,9 +36350,7 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49F30);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49F36);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X49F36);
 	MakeDword	(x=0X49F40);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36868,7 +36375,8 @@ static Bytes_6(void) {
 	MakeDword	(x=0X49F78);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X49F7E);
+	MakeByte	(0X49F7E);
+	MakeDword	(x=0X49F8C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X49F94);
@@ -37006,15 +36514,6 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4A56A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X4A646);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37060,6 +36559,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4A8D4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4A912);
 	MakeDword	(x=0X4A91C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37081,9 +36581,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4A94C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4A952);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4A952);
 	MakeName	(0X4A952,	"bbcs_08");
 	MakeDword	(x=0X4A968);
 	OpOff		(x,	0,	0X0);
@@ -37139,9 +36637,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AA6E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AA74);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4AA74);
 	MakeDword	(x=0X4AA82);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37175,9 +36671,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AB9A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ABBE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ABBE);
 	MakeDword	(x=0X4ABC8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37199,9 +36693,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4ABF8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ABFE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ABFE);
 	MakeName	(0X4ABFE,	"bbcs_11");
 	MakeDword	(x=0X4AC10);
 	OpOff		(x,	0,	0X0);
@@ -37215,9 +36707,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AC68);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ACA0);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ACA0);
 	MakeDword	(x=0X4ACAA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37230,15 +36720,9 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4ACC2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ACC8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ACEC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ACF8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ACC8);
+	MakeByte	(0X4ACEC);
+	MakeByte	(0X4ACF8);
 	MakeDword	(x=0X4AD0A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37257,15 +36741,11 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AD5E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AD96);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4AD96);
 	MakeDword	(x=0X4ADA0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ADA6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ADA6);
 	MakeName	(0X4ADA6,	"bbcs_15");
 	MakeDword	(x=0X4ADB4);
 	OpOff		(x,	0,	0X0);
@@ -37297,9 +36777,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AE28);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AE42);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4AE42);
 	MakeDword	(x=0X4AE4C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37315,9 +36793,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AE6C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AE72);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4AE72);
 	MakeDword	(x=0X4AE80);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37339,12 +36815,8 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4AF2E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AFB6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4AFBE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4AFB6);
+	MakeByte	(0X4AFBE);
 	MakeName	(0X4AFBE,	"bbcs_16");
 	MakeDword	(x=0X4AFCC);
 	OpOff		(x,	0,	0X0);
@@ -37382,9 +36854,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4B0E0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B15C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B15C);
 	MakeDword	(x=0X4B166);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37418,19 +36888,18 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4B1B6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B1BC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B1BC);
 	MakeCode	(x=0X4B1CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X4B1D0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X4B1D8);
+	MakeByte	(0X4B1D8);
+	MakeName	(0X4B1D8,	"bbcs_18");
+	MakeDword	(x=0X4B1E6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X4B1D8,	"bbcs_18");
 	MakeDword	(x=0X4B1EE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37455,15 +36924,14 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4B272);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B2DA);
 	MakeDword	(x=0X4B2E4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X4B2EC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B2F2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B2F2);
 	MakeDword	(x=0X4B300);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37512,6 +36980,15 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4B564);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X4B574);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37533,26 +37010,122 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4B686);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B6BE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B6CE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B790);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B6BE);
+	MakeByte	(0X4B6CE);
+	MakeByte	(0X4B790);
 	MakeName	(0X4B790,	"bbcs_21");
-	MakeDword	(x=0X4B88C);
+	MakeDword	(x=0X4B79E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B958);
+	MakeDword	(x=0X4B7A6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B7AE);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B7BC);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B836);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B83E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B846);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B84C);
+	MakeDword	(x=0X4B856);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B85E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B866);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B86E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B876);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B87E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B886);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B88C);
+	MakeDword	(x=0X4B89A);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B8A2);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B8AA);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B8B8);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B8D4);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B8E0);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B948);
+	MakeDword	(x=0X4B952);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4B958);
 	MakeName	(0X4B958,	"bbcs_26");
-	MakeDword	(x=0X4BCAA);
+	MakeDword	(x=0X4B966);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B96E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B976);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B984);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B9DE);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B9F0);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA10);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA2A);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA44);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA52);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA5E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA6A);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BA88);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4BAC8);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4BC5A);
+	MakeByte	(0X4BCAA);
 	MakeDword	(x=0X4BCC0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -37586,106 +37159,50 @@ static Bytes_7(void) {
 	MakeDword	(x=0X4BE64);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4BE6A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4BE8C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4BE6A);
+	MakeByte	(0X4BE8C);
 	MakeName	(0X4BE8C,	"bbcs_28");
-	MakeDword	(x=0X4C07C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4C3DC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4C07C);
+	MakeByte	(0X4C3DC);
 	MakeName	(0X4C3DC,	"bbcs_29");
-	MakeDword	(x=0X4C5E6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4C5E6);
 	MakeName	(0X4C5E6,	"bbcs_30");
-	MakeDword	(x=0X4C6A8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4C994);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4C6A8);
+	MakeByte	(0X4C994);
 	MakeName	(0X4C994,	"bbcs_31");
-	MakeDword	(x=0X4CBE2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4CBE2);
 	MakeName	(0X4CBE2,	"bbcs_32");
-	MakeDword	(x=0X4CD10);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4CD10);
 	MakeCode	(0X4CD56);
-	MakeDword	(x=0X4CDB4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4CF0C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4CDB4);
+	MakeByte	(0X4CF0C);
 	MakeName	(0X4CF0C,	"bbcs_33");
-	MakeDword	(x=0X4D09A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4D342);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4D09A);
+	MakeByte	(0X4D342);
 	MakeName	(0X4D342,	"bbcs_34");
-	MakeDword	(x=0X4D4B6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4D6CE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4D4B6);
+	MakeByte	(0X4D6CE);
 	MakeName	(0X4D6CE,	"bbcs_35");
-	MakeDword	(x=0X4D88A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4D88A);
 	MakeName	(0X4D88A,	"bbcs_36");
-	MakeDword	(x=0X4D9A4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4DA66);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4D9A4);
+	MakeByte	(0X4DA66);
 	MakeName	(0X4DA66,	"bbcs_37");
-	MakeDword	(x=0X4DB94);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4DDA4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4DB94);
+	MakeByte	(0X4DDA4);
 	MakeName	(0X4DDA4,	"bbcs_38");
-	MakeDword	(x=0X4DE8C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4E3D2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4DE8C);
+	MakeByte	(0X4E3D2);
 	MakeName	(0X4E3D2,	"bbcs_39");
-	MakeDword	(x=0X4E4DC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4E4DC);
 	MakeName	(0X4E4DC,	"bbcs_40");
-	MakeDword	(x=0X4EA94);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4ED0E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4EA94);
+	MakeByte	(0X4ED0E);
 	MakeName	(0X4ED0E,	"bbcs_41");
-	MakeDword	(x=0X4ED8E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4ED8E);
 	MakeName	(0X4ED8E,	"bbcs_42");
-	MakeDword	(x=0X4EF04);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4F47A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4EF04);
+	MakeByte	(0X4F47A);
 	MakeCode	(0X4F48A);
 	MakeCode	(x=0X4F498);
 	OpOff		(x,	0,	0X0);
@@ -37693,10 +37210,12 @@ static Bytes_7(void) {
 	MakeCode	(x=0X4F49C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeWord	(0X4F4CA);
 	MakeCode	(0X4F4CC);
+	MakeWord	(0X4F4CE);
 	MakeCode	(0X4F4D0);
 	MakeWord	(x=0X4F4F6);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X4F4F8);
 	MakeWord	(0X4F4FA);
 	MakeCode	(0X4F4FC);
@@ -37704,7 +37223,7 @@ static Bytes_7(void) {
 	MakeCode	(0X4F50A);
 	MakeCode	(0X4F510);
 	MakeWord	(x=0X4F526);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X4F528);
 	MakeWord	(0X4F52A);
 	MakeCode	(0X4F52C);
@@ -37727,14 +37246,20 @@ static Bytes_7(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X4F5B6);
+	MakeWord	(0X4F5EA);
 	MakeCode	(0X4F5EC);
 	MakeCode	(0X4F5F0);
+	MakeWord	(0X4F5FA);
 	MakeCode	(0X4F5FC);
+	MakeWord	(0X4F604);
 	MakeCode	(0X4F606);
 	MakeCode	(0X4F610);
+	MakeWord	(0X4F652);
 	MakeCode	(0X4F654);
+	MakeWord	(0X4F656);
 	MakeCode	(0X4F658);
 	MakeCode	(0X4F65C);
+	MakeWord	(0X4F696);
 	MakeCode	(0X4F698);
 	MakeCode	(0X4F69C);
 	MakeCode	(0X4F6CE);
@@ -38448,9 +37973,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X4FF3A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4FF5A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X4FF5A);
 	MakeDword	(x=0X50312);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -38488,12 +38011,8 @@ static Bytes_7(void) {
 	MakeWord	(0X50368);
 	MakeCode	(0X5036A);
 	MakeCode	(0X5036C);
-	MakeDword	(x=0X503A6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X50806);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X503A6);
+	MakeByte	(0X50806);
 	MakeDword	(x=0X5096A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -38999,9 +38518,7 @@ static Bytes_7(void) {
 	MakeByte	(0X513D2);
 	MakeByte	(0X513D3);
 	MakeCode	(0X513D4);
-	MakeDword	(x=0X513E2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X513E2);
 	MakeDword	(x=0X516CC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39031,12 +38548,8 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5173A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X51742);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X51750);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X51742);
+	MakeByte	(0X51750);
 	MakeDword	(x=0X51912);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39164,9 +38677,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X52478);
 	MakeCode	(0X5247A);
-	MakeDword	(x=0X5249E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5249E);
 	MakeDword	(x=0X52A80);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39434,9 +38945,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X530FC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X53104);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X53104);
 	MakeCode	(0X5310C);
 	MakeWord	(0X5310E);
 	MakeCode	(0X53110);
@@ -39546,9 +39055,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5398E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X53996);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X53996);
 	MakeDword	(x=0X53E18);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39632,9 +39139,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X53F22);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X53F2A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X53F2A);
 	MakeDword	(x=0X53F48);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39677,9 +39182,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X53FD0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X53FD8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X53FD8);
 	MakeDword	(x=0X53FFE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39727,9 +39230,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X540B8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeDword	(x=0X540C0);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X540C0);
 	MakeDword	(x=0X54348);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39881,12 +39382,8 @@ static Bytes_7(void) {
 	MakeCode	(x=0X54E68);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X54E70);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X54E78);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X54E70);
+	MakeByte	(0X54E78);
 	MakeDword	(x=0X5537E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -39954,9 +39451,7 @@ static Bytes_7(void) {
 	MakeCode	(0X5582C);
 	MakeWord	(0X5582E);
 	MakeCode	(0X55830);
-	MakeDword	(x=0X55832);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X55832);
 	MakeDword	(x=0X55F8E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40090,9 +39585,7 @@ static Bytes_7(void) {
 	MakeCode	(0X57092);
 	MakeWord	(0X570A0);
 	MakeCode	(0X570A2);
-	MakeDword	(x=0X570B0);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X570B0);
 	MakeDword	(x=0X579CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40155,9 +39648,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X57D12);
 	MakeCode	(0X57D14);
-	MakeDword	(x=0X57D22);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X57D22);
 	MakeDword	(x=0X57E36);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40288,9 +39779,7 @@ static Bytes_7(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X58F9A);
-	MakeDword	(x=0X58FA4);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X58FA4);
 	MakeDword	(x=0X592E0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40344,12 +39833,8 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X59652);
 	MakeCode	(0X59654);
-	MakeDword	(x=0X59656);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5996E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X59656);
+	MakeByte	(0X5996E);
 	MakeDword	(x=0X59AC0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40454,9 +39939,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X59C96);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X59C9E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X59C9E);
 	MakeName	(0X59C9E,	"script_StartSpecialBattle");
 	MakeDword	(x=0X59CAA);
 	OpOff		(x,	0,	0X0);
@@ -40488,7 +39971,7 @@ static Bytes_7(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(x=0X59CE6);
-	OpEnumEx		(x,	0,	GetEnum("Music"),1);
+	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeRptCmt	(0X59CE8,	"fade out music and wait for P2 input ?!");
 	MakeCode	(0X59CE8);
 	MakeCode	(0X59CF0);
@@ -40534,9 +40017,7 @@ static Bytes_7(void) {
 	OpOff		(x,	129,	0X0);
 	MakeWord	(0X59DF4);
 	MakeCode	(0X59DF6);
-	MakeDword	(x=0X59E04);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X59E04);
 	MakeDword	(x=0X59F42);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40658,9 +40139,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5A304);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5A31E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5A31E);
 	MakeDword	(x=0X5A646);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40763,9 +40242,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5ABC2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5ABCC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5ABCC);
 	MakeCode	(0X5ABD4);
 	MakeCode	(0X5ABD6);
 	MakeWord	(0X5ABD8);
@@ -40773,9 +40250,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5ABDC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5ABE6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5ABE6);
 	MakeCode	(0X5ABEE);
 	MakeWord	(0X5ABF0);
 	MakeCode	(0X5ABF2);
@@ -40784,18 +40259,14 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5ABFA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5AC04);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5AC04);
 	MakeCode	(0X5AC0C);
 	MakeWord	(0X5AC0E);
 	MakeCode	(0X5AC10);
 	MakeCode	(x=0X5AC12);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5AC1C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5AC1C);
 	MakeCode	(0X5AC24);
 	MakeWord	(0X5AC26);
 	MakeCode	(0X5AC28);
@@ -40811,14 +40282,10 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5AC42);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5AC4C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5AC4C);
 	MakeCode	(0X5AC54);
 	MakeCode	(0X5AC56);
-	MakeDword	(x=0X5B016);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5B016);
 	MakeDword	(x=0X5B5B6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40918,9 +40385,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5C3D0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5C3D8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5C3D8);
 	MakeDword	(x=0X5C454);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -40967,9 +40432,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X5C4EA);
 	MakeCode	(0X5C4EC);
-	MakeDword	(x=0X5C622);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5C622);
 	MakeDword	(x=0X5C638);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41086,9 +40549,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5CA56);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5CA5E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5CA5E);
 	MakeDword	(x=0X5CDFE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41150,9 +40611,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5D3A2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5D3AA);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5D3AA);
 	MakeDword	(x=0X5D40E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41202,9 +40661,7 @@ static Bytes_7(void) {
 	MakeCode	(0X5D634);
 	MakeWord	(0X5D638);
 	MakeCode	(0X5D63A);
-	MakeDword	(x=0X5D63C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5D63C);
 	MakeDword	(x=0X5D756);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41285,9 +40742,7 @@ static Bytes_7(void) {
 	MakeCode	(0X5DD88);
 	MakeWord	(0X5DD8A);
 	MakeCode	(0X5DD8C);
-	MakeDword	(x=0X5DD9C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5DD9C);
 	MakeDword	(x=0X5DF84);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41358,9 +40813,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5E274);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5E346);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5E346);
 	MakeDword	(x=0X5E37C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41492,21 +40945,11 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5EB1E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5EB26);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5EB44);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5ED06);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5EDB8);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5EF60);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5EB26);
+	MakeByte	(0X5EB44);
+	MakeByte	(0X5ED06);
+	MakeByte	(0X5EDB8);
+	MakeByte	(0X5EF60);
 	MakeDword	(x=0X5F34C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41610,9 +41053,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X5FA94);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X5FA9C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5FA9C);
 	MakeCode	(0X5FAA4);
 	MakeWord	(0X5FAAC);
 	MakeCode	(0X5FAAE);
@@ -41621,9 +41062,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X5FAB8);
 	MakeCode	(0X5FABA);
-	MakeDword	(x=0X5FABC);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X5FABC);
 	MakeDword	(x=0X5FDE4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41667,9 +41106,7 @@ static Bytes_7(void) {
 	MakeCode	(x=0X600AA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X600B2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X600B2);
 	MakeDword	(x=0X603AE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -41706,9 +41143,7 @@ static Bytes_7(void) {
 	MakeDword	(x=0X603DA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X6060E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X6060E);
 	MakeCode	(0X6061E);
 	MakeWord	(0X60620);
 	MakeCode	(0X60622);
@@ -42699,15 +42134,6 @@ static Bytes_7(void) {
 	MakeByte	(0X60A72);
 	MakeByte	(0X60A73);
 	MakeByte	(0X60A74);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60A75);
 	MakeByte	(0X60A76);
 	MakeByte	(0X60A77);
@@ -43292,6 +42718,15 @@ static Bytes_8(void) {
 	MakeByte	(0X60CB9);
 	MakeByte	(0X60CBA);
 	MakeByte	(0X60CBB);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60CBC);
 	MakeByte	(0X60CBD);
 	MakeByte	(0X60CBE);
@@ -44267,12 +43702,8 @@ static Bytes_8(void) {
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X612A6);
 	MakeCode	(0X612A8);
-	MakeDword	(x=0X612BE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X6143C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X612BE);
+	MakeByte	(0X6143C);
 	MakeName	(0X6143C,	"eas_6143C");
 	MakeDword	(x=0X61488);
 	OpOff		(x,	0,	0X0);
@@ -44317,9 +43748,7 @@ static Bytes_8(void) {
 	MakeCode	(x=0X615DE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X615E6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X615E6);
 	MakeDword	(x=0X626A6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44404,12 +43833,8 @@ static Bytes_8(void) {
 	MakeWord	(x=0X62CFE);
 	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X62D00);
-	MakeDword	(x=0X62D06);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X62D0E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X62D06);
+	MakeByte	(0X62D0E);
 	MakeDword	(x=0X631EA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44434,9 +43859,7 @@ static Bytes_8(void) {
 	MakeCode	(x=0X633A8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X633B2);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeByte	(0X633B2);
 	MakeCode	(0X633BA);
 	MakeWord	(x=0X633BC);
 	OpEnumEx		(x,	0,	GetEnum("Music"),0);
@@ -47707,15 +47130,6 @@ static Bytes_8(void) {
 	MakeDword	(x=0XAD440);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XAD444);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -48156,6 +47570,15 @@ static Bytes_9(void) {
 	MakeDword	(x=0XB14A6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XB14AA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -52657,15 +52080,6 @@ static Bytes_9(void) {
 	MakeDword	(x=0XC8AC4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XC8AC8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -53038,6 +52452,15 @@ static Bytes_10(void) {
 	MakeByte	(0XD0CB2);
 	MakeArray	(0XD0CB2,	0X10E);
 	MakeName	(0XD0CB2,	"EntitySprite093");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XD0DC0);
 	MakeArray	(0XD0DC0,	0X172);
 	MakeName	(0XD0DC0,	"EntitySprite094");
@@ -56520,15 +55943,6 @@ static Bytes_10(void) {
 	MakeDword	(x=0X1AB92E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X1AB932);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -56877,6 +56291,15 @@ static Bytes_11(void) {
 	MakeByte	(0X1ABD76);
 	MakeArray	(0X1ABD76,	0X8);
 	MakeName	(0X1ABD76,	"EnemyAnimation095");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1ABD7E);
 	MakeArray	(0X1ABD7E,	0X8);
 	MakeName	(0X1ABD7E,	"EnemyAnimation096");
@@ -58057,6 +57480,8 @@ static Bytes_11(void) {
 	MakeByte	(0X1B6BBE);
 	MakeArray	(0X1B6BBE,	0X1F2);
 	MakeName	(0X1B6BBE,	"BattleEntitySetup44");
+	MakeByte	(0X1B6DB0);
+	MakeArray	(0X1B6DB0,	0XC);
 	MakeName	(0X1B6DB0,	"SpecialBattles");
 	MakeByte	(0X1B6DDA);
 	MakeArray	(0X1B6DDA,	0X20);
@@ -60397,15 +59822,6 @@ static Bytes_11(void) {
 	MakeName	(0XFFDEF0,	"FADING_SETTING");
 	MakeByte	(0XFFDEF2);
 	MakeName	(0XFFDEF2,	"FADING_COUNTER_MAX");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0XFFDEF3,	"decremented when value $8x");
 	MakeByte	(0XFFDEF3);
 	MakeName	(0XFFDEF3,	"FADING_POINTER");
@@ -63057,11 +62473,11 @@ static Functions_0(void) {
 	SetFunctionFlags(0X1A744,0x0);
 	MakeFunction    (0X1A848,0X1A8F4);
 	SetFunctionFlags(0X1A848,0x0);
-	MakeFunction    (0X1A928,0X1A92C);
+	MakeFunction    (0X1A928,0X1AA28);
 	SetFunctionFlags(0X1A928,0x0);
 	MakeFunction    (0X1AA40,0X1AA88);
 	SetFunctionFlags(0X1AA40,0x0);
-	MakeFunction    (0X1AA90,0X1AA94);
+	MakeFunction    (0X1AA90,0X1AB4E);
 	SetFunctionFlags(0X1AA90,0x0);
 	MakeFunction    (0X1AB9E,0X1ACC6);
 	SetFunctionFlags(0X1AB9E,0x0);
@@ -63087,7 +62503,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X1B4F6,0x0);
 	MakeFunction    (0X1B618,0X1B660);
 	SetFunctionFlags(0X1B618,0x0);
-	MakeFunction    (0X1B660,0X1B67C);
+	MakeFunction    (0X1B660,0X1B6A8);
 	SetFunctionFlags(0X1B660,0x0);
 	MakeFunction    (0X1B6A8,0X1B6EA);
 	SetFunctionFlags(0X1B6A8,0x0);
@@ -63111,7 +62527,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X1B90C,0x0);
 	MakeFunction    (0X1B93A,0X1B93C);
 	SetFunctionFlags(0X1B93A,0x0);
-	MakeFunction    (0X1B93C,0X1BC20);
+	MakeFunction    (0X1B93C,0X1BD4C);
 	SetFunctionFlags(0X1B93C,0x0);
 	MakeFunction    (0X1BD4C,0X1BDA0);
 	SetFunctionFlags(0X1BD4C,0x0);
@@ -63289,7 +62705,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X2005C,0x80);
 	MakeFunction    (0X20060,0X20064);
 	SetFunctionFlags(0X20060,0x80);
-	MakeFunction    (0X20064,0X200C6);
+	MakeFunction    (0X20064,0X207D4);
 	SetFunctionFlags(0X20064,0x0);
 	MakeFunction    (0X207D4,0X207E6);
 	SetFunctionFlags(0X207D4,0x0);
@@ -63301,7 +62717,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X20834,0x0);
 	MakeFunction    (0X20852,0X20878);
 	SetFunctionFlags(0X20852,0x0);
-	MakeFunction    (0X20A02,0X20A64);
+	MakeFunction    (0X20A02,0X21046);
 	SetFunctionFlags(0X20A02,0x0);
 	MakeFunction    (0X21072,0X210D0);
 	SetFunctionFlags(0X21072,0x0);
@@ -63910,7 +63326,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X468BE,0x0);
 	MakeFunction    (0X468D2,0X468E6);
 	SetFunctionFlags(0X468D2,0x0);
-	MakeFunction    (0X468E6,0X468F2);
+	MakeFunction    (0X468E6,0X468FA);
 	SetFunctionFlags(0X468E6,0x0);
 	MakeFunction    (0X468FA,0X46928);
 	SetFunctionFlags(0X468FA,0x0);
@@ -63964,7 +63380,7 @@ static Functions_0(void) {
 	SetFunctionFlags(0X46E38,0x0);
 	MakeFunction    (0X46E58,0X46E8A);
 	SetFunctionFlags(0X46E58,0x0);
-	MakeFunction    (0X46E98,0X46E9A);
+	MakeFunction    (0X46E98,0X46EA8);
 	SetFunctionFlags(0X46E98,0x0);
 	MakeFunction    (0X46EA8,0X46EC0);
 	SetFunctionFlags(0X46EA8,0x0);
@@ -64104,6 +63520,12 @@ static Functions_0(void) {
 	SetFunctionFlags(0X47EF8,0x0);
 	MakeFunction    (0X48FE2,0X49038);
 	SetFunctionFlags(0X48FE2,0x0);
+	MakeFunction    (0X49816,0X4981E);
+	SetFunctionFlags(0X49816,0x0);
+	MakeFunction    (0X4B1CA,0X4B1D8);
+	SetFunctionFlags(0X4B1CA,0x0);
+	MakeFunction    (0X4CD56,0X4CDB4);
+	SetFunctionFlags(0X4CD56,0x0);
 	MakeFunction    (0X4F48A,0X4F542);
 	SetFunctionFlags(0X4F48A,0x0);
 	MakeFunction    (0X4F542,0X4F570);
@@ -64305,7 +63727,6 @@ static Bytes(void) {
 	Bytes_9();
 	Bytes_10();
 	Bytes_11();
-	Bytes_12();
 }
 
 // End of file.
