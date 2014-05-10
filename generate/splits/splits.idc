@@ -69,6 +69,28 @@ static splitSingleChunks(file) {
 	
 	// Template : splitSingleChunk(0x,0x,"","",file);
 	
+	splitSingleChunk(0x7A36,0x7B71,"BattleMapCoords","battles/battlemapcoords.bin",file);
+	
+	MakeAlign(0x7FA6, 0x8000-0x7FA6,15);
+	
+	splitSingleChunk(0xBE52,0xBECC,"tbl_EnemyItemDrops","battles/enemyitemdrops.bin",file);
+	splitSingleChunk(0xBECC,0xC024,"tbl_EnemyGold","battles/enemygold.bin",file);
+	
+	splitSingleChunk(0xC24E,0xC27A,"tbl_SpellElements","spells/spellelements.bin",file);
+	
+	splitSingleChunk(0xD824,0xD8F4,"t_MoveTypeTerrainCosts","battles/movetypeterraincosts.bin",file);
+	
+	splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","spells/spellnames.bin",file);
+	splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","chardata/allynames.bin",file);
+	splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","chardata/enemynames.bin",file);
+	MakeAlign(0xFF87, 0x10000-0xFF87,15);
+	
+	splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","misc/itemdefs.bin",file);
+	splitSingleChunk(0x176A6,0x1796E,"SpellDefs","spells/spelldefs.bin",file);
+	splitSingleChunk(0x1796E,0x17F3E,"ItemNames","misc/itemnames.bin",file);
+	splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","chardata/classnames.bin",file);
+	MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
+	
 	MakeAlign(0x27D8E, 0x28000-0x27D8E,15);
 	
 	splitSingleChunk(0x2E196,0x2EB34,"t_RelativeTreePointers","scriptbanks/scriptbanktrees.bin",file);

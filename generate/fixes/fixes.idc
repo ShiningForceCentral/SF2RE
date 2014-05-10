@@ -66,6 +66,7 @@ static fixRPTs() {
 }
 
 static fixBTs() {
+	makeBt(0x4F1C,0x4FBC);
 	makeBt(0x183C0,0x183EA);
 	makeBt(0x1B7E8,0x1B828);
 }
