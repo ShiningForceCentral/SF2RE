@@ -29,12 +29,19 @@
 
 static main(void) {
 
+	Message("FIXING...\n");
+
+	Message("Relative Jump Tables...");
 	fixRJTs();
+	Message(" DONE.\nRelative Pointer Tables...");		
 	fixRPTs();
+	Message(" DONE.\nBranch Tables...");		
 	fixBTs();
-	
+	Message(" DONE.\nInstruction Representations...");			
 	fixInstructionRepresentations();
-	
+	Message(" DONE.\nSingle Instructions...");		
+	fixSingleInstructions();
+	Message(" DONE.\n");
 	Message("END OF FIXES.\n");
 	Batch(0);
 
@@ -108,8 +115,9 @@ static fixInstructionRepresentations(){
 	auto batch;
 	
 	Batch(0);
-	batch = AskYN(1,"Fix Instruction Represensations : BATCH MODE ?");
-	Batch(batch);
+	//batch = AskYN(1,"Fix Instruction Represensations : BATCH MODE ?");
+	//if (batch==-1) return;
+	//Batch(batch);
 	
 	fix("4E 66","move.l  a6,usp","move a6,usp","move.l a6,usp");
 	
@@ -142,15 +150,15 @@ static fix(pattern, manualInstruction, wrongInstString, newInstString){
 		opnd = GetOpnd(addr,0);
 		if (opnd!=""){
 			rep = form(manualInstruction,opnd);
-			Jump(addr);
-			action = AskYN(1,form("Change representation from %s to %s ?",wrongInstString, newInstString));
+			//Jump(addr);
+			//action = AskYN(1,form("Change representation from %s to %s ?",wrongInstString, newInstString));
 			if (action==-1) break;
 			if (action==1){
-				Message(form("\n0x%d : %s changed to %s",addr,wrongInstString, newInstString));
+				//Message(form("\n0x%d : %s changed to %s",addr,wrongInstString, newInstString));
 				SetManualInsn(addr,rep);
 			}
 			else{
-				Message(form("\n0x%d : %s NOT changed to %s",addr,wrongInstString, newInstString));
+				//Message(form("\n0x%d : %s NOT changed to %s",addr,wrongInstString, newInstString));
 			}
 		}
 	}
@@ -160,7 +168,7 @@ static makeRpt(base, end){
 	auto addr;
 	addr = base;
 	while(addr < end){
-		Jump(addr);
+		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
 			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
@@ -176,7 +184,7 @@ static makeBt(base, end){
 	auto addr;
 	addr = base;
 	while(addr < end){
-		Jump(addr);
+		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
 			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
@@ -192,7 +200,7 @@ static makeRjt(base, end){
 	auto addr;
 	addr = base;
 	while(addr < end){
-		Jump(addr);
+		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
 			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
@@ -208,7 +216,7 @@ static makeRjtWithOneWordBetweenEachEntry(base, end){
 	auto addr;
 	addr = base;
 	while(addr < end){
-		Jump(addr);
+		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		addr = addr+2;
 		MakeData(addr, FF_WORD, 0x2, 0);
