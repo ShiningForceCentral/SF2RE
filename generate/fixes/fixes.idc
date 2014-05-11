@@ -137,6 +137,15 @@ static fixInstructionRepresentations(){
 
 }
 
+static fixSingleInstructions(){
+
+	OpHex(0x128C0,1);
+	OpHex(0x27982,1);
+	OpHex(0x27A36,1);
+	OpHex(0x27B16,0);
+
+}
+
 static fix(pattern, manualInstruction, wrongInstString, newInstString){
 
 	auto addr; // current location
