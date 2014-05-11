@@ -37,7 +37,7 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(200);
+	XrefShow(2);
 	AutoShow(1);
 	Indent(8);
 	CmtIndent(80);
@@ -4980,8 +4980,6 @@ static Bytes_0(void) {
 	MakeCode	(0X5FBA);
 	MakeCode	(0X5FC8);
 	MakeCode	(0X5FD6);
-	MakeCode	(0X5FE4);
-	MakeCode	(0X5FF6);
 }
 
 //------------------------------------------------------------------------
@@ -4991,6 +4989,8 @@ static Bytes_1(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X5FE4);
+	MakeCode	(0X5FF6);
 	MakeCode	(0X6008);
 	MakeCode	(0X601A);
 	MakeCode	(0X6024);
@@ -8023,6 +8023,9 @@ static Bytes_1(void) {
 	OpOff		(x,	128,	0XB0BC);
 	MakeCode	(0XB114);
 	MakeCode	(0XB140);
+	MakeDword	(x=0XB160);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(0XB16A);
 	MakeCode	(0XB194);
 	MakeCode	(x=0XB19E);
@@ -8402,6 +8405,7 @@ static Bytes_1(void) {
 	MakeCode	(0XC71A);
 	MakeName	(0XC71A,	"GetClosestAttackPosition");
 	MakeCode	(x=0XC71E);
+	OpSign		(x,	1);
 	OpDecimal	(x,	1);
 	MakeRptCmt	(0XC74E,	"D6 is now -max range");
 	MakeRptCmt	(0XC75C,	"D5 is now (max range - max range) ???");
@@ -9539,10 +9543,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0XEDAE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0XEDBA);
-	MakeCode	(x=0XEDBE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -9552,6 +9552,10 @@ static Bytes_2(void) {
         auto x;
 #define id x
 
+	MakeCode	(0XEDBA);
+	MakeCode	(x=0XEDBE);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0XEDC4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -10014,7 +10018,6 @@ static Bytes_2(void) {
 	MakeName	(0X100E2,	"WriteTilesFromASCII");
 	MakeCode	(x=0X100E6);
 	OpStkvar	(x,	0);
-	MakeByte	(0X100FF);
 	MakeCode	(x=0X10122);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X10138);
@@ -14926,9 +14929,6 @@ static Bytes_2(void) {
 	MakeCode	(x=0X18A08);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(x=0X18A0E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -14938,6 +14938,9 @@ static Bytes_3(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0X18A0E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(0X18A2A);
 	MakeCode	(x=0X18A3C);
 	OpOff		(x,	1,	0X0);
@@ -19417,9 +19420,6 @@ static Bytes_3(void) {
 	MakeByte	(0X1F806);
 	MakeArray	(0X1F806,	0X10D);
 	MakeName	(0X1F806,	"tbl_CharacterBattleSprites");
-	MakeRptCmt	(0X1F80E,	"table : class -> sprite");
-	MakeRptCmt	(0X1F80F,	"table : class -> sprite");
-	MakeRptCmt	(0X1F810,	"table : class -> sprite");
 	MakeByte	(0X1F913);
 	MakeArray	(0X1F913,	0XCF);
 	MakeName	(0X1F913,	"tbl_MonsterBattleSprites");
@@ -20405,6 +20405,10 @@ static Bytes_3(void) {
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X216E0,	"{NAME} changed hands{N}to hold the {ITEM}.{W2}");
 	MakeWord	(0X216E0);
+	MakeCode	(0X216E2);
+	MakeCode	(x=0X216E4);
+	OpOff		(x,	1,	0X0);
+	OpOff		(x,	129,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -20414,10 +20418,6 @@ static Bytes_4(void) {
         auto x;
 #define id x
 
-	MakeCode	(0X216E2);
-	MakeCode	(x=0X216E4);
-	OpOff		(x,	1,	0X0);
-	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X216EA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -25569,6 +25569,15 @@ static Bytes_4(void) {
 	MakeByte	(0X44E93);
 	MakeByte	(0X44E94);
 	MakeByte	(0X44E95);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X44E96);
 	MakeByte	(0X44E97);
 	MakeByte	(0X44E98);
@@ -25591,15 +25600,6 @@ static Bytes_4(void) {
 	MakeByte	(0X44EA9);
 	MakeByte	(0X44EAA);
 	MakeByte	(0X44EAB);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X44EAC);
 	MakeByte	(0X44EAD);
 	MakeByte	(0X44EAE);
@@ -26684,13 +26684,6 @@ static Bytes_5(void) {
 	MakeByte	(0X4567A);
 	MakeArray	(0X4567A,	0X1DE);
 	MakeName	(0X4567A,	"tbl_SpriteToPortraitnBlip");
-	MakeRptCmt	(0X4567E,	"bowie");
-	MakeRptCmt	(0X45682,	"bowie");
-	MakeRptCmt	(0X45686,	"bowie");
-	MakeRptCmt	(0X4568A,	"bowie");
-	MakeRptCmt	(0X4568E,	"bowie");
-	MakeRptCmt	(0X45692,	"bowie");
-	MakeRptCmt	(0X45696,	"bowie");
 	MakeCode	(0X45858);
 	MakeCode	(x=0X4585C);
 	OpSign		(x,	1);
@@ -31048,6 +31041,15 @@ static Bytes_5(void) {
 	MakeByte	(0X47FE1);
 	MakeByte	(0X47FE2);
 	MakeByte	(0X47FE3);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X47FE4);
 	MakeByte	(0X47FE5);
 	MakeByte	(0X47FE6);
@@ -31058,15 +31060,6 @@ static Bytes_5(void) {
 	MakeByte	(0X47FEB);
 	MakeByte	(0X47FEC);
 	MakeByte	(0X47FED);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X47FEE);
 	MakeByte	(0X47FEF);
 	MakeByte	(0X47FF0);
@@ -37071,15 +37064,6 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4B528);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B53E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B55C);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeDword	(x=0X4B564);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -37089,6 +37073,15 @@ static Bytes_7(void) {
         auto x;
 #define id x
 
+	MakeDword	(x=0X4B53E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B55C);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X4B564);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X4B574);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -38074,6 +38067,9 @@ static Bytes_7(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X4FF5A);
+	MakeDword	(x=0X50006);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X50312);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -42806,6 +42802,15 @@ static Bytes_7(void) {
 	MakeByte	(0X60CAD);
 	MakeByte	(0X60CAE);
 	MakeByte	(0X60CAF);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60CB0);
 	MakeByte	(0X60CB1);
 	MakeByte	(0X60CB2);
@@ -42818,15 +42823,6 @@ static Bytes_7(void) {
 	MakeByte	(0X60CB9);
 	MakeByte	(0X60CBA);
 	MakeByte	(0X60CBB);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60CBC);
 	MakeByte	(0X60CBD);
 	MakeByte	(0X60CBE);
@@ -47658,6 +47654,15 @@ static Bytes_8(void) {
 	MakeDword	(x=0XB1496);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XB149A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -47670,15 +47675,6 @@ static Bytes_8(void) {
 	MakeDword	(x=0XB14A6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XB14AA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -52543,15 +52539,6 @@ static Bytes_9(void) {
 	MakeByte	(0XD0906);
 	MakeArray	(0XD0906,	0X14A);
 	MakeName	(0XD0906,	"EntitySprite090");
-	MakeByte	(0XD0A50);
-	MakeArray	(0XD0A50,	0X11C);
-	MakeName	(0XD0A50,	"EntitySprite091");
-	MakeByte	(0XD0B6C);
-	MakeArray	(0XD0B6C,	0X146);
-	MakeName	(0XD0B6C,	"EntitySprite092");
-	MakeByte	(0XD0CB2);
-	MakeArray	(0XD0CB2,	0X10E);
-	MakeName	(0XD0CB2,	"EntitySprite093");
 }
 
 //------------------------------------------------------------------------
@@ -52561,6 +52548,15 @@ static Bytes_10(void) {
         auto x;
 #define id x
 
+	MakeByte	(0XD0A50);
+	MakeArray	(0XD0A50,	0X11C);
+	MakeName	(0XD0A50,	"EntitySprite091");
+	MakeByte	(0XD0B6C);
+	MakeArray	(0XD0B6C,	0X146);
+	MakeName	(0XD0B6C,	"EntitySprite092");
+	MakeByte	(0XD0CB2);
+	MakeArray	(0XD0CB2,	0X10E);
+	MakeName	(0XD0CB2,	"EntitySprite093");
 	MakeByte	(0XD0DC0);
 	MakeArray	(0XD0DC0,	0X172);
 	MakeName	(0XD0DC0,	"EntitySprite094");
@@ -56382,15 +56378,6 @@ static Bytes_10(void) {
 	MakeByte	(0X1ABD5E);
 	MakeArray	(0X1ABD5E,	0X8);
 	MakeName	(0X1ABD5E,	"EnemyAnimation092");
-	MakeByte	(0X1ABD66);
-	MakeArray	(0X1ABD66,	0X8);
-	MakeName	(0X1ABD66,	"EnemyAnimation093");
-	MakeByte	(0X1ABD6E);
-	MakeArray	(0X1ABD6E,	0X8);
-	MakeName	(0X1ABD6E,	"EnemyAnimation094");
-	MakeByte	(0X1ABD76);
-	MakeArray	(0X1ABD76,	0X8);
-	MakeName	(0X1ABD76,	"EnemyAnimation095");
 }
 
 //------------------------------------------------------------------------
@@ -56400,6 +56387,15 @@ static Bytes_11(void) {
         auto x;
 #define id x
 
+	MakeByte	(0X1ABD66);
+	MakeArray	(0X1ABD66,	0X8);
+	MakeName	(0X1ABD66,	"EnemyAnimation093");
+	MakeByte	(0X1ABD6E);
+	MakeArray	(0X1ABD6E,	0X8);
+	MakeName	(0X1ABD6E,	"EnemyAnimation094");
+	MakeByte	(0X1ABD76);
+	MakeArray	(0X1ABD76,	0X8);
+	MakeName	(0X1ABD76,	"EnemyAnimation095");
 	MakeByte	(0X1ABD7E);
 	MakeArray	(0X1ABD7E,	0X8);
 	MakeName	(0X1ABD7E,	"EnemyAnimation096");

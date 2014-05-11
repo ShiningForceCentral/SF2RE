@@ -35,6 +35,7 @@ static main(void) {
 	
 	fixInstructionRepresentations();
 	
+	Message("END OF FIXES.\n");
 	Batch(0);
 
 }

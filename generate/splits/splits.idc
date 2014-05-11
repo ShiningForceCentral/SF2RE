@@ -69,6 +69,50 @@ static splitSingleChunks(file) {
 	
 	// Template : splitSingleChunk(0x,0x,"","",file);
 	
+	splitSingleChunk(0x7A36,0x7B71,"BattleMapCoords","battles/battlemapcoords.bin",file);
+	
+	MakeAlign(0x7FA6, 0x8000-0x7FA6,15);
+	
+	splitSingleChunk(0xBE52,0xBECC,"tbl_EnemyItemDrops","battles/enemyitemdrops.bin",file);
+	splitSingleChunk(0xBECC,0xC024,"tbl_EnemyGold","battles/enemygold.bin",file);
+	
+	splitSingleChunk(0xC24E,0xC27A,"tbl_SpellElements","spells/spellelements.bin",file);
+	
+	splitSingleChunk(0xD824,0xD8F4,"t_MoveTypeTerrainCosts","battles/movetypeterraincosts.bin",file);
+	
+	splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","spells/spellnames.bin",file);
+	splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","chardata/allynames.bin",file);
+	splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","chardata/enemynames.bin",file);
+	MakeAlign(0xFF87, 0x10000-0xFF87,15);
+	
+	splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","misc/itemdefs.bin",file);
+	splitSingleChunk(0x176A6,0x1796E,"SpellDefs","spells/spelldefs.bin",file);
+	splitSingleChunk(0x1796E,0x17F3E,"ItemNames","misc/itemnames.bin",file);
+	splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","chardata/classnames.bin",file);
+	MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
+	
+	splitSingleChunk(0x1F806,0x1F914,"tbl_CharacterBattleSprites","sprites/charbattlesprites.bin",file);
+	splitSingleChunk(0x1F914,0x1F9E2,"tbl_MonsterBattleSprites","sprites/enemybattlesprites.bin",file);
+	splitSingleChunk(0x1F9E2,0x1FA8A,"tbl_ItemBattleSprites","sprites/weaponsprites.bin",file);
+	splitSingleChunk(0x1FA8A,0x1FAB8,"tbl_CustomBackgrounds","backgrounds/custombackgrounds.bin",file);
+	
+	splitSingleChunk(0x1FAD6,0x1FADD,"tbl_AllyBSpriteIdleAnimate","sprites/battlesprites/allyidlesprites.bin",file);
+	splitSingleChunk(0x1FADD,0x1FAEA,"tbl_EnemyBSpriteIdleAnimate","sprites/battlesprites/enemyidlesprites.bin",file);
+	
+	MakeAlign(0x1FDEC, 0x20000-0x1FDEC,15);
+	
+	splitSingleChunk(0x21046,0x21072,"promotion_data","chardata/promotions.bin",file);
+	
+	splitSingleChunk(0x21F62,0x21F92,"tbl_MithrilWeaponClassLists","chardata/mithrilweaponclasses.bin",file);
+	splitSingleChunk(0x21F92,0x21FD2,"tbl_MithrilWeaponLists","chardata/mithrilweapons.bin",file);
+	
+	splitSingleChunk(0x25DF6,0x261A6,"specialSprites_Taros","sprites/specialsprites/taros.bin",file);
+	splitSingleChunk(0x261A6,0x26552,"specialSprites_Kraken","sprites/specialsprites/kraken.bin",file);
+	splitSingleChunk(0x26552,0x268F2,"specialSprites_NazcaShip","sprites/specialsprites/nazcaship.bin",file);
+	splitSingleChunk(0x268F2,0x26DB8,"specialSprites_EvilSpirit","sprites/specialsprites/evilspirit.bin",file);
+	splitSingleChunk(0x26DB8,0x27264,"specialSprites_EvilSpiritAlt","sprites/specialsprites/evilspiritalt.bin",file);
+	splitSingleChunk(0x27264,0x2784C,"specialSprites_Zeon","sprites/specialsprites/zeon.bin",file);
+	
 	MakeAlign(0x27D8E, 0x28000-0x27D8E,15);
 	
 	splitSingleChunk(0x2E196,0x2EB34,"t_RelativeTreePointers","scriptbanks/scriptbanktrees.bin",file);
