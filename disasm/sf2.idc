@@ -8416,7 +8416,7 @@ static Bytes_1(void) {
 	MakeCode	(0XC71A);
 	MakeName	(0XC71A,	"GetClosestAttackPosition");
 	MakeCode	(x=0XC71E);
-	OpDecimal	(x,	1);
+	OpSign		(x,	1);
 	MakeRptCmt	(0XC74E,	"D6 is now -max range");
 	MakeRptCmt	(0XC75C,	"D5 is now (max range - max range) ???");
 	MakeRptCmt	(0XC786,	"already in range, so end because it can't get cheaper");
