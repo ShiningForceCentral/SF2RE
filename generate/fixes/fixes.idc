@@ -42,6 +42,7 @@ static main(void) {
 	Message(" DONE.\nSingle Instructions...");		
 	fixSingleInstructions();
 	Message(" DONE.\n");
+	
 	Message("END OF FIXES.\n");
 	Batch(0);
 
@@ -68,9 +69,11 @@ static fixRPTs() {
 	makeRpt(0x47A88,0x47AE8);
 	makeRpt(0x47B2C,0x47B8C);
 	makeRpt(0x47BE8,0x47C48);
+	makeRpt(0x47CF4,0x47D54);
 }
 
 static fixBTs() {
+	makeBt(0x4F1C,0x4FBC);
 	makeBt(0x183C0,0x183EA);
 	makeBt(0x1B7E8,0x1B828);
 }
@@ -136,6 +139,7 @@ static fixInstructionRepresentations(){
 	fix("4F FA","lea     %s(pc), a7","lea loc, a7","lea loc(pc),a7");
 
 }
+
 
 static fixSingleInstructions(){
 

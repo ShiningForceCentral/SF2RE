@@ -119,7 +119,38 @@ static splitSingleChunks(file) {
 	
 	MakeAlign(0x27D8E, 0x28000-0x27D8E,15);
 	
+	splitSingleChunk(0x2824C,0x28B12,"SegaLogo","misc/segalogo.bin",file);
+	
+	splitSingleChunk(0x29002,0x29A02,"VariableWidthFont","misc/variablewidthfont.bin",file);
+	
+	splitSingleChunk(0x29A02,0x2A9C2,"MenuTiles_Uncompressed","misc/menutiles.bin",file);
+	splitSingleChunk(0x2A9C2,0x2ACF6,"MenuTiles_Item","misc/menutilesitem.bin",file);
+	splitSingleChunk(0x2ACF6,0x2B072,"MenuTiles_BattleField","misc/menutilesbattlefield.bin",file);
+	splitSingleChunk(0x2B072,0x2B418,"MenuTiles_Church","misc/menutileschurch.bin",file);
+	splitSingleChunk(0x2B418,0x2B7C0,"MenuTiles_Shop","misc/menutilesshop.bin",file);
+	splitSingleChunk(0x2B7C0,0x2BAE8,"MenuTiles_Caravan","misc/menutilescaravan.bin",file);
+	splitSingleChunk(0x2BAE8,0x2BE2C,"MenuTiles_Depot","misc/menutilesdepot.bin",file);
+	splitSingleChunk(0x2BE2C,0x2C01E,"MenuTiles_YesNo","misc/menutilesyesno.bin",file);
+	
+	splitSingleChunk(0x2C01E,0x2C03E,"plt_WitchChoice","misc/specialscreens/whitchchoicepalette.bin",file);
+	
+	splitSingleChunk(0x2C3FE,0x2C576,"SpeechBalloonTiles","misc/specialscreens/speechballoontiles.bin",file);
+	
+	splitSingleChunk(0x2DDDE,0x2E08E,"StaticWidthFont","misc/staticwidthfont.bin",file);
+	
 	splitSingleChunk(0x2E196,0x2EB34,"t_RelativeTreePointers","scriptbanks/scriptbanktrees.bin",file);
+	
+	splitSingleChunk(0x4201E,0x425E7,"GameStaff","misc/gamestaff.bin",file);
+	MakeAlign(0x425E7, 0x44000-0x425E7,14);
+	
+	splitSingleChunk(0x4428A,0x44298,"OverworldMaps","maps/overworldmaps.bin",file);
+	
+	splitSingleChunk(0x44A5E,0x44A7C,"t_AllySprites","chardata/allyspriteids.bin",file);
+	splitSingleChunk(0x44AA4,0x44B4A,"t_MonsterSprites","chardata/enemyspriteids.bin",file);
+	
+	splitSingleChunk(0x4567A,0x45858,"tbl_SpriteToPortraitnBlip","chardata/spriteportraitsnblips.bin",file);
+	
+	splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","battles/enemyleaderpresence.bin",file);
 	
 	MakeAlign(0x6348C, 0x64000-0x6348C,14);
 	
@@ -133,6 +164,14 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x12D9CA,0x12E988,"invocationSpriteNeptun","battles/animations/invocations/neptun.bin",file);
 	splitSingleChunk(0x12E988,0x12FADE,"invocationSpriteAtlas","battles/animations/invocations/atlas.bin",file);
 	MakeAlign(0x12FADE, 0x130000-0x12FADE,15);
+	
+	splitSingleChunk(0x1AA16E,0x1AA316,"statusAnimationTiles","misc/statusanimationtiles.bin",file);
+	splitSingleChunk(0x1AA31E,0x1AA5FA,"battlesceneTransitionTilesA","misc/battlescenetransitiontilesa.bin",file);
+	splitSingleChunk(0x1AA5FA,0x1AA8CA,"battlesceneTransitionTilesB","misc/battlescenetransitiontilesb.bin",file);
+	splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","spells/boltanimdataa.bin",file);
+	splitSingleChunk(0x11AAA82,0x1AA8CA,"BoltAnimData_B","spells/boltanimdatab.bin",file);		
+	
+	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","battles/specialbattles.bin",file);	
 	
 	splitSingleChunk(0x1B6DDA,0x1B6DFA,"plt_endKiss","misc/specialscreens/endingkisspalette.bin",file);
 	splitSingleChunk(0x1B6DFA,0x1B7C9A,"endKissPicture","misc/specialscreens/endingkisstiles.bin",file);
@@ -533,15 +572,16 @@ writestr(file,"#dir	battles/animations/allies/\n");
 writestr(file,"#dir	battles/animations/invocations/\n");
 writestr(file,"#dir	battles/grounds/\n");
 writestr(file,"#dir	maps/\n");
-writestr(file,"#dir	maps/tilesets\n");
-writestr(file,"#dir	maps/palettes\n");
+writestr(file,"#dir	maps/tilesets/\n");
+writestr(file,"#dir	maps/palettes/\n");
 writestr(file,"#dir	sprites/\n");
-writestr(file,"#dir	sprites/entities\n");
+writestr(file,"#dir	sprites/entities/\n");
 writestr(file,"#dir	backgrounds/\n");
-writestr(file,"#dir	sprites/battlesprites\n");
-writestr(file,"#dir	sprites/battlesprites/enemies\n");
-writestr(file,"#dir	sprites/battlesprites/allies\n");
-writestr(file,"#dir	sprites/weapons\n");
+writestr(file,"#dir	sprites/battlesprites/\n");
+writestr(file,"#dir	sprites/battlesprites/enemies/\n");
+writestr(file,"#dir	sprites/battlesprites/allies/\n");
+writestr(file,"#dir	sprites/specialsprites/\n");
+writestr(file,"#dir	sprites/weapons/\n");
 writestr(file,"#dir	spells/\n");
 writestr(file,"#dir	portraits/\n");
 writestr(file,"#dir	icons/\n");
