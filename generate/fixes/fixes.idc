@@ -43,7 +43,7 @@ static main(void) {
 	fixSingleInstructions();
 	Message(" DONE.\n");
 	
-	Message("END OF SPLITS.\n");
+	Message("END OF FIXES.\n");
 	Batch(0);
 
 }
