@@ -92,11 +92,11 @@ static main()
     SetFunctionCmt(0x150e, 
         "converts data ports 1/2 information into P1/2 inputs State A/B", 1);
 
-    // Randomize
+    // UpdateRandomSeed
     SetFunctionCmt(0x1600, 
         "randomize a few bits in D7 based on RAM:dea4", 1);
 
-    // getRandomOrDebugValue
+    // GetRandomOrDebugValue
     SetFunctionCmt(0x1674, 
         "another random function taking debug mode into account", 1);
 
@@ -127,14 +127,31 @@ set default values in sprite table", 1);
 
     // loadSpriteData
     SetFunctionCmt(0x1a84, 
-        "    In: A0 = address of compressed data\n\
+        "Basic tile decompression\n\
+\n\
+    In: A0 = address of compressed data\n\
         A1 = dest address in RAM\n\
 ", 1);
 
     // loadTileData
     SetFunctionCmt(0x1e48, 
-        "    In: A0 = address of compressed data\n\
+        "Stack tile decompression\n\
+\n\
+    In: A0 = address of compressed data\n\
         A1 = dest address in RAM", 1);
+
+    // LoadMapLayoutData
+    SetFunctionCmt(0x20e6, 
+        "In: A0 = compressed map layout data (block indexes)\n\
+    A1 = RAM address to put map layout data", 1);
+
+    // ReadMapLayoutBarrelForBlockFlags
+    SetFunctionCmt(0x2296, 
+        "Reads next part of barrel to determine flags for next block\n\
+barrel = 00\n\
+\n\
+In: D0 = barrel\n\
+Out: D1 = block flag word", 1);
 
     // sub_2670
     SetFunctionCmt(0x2670, 
@@ -151,6 +168,10 @@ set default values in sprite table", 1);
     // displayBlackScreen
     SetFunctionCmt(0x3022, 
         "or something like that ?", 1);
+
+    // ToggleRoofOnMapLoad
+    SetFunctionCmt(0x3f2c, 
+        "display (or don't) map roof depending on player's start location", 1);
 
     // LoadBattleMapMusic
     SetFunctionCmt(0x4544, 
@@ -175,17 +196,17 @@ returns a1 = window tiles end, d0 = window slot", 1);
     In: D0 = window number\n\
     Cross: getAddressOfWindowInfo", 1);
 
-    // moveWindow
+    // MoveWindowWithoutSFX
     SetFunctionCmt(0x48f8, 
         "set window D0's dest to D1 (xxyy)", 1);
 
-    // getWindowInfo
+    // GetWindowInfo
     SetFunctionCmt(0x4c38, 
         "    Get address in RAM of window info, starting at RAM:a87e.\n\
     In: D0 = window idx\n\
     Out: A0 = address of window info", 1);
 
-    // getAddressOfWindowCoord
+    // GetAddressOfWindowTileDataStartingAtCoord
     SetFunctionCmt(0x4c44, 
         "    Get address of specific tile based on coord for a window.\n\
     In: D0 = window idx\n\
@@ -194,7 +215,7 @@ returns a1 = window tiles end, d0 = window slot", 1);
 
     // esc00_wait
     SetFunctionCmt(0x4fbc, 
-        "wait for 00xx VInts", 1);
+        "clear timer and parse next command", 1);
 
     // esc01_waitUntilDestination
     SetFunctionCmt(0x4fd4, 
@@ -202,10 +223,10 @@ returns a1 = window tiles end, d0 = window slot", 1);
 
     // esc02_
     SetFunctionCmt(0x4ff8, 
-        "related to controlling character", 1);
+        "update next entity", 1);
 
-    // sub_55C8
-    SetFunctionCmt(0x55c8, 
+    // esc04_moveToRelativeDest
+    SetFunctionCmt(0x53fe, 
         "related to moving an entity", 1);
 
     // checkIfSameDestForOtherEntity
@@ -297,17 +318,9 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5d48, 
         "directly go to next command 4 bytes forward", 1);
 
-    // esc_clearTimerGoToNextCommand
-    SetFunctionCmt(0x5d4e, 
-        "clear timer and parse next command", 1);
-
     // esc_clearTimerGoToNextEntity
     SetFunctionCmt(0x5d5a, 
         "clear timer and update next entity", 1);
-
-    // esc_goToNextEntity
-    SetFunctionCmt(0x5d5e, 
-        "update next entity", 1);
 
     // LoadMapEntitySprites
     SetFunctionCmt(0x6024, 
@@ -317,6 +330,12 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x60a8, 
         "a0 : entity address\n\
 d6 : facing", 1);
+
+    // GetMapPixelCoordRAMOffset
+    SetFunctionCmt(0x61fc, 
+        "In: D0 = x pixel coord\n\
+    D1 = y pixel coord\n\
+Out: D2 = RAM offset from start of map VDP tile data", 1);
 
     // DisplayText
     SetFunctionCmt(0x6260, 
@@ -351,6 +370,11 @@ d7 = number of bytes to copy", 1);
     // MainBattleAndMapLoop
     SetFunctionCmt(0x75c4, 
         "In: D0 = map idx\n\
+    D1 = player X coord\n\
+    D2 = player Y coord\n\
+    D3 = player facing\n\
+    D4 = ???\n\
+    D7 = battle idx (FFFF for none)\n\
 ...more", 1);
 
     // AlterMapIndexIfChanged
@@ -359,9 +383,12 @@ d7 = number of bytes to copy", 1);
 In: D0 = map idx\n\
 Out: D0 = new map idx", 1);
 
-    // GetNextBattleOnThisMap
+    // GetNextBattleOnMap
     SetFunctionCmt(0x799c, 
-        "In: D0 = map idx\n\
+        "In: D0 = map idx (if not supplied, will be pulled from CURRENT_MAP)\n\
+    D1 = player X coord to check\n\
+    D2 = player Y coord to check\n\
+Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
 
     // j_GetClass
@@ -799,10 +826,14 @@ Out: D1 = item idx\n\
     SetFunctionCmt(0x101f6, 
         "related to menus\n\
 \n\
-In: A0 = ???\n\
+In: A0 = special subroutine address to handle menu, default handling if not supplied (unused functionality)\n\
     D0 = initial choice (00=up, 01=left, 02=right, 03=down)\n\
     D1 = animate-in direction (00=from bottom, other=from right)\n\
-    D2 = menu idx to use", 1);
+    D2 = menu idx to use (just affects icons and text)", 1);
+
+    // LoadDiamenuWindowVDPTileData
+    SetFunctionCmt(0x103b8, 
+        "In: -$C(A6) = window slot idx", 1);
 
     // loadIHighlightableSpellIcon
     SetFunctionCmt(0x10940, 
@@ -1135,6 +1166,11 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x2399c, 
         "get amount of gold (D2 - 0x80) as an offset from the gold table (see constants)", 1);
 
+    // ExecuteBattleLoop
+    SetFunctionCmt(0x23a84, 
+        "In: D0 = map idx\n\
+    D1 = battle idx", 1);
+
     // GetRemainingFighters
     SetFunctionCmt(0x23c58, 
         "number of force members living, number of enemies living -> D2, D3", 1);
@@ -1372,7 +1408,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x4779e, 
         "returns map setup address in a0", 1);
 
-    // sub_47A50
+    // j_ExecuteBattleCutscene_Intro_0
     SetFunctionCmt(0x47a50, 
         "cutscene before the battle begins", 1);
 
