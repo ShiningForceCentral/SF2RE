@@ -95,8 +95,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","chardata/classnames.bin",file);
 	MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
 	
-	splitSingleChunk(0x1F806,0x1F913,"tbl_CharacterBattleSprites","sprites/charbattlesprites.bin",file);
-	splitSingleChunk(0x1F913,0x1F9E2,"tbl_MonsterBattleSprites","sprites/enemybattlesprites.bin",file);
+	splitSingleChunk(0x1F806,0x1F914,"tbl_CharacterBattleSprites","sprites/charbattlesprites.bin",file);
+	splitSingleChunk(0x1F914,0x1F9E2,"tbl_MonsterBattleSprites","sprites/enemybattlesprites.bin",file);
 	splitSingleChunk(0x1F9E2,0x1FA8A,"tbl_ItemBattleSprites","sprites/weaponsprites.bin",file);
 	splitSingleChunk(0x1FA8A,0x1FAB8,"tbl_CustomBackgrounds","backgrounds/custombackgrounds.bin",file);
 	
