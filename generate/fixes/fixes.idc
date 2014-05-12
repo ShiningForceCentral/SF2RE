@@ -140,13 +140,21 @@ static fixInstructionRepresentations(){
 
 }
 
-
+/*
+ *	fixSingleInstructions()
+ *
+ *  Add a line to this function for every specific instruction that
+ *  needs to be changed with its own individual logic.
+ *
+ */
+ 
 static fixSingleInstructions(){
 
 	OpHex(0x128C0,1);
 	OpHex(0x27982,1);
 	OpHex(0x27A36,1);
 	OpHex(0x27B16,0);
+	OpHex(0x478A6,0);	
 
 }
 
