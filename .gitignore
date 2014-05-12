@@ -2,6 +2,9 @@
 # No rom files or game content on the repository
 *.bin
 
+# No SF2DISASM-related files created by our IDC scripts
+sf2splits.txt
+
 # No IDB IDA Database or related files
 *.idb
 *.id0
@@ -15,6 +18,8 @@
 # No Ultra Edit backup files
 *.bak
 
+# Extra convenience ignores
+swapspace/
 
 #################
 ## Below is the default ignore file, kept as is.
