@@ -86,8 +86,8 @@ SF2RE WORKFLOW
 		These include:
 		
 			ram-migration.idc
-			fixes.idc
 			splits.idc
+			fixes.idc
 			
 		All of these are non-destructive and repeatable at any point, so feel free to run them
 		whenever you need to.  I also don't think you really need to run them in any particular
