@@ -77,6 +77,11 @@ static Segments(void) {
 
 static Enums_0(id) {
 
+	id = AddEnum(-1,"Animation",0x1100000);
+	AddConstEx(id,"ANIM_SPRITE_DEATH_SPIN_DELAY",	0X3,	-1);
+	SetConstCmt(GetConstEx(id,0X3,0,-1),"number of vints to wait between sprite death spins",1);
+	AddConstEx(id,"ANIM_SPRITE_DEATH_NUM_SPINS",	0XB,	-1);
+	SetConstCmt(GetConstEx(id,0XB,0,-1),"number of sprite death spins to perform",1);
 	id = AddEnum(-1,"Traps",0x1100000);
 	AddConstEx(id,"TRAP_SOUNDCOM",	0X0,	-1);
 	AddConstEx(id,"TRAP_CHECKFLAG",	0X1,	-1);
@@ -85,11 +90,6 @@ static Enums_0(id) {
 	AddConstEx(id,"TRAP_TEXTBOX",	0X5,	-1);
 	AddConstEx(id,"TRAP_MAPSCRIPT",	0X6,	-1);
 	AddConstEx(id,"TRAP_VINTFUNCTIONS",	0X9,	-1);
-	id = AddEnum(-1,"Animation",0x1100000);
-	AddConstEx(id,"ANIM_SPRITE_DEATH_SPIN_DELAY",	0X3,	-1);
-	SetConstCmt(GetConstEx(id,0X3,0,-1),"number of vints to wait between sprite death spins",1);
-	AddConstEx(id,"ANIM_SPRITE_DEATH_NUM_SPINS",	0XB,	-1);
-	SetConstCmt(GetConstEx(id,0XB,0,-1),"number of sprite death spins to perform",1);
 	id = AddEnum(-1,"GraphicsValues",0x1100000);
 	AddConstEx(id,"GFX_MAX_SPRITES_TO_LOAD",	0X7,	-1);
 	SetConstCmt(GetConstEx(id,0X7,0,-1),"maximum number of sprites that can be loaded per VInt",1);
@@ -333,6 +333,7 @@ static Enums_0(id) {
 	AddConstEx(id,"ACTION_SPELL",	0X1,	-1);
 	AddConstEx(id,"ACTION_ITEM",	0X2,	-1);
 	AddConstEx(id,"MAX_BTL_IDX",	0X2C,	-1);
+	AddConstEx(id,"BATTLEIDX_FAIRY_WOODS",	0X2C,	-1);
 	id = AddEnum(-1,"Battle_Cutscene",0x100000);
 	AddConstEx(id,"BTLANIM_ATTACK",	0X0,	-1);
 	AddConstEx(id,"BTLANIM_DODGE",	0X1,	-1);
@@ -5333,10 +5334,15 @@ static Bytes_1(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X64DA);
 	MakeCode	(0X64F6);
+	MakeName	(0X64F6,	"UpdateForceAndGetFirstForceMemberIndex");
 	MakeCode	(0X6506);
 	MakeName	(0X6506,	"leader");
+	MakeCode	(x=0X650E);
+	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
 	MakeCode	(0X6518);
 	MakeName	(0X6518,	"player");
+	MakeCode	(x=0X6522);
+	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
 	MakeCode	(0X652C);
 	MakeName	(0X652C,	"name");
 	MakeCode	(0X6540);
@@ -5410,7 +5416,7 @@ static Bytes_1(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X6654);
-	MakeName	(0X6654,	"copyName");
+	MakeName	(0X6654,	"CopyASCIIBytesForDialogueString");
 	MakeCode	(x=0X6658);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -5459,9 +5465,11 @@ static Bytes_1(void) {
 	MakeCode	(x=0X688C);
 	OpHex		(x,	0);
 	MakeCode	(0X689C);
+	MakeName	(0X689C,	"HandleDialogueTypewriting");
 	MakeCode	(x=0X68B8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X68C6,	"skip playing speech sound if character is a space");
 	MakeCode	(x=0X68C8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -5514,6 +5522,7 @@ static Bytes_1(void) {
 	MakeCode	(x=0X697A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeName	(0X697A,	"HandleBlinkingDialogueCursor");
 	MakeCode	(x=0X6980);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -5564,6 +5573,7 @@ static Bytes_1(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X6A80);
+	MakeName	(0X6A80,	"ClearNextLineOfDialoguePixels");
 	MakeCode	(x=0X6A82);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -9376,6 +9386,15 @@ static Bytes_1(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0XE490);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0XE4BE);
 	MakeCode	(0XE4C0);
 	MakeCode	(0XE4C4);
@@ -9408,15 +9427,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0XE5A8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0XE5B4);
 	MakeCode	(x=0XE5F2);
 	OpOff		(x,	0,	0X0);
@@ -14256,7 +14266,7 @@ static Bytes_2(void) {
 	MakeCode	(x=0X165FA);
 	OpHex		(x,	0);
 	MakeStr		(0X16618,	0X16658);
-	MakeName	(0X16618,	"menuLayout_Timer");
+	MakeName	(0X16618,	"VDPTileOrder_TimerWindow");
 	MakeCode	(0X16658);
 	MakeName	(0X16658,	"executeWitchMainMenu");
 	MakeCode	(x=0X1665C);
@@ -14708,6 +14718,15 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X183C0);
 	OpOff		(x,	1,	0X183C0);
 	OpOff		(x,	129,	0X183C0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X183C8);
 	OpOff		(x,	0,	0X183C0);
 	OpOff		(x,	128,	0X183C0);
@@ -14738,15 +14757,6 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X183C0);
 	OpOff		(x,	1,	0X183C0);
 	OpOff		(x,	129,	0X183C0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X183D4);
 	OpOff		(x,	0,	0X183C0);
 	OpOff		(x,	128,	0X183C0);
@@ -20205,6 +20215,15 @@ static Bytes_3(void) {
 	OpOff		(x,	129,	0X0);
 	MakeWord	(0X20DA8);
 	MakeCode	(0X20DAA);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X20DAE);
 	MakeCode	(x=0X20DBC);
 	OpHex		(x,	0);
@@ -20239,15 +20258,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X20E92);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X20E9A);
 	MakeCode	(0X20E9C);
 	MakeWord	(0X20E9E);
@@ -22434,7 +22444,10 @@ static Bytes_4(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X23BB4,	"kill all enemies");
-	MakeCode	(0X23BB4);
+	MakeCode	(x=0X23BB4);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X23BB6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(x=0X23BBA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22465,6 +22478,7 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X23CBA);
 	MakeCode	(x=0X23CBE);
+	OpEnumEx		(x,	0,	GetEnum("Battle"),1);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X23CCC);
@@ -23621,6 +23635,7 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X25692,	"if battle 44, then special battle !");
 	MakeCode	(x=0X25692);
+	OpEnumEx		(x,	0,	GetEnum("Battle"),1);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeWord	(0X256A2);
@@ -25302,6 +25317,15 @@ static Bytes_4(void) {
 	MakeCode	(x=0X443D2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X443FE);
 	MakeCode	(x=0X44404);
 	OpOff		(x,	1,	0X0);
@@ -25344,15 +25368,6 @@ static Bytes_4(void) {
 	OpSign		(x,	1);
 	MakeCode	(x=0X444A6);
 	OpStkvar	(x,	1);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X444EC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -30726,6 +30741,15 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X47BE8);
 	OpOff		(x,	1,	0X47BE8);
 	OpOff		(x,	129,	0X47BE8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X47C32);
 	OpOff		(x,	0,	0X47BE8);
 	OpOff		(x,	128,	0X47BE8);
@@ -30766,15 +30790,6 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X47BE8);
 	OpOff		(x,	1,	0X47BE8);
 	OpOff		(x,	129,	0X47BE8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X47C42);
 	OpOff		(x,	0,	0X47BE8);
 	OpOff		(x,	128,	0X47BE8);
@@ -36741,6 +36756,15 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4A122);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X4A132);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36780,15 +36804,6 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4A350);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X4A370);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -42440,6 +42455,15 @@ static Bytes_7(void) {
 	MakeByte	(0X60A61);
 	MakeByte	(0X60A62);
 	MakeByte	(0X60A63);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60A64);
 	MakeByte	(0X60A65);
 	MakeByte	(0X60A66);
@@ -42481,15 +42505,6 @@ static Bytes_7(void) {
 	MakeByte	(0X60A8A);
 	MakeByte	(0X60A8B);
 	MakeByte	(0X60A8C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60A8D);
 	MakeByte	(0X60A8E);
 	MakeByte	(0X60A8F);
@@ -47450,6 +47465,15 @@ static Bytes_8(void) {
 	MakeDword	(x=0XAD43C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XAD440);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -47480,15 +47504,6 @@ static Bytes_8(void) {
 	MakeByte	(0XAD498);
 	MakeArray	(0XAD498,	0X1A);
 	MakeName	(0XAD498,	"Map34Section6");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XAD4B2);
 	MakeArray	(0XAD4B2,	0X2);
 	MakeName	(0XAD4B2,	"Map34Section7");
@@ -52400,6 +52415,15 @@ static Bytes_9(void) {
 	MakeDword	(x=0XC8AC0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XC8AC4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -52439,15 +52463,6 @@ static Bytes_9(void) {
 	MakeDword	(x=0XC8AF4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XC8AF8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -56263,6 +56278,15 @@ static Bytes_10(void) {
 	MakeDword	(x=0X1AB92A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X1AB92E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -56302,15 +56326,6 @@ static Bytes_10(void) {
 	MakeDword	(x=0X1AB95E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X1AB962);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -59574,6 +59589,7 @@ static Bytes_11(void) {
 	MakeWord	(0XFFAF6C);
 	MakeName	(0XFFAF6C,	"TEXT_WINDOW_INDEX");
 	MakeWord	(0XFFAF6E);
+	MakeName	(0XFFAF6E,	"DIALOGUE_SCROLLING_Y_OFFSET");
 	MakeWord	(0XFFAF70);
 	MakeWord	(0XFFAF72);
 	MakeWord	(0XFFAF74);
@@ -59619,6 +59635,7 @@ static Bytes_11(void) {
 	MakeName	(0XFFAFE7,	"CURRENT_DIAMENU_CHOICE");
 	MakeByte	(0XFFAFFB);
 	MakeArray	(0XFFAFFB,	0X3);
+	MakeName	(0XFFAFFB,	"SPEECH_SOUND_TOGGLE");
 	MakeRptCmt	(0XFFAFFE,	"holds number of tiles to change for eye animation");
 	MakeWord	(0XFFAFFE);
 	MakeName	(0XFFAFFE,	"BLINK_TILE_NUMBER");
@@ -59651,6 +59668,7 @@ static Bytes_11(void) {
 	MakeWord	(0XFFB088);
 	MakeName	(0XFFB088,	"LAND_EFFECT_WINDOW_IDX");
 	MakeWord	(0XFFB08A);
+	MakeName	(0XFFB08A,	"TIMER_WINDOW_INDEX");
 	MakeWord	(0XFFB08C);
 	MakeWord	(0XFFB08E);
 	MakeWord	(0XFFB090);
@@ -59726,7 +59744,7 @@ static Bytes_11(void) {
 	MakeRptCmt	(0XFFB19C,	"always set to 71EC");
 	MakeDword	(0XFFB19C);
 	MakeName	(0XFFB19C,	"AFTER_INTRO_JUMP_OFFSET");
-	MakeRptCmt	(0XFFB1A0,	"used for walking actscript with dynamic parameters");
+	MakeRptCmt	(0XFFB1A0,	"used for walking actscript with dynamic parameters\nalso holds the current address byte when checking the next debug mode input at the start of the game");
 	MakeDword	(0XFFB1A0);
 	MakeDword	(0XFFB1A4);
 	MakeWord	(0XFFB1A8);
@@ -59934,27 +59952,34 @@ static Bytes_11(void) {
 	MakeWord	(0XFFB6D2);
 	MakeName	(0XFFB6D2,	"CURRENT_SHOP");
 	MakeByte	(0XFFB6D4);
+	MakeName	(0XFFB6D4,	"DIALOGUE_TYPEWRITING_CURRENT_X");
 	MakeByte	(0XFFB6D5);
+	MakeName	(0XFFB6D5,	"DIALOGUE_TYPEWRITING_CURRENT_Y");
 	MakeByte	(0XFFB6D6);
+	MakeName	(0XFFB6D6,	"USE_REGULAR_DIALOGUE_FONT");
 	MakeByte	(0XFFB6D7);
 	MakeByte	(0XFFB6D8);
 	MakeArray	(0XFFB6D8,	0X10);
 	MakeWord	(0XFFB6E8);
-	MakeName	(0XFFB6E8,	"DIALOG_LINE_NAME");
+	MakeName	(0XFFB6E8,	"DIALOGUE_NAMEIDX_CHAR");
 	MakeWord	(0XFFB6EA);
-	MakeName	(0XFFB6EA,	"DIALOG_LINE_SPELL_ITEM");
+	MakeName	(0XFFB6EA,	"DIALOGUE_NAMEIDX_SPELLORITEM");
 	MakeDword	(0XFFB6EC);
 	MakeByte	(0XFFB6F0);
 	MakeArray	(0XFFB6F0,	0X86);
-	MakeName	(0XFFB6F0,	"TEXT_NAMES");
+	MakeName	(0XFFB6F0,	"DIALOGUE_ASCII_STRING");
 	MakeRptCmt	(0XFFB776,	"contains current number loaded for printing");
 	MakeWord	(0XFFB776);
-	MakeName	(0XFFB776,	"DIALOG_LINE_NUMBER");
+	MakeName	(0XFFB776,	"DIALOGUE_ASCII_NUMBER");
 	MakeWord	(0XFFB778);
+	MakeRptCmt	(0XFFB77A,	"address of current ASCII byte in RAM (for printing names in dialogue text)");
 	MakeDword	(0XFFB77A);
+	MakeName	(0XFFB77A,	"ADDR_CURRENT_DIALOGUE_ASCII_BYTE");
 	MakeRptCmt	(0XFFB77E,	"address of current Huffman-encoded script byte");
 	MakeDword	(0XFFB77E);
+	MakeName	(0XFFB77E,	"ADDR_CURRENT_HUFFMAN_BYTE");
 	MakeDword	(0XFFB782);
+	MakeName	(0XFFB782,	"ADDR_CURRENT_DIALOGUE_NAMEIDX");
 	MakeByte	(0XFFB786);
 	MakeArray	(0XFFB786,	0X7A);
 	MakeName	(0XFFB786,	"EQUIPPABLE_ITEMS");
@@ -60108,6 +60133,15 @@ static Bytes_11(void) {
 	MakeRptCmt	(0XFFDE9C,	"first direction moved (same as above) if still moving (or holding move buttons)");
 	MakeByte	(0XFFDE9C);
 	MakeName	(0XFFDE9C,	"PRIMARY_WALKING_DIRECTION");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XFFDE9D);
 	MakeByte	(0XFFDE9E);
 	MakeByte	(0XFFDE9F);
@@ -60151,15 +60185,6 @@ static Bytes_11(void) {
 	MakeRptCmt	(0XFFDEED,	"YET TO FIGURE OUT : some kind of counter related to walking, but also related to portrait (wtf ...)");
 	MakeByte	(0XFFDEED);
 	MakeArray	(0XFFDEED,	0X3);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0XFFDEF0,	"1 : in from black\n2 : out to black\n3 : in from white\n4 : out to white\n5 : pulsating 1\n6 : pulsating 2\n7 : flash quickly 1\n8 : nothing?\n9 : half out to black\nA : flicker once\nB : flash quickly 2\nC : instant black\nD : nothing?\nE : half in from black\nF : out to black?");
 	MakeWord	(0XFFDEF0);
 	MakeName	(0XFFDEF0,	"FADING_SETTING");
@@ -60246,9 +60271,9 @@ static Bytes_12(void) {
 	MakeByte	(0XFFF708);
 	MakeByte	(0XFFF709);
 	MakeArray	(0XFFF709,	0X7);
-	MakeRptCmt	(0XFFF710,	"holds which player entity we are (00=BOWIE, 01=caravan, 02=raft)");
+	MakeRptCmt	(0XFFF710,	"holds which player entity type we are (00=BOWIE, 01=caravan, 02=raft)");
 	MakeByte	(0XFFF710);
-	MakeName	(0XFFF710,	"CONTROLLED_ENTITY");
+	MakeName	(0XFFF710,	"PLAYER_TYPE");
 	MakeRptCmt	(0XFFF711,	"holds which map index we're currently using");
 	MakeByte	(0XFFF711);
 	MakeName	(0XFFF711,	"CURRENT_MAP");
