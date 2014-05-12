@@ -1,0 +1,105 @@
+SF2RE WORKFLOW
+
+1. INITIAL - You want to create a new IDB from scratch based on the scripts on github.
+
+	a. Create a new IDB from the base Shining Force 2 ROM.
+	
+	b. Follow the steps from GENERATE below.
+	
+2. EXTRACT - You are ready to pull down the latest changes, but you need to extract your own local changes first.
+
+	a. Run the "Dump database to IDC file..." command from IDA.
+		
+		This will create a list of commands required to recreate your IDB as it is.
+		You must do this BEFORE you pull down the latest changes, if the latest
+		commits contain changes to sf2.idc.
+		
+	b. Run extract/ExportFunctionComments.idc.
+	
+		This step will export the repeatable function comments from your IDB by overwriting the
+		disasm/ImportGeneratedFunctionComments.idc script.
+		
+		Make sure you have run the latest version of disasm/ImportGeneratedFunctionComments.idc
+		from the repo so that your IDB contains all of those comments in addition to the ones
+		you have added. If you have done this, and you have not added any repeatable function
+		comments of your own, git should not detect this file as changed.
+		
+	c. Commit your sf2.idc and any other extracted contents.
+		
+		You can also include your changes on other IDC scripts, that's fine.	
+		This includes the following files that we have to create in addition
+		to the main dump sf2.idc step:
+			
+			ImportGeneratedFunctionComments.idc
+
+3. MERGE - You must merge your changes (specifically sf2.idc) upstream.
+
+	a. Start a git merge between your local commit(s) and the latest github version.
+	
+		There will almost certainly be conflicts in sf2.idc, due to the way IDA splits up its
+		commands into smaller Bytes_X functions.  These are incredibly annoying and have to be
+		dealt with by hand, but the process for doing so is rather straightforward.
+		
+		Any other conflicts can be handled like you would normally, just use your judgment.
+	
+	b. Deal with sf2.idc.
+	
+		This is the step that requires the most care, and is the reason I had to write this
+		document.  To handle sf2.idc as expertly as possible requires a pretty good knowledge
+		of the various IDC commands you'll see in it (such as OpOff, OpHex, MakeCode, etc.)
+		which I won't get into here.
+		
+		Here are the special considerations you need to make when merging sf2.idc conflicts:
+		
+			Because both your LOCAL version and the REMOTE version have had changes made to
+			them, the Bytes_X functions will be in different places.  git will attempt to
+			merge these two files together and see both, so it will happily think both
+			should be included.  This will result in a non-compiling IDC file, which is very bad.
+			Simply put, just pick one side and go with it -- take the Bytes_X removes and adds
+			from one side and use all of them.  This way there is only one set of each in the
+			resulting BASE and there should be no problem.  To test this, search for "Bytes_" in
+			the resulting BASE and make sure they only show up once, and in order, and they match
+			the calls made in the main "Bytes" function.
+	
+	c. Handle any other conflicts as per normal.
+		
+4. GENERATE - You have merged your changes with upstream, now you need to apply them to your IDB.
+
+	a. MAKE A BACKUP OF YOUR PACKED IDB FILE JUST IN CASE SOMETHING GOES HORRIBLY WRONG.
+	
+		I can't stress this enough.  As of 5/12/2014 we're kind of new to this, and dealing with
+		IDA's foibles and the limitations of sf2.idc is a big pain, so bad things have been
+		known to happen.  Better safe than sorry.
+		
+	b. Run disasm/sf2.idc on your IDB.
+	
+		Because IDA does not export everything with its "Dump database" command, this step will 
+		undo the changes done by the following scripts:
+		
+			ram-migration.idc
+		
+		If running this causes errors, stop immediately and try to figure out what happened.
+		I suggest you close the database without saving and try to recreate the problems.
+	
+	c. Run the various fix scripts.
+	
+		These include:
+		
+			ram-migration.idc
+			fixes.idc
+			splits.idc
+			
+		All of these are non-destructive and repeatable at any point, so feel free to run them
+		whenever you need to.  I also don't think you really need to run them in any particular
+		order.
+		
+	d. Run disasm/ImportGeneratedFunctionComments.idc.
+	
+		This step will import the combined repeatable function comments into your IDB,
+		since IDA does not export them with the "Dump database" step.
+		
+		This step is also non-destructive.  This means that you can safely run it every time
+		you pull down without having to worry about your non-exported comments
+		disappearing.
+		
+	If everything went fine, push your merge commit upstream.
