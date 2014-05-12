@@ -6484,7 +6484,6 @@ static Bytes_1(void) {
 	MakeName	(0X7F9B,	"aSystems_");
 	MakeCode	(0X7FA4);
 	MakeName	(0X7FA4,	"nullsub_17");
-	MakeByte	(0X7FA6);
 	MakeArray	(0X7FA6,	0X5A);
 	MakeCode	(0X8000);
 	MakeName	(0X8000,	"j_FindCombatantName");
@@ -24424,7 +24423,6 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X27D76);
 	OpHex		(x,	0);
-	MakeByte	(0X27D8E);
 	MakeArray	(0X27D8E,	0X272);
 	MakeDword	(x=0X28000);
 	OpOff		(x,	0,	0X0);
@@ -25066,7 +25064,6 @@ static Bytes_4(void) {
 	MakeByte	(0X4201E);
 	MakeArray	(0X4201E,	0X5C9);
 	MakeName	(0X4201E,	"GameStaff");
-	MakeByte	(0X425E7);
 	MakeArray	(0X425E7,	0X1A19);
 	MakeCode	(0X44000);
 	MakeCode	(0X44004);
@@ -25345,6 +25342,8 @@ static Bytes_4(void) {
 	MakeCode	(0X4449C);
 	MakeCode	(x=0X444A2);
 	OpSign		(x,	1);
+	MakeCode	(x=0X444A6);
+	OpStkvar	(x,	1);
 }
 
 //------------------------------------------------------------------------
@@ -25354,8 +25353,6 @@ static Bytes_5(void) {
         auto x;
 #define id x
 
-	MakeCode	(x=0X444A6);
-	OpStkvar	(x,	1);
 	MakeCode	(x=0X444EC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44228,7 +44225,6 @@ static Bytes_8(void) {
 	MakeWord	(x=0X63484);
 	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X63486);
-	MakeByte	(0X6348C);
 	MakeArray	(0X6348C,	0XB74);
 	MakeDword	(x=0X64000);
 	OpOff		(x,	0,	0X0);
@@ -50335,7 +50331,6 @@ static Bytes_9(void) {
 	MakeByte	(0XC7EB6);
 	MakeArray	(0XC7EB6,	0X16);
 	MakeName	(0XC7EB6,	"Map78Section9");
-	MakeByte	(0XC7ECC);
 	MakeArray	(0XC7ECC,	0X134);
 	MakeDword	(x=0XC8000);
 	OpOff		(x,	0,	0X0);
@@ -56304,6 +56299,9 @@ static Bytes_10(void) {
 	MakeDword	(x=0X1AB95A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeDword	(x=0X1AB95E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -56313,9 +56311,6 @@ static Bytes_11(void) {
         auto x;
 #define id x
 
-	MakeDword	(x=0X1AB95E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 	MakeDword	(x=0X1AB962);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -60153,6 +60148,9 @@ static Bytes_11(void) {
 	MakeName	(0XFFDEEB,	"WAIT_FOR_MUSIC_END");
 	MakeByte	(0XFFDEEC);
 	MakeName	(0XFFDEEC,	"LAST_PLAYER_INPUT");
+	MakeRptCmt	(0XFFDEED,	"YET TO FIGURE OUT : some kind of counter related to walking, but also related to portrait (wtf ...)");
+	MakeByte	(0XFFDEED);
+	MakeArray	(0XFFDEED,	0X3);
 }
 
 //------------------------------------------------------------------------
@@ -60162,9 +60160,6 @@ static Bytes_12(void) {
         auto x;
 #define id x
 
-	MakeRptCmt	(0XFFDEED,	"YET TO FIGURE OUT : some kind of counter related to walking, but also related to portrait (wtf ...)");
-	MakeByte	(0XFFDEED);
-	MakeArray	(0XFFDEED,	0X3);
 	MakeRptCmt	(0XFFDEF0,	"1 : in from black\n2 : out to black\n3 : in from white\n4 : out to white\n5 : pulsating 1\n6 : pulsating 2\n7 : flash quickly 1\n8 : nothing?\n9 : half out to black\nA : flicker once\nB : flash quickly 2\nC : instant black\nD : nothing?\nE : half in from black\nF : out to black?");
 	MakeWord	(0XFFDEF0);
 	MakeName	(0XFFDEF0,	"FADING_SETTING");
