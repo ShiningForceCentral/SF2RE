@@ -37,10 +37,10 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(2);
+	XrefShow(20);
 	AutoShow(1);
-	Indent(16);
-	CmtIndent(40);
+	Indent(8);
+	CmtIndent(80);
 	TailDepth(0x10);
 }
 
@@ -85,7 +85,14 @@ static Enums_0(id) {
 	AddConstEx(id,"TRAP_TEXTBOX",	0X5,	-1);
 	AddConstEx(id,"TRAP_MAPSCRIPT",	0X6,	-1);
 	AddConstEx(id,"TRAP_VINTFUNCTIONS",	0X9,	-1);
+	id = AddEnum(-1,"Animation",0x1100000);
+	AddConstEx(id,"ANIM_SPRITE_DEATH_SPIN_DELAY",	0X3,	-1);
+	SetConstCmt(GetConstEx(id,0X3,0,-1),"number of vints to wait between sprite death spins",1);
+	AddConstEx(id,"ANIM_SPRITE_DEATH_NUM_SPINS",	0XB,	-1);
+	SetConstCmt(GetConstEx(id,0XB,0,-1),"number of sprite death spins to perform",1);
 	id = AddEnum(-1,"GraphicsValues",0x1100000);
+	AddConstEx(id,"GFX_MAX_SPRITES_TO_LOAD",	0X7,	-1);
+	SetConstCmt(GetConstEx(id,0X7,0,-1),"maximum number of sprites that can be loaded per VInt",1);
 	AddConstEx(id,"GFX_DIAMENU_ICON_NUM_PIXELS",	0X240,	-1);
 	id = AddEnum(-1,"Combatant",0x100000);
 	AddConstEx(id,"COM_ALLY_START",	0X0,	-1);
@@ -107,15 +114,27 @@ static Enums_0(id) {
 	AddConstEx(id,"COM_STATUS_MASK_MUDDLE2",	0X8,	-1);
 	AddConstEx(id,"COM_STATUS_MASK_MUDDLE",	0X30,	-1);
 	id = AddEnum(-1,"CharDef",0x100000);
-	AddConstEx(id,"MAX_CHAR_IDX",	0X1D,	-1);
+	AddConstEx(id,"CHAR_BOWIE",	0X0,	-1);
+	AddConstEx(id,"CHARDEF_STARTDATA_ENTRYSIZE",	0X6,	-1);
+	AddConstEx(id,"CHAR_PETER",	0X7,	-1);
+	AddConstEx(id,"CHAR_LEMON",	0X1C,	-1);
+	AddConstEx(id,"CHAR_MAX_IDX",	0X1D,	-1);
+	id = AddEnum(-1,"Force",0x1100000);
+	AddConstEx(id,"FORCE_MAX_SIZE",	0XC,	-1);
 	id = AddEnum(-1,"CharEntry",0x100000);
 	AddConstEx(id,"CHAR_ITEMSLOTS",	0X4,	-1);
 	AddConstEx(id,"CHAR_SPELLSLOTS",	0X4,	-1);
 	AddConstEx(id,"CHAR_NAMELENGTH",	0XA,	-1);
+	AddConstEx(id,"CHAR_ENTRY_SIZE",	0X38,	-1);
 	id = AddEnum(-1,"CharEntry_Offsets",0x100000);
 	AddConstEx(id,"CHAR_OFFSET_NAME",	0X0,	-1);
 	AddConstEx(id,"CHAR_OFFSET_CLASS_IDX",	0XA,	-1);
-	AddConstEx(id,"CHAR_OFFSET_ITEMS",	0X20,	-1);
+	AddConstEx(id,"CHAR_OFFSET_ITEM_0",	0X20,	-1);
+	AddConstEx(id,"CHAR_OFFSET_ITEM_1",	0X22,	-1);
+	AddConstEx(id,"CHAR_OFFSET_ITEM_2",	0X24,	-1);
+	AddConstEx(id,"CHAR_OFFSET_ITEM_3",	0X26,	-1);
+	AddConstEx(id,"CHAR_OFFSET_SPELL_0",	0X28,	-1);
+	AddConstEx(id,"test",	0X28,	-1);
 	AddConstEx(id,"CHAR_OFFSET_STATUS",	0X2C,	-1);
 	id = AddEnum(-1,"ClassDef",0x100000);
 	AddConstEx(id,"CLASSIDX_BRGN",	0X16,	-1);
@@ -131,15 +150,25 @@ static Enums_0(id) {
 	id = AddEnum(-1,"ItemDef",0x100000);
 	AddConstEx(id,"ITEMDEF_OFFSET_MAXRANGE",	0X4,	-1);
 	AddConstEx(id,"ITEMDEF_OFFSET_MINRANGE",	0X5,	-1);
+	AddConstEx(id,"ITEMDEF_LIFE_RING_RECOVERY",	0X5,	-1);
 	AddConstEx(id,"ITEMDEF_OFFSET_TYPE",	0X8,	-1);
 	AddConstEx(id,"ITEMDEF_OFFSET_SPELL",	0X9,	-1);
-	AddConstEx(id,"MAX_ITEM_IDX",	0X7F,	-1);
+	AddConstEx(id,"ITEM_MAX_IDX",	0X7F,	-1);
+	id = AddEnum(-1,"Deals",0x1100000);
+	AddConstEx(id,"DEALS_ADDAMT_EVEN",	0X1,	-1);
+	AddConstEx(id,"DEALS_MAX_NUM_PER_ITEM",	0XF,	-1);
+	AddConstEx(id,"DEALS_BIT_REMAINDER",	0X10,	-1);
+	SetConstCmt(GetConstEx(id,0X10,0,-1),"since deals are stacked 2 to a byte, this is the bit index that stores whether we are an even or odd item idx",1);
+	AddConstEx(id,"DEALS_ADDAMT_ODD",	0X10,	-1);
+	id = AddEnum(-1,"Caravan",0x1100000);
+	AddConstEx(id,"CARAVAN_MAX_ITEMS",	0X3F,	-1);
 	id = AddEnum(-1,"ItemDef_Idx",0x100000);
 	AddConstEx(id,"ITEMIDX_HEALING_RAIN",	0X8,	-1);
 	AddConstEx(id,"ITEMIDX_POWER_RING",	0X13,	-1);
 	AddConstEx(id,"ITEMIDX_PROTECT_RING",	0X14,	-1);
 	AddConstEx(id,"ITEMIDX_QUICK_RING",	0X15,	-1);
 	AddConstEx(id,"ITEMIDX_RUNNING_RING",	0X16,	-1);
+	AddConstEx(id,"ITEMIDX_LIFE_RING",	0X7C,	-1);
 	AddConstEx(id,"ITEMIDX_NOTHING",	0X7F,	-1);
 	id = AddEnum(-1,"ItemDef_Type_Bitfield",0x100000);
 	AddConstEx(id,"ITEMTYPE_BIT_WEAPON",	0X1,	-1);
@@ -160,6 +189,11 @@ static Enums_0(id) {
 	AddConstEx(id,"ITEM_BIT_BROKEN",	0XF,	-1);
 	AddConstEx(id,"ITEM_MASK_IDX",	0X7F,	-1);
 	id = AddEnum(-1,"MapDef",0x100000);
+	AddConstEx(id,"MAP_BLOCKIDX_CLOSEDCHEST",	0XD801,	-1);
+	AddConstEx(id,"MAP_BLOCKIDX_OPENCHEST",	0XD802,	-1);
+	AddConstEx(id,"MAP_NULLPOSITION",	0XFFFF,	-1);
+	id = AddEnum(-1,"Map_Entity",0x1100000);
+	AddConstEx(id,"ENTITYDEF_OFFSET_Y",	0X2,	-1);
 	id = AddEnum(-1,"SoundCommands",0x1100000);
 	AddConstEx(id,"SOUND_COMMAND_INIT_DRIVER",	0X20,	-1);
 	AddConstEx(id,"SOUND_COMMAND_WAIT_MUSIC_END",	0XF0,	-1);
@@ -310,9 +344,12 @@ static Enums_0(id) {
 	AddConstEx(id,"BCSTACK_DBGCOUNTER",	0X14,	-1);
 	id = AddEnum(-1,"Def_Lengths",0x100000);
 	AddConstEx(id,"SIZE_ITEM",	0X2,	-1);
+	AddConstEx(id,"BITS_HALFBYTE",	0X4,	-1);
 	AddConstEx(id,"SIZE_ITEMDEF",	0X10,	-1);
 	id = AddEnum(-1,"Flags",0x100000);
-	AddConstEx(id,"FLAG_BATTLE0",	0X190,	-1);
+	AddConstEx(id,"FLAG_COUNT_FORCEMEMBERS_JOINED",	0X20,	-1);
+	AddConstEx(id,"FLAGIDX_BATTLE0",	0X190,	-1);
+	AddConstEx(id,"FLAG_MASK",	0X3FF,	-1);
 	id = AddEnum(-1,"Codes",0x100000);
 	AddConstEx(id,"CODE_NOTHING_BYTE",	0XFF,	-1);
 	AddConstEx(id,"CODE_NOTHING_WORD",	0XFFFF,	-1);
@@ -321,6 +358,37 @@ static Enums_0(id) {
 	id = AddEnum(-1,"Text_Index",0x100000);
 	AddConstEx(id,"TEXTIDX_HQ",	0X2E,	-1);
 	AddConstEx(id,"TEXTIDX_CARAVANDESC_ITEMISFOR",	0X60,	-1);
+	id = AddEnum(-1,"Windowing",0x1100000);
+	AddConstEx(id,"WINDOW_MEMBER_KD_TEXT_DEFEATS_LENGTH",	0X6,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_TEXT_KILLS_LENGTH",	0X6,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_TEXT_DEFEATS_OFFSET",	0X24,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_STATS_TEXT_CLASS_OFFSET",	0X2C,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_TEXT_KILLS_OFFSET",	0X72,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_VDPTILEORDER_BYTESIZE",	0XC0,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_PORTRAIT_POSITION",	0X201,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_POSITION",	0X20B,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_GOLD_POSITION",	0X217,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_STATS_VDPTILEORDER_BYTESIZE",	0X444,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_PORTRAIT_SIZE",	0X80A,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_SIZE",	0X80C,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_GOLD_SIZE",	0X80C,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_STATS_POSITION",	0XA01,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_STATS_SIZE",	0X151A,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_STATS_DEST",	0X2001,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_KD_DEST",	0XF80B,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_GOLD_DEST",	0XF81C,	-1);
+	AddConstEx(id,"WINDOW_MEMBER_PORTRAIT_DEST",	0XF8F6,	-1);
+	id = AddEnum(-1,"Text",0x1100000);
+	AddConstEx(id,"TEXT_CODE_NEWLINE",	0XB,	-1);
+	AddConstEx(id,"TEXT_CODE_MOVEDOWN",	0XD,	-1);
+	AddConstEx(id,"TEXT_CODE_TOGGLEFONTCOLOR",	0X5C,	-1);
+	id = AddEnum(-1,"VDP_Tile",0x1100000);
+	AddConstEx(id,"VDPTILE_PALETTE3_MASK",	0XC000,	-1);
+	AddConstEx(id,"VDPTILE_STATUSEFFECT_CURSE",	0XC0ECC0ED,	-1);
+	id = AddEnum(-1,"Status_Effects",0x1100000);
+	AddConstEx(id,"STATUSEFFECT_LASTING_EFFECTS_MASK",	0X7,	-1);
+	id = AddEnum(-1,"Gold",0x1100000);
+	AddConstEx(id,"GOLD_STARTING_AMOUNT",	0X3C,	-1);
 	return id;
 }
 
@@ -1579,7 +1647,7 @@ static Bytes_0(void) {
 	MakeRptCmt	(0XECE,	"wait for DMA free");
 	MakeRptCmt	(0XEE0,	"auto increment : 2");
 	MakeCode	(0XEEE);
-	MakeName	(0XEEE,	"waitNextVint");
+	MakeName	(0XEEE,	"WaitForVInt");
 	MakeCode	(x=0XEF6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -3534,6 +3602,8 @@ static Bytes_0(void) {
 	MakeCode	(0X4156);
 	MakeName	(0X4156,	"OpenChest");
 	MakeRptCmt	(0X4174,	"set block idx to open chest");
+	MakeCode	(x=0X4174);
+	OpEnumEx		(x,	0,	GetEnum("MapDef"),0);
 	MakeCode	(x=0X417A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -3547,6 +3617,8 @@ static Bytes_0(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X4194);
 	MakeName	(0X4194,	"CloseChest");
+	MakeCode	(x=0X41A6);
+	OpEnumEx		(x,	0,	GetEnum("MapDef"),0);
 	MakeCode	(x=0X41AC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -4929,9 +5001,6 @@ static Bytes_0(void) {
 	MakeName	(0X5CA6,	"esc30_branch");
 	MakeCode	(0X5CAE);
 	MakeName	(0X5CAE,	"esc31_branchIfFlagSet");
-	MakeCode	(0X5CC6);
-	MakeCode	(0X5CCC);
-	MakeName	(0X5CCC,	"esc32_branchIfFlagClear");
 }
 
 //------------------------------------------------------------------------
@@ -4941,6 +5010,9 @@ static Bytes_1(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X5CC6);
+	MakeCode	(0X5CCC);
+	MakeName	(0X5CCC,	"esc32_branchIfFlagClear");
 	MakeCode	(0X5CE4);
 	MakeCode	(0X5CEA);
 	MakeName	(0X5CEA,	"esc33_randomBranch");
@@ -6412,6 +6484,7 @@ static Bytes_1(void) {
 	MakeName	(0X7F9B,	"aSystems_");
 	MakeCode	(0X7FA4);
 	MakeName	(0X7FA4,	"nullsub_17");
+	MakeByte	(0X7FA6);
 	MakeArray	(0X7FA6,	0X5A);
 	MakeCode	(0X8000);
 	MakeName	(0X8000,	"j_FindCombatantName");
@@ -7290,16 +7363,40 @@ static Bytes_1(void) {
 	MakeCode	(0X96DC);
 	MakeCode	(0X9736);
 	MakeName	(0X9736,	"NewGame");
+	MakeCode	(x=0X973E);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X9740);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0X974C,	"starting gold value");
+	MakeCode	(x=0X974C);
+	OpEnumEx		(x,	0,	GetEnum("Gold"),0);
 	MakeRptCmt	(0X9752,	"starting character");
+	MakeCode	(x=0X9752);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
 	MakeCode	(0X975E);
 	MakeName	(0X975E,	"InitCharacterDataInRAM");
+	MakeCode	(x=0X9764);
+	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
 	MakeCode	(x=0X9768);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X976E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X9788);
+	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
+	MakeCode	(x=0X97A2);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
+	MakeCode	(x=0X97C6);
+	OpEnumEx		(x,	1,	GetEnum("CharEntry_Offsets"),0);
+	MakeCode	(x=0X97CC);
+	OpEnumEx		(x,	1,	GetEnum("CharEntry_Offsets"),0);
+	MakeCode	(x=0X97D2);
+	OpEnumEx		(x,	1,	GetEnum("CharEntry_Offsets"),0);
+	MakeCode	(x=0X97D8);
+	OpEnumEx		(x,	1,	GetEnum("CharEntry_Offsets"),0);
+	MakeCode	(x=0X97DC);
+	OpEnumEx		(x,	1,	GetEnum("CharEntry_Offsets"),0);
 	MakeCode	(0X97F8);
 	MakeName	(0X97F8,	"SetCharacterClassData");
 	MakeCode	(x=0X9800);
@@ -7359,7 +7456,8 @@ static Bytes_1(void) {
 	MakeName	(0X98C4,	"SetFlag");
 	MakeCode	(0X98D4);
 	MakeName	(0X98D4,	"ClearFlag");
-	MakeCode	(0X98E8);
+	MakeCode	(x=0X98E8);
+	OpEnumEx		(x,	0,	GetEnum("Flags"),0);
 	MakeName	(0X98E8,	"GetFlag");
 	MakeRptCmt	(0X98EE,	"get the byte in which the flag is stored");
 	MakeRptCmt	(0X98F2,	"go to the flag location in RAM");
@@ -7381,6 +7479,8 @@ static Bytes_1(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X9918,	"loop 30 times");
+	MakeCode	(x=0X9918);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X993A);
 	MakeCode	(x=0X9944);
 	OpOff		(x,	1,	0X0);
@@ -7394,30 +7494,53 @@ static Bytes_1(void) {
 	MakeCode	(0X9956);
 	MakeName	(0X9956,	"JoinForce");
 	MakeCode	(x=0X9966);
+	OpEnumEx		(x,	0,	GetEnum("Force"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X9976);
 	MakeName	(0X9976,	"LeaveForce");
+	MakeCode	(x=0X9986);
+	OpEnumEx		(x,	0,	GetEnum("MapDef"),0);
 	MakeCode	(0X9994);
 	MakeName	(0X9994,	"IsInBattleParty");
+	MakeCode	(x=0X999E);
+	OpEnumEx		(x,	0,	GetEnum("Flags"),0);
 	MakeCode	(0X99AC);
 	MakeName	(0X99AC,	"JoinBattleParty");
+	MakeCode	(x=0X99B4);
+	OpEnumEx		(x,	0,	GetEnum("Flags"),0);
 	MakeCode	(0X99C0);
 	MakeName	(0X99C0,	"LeaveBattleParty");
+	MakeCode	(x=0X99C8);
+	OpEnumEx		(x,	0,	GetEnum("Flags"),0);
 	MakeCode	(0X99DE);
 	MakeName	(0X99DE,	"GetDealsItemAmount");
 	MakeCode	(0X99EC);
 	MakeName	(0X99EC,	"AddItemToDeals");
+	MakeCode	(x=0X99F4);
+	OpEnumEx		(x,	0,	GetEnum("Deals"),0);
 	MakeCode	(0X9A02);
 	MakeName	(0X9A02,	"RemoveItemFromDeals");
-	MakeCode	(0X9A16);
+	MakeCode	(x=0X9A16);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Idx"),0);
 	MakeName	(0X9A16,	"GetDealsItemInfo");
 	MakeCode	(x=0X9A1C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0X9A34);
+	MakeCode	(x=0X9A28);
+	OpEnumEx		(x,	0,	GetEnum("Deals"),0);
+	MakeCode	(x=0X9A2E);
+	OpEnumEx		(x,	0,	GetEnum("Def_Lengths"),0);
+	MakeCode	(x=0X9A30);
+	OpEnumEx		(x,	0,	GetEnum("Deals"),1);
+	MakeCode	(x=0X9A34);
+	OpEnumEx		(x,	0,	GetEnum("Deals"),0);
+	MakeCode	(x=0X9A38);
+	OpEnumEx		(x,	0,	GetEnum("Deals"),0);
 	MakeCode	(0X9A3C);
 	MakeName	(0X9A3C,	"AddItemToCaravan");
+	MakeCode	(x=0X9A40);
+	OpEnumEx		(x,	0,	GetEnum("Caravan"),0);
 	MakeCode	(x=0X9A42);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -7427,6 +7550,8 @@ static Bytes_1(void) {
 	MakeCode	(x=0X9A4C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X9A50);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Idx"),0);
 	MakeCode	(x=0X9A58);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -7442,6 +7567,8 @@ static Bytes_1(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X9A84);
+	MakeCode	(x=0X9A90);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(0X9A9A);
 	MakeName	(0X9A9A,	"DebugModeSelectAction");
 	MakeCode	(x=0X9A9E);
@@ -8416,7 +8543,6 @@ static Bytes_1(void) {
 	MakeName	(0XC71A,	"GetClosestAttackPosition");
 	MakeCode	(x=0XC71E);
 	OpSign		(x,	1);
-	OpDecimal	(x,	1);
 	MakeRptCmt	(0XC74E,	"D6 is now -max range");
 	MakeRptCmt	(0XC75C,	"D5 is now (max range - max range) ???");
 	MakeRptCmt	(0XC786,	"already in range, so end because it can't get cheaper");
@@ -9283,6 +9409,15 @@ static Bytes_1(void) {
 	MakeCode	(x=0XE5A8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0XE5B4);
 	MakeCode	(x=0XE5F2);
 	OpOff		(x,	0,	0X0);
@@ -9390,15 +9525,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0XE968);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0XE96E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -10013,7 +10139,7 @@ static Bytes_2(void) {
 	MakeDword	(x=0X100C4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X100C4,	"j_menuLayout_MemberStats");
+	MakeName	(0X100C4,	"pt_VDPTileOrder_MemberStatsWindow");
 	MakeCode	(x=0X100C8);
 	OpSign		(x,	1);
 	MakeCode	(x=0X100CC);
@@ -10028,9 +10154,15 @@ static Bytes_2(void) {
 	MakeName	(0X100E2,	"WriteTilesFromASCII");
 	MakeCode	(x=0X100E6);
 	OpStkvar	(x,	0);
-	MakeDword	(x=0X100FF);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X100FA);
+	OpEnumEx		(x,	0,	GetEnum("VDP_Tile"),0);
+	MakeCode	(x=0X100FE);
+	OpEnumEx		(x,	0,	GetEnum("Text"),0);
+	MakeCode	(x=0X10104);
+	OpEnumEx		(x,	0,	GetEnum("Text"),0);
+	MakeCode	(x=0X1010A);
+	OpEnumEx		(x,	0,	GetEnum("Text"),0);
+	MakeRptCmt	(0X10122,	"test if we're using the orange font");
 	MakeCode	(x=0X10122);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X10138);
@@ -10038,6 +10170,7 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X10140);
 	MakeCode	(0X10152);
+	MakeRptCmt	(0X1015A,	"VDP tile idxes to substitute in for symbol ASCII values when using orange font");
 	MakeByte	(0X1015A);
 	MakeByte	(0X1015B);
 	MakeByte	(0X1015C);
@@ -10055,7 +10188,9 @@ static Bytes_2(void) {
 	MakeByte	(0X10168);
 	MakeByte	(0X10169);
 	MakeCode	(0X1016A);
+	MakeRptCmt	(0X10174,	"0x5C: toggle to/from orange font");
 	MakeCode	(x=0X10174);
+	OpHex		(x,	0);
 	OpStkvar	(x,	1);
 	MakeCode	(0X1017C);
 	MakeCode	(0X1018E);
@@ -11424,13 +11559,37 @@ static Bytes_2(void) {
 	MakeCode	(x=0X11C3E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X11C42);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11C46);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeRptCmt	(0X11C4A,	"stats window, on the right");
+	MakeCode	(x=0X11C52);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),1);
+	MakeCode	(x=0X11C56);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeRptCmt	(0X11C5A,	"portrait, upper left");
 	MakeCode	(x=0X11C64);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X11C68);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11C6C);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeRptCmt	(0X11C70,	"kills/defeat, middle left");
+	MakeCode	(x=0X11C78);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),1);
+	MakeCode	(x=0X11C7C);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeRptCmt	(0X11C80,	"gold, bottom left");
+	MakeCode	(x=0X11CAA);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11CB8);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11CCA);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11CDE);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X11CEA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -11541,17 +11700,30 @@ static Bytes_2(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X11EEA);
-	MakeName	(0X11EEA,	"copyStatusEffectTilesToRAM");
+	MakeName	(0X11EEA,	"AddStatusEffectTileIndexesToVDPTileOrder");
 	MakeCode	(0X11EFE);
+	MakeName	(0X11EFE,	"LoadTileDataForMemberScreen");
 	MakeCode	(x=0X11F14);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X11F1E);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11F26);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeRptCmt	(0X11F30,	"character idx is negative (a monster), so do not display kills");
+	MakeCode	(x=0X11F3C);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),1);
+	MakeCode	(x=0X11F42);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
+	MakeCode	(x=0X11F54);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X11F5A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X11F64);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X11F70,	"get character idx from stack");
 	MakeCode	(x=0X11F80);
 	OpSign		(x,	0);
 	MakeCode	(x=0X11F86);
@@ -11572,10 +11744,14 @@ static Bytes_2(void) {
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X11FF8);
 	OpStkvar	(x,	1);
+	MakeCode	(x=0X12002);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1200A);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X1200E);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X12012);
+	OpEnumEx		(x,	0,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X12026);
 	OpHex		(x,	0);
 	MakeCode	(x=0X1202E);
@@ -11589,6 +11765,8 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1204A);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X1205C);
+	OpEnumEx		(x,	0,	GetEnum("VDP_Tile"),0);
 	MakeCode	(x=0X120F6);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X12106);
@@ -11893,7 +12071,7 @@ static Bytes_2(void) {
 	MakeByte	(0X126EB);
 	MakeByte	(0X126EC);
 	MakeByte	(0X126ED);
-	MakeName	(0X1278E,	"menuLayout_MemberBottomLeft");
+	MakeName	(0X1278E,	"VDPTileOrder_MemberKDWindow");
 	MakeCode	(x=0X1288E);
 	OpSign		(x,	1);
 	MakeCode	(x=0X12892);
@@ -14220,7 +14398,7 @@ static Bytes_2(void) {
 	OpHex		(x,	0);
 	MakeCode	(0X16A0C);
 	MakeCode	(0X16A30);
-	MakeName	(0X16A62,	"menuLayout_MemberStats");
+	MakeName	(0X16A62,	"VDPTileOrder_MemberStatsWindow");
 	MakeByte	(0X16EA6);
 	MakeArray	(0X16EA6,	0X800);
 	MakeName	(0X16EA6,	"ItemDefs");
@@ -14561,6 +14739,15 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X183C0);
 	OpOff		(x,	1,	0X183C0);
 	OpOff		(x,	129,	0X183C0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X183D4);
 	OpOff		(x,	0,	0X183C0);
 	OpOff		(x,	128,	0X183C0);
@@ -14748,15 +14935,6 @@ static Bytes_2(void) {
 	MakeCode	(x=0X186BC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X186CC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -17232,8 +17410,7 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1B3A0);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	OpHex		(x,	0);
 	MakeCode	(x=0X1B3CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -20063,6 +20240,15 @@ static Bytes_3(void) {
 	MakeCode	(x=0X20E92);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X20E9A);
 	MakeCode	(0X20E9C);
 	MakeWord	(0X20E9E);
@@ -20260,15 +20446,6 @@ static Bytes_3(void) {
 	MakeCode	(0X2133A);
 	MakeWord	(0X2133C);
 	MakeCode	(0X2133E);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X2134A,	"But nothing happened.");
 	MakeWord	(0X2134A);
 	MakeCode	(0X2134C);
@@ -22053,6 +22230,8 @@ static Bytes_4(void) {
 	MakeCode	(x=0X23874);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X23880);
+	OpEnumEx		(x,	0,	GetEnum("Map_Entity"),0);
 	ExtLinA		(0X2388A,	0,	"");
 	ExtLinA		(0X2388A,	1,	"; get activated block position");
 	ExtLinA		(0X2388A,	2,	"");
@@ -22187,8 +22366,11 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X23A84,	"ExecuteBattleLoop");
+	MakeCode	(x=0X23A88);
+	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(0X23A8A);
-	MakeCode	(0X23A8C);
+	MakeCode	(x=0X23A8C);
+	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(0X23A8E);
 	MakeCode	(0X23A90);
 	MakeCode	(x=0X23A92);
@@ -22196,6 +22378,8 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X23A98);
+	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeRptCmt	(0X23A9A,	"clear \"game begun\" flag ?");
 	MakeWord	(0X23A9A);
 	MakeCode	(0X23A9C);
@@ -22264,8 +22448,22 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X23BFC);
 	MakeName	(0X23BFC,	"HealAliveCharsAndImmortals");
+	MakeCode	(x=0X23C02);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
+	MakeCode	(x=0X23C04);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
+	MakeCode	(x=0X23C0C);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
+	MakeCode	(x=0X23C3C);
+	OpEnumEx		(x,	0,	GetEnum("Status_Effects"),0);
 	MakeCode	(0X23C58);
 	MakeName	(0X23C58,	"GetRemainingFighters");
+	MakeCode	(x=0X23C5E);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X23C82);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0X23C86);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X23CBA);
 	MakeCode	(x=0X23CBE);
 	OpOff		(x,	1,	0X0);
@@ -22564,8 +22762,10 @@ static Bytes_4(void) {
 	MakeCode	(x=0X24226);
 	OpHex		(x,	0);
 	MakeCode	(0X24242);
+	MakeName	(0X24242,	"HandleAfterTurnEffects");
 	MakeCode	(x=0X24246);
 	OpSign		(x,	1);
+	MakeRptCmt	(0X24256,	"skip all this if character died");
 	MakeCode	(x=0X2425A);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -22629,6 +22829,10 @@ static Bytes_4(void) {
 	MakeCode	(x=0X24416);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X24424);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
+	MakeCode	(x=0X24432);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef"),1);
 	MakeCode	(x=0X24440);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -22688,6 +22892,9 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X24518,	"HandleKilledCombatants");
+	MakeCode	(x=0X24524);
+	OpEnumEx		(x,	0,	GetEnum("Animation"),0);
+	MakeRptCmt	(0X24526,	"loop point for sprite death spin animation");
 	MakeCode	(x=0X24526);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22700,11 +22907,16 @@ static Bytes_4(void) {
 	MakeCode	(x=0X24546);
 	OpHex		(x,	0);
 	MakeCode	(x=0X2454E);
+	OpEnumEx		(x,	0,	GetEnum("GraphicsValues"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X2455A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X2456A);
+	OpEnumEx		(x,	0,	GetEnum("Animation"),0);
+	MakeCode	(x=0X24574);
+	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(x=0X24576);
 	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
 	MakeCode	(0X24578);
@@ -24212,6 +24424,7 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X27D76);
 	OpHex		(x,	0);
+	MakeByte	(0X27D8E);
 	MakeArray	(0X27D8E,	0X272);
 	MakeDword	(x=0X28000);
 	OpOff		(x,	0,	0X0);
@@ -24853,6 +25066,7 @@ static Bytes_4(void) {
 	MakeByte	(0X4201E);
 	MakeArray	(0X4201E,	0X5C9);
 	MakeName	(0X4201E,	"GameStaff");
+	MakeByte	(0X425E7);
 	MakeArray	(0X425E7,	0X1A19);
 	MakeCode	(0X44000);
 	MakeCode	(0X44004);
@@ -25131,6 +25345,15 @@ static Bytes_4(void) {
 	MakeCode	(0X4449C);
 	MakeCode	(x=0X444A2);
 	OpSign		(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X444A6);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X444EC);
@@ -25366,15 +25589,6 @@ static Bytes_4(void) {
 	MakeCode	(x=0X44C20);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X44C2E);
 	MakeCode	(x=0X44C42);
 	OpOff		(x,	0,	0X0);
@@ -29761,8 +29975,7 @@ static Bytes_5(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X478A6);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	OpHex		(x,	0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X478AE);
@@ -30556,6 +30769,15 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X47BE8);
 	OpOff		(x,	1,	0X47BE8);
 	OpOff		(x,	129,	0X47BE8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X47C42);
 	OpOff		(x,	0,	0X47BE8);
 	OpOff		(x,	128,	0X47BE8);
@@ -30841,15 +31063,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X47D56);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X47D5A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36570,6 +36783,15 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4A350);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X4A370);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36860,15 +37082,6 @@ static Bytes_6(void) {
 	MakeDword	(x=0X4ADB4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X4ADBC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -42271,6 +42484,15 @@ static Bytes_7(void) {
 	MakeByte	(0X60A8A);
 	MakeByte	(0X60A8B);
 	MakeByte	(0X60A8C);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60A8D);
 	MakeByte	(0X60A8E);
 	MakeByte	(0X60A8F);
@@ -42583,15 +42805,6 @@ static Bytes_7(void) {
 	MakeByte	(0X60BC2);
 	MakeByte	(0X60BC3);
 	MakeByte	(0X60BC4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60BC5);
 	MakeByte	(0X60BC6);
 	MakeByte	(0X60BC7);
@@ -44015,6 +44228,7 @@ static Bytes_8(void) {
 	MakeWord	(x=0X63484);
 	OpEnumEx		(x,	0,	GetEnum("Music"),0);
 	MakeCode	(0X63486);
+	MakeByte	(0X6348C);
 	MakeArray	(0X6348C,	0XB74);
 	MakeDword	(x=0X64000);
 	OpOff		(x,	0,	0X0);
@@ -47270,6 +47484,15 @@ static Bytes_8(void) {
 	MakeByte	(0XAD498);
 	MakeArray	(0XAD498,	0X1A);
 	MakeName	(0XAD498,	"Map34Section6");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XAD4B2);
 	MakeArray	(0XAD4B2,	0X2);
 	MakeName	(0XAD4B2,	"Map34Section7");
@@ -47499,15 +47722,6 @@ static Bytes_8(void) {
 	MakeDword	(x=0XAFC06);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XAFC0A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -50121,6 +50335,7 @@ static Bytes_9(void) {
 	MakeByte	(0XC7EB6);
 	MakeArray	(0XC7EB6,	0X16);
 	MakeName	(0XC7EB6,	"Map78Section9");
+	MakeByte	(0XC7ECC);
 	MakeArray	(0XC7ECC,	0X134);
 	MakeDword	(x=0XC8000);
 	OpOff		(x,	0,	0X0);
@@ -52229,6 +52444,15 @@ static Bytes_9(void) {
 	MakeDword	(x=0XC8AF4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XC8AF8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -52424,15 +52648,6 @@ static Bytes_9(void) {
 	MakeByte	(0XCCBA2);
 	MakeArray	(0XCCBA2,	0X100);
 	MakeName	(0XCCBA2,	"EntitySprite046");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XCCCA2);
 	MakeArray	(0XCCCA2,	0X16C);
 	MakeName	(0XCCCA2,	"EntitySprite047");
@@ -56089,6 +56304,15 @@ static Bytes_10(void) {
 	MakeDword	(x=0X1AB95A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X1AB95E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -56269,15 +56493,6 @@ static Bytes_10(void) {
 	MakeByte	(0X1ABBDE);
 	MakeArray	(0X1ABBDE,	0XC);
 	MakeName	(0X1ABBDE,	"EnemyAnimation050");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X1ABBEA);
 	MakeArray	(0X1ABBEA,	0XC);
 	MakeName	(0X1ABBEA,	"EnemyAnimation051");
@@ -59266,7 +59481,7 @@ static Bytes_11(void) {
 	MakeWord	(0XFFA82A);
 	MakeRptCmt	(0XFFA82C,	"which entity # is being controlled by the player (FF for none)");
 	MakeByte	(0XFFA82C);
-	MakeName	(0XFFA82C,	"PLAYER_ENTITY_IDX");
+	MakeName	(0XFFA82C,	"CAMERA_TARGET_ENTITYIDX");
 	MakeByte	(0XFFA82D);
 	MakeWord	(0XFFA82E);
 	MakeRptCmt	(0XFFA830,	"Map properties");
@@ -59312,14 +59527,22 @@ static Bytes_11(void) {
 	MakeByte	(0XFFA8FE);
 	MakeByte	(0XFFA8FF);
 	MakeWord	(0XFFA900);
-	MakeRptCmt	(0XFFA902,	"start of entity information");
+	MakeRptCmt	(0XFFA902,	"start of entity struct in RAM, and X position");
 	MakeWord	(0XFFA902);
-	MakeName	(0XFFA902,	"ENTITY_DATA");
+	MakeName	(0XFFA902,	"ENTITY_DATA_STRUCT_X_AND_START");
+	MakeRptCmt	(0XFFA904,	"RAM: entity Y position");
 	MakeByte	(0XFFA904);
 	MakeArray	(0XFFA904,	0XA);
+	MakeName	(0XFFA904,	"ENTITY_DATA_STRUCT_Y");
+	MakeRptCmt	(0XFFA90E,	"RAM: entity X destination");
 	MakeWord	(0XFFA90E);
+	MakeName	(0XFFA90E,	"ENTITY_DATA_STRUCT_X_DEST");
+	MakeRptCmt	(0XFFA910,	"RAM: entity Y destination");
 	MakeWord	(0XFFA910);
+	MakeName	(0XFFA910,	"ENTITY_DATA_STRUCT_Y_DEST");
+	MakeRptCmt	(0XFFA912,	"RAM: entity facing value");
 	MakeByte	(0XFFA912);
+	MakeName	(0XFFA912,	"ENTITY_DATA_STRUCT_FACING");
 	MakeWord	(0XFFA913);
 	MakeByte	(0XFFA915);
 	MakeArray	(0XFFA915,	0XB);
@@ -59348,7 +59571,7 @@ static Bytes_11(void) {
 	MakeArray	(0XFFAF47,	0X20);
 	MakeRptCmt	(0XFFAF67,	"cleared on update of entities\nlooks like it can reach a maximum of 7 sprite graphics to update per Vint");
 	MakeWord	(0XFFAF67);
-	MakeName	(0XFFAF67,	"SPRITES_TO_LOAD");
+	MakeName	(0XFFAF67,	"NUM_SPRITES_TO_LOAD");
 	MakeByte	(0XFFAF69);
 	MakeByte	(0XFFAF6A);
 	MakeByte	(0XFFAF6B);
@@ -59930,6 +60153,15 @@ static Bytes_11(void) {
 	MakeName	(0XFFDEEB,	"WAIT_FOR_MUSIC_END");
 	MakeByte	(0XFFDEEC);
 	MakeName	(0XFFDEEC,	"LAST_PLAYER_INPUT");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0XFFDEED,	"YET TO FIGURE OUT : some kind of counter related to walking, but also related to portrait (wtf ...)");
 	MakeByte	(0XFFDEED);
 	MakeArray	(0XFFDEED,	0X3);
@@ -59998,20 +60230,20 @@ static Bytes_11(void) {
 	MakeName	(0XFFE800,	"CHARACTER_DATA");
 	MakeDword	(0XFFF600);
 	MakeName	(0XFFF600,	"PARTY_GOLD");
+	MakeRptCmt	(0XFFF604,	"amount of each item in the deals section (stacked 2 items to a byte, 4 bits per item, max 0xF amt of each item)");
 	MakeByte	(0XFFF604);
 	MakeArray	(0XFFF604,	0X40);
-	MakeName	(0XFFF604,	"DEALS_CONTENT");
+	MakeName	(0XFFF604,	"DEALS_ITEMS");
 	MakeRptCmt	(0XFFF644,	"number of items in caravan");
 	MakeWord	(0XFFF644);
-	MakeName	(0XFFF644,	"CARAVAN_ITEM_NUMBER");
+	MakeName	(0XFFF644,	"NUM_ITEMS_IN_CARAVAN");
 	MakeRptCmt	(0XFFF646,	"indexes of items in caravan (1 byte each, 7f for no item, 64 items)");
 	MakeByte	(0XFFF646);
 	MakeArray	(0XFFF646,	0X40);
+	MakeName	(0XFFF646,	"CARAVAN_ITEMS");
 	MakeByte	(0XFFF686);
-	MakeArray	(0XFFF686,	0X7A);
+	MakeArray	(0XFFF686,	0X80);
 	MakeName	(0XFFF686,	"GAME_FLAGS");
-	MakeByte	(0XFFF700);
-	MakeArray	(0XFFF700,	0X6);
 	MakeRptCmt	(0XFFF706,	"camera lock x1");
 	MakeByte	(0XFFF706);
 	MakeByte	(0XFFF707);
@@ -61957,6 +62189,7 @@ static Functions_0(void) {
 	MakeFunction    (0X100E2,0X1018E);
 	SetFunctionFlags(0X100E2,0x10);
 	MakeFrame(0X100E2, 0X6, 4, 0X0);
+	MakeNameEx(0X1015A, "tbl_MainFontAlternateSymbols", SN_LOCAL);
 	MakeFunction    (0X1018E,0X101E6);
 	SetFunctionFlags(0X1018E,0x0);
 	MakeFunction    (0X101E6,0X101F6);
@@ -63845,6 +64078,7 @@ static Bytes(void) {
 	Bytes_9();
 	Bytes_10();
 	Bytes_11();
+	Bytes_12();
 }
 
 // End of file.
