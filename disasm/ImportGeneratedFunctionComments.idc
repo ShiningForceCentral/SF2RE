@@ -345,9 +345,9 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     SetFunctionCmt(0x6260, 
         "d0 : string index", 1);
 
-    // copyName
+    // CopyASCIIBytesForDialogueString
     SetFunctionCmt(0x6654, 
-        "copy ASCII string of length D7 at A0 to slot for textbox", 1);
+        "copy ASCII string of length D7 at A0 to RAM for dialogue textbox", 1);
 
     // hideTextBox
     SetFunctionCmt(0x6a38, 
