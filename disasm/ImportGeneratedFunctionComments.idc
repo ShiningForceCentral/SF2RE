@@ -48,7 +48,7 @@ static main()
     SetFunctionCmt(0xcc4, 
         "looks like this piece of code is incomplete and useless", 1);
 
-    // waitNextVint
+    // WaitForVInt
     SetFunctionCmt(0xeee, 
         "wait until VInt func is called, which clears RAM:def7", 1);
 
@@ -195,6 +195,10 @@ returns a1 = window tiles end, d0 = window slot", 1);
         "    startWindowTransition ???\n\
     In: D0 = window number\n\
     Cross: getAddressOfWindowInfo", 1);
+
+    // MoveWindowWithSFX
+    SetFunctionCmt(0x48f4, 
+        "set window D0's dest to D1 (xxyy) and play window switching sound", 1);
 
     // MoveWindowWithoutSFX
     SetFunctionCmt(0x48f8, 
@@ -574,6 +578,10 @@ Out: D2 = distance", 1);
     SetFunctionCmt(0x98e8, 
         "flag bit check pattern based on bit number D1 -> D0", 1);
 
+    // UpdateForce
+    SetFunctionCmt(0x9900, 
+        "determine who is in the force or not based on flags and update RAM lists", 1);
+
     // AddItemToDeals
     SetFunctionCmt(0x99ec, 
         "In: D1 = item idx", 1);
@@ -588,6 +596,10 @@ Out: D2 = distance", 1);
 Out: A0 = RAM address of deals slot\n\
      D0 = amt to add to deals slot (0x10 or 0x01)\n\
      D2 = number of item idx in deals", 1);
+
+    // AddItemToCaravan
+    SetFunctionCmt(0x9a3c, 
+        "In: D1 = item idx (only the actual item idx is used, the status bits are cut out)", 1);
 
     // WriteSkirmishScript
     SetFunctionCmt(0x9b92, 
@@ -858,6 +870,16 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     // copyFighterMinistatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
         "draw tiles from A0 into A1 (one column)", 1);
+
+    // memberStatsScreen
+    SetFunctionCmt(0x11c2a, 
+        "Create and display member stats screen\n\
+\n\
+In: D0 = character idx", 1);
+
+    // AddStatusEffectTileIndexesToVDPTileOrder
+    SetFunctionCmt(0x11eea, 
+        "In: A1 = address of VDP tile order in RAM", 1);
 
     // getPortraitIdx
     SetFunctionCmt(0x1263a, 
@@ -1179,7 +1201,7 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x23eb0, 
         "In: D0 = char idx", 1);
 
-    // sub_24242
+    // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
         "handle after-turn effects (status effects, HP/MP regen/degen, etc)", 1);
 
