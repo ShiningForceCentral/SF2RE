@@ -146,11 +146,16 @@ static fixInstructionRepresentations(){
  *  Add a line to this function for every specific instruction that
  *  needs to be changed with its own individual logic.
  *
+ *  For example, here we use OpHex commands to change falsely
+ *  identified offsets into just hex values, so IDA doesn't create
+ *  false xrefs and names.
+ *
  */
  
 static fixSingleInstructions(){
 
 	OpHex(0x128C0,1);
+	OpHex(0x1B3A0,0);
 	OpHex(0x27982,1);
 	OpHex(0x27A36,1);
 	OpHex(0x27B16,0);
