@@ -117,6 +117,10 @@ static main()
 \n\
 set default values in sprite table", 1);
 
+    // sub_1942
+    SetFunctionCmt(0x1942, 
+        "something with clearing/resetting sprite info when transitioning to battle scene?", 1);
+
     // sub_19C8
     SetFunctionCmt(0x19c8, 
         "moves palettes, no idea why", 1);
@@ -349,6 +353,14 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     SetFunctionCmt(0x6654, 
         "copy ASCII string of length D7 at A0 to RAM for dialogue textbox", 1);
 
+    // CopyLineOfVDPTileOrderForDialogueWindowToRAM
+    SetFunctionCmt(0x6860, 
+        "In: A1 - address in RAM to copy VDP tile idxes\n\
+    D0 - VDP tile idx for left border of line\n\
+    D1 - VDP tile idx for first inner box tile of line\n\
+    D2 - VDP tile idx for right border of line\n\
+    D3 - amount to add to D1 each time a tile is copied (0 for top and bottom border lines, 1 for inner box)", 1);
+
     // hideTextBox
     SetFunctionCmt(0x6a38, 
         "related to text box", 1);
@@ -415,9 +427,9 @@ Out: D7 = battle idx to trigger (FFFF if none)\n\
     SetFunctionCmt(0x82bc, 
         "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
 
-    // FindCombatantName
+    // GetCharName
     SetFunctionCmt(0x82d0, 
-        "In: D0 = combatant entry\n\
+        "In: D0 = char idx\n\
 Out: A0 = address of name\n\
      D7 = length of name", 1);
 
@@ -426,6 +438,14 @@ Out: A0 = address of name\n\
         "In: D0 = char idx\n\
 Out: D1 = high 4 bits\n\
      D2 = low 4 bits", 1);
+
+    // SetKills
+    SetFunctionCmt(0x86e6, 
+        "actually seems to only be used for monster AI, not kills", 1);
+
+    // SetDefeats
+    SetFunctionCmt(0x86fe, 
+        "actually seems to only be used for monster AI, not kills", 1);
 
     // FindName
     SetFunctionCmt(0x8976, 
@@ -443,12 +463,12 @@ Out: A0 = address of name\n\
     // GetItemDefAddress
     SetFunctionCmt(0x8be4, 
         "In: D1 = item idx\n\
-Out: A0 = item address", 1);
+Out: A0 = item definition address in ROM", 1);
 
-    // GetItemAndNumberOfItems
+    // GetCharItemAtSlotAndNumberOfItems
     SetFunctionCmt(0x8bfa, 
-        "In: D0 = entity idx\n\
-    D1 = item slot\n\
+        "In: D0 = char entry idx\n\
+    D1 = item slot idx\n\
 Out: D1 = item idx\n\
      D2 = number of items held", 1);
 
@@ -469,7 +489,7 @@ Out: D2 = item type (0 = item, 1 = weapon, FFFF = ring)", 1);
 
     // EquipItemBySlot
     SetFunctionCmt(0x8d34, 
-        "In: D0 = char idx\n\
+        "In: D0 = char entry idx\n\
     D1 = item slot idx\n\
 Out: D2 = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothing", 1);
 
@@ -488,7 +508,8 @@ Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
     SetFunctionCmt(0x8db6, 
         "In: D0 = char idx\n\
     D1 = item slot idx\n\
-Out: D2 = 0 = equipped and cursed, 1 = not equipped, 2 = equipped, 3 = nothing", 1);
+Out: A0 = address of char entry item slot idx in RAM\n\
+     D2 = 0 = equipped and cursed, 1 = not equipped, 2 = equipped, 3 = nothing", 1);
 
     // UnequipItemBySlot
     SetFunctionCmt(0x8dfe, 
@@ -559,9 +580,25 @@ Out: D1 = spell idx\n\
         "In: D0 = char idx\n\
 Out: A0 = char RAM address", 1);
 
-    // ClampByteIncreasing
+    // GetCharacterByte
+    SetFunctionCmt(0x92f8, 
+        "In: D0 = char idx\n\
+    D7 = char byte offset\n\
+Out: D1 = byte", 1);
+
+    // GetCharacterWord
+    SetFunctionCmt(0x9302, 
+        "In: D0 = char idx\n\
+    D7 = char byte offset\n\
+Out: D1 = word", 1);
+
+    // IncreaseAndClampByte
     SetFunctionCmt(0x9312, 
         "clamp byte # D7 of entity D0's information + D1 between D5 and D6", 1);
+
+    // DecreaseAndClampByte
+    SetFunctionCmt(0x936c, 
+        "clamp byte # D7 of entity D0's information - D1 between D5 and D6", 1);
 
     // getDistanceBetweenEntities
     SetFunctionCmt(0x941e, 
