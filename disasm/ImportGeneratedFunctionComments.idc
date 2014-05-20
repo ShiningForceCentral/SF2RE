@@ -177,17 +177,25 @@ Out: D1 = block flag word", 1);
     SetFunctionCmt(0x3f2c, 
         "display (or don't) map roof depending on player's start location", 1);
 
+    // sub_4232
+    SetFunctionCmt(0x4232, 
+        "something with chests/vases/etc\n\
+\n\
+Out: D2 = item idx", 1);
+
     // LoadBattleMapMusic
     SetFunctionCmt(0x4544, 
         "overrides music index if we're in a battle", 1);
 
-    // waitForScrollingStop
+    // WaitForCameraToCatchUp
     SetFunctionCmt(0x4708, 
         "wait for end of scrolling ?", 1);
 
-    // testIfMapScrollingDueToWalking
+    // IsMapScrollingToFollowCameraTarget
     SetFunctionCmt(0x4728, 
-        "8 = foreground x, 4 = foreground y, 2 = background x, 1 = background y", 1);
+        "8 = foreground x, 4 = foreground y, 2 = background x, 1 = background y\n\
+\n\
+Out: Z = is scrolling", 1);
 
     // createWindow
     SetFunctionCmt(0x4802, 
@@ -330,9 +338,19 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5d5a, 
         "clear timer and update next entity", 1);
 
+    // UpdateEntityData
+    SetFunctionCmt(0x5d6c, 
+        "update entity based on entity params (all movement is done here, it seems like)\n\
+\n\
+In: A0 = entity RAM addr", 1);
+
     // LoadMapEntitySprites
     SetFunctionCmt(0x6024, 
         "load all entities for the current map", 1);
+
+    // sub_6052
+    SetFunctionCmt(0x6052, 
+        "In: D0 = entity idx", 1);
 
     // changeEntitySprite
     SetFunctionCmt(0x60a8, 
@@ -392,6 +410,14 @@ d7 = number of bytes to copy", 1);
     D4 = ???\n\
     D7 = battle idx (FFFF for none)\n\
 ...more", 1);
+
+    // GetEgressPositionForMap
+    SetFunctionCmt(0x75ec, 
+        "In: D0 = from map idx\n\
+Out: D0 = to map idx\n\
+     D1 = X\n\
+     D2 = Y\n\
+     D3 = facing", 1);
 
     // AlterMapIndexIfChanged
     SetFunctionCmt(0x7956, 
@@ -453,6 +479,17 @@ Out: D1 = high 4 bits\n\
     D1 = name idx\n\
 Out: A0 = address of entry in names list\n\
      D7 = length of name", 1);
+
+    // ApplyMagicOnStats
+    SetFunctionCmt(0x8a26, 
+        "In: D0 = char index\n\
+    D3 = status bitfield", 1);
+
+    // ApplyItemOnStats
+    SetFunctionCmt(0x8a90, 
+        "In: A2 = address in RAM of char's prowess\n\
+    D0 = char idx\n\
+    D1 = item idx", 1);
 
     // FindItemName
     SetFunctionCmt(0x8bd0, 
@@ -532,6 +569,19 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
         "In: D0 = char idx\n\
     D1 = item slot", 1);
 
+    // isItemEquippable
+    SetFunctionCmt(0x8f60, 
+        "In: D1 = item idx\n\
+    D2 = item type bitmask (for ANDing the item type bitfield)\n\
+    D3 = class equip bitmask (for ANDing the item equip bitfield)", 1);
+
+    // GetCharATKandDEFWithSpecificWeapon
+    SetFunctionCmt(0x8fee, 
+        "In: A0 = char entry address\n\
+    D1 = item idx\n\
+Out: D2 = char ATK with item equipped\n\
+     D3 = char DEF with item equipped", 1);
+
     // isItemUsableInBattle
     SetFunctionCmt(0x90cc, 
         "carry set : YES", 1);
@@ -568,6 +618,12 @@ Out: A0 = address of name\n\
     D1 = spell slot\n\
 Out: D1 = spell idx\n\
      D2 = number of spells", 1);
+
+    // LearnSpell
+    SetFunctionCmt(0x9226, 
+        "In: D0 = char idx\n\
+    D1 = spell idx\n\
+Out: D2 = result (0 = learned new spell, 1 = upgraded spell, 2 = no room)", 1);
 
     // getSpellCost
     SetFunctionCmt(0x927e, 
@@ -619,6 +675,11 @@ Out: D2 = distance", 1);
     SetFunctionCmt(0x9900, 
         "determine who is in the force or not based on flags and update RAM lists", 1);
 
+    // GetDealsItemAmount
+    SetFunctionCmt(0x99de, 
+        "In: D1 = item idx\n\
+Out: D2 = number of item idx in deals", 1);
+
     // AddItemToDeals
     SetFunctionCmt(0x99ec, 
         "In: D1 = item idx", 1);
@@ -646,6 +707,13 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0x9dd6, 
         "In: A3 = action data", 1);
 
+    // InitSkirmishProperties
+    SetFunctionCmt(0x9f28, 
+        "In: A2 = battle scene stack\n\
+    A3 = address in RAM of scene action type\n\
+    A4 = address in RAM of attacker idx\n\
+    A5 = address in RAM of target idx", 1);
+
     // createBattleSceneText
     SetFunctionCmt(0xa05c, 
         "Loads proper battle scene text script depending on attack action.\n\
@@ -656,6 +724,13 @@ In: A3 = RAM index containing action type\n\
     SetFunctionCmt(0xa200, 
         "    Loads proper battle scene sprite/magic animation properties.\n\
     In: A3 = ", 1);
+
+    // WriteSkirmishScript_DoAction
+    SetFunctionCmt(0xa3f4, 
+        "In: A2 = battle scene stack\n\
+    A3 = address in RAM of scene action type\n\
+    A4 = address in RAM of attacker idx\n\
+    A5 = address in RAM of target idx", 1);
 
     // GetEffectGraphicsIdx
     SetFunctionCmt(0xa54e, 
@@ -682,7 +757,18 @@ Out: D5 = amount of EXP", 1);
     A5 = defender index in RAM\n\
 Out: D6 = damage", 1);
 
-    // alterSpellPotency
+    // WriteSkirmishScript_InflictDamage
+    SetFunctionCmt(0xacea, 
+        "In: D6 = damage", 1);
+
+    // WriteSkirmishScript_UseSpell
+    SetFunctionCmt(0xb0a8, 
+        "In: A2 = battle scene stack\n\
+    A3 = address in RAM of scene action type\n\
+    A4 = address in RAM of attacker idx\n\
+    A5 = address in RAM of target idx", 1);
+
+    // GetSpellPowerAdjustedForClass
     SetFunctionCmt(0xbb56, 
         "    Miscellaneous hacks to alter spell damage. (125% if promoted, damage divided if SORC spells)\n\
     In: D6 = original damage\n\
@@ -693,6 +779,13 @@ Out: D6 = damage", 1);
         "In: A2 = skirmish properties stack\n\
     D0 = whether item is already damaged (0=no, 1=yes)\n\
 Out: D3 = message idx", 1);
+
+    // WriteSkirmishScript_EnemyDropItem
+    SetFunctionCmt(0xbd24, 
+        "In: A2 = battle scene stack\n\
+    A3 = address in RAM of scene action type\n\
+    A4 = address in RAM of attacker idx\n\
+    A5 = address in RAM of target idx", 1);
 
     // convertCoordToOffset
     SetFunctionCmt(0xc09a, 
@@ -795,6 +888,17 @@ Out: D1 = chosen x pos\n\
     SetFunctionCmt(0xc7fa, 
         "    Clear target grid, then add allies.", 1);
 
+    // GetSpellPowerAdjustedForResistance
+    SetFunctionCmt(0xcc54, 
+        "In: D0 = target combatant idx\n\
+    D1 = spell idx\n\
+Out: D6 = adjusted power", 1);
+
+    // sub_CD68
+    SetFunctionCmt(0xcd68, 
+        "In: D0 = heal target char idx\n\
+    D4 = heal spell idx", 1);
+
     // GetHighestUsableSpellLevel
     SetFunctionCmt(0xced2, 
         "Get highest usable level of spell D1, considering current MP and highest known level.\n\
@@ -849,6 +953,14 @@ Out: D1 = item idx\n\
     // MakeEnemyMoveOrder
     SetFunctionCmt(0xdd78, 
         "create enemy move order from movecost lists", 1);
+
+    // sub_DEFC
+    SetFunctionCmt(0xdefc, 
+        "In: D0 = char idx", 1);
+
+    // sub_EBA4
+    SetFunctionCmt(0xeba4, 
+        "In: D0 = char idx", 1);
 
     // sub_100B4
     SetFunctionCmt(0x100b4, 
@@ -974,6 +1086,17 @@ In: D0 = character idx", 1);
         "    Get index of portrait based on char index for force members.\n\
     In: D0 = char idx\n\
     Out: D0 = adjusted portrait idx", 1);
+
+    // ExecuteNumberPrompt
+    SetFunctionCmt(0x16282, 
+        "In: D0 = default num\n\
+    D1 = min num\n\
+    D2 = max num\n\
+Out: D0 = chosen num", 1);
+
+    // ModifyPromptNumber
+    SetFunctionCmt(0x16398, 
+        "In: A6 = prompt stack", 1);
 
     // executeBattlesceneScript
     SetFunctionCmt(0x18398, 
@@ -1128,10 +1251,19 @@ In: D0 = weapon sprite idx", 1);
     SetFunctionCmt(0x20010, 
         "seems related to caravan", 1);
 
+    // DoesCurrentShopContainItem
+    SetFunctionCmt(0x20834, 
+        "In: D1 = item idx\n\
+Out: Z = 0 = yes, 1 = no", 1);
+
     // FindPromotionSection
     SetFunctionCmt(0x2110c, 
         "In: D2 = section type (regpre, regpost, specpre, specpost, specitem)\n\
 Out: A0 = address", 1);
+
+    // ReplaceSpellsWithSORCDefaults
+    SetFunctionCmt(0x2112c, 
+        "In: A6 = church actions stack", 1);
 
     // sub_219EC
     SetFunctionCmt(0x219ec, 
@@ -1140,6 +1272,10 @@ Out: A0 = address", 1);
     // CaravanActions
     SetFunctionCmt(0x21fd2, 
         "seems related to caravan", 1);
+
+    // DisplaySpecialCaravanDescription
+    SetFunctionCmt(0x22864, 
+        "only used for chirrup sandals", 1);
 
     // sub_228A8
     SetFunctionCmt(0x228a8, 
@@ -1153,23 +1289,23 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x2294c, 
         "get whether character D0's item at slot D1 is cursed -> carry", 1);
 
-    // sub_229EC
+    // UseFieldItem
     SetFunctionCmt(0x229ec, 
-        "initiates the level up process ?", 1);
+        "check specific item index + code offset to run when used in field", 1);
 
-    // sub_22AAE
+    // FieldItem_IncreaseATK
     SetFunctionCmt(0x22aae, 
         "boost attack ?", 1);
 
-    // sub_22AD6
+    // FieldItem_IncreaseDEF
     SetFunctionCmt(0x22ad6, 
         "boost def ?", 1);
 
-    // sub_22AFE
+    // FieldItem_IncreaseAGI
     SetFunctionCmt(0x22afe, 
         "boost agi ?", 1);
 
-    // sub_22B26
+    // FieldItem_IncreaseMOV
     SetFunctionCmt(0x22b26, 
         "boost mov ?", 1);
 
@@ -1183,24 +1319,32 @@ Out: A0 = address", 1);
 
     // ControlBattleUnit
     SetFunctionCmt(0x22e1a, 
-        "Out: D4 = copied P1 input state bitfield", 1);
+        "Out: D2 = chosen X\n\
+     D3 = chosen Y\n\
+     D4 = copied P1 input state bitfield", 1);
 
-    // getCombatantNumberOfEntity
+    // getEntityNumberOfCombatant
     SetFunctionCmt(0x22f30, 
-        "    Convert entity number to combatant number.\n\
-    In: D0 = entity number\n\
-    Out: D0 = combatant number", 1);
+        "    Convert combatant number to entity number.\n\
+    In: D0 = combatant number\n\
+    Out: D0 = entity number", 1);
 
     // GetEntityEventIdx
     SetFunctionCmt(0x22f4a, 
         "In: D0 = entity idx\n\
 Out: D0 = entity event idx", 1);
 
-    // SetEntityVspeedBit7
+    // SetUnitCursorDestinationToNextCombatant
+    SetFunctionCmt(0x232ac, 
+        "In: D0 = entity idx\n\
+Out: D2 = entity X\n\
+     D3 = entity Y", 1);
+
+    // SetEntityBlinkingFlag
     SetFunctionCmt(0x2345a, 
         "is it vertical speed ?", 1);
 
-    // ClearEntityVspeedBit7
+    // ClearEntityBlinkingFlag
     SetFunctionCmt(0x23474, 
         "is it vertical speed ?", 1);
 
@@ -1221,7 +1365,7 @@ Out: D0 = entity event idx", 1);
         "In: D0 = entity idx\n\
 Out: Z = entity is NOT follower", 1);
 
-    // getGoldAmount
+    // GetChestGoldAmount
     SetFunctionCmt(0x2399c, 
         "get amount of gold (D2 - 0x80) as an offset from the gold table (see constants)", 1);
 
@@ -1236,7 +1380,7 @@ Out: Z = entity is NOT follower", 1);
 
     // sub_23EB0
     SetFunctionCmt(0x23eb0, 
-        "In: D0 = char idx", 1);
+        "In: D0 = combatant idx", 1);
 
     // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
@@ -1245,6 +1389,10 @@ Out: Z = entity is NOT follower", 1);
     // SpawnEnemySkipCamera
     SetFunctionCmt(0x2448a, 
         "?", 1);
+
+    // UpdateTargetListForCombatant
+    SetFunctionCmt(0x24642, 
+        "In: D0 = combatant idx", 1);
 
     // sub_24966
     SetFunctionCmt(0x24966, 
@@ -1258,6 +1406,12 @@ Out: Z = entity is NOT follower", 1);
     // LoadBattle
     SetFunctionCmt(0x25610, 
         "load all battle properties", 1);
+
+    // GetEntityPositionAfterApplyingFacing
+    SetFunctionCmt(0x256b2, 
+        "In: D0 = combatant idx\n\
+Out: D0 = new X\n\
+     D1 = new Y", 1);
 
     // PrintActivatedDefCon
     SetFunctionCmt(0x25772, 
@@ -1303,7 +1457,11 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x44c02, 
         "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
 
-    // getEntityAddress
+    // WaitForEntityToStopMoving
+    SetFunctionCmt(0x44da4, 
+        "In: D0 = entity idx", 1);
+
+    // GetEntityRAMAddress
     SetFunctionCmt(0x44dd8, 
         "location in memory of entity # D0 -> A0", 1);
 
