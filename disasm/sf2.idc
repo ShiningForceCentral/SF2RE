@@ -37,10 +37,10 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(200);
+	XrefShow(2);
 	AutoShow(1);
-	Indent(8);
-	CmtIndent(80);
+	Indent(16);
+	CmtIndent(40);
 	TailDepth(0x10);
 }
 
@@ -1022,6 +1022,7 @@ static Bytes_0(void) {
 	MakeRptCmt	(0X366,	"Move 0x2700 into Status Register, which now has these set: no trace, A7 is Interupt Stack Pointer, no interrupts, clear condition code bits");
 	MakeRptCmt	(0X36C,	"vdp register set base word");
 	MakeWord	(0X36C);
+	MakeName	(0X36C,	"start_params");
 	MakeWord	(0X36E);
 	MakeRptCmt	(0X370,	"vdp register set word to add for next register");
 	MakeWord	(0X370);
@@ -1329,6 +1330,7 @@ static Bytes_0(void) {
 	MakeWord	(x=0X7EC);
 	OpOff		(x,	0,	0X7EC);
 	OpOff		(x,	128,	0X7EC);
+	MakeName	(0X7EC,	"tbl_Trap9ActionsOfs");
 	MakeWord	(x=0X7EE);
 	OpOff		(x,	0,	0X7EC);
 	OpOff		(x,	128,	0X7EC);
@@ -5174,8 +5176,6 @@ static Bytes_0(void) {
 	MakeName	(0X5B70,	"esc16_setEntityNumber");
 	MakeCode	(0X5B7C);
 	MakeName	(0X5B7C,	"esc17_setSpriteNumber");
-	MakeCode	(0X5B88);
-	MakeName	(0X5B88,	"esc18_");
 }
 
 //------------------------------------------------------------------------
@@ -5185,6 +5185,8 @@ static Bytes_1(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X5B88);
+	MakeName	(0X5B88,	"esc18_");
 	MakeCode	(0X5B96);
 	MakeCode	(0X5BA2);
 	MakeName	(0X5BA2,	"esc19_");
@@ -5407,6 +5409,7 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X6286,	"restore string #");
 	MakeRptCmt	(0X628A,	"restrict to range 0-255");
 	MakeCode	(0X6292);
+	MakeName	(0X6292,	"GoToNextString");
 	MakeRptCmt	(0X629C,	"get ready");
 	MakeCode	(x=0X629C);
 	OpOff		(x,	0,	0X0);
@@ -8375,6 +8378,7 @@ static Bytes_1(void) {
 	MakeWord	(x=0X9AC2);
 	OpOff		(x,	0,	0X9AC2);
 	OpOff		(x,	128,	0X9AC2);
+	MakeName	(0X9AC2,	"rjt_DebugModeBattleActions");
 	MakeWord	(x=0X9AC4);
 	OpOff		(x,	0,	0X9AC2);
 	OpOff		(x,	128,	0X9AC2);
@@ -8429,6 +8433,7 @@ static Bytes_1(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
+	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -8876,6 +8881,15 @@ static Bytes_1(void) {
 	MakeName	(0XA90E,	"GiveEXPandGoldForKill");
 	MakeCode	(x=0XA912);
 	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0XA92E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -8886,15 +8900,6 @@ static Bytes_1(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeName	(0XA940,	"giveEXPandCap");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0XA944);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -10375,6 +10380,7 @@ static Bytes_2(void) {
 	MakeCode	(0XDB6C);
 	MakeCode	(0XDB8A);
 	MakeCode	(0XDB9A);
+	MakeName	(0XDB9A,	"MakeBattleEntityCancelMoveString_0");
 	MakeCode	(0XDBA8);
 	MakeCode	(x=0XDBB6);
 	OpOff		(x,	0,	0X0);
@@ -11412,6 +11418,7 @@ static Bytes_2(void) {
 	MakeCode	(0X10152);
 	MakeRptCmt	(0X1015A,	"VDP tile idxes to substitute in for symbol ASCII values when using orange font");
 	MakeByte	(0X1015A);
+	MakeName	(0X1015A,	"tbl_MainFontAlternateSymbols");
 	MakeByte	(0X1015B);
 	MakeByte	(0X1015C);
 	MakeByte	(0X1015D);
@@ -12562,6 +12569,7 @@ static Bytes_2(void) {
 	MakeCode	(x=0X11572);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeName	(0X11572,	"CreateFighterMiniStatusWindow_0");
 	MakeCode	(x=0X11584);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -13871,6 +13879,15 @@ static Bytes_2(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X13666);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1367C);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X13690);
@@ -13896,15 +13913,6 @@ static Bytes_2(void) {
 	MakeCode	(x=0X1372C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X13738);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -15045,6 +15053,7 @@ static Bytes_3(void) {
 	MakeName	(0X15736,	"getCharPortraitIdx");
 	MakeRptCmt	(0X15746,	"stupid CMP mechanism for alternate portraits, need to improve that one day");
 	MakeCode	(0X15772);
+	MakeName	(0X15772,	"CreateLandEffectWindow_0");
 	MakeCode	(x=0X15784);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -15384,7 +15393,6 @@ static Bytes_3(void) {
 	MakeCode	(0X16282);
 	MakeName	(0X16282,	"ExecuteNumberPrompt");
 	MakeCode	(x=0X16286);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1628A);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
@@ -15997,6 +16005,7 @@ static Bytes_3(void) {
 	OpOff		(x,	128,	0X183C0);
 	OpOff		(x,	1,	0X183C0);
 	OpOff		(x,	129,	0X183C0);
+	MakeName	(0X183C0,	"bt_battlesceneScriptCommands");
 	MakeWord	(x=0X183C2);
 	OpOff		(x,	0,	0X183C0);
 	OpOff		(x,	128,	0X183C0);
@@ -17527,6 +17536,7 @@ static Bytes_3(void) {
 	OpOff		(x,	128,	0X19F1C);
 	OpOff		(x,	1,	0X19F1C);
 	OpOff		(x,	129,	0X19F1C);
+	MakeName	(0X19F1C,	"rjt_SpellAnimation");
 	MakeWord	(x=0X19F1E);
 	OpOff		(x,	0,	0X19F1C);
 	OpOff		(x,	128,	0X19F1C);
@@ -19165,6 +19175,15 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1B858);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1B85C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19201,15 +19220,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1B8BA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1B8BE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22363,6 +22373,7 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X2200C);
 	OpOff		(x,	1,	0X2200C);
 	OpOff		(x,	129,	0X2200C);
+	MakeName	(0X2200C,	"rjt_2200C");
 	MakeWord	(x=0X2200E);
 	OpOff		(x,	0,	0X2200C);
 	OpOff		(x,	128,	0X2200C);
@@ -22932,6 +22943,7 @@ static Bytes_4(void) {
 	MakeCode	(0X22A1A);
 	MakeRptCmt	(0X22A22,	"it works quite unusually, I have to look into it");
 	MakeWord	(0X22A22);
+	MakeName	(0X22A22,	"rjt_FieldItemEffects");
 	MakeWord	(x=0X22A24);
 	OpOff		(x,	0,	0X22A22);
 	OpOff		(x,	128,	0X22A22);
@@ -24220,6 +24232,15 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
 	MakeCode	(x=0X2404A);
 	OpEnumEx		(x,	0,	GetEnum("SpellDef_Idx"),0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X24052);
 	OpEnumEx		(x,	0,	GetEnum("Battle"),0);
 	OpOff		(x,	1,	0X0);
@@ -24254,15 +24275,6 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X240B6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -29477,6 +29489,15 @@ static Bytes_5(void) {
 	MakeDword	(x=0X461B2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X461B6);
 	MakeName	(0X461B6,	"eas_461B6");
 	MakeByte	(0X461B7);
@@ -29517,15 +29538,6 @@ static Bytes_5(void) {
 	MakeByte	(0X461DA);
 	MakeByte	(0X461DB);
 	MakeByte	(0X461DC);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X461DD);
 	MakeByte	(0X461DE);
 	MakeByte	(0X461DF);
@@ -30873,6 +30885,7 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47180);
 	OpOff		(x,	1,	0X47180);
 	OpOff		(x,	129,	0X47180);
+	MakeName	(0X47180,	"rjt_cutsceneScriptCommands");
 	MakeWord	(x=0X47182);
 	OpOff		(x,	0,	0X47180);
 	OpOff		(x,	128,	0X47180);
@@ -31949,6 +31962,7 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47B2C);
 	OpOff		(x,	1,	0X47B2C);
 	OpOff		(x,	129,	0X47B2C);
+	MakeName	(0X47B2C,	"rpt_47B2C");
 	MakeWord	(x=0X47B2E);
 	OpOff		(x,	0,	0X47B2C);
 	OpOff		(x,	128,	0X47B2C);
@@ -35055,6 +35069,15 @@ static Bytes_6(void) {
 	MakeByte	(0X48885);
 	MakeByte	(0X48886);
 	MakeByte	(0X48887);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X48888);
 	MakeByte	(0X48889);
 	MakeByte	(0X4888A);
@@ -35101,15 +35124,6 @@ static Bytes_6(void) {
 	MakeByte	(0X488B7);
 	MakeByte	(0X488B8);
 	MakeByte	(0X488B9);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X488BA);
 	MakeByte	(0X488BB);
 	MakeByte	(0X488BC);
@@ -40926,6 +40940,15 @@ static Bytes_7(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X5311A);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X5311C);
 	MakeCode	(0X5311E);
 	MakeWord	(0X53120);
@@ -40971,15 +40994,6 @@ static Bytes_7(void) {
 	MakeDword	(x=0X5365C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X53660);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -43174,6 +43188,7 @@ static Bytes_8(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X606AC);
+	MakeName	(0X606AC,	"eas_606AC");
 	MakeByte	(0X606AD);
 	MakeByte	(0X606AE);
 	MakeByte	(0X606AF);
@@ -43199,6 +43214,7 @@ static Bytes_8(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X606E0);
+	MakeName	(0X606E0,	"eas_606E0");
 	MakeByte	(0X606E1);
 	MakeByte	(0X606E2);
 	MakeByte	(0X606E3);
@@ -46558,6 +46574,15 @@ static Bytes_8(void) {
 	MakeByte	(0X90E9C);
 	MakeArray	(0X90E9C,	0X93C);
 	MakeName	(0X90E9C,	"MapTiles107");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X917D8);
 	MakeArray	(0X917D8,	0X91E);
 	MakeName	(0X917D8,	"MapTiles108");
@@ -46592,15 +46617,6 @@ static Bytes_8(void) {
 	MakeDword	(x=0X94956);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X9495A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -51116,6 +51132,15 @@ static Bytes_9(void) {
 	MakeByte	(0XBBD1C);
 	MakeByte	(0XBBD1D);
 	MakeByte	(0XBBD1E);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XBBD1F);
 	MakeDword	(x=0XBBD20);
 	OpOff		(x,	0,	0X0);
@@ -51159,15 +51184,6 @@ static Bytes_9(void) {
 	MakeByte	(0XBBD7C);
 	MakeArray	(0XBBD7C,	0X2);
 	MakeName	(0XBBD7C,	"Map66Section5");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XBBD7E);
 	MakeArray	(0XBBD7E,	0X52);
 	MakeName	(0XBBD7E,	"Map66Section6");
@@ -55619,6 +55635,15 @@ static Bytes_10(void) {
 	MakeByte	(0XF314A);
 	MakeArray	(0XF314A,	0X176);
 	MakeName	(0XF314A,	"EntitySprite524");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XF32C0);
 	MakeArray	(0XF32C0,	0XC0);
 	MakeName	(0XF32C0,	"EntitySprite525");
@@ -55649,15 +55674,6 @@ static Bytes_10(void) {
 	MakeByte	(0XF3AC2);
 	MakeArray	(0XF3AC2,	0XF2);
 	MakeName	(0XF3AC2,	"EntitySprite534");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XF3BB4);
 	MakeArray	(0XF3BB4,	0X154);
 	MakeName	(0XF3BB4,	"EntitySprite535");
@@ -59799,6 +59815,15 @@ static Bytes_11(void) {
 	MakeName	(0X1B813E,	"bsg19_rpbase");
 	MakeWord	(0X1B8140);
 	MakeName	(0X1B8140,	"battlesceneGround20");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X1B8142);
 	MakeWord	(0X1B8144);
 	MakeWord	(x=0X1B8146);
@@ -59837,15 +59862,6 @@ static Bytes_11(void) {
 	OpOff		(x,	1,	0X1B815E);
 	OpOff		(x,	129,	0X1B815E);
 	MakeName	(0X1B815E,	"bsg25_rpbase");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X1B8160);
 	MakeName	(0X1B8160,	"battlesceneGround26");
 	MakeWord	(0X1B8162);
@@ -61984,7 +62000,6 @@ static Functions_0(void) {
 	MakeFunction    (0X2DE,0X3EE);
 	SetFunctionFlags(0X2DE,0x0);
 	MakeFrame(0X2DE, 0X0, 0, 0X0);
-	MakeNameEx(0X36C, "start_params", SN_LOCAL);
 	MakeFunction    (0X3F6,0X44C);
 	SetFunctionFlags(0X3F6,0x0);
 	MakeFunction    (0X44C,0X452);
@@ -62034,7 +62049,6 @@ static Functions_0(void) {
 	MakeFunction    (0X7CE,0X8DE);
 	SetFunctionFlags(0X7CE,0x0);
 	MakeFrame(0X7CE, 0X0, 0, 0X0);
-	MakeNameEx(0X7EC, "tbl_Trap9ActionsOfs", SN_LOCAL);
 	MakeFunction    (0X8DE,0XABA);
 	SetFunctionFlags(0X8DE,0x0);
 	MakeFunction    (0XABA,0XB1E);
@@ -62502,7 +62516,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X61FC,0x0);
 	MakeFunction    (0X6260,0X6308);
 	SetFunctionFlags(0X6260,0x0);
-	MakeNameEx(0X6292, "GoToNextString", SN_LOCAL);
 	MakeFunction    (0X6308,0X633A);
 	SetFunctionFlags(0X6308,0x0);
 	MakeFunction    (0X633A,0X634E);
@@ -62660,7 +62673,7 @@ static Functions_0(void) {
 	MakeFunction    (0X7FA4,0X7FA6);
 	SetFunctionFlags(0X7FA4,0x0);
 	MakeFunction    (0X8000,0X8004);
-	SetFunctionFlags(0X8000,0xc0);
+	SetFunctionFlags(0X8000,0x80);
 	MakeFunction    (0X8004,0X8008);
 	SetFunctionFlags(0X8004,0x80);
 	MakeFunction    (0X8008,0X800C);
@@ -62676,9 +62689,9 @@ static Functions_0(void) {
 	MakeFunction    (0X801C,0X8020);
 	SetFunctionFlags(0X801C,0x80);
 	MakeFunction    (0X8020,0X8024);
-	SetFunctionFlags(0X8020,0xc0);
+	SetFunctionFlags(0X8020,0x80);
 	MakeFunction    (0X8024,0X8028);
-	SetFunctionFlags(0X8024,0xc0);
+	SetFunctionFlags(0X8024,0x80);
 	MakeFunction    (0X8028,0X802C);
 	SetFunctionFlags(0X8028,0x80);
 	MakeFunction    (0X802C,0X8030);
@@ -62722,7 +62735,7 @@ static Functions_0(void) {
 	MakeFunction    (0X8078,0X807C);
 	SetFunctionFlags(0X8078,0x80);
 	MakeFunction    (0X807C,0X8080);
-	SetFunctionFlags(0X807C,0xc0);
+	SetFunctionFlags(0X807C,0x80);
 	MakeFunction    (0X8080,0X8084);
 	SetFunctionFlags(0X8080,0x80);
 	MakeFunction    (0X8084,0X8088);
@@ -62778,7 +62791,7 @@ static Functions_0(void) {
 	MakeFunction    (0X80E8,0X80EC);
 	SetFunctionFlags(0X80E8,0x80);
 	MakeFunction    (0X80EC,0X80F0);
-	SetFunctionFlags(0X80EC,0xc0);
+	SetFunctionFlags(0X80EC,0x80);
 	MakeFunction    (0X80F0,0X80F4);
 	SetFunctionFlags(0X80F0,0x80);
 	MakeFunction    (0X80F4,0X80F8);
@@ -62788,7 +62801,7 @@ static Functions_0(void) {
 	MakeFunction    (0X80FC,0X8100);
 	SetFunctionFlags(0X80FC,0x80);
 	MakeFunction    (0X8100,0X8104);
-	SetFunctionFlags(0X8100,0xc0);
+	SetFunctionFlags(0X8100,0x80);
 	MakeFunction    (0X8104,0X8108);
 	SetFunctionFlags(0X8104,0x80);
 	MakeFunction    (0X8108,0X810C);
@@ -62846,7 +62859,7 @@ static Functions_0(void) {
 	MakeFunction    (0X8170,0X8174);
 	SetFunctionFlags(0X8170,0x80);
 	MakeFunction    (0X8174,0X8178);
-	SetFunctionFlags(0X8174,0xc0);
+	SetFunctionFlags(0X8174,0x80);
 	MakeFunction    (0X8178,0X817C);
 	SetFunctionFlags(0X8178,0x80);
 	MakeFunction    (0X817C,0X8180);
@@ -63369,7 +63382,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X9A62,0x0);
 	MakeFunction    (0X9A9A,0X9B44);
 	SetFunctionFlags(0X9A9A,0x0);
-	MakeNameEx(0X9AC2, "rjt_DebugModeBattleActions", SN_LOCAL);
 	MakeFunction    (0X9B44,0X9B58);
 	SetFunctionFlags(0X9B44,0x0);
 	MakeFunction    (0X9B58,0X9B92);
@@ -63775,7 +63787,7 @@ static Functions_0(void) {
 	MakeFunction    (0X10014,0X10018);
 	SetFunctionFlags(0X10014,0x80);
 	MakeFunction    (0X10018,0X1001C);
-	SetFunctionFlags(0X10018,0xc0);
+	SetFunctionFlags(0X10018,0x80);
 	MakeFunction    (0X1001C,0X10020);
 	SetFunctionFlags(0X1001C,0x80);
 	MakeFunction    (0X10020,0X10024);
@@ -63817,7 +63829,7 @@ static Functions_0(void) {
 	MakeFunction    (0X10068,0X1006C);
 	SetFunctionFlags(0X10068,0x80);
 	MakeFunction    (0X1006C,0X10070);
-	SetFunctionFlags(0X1006C,0xc0);
+	SetFunctionFlags(0X1006C,0x80);
 	MakeFunction    (0X10070,0X10074);
 	SetFunctionFlags(0X10070,0x80);
 	MakeFunction    (0X10074,0X10078);
@@ -63860,7 +63872,6 @@ static Functions_0(void) {
 	MakeFunction    (0X100E2,0X1018E);
 	SetFunctionFlags(0X100E2,0x10);
 	MakeFrame(0X100E2, 0X6, 4, 0X0);
-	MakeNameEx(0X1015A, "tbl_MainFontAlternateSymbols", SN_LOCAL);
 	MakeFunction    (0X1018E,0X101E6);
 	SetFunctionFlags(0X1018E,0x0);
 	MakeFunction    (0X101E6,0X101F6);
@@ -64240,7 +64251,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X18012,0x0);
 	MakeFunction    (0X18398,0X183EE);
 	SetFunctionFlags(0X18398,0x0);
-	MakeNameEx(0X183C0, "bt_battlesceneScriptCommands", SN_LOCAL);
 	MakeFunction    (0X183EE,0X183F2);
 	SetFunctionFlags(0X183EE,0x80);
 	MakeFunction    (0X183F2,0X183F4);
@@ -64420,7 +64430,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X19ECA,0x0);
 	MakeFunction    (0X19EE6,0X19F5E);
 	SetFunctionFlags(0X19EE6,0x0);
-	MakeNameEx(0X19F1C, "rjt_SpellAnimation", SN_LOCAL);
 	MakeFunction    (0X19F5E,0X19FAA);
 	SetFunctionFlags(0X19F5E,0x0);
 	MakeFunction    (0X19FAA,0X1A00A);
@@ -64688,11 +64697,11 @@ static Functions_0(void) {
 	MakeFunction    (0X20010,0X20014);
 	SetFunctionFlags(0X20010,0x80);
 	MakeFunction    (0X20014,0X20018);
-	SetFunctionFlags(0X20014,0xc0);
+	SetFunctionFlags(0X20014,0x80);
 	MakeFunction    (0X20018,0X2001C);
 	SetFunctionFlags(0X20018,0x80);
 	MakeFunction    (0X2001C,0X20020);
-	SetFunctionFlags(0X2001C,0xc0);
+	SetFunctionFlags(0X2001C,0x80);
 	MakeFunction    (0X20020,0X20024);
 	SetFunctionFlags(0X20020,0x80);
 	MakeFunction    (0X20024,0X20028);
@@ -64700,7 +64709,7 @@ static Functions_0(void) {
 	MakeFunction    (0X20028,0X2002C);
 	SetFunctionFlags(0X20028,0x80);
 	MakeFunction    (0X2002C,0X20030);
-	SetFunctionFlags(0X2002C,0xc0);
+	SetFunctionFlags(0X2002C,0x80);
 	MakeFunction    (0X20030,0X20034);
 	SetFunctionFlags(0X20030,0x80);
 	MakeFunction    (0X20034,0X20038);
@@ -64779,7 +64788,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X21ED6,0x0);
 	MakeFunction    (0X21FD2,0X22028);
 	SetFunctionFlags(0X21FD2,0x0);
-	MakeNameEx(0X2200C, "rjt_2200C", SN_LOCAL);
 	MakeFunction    (0X22028,0X220F2);
 	SetFunctionFlags(0X22028,0x0);
 	MakeFunction    (0X22102,0X2214E);
@@ -64822,7 +64830,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X229CA,0x0);
 	MakeFunction    (0X229EC,0X22A4E);
 	SetFunctionFlags(0X229EC,0x0);
-	MakeNameEx(0X22A22, "rjt_FieldItemEffects", SN_LOCAL);
 	MakeFunction    (0X22A4E,0X22A70);
 	SetFunctionFlags(0X22A4E,0x0);
 	MakeFunction    (0X22A70,0X22AAE);
@@ -65440,7 +65447,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X4712A,0x0);
 	MakeFunction    (0X4712C,0X47248);
 	SetFunctionFlags(0X4712C,0x0);
-	MakeNameEx(0X47180, "rjt_cutsceneScriptCommands", SN_LOCAL);
 	MakeFunction    (0X47248,0X4724A);
 	SetFunctionFlags(0X47248,0x0);
 	MakeFunction    (0X4724A,0X4729E);
@@ -65527,7 +65533,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X47A50,0x0);
 	MakeFunction    (0X47AEE,0X47B92);
 	SetFunctionFlags(0X47AEE,0x0);
-	MakeNameEx(0X47B2C, "rpt_47B2C", SN_LOCAL);
 	MakeFunction    (0X47B92,0X47BE8);
 	SetFunctionFlags(0X47B92,0x0);
 	MakeFunction    (0X47CBC,0X47CF4);
@@ -65564,8 +65569,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X59C36,0x0);
 	MakeFunction    (0X6061E,0X606EA);
 	SetFunctionFlags(0X6061E,0x0);
-	MakeNameEx(0X606AC, "eas_606AC", SN_LOCAL);
-	MakeNameEx(0X606E0, "eas_606E0", SN_LOCAL);
 	MakeFunction    (0X61116,0X6112E);
 	SetFunctionFlags(0X61116,0x0);
 	MakeFunction    (0X6112E,0X6113C);
