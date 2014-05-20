@@ -11,9 +11,6 @@
  * 2) Iterate through all xrefs to the current addr pointer.
  * 3) Use the OpOffEx command to change the xref line's operand to be in terms of an offset from 0xFFFF0000.
  *
- * If a RAM offset reference has to be changed, do it manually with the "manual operand" command (Atl-F1).
- * Example : ((byte_FFF7A8-$1000000)).w
- *
  */
 
 #include <idc.idc>
