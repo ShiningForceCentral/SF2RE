@@ -129,9 +129,35 @@ auto funcCmt;
 	else{
 		funcCmt = GetFunctionCmt(ea,1);
 		if(funcCmt!=""){
-			funcCmt = formatRptCmt(funcCmt);
+			funcCmt = formatFuncRptCmt(funcCmt);
 			writestr(file,form("; %s\n\n",funcCmt));
 		}
+	}
+	
+	writeFrame(file,ea);
+
+
+}
+
+static writeFrame(file,ea){
+
+	auto id, i, firstM, lastM, mName, mSize, mFlag;
+
+	id = GetFrame(ea);
+	firstM = GetFirstMember(id);
+	lastM = GetLastMember(id);
+	i=firstM;
+	while(i<=lastM){
+		if(i!=-1&&GetMemberName(id,i)!=""&&GetMemberName(id,i)!=" r"&&GetMemberName(id,i)!=" s"){
+			mName = GetMemberName(id,i); // Get the name
+			mSize = GetMemberSize(id, i); // Get the size (in byte)
+			mFlag = GetMemberFlag(id, i); // Get the flag
+			Message("\n%a : %s %d %x", ea, mName, mSize, mFlag);		
+			i = i+mSize;
+		}
+		else{
+			i++;
+		}	
 	}
 
 
@@ -181,6 +207,17 @@ static writeItem(file,ea){
 		
 	}
 	
+	commentEx = CommentEx(ea,0);
+	if(commentEx!=""){
+		comment = commentEx;
+	}
+	else{
+		commentEx = CommentEx(ea,1);
+		if(commentEx!=""){
+			comment = formatRptCmt(commentEx);
+		}
+	}
+	
 	output = form("%s%s%s\n",name,GetDisasm(ea),comment);
 	//Message(output);
 	writestr(file,output);
@@ -199,6 +236,24 @@ static writeFChunkFooter(file,ea){
 }
 
 
+static formatFuncRptCmt(cmt){
+
+	auto index, before, after, result;
+	index = strstr(cmt,"\n");
+
+	if(index!=-1){
+		before = substr(cmt,0,index+1);
+		after = substr(cmt,index+1,strlen(cmt)-1);
+		result = form("%s; %s",before,formatFuncRptCmt(after));
+		return result;
+	}
+	else{
+		return cmt;
+	}
+
+}
+
+
 static formatRptCmt(cmt){
 
 	auto index, before, after, result;
@@ -207,7 +262,7 @@ static formatRptCmt(cmt){
 	if(index!=-1){
 		before = substr(cmt,0,index+1);
 		after = substr(cmt,index+1,strlen(cmt)-1);
-		result = form("%s;%s",before,formatRptCmt(after));
+		result = form("%s                                            ; %s",before,formatRptCmt(after));
 		return result;
 	}
 	else{
