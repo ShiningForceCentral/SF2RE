@@ -8,48 +8,9 @@
 
 static main(void) {
 
-	auto seg,end,ea,itemSize,action,currentLine,previousLine,file;
-	auto output, name, indent, comment, commentEx, commentIndent;
-	
-	action = 1;
-
 	produceEnums();
-
-	file = fopen("sf2.asm","w");
-	writeHeader(file);
-	
-	seg = FirstSeg();
-	end = SegEnd(seg);
-	ea = seg;
-	while(ea<end){
-	
-		//Jump(ea);
-		
-		itemSize = ItemSize(ea);
-		
-		//Message(form("\nSTART %s, END %s, ea %s",ltoa(GetFunctionAttr(ea,FUNCATTR_START),16),ltoa(GetFunctionAttr(ea,FUNCATTR_END),16),ltoa(ea,16)));	
-
-		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
-			writeFunctionHeader(file,ea);
-		}
-		
-		writeItem(file,ea);
-		
-		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
-			writeFunctionFooter(file,ea);
-		}		
-
-		
-
-		//action = AskYN(1,"Continue ?");
-		if(action!=1) break;
-		
-		ea = ea + itemSize;
-	
-	}
-
-	fclose(file);
-	Message("DONE.\n");
+	produceConst();
+	produceMain();
 
 }
 
@@ -87,6 +48,83 @@ static produceEnums(){
 	
 	fclose(file);
 	Message("DONE.\n");
+}
+
+
+static produceConst(void) {
+
+	auto seg,end,ea,segName,name,file;
+	
+	Message("\nWriting offset constants to sf2const.asm ...");
+	file = fopen("sf2const.asm","w");
+	writestr(file,"; SF2CONST.ASM INCLUDED AT START OF SF2.ASM\n\n");
+	seg = FirstSeg();
+	seg = NextSeg(seg);
+	while(seg != BADADDR){
+		end = SegEnd(seg);
+		segName = SegName(seg);
+		writestr(file,form("; START OF SEGMENT %s OFFSETS FROM %a TO %a\n",segName, seg, end));
+		ea = seg;
+		while(ea<end){
+			name = GetTrueName(ea);
+			if(name!=""){
+				writestr(file,form("%s: equ $%s\n",name,ltoa(ea,16)));
+			}
+			ea = ea + ItemSize(ea);
+		}
+		writestr(file,form("; END OF SEGMENT %s OFFSETS FROM %a TO %a\n\n",segName, seg, end));
+		seg = NextSeg(seg);
+	}
+	fclose(file);
+	Message("DONE.\n");
+
+}
+
+
+static produceMain(){
+
+	auto seg,end,ea,itemSize,action,currentLine,previousLine,file;
+	auto output, name, indent, comment, commentEx, commentIndent;
+	
+	action = 1;
+	
+	file = fopen("sf2.asm","w");
+	writeHeader(file);
+	
+	seg = FirstSeg();
+	end = SegEnd(seg);
+	ea = seg;
+	while(ea<end){
+	
+		//Jump(ea);
+		
+		itemSize = ItemSize(ea);
+		
+		//Message(form("\nSTART %s, END %s, ea %s",ltoa(GetFunctionAttr(ea,FUNCATTR_START),16),ltoa(GetFunctionAttr(ea,FUNCATTR_END),16),ltoa(ea,16)));	
+
+		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
+			writeFunctionHeader(file,ea);
+		}
+		
+		writeItem(file,ea);
+		
+		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+			writeFunctionFooter(file,ea);
+		}		
+
+		
+
+		//action = AskYN(1,"Continue ?");
+		if(action!=1) break;
+		
+		ea = ea + itemSize;
+	
+	}
+
+	fclose(file);
+	Message("DONE.\n");	
+
+
 }
 
 
@@ -152,7 +190,8 @@ static writeFrame(file,ea){
 			mName = GetMemberName(id,i); // Get the name
 			mSize = GetMemberSize(id, i); // Get the size (in byte)
 			mFlag = GetMemberFlag(id, i); // Get the flag
-			Message("\n%a : %s %d %x", ea, mName, mSize, mFlag);		
+			Message("\n%a : %s %d %x", ea, mName, mSize, mFlag);
+			DelStrucMember(id,i);		
 			i = i+mSize;
 		}
 		else{
@@ -176,10 +215,10 @@ static writeFunctionFooter(file, ea){
 
 static writeItem(file,ea){
 
-	auto name,indent,commentIndent,comment,commentEx,output;
+	auto name,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
 	
-	indent = "                    ";
-	commentIndent = "                    ";
+	indent = "\t\t\t\t\t\t\t\t\t\t";
+	commentIndent = "\t\t\t\t\t\t\t\t\t\t\t\t";
 
 	name = GetTrueName(ea);
 	if(name==""){
@@ -199,13 +238,7 @@ static writeItem(file,ea){
 	else {
 		name = indent;
 	}
-	
-	
-	commentEx = CommentEx(ea,1);
-	while(strstr(comment,"\n")!=-1){
-		//TODO manage repeatable comments
-		
-	}
+
 	
 	commentEx = CommentEx(ea,0);
 	if(commentEx!=""){
@@ -218,8 +251,54 @@ static writeItem(file,ea){
 		}
 	}
 	
-	output = form("%s%s%s\n",name,GetDisasm(ea),comment);
-	//Message(output);
+	disasm = GetDisasm(ea);
+	cmtIdx = strstr(disasm,";");
+	if(cmtIdx!=-1){
+		disasm = substr(disasm,0,cmtIdx);
+	}
+	
+	if(comment!=""){
+		comment = form("; %s",comment);
+	}
+	
+	if(strlen(name)>strlen(indent)){
+		name = form("%s\n%s",name,indent);
+	}
+	
+	if(strlen(disasm)>strlen(commentIndent)&&comment!=""){
+		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
+	}
+	
+	/* useless
+	i=0;
+	line = LineA(ea,i);
+	while(line!=""){
+		lineA = form("%s\n%s",lineA,line);
+		i++;
+		line = LineA(ea,i);
+	}
+	if(lineA!=""){
+		lineA = form("%s\n",lineA);
+	}
+	
+	i=0;
+	line = LineB(ea,i);
+	while(line!=""){
+		lineA = form("%s\n%s",lineB,line);
+		i++;
+		line = LineB(ea,i);		
+	}
+	if(lineB!=""){
+		lineB = form("%s\n",lineB);
+	}
+	*/
+	
+	output = form("%s%s%s%s\n%s",lineA,name,disasm,comment,lineB);
+	/*type = GuessType(ea);
+	if(strstr(type,"char[")!=-1){
+			Message("%a %s : %s\n",ea,GuessType(ea),disasm);
+	}*/
+
 	writestr(file,output);
 
 }
@@ -243,7 +322,7 @@ static formatFuncRptCmt(cmt){
 
 	if(index!=-1){
 		before = substr(cmt,0,index+1);
-		after = substr(cmt,index+1,strlen(cmt)-1);
+		after = substr(cmt,index+1,strlen(cmt));
 		result = form("%s; %s",before,formatFuncRptCmt(after));
 		return result;
 	}
@@ -261,8 +340,8 @@ static formatRptCmt(cmt){
 
 	if(index!=-1){
 		before = substr(cmt,0,index+1);
-		after = substr(cmt,index+1,strlen(cmt)-1);
-		result = form("%s                                            ; %s",before,formatRptCmt(after));
+		after = substr(cmt,index+1,strlen(cmt));
+		result = form("%s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t; %s",before,formatRptCmt(after));
 		return result;
 	}
 	else{
