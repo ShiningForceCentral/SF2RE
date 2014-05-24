@@ -169,7 +169,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1AA31E,0x1AA5FA,"battlesceneTransitionTilesA","misc/battlescenetransitiontilesa.bin",file);
 	splitSingleChunk(0x1AA5FA,0x1AA8CA,"battlesceneTransitionTilesB","misc/battlescenetransitiontilesb.bin",file);
 	splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","spells/boltanimdataa.bin",file);
-	splitSingleChunk(0x11AAA82,0x1AA8CA,"BoltAnimData_B","spells/boltanimdatab.bin",file);		
+	splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","spells/boltanimdatab.bin",file);		
 	
 	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","battles/specialbattles.bin",file);	
 	
