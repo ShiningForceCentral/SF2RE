@@ -87,13 +87,42 @@ static produceMain(){
 	action = 1;
 	file = fopen("sf2.asm","w");
 	writeHeader(file);
-	seg = FirstSeg();
-	end = SegEnd(seg);
-	ea = seg;
+
+	produceSection(file,"01",0x0,			0x8000,"Technical Layer, Low Level Game Engine, Map/Exploration Engine, Entity Script Commands, Witch Functions ");
+	produceSection(file,"02",0x8000,	0x10000,"Character Stats Engine, Item Effects Engine");
+	produceSection(file,"03",0x10000,	0x18000,"Menu Engine");
+	produceSection(file,"04",0x18000,	0x20000,"BattleScene Engine");
+	produceSection(file,"05",0x20000,	0x28000,"Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine");
+	produceSection(file,"06",0x28000,	0x44000,"Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Script Huffman Trees, Scriptbanks");
+	produceSection(file,"07",0x44000,	0x64000,"Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
+	produceSection(file,"08",0x64000,	0xC8000,"Map Tiles, Map Palettes, Map Data");
+	produceSection(file,"09",0xC8000,	0x100000,"Entity Sprites");
+	produceSection(file,"10",0x100000,0x130000,"Backgrounds, invocation sprites, title screen");
+	produceSection(file,"11",0x130000,0x180000,"Enemy battle sprites");
+	produceSection(file,"12",0x180000,0x1AC000,"Ally battle sprites, status anim tiles, battlescene transition tiles, bolt graphics, ally and enemy animations");
+	produceSection(file,"13",0x1AC000,0x1B8000,"Battle setup functions, battle terrains, battle entity setups, end kiss graphics");
+	produceSection(file,"14",0x1B8000,0x1C8000,"Battlescene grounds, weapons, spell graphics, witch screens");
+	produceSection(file,"15",0x1C8000,0x1D8000,"Portraits");
+	produceSection(file,"16",0x1D8000,0x1E0000,"Icons");
+	produceSection(file,"17",0x1E0000,0x1F0000,"PCM Banks, YM Instruments, sound driver, char stats, witch screens");
+	produceSection(file,"18",0x1F0000,0x200000,"Music banks 1 and 0");
+
+	fclose(file);
+	Message("\nDONE.");	
+}
+
+static produceSection(mainFile,sectionName,start,end,sectionComment){
+	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+	auto output, name, indent, comment, commentEx, commentIndent;
+	fileName = form("sf2-%s.asm",sectionName);
+	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
+	action = 1;
+	writestr(mainFile,form("   include \"%s\"\t\t; %s\n",fileName,sectionComment));
+	file = fopen(fileName,"w");
+	writestr(file,form("\n; GAME SECTION %s :\n; %s\n\n\n",sectionName,sectionComment));
+	ea = start;
 	while(ea<end){
-		//Jump(ea);
 		itemSize = ItemSize(ea);
-		//Message(form("\nSTART %s, END %s, ea %s",ltoa(GetFunctionAttr(ea,FUNCATTR_START),16),ltoa(GetFunctionAttr(ea,FUNCATTR_END),16),ltoa(ea,16)));	
 		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
 			writeFunctionHeader(file,ea);
 		}
@@ -107,13 +136,13 @@ static produceMain(){
 		else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFChunkFooter(file,ea);
 		}				
-		//action = AskYN(1,"Continue ?");
-		if(action!=1) break;
 		ea = ea + itemSize;
 	}
 	fclose(file);
-	Message("\nDONE.");	
+	Message("DONE.\n");	
+
 }
+
 
 static writeHeader(file){
 	writestr(file,"\n\nalign macro\n");
