@@ -8,9 +8,13 @@
 
 static main(void) {
 
+	Message("PRODUCING ASM...\n");
+
 	produceEnums();
 	produceConst();
 	produceMain();
+	
+	Message("\nEND OF ASM PRODUCTION.\n");
 
 }
 
@@ -43,18 +47,13 @@ static produceEnums(){
 			constant = GetNextConst(id,constant,-1);
 		}
 	}
-	
-	writeFooter(file);
-	
 	fclose(file);
-	Message("DONE.\n");
+	Message("DONE.");
 }
 
 
 static produceConst(void) {
-
 	auto seg,end,ea,segName,name,file;
-	
 	Message("\nWriting offset constants to sf2const.asm ...");
 	file = fopen("sf2const.asm","w");
 	writestr(file,"; SF2CONST.ASM INCLUDED AT START OF SF2.ASM\n\n");
@@ -77,7 +76,6 @@ static produceConst(void) {
 	}
 	fclose(file);
 	Message("DONE.\n");
-
 }
 
 
@@ -85,54 +83,37 @@ static produceMain(){
 
 	auto seg,end,ea,itemSize,action,currentLine,previousLine,file;
 	auto output, name, indent, comment, commentEx, commentIndent;
-	
+	Message("Writing main assembly file to sf2.asm ...");	
 	action = 1;
-	
 	file = fopen("sf2.asm","w");
 	writeHeader(file);
-	
 	seg = FirstSeg();
 	end = SegEnd(seg);
 	ea = seg;
 	while(ea<end){
-	
 		//Jump(ea);
-		
 		itemSize = ItemSize(ea);
-		
 		//Message(form("\nSTART %s, END %s, ea %s",ltoa(GetFunctionAttr(ea,FUNCATTR_START),16),ltoa(GetFunctionAttr(ea,FUNCATTR_END),16),ltoa(ea,16)));	
-
 		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
 			writeFunctionHeader(file,ea);
 		}
 		else if(GetFchunkAttr(ea,FUNCATTR_START)==ea){	
 			writeFChunkHeader(file,ea);
 		}		
-
 		writeItem(file,ea);
-		
 		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFunctionFooter(file,ea);
 		}		
 		else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFChunkFooter(file,ea);
 		}				
-
-		
-
 		//action = AskYN(1,"Continue ?");
 		if(action!=1) break;
-		
 		ea = ea + itemSize;
-	
 	}
-
 	fclose(file);
-	Message("DONE.\n");	
-
-
+	Message("\nDONE.");	
 }
-
 
 static writeHeader(file){
 	writestr(file,"\n\nalign macro\n");
@@ -143,16 +124,12 @@ static writeHeader(file){
 	writestr(file,"\n\n");
 }
 
-
 static writeFooter(file){
 	writestr(file,"		END");
 }
 
-
 static writeFunctionHeader(file, ea){
-
 	auto funcCmt;
-
 	writestr(file,"\n; =============== S U B R O U T I N E =======================================\n\n");
 	funcCmt = GetFunctionCmt(ea,0);
 	if(funcCmt!=""){
@@ -165,16 +142,11 @@ static writeFunctionHeader(file, ea){
 			writestr(file,form("; %s\n\n",funcCmt));
 		}
 	}
-	
-	writeFrame(file,ea);
-
-
+	undefineLocalVars(file,ea);
 }
 
-static writeFrame(file,ea){
-
+static undefineLocalVars(file,ea){
 	auto id, i, firstM, lastM, mName, mSize, mFlag;
-
 	id = GetFrame(ea);
 	firstM = GetFirstMember(id);
 	lastM = GetLastMember(id);
@@ -184,7 +156,7 @@ static writeFrame(file,ea){
 			mName = GetMemberName(id,i); // Get the name
 			mSize = GetMemberSize(id, i); // Get the size (in byte)
 			mFlag = GetMemberFlag(id, i); // Get the flag
-			Message("\n%a : %s %d %x", ea, mName, mSize, mFlag);
+			Message("\n%a : undefined %s %d %x", ea, mName, mSize, mFlag);
 			DelStrucMember(id,i);		
 			i = i+mSize;
 		}
@@ -192,29 +164,27 @@ static writeFrame(file,ea){
 			i++;
 		}	
 	}
-
-
 }
 
+static undefineMultipleLineArray(ea){
+	auto type;
+			type = GuessType(ea);
+			if(strstr(type,"char[")!=-1&&(strstr(GetDisasm(ea),"incbin")==-1)){
+					Message(form("\n%a : %s \t\t<== UNDEFINE if on multiple lines.",ea,GuessType(ea)));
+			}	
+}
 
 static writeFunctionFooter(file, ea){
-
 	auto funcName;
 	funcName = GetFunctionName(ea);
 	writestr(file,form("\n	; End of function %s\n\n",funcName));
-
-
 }
 
-
 static writeItem(file,ea){
-
 	auto name,tabLength,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
-	
 	tabLength = 2;
 	indent = "\t\t\t\t\t\t\t\t\t\t";
 	commentIndent = "\t\t\t\t\t\t\t\t\t\t\t\t";
-
 	name = GetTrueName(ea);
 	if(name==""){
 		name = Name(ea);
@@ -228,13 +198,12 @@ static writeItem(file,ea){
 			while(strlen(name)<(strlen(indent)*tabLength)){
 				name = form("%s ",name);
 			}		
+			undefineMultipleLineArray(ea);
 		}
 	}
 	else {
 		name = indent;
 	}
-
-	
 	commentEx = CommentEx(ea,0);
 	if(commentEx!=""){
 		comment = commentEx;
@@ -245,26 +214,69 @@ static writeItem(file,ea){
 			comment = formatRptCmt(commentEx);
 		}
 	}
-	
 	disasm = GetDisasm(ea);
 	cmtIdx = strstr(disasm,";");
 	if(cmtIdx!=-1){
 		disasm = substr(disasm,0,cmtIdx);
 	}
-	
 	if(comment!=""){
 		comment = form("; %s",comment);
 	}
-	
 	if(strlen(name)>(strlen(indent)*tabLength)){
-		//Message(form("indent length %d, name length %d",strlen(indent),strlen(name)));
 		name = form("%s\n%s",name,indent);
 	}
-	
 	if(strlen(disasm)>(strlen(commentIndent)*tabLength)&&comment!=""){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
-	
+	output = form("%s%s%s%s\n%s",lineA,name,disasm,comment,lineB);
+	writestr(file,output);
+}
+
+static writeFChunkHeader(file,ea){
+	auto text,functionName;
+	text = "; START OF FUNCTION CHUNK FOR ";
+	functionName = GetFunctionName(ea);
+	writestr(file,form("\n%s%s\n\n",text,functionName));
+}
+
+static writeFChunkFooter(file,ea){
+	auto text,functionName;
+	text = "; END OF FUNCTION CHUNK FOR ";
+	functionName = GetFunctionName(ea);
+	writestr(file,form("\n%s%s\n\n",text,functionName));
+}
+
+static formatFuncRptCmt(cmt){
+	auto index, before, after, result;
+	index = strstr(cmt,"\n");
+	if(index!=-1){
+		before = substr(cmt,0,index+1);
+		after = substr(cmt,index+1,strlen(cmt));
+		result = form("%s; %s",before,formatFuncRptCmt(after));
+		return result;
+	}
+	else{
+		return cmt;
+	}
+}
+
+static formatRptCmt(cmt){
+	auto index, before, after, result;
+	index = strstr(cmt,"\n");
+	if(index!=-1){
+		before = substr(cmt,0,index+1);
+		after = substr(cmt,index+1,strlen(cmt));
+		result = form("%s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t; %s",before,formatRptCmt(after));
+		return result;
+	}
+	else{
+		return cmt;
+	}
+}
+
+
+
+
 	/* useless
 	i=0;
 	line = LineA(ea,i);
@@ -288,69 +300,3 @@ static writeItem(file,ea){
 		lineB = form("%s\n",lineB);
 	}
 	*/
-	
-	output = form("%s%s%s%s\n%s",lineA,name,disasm,comment,lineB);
-	/*type = GuessType(ea);
-	if(strstr(type,"char[")!=-1){
-			Message("%a %s : %s\n",ea,GuessType(ea),disasm);
-	}*/
-
-	writestr(file,output);
-
-}
-
-static writeFChunkHeader(file,ea){
-
-	auto text,functionName;
-	
-	text = "; START OF FUNCTION CHUNK FOR ";
-	functionName = GetFunctionName(ea);
-	writestr(file,form("\n%s%s\n\n",text,functionName));
-
-}
-
-static writeFChunkFooter(file,ea){
-
-	auto text,functionName;
-	
-	text = "; END OF FUNCTION CHUNK FOR ";
-	functionName = GetFunctionName(ea);
-	writestr(file,form("\n%s%s\n\n",text,functionName));
-
-}
-
-
-static formatFuncRptCmt(cmt){
-
-	auto index, before, after, result;
-	index = strstr(cmt,"\n");
-
-	if(index!=-1){
-		before = substr(cmt,0,index+1);
-		after = substr(cmt,index+1,strlen(cmt));
-		result = form("%s; %s",before,formatFuncRptCmt(after));
-		return result;
-	}
-	else{
-		return cmt;
-	}
-
-}
-
-
-static formatRptCmt(cmt){
-
-	auto index, before, after, result;
-	index = strstr(cmt,"\n");
-
-	if(index!=-1){
-		before = substr(cmt,0,index+1);
-		after = substr(cmt,index+1,strlen(cmt));
-		result = form("%s\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t; %s",before,formatRptCmt(after));
-		return result;
-	}
-	else{
-		return cmt;
-	}
-
-}

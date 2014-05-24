@@ -155,6 +155,7 @@ static fixInstructionRepresentations(){
 static fixSingleInstructions(){
 
 	OpHex(0x128C0,1);
+	OpHex(0x19C58,0);	
 	OpHex(0x1B3A0,0);
 	OpHex(0x27982,1);
 	OpHex(0x27A36,1);

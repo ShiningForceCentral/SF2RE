@@ -3080,8 +3080,9 @@ static Bytes_0(void) {
 	MakeCode	(x=0X3190);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeByte	(0X31CE);
-	MakeArray	(0X31CE,	0X480);
+	MakeDword	(x=0X31CE);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeName	(0X31CE,	"MapOffsetHashTable");
 	MakeCode	(0X364E);
 	MakeCode	(x=0X368C);
@@ -5292,8 +5293,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X5F96,	"reset animation counter if it reached max value");
 	MakeCode	(x=0X5F96);
 	OpEnumEx		(x,	0,	GetEnum("Map_Entity"),0);
-	MakeByte	(0X5F9C);
-	MakeArray	(0X5F9C,	0X10);
 	MakeCode	(0X5FAC);
 	MakeCode	(0X5FBA);
 	MakeCode	(0X5FC8);
@@ -5352,7 +5351,6 @@ static Bytes_1(void) {
 	OpHex		(x,	0);
 	MakeRptCmt	(0X6182,	"8 bytes holding facing values for sprites (not sure what it's for)");
 	MakeByte	(0X6182);
-	MakeArray	(0X6182,	0X8);
 	MakeName	(0X6182,	"FacingValues");
 	MakeCode	(0X618A);
 	MakeCode	(x=0X6190);
@@ -5652,8 +5650,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0X665C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeByte	(0X666E);
-	MakeArray	(0X666E,	0X100);
 	MakeCode	(x=0X676E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -5969,8 +5965,6 @@ static Bytes_1(void) {
 	MakeCode	(0X6D4A);
 	MakeCode	(0X6D58);
 	MakeCode	(0X6D66);
-	MakeByte	(0X6D74);
-	MakeArray	(0X6D74,	0X120);
 	MakeStr		(0X6E94,	0X6EA5);
 	MakeName	(0X6E94,	"aTaguchiNewSupra");
 	MakeByte	(0X6EA5);
@@ -6130,8 +6124,6 @@ static Bytes_1(void) {
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X7186,	"compared to save locations ?");
 	MakeByte	(0X7186);
-	MakeByte	(0X7187);
-	MakeArray	(0X7187,	0X39);
 	MakeCode	(0X71C0);
 	MakeName	(0X71C0,	"j_playIntro");
 	MakeCode	(0X71C4);
@@ -6490,8 +6482,9 @@ static Bytes_1(void) {
 	OpHex		(x,	0);
 	MakeCode	(0X7982);
 	MakeRptCmt	(0X7988,	"maps to change if flags are set\nmap idx (word), flag (word), new map idx (word)");
-	MakeByte	(0X7988);
-	MakeArray	(0X7988,	0X14);
+	MakeDword	(x=0X7988);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeName	(0X7988,	"ListOfChangingMaps");
 	MakeCode	(0X799C);
 	MakeName	(0X799C,	"GetNextBattleOnMap");
@@ -7248,8 +7241,6 @@ static Bytes_1(void) {
 	MakeName	(0X851A,	"GetSomethingClassType");
 	MakeCode	(0X8536);
 	MakeRptCmt	(0X853A,	"0,1,2 = base class, promoted class, special promoted class");
-	MakeByte	(0X853A);
-	MakeArray	(0X853A,	0X20);
 	MakeName	(0X853A,	"tbl_classTypes");
 	MakeCode	(0X855A);
 	MakeName	(0X855A,	"CopyCharNameToRAM");
@@ -8433,7 +8424,6 @@ static Bytes_1(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -8881,15 +8871,6 @@ static Bytes_1(void) {
 	MakeName	(0XA90E,	"GiveEXPandGoldForKill");
 	MakeCode	(x=0XA912);
 	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0XA92E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -8903,6 +8884,15 @@ static Bytes_2(void) {
 	MakeCode	(x=0XA944);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0XA94C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -12564,7 +12554,6 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X114AC);
 	OpStkvar	(x,	0);
-	MakeStr		(0X114BE,	0X11572);
 	MakeName	(0X114BE,	"aAAAAAAAAPATT99PPPPD");
 	MakeCode	(x=0X11572);
 	OpOff		(x,	1,	0X0);
@@ -13879,15 +13868,6 @@ static Bytes_2(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X13666);
 	OpStkvar	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1367C);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X13690);
@@ -13905,6 +13885,15 @@ static Bytes_3(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X13708);
 	OpStkvar	(x,	0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1371E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -14799,7 +14788,7 @@ static Bytes_3(void) {
 	MakeCode	(x=0X14EE6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeStr		(0X14F7C,	0X15059);
+	MakeByte	(0X14F7C);
 	MakeName	(0X14F7C,	"aUuUuIUuUU");
 	MakeCode	(x=0X15268);
 	OpOff		(x,	0,	0X0);
@@ -15190,7 +15179,6 @@ static Bytes_3(void) {
 	MakeWord	(x=0X15A56);
 	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
 	MakeCode	(0X15A58);
-	MakeStr		(0X15A5A,	0X15BB0);
 	MakeName	(0X15A5A,	"menuLayout_BattlefieldConfig");
 	MakeCode	(0X15BB0);
 	MakeCode	(x=0X15BB4);
@@ -15393,6 +15381,7 @@ static Bytes_3(void) {
 	MakeCode	(0X16282);
 	MakeName	(0X16282,	"ExecuteNumberPrompt");
 	MakeCode	(x=0X16286);
+	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1628A);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
@@ -15569,7 +15558,6 @@ static Bytes_3(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X165FA);
 	OpHex		(x,	0);
-	MakeStr		(0X16618,	0X16658);
 	MakeName	(0X16618,	"VDPTileOrder_TimerWindow");
 	MakeCode	(0X16658);
 	MakeName	(0X16658,	"executeWitchMainMenu");
@@ -17403,9 +17391,7 @@ static Bytes_3(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X19C46);
 	OpHex		(x,	0);
-	MakeCode	(x=0X19C58);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
+	MakeCode	(0X19C58);
 	MakeCode	(x=0X19C6C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -17413,7 +17399,8 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X19C7C);
-	OpHex		(x,	0);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(0X19CA4);
 	MakeName	(0X19CA4,	"loadSpellAnimationGraphics");
 	MakeCode	(x=0X19CB2);
@@ -19175,15 +19162,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1B858);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1B85C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19205,6 +19183,15 @@ static Bytes_4(void) {
 	MakeCode	(x=0X1B874);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1B878);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -24232,15 +24219,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
 	MakeCode	(x=0X2404A);
 	OpEnumEx		(x,	0,	GetEnum("SpellDef_Idx"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X24052);
 	OpEnumEx		(x,	0,	GetEnum("Battle"),0);
 	OpOff		(x,	1,	0X0);
@@ -24255,6 +24233,15 @@ static Bytes_5(void) {
 	MakeCode	(x=0X2406A);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X24074);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -26338,10 +26325,9 @@ static Bytes_5(void) {
 	MakeWord	(0X28BB2);
 	MakeWord	(0X28BB4);
 	MakeWord	(0X28BB6);
-	MakeByte	(0X28BB8);
-	MakeArray	(0X28BB8,	0X379);
-	MakeByte	(0X28F31);
-	MakeArray	(0X28F31,	0X25);
+	MakeDword	(x=0X28F31);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(0X28F56);
 	MakeName	(0X28F56,	"loadSegaLogoPalette");
 	MakeCode	(0X28F62);
@@ -26370,8 +26356,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X28FB6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeByte	(0X28FBC);
-	MakeArray	(0X28FBC,	0X10);
 	MakeName	(0X28FBC,	"ConfigurationModeInputSequence");
 	MakeCode	(x=0X28FCC);
 	OpOff		(x,	0,	0X0);
@@ -26390,8 +26374,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X28FEA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeByte	(0X28FF0);
-	MakeArray	(0X28FF0,	0X12);
 	MakeName	(0X28FF0,	"DebugModeInputSequence");
 	MakeByte	(0X29002);
 	MakeArray	(0X29002,	0XA00);
@@ -26423,8 +26405,6 @@ static Bytes_5(void) {
 	MakeByte	(0X2C01E);
 	MakeArray	(0X2C01E,	0X20);
 	MakeName	(0X2C01E,	"plt_WitchChoice");
-	MakeByte	(0X2C03E);
-	MakeArray	(0X2C03E,	0X3C0);
 	MakeByte	(0X2C3FE);
 	MakeArray	(0X2C3FE,	0X178);
 	MakeName	(0X2C3FE,	"SpeechBalloonTiles");
@@ -26483,8 +26463,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X2C6D4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeByte	(0X2C6FC);
-	MakeArray	(0X2C6FC,	0X40);
 	MakeCode	(x=0X2C73C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -26512,8 +26490,6 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X2C7A0,	"no reference to that ? looks like compressed tiles but no idea of what they represent (32x8 tiles)");
-	MakeByte	(0X2C7A0);
-	MakeArray	(0X2C7A0,	0X163E);
 	MakeName	(0X2C7A0,	"UnusedCloudTiles");
 	MakeRptCmt	(0X2DDDE,	"used for title screen");
 	MakeByte	(0X2DDDE);
@@ -27132,14 +27108,13 @@ static Bytes_5(void) {
 	MakeByte	(0X4497A);
 	MakeArray	(0X4497A,	0X6);
 	MakeName	(0X4497A,	"ActScript_Fainted");
-	MakeByte	(0X44980);
-	MakeArray	(0X44980,	0X8);
+	MakeDword	(x=0X44980);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeName	(0X44980,	"ActScript_Motionless");
 	MakeByte	(0X44988);
 	MakeArray	(0X44988,	0XA);
 	MakeName	(0X44988,	"Actscript_44988");
-	MakeByte	(0X44992);
-	MakeArray	(0X44992,	0X34);
 	MakeName	(0X44992,	"ActScript_WhirlsInWater");
 	MakeCode	(0X449C6);
 	MakeName	(0X449C6,	"getCharacterSpriteIdx");
@@ -29489,15 +29464,6 @@ static Bytes_5(void) {
 	MakeDword	(x=0X461B2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X461B6);
 	MakeName	(0X461B6,	"eas_461B6");
 	MakeByte	(0X461B7);
@@ -29533,6 +29499,15 @@ static Bytes_6(void) {
 	MakeByte	(0X461D5);
 	MakeByte	(0X461D6);
 	MakeByte	(0X461D7);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X461D8);
 	MakeByte	(0X461D9);
 	MakeByte	(0X461DA);
@@ -32777,8 +32752,6 @@ static Bytes_6(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X47EEA,	"executeFlashScreenScript");
-	MakeByte	(0X47EF2);
-	MakeArray	(0X47EF2,	0X6);
 	MakeName	(0X47EF2,	"FlashScreenScript");
 	MakeCode	(0X47EF8);
 	MakeName	(0X47EF8,	"PlayIntroOrEndCutscene");
@@ -35069,15 +35042,6 @@ static Bytes_6(void) {
 	MakeByte	(0X48885);
 	MakeByte	(0X48886);
 	MakeByte	(0X48887);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X48888);
 	MakeByte	(0X48889);
 	MakeByte	(0X4888A);
@@ -35116,6 +35080,15 @@ static Bytes_7(void) {
 	MakeByte	(0X488AF);
 	MakeByte	(0X488B0);
 	MakeByte	(0X488B1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X488B2);
 	MakeByte	(0X488B3);
 	MakeByte	(0X488B4);
@@ -40940,15 +40913,6 @@ static Bytes_7(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X5311A);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X5311C);
 	MakeCode	(0X5311E);
 	MakeWord	(0X53120);
@@ -40988,6 +40952,15 @@ static Bytes_8(void) {
 	MakeDword	(x=0X53654);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X53658);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -46574,15 +46547,6 @@ static Bytes_8(void) {
 	MakeByte	(0X90E9C);
 	MakeArray	(0X90E9C,	0X93C);
 	MakeName	(0X90E9C,	"MapTiles107");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X917D8);
 	MakeArray	(0X917D8,	0X91E);
 	MakeName	(0X917D8,	"MapTiles108");
@@ -46608,6 +46572,15 @@ static Bytes_9(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X9494A,	"pt_MapPalettes");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X9494E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -51132,15 +51105,6 @@ static Bytes_9(void) {
 	MakeByte	(0XBBD1C);
 	MakeByte	(0XBBD1D);
 	MakeByte	(0XBBD1E);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XBBD1F);
 	MakeDword	(x=0XBBD20);
 	OpOff		(x,	0,	0X0);
@@ -51178,6 +51142,15 @@ static Bytes_10(void) {
 	MakeByte	(0XBBD68);
 	MakeArray	(0XBBD68,	0X12);
 	MakeName	(0XBBD68,	"Map66Section3");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XBBD7A);
 	MakeArray	(0XBBD7A,	0X2);
 	MakeName	(0XBBD7A,	"Map66Section4");
@@ -55635,15 +55608,6 @@ static Bytes_10(void) {
 	MakeByte	(0XF314A);
 	MakeArray	(0XF314A,	0X176);
 	MakeName	(0XF314A,	"EntitySprite524");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XF32C0);
 	MakeArray	(0XF32C0,	0XC0);
 	MakeName	(0XF32C0,	"EntitySprite525");
@@ -55668,6 +55632,15 @@ static Bytes_11(void) {
 	MakeByte	(0XF38F6);
 	MakeArray	(0XF38F6,	0XCA);
 	MakeName	(0XF38F6,	"EntitySprite532");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XF39C0);
 	MakeArray	(0XF39C0,	0X102);
 	MakeName	(0XF39C0,	"EntitySprite533");
@@ -59815,15 +59788,6 @@ static Bytes_11(void) {
 	MakeName	(0X1B813E,	"bsg19_rpbase");
 	MakeWord	(0X1B8140);
 	MakeName	(0X1B8140,	"battlesceneGround20");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X1B8142);
 	MakeWord	(0X1B8144);
 	MakeWord	(x=0X1B8146);
@@ -59854,6 +59818,15 @@ static Bytes_12(void) {
 	MakeName	(0X1B8156,	"bsg24_rpbase");
 	MakeWord	(0X1B8158);
 	MakeName	(0X1B8158,	"battlesceneGround25");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X1B815A);
 	MakeWord	(0X1B815C);
 	MakeWord	(x=0X1B815E);
