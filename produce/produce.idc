@@ -105,12 +105,18 @@ static produceMain(){
 		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
 			writeFunctionHeader(file,ea);
 		}
-		
+		else if(GetFchunkAttr(ea,FUNCATTR_START)==ea){	
+			writeFChunkHeader(file,ea);
+		}		
+
 		writeItem(file,ea);
 		
 		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFunctionFooter(file,ea);
 		}		
+		else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+			writeFChunkFooter(file,ea);
+		}				
 
 		
 
@@ -145,20 +151,8 @@ static writeFooter(file){
 
 static writeFunctionHeader(file, ea){
 
-auto funcCmt;
+	auto funcCmt;
 
-	/*
-	GetFunctionAttr(ea,);
-	 FUNCATTR_START   -- function start address
-	 FUNCATTR_END     -- function end address
-	 FUNCATTR_FLAGS   -- function flags
-	 FUNCATTR_FRAME   -- function frame id
-	 FUNCATTR_FRSIZE  -- size of local variables
-	 FUNCATTR_FRREGS  -- size of saved registers area
-	 FUNCATTR_ARGSIZE -- number of bytes purged from the stack
-	 FUNCATTR_FPD     -- frame pointer delta
-	 FUNCATTR_COLOR   -- function color code
-	*/
 	writestr(file,"\n; =============== S U B R O U T I N E =======================================\n\n");
 	funcCmt = GetFunctionCmt(ea,0);
 	if(funcCmt!=""){
@@ -215,8 +209,9 @@ static writeFunctionFooter(file, ea){
 
 static writeItem(file,ea){
 
-	auto name,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
+	auto name,tabLength,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
 	
+	tabLength = 2;
 	indent = "\t\t\t\t\t\t\t\t\t\t";
 	commentIndent = "\t\t\t\t\t\t\t\t\t\t\t\t";
 
@@ -230,7 +225,7 @@ static writeItem(file,ea){
 			name = form("%s\n%s",name,indent);
 		}
 		else{
-			while(strlen(name)<strlen(indent)){
+			while(strlen(name)<(strlen(indent)*tabLength)){
 				name = form("%s ",name);
 			}		
 		}
@@ -261,11 +256,12 @@ static writeItem(file,ea){
 		comment = form("; %s",comment);
 	}
 	
-	if(strlen(name)>strlen(indent)){
+	if(strlen(name)>(strlen(indent)*tabLength)){
+		//Message(form("indent length %d, name length %d",strlen(indent),strlen(name)));
 		name = form("%s\n%s",name,indent);
 	}
 	
-	if(strlen(disasm)>strlen(commentIndent)&&comment!=""){
+	if(strlen(disasm)>(strlen(commentIndent)*tabLength)&&comment!=""){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
 	
@@ -305,12 +301,21 @@ static writeItem(file,ea){
 
 static writeFChunkHeader(file,ea){
 
-
+	auto text,functionName;
+	
+	text = "; START OF FUNCTION CHUNK FOR ";
+	functionName = GetFunctionName(ea);
+	writestr(file,form("\n%s%s\n\n",text,functionName));
 
 }
 
 static writeFChunkFooter(file,ea){
 
+	auto text,functionName;
+	
+	text = "; END OF FUNCTION CHUNK FOR ";
+	functionName = GetFunctionName(ea);
+	writestr(file,form("\n%s%s\n\n",text,functionName));
 
 }
 
