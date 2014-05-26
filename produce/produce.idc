@@ -10,6 +10,7 @@ static main(void) {
 
 	Message("PRODUCING ASM...\n");
 
+	produceMacros();
 	produceEnums();
 	produceConst();
 	produceMain();
@@ -18,7 +19,26 @@ static main(void) {
 
 }
 
-
+static produceMacros(){
+	auto file;
+	Message("\nWriting Macros to sf2macros.asm ...");	
+	file = fopen("sf2macros.asm","w");
+	writestr(file,"; ---------------------------------------------------------------------------\n");
+	writestr(file,"; Align and pad\n");
+	writestr(file,"; input: length to align to, value to use as padding (default is $FF)\n");
+	writestr(file,"; ---------------------------------------------------------------------------\n");
+	writestr(file,"\n");
+	writestr(file,"align:	macro\n");
+	writestr(file,"	if (narg=1)\n");
+	writestr(file,"	dcb.b \\1-(*%\\1),$FF\n");
+	writestr(file,"	else\n");
+	writestr(file,"	dcb.b \\1-(*%\\1),\\2\n");
+	writestr(file,"	endc\n");
+	writestr(file,"	endm\n");
+	writestr(file,"\n");
+	fclose(file);	
+	Message("DONE.");	
+}
 
 static produceEnums(){
 	auto i,j,enumQty,id,enumName,enumSize,constant,constId,output,file;
@@ -146,12 +166,11 @@ static produceSection(mainFile,sectionName,start,end,fs,sectionComment){
 
 
 static writeHeader(file){
-	writestr(file,"\n\nalign macro\n");
-	writestr(file,"   cnop 0,\\1\n");
-	writestr(file,"   endm\n");
+	writestr(file,"\n");
+	writestr(file,"   include \"sf2macros.asm\"\n");	
 	writestr(file,"   include \"sf2enums.asm\"\n");
 	writestr(file,"   include \"sf2const.asm\"\n");
-	writestr(file,"\n\n");
+	writestr(file,"\n");
 }
 
 static writeFooter(file){
