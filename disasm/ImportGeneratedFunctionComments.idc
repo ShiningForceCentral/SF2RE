@@ -24,6 +24,26 @@ static main()
     SetFunctionCmt(0x740, 
         "executes if bit3 set or bit1 clear", 1);
 
+    // Trap9_ClearPointers
+    SetFunctionCmt(0x7f6, 
+        "clear pointers", 1);
+
+    // Trap9_SetFunctionAndTrigger
+    SetFunctionCmt(0x814, 
+        "declare function and set trigger", 1);
+
+    // Trap9_ClearFunctionAndTrigger
+    SetFunctionCmt(0x83c, 
+        "remove declared function and clear trigger", 1);
+
+    // Trap9_ClearTrigger
+    SetFunctionCmt(0x864, 
+        "clear function trigger, or clear all triggers if param=0", 1);
+
+    // Trap9_SetTrigger
+    SetFunctionCmt(0x896, 
+        "set function trigger, or set all triggers if param=0", 1);
+
     // ParseFadingFX
     SetFunctionCmt(0xaba, 
         "fade subroutine to comment again ;_;", 1);
@@ -266,7 +286,7 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x59cc, 
         "same facing as other entity ?", 1);
 
-    // esc0A_
+    // esc0A_updateEntitySprite
     SetFunctionCmt(0x5a18, 
         "force entity sprite update ?", 1);
 
@@ -274,57 +294,53 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5a30, 
         "update FFAF44", 1);
 
-    // esc0C_
+    // esc0C_setPosition
     SetFunctionCmt(0x5a3c, 
         "set new pos/dest, clear offset", 1);
 
-    // esc0D_
+    // esc0D_clonePosition
     SetFunctionCmt(0x5a64, 
         "set same X pos, dest, offset and facing as other entity", 1);
 
-    // scriptCommand_0010
+    // esc10_setSpeed
     SetFunctionCmt(0x5ac8, 
         "set entity 1A-1B values with xxxx", 1);
 
-    // sub_5AD4
+    // esc11_
     SetFunctionCmt(0x5ad4, 
         "set entity 18-19 values with xxxx", 1);
 
-    // sub_5AE0
+    // esc12_
     SetFunctionCmt(0x5ae0, 
         "set or clear entity value 1C bits 0-1 according to xxxx", 1);
 
-    // sub_5B0E
+    // esc13_
     SetFunctionCmt(0x5b0e, 
         "set or clear entity value 1C bits 2-3 according to xxxx", 1);
 
-    // esc18_
+    // esc18_set1Cbit7
     SetFunctionCmt(0x5b88, 
         "set or clear entity value 1C bit 7 according to xxxx", 1);
 
-    // esc19_
+    // esc19_set1Cbit6
     SetFunctionCmt(0x5ba2, 
         "set or clear entity value 1C bit 6 according to xxxx", 1);
 
-    // scriptCommand_001A
+    // esc1A_set1Cbit5
     SetFunctionCmt(0x5bbc, 
         "set or clear entity value 1C bit 5 according to xxxx", 1);
 
-    // sub_5C3C
+    // esc1F_set1Dbit3
     SetFunctionCmt(0x5c3c, 
         "set entity bit 3 of byte $1D", 1);
 
-    // sub_5C56
+    // esc20_setEntityInWater
     SetFunctionCmt(0x5c56, 
         "set entity bit 5 of byte $1D", 1);
 
-    // sub_5C70
+    // esc21_set1Cbit4
     SetFunctionCmt(0x5c70, 
         "set entity bit 4 of byte $1C", 1);
-
-    // esc22_setEntityFacing
-    SetFunctionCmt(0x5c8a, 
-        "maybe more than just that ?", 1);
 
     // esc30_branch
     SetFunctionCmt(0x5ca6, 
@@ -1437,6 +1453,14 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
 
+    // sub_443B2
+    SetFunctionCmt(0x443b2, 
+        "initialize followers ?", 1);
+
+    // sub_445CA
+    SetFunctionCmt(0x445ca, 
+        "declare new entity ?", 1);
+
     // clearEntities
     SetFunctionCmt(0x4465a, 
         "clear entities in memory", 1);
@@ -1485,13 +1509,17 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x45254, 
         "to confirm", 1);
 
+    // sub_45268
+    SetFunctionCmt(0x45268, 
+        "related to Caravan ... warp into Caravan ?", 1);
+
     // GetEntityPortraitAndSpeechSound
     SetFunctionCmt(0x45638, 
         "In: D0 = entity idx\n\
 Out: D1 = portrait idx\n\
      D2 = speech sound idx", 1);
 
-    // sub_4658E
+    // csc36_
     SetFunctionCmt(0x4658e, 
         "related to loading a map", 1);
 
@@ -1551,7 +1579,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x46c5a, 
         "wtf, copy entity number of entity 00xx into entity number of entity 00yy ?!", 1);
 
-    // sub_47008
+    // csc56_
     SetFunctionCmt(0x47008, 
         "xx character", 1);
 

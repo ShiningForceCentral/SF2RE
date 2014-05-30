@@ -144,6 +144,8 @@ static splitSingleChunks(file) {
 	MakeAlign(0x425E7, 0x44000-0x425E7,14);
 	
 	splitSingleChunk(0x4428A,0x44298,"OverworldMaps","maps/overworldmaps.bin",file);
+	splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","misc/overworldfollowoers.bin",file);
+	splitSingleChunk(0x4433C,0x4438A,"Followers","misc/followers.bin",file);
 	
 	splitSingleChunk(0x44A5E,0x44A7C,"t_AllySprites","chardata/allyspriteids.bin",file);
 	splitSingleChunk(0x44AA4,0x44B4A,"t_MonsterSprites","chardata/enemyspriteids.bin",file);
