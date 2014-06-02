@@ -290,7 +290,7 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5a18, 
         "force entity sprite update ?", 1);
 
-    // esc0B_
+    // esc0B_setSpriteSize
     SetFunctionCmt(0x5a30, 
         "update FFAF44", 1);
 
@@ -1513,11 +1513,19 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x45268, 
         "related to Caravan ... warp into Caravan ?", 1);
 
+    // sub_455AC
+    SetFunctionCmt(0x455ac, 
+        "warp out ?", 1);
+
     // GetEntityPortraitAndSpeechSound
     SetFunctionCmt(0x45638, 
         "In: D0 = entity idx\n\
 Out: D1 = portrait idx\n\
      D2 = speech sound idx", 1);
+
+    // csc35_
+    SetFunctionCmt(0x46582, 
+        "similar to setBlocks", 1);
 
     // csc36_
     SetFunctionCmt(0x4658e, 
@@ -1551,18 +1559,6 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x46a82, 
         "if character xxxx dead, then do it to entity yyyy ?!", 1);
 
-    // csc1F_addForceMemberToList
-    SetFunctionCmt(0x46ade, 
-        "set some value in RAM", 1);
-
-    // csc20_addForceMembersOnMapToList
-    SetFunctionCmt(0x46af0, 
-        "related to same ram values", 1);
-
-    // csc21_removeForceMemberFromList
-    SetFunctionCmt(0x46b1a, 
-        "related to same ram values", 1);
-
     // csc22_animateEntityFadeInOrOut
     SetFunctionCmt(0x46b42, 
         "0/1 = scan down/up, 2/3 = wipe out/in, 4/5 = slide out/in, 6/7 = mosaic out/in", 1);
@@ -1578,6 +1574,10 @@ Out: D1 = portrait idx\n\
     // csc25_cloneEntity
     SetFunctionCmt(0x46c5a, 
         "wtf, copy entity number of entity 00xx into entity number of entity 00yy ?!", 1);
+
+    // csc52_
+    SetFunctionCmt(0x46f58, 
+        "related to 2 entities", 1);
 
     // csc56_
     SetFunctionCmt(0x47008, 
@@ -1625,7 +1625,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x47440, 
         "branch if something", 1);
 
-    // csc0F_jumpIfCharacterDead
+    // csc0F_jumpIfCharacterAlive
     SetFunctionCmt(0x47464, 
         "xxxx yyyyyyyy", 1);
 
