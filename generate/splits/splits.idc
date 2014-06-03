@@ -195,7 +195,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1E0000,0x1E8000,"","sound/pcm/bank0.bin",file);
 	splitSingleChunk(0x1E8000,0x1EB000,"","sound/pcm/bank1.bin",file);
 	splitSingleChunk(0x1EB000,0x1EC000,"","sound/yminst.bin",file);
-	splitSingleChunk(0x1EC000,0x1EE000,"Z80_SoundDriver","sound/driver/cube.bin",file);
+	splitSingleChunkWithCommentedSplitEntry(0x1EC000,0x1EE000,"Z80_SoundDriver","sound/driver/cube.bin",file);
 	
 	splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","chardata/growthcurves.bin",file);
 	
@@ -252,6 +252,17 @@ static splitSingleChunk(start, end, nameString, binPath, splitFile){
 	MakeNameEx(start,nameString,0);
 	SetManualInsn   (start, form("incbin \"%s\"",binPath));
 	writestr(splitFile,form("#split\t0x%s,0x%s,%s\n",ltoa(start,16),ltoa(end,16),binPath));
+	//Jump(start);
+}
+
+static splitSingleChunkWithCommentedSplitEntry(start, end, nameString, binPath, splitFile){
+	auto j;
+	//Message("Cleaning from %a to %a ...\n",start,end);
+	for(j=start+1;j<end;j++){undefineByte(j);}
+	MakeData(start,FF_BYTE,end-start,1);
+	MakeNameEx(start,nameString,0);
+	SetManualInsn   (start, form("incbin \"%s\"",binPath));
+	writestr(splitFile,form("/*#split\t0x%s,0x%s,%s*/\n",ltoa(start,16),ltoa(end,16),binPath));
 	//Jump(start);
 }
 
