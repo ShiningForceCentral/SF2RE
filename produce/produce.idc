@@ -114,7 +114,7 @@ static produceMain(){
 	produceSection(file,"04",0x18000,	0x20000,		532,	"BattleScene Engine");
 	produceSection(file,"05",0x20000,	0x28000,		626,	"Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine");
 	produceSection(file,"06",0x28000,	0x44000,		6681,	"Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Script Huffman Trees, Scriptbanks");
-	produceSection(file,"07",0x44000,	0x64000,		2931,	"Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
+	produceSpecificSectionSeven(file,"07",0x44000,	0x64000,		2931,	"Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
 	produceSection(file,"08",0x64000,	0xC8000,		953 ,	"Map Tiles, Map Palettes, Map Data");
 	produceSection(file,"09",0xC8000,	0x100000,		1315,"Entity Sprites");
 	produceSection(file,"10",0x100000,0x130000,		432,	"Backgrounds, invocation sprites, title screen");
@@ -164,6 +164,92 @@ static produceSection(mainFile,sectionName,start,end,fs,sectionComment){
 
 }
 
+static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComment){
+	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+	auto output, name, indent, comment, commentEx, commentIndent;
+	fileName = form("sf2-%s.asm",sectionName);
+	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
+	action = 1;
+	writestr(mainFile,form("   include \"%s\"\t\t; %s\n",fileName,sectionComment));
+	file = fopen(fileName,"w");
+	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
+	writestr(file,form("\n; FREE SPACE : %d bytes.\n\n\n",fs));	
+
+	produceAsmSection(file,0x44000,0x448C4);
+	produceAsmScript(file,"battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
+	produceAsmScript(file,"eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
+	produceAsmSection(file,0x449C6,0x44DE2);
+	produceAsmScript(file,"eas_main",0x44DE2,0x45202,"Main entity actscripts");
+	produceAsmSection(file,0x45202,0x45284);
+	produceAsmScript(file,"ms_caravanin",0x45284,0x45322,"Mapscript for getting into Caravan ?");
+	produceAsmSection(file,0x45322,0x45348);
+	produceAsmScript(file,"ms_caravanout",0x45348,0x453C6,"Mapscript for getting out of Caravan ?");
+	produceAsmSection(file,0x453C6,0x453F2);
+	produceAsmScript(file,"ms_raftin",0x453F2,0x45440,"Mapscript for getting into Raft ?");
+	produceAsmSection(file,0x45440,0x45470);
+	produceAsmScript(file,"ms_raftout",0x45470,0x454AC,"Mapscript for getting out of Raft ?");
+	produceAsmSection(file,0x454AC,0x45546);
+	produceAsmScript(file,"ms_shrinkin",0x45546,0x455AC,"Mapscript for shrinking in ?");
+	produceAsmSection(file,0x455AC,0x455D2);
+	produceAsmScript(file,"ms_growout",0x455D2,0x45634,"Mapscript for growing out ?");
+	produceAsmSection(file,0x45634,0x45E44);
+	produceAsmScript(file,"eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
+	produceAsmSection(file,0x46506,0x47EC8);
+	produceAsmScript(file,"cs_regionactivated",0x47EC8,0x47EEA,"Battle cutscenes activated by reaching a zone");
+	produceAsmSection(file,0x47EEA,0x47EF8);
+	produceAsmScript(file,"cs_introendroutine",0x47EF8,0x47F7E,"Subroutine launching intro and end cutscenes");
+	produceAsmScript(file,"cs_intro1",0x47F7E,0x48380,"Intro cutscene 1");
+	produceAsmScript(file,"cs_intro2",0x48380,0x48540,"Intro cutscene 2");
+	produceAsmScript(file,"cs_intro3",0x48540,0x48A78,"Intro cutscene 3");
+	produceAsmScript(file,"cs_intro4",0x48A78,0x48FE2,"Intro cutscene 4");
+	produceAsmSection(file,0x48FE2,0x49058);
+	produceAsmScript(file,"cs_end",0x49058,0x493EC,"End cutscene");
+	produceAsmSection(file,0x493EC,0x494BC);
+	produceAsmScript(file,"battlecutscenes\\cs_battlecutscenes",0x494BC,0x4F6E2,"To be split later");
+	produceAsmScript(file,"mapsetups\\mapsetupstable",0x4F6E2,0x4FA70,"Map setups table");
+	produceAsmScript(file,"mapsetups\\mapsetups",0x4FA70,0x6348C,"Map setups to be split later");
+	produceAsmSection(file,0x6348C,0x64000);
+
+	fclose(file);
+	Message("DONE.\n");	
+}
+
+static produceAsmScript(mainFile,sectionName,start,end,sectionComment){
+	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+	auto output, name, indent, comment, commentEx, commentIndent;
+	fileName = form("asmscripts\\%s.asm",sectionName);
+	Message(form("Writing assembly script section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
+	action = 1;
+	writestr(mainFile,form("   include \"%s\"\t\t; %s\n",fileName,sectionComment));
+	file = fopen(fileName,"w");
+	writestr(file,form("\n; SCRIPT SECTION %s :\n; %s\n",sectionName,sectionComment));	
+	produceAsmSection(file,start,end);
+	fclose(file);
+	Message("DONE.\n");	
+
+}
+
+static produceAsmSection(file,start,end){
+	auto ea,itemSize;
+	ea = start;
+	while(ea<end){
+		itemSize = ItemSize(ea);
+		if(GetFunctionAttr(ea,FUNCATTR_START)==ea){	
+			writeFunctionHeader(file,ea);
+		}
+		else if(GetFchunkAttr(ea,FUNCATTR_START)==ea){	
+			writeFChunkHeader(file,ea);
+		}		
+		writeItem(file,ea);
+		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+			writeFunctionFooter(file,ea);
+		}		
+		else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+			writeFChunkFooter(file,ea);
+		}				
+		ea = ea + itemSize;
+	}
+}
 
 static writeHeader(file){
 	writestr(file,"\n");
