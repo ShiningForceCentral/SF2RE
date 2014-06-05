@@ -194,8 +194,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"ms_growout",0x455D2,0x45634,"Mapscript for growing out ?");
 	produceAsmSection(file,0x45634,0x45E44);
 	produceAsmScript(file,"eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
-	produceAsmSection(file,0x46506,0x47A50);
-	produceAsmScript(file,"battlecutscenes\\cs_beforebattle",0x47A50,0x47AE8,"Before battle cutscenes");
+	produceAsmSection(file,0x46506,0x47A88);
+	produceAsmScript(file,"battlecutscenes\\cs_beforebattle",0x47A88,0x47AE8,"Before battle cutscenes");
 	produceAsmSection(file,0x47AE8,0x47B2C);
 	produceAsmScript(file,"battlecutscenes\\cs_battlestart",0x47B2C,0x47B8C,"Battle start cutscenes");
 	produceAsmSection(file,0x47B8C,0x47BE8);

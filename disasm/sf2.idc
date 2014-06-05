@@ -37,7 +37,7 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(20);
+	XrefShow(2);
 	AutoShow(1);
 	Indent(16);
 	CmtIndent(40);
@@ -331,6 +331,7 @@ static Enums_0(id) {
 	AddConstEx(id,"MUSIC_CURSED_ITEM",	0X1A,	-1);
 	AddConstEx(id,"MUSIC_ITEM",	0X1B,	-1);
 	AddConstEx(id,"MUSIC_TITLE",	0X1C,	-1);
+	AddConstEx(id,"MUSIC_STOP",	0X20,	-1);
 	AddConstEx(id,"MUSIC_BATTLE_THEME_3",	0X21,	-1);
 	AddConstEx(id,"MUSIC_BATTLE_THEME_1",	0X22,	-1);
 	AddConstEx(id,"MUSIC_SHRINE",	0X23,	-1);
@@ -2980,7 +2981,9 @@ static Bytes_0(void) {
 	MakeDword	(0X2FEA);
 	MakeName	(0X2FEA,	"MaskSprites");
 	MakeDword	(0X2FEE);
-	MakeDword	(0X2FF2);
+	MakeDword	(x=0X2FF2);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeDword	(0X2FF6);
 	MakeDword	(0X2FFA);
 	MakeDword	(0X2FFE);
@@ -8596,7 +8599,6 @@ static Bytes_1(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -11552,7 +11554,7 @@ static Bytes_2(void) {
 	MakeCode	(x=0X100C8);
 	OpSign		(x,	1);
 	MakeCode	(x=0X100CC);
-	OpHex		(x,	1);
+	OpStkvar	(x,	1);
 	MakeCode	(0X100D4);
 	MakeName	(0X100D4,	"WriteTilesFromNumber");
 	MakeCode	(x=0X100D8);
@@ -15559,6 +15561,7 @@ static Bytes_3(void) {
 	MakeCode	(0X16282);
 	MakeName	(0X16282,	"ExecuteNumberPrompt");
 	MakeCode	(x=0X16286);
+	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1628A);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
@@ -26895,6 +26898,7 @@ static Bytes_5(void) {
 	MakeCode	(0X44048);
 	MakeName	(0X44048,	"j_ExecuteBattleCutscene_Defeated");
 	MakeCode	(0X4404C);
+	MakeName	(0X4404C,	"j_ExecuteAfterBattleCutscene");
 	MakeCode	(0X44050);
 	MakeCode	(0X44054);
 	MakeName	(0X44054,	"j_ExecuteBattleCutscene_Region");
@@ -26945,8 +26949,7 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X440F2);
-	OpOff		(x,	0,	0XFFFFB140);
-	OpOff		(x,	128,	0XFFFFB140);
+	OpHex		(x,	0);
 	MakeCode	(x=0X440F6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -26996,8 +26999,7 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X4422E);
-	OpOff		(x,	1,	0XFFFFB140);
-	OpOff		(x,	129,	0XFFFFB140);
+	OpHex		(x,	1);
 	MakeCode	(x=0X4423E);
 	OpHex		(x,	0);
 	MakeCode	(x=0X44240);
@@ -27694,7 +27696,6 @@ static Bytes_5(void) {
 	MakeRptCmt	(0X44E3E,	"0018 SET 1C BIT 7 $FFFF");
 	MakeWord	(0X44E3E);
 	MakeName	(0X44E3E,	"eas_ControlledCharacter");
-	MakeRptCmt	(0X44E3F,	"0018 SET 1C BIT 7 $FFFF");
 	MakeWord	(0X44E40);
 	MakeRptCmt	(0X44E42,	"0019 SET 1C BIT 6 $FFFF");
 	MakeWord	(0X44E42);
@@ -28643,6 +28644,8 @@ static Bytes_5(void) {
 	MakeWord	(0X452DC);
 	MakeRptCmt	(0X452DE,	"000A UPDATE SPRITE");
 	MakeWord	(0X452DE);
+	MakeRptCmt	(0X452E0,	"0000 WAIT value $1");
+	MakeWord	(0X452E0);
 }
 
 //------------------------------------------------------------------------
@@ -28652,8 +28655,6 @@ static Bytes_6(void) {
         auto x;
 #define id x
 
-	MakeRptCmt	(0X452E0,	"0000 WAIT value $1");
-	MakeWord	(0X452E0);
 	MakeWord	(0X452E2);
 	MakeRptCmt	(0X452E4,	"000B SET SPRITE SIZE $10");
 	MakeWord	(0X452E4);
@@ -28938,6 +28939,8 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X45498);
 	OpOff		(x,	1,	0X45498);
 	OpOff		(x,	129,	0X45498);
+	MakeWord	(0X4549C);
+	MakeWord	(0X4549E);
 	MakeCode	(0X454AC);
 	MakeCode	(x=0X454B0);
 	OpOff		(x,	0,	0X0);
@@ -32066,7 +32069,7 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47A88);
 	OpOff		(x,	1,	0X47A88);
 	OpOff		(x,	129,	0X47A88);
-	MakeName	(0X47A88,	"rpt_BattleBeginCutscenes");
+	MakeName	(0X47A88,	"rpt_BeforeBattleCutscenes");
 	MakeWord	(x=0X47A8A);
 	OpOff		(x,	0,	0X47A88);
 	OpOff		(x,	128,	0X47A88);
@@ -32322,7 +32325,7 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47B2C);
 	OpOff		(x,	1,	0X47B2C);
 	OpOff		(x,	129,	0X47B2C);
-	MakeName	(0X47B2C,	"rpt_47B2C");
+	MakeName	(0X47B2C,	"rpt_BattleStartCutscenes");
 	MakeWord	(x=0X47B2E);
 	OpOff		(x,	0,	0X47B2C);
 	OpOff		(x,	128,	0X47B2C);
@@ -32837,6 +32840,7 @@ static Bytes_7(void) {
 	MakeArray	(0X47C8E,	0X2E);
 	MakeName	(0X47C8E,	"EnemyLeaderPresence");
 	MakeCode	(0X47CBC);
+	MakeName	(0X47CBC,	"ExecuteAfterBattleCutscene");
 	MakeCode	(x=0X47CC2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -32854,6 +32858,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X47CF4);
 	OpOff		(x,	1,	0X47CF4);
 	OpOff		(x,	129,	0X47CF4);
+	MakeName	(0X47CF4,	"rpt_AfterBattleCutscenes");
 	MakeWord	(x=0X47CF6);
 	OpOff		(x,	0,	0X47CF4);
 	OpOff		(x,	128,	0X47CF4);
@@ -33125,10 +33130,15 @@ static Bytes_7(void) {
 	MakeCode	(x=0X47E94);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X47EC8,	"battle id");
+	MakeRptCmt	(0X47EC9,	"region id");
+	MakeRptCmt	(0X47ECA,	"associated flag");
 	MakeWord	(0X47ECA);
 	MakeDword	(x=0X47ECC);
+	OpSign		(x,	0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	OpSign		(x,	1);
 	MakeWord	(0X47ED2);
 	MakeDword	(x=0X47ED4);
 	OpOff		(x,	0,	0X0);
@@ -33147,7 +33157,7 @@ static Bytes_7(void) {
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X47EEA,	"executeFlashScreenScript");
 	MakeWord	(0X47EF2);
-	MakeName	(0X47EF2,	"FlashScreenScript");
+	MakeName	(0X47EF2,	"cs_FlashScreen");
 	MakeWord	(0X47EF4);
 	MakeWord	(0X47EF6);
 	MakeCode	(0X47EF8);
@@ -36664,15 +36674,6 @@ static Bytes_7(void) {
 	MakeByte	(0X48E35);
 	MakeRptCmt	(0X48E36,	"0005 PLAY SOUND SFX_INTRO_LIGHTNING");
 	MakeWord	(0X48E36);
-	MakeWord	(0X48E38);
-	MakeRptCmt	(0X48E3A,	"0019 SET ENTITY POS AND FACING 84 9 B 1");
-	MakeWord	(0X48E3A);
-	MakeByte	(0X48E3C);
-	MakeByte	(0X48E3D);
-	MakeByte	(0X48E3E);
-	MakeByte	(0X48E3F);
-	MakeRptCmt	(0X48E40,	"000A EXECUTE SUBROUTINE 48FE2");
-	MakeWord	(0X48E40);
 }
 
 //------------------------------------------------------------------------
@@ -36682,6 +36683,15 @@ static Bytes_8(void) {
         auto x;
 #define id x
 
+	MakeWord	(0X48E38);
+	MakeRptCmt	(0X48E3A,	"0019 SET ENTITY POS AND FACING 84 9 B 1");
+	MakeWord	(0X48E3A);
+	MakeByte	(0X48E3C);
+	MakeByte	(0X48E3D);
+	MakeByte	(0X48E3E);
+	MakeByte	(0X48E3F);
+	MakeRptCmt	(0X48E40,	"000A EXECUTE SUBROUTINE 48FE2");
+	MakeWord	(0X48E40);
 	MakeDword	(x=0X48E42);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -38032,11 +38042,8 @@ static Bytes_8(void) {
 	MakeWord	(0X494A6);
 	MakeWord	(0X494A8);
 	MakeWord	(0X494AA);
-	MakeRptCmt	(0X494AC,	"0030 BRANCH TO CURRENT ADDR. + $BD50");
 	MakeWord	(0X494AC);
 	MakeWord	(x=0X494AE);
-	OpOff		(x,	0,	0X494AC);
-	OpOff		(x,	128,	0X494AC);
 	OpOff		(x,	1,	0X494AC);
 	OpOff		(x,	129,	0X494AC);
 	MakeByte	(0X494B0);
@@ -38545,6 +38552,7 @@ static Bytes_8(void) {
 	MakeWord	(0X496DA);
 	MakeRptCmt	(0X496DC,	"0004 SET TEXT INDEX 901");
 	MakeWord	(0X496DC);
+	MakeName	(0X496DC,	"abcs_battle01");
 	MakeWord	(0X496DE);
 	MakeRptCmt	(0X496E0,	"0055 RESET FORCE BATTLE STATS");
 	MakeWord	(0X496E0);
@@ -39008,6 +39016,7 @@ static Bytes_8(void) {
 	MakeWord	(0X498EC);
 	MakeRptCmt	(0X498EE,	"0004 SET TEXT INDEX 90F");
 	MakeWord	(0X498EE);
+	MakeName	(0X498EE,	"abcs_battle04");
 	MakeWord	(0X498F0);
 	MakeRptCmt	(0X498F2,	"0037 LOAD MAP AND FADE IN 42 9 10");
 	MakeWord	(0X498F2);
@@ -39411,6 +39420,7 @@ static Bytes_8(void) {
 	MakeWord	(0X49AB0);
 	MakeRptCmt	(0X49AB2,	"0004 SET TEXT INDEX 913");
 	MakeWord	(0X49AB2);
+	MakeName	(0X49AB2,	"edcs_battle5");
 	MakeWord	(0X49AB4);
 	MakeRptCmt	(0X49AB6,	"001C STOP ENTITY ANIM 80");
 	MakeWord	(0X49AB6);
@@ -39542,6 +39552,7 @@ static Bytes_8(void) {
 	MakeWord	(0X49B46);
 	MakeRptCmt	(0X49B48,	"0004 SET TEXT INDEX 91C");
 	MakeWord	(0X49B48);
+	MakeName	(0X49B48,	"abcs_battle05");
 	MakeWord	(0X49B4A);
 	MakeRptCmt	(0X49B4C,	"0015 SET ACTSCRIPT 5 FF 460CE");
 	MakeWord	(0X49B4C);
@@ -40443,6 +40454,7 @@ static Bytes_8(void) {
 	MakeWord	(0X49F7C);
 	MakeRptCmt	(0X49F7E,	"0004 SET TEXT INDEX 951");
 	MakeWord	(0X49F7E);
+	MakeName	(0X49F7E,	"abcs_battle07");
 	MakeWord	(0X49F80);
 	MakeRptCmt	(0X49F82,	"0037 LOAD MAP AND FADE IN 3A 8 10");
 	MakeWord	(0X49F82);
@@ -40565,6 +40577,15 @@ static Bytes_8(void) {
 	MakeWord	(0X4A012);
 	MakeRptCmt	(0X4A014,	"002D MOVE ENTITY 86 FF 1 6");
 	MakeWord	(0X4A014);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4A016);
 	MakeByte	(0X4A017);
 	MakeByte	(0X4A018);
@@ -40578,15 +40599,6 @@ static Bytes_8(void) {
 	MakeWord	(0X4A022);
 	MakeRptCmt	(0X4A024,	"0032 SET CAMERA DEST 8 D");
 	MakeWord	(0X4A024);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X4A026);
 	MakeWord	(0X4A028);
 	MakeRptCmt	(0X4A02A,	"0000 DISPLAY SINGLE TEXTBOX 84");
@@ -42845,6 +42857,7 @@ static Bytes_9(void) {
 	MakeWord	(0X4AA72);
 	MakeRptCmt	(0X4AA74,	"0004 SET TEXT INDEX 9A4");
 	MakeWord	(0X4AA74);
+	MakeName	(0X4AA74,	"abcs_battle08");
 	MakeWord	(0X4AA76);
 	MakeRptCmt	(0X4AA78,	"0037 LOAD MAP AND FADE IN 48 8 20");
 	MakeWord	(0X4AA78);
@@ -43353,6 +43366,7 @@ static Bytes_9(void) {
 	MakeWord	(0X4ACC6);
 	MakeRptCmt	(0X4ACC8,	"0004 SET TEXT INDEX 9BA");
 	MakeWord	(0X4ACC8);
+	MakeName	(0X4ACC8,	"edcs_battle12");
 	MakeWord	(0X4ACCA);
 	MakeRptCmt	(0X4ACCC,	"0045 RELATED TO CAMERA ADJUST TO PLAYER 20");
 	MakeWord	(0X4ACCC);
@@ -43380,6 +43394,7 @@ static Bytes_9(void) {
 	MakeWord	(0X4ACEA);
 	MakeRptCmt	(0X4ACEC,	"0004 SET TEXT INDEX 9BD");
 	MakeWord	(0X4ACEC);
+	MakeName	(0X4ACEC,	"abcs_battle12");
 	MakeWord	(0X4ACEE);
 	MakeRptCmt	(0X4ACF0,	"0007 EXECUTE MAP SYSTEM EVENT 34170802");
 	MakeWord	(0X4ACF0);
@@ -43388,6 +43403,7 @@ static Bytes_9(void) {
 	MakeWord	(0X4ACF6);
 	MakeRptCmt	(0X4ACF8,	"0004 SET TEXT INDEX 9BF");
 	MakeWord	(0X4ACF8);
+	MakeName	(0X4ACF8,	"abcs_battle13");
 	MakeWord	(0X4ACFA);
 	MakeRptCmt	(0X4ACFC,	"0005 PLAY SOUND ");
 	MakeWord	(0X4ACFC);
@@ -43708,6 +43724,7 @@ static Bytes_9(void) {
 	MakeWord	(0X4AE70);
 	MakeRptCmt	(0X4AE72,	"0004 SET TEXT INDEX 9CA");
 	MakeWord	(0X4AE72);
+	MakeName	(0X4AE72,	"abcs_battle15");
 	MakeWord	(0X4AE74);
 	MakeRptCmt	(0X4AE76,	"0037 LOAD MAP AND FADE IN 32 9 A");
 	MakeWord	(0X4AE76);
@@ -44209,6 +44226,15 @@ static Bytes_9(void) {
 	MakeWord	(0X4B0B8);
 	MakeRptCmt	(0X4B0BA,	"0032 SET CAMERA DEST 9 0");
 	MakeWord	(0X4B0BA);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X4B0BC);
 	MakeWord	(0X4B0BE);
 	MakeRptCmt	(0X4B0C0,	"0005 PLAY SOUND SFX_BIG_DOOR_RUMBLE");
@@ -44226,15 +44252,6 @@ static Bytes_9(void) {
 	MakeRptCmt	(0X4B0CE,	"0015 SET ACTSCRIPT 80 FF 46172");
 	MakeWord	(0X4B0CE);
 	MakeByte	(0X4B0D0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4B0D1);
 	MakeDword	(x=0X4B0D2);
 	OpOff		(x,	0,	0X0);
@@ -44443,6 +44460,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4B1BA);
 	MakeRptCmt	(0X4B1BC,	"000A EXECUTE SUBROUTINE 4B1D0");
 	MakeWord	(0X4B1BC);
+	MakeName	(0X4B1BC,	"abcs_battle16");
 	MakeDword	(x=0X4B1BE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44709,6 +44727,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4B2F0);
 	MakeRptCmt	(0X4B2F2,	"0004 SET TEXT INDEX 9E0");
 	MakeWord	(0X4B2F2);
+	MakeName	(0X4B2F2,	"abcs_battle18");
 	MakeWord	(0X4B2F4);
 	MakeRptCmt	(0X4B2F6,	"0037 LOAD MAP AND FADE IN C 7 5");
 	MakeWord	(0X4B2F6);
@@ -45661,6 +45680,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4B6CC);
 	MakeRptCmt	(0X4B6CE,	"0004 SET TEXT INDEX A06");
 	MakeWord	(0X4B6CE);
+	MakeName	(0X4B6CE,	"abcs_battle20");
 	MakeWord	(0X4B6D0);
 	MakeRptCmt	(0X4B6D2,	"0037 LOAD MAP AND FADE IN 33 2 6");
 	MakeWord	(0X4B6D2);
@@ -46043,6 +46063,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4B88A);
 	MakeRptCmt	(0X4B88C,	"0004 SET TEXT INDEX A17");
 	MakeWord	(0X4B88C);
+	MakeName	(0X4B88C,	"abcs_battle21");
 	MakeWord	(0X4B88E);
 	MakeRptCmt	(0X4B890,	"0037 LOAD MAP AND FADE IN 43 4 12");
 	MakeWord	(0X4B890);
@@ -46941,6 +46962,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4BCA8);
 	MakeRptCmt	(0X4BCAA,	"0004 SET TEXT INDEX A4D");
 	MakeWord	(0X4BCAA);
+	MakeName	(0X4BCAA,	"abcs_battle26");
 	MakeWord	(0X4BCAC);
 	MakeRptCmt	(0X4BCAE,	"0037 LOAD MAP AND FADE IN 48 D B");
 	MakeWord	(0X4BCAE);
@@ -47316,6 +47338,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4BE68);
 	MakeRptCmt	(0X4BE6A,	"0004 SET TEXT INDEX A62");
 	MakeWord	(0X4BE6A);
+	MakeName	(0X4BE6A,	"bscs_battle27");
 	MakeWord	(0X4BE6C);
 	MakeRptCmt	(0X4BE6E,	"0045 RELATED TO CAMERA ADJUST TO PLAYER 30");
 	MakeWord	(0X4BE6E);
@@ -47771,6 +47794,7 @@ static Bytes_10(void) {
 	MakeWord	(0X4C07A);
 	MakeRptCmt	(0X4C07C,	"0004 SET TEXT INDEX A6E");
 	MakeWord	(0X4C07C);
+	MakeName	(0X4C07C,	"abcs_battle28");
 	MakeWord	(0X4C07E);
 	MakeRptCmt	(0X4C080,	"0037 LOAD MAP AND FADE IN 2F 7 19");
 	MakeWord	(0X4C080);
@@ -47963,6 +47987,15 @@ static Bytes_10(void) {
 	MakeWord	(0X4C15C);
 	MakeWord	(0X4C15E);
 	MakeWord	(0X4C160);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X4C162,	"002D MOVE ENTITY 0 0 0 2");
 	MakeWord	(0X4C162);
 	MakeByte	(0X4C164);
@@ -47999,15 +48032,6 @@ static Bytes_10(void) {
 	MakeWord	(0X4C186);
 	MakeRptCmt	(0X4C188,	"0023 SET ENTITY FACING 0 2");
 	MakeWord	(0X4C188);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4C18A);
 	MakeByte	(0X4C18B);
 	MakeRptCmt	(0X4C18C,	"0023 SET ENTITY FACING 7 2");
@@ -49124,6 +49148,7 @@ static Bytes_11(void) {
 	MakeWord	(0X4C6A6);
 	MakeRptCmt	(0X4C6A8,	"0004 SET TEXT INDEX ACD");
 	MakeWord	(0X4C6A8);
+	MakeName	(0X4C6A8,	"abcs_battle30");
 	MakeWord	(0X4C6AA);
 	MakeRptCmt	(0X4C6AC,	"0037 LOAD MAP AND FADE IN 1 5 8");
 	MakeWord	(0X4C6AC);
@@ -50509,7 +50534,7 @@ static Bytes_11(void) {
 	MakeWord	(0X4CD0E);
 	MakeRptCmt	(0X4CD10,	"0004 SET TEXT INDEX B21");
 	MakeWord	(0X4CD10);
-	MakeName	(0X4CD10,	"csc_4CD10");
+	MakeName	(0X4CD10,	"rbcs_battle32");
 	MakeWord	(0X4CD12);
 	MakeRptCmt	(0X4CD14,	"000A EXECUTE SUBROUTINE 4CD56");
 	MakeWord	(0X4CD14);
@@ -50573,6 +50598,7 @@ static Bytes_11(void) {
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X4CDB4,	"0004 SET TEXT INDEX B25");
 	MakeWord	(0X4CDB4);
+	MakeName	(0X4CDB4,	"abcs_battle32");
 	MakeWord	(0X4CDB6);
 	MakeRptCmt	(0X4CDB8,	"0037 LOAD MAP AND FADE IN 4A 5 14");
 	MakeWord	(0X4CDB8);
@@ -51158,6 +51184,7 @@ static Bytes_11(void) {
 	MakeCode	(0X4D078);
 	MakeRptCmt	(0X4D09A,	"0004 SET TEXT INDEX B3C");
 	MakeWord	(0X4D09A);
+	MakeName	(0X4D09A,	"abcs_battle33");
 	MakeWord	(0X4D09C);
 	MakeRptCmt	(0X4D09E,	"0037 LOAD MAP AND FADE IN 1F 8 6");
 	MakeWord	(0X4D09E);
@@ -51718,6 +51745,15 @@ static Bytes_11(void) {
 	MakeByte	(0X4D301);
 	MakeRptCmt	(0X4D302,	"0002 DISPLAY TEXT BOX 1F");
 	MakeWord	(0X4D302);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X4D304);
 	MakeRptCmt	(0X4D306,	"0000 DISPLAY SINGLE TEXTBOX 1F");
 	MakeWord	(0X4D306);
@@ -51762,15 +51798,6 @@ static Bytes_11(void) {
 	MakeDword	(x=0X4D33C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X4D340);
 	MakeRptCmt	(0X4D342,	"0004 SET TEXT INDEX B4F");
 	MakeWord	(0X4D342);
@@ -52087,6 +52114,7 @@ static Bytes_12(void) {
 	MakeWord	(0X4D4B4);
 	MakeRptCmt	(0X4D4B6,	"0004 SET TEXT INDEX B5F");
 	MakeWord	(0X4D4B6);
+	MakeName	(0X4D4B6,	"abcs_battle34");
 	MakeWord	(0X4D4B8);
 	MakeRptCmt	(0X4D4BA,	"0037 LOAD MAP AND FADE IN 37 2 7");
 	MakeWord	(0X4D4BA);
@@ -53150,6 +53178,7 @@ static Bytes_12(void) {
 	MakeWord	(0X4D9A2);
 	MakeRptCmt	(0X4D9A4,	"0004 SET TEXT INDEX B89");
 	MakeWord	(0X4D9A4);
+	MakeName	(0X4D9A4,	"abcs_battle36");
 	MakeWord	(0X4D9A6);
 	MakeRptCmt	(0X4D9A8,	"0037 LOAD MAP AND FADE IN 35 6 11");
 	MakeWord	(0X4D9A8);
@@ -53557,6 +53586,7 @@ static Bytes_12(void) {
 	MakeWord	(0X4DB92);
 	MakeRptCmt	(0X4DB94,	"0004 SET TEXT INDEX B9C");
 	MakeWord	(0X4DB94);
+	MakeName	(0X4DB94,	"abcs_battle37");
 	MakeWord	(0X4DB96);
 	MakeRptCmt	(0X4DB98,	"0037 LOAD MAP AND FADE IN 4D 1F 36");
 	MakeWord	(0X4DB98);
@@ -54198,6 +54228,7 @@ static Bytes_12(void) {
 	MakeWord	(0X4DE8A);
 	MakeRptCmt	(0X4DE8C,	"0004 SET TEXT INDEX BC4");
 	MakeWord	(0X4DE8C);
+	MakeName	(0X4DE8C,	"abcs_battle38");
 	MakeWord	(0X4DE8E);
 	MakeRptCmt	(0X4DE90,	"0037 LOAD MAP AND FADE IN 42 3 16");
 	MakeWord	(0X4DE90);
@@ -55487,6 +55518,15 @@ static Bytes_12(void) {
 	MakeWord	(0X4E43C);
 	MakeRptCmt	(0X4E43E,	"0015 SET ACTSCRIPT 81 0 45E44");
 	MakeWord	(0X4E43E);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4E440);
 	MakeByte	(0X4E441);
 	MakeDword	(x=0X4E442);
@@ -55531,15 +55571,6 @@ static Bytes_12(void) {
 	MakeByte	(0X4E46E);
 	MakeByte	(0X4E46F);
 	MakeByte	(0X4E470);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4E471);
 	MakeWord	(0X4E472);
 	MakeRptCmt	(0X4E474,	"0023 SET ENTITY FACING 80 1");
@@ -56442,7 +56473,7 @@ static Bytes_13(void) {
 	MakeWord	(0X4E8A6);
 	MakeRptCmt	(0X4E8A8,	"0045 RELATED TO CAMERA ADJUST TO PLAYER 30");
 	MakeWord	(0X4E8A8);
-	MakeName	(0X4E8A8,	"csc_4E8A8");
+	MakeName	(0X4E8A8,	"rbcs_battle40_1");
 	MakeWord	(0X4E8AA);
 	MakeRptCmt	(0X4E8AC,	"0032 SET CAMERA DEST A 11");
 	MakeWord	(0X4E8AC);
@@ -56653,7 +56684,7 @@ static Bytes_13(void) {
 	MakeWord	(0X4E9B0);
 	MakeRptCmt	(0X4E9B2,	"0045 RELATED TO CAMERA ADJUST TO PLAYER 30");
 	MakeWord	(0X4E9B2);
-	MakeName	(0X4E9B2,	"csc_4E9B2");
+	MakeName	(0X4E9B2,	"rbcs_battle40_2");
 	MakeWord	(0X4E9B4);
 	MakeRptCmt	(0X4E9B6,	"0032 SET CAMERA DEST D 8");
 	MakeWord	(0X4E9B6);
@@ -56832,6 +56863,7 @@ static Bytes_13(void) {
 	MakeWord	(0X4EA92);
 	MakeRptCmt	(0X4EA94,	"0004 SET TEXT INDEX BF9");
 	MakeWord	(0X4EA94);
+	MakeName	(0X4EA94,	"abcs_battle40");
 	MakeWord	(0X4EA96);
 	MakeRptCmt	(0X4EA98,	"0037 LOAD MAP AND FADE IN 36 A 4");
 	MakeWord	(0X4EA98);
@@ -57811,6 +57843,7 @@ static Bytes_13(void) {
 	MakeWord	(0X4EF02);
 	MakeRptCmt	(0X4EF04,	"0004 SET TEXT INDEX C22");
 	MakeWord	(0X4EF04);
+	MakeName	(0X4EF04,	"abcs_battle42");
 	MakeWord	(0X4EF06);
 	MakeRptCmt	(0X4EF08,	"0037 LOAD MAP AND FADE IN 3B 8 D");
 	MakeWord	(0X4EF08);
@@ -58789,11 +58822,13 @@ static Bytes_13(void) {
 	MakeWord	(0X4F356);
 	MakeRptCmt	(0X4F358,	"0021 REVIVE FORCE MEMBER 80");
 	MakeWord	(0X4F358);
+	MakeName	(0X4F358,	"edcs_battle43");
 	MakeWord	(0X4F35A);
 	MakeRptCmt	(0X4F35C,	"END OF CUTSCENE SCRIPT");
 	MakeWord	(0X4F35C);
 	MakeRptCmt	(0X4F35E,	"0032 SET CAMERA DEST 8 2");
 	MakeWord	(0X4F35E);
+	MakeName	(0X4F35E,	"abcs_battle43");
 	MakeWord	(0X4F360);
 	MakeWord	(0X4F362);
 	MakeRptCmt	(0X4F364,	"0005 PLAY SOUND ");
@@ -59005,6 +59040,7 @@ static Bytes_13(void) {
 	MakeWord	(0X4F478);
 	MakeRptCmt	(0X4F47A,	"0004 SET TEXT INDEX 1D2");
 	MakeWord	(0X4F47A);
+	MakeName	(0X4F47A,	"abcs_battle00");
 	MakeWord	(0X4F47C);
 	MakeRptCmt	(0X4F47E,	"0005 PLAY SOUND MUSIC_ITEM");
 	MakeWord	(0X4F47E);
@@ -59364,6 +59400,15 @@ static Bytes_13(void) {
 	MakeDword	(x=0X4F894);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X4F898);
 	MakeDword	(x=0X4F89A);
 	OpOff		(x,	0,	0X0);
@@ -59439,15 +59484,6 @@ static Bytes_13(void) {
 	MakeDword	(x=0X4F908);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X4F90C);
 	MakeDword	(x=0X4F90E);
 	OpOff		(x,	0,	0X0);
@@ -65151,6 +65187,15 @@ static Bytes_14(void) {
 	MakeByte	(0X60F16);
 	MakeByte	(0X60F17);
 	MakeByte	(0X60F18);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60F19);
 	MakeByte	(0X60F1A);
 	MakeByte	(0X60F1B);
@@ -65229,15 +65274,6 @@ static Bytes_14(void) {
 	MakeByte	(0X60F64);
 	MakeByte	(0X60F65);
 	MakeByte	(0X60F66);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60F67);
 	MakeByte	(0X60F68);
 	MakeByte	(0X60F69);
@@ -69845,6 +69881,15 @@ static Bytes_15(void) {
 	MakeDword	(x=0XB4ABE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XB4AC2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -69897,15 +69942,6 @@ static Bytes_15(void) {
 	MakeDword	(x=0XB518C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XB5190);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -74615,6 +74651,15 @@ static Bytes_16(void) {
 	MakeByte	(0XDA3D8);
 	MakeArray	(0XDA3D8,	0X1B4);
 	MakeName	(0XDA3D8,	"EntitySprite205");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XDA58C);
 	MakeArray	(0XDA58C,	0X1A6);
 	MakeName	(0XDA58C,	"EntitySprite206");
@@ -74657,15 +74702,6 @@ static Bytes_16(void) {
 	MakeByte	(0XDB846);
 	MakeArray	(0XDB846,	0X1EA);
 	MakeName	(0XDB846,	"EntitySprite219");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XDBA30);
 	MakeArray	(0XDBA30,	0X15E);
 	MakeName	(0XDBA30,	"EntitySprite220");
@@ -78565,6 +78601,15 @@ static Bytes_17(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1AD0B4);
 	MakeName	(0X1AD0B4,	"randomLessThanD6");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X1AD0C8);
 	MakeCode	(0X1AD0CE);
 	MakeCode	(0X1AD0D4);
@@ -78631,15 +78676,6 @@ static Bytes_17(void) {
 	MakeDword	(x=0X1AD144);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X1AD148);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
