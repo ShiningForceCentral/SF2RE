@@ -87,6 +87,7 @@ SF2RE WORKFLOW
 		
 			ram-migration.idc
 			splits.idc
+			parsescripts.idc
 			fixes.idc
 			
 		All of these are non-destructive and repeatable at any point, so feel free to run them
