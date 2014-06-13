@@ -1449,6 +1449,10 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x4401c, 
         "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
 
+    // sub_44088
+    SetFunctionCmt(0x44088, 
+        "triggers a map setup function according to up to 4 criterias in d1-d4", 1);
+
     // sub_44098
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
@@ -1457,7 +1461,7 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x443b2, 
         "initialize followers ?", 1);
 
-    // sub_445CA
+    // DeclareNewEntity
     SetFunctionCmt(0x445ca, 
         "declare new entity ?", 1);
 

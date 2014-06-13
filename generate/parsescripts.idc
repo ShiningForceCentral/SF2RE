@@ -5,6 +5,19 @@
 
 static main(void){
 
+	if(AskYN(1,"Parse cutscene at current cursor position ?")!=1){
+		parseAll();
+	}
+	else{
+		parseSingleCS(ScreenEA());
+	}
+	
+
+
+}
+
+static parseAll(){
+
 	Message("\nPARSING...\n");
 	Message("Entity Actscripts...");
 	parseActscripts();
@@ -12,7 +25,6 @@ static main(void){
 	parseCutscenes();
 	Message(" DONE.\n");		
 	Message("END OF PARSING.\n");	
-
 
 }
 
@@ -31,7 +43,26 @@ static parseActscripts(){
 				
 	parseEAS(0x493A2,0x493CE);	
 	
+	parseEAS(0x51840,0x51912);
 	
+	parseEAS(0x5E2C4,0x5E320);
+	parseEAS(0x5EF46,0x5EF60);	
+	parseEAS(0x5FFC4,0x60024);	
+	
+	
+}
+
+static parseSingleCS(ea){
+
+	auto file;
+	
+	file = fopen("parsecommands.txt","a");
+	writestr(file,form("\n\tparseCS(0x%s,-1);",ltoa(ea,16)));
+	parseCS(ea,0x64000);
+
+
+	file = fclose(file);
+
 }
 
 static parseCutscenes(){
@@ -116,10 +147,235 @@ static parseCutscenes(){
 	parseCS(0x4F35E,0x4F47A);	
 	parseCS(0x4F47A,0x4F48A);	
 	
-																																																																						
+
+
+	parseCS(0x4FB64,-1);
+	parseCS(0x4FC32,-1);
+	parseCS(0x4FF42,-1);
+	parseCS(0x4FF5A,-1);
+	parseCS(0x4FFDA,-1);
+	parseCS(0x5023E,-1);
+	parseCS(0x503A6,-1);
+	parseCS(0x50806,-1);
+	parseCS(0x50ABE,-1);
+	parseCS(0x512BA,-1);
+	parseCS(0x51374,-1);
+	parseCS(0x5137A,-1);
+	parseCS(0x513A0,-1);
+	parseCS(0x513BA,-1);
+	parseCS(0x513CE,-1);
+	parseCS(0x513D6,-1);
+	parseCS(0x513E2,-1);
+	parseCS(0x51444,-1);
+	parseCS(0x5144C,-1);
+	parseCS(0x51454,-1);
+	parseCS(0x5145C,-1);
+	parseCS(0x5148C,-1);
+	parseCS(0x5149A,-1);
+	parseCS(0x51652,-1);
+	parseCS(0x516A8,-1);
+	parseCS(0x51742,-1);
+	parseCS(0x51750,-1);
+	parseCS(0x51B14,-1);
+	parseCS(0x51F88,-1);
+	parseCS(0x521BA,-1);
+	parseCS(0x5247C,-1);
+	parseCS(0x5249E,-1);
+	parseCS(0x52530,-1);
+	parseCS(0x528CA,-1);
+	parseCS(0x528D4,-1);
+	parseCS(0x52938,-1);
+	parseCS(0x52A3C,-1);
+	parseCS(0x52F0C,-1);
+	parseCS(0x52F24,-1);
+	parseCS(0x52F40,-1);
+	parseCS(0x53104,-1);
+	parseCS(0x53176,-1);
+	parseCS(0x534D2,-1);
+	parseCS(0x535FA,-1);
+	parseCS(0x53620,-1);
+	parseCS(0x5362A,-1);
+	parseCS(0x53816,-1);
+	parseCS(0x53996,-1);
+	parseCS(0x53B66,-1);
+	parseCS(0x53EF4,-1);
+	parseCS(0x53F2A,-1);
+	parseCS(0x53FD8,-1);
+	parseCS(0x53FE0,-1);
+	parseCS(0x540C0,-1);
+	parseCS(0x54570,-1);
+	parseCS(0x54578,-1);
+	parseCS(0x54CC6,-1);
+	parseCS(0x54E70,-1);
+	parseCS(0x54E78,-1);
+	parseCS(0x54E86,-1);
+	parseCS(0x54F26,-1);
+	parseCS(0x55242,-1);
+	parseCS(0x55288,-1);
+	parseCS(0x55832,-1);
+	parseCS(0x55A36,-1);
+	parseCS(0x55BEE,-1);
+	parseCS(0x56146,-1);
+	parseCS(0x56172,-1);
+	parseCS(0x56314,-1);
+	parseCS(0x563B2,-1);
+	parseCS(0x56422,-1);
+	parseCS(0x568F6,-1);
+	parseCS(0x569BC,-1);
+	parseCS(0x56AE6,-1);
+	parseCS(0x570B0,-1);
+	parseCS(0x573EC,-1);
+	parseCS(0x574A6,-1);
+	parseCS(0x5766C,-1);
+	parseCS(0x5779C,-1);
+	parseCS(0x5797A,-1);
+	parseCS(0x57AAA,-1);
+	parseCS(0x57D22,-1);
+	parseCS(0x58116,-1);
+	parseCS(0x58310,-1);
+	parseCS(0x58330,-1);
+	parseCS(0x58512,-1);
+	parseCS(0x585FE,-1);
+	parseCS(0x58856,-1);
+	parseCS(0x58AE2,-1);
+	parseCS(0x58B7A,-1);
+	parseCS(0x58E5C,-1);
+	parseCS(0x58F5C,-1);
+	parseCS(0x58F7E,-1);
+	parseCS(0x58FA4,-1);
+	parseCS(0x59656,-1);
+	parseCS(0x5994E,-1);
+	parseCS(0x5996E,-1);
+	parseCS(0x599A4,-1);
+	parseCS(0x599B2,-1);
+	parseCS(0x59C9E,-1);
+	parseCS(0x59CAA,-1);
+	parseCS(0x59E04,-1);
+	parseCS(0x59F20,-1);
+	parseCS(0x59FB8,-1);
+	parseCS(0x5A256,-1);
+	parseCS(0x5A30C,-1);
+	parseCS(0x5A31E,-1);
+	parseCS(0x5A33A,-1);
+	parseCS(0x5A4FE,-1);
+	parseCS(0x5A828,-1);
+	parseCS(0x5A8CA,-1);
+	parseCS(0x5A8E6,-1);
+	parseCS(0x5A90E,-1);
+	parseCS(0x5A92A,-1);
+	parseCS(0x5A93A,-1);
+	parseCS(0x5A956,-1);
+	parseCS(0x5A97E,-1);
+	parseCS(0x5A99A,-1);
+	parseCS(0x5A9AA,-1);
+	parseCS(0x5A9C6,-1);
+	parseCS(0x5A9EE,-1);
+	parseCS(0x5AA0A,-1);
+	parseCS(0x5AA1A,-1);
+	parseCS(0x5AA36,-1);
+	parseCS(0x5AA5E,-1);
+	parseCS(0x5AA7A,-1);
+	parseCS(0x5ABA8,-1);
+	parseCS(0x5ABCC,-1);
+	parseCS(0x5ABE6,-1);
+	parseCS(0x5AC04,-1);
+	parseCS(0x5AC1C,-1);
+	parseCS(0x5AC34,-1);
+	parseCS(0x5AC4C,-1);
+	parseCS(0x5AC58,-1);
+	parseCS(0x5AF36,-1);
+	parseCS(0x5B016,-1);
+	parseCS(0x5B466,-1);
+	parseCS(0x5B6C0,-1);
+	parseCS(0x5C312,-1);
+	parseCS(0x5C3AA,-1);
+	parseCS(0x5C3D8,-1);
+	parseCS(0x5C4EE,-1);
+	parseCS(0x5C622,-1);
+	parseCS(0x5C6CA,-1);
+	parseCS(0x5C876,-1);
+	parseCS(0x5C8D4,-1);
+	parseCS(0x5C8FE,-1);
+	parseCS(0x5C914,-1);
+	parseCS(0x5CA5E,-1);
+	parseCS(0x5CA6E,-1);
+	parseCS(0x5CB34,-1);
+	parseCS(0x5CBB4,-1);
+	parseCS(0x5CC26,-1);
+	parseCS(0x5CCF6,-1);
+	parseCS(0x5D04E,-1);
+	parseCS(0x5D3AA,-1);
+	parseCS(0x5D3B8,-1);
+	parseCS(0x5D63C,-1);
+	parseCS(0x5D644,-1);
+	parseCS(0x5D652,-1);
+	parseCS(0x5D712,-1);
+	parseCS(0x5D724,-1);
+	parseCS(0x5D732,-1);
+	parseCS(0x5DA28,-1);
+	parseCS(0x5DA7A,-1);
+	parseCS(0x5DD8E,-1);
+	parseCS(0x5DD9C,-1);
+	parseCS(0x5DE22,-1);
+	parseCS(0x5DE76,-1);
+	parseCS(0x5E0EE,-1);
+	parseCS(0x5E0F8,-1);
+	parseCS(0x5E20A,-1);
+	parseCS(0x5E27C,-1);	
+	parseCS(0x5E320,-1);
+	parseCS(0x5E346,-1);
+	parseCS(0x5E3C2,-1);
+	parseCS(0x5E772,-1);
+	parseCS(0x5EB26,-1);
+	parseCS(0x5EB44,-1);
+	parseCS(0x5EBFC,-1);
+	parseCS(0x5ED06,-1);
+	parseCS(0x5EDB8,-1);	
+	parseCS(0x5EF60,-1);
+	parseCS(0x5F3A2,-1);
+	parseCS(0x5F3C4,-1);
+	parseCS(0x5F4AE,-1);
+	parseCS(0x5F4B8,-1);
+	parseCS(0x5F594,-1);
+	parseCS(0x5FA9C,-1);
+	parseCS(0x5FABC,-1);
+	parseCS(0x5FB30,-1);
+	parseCS(0x5FB6A,-1);
+	parseCS(0x5FE9A,-1);
+	parseCS(0x5FF06,-1);	
+	parseCS(0x600B2,-1);
+	parseCS(0x600CE,-1);
+	parseCS(0x6060E,-1);
+	parseCS(0x60656,-1);
+	parseCS(0x606AC,-1);
+	parseCS(0x606E0,-1);
+	parseCS(0x606EA,-1);
+	parseCS(0x60708,-1);
+	parseCS(0x607DE,-1);
+	parseCS(0x6093A,-1);
+	parseCS(0x60B10,-1);
+	parseCS(0x60BA6,-1);
+	parseCS(0x60C42,-1);
+	parseCS(0x60CA4,-1);
+	parseCS(0x60EB2,-1);
+	parseCS(0x60F18,-1);
+	parseCS(0x60F64,-1);
+	parseCS(0x60FA4,-1);
+	parseCS(0x612BE,-1);
+	parseCS(0x6143C,-1);
+	parseCS(0x6150A,-1);
+	parseCS(0x615E6,-1);
+	parseCS(0x6283E,-1);
+	parseCS(0x628C8,-1);
+	parseCS(0x6290C,-1);
+	parseCS(0x62D06,-1);
+	parseCS(0x62D0E,-1);
+	parseCS(0x632EA,-1);
+	parseCS(0x6335E,-1);
+	parseCS(0x633B2,-1);
+	parseCS(0x633C4,-1);																																																											
 
 }
-
 
 
 static parseCS(start,end){
@@ -133,11 +389,13 @@ static parseCS(start,end){
 	
 	//Message(form("\n%a : START OF CS PARSING",ea));
 	
-	for(i=start;i<end;i++){
-		MakeRptCmt(i,"");
-	}		
-
-	while(ea<end && action==1){
+	if(end!=-1&&(end-start)<0x1000){
+		for(i=start;i<end;i++){
+			MakeRptCmt(i,"");
+		}	
+	}
+	
+	while(action==1){
 	
 		//Jump(ea);
 		
@@ -302,12 +560,10 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0011){
 			cmdName = "0011 STORY YESNO PROMPT";
-			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16));
-			cmdLength = 4;
+			cmdComment = form("%s",cmdName);
+			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeByte(ea+2);				
-			MakeByte(ea+4);		
+			MakeWord(ea);	
 		}
 		else if(cmd==	0x0012){
 			cmdName = "0012 EXECUTE CONTEXTUAL MENU";
@@ -961,7 +1217,7 @@ static undefineByte(addr){
 		}		
 		from = RfirstB(addr);
 		while(from!=BADADDR){
-			//Message(form("Removed Code XRrf at addr %a, from %a\n",addr, from));
+			//Message(form("Removed Code XRref at addr %a, from %a\n",addr, from));
       DelCodeXref(from,addr,1);
       from=RnextB(addr,from);      
 		}				
@@ -1298,7 +1554,7 @@ static parseEAS(start,end){
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
 			MakeWord(ea+2);				
-			makeRelativeOffset(ea+2);			
+			makeRelativeOffsetFromCmd(ea+2);			
 		}
 		else if(Word(ea)==0x0031){
 			cmdName = "0031 BRANCH IF SET FLAG";
@@ -1307,7 +1563,7 @@ static parseEAS(start,end){
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);			
 			MakeWord(ea+2);		
-			makeRelativeOffset(ea+2);	
+			makeRelativeOffsetFromCmd(ea+2);	
 			MakeWord(ea+4);				
 		}
 		else if(Word(ea)==0x0032){
@@ -1317,7 +1573,7 @@ static parseEAS(start,end){
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
 			MakeWord(ea+2);				
-			makeRelativeOffset(ea+2);					
+			makeRelativeOffsetFromCmd(ea+2);					
 			MakeWord(ea+4);				
 		}
 		else if(Word(ea)==0x0033){
@@ -1327,7 +1583,7 @@ static parseEAS(start,end){
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);		
 			MakeWord(ea+2);			
-			makeRelativeOffset(ea+2);				
+			makeRelativeOffsetFromCmd(ea+2);				
 			MakeWord(ea+4);			
 		}
 		else if(Word(ea)==0x0034){
@@ -1380,7 +1636,7 @@ static parseEAS(start,end){
 }
 
 
-static makeRelativeOffset(addr){
+static makeRelativeOffsetFromCmd(addr){
 
 		if(Word(addr) > 0x8000) {
 			OpOffEx(addr, -1, REF_OFF32, addr - 2 + Word(addr) - 0x10000, addr-2, 0x10000);

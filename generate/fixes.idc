@@ -33,6 +33,9 @@ static main(void) {
 
 	Message("Relative Jump Tables...");
 	fixRJTs();
+	Message(" DONE.\nMap Setups RJTs...");	
+	fixMapSetups();
+	fixMapSetupsSection4();
 	Message(" DONE.\nRelative Pointer Tables...");		
 	fixRPTs();
 	Message(" DONE.\nBranch Tables...");		
@@ -255,4 +258,98 @@ static makeRjtWithOneWordBetweenEachEntry(base, end){
 		}
 		addr = addr+2;
 	}
+}
+
+
+
+static fixMapSetups(){
+
+	auto ea,start;
+	start = 0x4F6E2;
+	ea = start;
+	while(Word(ea)!=0xFFFF){
+		while(Word(ea)!=0xFFFD){
+			fixSingleMapSetup(Dword(ea+2));
+			ea = ea + 6;
+		}
+		ea = ea + 2;
+	}
+}
+
+
+static fixSingleMapSetup(ea){
+	fixMapSetupSection2(Dword(ea+4));
+	fixMapSetupSection3(Dword(ea+8));
+	fixMapSetupSection5(Dword(ea+16));
+}
+
+static fixMapSetupSection2(ea){
+	auto base;
+	base = ea;
+	if(Word(ea)==0x4E75){
+		return;
+	}
+	while(Byte(ea)!=0xFD){
+		makeRelativeOffset(ea+2,base);
+		ea = ea + 4;
+	}
+	makeRelativeOffset(ea+2,base);
+}
+
+static fixMapSetupSection3(ea){
+	auto base;
+	base = ea;
+	if(Word(ea)==0x4E75){
+		return;
+	}
+	while(Byte(ea)!=0xFD){
+		makeRelativeOffset(ea+2,base);
+		ea = ea + 4;
+	}
+	makeRelativeOffset(ea+2,base);
+}
+
+static fixMapSetupSection5(ea){
+	auto base;
+	base = ea;
+	if(Word(ea)==0x4E75){
+		return;
+	}
+	while(Byte(ea)!=0xFD){
+		makeRelativeOffset(ea+4,base);
+		ea = ea + 6;	
+	}
+	makeRelativeOffset(ea+4,base);
+}
+
+static fixMapSetupsSection4(){
+	fixSingleMapSetuSection4(0x4FCDE);
+	fixSingleMapSetuSection4(0x54D4C);
+	fixSingleMapSetuSection4(0x54D9A);
+	fixSingleMapSetuSection4(0x561FC);
+	fixSingleMapSetuSection4(0x5D584);
+	fixSingleMapSetuSection4(0x5E736);
+	fixSingleMapSetuSection4(0x5F41E);
+	fixSingleMapSetuSection4(0x5FE34);
+	fixSingleMapSetuSection4(0x60558);
+}
+
+static fixSingleMapSetuSection4(ea){
+	auto base;
+	base = ea;
+	while(Byte(ea)!=0xFD){
+		if(Byte(ea+3)!=0){
+			makeRelativeOffset(ea+4,base);
+		}		
+		ea = ea + 6;	
+	}
+}
+
+static makeRelativeOffset(ea,base){
+		if(Word(ea) > 0x8000) {
+			OpOffEx(ea, -1, REF_OFF32, base + Word(ea) - 0x10000, base, 0x10000);
+		}
+		else{
+			OpOffEx(ea, -1, REF_OFF32, -1, base, 0);
+		}
 }
