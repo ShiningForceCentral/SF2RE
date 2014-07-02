@@ -173,6 +173,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","spells/boltanimdataa.bin",file);
 	splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","spells/boltanimdatab.bin",file);		
 	
+	splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","battles/enemydata.bin",file);
+	
 	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","battles/specialbattles.bin",file);	
 	
 	splitSingleChunk(0x1B6DDA,0x1B6DFA,"plt_endKiss","misc/specialscreens/endingkisspalette.bin",file);
@@ -249,7 +251,9 @@ static splitSingleChunk(start, end, nameString, binPath, splitFile){
 	//Message("Cleaning from %a to %a ...\n",start,end);
 	for(j=start+1;j<end;j++){undefineByte(j);}
 	MakeData(start,FF_BYTE,end-start,1);
-	MakeNameEx(start,nameString,0);
+	if(nameString!=""){
+		MakeNameEx(start,nameString,0);
+	}
 	SetManualInsn   (start, form("incbin \"%s\"",binPath));
 	writestr(splitFile,form("#split\t0x%s,0x%s,%s\n",ltoa(start,16),ltoa(end,16),binPath));
 	//Jump(start);
@@ -425,27 +429,30 @@ static splitBattleSceneGrounds(file) {
 	action=1;
 	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
-	MakeNameEx(addr,"pt_BattleSceneGrounds",0);
+	MakeNameExC(addr,"pt_BattleSceneGrounds",0);
 	while(addr<end&&action==1){
 		MakeDword(addr);
 		dref = Dword(addr);
 		add_dref(addr,dref,dr_O);
 		dref = Dfirst(addr);		
 		//Jump(dref);
-		index = ltoa(i,10);
-		if(strlen(index)==1)index=form("0%s",index);
-		MakeNameEx(dref,form("battlesceneGround%s",index),0);
-		MakeData(dref, FF_WORD, 0x2, 0);
-		MakeData(dref+2, FF_WORD, 0x2, 0);
-		MakeData(dref+4, FF_WORD, 0x2, 0);
-		MakeData(dref+6, FF_WORD, 0x2, 0);
-		MakeNameEx(dref+6,form("bsg%s_rpbase",index),0);
-		base = dref+6;
-		OpOffEx(base, -1, REF_OFF32, -1, base, 0);
-		section = Word(base) + base;
-		add_dref(base,section,dr_O);
-		//Message("base %a, section %a\n",base, section);
-		MakeNameEx(section,form("groundTiles%s",index),0);
+		if(strstr(GetTrueName(dref),"battlesceneGround")==-1){
+			index = ltoa(i,10);
+			if(strlen(index)==1)index=form("0%s",index);
+			MakeNameExC(dref,form("battlesceneGround%s",index),0);
+			/*MakeData(dref, FF_WORD, 0x2, 0);
+			MakeData(dref+2, FF_WORD, 0x2, 0);
+			MakeData(dref+4, FF_WORD, 0x2, 0);*/
+			splitSingleChunk(dref, dref+6, "", form("battles/grounds/ground%s_palette.bin",index),file);		
+			MakeData(dref+6, FF_WORD, 0x2, 0);
+			MakeNameExC(dref+6,form("bsg%s_rpbase",index),0);
+			base = dref+6;
+			OpOffEx(base, -1, REF_OFF32, -1, base, 0);
+			section = Word(base) + base;
+			add_dref(base,section,dr_O);
+			//Message("base %a, section %a\n",base, section);
+			MakeNameExC(section,form("groundTiles%s",index),0);		
+		}
 		addr=addr+4;
 		i++;
 	}
@@ -473,8 +480,10 @@ static splitBattleSceneGrounds(file) {
 				if(strlen(index)==1)index=form("0%s",index);
 				//Message(form("Processing ground%s at %s, dataEnd %s\n",index,ltoa(dref,16),ltoa(dataEnd,16)));
 				MakeData(dref,FF_BYTE,dataEnd-dref,1);
-				SetManualInsn   (dref, form("incbin \"battles/grounds/ground%s.bin\"",index));
-				writestr(file,form("#split\t0x%s,0x%s,battles/grounds/ground%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),index));
+				if(strstr(GetDisasm(dref),"incbin")==-1){
+					SetManualInsn   (dref, form("incbin \"battles/grounds/ground%s.bin\"",index));
+					writestr(file,form("#split\t0x%s,0x%s,battles/grounds/ground%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),index));
+				}
 		addr=addr+4;
 		i++;
 		//action = AskYN(1,"Ok ?");
@@ -539,7 +548,15 @@ static splitScriptbanks(file) {
 
 
 
+static MakeNameExC(addr,name,flags){
 
+	auto current;
+	current = GetTrueName(addr);
+	if(current=="" || strstr(current,"unk_")!=-1 || strstr(current,"byte_")!=-1 || strstr(current,"word_")!=-1 || strstr(current,"dword_")!=-1 || strstr(current,"off_")!=-1){
+		MakeNameEx(addr,name,flags);
+	}
+
+}
 
 
 
