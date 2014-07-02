@@ -296,7 +296,7 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 		while(strlen(index)<indexLength){
 			index=form("0%s",index);
 		}
-		MakeNameEx(dref,form("%s%s",entryName,index),0);
+		MakeNameExC(dref,form("%s%s",entryName,index),0);
 		addr=addr+4;
 		i++;
 	}
@@ -329,8 +329,10 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 		}
 		//Message(form("Processing entry %s%s from %s, to %s\n",entryName,index,ltoa(dref,16),ltoa(dataEnd,16)));
 		MakeData(dref,FF_BYTE,dataEnd-dref,1);
-		SetManualInsn   (dref, form("incbin \"%s%s%s.bin\"",binDir,binName,index));
-		writestr(file,form("#split\t0x%s,0x%s,%s%s%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),binDir,binName,index));
+		if(strstr(GetDisasm(dref),"incbin")==-1){		
+			SetManualInsn   (dref, form("incbin \"%s%s%s.bin\"",binDir,binName,index));
+			writestr(file,form("#split\t0x%s,0x%s,%s%s%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),binDir,binName,index));
+		}
 		addr=addr+4;
 		i++;
 		//action = AskYN(1,"Ok ?");
@@ -374,7 +376,7 @@ static splitMaps(file) {
 			MakeDword(from);
 			section = Dword(from);
 			add_dref(from,section,dr_O);
-			MakeNameEx(section,form("Map%sSection%d",index,s),0);
+			MakeNameExC(section,form("Map%sSection%d",index,s),0);
 		} 
 		addr=addr+4;
 		i++;
@@ -404,8 +406,10 @@ static splitMaps(file) {
 				if(strlen(index)==1)index=form("0%s",index);
 				//Message(form("Processing Map%s section%d at %s, dataEnd %s\n",index,s,ltoa(section,16),ltoa(dataEnd,16)));
 				MakeData(section,FF_BYTE,dataEnd-section,1);
-				SetManualInsn   (section, form("incbin \"maps/map%s/section%d.bin\"",index,s));
-				writestr(file,form("#split\t0x%s,0x%s,maps/map%s/section%d.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,s));
+				if(strstr(GetDisasm(dref),"incbin")==-1){						
+					SetManualInsn   (section, form("incbin \"maps/map%s/section%d.bin\"",index,s));
+					writestr(file,form("#split\t0x%s,0x%s,maps/map%s/section%d.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,s));
+				}
 			}
 		}
 		addr=addr+4;
