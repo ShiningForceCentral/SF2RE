@@ -141,7 +141,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x2E196,0x2EB34,"t_RelativeTreePointers","scriptbanks/scriptbanktrees.bin",file);
 	
 	splitSingleChunk(0x4201E,0x425E7,"GameStaff","misc/gamestaff.bin",file);
-	MakeAlign(0x425E7, 0x44000-0x425E7,14);
+	MakeAlign(0x425ED, 0x44000-0x425ED,14);
 	
 	splitSingleChunk(0x4428A,0x44298,"OverworldMaps","maps/overworldmaps.bin",file);
 	splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","misc/overworldfollowoers.bin",file);
