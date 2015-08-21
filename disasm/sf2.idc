@@ -37,7 +37,7 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(20);
+	XrefShow(2);
 	AutoShow(1);
 	Indent(16);
 	CmtIndent(40);
@@ -2353,8 +2353,27 @@ static Bytes_0(void) {
 	MakeCode	(x=0X1F24);
 	OpHex		(x,	0);
 	MakeCode	(0X1F44);
+	MakeRptCmt	(0X1F4C,	" exg     d6,d4");
+	MakeWord	(0X1F4C);
+	MakeRptCmt	(0X1F4E,	" add.w   d4,d7");
+	MakeWord	(0X1F4E);
+	MakeCode	(0X1F50);
 	MakeCode	(0X1F58);
+	MakeRptCmt	(0X1F6A,	"exg     d6,d4");
+	MakeWord	(0X1F6A);
+	MakeRptCmt	(0X1F6C,	"add.w   d4,d7");
+	MakeWord	(0X1F6C);
+	MakeCode	(0X1F6E);
 	MakeCode	(0X1F76);
+	MakeRptCmt	(0X1F7E,	"exg     a4,a3");
+	MakeWord	(0X1F7E);
+	MakeRptCmt	(0X1F80,	"exg     d6,a3");
+	MakeWord	(0X1F80);
+	MakeRptCmt	(0X1F82,	"exg     d6,d4");
+	MakeWord	(0X1F82);
+	MakeRptCmt	(0X1F84,	"add.w   d4,d7");
+	MakeWord	(0X1F84);
+	MakeCode	(0X1F86);
 	MakeCode	(0X1F8E);
 	MakeCode	(0X1FB0);
 	MakeCode	(0X1FD2);
@@ -5140,6 +5159,15 @@ static Bytes_0(void) {
 	MakeCode	(x=0X5862);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitfield"),0);
 	OpStkvar	(x,	1);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_1(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X586A);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X5874);
@@ -5162,15 +5190,6 @@ static Bytes_0(void) {
 	MakeCode	(0X5942);
 	MakeCode	(x=0X595A);
 	OpEnumEx		(x,	1,	GetEnum("Map_Entity"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_1(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X595E);
 	OpEnumEx		(x,	1,	GetEnum("Map_Entity"),0);
 	MakeCode	(0X596C);
@@ -8598,6 +8617,7 @@ static Bytes_1(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
+	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -8824,6 +8844,15 @@ static Bytes_1(void) {
 	MakeCode	(x=0X9F8E);
 	OpEnumEx		(x,	0,	GetEnum("Battle"),0);
 	MakeRptCmt	(0X9F9E,	"check if block distance between attacker and target is >= 2");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X9FA4);
 	OpEnumEx		(x,	0,	GetEnum("Battle_Cutscene_Stack"),0);
 	MakeCode	(x=0X9FAA);
@@ -8836,15 +8865,6 @@ static Bytes_1(void) {
 	OpEnumEx		(x,	0,	GetEnum("Battle_Cutscene_Stack"),0);
 	MakeCode	(x=0X9FD2);
 	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X9FD8);
 	OpEnumEx		(x,	0,	GetEnum("Battle"),2);
 	MakeCode	(x=0X9FE0);
@@ -13716,6 +13736,15 @@ static Bytes_2(void) {
 	MakeCode	(x=0X12FB6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X12FD0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -13740,15 +13769,6 @@ static Bytes_2(void) {
 	MakeCode	(x=0X13004);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1300A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -15569,7 +15589,6 @@ static Bytes_3(void) {
 	MakeCode	(0X16282);
 	MakeName	(0X16282,	"ExecuteNumberPrompt");
 	MakeCode	(x=0X16286);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1628A);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
@@ -19015,6 +19034,15 @@ static Bytes_3(void) {
 	MakeCode	(x=0X1B582);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1B586);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -19034,15 +19062,6 @@ static Bytes_3(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X1B5E0);
 	MakeCode	(0X1B604);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X1B608);
 	MakeWord	(0X1B60A);
 	MakeWord	(0X1B60C);
@@ -21104,13 +21123,13 @@ static Bytes_4(void) {
 	MakeRptCmt	(0X1F806,	"table : class -> sprite");
 	MakeByte	(0X1F806);
 	MakeArray	(0X1F806,	0X10E);
-	MakeName	(0X1F806,	"tbl_CharacterBattleSprites");
+	MakeName	(0X1F806,	"tbl_AllyBattleSprites");
 	MakeByte	(0X1F914);
 	MakeArray	(0X1F914,	0XCE);
-	MakeName	(0X1F914,	"tbl_MonsterBattleSprites");
+	MakeName	(0X1F914,	"tbl_EnemyBattleSprites");
 	MakeByte	(0X1F9E2);
 	MakeArray	(0X1F9E2,	0XA8);
-	MakeName	(0X1F9E2,	"tbl_ItemBattleSprites");
+	MakeName	(0X1F9E2,	"tbl_WeaponBattleSprites");
 	MakeByte	(0X1FA8A);
 	MakeArray	(0X1FA8A,	0X2E);
 	MakeName	(0X1FA8A,	"tbl_CustomBackgrounds");
@@ -21865,7 +21884,7 @@ static Bytes_4(void) {
 	MakeCode	(0X21042);
 	MakeByte	(0X21046);
 	MakeArray	(0X21046,	0X2C);
-	MakeName	(0X21046,	"promotion_data");
+	MakeName	(0X21046,	"Promotions");
 	MakeCode	(0X21072);
 	MakeCode	(x=0X21080);
 	OpOff		(x,	0,	0X0);
@@ -24150,15 +24169,6 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X23BC2,	"init whole force for battle (restore stats, apply effects/items)");
-	MakeCode	(x=0X23BE8);
-	OpOff		(x,	1,	0X0);
-	OpOff		(x,	129,	0X0);
-	MakeCode	(0X23BFC);
-	MakeName	(0X23BFC,	"HealAliveCharsAndImmortals");
-	MakeCode	(x=0X23C02);
-	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
-	MakeCode	(x=0X23C04);
-	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
 }
 
 //------------------------------------------------------------------------
@@ -24168,6 +24178,15 @@ static Bytes_5(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0X23BE8);
+	OpOff		(x,	1,	0X0);
+	OpOff		(x,	129,	0X0);
+	MakeCode	(0X23BFC);
+	MakeName	(0X23BFC,	"HealAliveCharsAndImmortals");
+	MakeCode	(x=0X23C02);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
+	MakeCode	(x=0X23C04);
+	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
 	MakeCode	(x=0X23C0C);
 	OpEnumEx		(x,	0,	GetEnum("CharDef"),0);
 	MakeCode	(x=0X23C3C);
@@ -26761,63 +26780,66 @@ static Bytes_5(void) {
 	MakeCode	(0X2E17A);
 	MakeCode	(0X2E182);
 	MakeByte	(0X2E196);
-	MakeArray	(0X2E196,	0X99E);
-	MakeName	(0X2E196,	"t_RelativeTreePointers");
+	MakeArray	(0X2E196,	0X1FE);
+	MakeName	(0X2E196,	"TextBankTreePointers");
+	MakeByte	(0X2E394);
+	MakeArray	(0X2E394,	0X7A0);
+	MakeName	(0X2E394,	"TextBankTreeData");
 	MakeByte	(0X2EB34);
 	MakeArray	(0X2EB34,	0X1003);
-	MakeName	(0X2EB34,	"ScriptBank00");
+	MakeName	(0X2EB34,	"TextBank00");
 	MakeByte	(0X2FB37);
 	MakeArray	(0X2FB37,	0XF1D);
-	MakeName	(0X2FB37,	"ScriptBank01");
+	MakeName	(0X2FB37,	"TextBank01");
 	MakeByte	(0X30A54);
 	MakeArray	(0X30A54,	0X18EA);
-	MakeName	(0X30A54,	"ScriptBank02");
+	MakeName	(0X30A54,	"TextBank02");
 	MakeByte	(0X3233E);
 	MakeArray	(0X3233E,	0X14FF);
-	MakeName	(0X3233E,	"ScriptBank03");
+	MakeName	(0X3233E,	"TextBank03");
 	MakeByte	(0X3383D);
 	MakeArray	(0X3383D,	0X12F2);
-	MakeName	(0X3383D,	"ScriptBank04");
+	MakeName	(0X3383D,	"TextBank04");
 	MakeByte	(0X34B2F);
 	MakeArray	(0X34B2F,	0X1463);
-	MakeName	(0X34B2F,	"ScriptBank05");
+	MakeName	(0X34B2F,	"TextBank05");
 	MakeByte	(0X35F92);
 	MakeArray	(0X35F92,	0X129E);
-	MakeName	(0X35F92,	"ScriptBank06");
+	MakeName	(0X35F92,	"TextBank06");
 	MakeByte	(0X37230);
 	MakeArray	(0X37230,	0X12DB);
-	MakeName	(0X37230,	"ScriptBank07");
+	MakeName	(0X37230,	"TextBank07");
 	MakeByte	(0X3850B);
 	MakeArray	(0X3850B,	0X1246);
-	MakeName	(0X3850B,	"ScriptBank08");
+	MakeName	(0X3850B,	"TextBank08");
 	MakeByte	(0X39751);
 	MakeArray	(0X39751,	0X111E);
-	MakeName	(0X39751,	"ScriptBank09");
+	MakeName	(0X39751,	"TextBank09");
 	MakeByte	(0X3A86F);
 	MakeArray	(0X3A86F,	0X11D2);
-	MakeName	(0X3A86F,	"ScriptBank10");
+	MakeName	(0X3A86F,	"TextBank10");
 	MakeByte	(0X3BA41);
 	MakeArray	(0X3BA41,	0X110C);
-	MakeName	(0X3BA41,	"ScriptBank11");
+	MakeName	(0X3BA41,	"TextBank11");
 	MakeByte	(0X3CB4D);
 	MakeArray	(0X3CB4D,	0X1224);
-	MakeName	(0X3CB4D,	"ScriptBank12");
+	MakeName	(0X3CB4D,	"TextBank12");
 	MakeByte	(0X3DD71);
 	MakeArray	(0X3DD71,	0X1402);
-	MakeName	(0X3DD71,	"ScriptBank13");
+	MakeName	(0X3DD71,	"TextBank13");
 	MakeByte	(0X3F173);
 	MakeArray	(0X3F173,	0X1205);
-	MakeName	(0X3F173,	"ScriptBank14");
+	MakeName	(0X3F173,	"TextBank14");
 	MakeByte	(0X40378);
 	MakeArray	(0X40378,	0X11A6);
-	MakeName	(0X40378,	"ScriptBank15");
+	MakeName	(0X40378,	"TextBank15");
 	MakeByte	(0X4151E);
 	MakeArray	(0X4151E,	0XABC);
-	MakeName	(0X4151E,	"ScriptBank16");
+	MakeName	(0X4151E,	"TextBank16");
 	MakeDword	(x=0X41FDA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X41FDA,	"pt_ScriptBanks");
+	MakeName	(0X41FDA,	"pt_TextBanks");
 	MakeDword	(x=0X41FDE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -26873,6 +26895,7 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X425EB);
+	MakeArray	(0X425ED,	0X1A13);
 	MakeCode	(0X44000);
 	MakeCode	(0X44004);
 	MakeName	(0X44004,	"j_InitMapEntities");
@@ -27524,7 +27547,7 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X44AA4);
 	MakeArray	(0X44AA4,	0XA6);
-	MakeName	(0X44AA4,	"t_MonsterSprites");
+	MakeName	(0X44AA4,	"t_EnemySprites");
 	MakeCode	(0X44B4A);
 	MakeName	(0X44B4A,	"setEntityActscript");
 	MakeCode	(x=0X44B52);
@@ -28626,6 +28649,15 @@ static Bytes_5(void) {
 	MakeDword	(x=0X4529E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X452A4,	"000E  $0 $0 $1");
 	MakeWord	(0X452A4);
 	MakeName	(0X452A4,	"eas_452A4");
@@ -28636,15 +28668,6 @@ static Bytes_5(void) {
 	MakeWord	(0X452AC);
 	MakeRptCmt	(0X452AE,	"0030 BRANCH TO CURRENT ADDR. + $FF4E");
 	MakeWord	(0X452AE);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X452B0);
 	OpOff		(x,	0,	0X452AE);
 	OpOff		(x,	128,	0X452AE);
@@ -32584,6 +32607,15 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47B2C);
 	OpOff		(x,	1,	0X47B2C);
 	OpOff		(x,	129,	0X47B2C);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X47B80);
 	OpOff		(x,	0,	0X47B2C);
 	OpOff		(x,	128,	0X47B2C);
@@ -32604,15 +32636,6 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X47B2C);
 	OpOff		(x,	1,	0X47B2C);
 	OpOff		(x,	129,	0X47B2C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X47B88);
 	OpOff		(x,	0,	0X47B2C);
 	OpOff		(x,	128,	0X47B2C);
@@ -36638,6 +36661,15 @@ static Bytes_7(void) {
 	MakeByte	(0X48DD9);
 	MakeRptCmt	(0X48DDA,	"000A EXECUTE SUBROUTINE 48FE2");
 	MakeWord	(0X48DDA);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X48DDC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36651,15 +36683,6 @@ static Bytes_7(void) {
 	MakeByte	(0X48DE8);
 	MakeByte	(0X48DE9);
 	MakeByte	(0X48DEA);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X48DEB);
 	MakeRptCmt	(0X48DEC,	"WAIT 3C");
 	MakeByte	(0X48DEC);
@@ -40547,6 +40570,15 @@ static Bytes_8(void) {
 	MakeWord	(0X49FB6);
 	MakeRptCmt	(0X49FB8,	"0014 SET MANUAL ACTSCRIPT 82");
 	MakeWord	(0X49FB8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X49FBA);
 	MakeByte	(0X49FBB);
 	MakeRptCmt	(0X49FBC,	"  0014 SET ANIM COUNTER $0");
@@ -40559,15 +40591,6 @@ static Bytes_8(void) {
 	MakeWord	(0X49FC4);
 	MakeRptCmt	(0X49FC6,	"  0034 JUMP TO ABSOLUTE ADDR. 0x451FC");
 	MakeWord	(0X49FC6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X49FC8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44189,6 +44212,15 @@ static Bytes_9(void) {
 	MakeByte	(0X4B05D);
 	MakeRptCmt	(0X4B05E,	"002D MOVE ENTITY 7 FF 0 1");
 	MakeWord	(0X4B05E);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4B060);
 	MakeByte	(0X4B061);
 	MakeByte	(0X4B062);
@@ -44207,15 +44239,6 @@ static Bytes_9(void) {
 	MakeByte	(0X4B06F);
 	MakeRptCmt	(0X4B070,	"0023 SET ENTITY FACING 1F 3");
 	MakeWord	(0X4B070);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4B072);
 	MakeByte	(0X4B073);
 	MakeRptCmt	(0X4B074,	"0000 DISPLAY SINGLE TEXTBOX C007");
@@ -47947,6 +47970,15 @@ static Bytes_10(void) {
 	MakeByte	(0X4C0F3);
 	MakeRptCmt	(0X4C0F4,	"0015 SET ACTSCRIPT 0 FF 45E94");
 	MakeWord	(0X4C0F4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4C0F6);
 	MakeByte	(0X4C0F7);
 	MakeDword	(x=0X4C0F8);
@@ -47964,15 +47996,6 @@ static Bytes_10(void) {
 	MakeWord	(0X4C106);
 	MakeRptCmt	(0X4C108,	"002D MOVE ENTITY 1F FF 3 1");
 	MakeWord	(0X4C108);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4C10A);
 	MakeByte	(0X4C10B);
 	MakeByte	(0X4C10C);
@@ -51710,6 +51733,15 @@ static Bytes_11(void) {
 	MakeDword	(x=0X4D2A0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X4D2A4,	"002D MOVE ENTITY 80 0 3 1");
 	MakeWord	(0X4D2A4);
 	MakeByte	(0X4D2A6);
@@ -51730,15 +51762,6 @@ static Bytes_11(void) {
 	MakeDword	(x=0X4D2B6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X4D2BA,	"WAIT 3");
 	MakeByte	(0X4D2BA);
 	MakeByte	(0X4D2BB);
@@ -55487,6 +55510,15 @@ static Bytes_12(void) {
 	MakeWord	(0X4E3DC);
 	MakeRptCmt	(0X4E3DE,	"0042 RELATED TO LOADING MAP ENTITIES 4E4AC");
 	MakeWord	(0X4E3DE);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X4E3E0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -55505,15 +55537,6 @@ static Bytes_12(void) {
 	MakeByte	(0X4E3F1);
 	MakeRptCmt	(0X4E3F2,	"0019 SET ENTITY POS AND FACING 1F 7 8 3");
 	MakeWord	(0X4E3F2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4E3F4);
 	MakeByte	(0X4E3F5);
 	MakeByte	(0X4E3F6);
@@ -59316,6 +59339,15 @@ static Bytes_13(void) {
 	MakeDword	(x=0X4F7C4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X4F7C8);
 	MakeDword	(x=0X4F7CA);
 	OpOff		(x,	0,	0X0);
@@ -59342,15 +59374,6 @@ static Bytes_13(void) {
 	MakeDword	(x=0X4F7EC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X4F7F0);
 	MakeWord	(0X4F7F2);
 	MakeDword	(x=0X4F7F4);
@@ -63711,6 +63734,15 @@ static Bytes_14(void) {
 	MakeDword	(x=0X50C9E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X50CA2);
 	MakeByte	(0X50CA3);
 	MakeByte	(0X50CA4);
@@ -63734,15 +63766,6 @@ static Bytes_14(void) {
 	MakeDword	(x=0X50CD6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X50CDA);
 	MakeByte	(0X50CDB);
 	MakeByte	(0X50CDC);
@@ -68380,6 +68403,15 @@ static Bytes_15(void) {
 	MakeByte	(0X522EA);
 	MakeByte	(0X522EB);
 	MakeByte	(0X522EC);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X522ED);
 	MakeByte	(0X522EE);
 	MakeByte	(0X522EF);
@@ -68407,15 +68439,6 @@ static Bytes_15(void) {
 	MakeDword	(x=0X52308);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5230C);
 	MakeByte	(0X5230D);
 	MakeByte	(0X5230E);
@@ -72681,6 +72704,15 @@ static Bytes_16(void) {
 	MakeByte	(0X536B4);
 	MakeByte	(0X536B5);
 	MakeByte	(0X536B6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X536B7);
 	MakeDword	(x=0X536B8);
 	OpOff		(x,	0,	0X0);
@@ -72708,15 +72740,6 @@ static Bytes_16(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeWord	(0X536D4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X536D6);
 	MakeName	(0X536D6,	"ms_map20_flag1F5_Entities");
 	MakeByte	(0X536D7);
@@ -77151,6 +77174,15 @@ static Bytes_17(void) {
 	MakeCode	(0X54ACA);
 	MakeWord	(0X54ACC);
 	MakeCode	(0X54ACE);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X54AD0);
 	MakeCode	(0X54AD8);
 	MakeWord	(0X54ADA);
@@ -77178,15 +77210,6 @@ static Bytes_17(void) {
 	MakeCode	(0X54B14);
 	MakeWord	(0X54B16);
 	MakeCode	(0X54B18);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X54B1A);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -81446,6 +81469,15 @@ static Bytes_18(void) {
 	OpOff		(x,	128,	0X56048);
 	OpOff		(x,	1,	0X56048);
 	OpOff		(x,	129,	0X56048);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5604C);
 	MakeByte	(0X5604D);
 	MakeWord	(x=0X5604E);
@@ -81474,15 +81506,6 @@ static Bytes_18(void) {
 	OpOff		(x,	128,	0X56048);
 	OpOff		(x,	1,	0X56048);
 	OpOff		(x,	129,	0X56048);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5605C);
 	MakeByte	(0X5605D);
 	MakeWord	(x=0X5605E);
@@ -85886,6 +85909,15 @@ static Bytes_19(void) {
 	MakeDword	(x=0X57574);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X57578,	"0015 SET ACTSCRIPT 7 FF 45E44");
 	MakeWord	(0X57578);
 	MakeByte	(0X5757A);
@@ -85901,15 +85933,6 @@ static Bytes_19(void) {
 	MakeWord	(0X57586);
 	MakeRptCmt	(0X57588,	"0000 DISPLAY SINGLE TEXTBOX 7");
 	MakeWord	(0X57588);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5758A);
 	MakeRptCmt	(0X5758C,	"0026 MAKE ENTITY NOD A");
 	MakeWord	(0X5758C);
@@ -89969,6 +89992,15 @@ static Bytes_20(void) {
 	MakeByte	(0X58835);
 	MakeRptCmt	(0X58836,	"WAIT 28");
 	MakeByte	(0X58836);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X58837);
 	MakeRptCmt	(0X58838,	"002D MOVE ENTITY 80 FF 2 1");
 	MakeWord	(0X58838);
@@ -89987,15 +90019,6 @@ static Bytes_20(void) {
 	MakeWord	(0X58848);
 	MakeRptCmt	(0X5884A,	"0013 SET STORY FLAG D");
 	MakeWord	(0X5884A);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5884C);
 	MakeRptCmt	(0X5884E,	"0007 EXECUTE MAP SYSTEM EVENT D000000");
 	MakeWord	(0X5884E);
@@ -94014,6 +94037,15 @@ static Bytes_21(void) {
 	MakeByte	(0X59A3B);
 	MakeRptCmt	(0X59A3C,	"  0010 SET SPEED X=$A Y=$A");
 	MakeWord	(0X59A3C);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X59A3E);
 	MakeByte	(0X59A3F);
 	MakeRptCmt	(0X59A40,	"  0034 JUMP TO ABSOLUTE ADDR. 0x451FC");
@@ -94029,15 +94061,6 @@ static Bytes_21(void) {
 	MakeByte	(0X59A4B);
 	MakeRptCmt	(0X59A4C,	"  0010 SET SPEED X=$A Y=$A");
 	MakeWord	(0X59A4C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X59A4E);
 	MakeByte	(0X59A4F);
 	MakeRptCmt	(0X59A50,	"  0034 JUMP TO ABSOLUTE ADDR. 0x451FC");
@@ -98285,6 +98308,15 @@ static Bytes_22(void) {
 	MakeDword	(x=0X5AE9C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5AEA0,	"0014 END OF MANUAL ACTSCRIPT");
 	MakeWord	(0X5AEA0);
 	MakeRptCmt	(0X5AEA2,	"0014 SET MANUAL ACTSCRIPT 1F");
@@ -98300,15 +98332,6 @@ static Bytes_22(void) {
 	MakeDword	(x=0X5AEAC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X5AEB0,	"0014 END OF MANUAL ACTSCRIPT");
 	MakeWord	(0X5AEB0);
 	MakeRptCmt	(0X5AEB2,	"002D MOVE ENTITY 0 0 3 1");
@@ -102063,6 +102086,15 @@ static Bytes_23(void) {
 	MakeWord	(0X5BEF6);
 	MakeRptCmt	(0X5BEF8,	"002E HIDE ENTITY 86");
 	MakeWord	(0X5BEF8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X5BEFA);
 	MakeRptCmt	(0X5BEFC,	"002E HIDE ENTITY 87");
 	MakeWord	(0X5BEFC);
@@ -102078,15 +102110,6 @@ static Bytes_23(void) {
 	MakeWord	(0X5BF0A);
 	MakeRptCmt	(0X5BF0C,	"002E HIDE ENTITY 8B");
 	MakeWord	(0X5BF0C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5BF0E);
 	MakeRptCmt	(0X5BF10,	"002E HIDE ENTITY 8C");
 	MakeWord	(0X5BF10);
@@ -106523,6 +106546,15 @@ static Bytes_24(void) {
 	MakeByte	(0X5D3D3);
 	MakeRptCmt	(0X5D3D4,	"002D MOVE ENTITY 85 FF 0 5");
 	MakeWord	(0X5D3D4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5D3D6);
 	MakeByte	(0X5D3D7);
 	MakeByte	(0X5D3D8);
@@ -106541,15 +106573,6 @@ static Bytes_24(void) {
 	MakeByte	(0X5D3E7);
 	MakeByte	(0X5D3E8);
 	MakeByte	(0X5D3E9);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5D3EA);
 	MakeRptCmt	(0X5D3EC,	"002D MOVE ENTITY 85 FF 1 1");
 	MakeWord	(0X5D3EC);
@@ -110973,6 +110996,15 @@ static Bytes_25(void) {
 	MakeDword	(x=0X5E8C0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5E8C4);
 	MakeByte	(0X5E8C5);
 	MakeByte	(0X5E8C6);
@@ -110997,15 +111029,6 @@ static Bytes_25(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X5E8DC);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5E8DD);
 	MakeByte	(0X5E8DE);
 	MakeByte	(0X5E8DF);
@@ -115268,6 +115291,15 @@ static Bytes_26(void) {
 	MakeCode	(x=0X5FD6C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X5FD7C);
 	MakeCode	(x=0X5FD82);
 	OpOff		(x,	1,	0X0);
@@ -115289,15 +115321,6 @@ static Bytes_26(void) {
 	MakeWord	(0X5FDB6);
 	MakeWord	(0X5FDB8);
 	MakeWord	(0X5FDBA);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5FDBC);
 	MakeWord	(0X5FDBE);
 	MakeWord	(0X5FDC0);
@@ -119331,6 +119354,15 @@ static Bytes_27(void) {
 	MakeCode	(0X610C4);
 	MakeWord	(0X610C6);
 	MakeCode	(0X610C8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_28(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X610CA);
 	MakeCode	(0X610CC);
 	MakeCode	(0X610CE);
@@ -119354,15 +119386,6 @@ static Bytes_27(void) {
 	MakeCode	(0X61100);
 	MakeWord	(0X61102);
 	MakeCode	(0X61104);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_28(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X61106);
 	MakeCode	(0X61108);
 	MakeCode	(0X6110A);
@@ -123137,6 +123160,15 @@ static Bytes_28(void) {
 	MakeRptCmt	(0X621FA,	"0000 DISPLAY SINGLE TEXTBOX 8007");
 	MakeWord	(0X621FA);
 	MakeWord	(0X621FC);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_29(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X621FE,	"002D MOVE ENTITY 7 FF 0 1");
 	MakeWord	(0X621FE);
 	MakeByte	(0X62200);
@@ -123151,15 +123183,6 @@ static Bytes_28(void) {
 	MakeWord	(0X6220A);
 	MakeRptCmt	(0X6220C,	"0023 SET ENTITY FACING 85 3");
 	MakeWord	(0X6220C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_29(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X6220E);
 	MakeByte	(0X6220F);
 	MakeRptCmt	(0X62210,	"0027 MAKE ENTITY SHAKE HEAD 85");
@@ -127262,7 +127285,7 @@ static Bytes_29(void) {
 	MakeDword	(x=0X6400C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X6400C,	"pt_MapTiles");
+	MakeName	(0X6400C,	"pt_MapTilesets");
 	MakeDword	(x=0X64010);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -127497,6 +127520,15 @@ static Bytes_29(void) {
 	MakeDword	(x=0X64144);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_30(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X64148);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -127518,15 +127550,6 @@ static Bytes_29(void) {
 	MakeDword	(x=0X64160);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_30(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X64164);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -127616,349 +127639,349 @@ static Bytes_30(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X641D8);
 	MakeArray	(0X641D8,	0X8EC);
-	MakeName	(0X641D8,	"MapTiles000");
+	MakeName	(0X641D8,	"MapTileset000");
 	MakeByte	(0X64AC4);
 	MakeArray	(0X64AC4,	0X86A);
-	MakeName	(0X64AC4,	"MapTiles001");
+	MakeName	(0X64AC4,	"MapTileset001");
 	MakeByte	(0X6532E);
 	MakeArray	(0X6532E,	0X8B2);
-	MakeName	(0X6532E,	"MapTiles002");
+	MakeName	(0X6532E,	"MapTileset002");
 	MakeByte	(0X65BE0);
 	MakeArray	(0X65BE0,	0X4A8);
-	MakeName	(0X65BE0,	"MapTiles003");
+	MakeName	(0X65BE0,	"MapTileset003");
 	MakeByte	(0X66088);
 	MakeArray	(0X66088,	0X86C);
-	MakeName	(0X66088,	"MapTiles004");
+	MakeName	(0X66088,	"MapTileset004");
 	MakeByte	(0X668F4);
 	MakeArray	(0X668F4,	0X70A);
-	MakeName	(0X668F4,	"MapTiles005");
+	MakeName	(0X668F4,	"MapTileset005");
 	MakeByte	(0X66FFE);
 	MakeArray	(0X66FFE,	0X908);
-	MakeName	(0X66FFE,	"MapTiles006");
+	MakeName	(0X66FFE,	"MapTileset006");
 	MakeByte	(0X67906);
 	MakeArray	(0X67906,	0X6A6);
-	MakeName	(0X67906,	"MapTiles007");
+	MakeName	(0X67906,	"MapTileset007");
 	MakeByte	(0X67FAC);
 	MakeArray	(0X67FAC,	0X6B2);
-	MakeName	(0X67FAC,	"MapTiles008");
+	MakeName	(0X67FAC,	"MapTileset008");
 	MakeByte	(0X6865E);
 	MakeArray	(0X6865E,	0X214);
-	MakeName	(0X6865E,	"MapTiles009");
+	MakeName	(0X6865E,	"MapTileset009");
 	MakeByte	(0X68872);
 	MakeArray	(0X68872,	0X5F6);
-	MakeName	(0X68872,	"MapTiles010");
+	MakeName	(0X68872,	"MapTileset010");
 	MakeByte	(0X68E68);
 	MakeArray	(0X68E68,	0X5C2);
-	MakeName	(0X68E68,	"MapTiles011");
+	MakeName	(0X68E68,	"MapTileset011");
 	MakeByte	(0X6942A);
 	MakeArray	(0X6942A,	0X54C);
-	MakeName	(0X6942A,	"MapTiles012");
+	MakeName	(0X6942A,	"MapTileset012");
 	MakeByte	(0X69976);
 	MakeArray	(0X69976,	0X2D6);
-	MakeName	(0X69976,	"MapTiles013");
+	MakeName	(0X69976,	"MapTileset013");
 	MakeByte	(0X69C4C);
 	MakeArray	(0X69C4C,	0X48C);
-	MakeName	(0X69C4C,	"MapTiles014");
+	MakeName	(0X69C4C,	"MapTileset014");
 	MakeByte	(0X6A0D8);
 	MakeArray	(0X6A0D8,	0X314);
-	MakeName	(0X6A0D8,	"MapTiles015");
+	MakeName	(0X6A0D8,	"MapTileset015");
 	MakeByte	(0X6A3EC);
 	MakeArray	(0X6A3EC,	0X6CE);
-	MakeName	(0X6A3EC,	"MapTiles016");
+	MakeName	(0X6A3EC,	"MapTileset016");
 	MakeByte	(0X6AABA);
 	MakeArray	(0X6AABA,	0X82E);
-	MakeName	(0X6AABA,	"MapTiles017");
+	MakeName	(0X6AABA,	"MapTileset017");
 	MakeByte	(0X6B2E8);
 	MakeArray	(0X6B2E8,	0X7E8);
-	MakeName	(0X6B2E8,	"MapTiles018");
+	MakeName	(0X6B2E8,	"MapTileset018");
 	MakeByte	(0X6BAD0);
 	MakeArray	(0X6BAD0,	0X19E);
-	MakeName	(0X6BAD0,	"MapTiles019");
+	MakeName	(0X6BAD0,	"MapTileset019");
 	MakeByte	(0X6BC6E);
 	MakeArray	(0X6BC6E,	0X4BC);
-	MakeName	(0X6BC6E,	"MapTiles020");
+	MakeName	(0X6BC6E,	"MapTileset020");
 	MakeByte	(0X6C12A);
 	MakeArray	(0X6C12A,	0X95E);
-	MakeName	(0X6C12A,	"MapTiles021");
+	MakeName	(0X6C12A,	"MapTileset021");
 	MakeByte	(0X6CA88);
 	MakeArray	(0X6CA88,	0X86C);
-	MakeName	(0X6CA88,	"MapTiles022");
+	MakeName	(0X6CA88,	"MapTileset022");
 	MakeByte	(0X6D2F4);
 	MakeArray	(0X6D2F4,	0X7C6);
-	MakeName	(0X6D2F4,	"MapTiles023");
+	MakeName	(0X6D2F4,	"MapTileset023");
 	MakeByte	(0X6DABA);
 	MakeArray	(0X6DABA,	0X83C);
-	MakeName	(0X6DABA,	"MapTiles024");
+	MakeName	(0X6DABA,	"MapTileset024");
 	MakeByte	(0X6E2F6);
 	MakeArray	(0X6E2F6,	0X3DC);
-	MakeName	(0X6E2F6,	"MapTiles025");
+	MakeName	(0X6E2F6,	"MapTileset025");
 	MakeByte	(0X6E6D2);
 	MakeArray	(0X6E6D2,	0X240);
-	MakeName	(0X6E6D2,	"MapTiles026");
+	MakeName	(0X6E6D2,	"MapTileset026");
 	MakeByte	(0X6E912);
 	MakeArray	(0X6E912,	0X682);
-	MakeName	(0X6E912,	"MapTiles027");
+	MakeName	(0X6E912,	"MapTileset027");
 	MakeByte	(0X6EF94);
 	MakeArray	(0X6EF94,	0X91A);
-	MakeName	(0X6EF94,	"MapTiles028");
+	MakeName	(0X6EF94,	"MapTileset028");
 	MakeByte	(0X6F8AE);
 	MakeArray	(0X6F8AE,	0X228);
-	MakeName	(0X6F8AE,	"MapTiles029");
+	MakeName	(0X6F8AE,	"MapTileset029");
 	MakeByte	(0X6FAD6);
 	MakeArray	(0X6FAD6,	0X76A);
-	MakeName	(0X6FAD6,	"MapTiles030");
+	MakeName	(0X6FAD6,	"MapTileset030");
 	MakeByte	(0X70240);
 	MakeArray	(0X70240,	0X804);
-	MakeName	(0X70240,	"MapTiles031");
+	MakeName	(0X70240,	"MapTileset031");
 	MakeByte	(0X70A44);
 	MakeArray	(0X70A44,	0X738);
-	MakeName	(0X70A44,	"MapTiles032");
+	MakeName	(0X70A44,	"MapTileset032");
 	MakeByte	(0X7117C);
 	MakeArray	(0X7117C,	0X846);
-	MakeName	(0X7117C,	"MapTiles033");
+	MakeName	(0X7117C,	"MapTileset033");
 	MakeByte	(0X719C2);
 	MakeArray	(0X719C2,	0X748);
-	MakeName	(0X719C2,	"MapTiles034");
+	MakeName	(0X719C2,	"MapTileset034");
 	MakeByte	(0X7210A);
 	MakeArray	(0X7210A,	0X716);
-	MakeName	(0X7210A,	"MapTiles035");
+	MakeName	(0X7210A,	"MapTileset035");
 	MakeByte	(0X72820);
 	MakeArray	(0X72820,	0X5BC);
-	MakeName	(0X72820,	"MapTiles036");
+	MakeName	(0X72820,	"MapTileset036");
 	MakeByte	(0X72DDC);
 	MakeArray	(0X72DDC,	0X774);
-	MakeName	(0X72DDC,	"MapTiles037");
+	MakeName	(0X72DDC,	"MapTileset037");
 	MakeByte	(0X73550);
 	MakeArray	(0X73550,	0X730);
-	MakeName	(0X73550,	"MapTiles038");
+	MakeName	(0X73550,	"MapTileset038");
 	MakeByte	(0X73C80);
 	MakeArray	(0X73C80,	0X730);
-	MakeName	(0X73C80,	"MapTiles039");
+	MakeName	(0X73C80,	"MapTileset039");
 	MakeByte	(0X743B0);
 	MakeArray	(0X743B0,	0X670);
-	MakeName	(0X743B0,	"MapTiles040");
+	MakeName	(0X743B0,	"MapTileset040");
 	MakeByte	(0X74A20);
 	MakeArray	(0X74A20,	0X632);
-	MakeName	(0X74A20,	"MapTiles041");
+	MakeName	(0X74A20,	"MapTileset041");
 	MakeByte	(0X75052);
 	MakeArray	(0X75052,	0X6B6);
-	MakeName	(0X75052,	"MapTiles042");
+	MakeName	(0X75052,	"MapTileset042");
 	MakeByte	(0X75708);
 	MakeArray	(0X75708,	0X820);
-	MakeName	(0X75708,	"MapTiles043");
+	MakeName	(0X75708,	"MapTileset043");
 	MakeByte	(0X75F28);
 	MakeArray	(0X75F28,	0X84C);
-	MakeName	(0X75F28,	"MapTiles044");
+	MakeName	(0X75F28,	"MapTileset044");
 	MakeByte	(0X76774);
 	MakeArray	(0X76774,	0X828);
-	MakeName	(0X76774,	"MapTiles045");
+	MakeName	(0X76774,	"MapTileset045");
 	MakeByte	(0X76F9C);
 	MakeArray	(0X76F9C,	0X3F0);
-	MakeName	(0X76F9C,	"MapTiles046");
+	MakeName	(0X76F9C,	"MapTileset046");
 	MakeByte	(0X7738C);
 	MakeArray	(0X7738C,	0X760);
-	MakeName	(0X7738C,	"MapTiles047");
+	MakeName	(0X7738C,	"MapTileset047");
 	MakeByte	(0X77AEC);
 	MakeArray	(0X77AEC,	0X838);
-	MakeName	(0X77AEC,	"MapTiles048");
+	MakeName	(0X77AEC,	"MapTileset048");
 	MakeByte	(0X78324);
 	MakeArray	(0X78324,	0X846);
-	MakeName	(0X78324,	"MapTiles049");
+	MakeName	(0X78324,	"MapTileset049");
 	MakeByte	(0X78B6A);
 	MakeArray	(0X78B6A,	0X822);
-	MakeName	(0X78B6A,	"MapTiles050");
+	MakeName	(0X78B6A,	"MapTileset050");
 	MakeByte	(0X7938C);
 	MakeArray	(0X7938C,	0X56C);
-	MakeName	(0X7938C,	"MapTiles051");
+	MakeName	(0X7938C,	"MapTileset051");
 	MakeByte	(0X798F8);
 	MakeArray	(0X798F8,	0X7D2);
-	MakeName	(0X798F8,	"MapTiles052");
+	MakeName	(0X798F8,	"MapTileset052");
 	MakeByte	(0X7A0CA);
 	MakeArray	(0X7A0CA,	0X750);
-	MakeName	(0X7A0CA,	"MapTiles053");
+	MakeName	(0X7A0CA,	"MapTileset053");
 	MakeByte	(0X7A81A);
 	MakeArray	(0X7A81A,	0X822);
-	MakeName	(0X7A81A,	"MapTiles054");
+	MakeName	(0X7A81A,	"MapTileset054");
 	MakeByte	(0X7B03C);
 	MakeArray	(0X7B03C,	0X802);
-	MakeName	(0X7B03C,	"MapTiles055");
+	MakeName	(0X7B03C,	"MapTileset055");
 	MakeByte	(0X7B83E);
 	MakeArray	(0X7B83E,	0X876);
-	MakeName	(0X7B83E,	"MapTiles056");
+	MakeName	(0X7B83E,	"MapTileset056");
 	MakeByte	(0X7C0B4);
 	MakeArray	(0X7C0B4,	0X810);
-	MakeName	(0X7C0B4,	"MapTiles057");
+	MakeName	(0X7C0B4,	"MapTileset057");
 	MakeByte	(0X7C8C4);
 	MakeArray	(0X7C8C4,	0X82E);
-	MakeName	(0X7C8C4,	"MapTiles058");
+	MakeName	(0X7C8C4,	"MapTileset058");
 	MakeByte	(0X7D0F2);
 	MakeArray	(0X7D0F2,	0X760);
-	MakeName	(0X7D0F2,	"MapTiles059");
+	MakeName	(0X7D0F2,	"MapTileset059");
 	MakeByte	(0X7D852);
 	MakeArray	(0X7D852,	0X7E4);
-	MakeName	(0X7D852,	"MapTiles060");
+	MakeName	(0X7D852,	"MapTileset060");
 	MakeByte	(0X7E036);
 	MakeArray	(0X7E036,	0X80C);
-	MakeName	(0X7E036,	"MapTiles061");
+	MakeName	(0X7E036,	"MapTileset061");
 	MakeByte	(0X7E842);
 	MakeArray	(0X7E842,	0X7F8);
-	MakeName	(0X7E842,	"MapTiles062");
+	MakeName	(0X7E842,	"MapTileset062");
 	MakeByte	(0X7F03A);
 	MakeArray	(0X7F03A,	0X76E);
-	MakeName	(0X7F03A,	"MapTiles063");
+	MakeName	(0X7F03A,	"MapTileset063");
 	MakeByte	(0X7F7A8);
 	MakeArray	(0X7F7A8,	0X81E);
-	MakeName	(0X7F7A8,	"MapTiles064");
+	MakeName	(0X7F7A8,	"MapTileset064");
 	MakeByte	(0X7FFC6);
 	MakeArray	(0X7FFC6,	0X742);
-	MakeName	(0X7FFC6,	"MapTiles065");
+	MakeName	(0X7FFC6,	"MapTileset065");
 	MakeByte	(0X80708);
 	MakeArray	(0X80708,	0X82C);
-	MakeName	(0X80708,	"MapTiles066");
+	MakeName	(0X80708,	"MapTileset066");
 	MakeByte	(0X80F34);
 	MakeArray	(0X80F34,	0X6E2);
-	MakeName	(0X80F34,	"MapTiles067");
+	MakeName	(0X80F34,	"MapTileset067");
 	MakeByte	(0X81616);
 	MakeArray	(0X81616,	0X650);
-	MakeName	(0X81616,	"MapTiles068");
+	MakeName	(0X81616,	"MapTileset068");
 	MakeByte	(0X81C66);
 	MakeArray	(0X81C66,	0X590);
-	MakeName	(0X81C66,	"MapTiles069");
+	MakeName	(0X81C66,	"MapTileset069");
 	MakeByte	(0X821F6);
 	MakeArray	(0X821F6,	0X658);
-	MakeName	(0X821F6,	"MapTiles070");
+	MakeName	(0X821F6,	"MapTileset070");
 	MakeByte	(0X8284E);
 	MakeArray	(0X8284E,	0X60E);
-	MakeName	(0X8284E,	"MapTiles071");
+	MakeName	(0X8284E,	"MapTileset071");
 	MakeByte	(0X82E5C);
 	MakeArray	(0X82E5C,	0X5A2);
-	MakeName	(0X82E5C,	"MapTiles072");
+	MakeName	(0X82E5C,	"MapTileset072");
 	MakeByte	(0X833FE);
 	MakeArray	(0X833FE,	0X272);
-	MakeName	(0X833FE,	"MapTiles073");
+	MakeName	(0X833FE,	"MapTileset073");
 	MakeByte	(0X83670);
 	MakeArray	(0X83670,	0X48C);
-	MakeName	(0X83670,	"MapTiles074");
+	MakeName	(0X83670,	"MapTileset074");
 	MakeByte	(0X83AFC);
 	MakeArray	(0X83AFC,	0X4A0);
-	MakeName	(0X83AFC,	"MapTiles075");
+	MakeName	(0X83AFC,	"MapTileset075");
 	MakeByte	(0X83F9C);
 	MakeArray	(0X83F9C,	0X506);
-	MakeName	(0X83F9C,	"MapTiles076");
+	MakeName	(0X83F9C,	"MapTileset076");
 	MakeByte	(0X844A2);
 	MakeArray	(0X844A2,	0X39A);
-	MakeName	(0X844A2,	"MapTiles077");
+	MakeName	(0X844A2,	"MapTileset077");
 	MakeByte	(0X8483C);
 	MakeArray	(0X8483C,	0X4E0);
-	MakeName	(0X8483C,	"MapTiles078");
+	MakeName	(0X8483C,	"MapTileset078");
 	MakeByte	(0X84D1C);
 	MakeArray	(0X84D1C,	0X58E);
-	MakeName	(0X84D1C,	"MapTiles079");
+	MakeName	(0X84D1C,	"MapTileset079");
 	MakeByte	(0X852AA);
 	MakeArray	(0X852AA,	0X5FE);
-	MakeName	(0X852AA,	"MapTiles080");
+	MakeName	(0X852AA,	"MapTileset080");
 	MakeByte	(0X858A8);
 	MakeArray	(0X858A8,	0X23E);
-	MakeName	(0X858A8,	"MapTiles081");
+	MakeName	(0X858A8,	"MapTileset081");
 	MakeByte	(0X85AE6);
 	MakeArray	(0X85AE6,	0X19C);
-	MakeName	(0X85AE6,	"MapTiles082");
+	MakeName	(0X85AE6,	"MapTileset082");
 	MakeByte	(0X85C82);
 	MakeArray	(0X85C82,	0X320);
-	MakeName	(0X85C82,	"MapTiles083");
+	MakeName	(0X85C82,	"MapTileset083");
 	MakeByte	(0X85FA2);
 	MakeArray	(0X85FA2,	0X3BE);
-	MakeName	(0X85FA2,	"MapTiles084");
+	MakeName	(0X85FA2,	"MapTileset084");
 	MakeByte	(0X86360);
 	MakeArray	(0X86360,	0X758);
-	MakeName	(0X86360,	"MapTiles085");
+	MakeName	(0X86360,	"MapTileset085");
 	MakeByte	(0X86AB8);
 	MakeArray	(0X86AB8,	0X90E);
-	MakeName	(0X86AB8,	"MapTiles086");
+	MakeName	(0X86AB8,	"MapTileset086");
 	MakeByte	(0X873C6);
 	MakeArray	(0X873C6,	0X51A);
-	MakeName	(0X873C6,	"MapTiles087");
+	MakeName	(0X873C6,	"MapTileset087");
 	MakeByte	(0X878E0);
 	MakeArray	(0X878E0,	0X642);
-	MakeName	(0X878E0,	"MapTiles088");
+	MakeName	(0X878E0,	"MapTileset088");
 	MakeByte	(0X87F22);
 	MakeArray	(0X87F22,	0X7F4);
-	MakeName	(0X87F22,	"MapTiles089");
+	MakeName	(0X87F22,	"MapTileset089");
 	MakeByte	(0X88716);
 	MakeArray	(0X88716,	0X836);
-	MakeName	(0X88716,	"MapTiles090");
+	MakeName	(0X88716,	"MapTileset090");
 	MakeByte	(0X88F4C);
 	MakeArray	(0X88F4C,	0X77E);
-	MakeName	(0X88F4C,	"MapTiles091");
+	MakeName	(0X88F4C,	"MapTileset091");
 	MakeByte	(0X896CA);
 	MakeArray	(0X896CA,	0X7B8);
-	MakeName	(0X896CA,	"MapTiles092");
+	MakeName	(0X896CA,	"MapTileset092");
 	MakeByte	(0X89E82);
 	MakeArray	(0X89E82,	0X444);
-	MakeName	(0X89E82,	"MapTiles093");
+	MakeName	(0X89E82,	"MapTileset093");
 	MakeByte	(0X8A2C6);
 	MakeArray	(0X8A2C6,	0X780);
-	MakeName	(0X8A2C6,	"MapTiles094");
+	MakeName	(0X8A2C6,	"MapTileset094");
 	MakeByte	(0X8AA46);
 	MakeArray	(0X8AA46,	0X76A);
-	MakeName	(0X8AA46,	"MapTiles095");
+	MakeName	(0X8AA46,	"MapTileset095");
 	MakeByte	(0X8B1B0);
 	MakeArray	(0X8B1B0,	0X874);
-	MakeName	(0X8B1B0,	"MapTiles096");
+	MakeName	(0X8B1B0,	"MapTileset096");
 	MakeByte	(0X8BA24);
 	MakeArray	(0X8BA24,	0X7F4);
-	MakeName	(0X8BA24,	"MapTiles097");
+	MakeName	(0X8BA24,	"MapTileset097");
 	MakeByte	(0X8C218);
 	MakeArray	(0X8C218,	0X784);
-	MakeName	(0X8C218,	"MapTiles098");
+	MakeName	(0X8C218,	"MapTileset098");
 	MakeByte	(0X8C99C);
 	MakeArray	(0X8C99C,	0X846);
-	MakeName	(0X8C99C,	"MapTiles099");
+	MakeName	(0X8C99C,	"MapTileset099");
 	MakeByte	(0X8D1E2);
 	MakeArray	(0X8D1E2,	0X774);
-	MakeName	(0X8D1E2,	"MapTiles100");
+	MakeName	(0X8D1E2,	"MapTileset100");
 	MakeByte	(0X8D956);
 	MakeArray	(0X8D956,	0X8A2);
-	MakeName	(0X8D956,	"MapTiles101");
+	MakeName	(0X8D956,	"MapTileset101");
 	MakeByte	(0X8E1F8);
 	MakeArray	(0X8E1F8,	0X88C);
-	MakeName	(0X8E1F8,	"MapTiles102");
+	MakeName	(0X8E1F8,	"MapTileset102");
 	MakeByte	(0X8EA84);
 	MakeArray	(0X8EA84,	0X97C);
-	MakeName	(0X8EA84,	"MapTiles103");
+	MakeName	(0X8EA84,	"MapTileset103");
 	MakeByte	(0X8F400);
 	MakeArray	(0X8F400,	0X8D2);
-	MakeName	(0X8F400,	"MapTiles104");
+	MakeName	(0X8F400,	"MapTileset104");
 	MakeByte	(0X8FCD2);
 	MakeArray	(0X8FCD2,	0X952);
-	MakeName	(0X8FCD2,	"MapTiles105");
+	MakeName	(0X8FCD2,	"MapTileset105");
 	MakeByte	(0X90624);
 	MakeArray	(0X90624,	0X878);
-	MakeName	(0X90624,	"MapTiles106");
+	MakeName	(0X90624,	"MapTileset106");
 	MakeByte	(0X90E9C);
 	MakeArray	(0X90E9C,	0X93C);
-	MakeName	(0X90E9C,	"MapTiles107");
+	MakeName	(0X90E9C,	"MapTileset107");
 	MakeByte	(0X917D8);
 	MakeArray	(0X917D8,	0X91E);
-	MakeName	(0X917D8,	"MapTiles108");
+	MakeName	(0X917D8,	"MapTileset108");
 	MakeByte	(0X920F6);
 	MakeArray	(0X920F6,	0X878);
-	MakeName	(0X920F6,	"MapTiles109");
+	MakeName	(0X920F6,	"MapTileset109");
 	MakeByte	(0X9296E);
 	MakeArray	(0X9296E,	0X8AE);
-	MakeName	(0X9296E,	"MapTiles110");
+	MakeName	(0X9296E,	"MapTileset110");
 	MakeByte	(0X9321C);
 	MakeArray	(0X9321C,	0X774);
-	MakeName	(0X9321C,	"MapTiles111");
+	MakeName	(0X9321C,	"MapTileset111");
 	MakeByte	(0X93990);
 	MakeArray	(0X93990,	0X3A4);
-	MakeName	(0X93990,	"MapTiles112");
+	MakeName	(0X93990,	"MapTileset112");
 	MakeByte	(0X93D34);
 	MakeArray	(0X93D34,	0X43C);
-	MakeName	(0X93D34,	"MapTiles113");
+	MakeName	(0X93D34,	"MapTileset113");
 	MakeByte	(0X94170);
 	MakeArray	(0X94170,	0X7DA);
-	MakeName	(0X94170,	"MapTiles114");
+	MakeName	(0X94170,	"MapTileset114");
 	MakeDword	(x=0X9494A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -131988,6 +132011,15 @@ static Bytes_30(void) {
 	MakeByte	(0XB8922);
 	MakeArray	(0XB8922,	0XB0);
 	MakeName	(0XB8922,	"Map57Section1");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_31(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XB89D2);
 	MakeName	(0XB89D2,	"Map58");
 	MakeByte	(0XB89D3);
@@ -132029,15 +132061,6 @@ static Bytes_30(void) {
 	MakeByte	(0XB8A20);
 	MakeArray	(0XB8A20,	0X2);
 	MakeName	(0XB8A20,	"Map58Section3");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_31(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XB8A22);
 	MakeArray	(0XB8A22,	0X2);
 	MakeName	(0XB8A22,	"Map58Section4");
@@ -133365,7 +133388,7 @@ static Bytes_31(void) {
 	MakeDword	(x=0XC8000);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0XC8000,	"pt_EntitySprites");
+	MakeName	(0XC8000,	"pt_MapSprites");
 	MakeDword	(x=0XC8004);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -135525,1120 +135548,1159 @@ static Bytes_31(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0XC8B40);
 	MakeArray	(0XC8B40,	0X172);
-	MakeName	(0XC8B40,	"EntitySprite000");
+	MakeName	(0XC8B40,	"MapSprite000");
 	MakeByte	(0XC8CB2);
 	MakeArray	(0XC8CB2,	0X14C);
-	MakeName	(0XC8CB2,	"EntitySprite001");
+	MakeName	(0XC8CB2,	"MapSprite001");
 	MakeByte	(0XC8DFE);
 	MakeArray	(0XC8DFE,	0X16C);
-	MakeName	(0XC8DFE,	"EntitySprite002");
+	MakeName	(0XC8DFE,	"MapSprite002");
 	MakeByte	(0XC8F6A);
 	MakeArray	(0XC8F6A,	0X170);
-	MakeName	(0XC8F6A,	"EntitySprite003");
+	MakeName	(0XC8F6A,	"MapSprite003");
 	MakeByte	(0XC90DA);
 	MakeArray	(0XC90DA,	0X15C);
-	MakeName	(0XC90DA,	"EntitySprite004");
+	MakeName	(0XC90DA,	"MapSprite004");
 	MakeByte	(0XC9236);
 	MakeArray	(0XC9236,	0X168);
-	MakeName	(0XC9236,	"EntitySprite005");
+	MakeName	(0XC9236,	"MapSprite005");
 	MakeByte	(0XC939E);
 	MakeArray	(0XC939E,	0X160);
-	MakeName	(0XC939E,	"EntitySprite006");
+	MakeName	(0XC939E,	"MapSprite006");
 	MakeByte	(0XC94FE);
 	MakeArray	(0XC94FE,	0X14A);
-	MakeName	(0XC94FE,	"EntitySprite007");
+	MakeName	(0XC94FE,	"MapSprite007");
 	MakeByte	(0XC9648);
 	MakeArray	(0XC9648,	0X180);
-	MakeName	(0XC9648,	"EntitySprite008");
+	MakeName	(0XC9648,	"MapSprite008");
 	MakeByte	(0XC97C8);
 	MakeArray	(0XC97C8,	0X160);
-	MakeName	(0XC97C8,	"EntitySprite009");
+	MakeName	(0XC97C8,	"MapSprite009");
 	MakeByte	(0XC9928);
 	MakeArray	(0XC9928,	0X14A);
-	MakeName	(0XC9928,	"EntitySprite010");
+	MakeName	(0XC9928,	"MapSprite010");
 	MakeByte	(0XC9A72);
 	MakeArray	(0XC9A72,	0X182);
-	MakeName	(0XC9A72,	"EntitySprite011");
+	MakeName	(0XC9A72,	"MapSprite011");
 	MakeByte	(0XC9BF4);
 	MakeArray	(0XC9BF4,	0X126);
-	MakeName	(0XC9BF4,	"EntitySprite012");
+	MakeName	(0XC9BF4,	"MapSprite012");
 	MakeByte	(0XC9D1A);
 	MakeArray	(0XC9D1A,	0X118);
-	MakeName	(0XC9D1A,	"EntitySprite013");
+	MakeName	(0XC9D1A,	"MapSprite013");
 	MakeByte	(0XC9E32);
 	MakeArray	(0XC9E32,	0X146);
-	MakeName	(0XC9E32,	"EntitySprite014");
+	MakeName	(0XC9E32,	"MapSprite014");
 	MakeByte	(0XC9F78);
 	MakeArray	(0XC9F78,	0X126);
-	MakeName	(0XC9F78,	"EntitySprite015");
+	MakeName	(0XC9F78,	"MapSprite015");
 	MakeByte	(0XCA09E);
 	MakeArray	(0XCA09E,	0X1CC);
-	MakeName	(0XCA09E,	"EntitySprite016");
+	MakeName	(0XCA09E,	"MapSprite016");
 	MakeByte	(0XCA26A);
 	MakeArray	(0XCA26A,	0X150);
-	MakeName	(0XCA26A,	"EntitySprite017");
+	MakeName	(0XCA26A,	"MapSprite017");
 	MakeByte	(0XCA3BA);
 	MakeArray	(0XCA3BA,	0X12A);
-	MakeName	(0XCA3BA,	"EntitySprite018");
+	MakeName	(0XCA3BA,	"MapSprite018");
 	MakeByte	(0XCA4E4);
 	MakeArray	(0XCA4E4,	0X1D0);
-	MakeName	(0XCA4E4,	"EntitySprite019");
+	MakeName	(0XCA4E4,	"MapSprite019");
 	MakeByte	(0XCA6B4);
 	MakeArray	(0XCA6B4,	0X160);
-	MakeName	(0XCA6B4,	"EntitySprite020");
+	MakeName	(0XCA6B4,	"MapSprite020");
 	MakeByte	(0XCA814);
 	MakeArray	(0XCA814,	0X1BE);
-	MakeName	(0XCA814,	"EntitySprite021");
+	MakeName	(0XCA814,	"MapSprite021");
 	MakeByte	(0XCA9D2);
 	MakeArray	(0XCA9D2,	0X1F8);
-	MakeName	(0XCA9D2,	"EntitySprite022");
+	MakeName	(0XCA9D2,	"MapSprite022");
 	MakeByte	(0XCABCA);
 	MakeArray	(0XCABCA,	0X1AA);
-	MakeName	(0XCABCA,	"EntitySprite023");
+	MakeName	(0XCABCA,	"MapSprite023");
 	MakeByte	(0XCAD74);
 	MakeArray	(0XCAD74,	0X198);
-	MakeName	(0XCAD74,	"EntitySprite024");
+	MakeName	(0XCAD74,	"MapSprite024");
 	MakeByte	(0XCAF0C);
 	MakeArray	(0XCAF0C,	0X166);
-	MakeName	(0XCAF0C,	"EntitySprite025");
+	MakeName	(0XCAF0C,	"MapSprite025");
 	MakeByte	(0XCB072);
 	MakeArray	(0XCB072,	0X17E);
-	MakeName	(0XCB072,	"EntitySprite026");
+	MakeName	(0XCB072,	"MapSprite026");
 	MakeByte	(0XCB1F0);
 	MakeArray	(0XCB1F0,	0X198);
-	MakeName	(0XCB1F0,	"EntitySprite027");
+	MakeName	(0XCB1F0,	"MapSprite027");
 	MakeByte	(0XCB388);
 	MakeArray	(0XCB388,	0X14C);
-	MakeName	(0XCB388,	"EntitySprite028");
+	MakeName	(0XCB388,	"MapSprite028");
 	MakeByte	(0XCB4D4);
 	MakeArray	(0XCB4D4,	0X186);
-	MakeName	(0XCB4D4,	"EntitySprite029");
+	MakeName	(0XCB4D4,	"MapSprite029");
 	MakeByte	(0XCB65A);
 	MakeArray	(0XCB65A,	0X170);
-	MakeName	(0XCB65A,	"EntitySprite030");
+	MakeName	(0XCB65A,	"MapSprite030");
 	MakeByte	(0XCB7CA);
 	MakeArray	(0XCB7CA,	0X124);
-	MakeName	(0XCB7CA,	"EntitySprite031");
+	MakeName	(0XCB7CA,	"MapSprite031");
 	MakeByte	(0XCB8EE);
 	MakeArray	(0XCB8EE,	0X186);
-	MakeName	(0XCB8EE,	"EntitySprite032");
+	MakeName	(0XCB8EE,	"MapSprite032");
 	MakeByte	(0XCBA74);
 	MakeArray	(0XCBA74,	0X15C);
-	MakeName	(0XCBA74,	"EntitySprite033");
+	MakeName	(0XCBA74,	"MapSprite033");
 	MakeByte	(0XCBBD0);
 	MakeArray	(0XCBBD0,	0X18A);
-	MakeName	(0XCBBD0,	"EntitySprite034");
+	MakeName	(0XCBBD0,	"MapSprite034");
 	MakeByte	(0XCBD5A);
 	MakeArray	(0XCBD5A,	0X168);
-	MakeName	(0XCBD5A,	"EntitySprite035");
+	MakeName	(0XCBD5A,	"MapSprite035");
 	MakeByte	(0XCBEC2);
 	MakeArray	(0XCBEC2,	0X130);
-	MakeName	(0XCBEC2,	"EntitySprite036");
+	MakeName	(0XCBEC2,	"MapSprite036");
 	MakeByte	(0XCBFF2);
 	MakeArray	(0XCBFF2,	0X11E);
-	MakeName	(0XCBFF2,	"EntitySprite037");
+	MakeName	(0XCBFF2,	"MapSprite037");
 	MakeByte	(0XCC110);
 	MakeArray	(0XCC110,	0X166);
-	MakeName	(0XCC110,	"EntitySprite038");
+	MakeName	(0XCC110,	"MapSprite038");
 	MakeByte	(0XCC276);
 	MakeArray	(0XCC276,	0X162);
-	MakeName	(0XCC276,	"EntitySprite039");
+	MakeName	(0XCC276,	"MapSprite039");
 	MakeByte	(0XCC3D8);
 	MakeArray	(0XCC3D8,	0X152);
-	MakeName	(0XCC3D8,	"EntitySprite040");
+	MakeName	(0XCC3D8,	"MapSprite040");
 	MakeByte	(0XCC52A);
 	MakeArray	(0XCC52A,	0X152);
-	MakeName	(0XCC52A,	"EntitySprite041");
+	MakeName	(0XCC52A,	"MapSprite041");
 	MakeByte	(0XCC67C);
 	MakeArray	(0XCC67C,	0X162);
-	MakeName	(0XCC67C,	"EntitySprite042");
+	MakeName	(0XCC67C,	"MapSprite042");
 	MakeByte	(0XCC7DE);
 	MakeArray	(0XCC7DE,	0X110);
-	MakeName	(0XCC7DE,	"EntitySprite043");
+	MakeName	(0XCC7DE,	"MapSprite043");
 	MakeByte	(0XCC8EE);
 	MakeArray	(0XCC8EE,	0X158);
-	MakeName	(0XCC8EE,	"EntitySprite044");
+	MakeName	(0XCC8EE,	"MapSprite044");
 	MakeByte	(0XCCA46);
 	MakeArray	(0XCCA46,	0X15C);
-	MakeName	(0XCCA46,	"EntitySprite045");
+	MakeName	(0XCCA46,	"MapSprite045");
 	MakeByte	(0XCCBA2);
 	MakeArray	(0XCCBA2,	0X100);
-	MakeName	(0XCCBA2,	"EntitySprite046");
+	MakeName	(0XCCBA2,	"MapSprite046");
 	MakeByte	(0XCCCA2);
 	MakeArray	(0XCCCA2,	0X16C);
-	MakeName	(0XCCCA2,	"EntitySprite047");
+	MakeName	(0XCCCA2,	"MapSprite047");
 	MakeByte	(0XCCE0E);
 	MakeArray	(0XCCE0E,	0X168);
-	MakeName	(0XCCE0E,	"EntitySprite048");
+	MakeName	(0XCCE0E,	"MapSprite048");
 	MakeByte	(0XCCF76);
 	MakeArray	(0XCCF76,	0X130);
-	MakeName	(0XCCF76,	"EntitySprite049");
+	MakeName	(0XCCF76,	"MapSprite049");
 	MakeByte	(0XCD0A6);
 	MakeArray	(0XCD0A6,	0X158);
-	MakeName	(0XCD0A6,	"EntitySprite050");
+	MakeName	(0XCD0A6,	"MapSprite050");
 	MakeByte	(0XCD1FE);
 	MakeArray	(0XCD1FE,	0X17A);
-	MakeName	(0XCD1FE,	"EntitySprite051");
+	MakeName	(0XCD1FE,	"MapSprite051");
 	MakeByte	(0XCD378);
 	MakeArray	(0XCD378,	0X184);
-	MakeName	(0XCD378,	"EntitySprite052");
+	MakeName	(0XCD378,	"MapSprite052");
 	MakeByte	(0XCD4FC);
 	MakeArray	(0XCD4FC,	0X1A8);
-	MakeName	(0XCD4FC,	"EntitySprite053");
+	MakeName	(0XCD4FC,	"MapSprite053");
 	MakeByte	(0XCD6A4);
 	MakeArray	(0XCD6A4,	0X15E);
-	MakeName	(0XCD6A4,	"EntitySprite054");
+	MakeName	(0XCD6A4,	"MapSprite054");
 	MakeByte	(0XCD802);
 	MakeArray	(0XCD802,	0X12E);
-	MakeName	(0XCD802,	"EntitySprite055");
+	MakeName	(0XCD802,	"MapSprite055");
 	MakeByte	(0XCD930);
 	MakeArray	(0XCD930,	0X13E);
-	MakeName	(0XCD930,	"EntitySprite056");
+	MakeName	(0XCD930,	"MapSprite056");
 	MakeByte	(0XCDA6E);
 	MakeArray	(0XCDA6E,	0X15A);
-	MakeName	(0XCDA6E,	"EntitySprite057");
+	MakeName	(0XCDA6E,	"MapSprite057");
 	MakeByte	(0XCDBC8);
 	MakeArray	(0XCDBC8,	0X14A);
-	MakeName	(0XCDBC8,	"EntitySprite058");
+	MakeName	(0XCDBC8,	"MapSprite058");
 	MakeByte	(0XCDD12);
 	MakeArray	(0XCDD12,	0X150);
-	MakeName	(0XCDD12,	"EntitySprite059");
+	MakeName	(0XCDD12,	"MapSprite059");
 	MakeByte	(0XCDE62);
 	MakeArray	(0XCDE62,	0X146);
-	MakeName	(0XCDE62,	"EntitySprite060");
+	MakeName	(0XCDE62,	"MapSprite060");
 	MakeByte	(0XCDFA8);
 	MakeArray	(0XCDFA8,	0X1E8);
-	MakeName	(0XCDFA8,	"EntitySprite061");
+	MakeName	(0XCDFA8,	"MapSprite061");
 	MakeByte	(0XCE190);
 	MakeArray	(0XCE190,	0X150);
-	MakeName	(0XCE190,	"EntitySprite062");
+	MakeName	(0XCE190,	"MapSprite062");
 	MakeByte	(0XCE2E0);
 	MakeArray	(0XCE2E0,	0X126);
-	MakeName	(0XCE2E0,	"EntitySprite063");
+	MakeName	(0XCE2E0,	"MapSprite063");
 	MakeByte	(0XCE406);
 	MakeArray	(0XCE406,	0X1D8);
-	MakeName	(0XCE406,	"EntitySprite064");
+	MakeName	(0XCE406,	"MapSprite064");
 	MakeByte	(0XCE5DE);
 	MakeArray	(0XCE5DE,	0X128);
-	MakeName	(0XCE5DE,	"EntitySprite065");
+	MakeName	(0XCE5DE,	"MapSprite065");
 	MakeByte	(0XCE706);
 	MakeArray	(0XCE706,	0X188);
-	MakeName	(0XCE706,	"EntitySprite066");
+	MakeName	(0XCE706,	"MapSprite066");
 	MakeByte	(0XCE88E);
 	MakeArray	(0XCE88E,	0X108);
-	MakeName	(0XCE88E,	"EntitySprite067");
+	MakeName	(0XCE88E,	"MapSprite067");
 	MakeByte	(0XCE996);
 	MakeArray	(0XCE996,	0X192);
-	MakeName	(0XCE996,	"EntitySprite068");
+	MakeName	(0XCE996,	"MapSprite068");
 	MakeByte	(0XCEB28);
 	MakeArray	(0XCEB28,	0X174);
-	MakeName	(0XCEB28,	"EntitySprite069");
+	MakeName	(0XCEB28,	"MapSprite069");
 	MakeByte	(0XCEC9C);
 	MakeArray	(0XCEC9C,	0X102);
-	MakeName	(0XCEC9C,	"EntitySprite070");
+	MakeName	(0XCEC9C,	"MapSprite070");
 	MakeByte	(0XCED9E);
 	MakeArray	(0XCED9E,	0X192);
-	MakeName	(0XCED9E,	"EntitySprite071");
+	MakeName	(0XCED9E,	"MapSprite071");
 	MakeByte	(0XCEF30);
 	MakeArray	(0XCEF30,	0X17C);
-	MakeName	(0XCEF30,	"EntitySprite072");
+	MakeName	(0XCEF30,	"MapSprite072");
 	MakeByte	(0XCF0AC);
 	MakeArray	(0XCF0AC,	0X180);
-	MakeName	(0XCF0AC,	"EntitySprite073");
+	MakeName	(0XCF0AC,	"MapSprite073");
 	MakeByte	(0XCF22C);
 	MakeArray	(0XCF22C,	0X130);
-	MakeName	(0XCF22C,	"EntitySprite074");
+	MakeName	(0XCF22C,	"MapSprite074");
 	MakeByte	(0XCF35C);
 	MakeArray	(0XCF35C,	0X17C);
-	MakeName	(0XCF35C,	"EntitySprite075");
+	MakeName	(0XCF35C,	"MapSprite075");
 	MakeByte	(0XCF4D8);
 	MakeArray	(0XCF4D8,	0X180);
-	MakeName	(0XCF4D8,	"EntitySprite076");
+	MakeName	(0XCF4D8,	"MapSprite076");
 	MakeByte	(0XCF658);
 	MakeArray	(0XCF658,	0X12E);
-	MakeName	(0XCF658,	"EntitySprite077");
+	MakeName	(0XCF658,	"MapSprite077");
 	MakeByte	(0XCF786);
 	MakeArray	(0XCF786,	0X10C);
-	MakeName	(0XCF786,	"EntitySprite078");
+	MakeName	(0XCF786,	"MapSprite078");
 	MakeByte	(0XCF892);
 	MakeArray	(0XCF892,	0X196);
-	MakeName	(0XCF892,	"EntitySprite079");
+	MakeName	(0XCF892,	"MapSprite079");
 	MakeByte	(0XCFA28);
 	MakeArray	(0XCFA28,	0X13A);
-	MakeName	(0XCFA28,	"EntitySprite080");
+	MakeName	(0XCFA28,	"MapSprite080");
 	MakeByte	(0XCFB62);
 	MakeArray	(0XCFB62,	0X124);
-	MakeName	(0XCFB62,	"EntitySprite081");
+	MakeName	(0XCFB62,	"MapSprite081");
 	MakeByte	(0XCFC86);
 	MakeArray	(0XCFC86,	0X1BE);
-	MakeName	(0XCFC86,	"EntitySprite082");
+	MakeName	(0XCFC86,	"MapSprite082");
 	MakeByte	(0XCFE44);
 	MakeArray	(0XCFE44,	0X140);
-	MakeName	(0XCFE44,	"EntitySprite083");
+	MakeName	(0XCFE44,	"MapSprite083");
 	MakeByte	(0XCFF84);
 	MakeArray	(0XCFF84,	0X128);
-	MakeName	(0XCFF84,	"EntitySprite084");
+	MakeName	(0XCFF84,	"MapSprite084");
 	MakeByte	(0XD00AC);
 	MakeArray	(0XD00AC,	0X1BA);
-	MakeName	(0XD00AC,	"EntitySprite085");
+	MakeName	(0XD00AC,	"MapSprite085");
 	MakeByte	(0XD0266);
 	MakeArray	(0XD0266,	0X15E);
-	MakeName	(0XD0266,	"EntitySprite086");
+	MakeName	(0XD0266,	"MapSprite086");
 	MakeByte	(0XD03C4);
 	MakeArray	(0XD03C4,	0X1BE);
-	MakeName	(0XD03C4,	"EntitySprite087");
+	MakeName	(0XD03C4,	"MapSprite087");
 	MakeByte	(0XD0582);
 	MakeArray	(0XD0582,	0X1E6);
-	MakeName	(0XD0582,	"EntitySprite088");
+	MakeName	(0XD0582,	"MapSprite088");
 	MakeByte	(0XD0768);
 	MakeArray	(0XD0768,	0X19E);
-	MakeName	(0XD0768,	"EntitySprite089");
+	MakeName	(0XD0768,	"MapSprite089");
 	MakeByte	(0XD0906);
 	MakeArray	(0XD0906,	0X14A);
-	MakeName	(0XD0906,	"EntitySprite090");
+	MakeName	(0XD0906,	"MapSprite090");
 	MakeByte	(0XD0A50);
 	MakeArray	(0XD0A50,	0X11C);
-	MakeName	(0XD0A50,	"EntitySprite091");
+	MakeName	(0XD0A50,	"MapSprite091");
 	MakeByte	(0XD0B6C);
 	MakeArray	(0XD0B6C,	0X146);
-	MakeName	(0XD0B6C,	"EntitySprite092");
+	MakeName	(0XD0B6C,	"MapSprite092");
 	MakeByte	(0XD0CB2);
 	MakeArray	(0XD0CB2,	0X10E);
-	MakeName	(0XD0CB2,	"EntitySprite093");
+	MakeName	(0XD0CB2,	"MapSprite093");
 	MakeByte	(0XD0DC0);
 	MakeArray	(0XD0DC0,	0X172);
-	MakeName	(0XD0DC0,	"EntitySprite094");
+	MakeName	(0XD0DC0,	"MapSprite094");
 	MakeByte	(0XD0F32);
 	MakeArray	(0XD0F32,	0X15C);
-	MakeName	(0XD0F32,	"EntitySprite095");
+	MakeName	(0XD0F32,	"MapSprite095");
 	MakeByte	(0XD108E);
 	MakeArray	(0XD108E,	0X10C);
-	MakeName	(0XD108E,	"EntitySprite096");
+	MakeName	(0XD108E,	"MapSprite096");
 	MakeByte	(0XD119A);
 	MakeArray	(0XD119A,	0X196);
-	MakeName	(0XD119A,	"EntitySprite097");
+	MakeName	(0XD119A,	"MapSprite097");
 	MakeByte	(0XD1330);
 	MakeArray	(0XD1330,	0X13A);
-	MakeName	(0XD1330,	"EntitySprite098");
+	MakeName	(0XD1330,	"MapSprite098");
 	MakeByte	(0XD146A);
 	MakeArray	(0XD146A,	0X12A);
-	MakeName	(0XD146A,	"EntitySprite099");
+	MakeName	(0XD146A,	"MapSprite099");
 	MakeByte	(0XD1594);
 	MakeArray	(0XD1594,	0X1C4);
-	MakeName	(0XD1594,	"EntitySprite100");
+	MakeName	(0XD1594,	"MapSprite100");
 	MakeByte	(0XD1758);
 	MakeArray	(0XD1758,	0X14E);
-	MakeName	(0XD1758,	"EntitySprite101");
+	MakeName	(0XD1758,	"MapSprite101");
 	MakeByte	(0XD18A6);
 	MakeArray	(0XD18A6,	0X132);
-	MakeName	(0XD18A6,	"EntitySprite102");
+	MakeName	(0XD18A6,	"MapSprite102");
 	MakeByte	(0XD19D8);
 	MakeArray	(0XD19D8,	0X1BE);
-	MakeName	(0XD19D8,	"EntitySprite103");
+	MakeName	(0XD19D8,	"MapSprite103");
 	MakeByte	(0XD1B96);
 	MakeArray	(0XD1B96,	0X160);
-	MakeName	(0XD1B96,	"EntitySprite104");
+	MakeName	(0XD1B96,	"MapSprite104");
 	MakeByte	(0XD1CF6);
 	MakeArray	(0XD1CF6,	0X1CC);
-	MakeName	(0XD1CF6,	"EntitySprite105");
+	MakeName	(0XD1CF6,	"MapSprite105");
 	MakeByte	(0XD1EC2);
 	MakeArray	(0XD1EC2,	0X1EC);
-	MakeName	(0XD1EC2,	"EntitySprite106");
+	MakeName	(0XD1EC2,	"MapSprite106");
 	MakeByte	(0XD20AE);
 	MakeArray	(0XD20AE,	0X1A4);
-	MakeName	(0XD20AE,	"EntitySprite107");
+	MakeName	(0XD20AE,	"MapSprite107");
 	MakeByte	(0XD2252);
 	MakeArray	(0XD2252,	0X16A);
-	MakeName	(0XD2252,	"EntitySprite108");
+	MakeName	(0XD2252,	"MapSprite108");
 	MakeByte	(0XD23BC);
 	MakeArray	(0XD23BC,	0X19C);
-	MakeName	(0XD23BC,	"EntitySprite109");
+	MakeName	(0XD23BC,	"MapSprite109");
 	MakeByte	(0XD2558);
 	MakeArray	(0XD2558,	0X186);
-	MakeName	(0XD2558,	"EntitySprite110");
+	MakeName	(0XD2558,	"MapSprite110");
 	MakeByte	(0XD26DE);
 	MakeArray	(0XD26DE,	0X174);
-	MakeName	(0XD26DE,	"EntitySprite111");
+	MakeName	(0XD26DE,	"MapSprite111");
 	MakeByte	(0XD2852);
 	MakeArray	(0XD2852,	0X148);
-	MakeName	(0XD2852,	"EntitySprite112");
+	MakeName	(0XD2852,	"MapSprite112");
 	MakeByte	(0XD299A);
 	MakeArray	(0XD299A,	0X17E);
-	MakeName	(0XD299A,	"EntitySprite113");
+	MakeName	(0XD299A,	"MapSprite113");
 	MakeByte	(0XD2B18);
 	MakeArray	(0XD2B18,	0X126);
-	MakeName	(0XD2B18,	"EntitySprite114");
+	MakeName	(0XD2B18,	"MapSprite114");
 	MakeByte	(0XD2C3E);
 	MakeArray	(0XD2C3E,	0X11E);
-	MakeName	(0XD2C3E,	"EntitySprite115");
+	MakeName	(0XD2C3E,	"MapSprite115");
 	MakeByte	(0XD2D5C);
 	MakeArray	(0XD2D5C,	0X146);
-	MakeName	(0XD2D5C,	"EntitySprite116");
+	MakeName	(0XD2D5C,	"MapSprite116");
 	MakeByte	(0XD2EA2);
 	MakeArray	(0XD2EA2,	0X198);
-	MakeName	(0XD2EA2,	"EntitySprite117");
+	MakeName	(0XD2EA2,	"MapSprite117");
 	MakeByte	(0XD303A);
 	MakeArray	(0XD303A,	0X168);
-	MakeName	(0XD303A,	"EntitySprite118");
+	MakeName	(0XD303A,	"MapSprite118");
 	MakeByte	(0XD31A2);
 	MakeArray	(0XD31A2,	0X17A);
-	MakeName	(0XD31A2,	"EntitySprite119");
+	MakeName	(0XD31A2,	"MapSprite119");
 	MakeByte	(0XD331C);
 	MakeArray	(0XD331C,	0X198);
-	MakeName	(0XD331C,	"EntitySprite120");
+	MakeName	(0XD331C,	"MapSprite120");
 	MakeByte	(0XD34B4);
 	MakeArray	(0XD34B4,	0X14A);
-	MakeName	(0XD34B4,	"EntitySprite121");
+	MakeName	(0XD34B4,	"MapSprite121");
 	MakeByte	(0XD35FE);
 	MakeArray	(0XD35FE,	0X182);
-	MakeName	(0XD35FE,	"EntitySprite122");
+	MakeName	(0XD35FE,	"MapSprite122");
 	MakeByte	(0XD3780);
 	MakeArray	(0XD3780,	0X16C);
-	MakeName	(0XD3780,	"EntitySprite123");
+	MakeName	(0XD3780,	"MapSprite123");
 	MakeByte	(0XD38EC);
 	MakeArray	(0XD38EC,	0X124);
-	MakeName	(0XD38EC,	"EntitySprite124");
+	MakeName	(0XD38EC,	"MapSprite124");
 	MakeByte	(0XD3A10);
 	MakeArray	(0XD3A10,	0X18A);
-	MakeName	(0XD3A10,	"EntitySprite125");
+	MakeName	(0XD3A10,	"MapSprite125");
 	MakeByte	(0XD3B9A);
 	MakeArray	(0XD3B9A,	0X188);
-	MakeName	(0XD3B9A,	"EntitySprite126");
+	MakeName	(0XD3B9A,	"MapSprite126");
 	MakeByte	(0XD3D22);
 	MakeArray	(0XD3D22,	0X188);
-	MakeName	(0XD3D22,	"EntitySprite127");
+	MakeName	(0XD3D22,	"MapSprite127");
 	MakeByte	(0XD3EAA);
 	MakeArray	(0XD3EAA,	0X176);
-	MakeName	(0XD3EAA,	"EntitySprite128");
+	MakeName	(0XD3EAA,	"MapSprite128");
 	MakeByte	(0XD4020);
 	MakeArray	(0XD4020,	0X13C);
-	MakeName	(0XD4020,	"EntitySprite129");
+	MakeName	(0XD4020,	"MapSprite129");
 	MakeByte	(0XD415C);
 	MakeArray	(0XD415C,	0X136);
-	MakeName	(0XD415C,	"EntitySprite130");
+	MakeName	(0XD415C,	"MapSprite130");
 	MakeByte	(0XD4292);
 	MakeArray	(0XD4292,	0X164);
-	MakeName	(0XD4292,	"EntitySprite131");
+	MakeName	(0XD4292,	"MapSprite131");
 	MakeByte	(0XD43F6);
 	MakeArray	(0XD43F6,	0X158);
-	MakeName	(0XD43F6,	"EntitySprite132");
+	MakeName	(0XD43F6,	"MapSprite132");
 	MakeByte	(0XD454E);
 	MakeArray	(0XD454E,	0X162);
-	MakeName	(0XD454E,	"EntitySprite133");
+	MakeName	(0XD454E,	"MapSprite133");
 	MakeByte	(0XD46B0);
 	MakeArray	(0XD46B0,	0X158);
-	MakeName	(0XD46B0,	"EntitySprite134");
+	MakeName	(0XD46B0,	"MapSprite134");
 	MakeByte	(0XD4808);
 	MakeArray	(0XD4808,	0X14A);
-	MakeName	(0XD4808,	"EntitySprite135");
+	MakeName	(0XD4808,	"MapSprite135");
 	MakeByte	(0XD4952);
 	MakeArray	(0XD4952,	0X11C);
-	MakeName	(0XD4952,	"EntitySprite136");
+	MakeName	(0XD4952,	"MapSprite136");
 	MakeByte	(0XD4A6E);
 	MakeArray	(0XD4A6E,	0X146);
-	MakeName	(0XD4A6E,	"EntitySprite137");
+	MakeName	(0XD4A6E,	"MapSprite137");
 	MakeByte	(0XD4BB4);
 	MakeArray	(0XD4BB4,	0X10E);
-	MakeName	(0XD4BB4,	"EntitySprite138");
+	MakeName	(0XD4BB4,	"MapSprite138");
 	MakeByte	(0XD4CC2);
 	MakeArray	(0XD4CC2,	0X172);
-	MakeName	(0XD4CC2,	"EntitySprite139");
+	MakeName	(0XD4CC2,	"MapSprite139");
 	MakeByte	(0XD4E34);
 	MakeArray	(0XD4E34,	0X15C);
-	MakeName	(0XD4E34,	"EntitySprite140");
+	MakeName	(0XD4E34,	"MapSprite140");
 	MakeByte	(0XD4F90);
 	MakeArray	(0XD4F90,	0X10C);
-	MakeName	(0XD4F90,	"EntitySprite141");
+	MakeName	(0XD4F90,	"MapSprite141");
 	MakeByte	(0XD509C);
 	MakeArray	(0XD509C,	0X196);
-	MakeName	(0XD509C,	"EntitySprite142");
+	MakeName	(0XD509C,	"MapSprite142");
 	MakeByte	(0XD5232);
 	MakeArray	(0XD5232,	0X13A);
-	MakeName	(0XD5232,	"EntitySprite143");
+	MakeName	(0XD5232,	"MapSprite143");
 	MakeByte	(0XD536C);
 	MakeArray	(0XD536C,	0X132);
-	MakeName	(0XD536C,	"EntitySprite144");
+	MakeName	(0XD536C,	"MapSprite144");
 	MakeByte	(0XD549E);
 	MakeArray	(0XD549E,	0X1C6);
-	MakeName	(0XD549E,	"EntitySprite145");
+	MakeName	(0XD549E,	"MapSprite145");
 	MakeByte	(0XD5664);
 	MakeArray	(0XD5664,	0X160);
-	MakeName	(0XD5664,	"EntitySprite146");
+	MakeName	(0XD5664,	"MapSprite146");
 	MakeByte	(0XD57C4);
 	MakeArray	(0XD57C4,	0X17A);
-	MakeName	(0XD57C4,	"EntitySprite147");
+	MakeName	(0XD57C4,	"MapSprite147");
 	MakeByte	(0XD593E);
 	MakeArray	(0XD593E,	0X180);
-	MakeName	(0XD593E,	"EntitySprite148");
+	MakeName	(0XD593E,	"MapSprite148");
 	MakeByte	(0XD5ABE);
 	MakeArray	(0XD5ABE,	0X12E);
-	MakeName	(0XD5ABE,	"EntitySprite149");
+	MakeName	(0XD5ABE,	"MapSprite149");
 	MakeByte	(0XD5BEC);
 	MakeArray	(0XD5BEC,	0X15E);
-	MakeName	(0XD5BEC,	"EntitySprite150");
+	MakeName	(0XD5BEC,	"MapSprite150");
 	MakeByte	(0XD5D4A);
 	MakeArray	(0XD5D4A,	0X18C);
-	MakeName	(0XD5D4A,	"EntitySprite151");
+	MakeName	(0XD5D4A,	"MapSprite151");
 	MakeByte	(0XD5ED6);
 	MakeArray	(0XD5ED6,	0X190);
-	MakeName	(0XD5ED6,	"EntitySprite152");
+	MakeName	(0XD5ED6,	"MapSprite152");
 	MakeByte	(0XD6066);
 	MakeArray	(0XD6066,	0X14E);
-	MakeName	(0XD6066,	"EntitySprite153");
+	MakeName	(0XD6066,	"MapSprite153");
 	MakeByte	(0XD61B4);
 	MakeArray	(0XD61B4,	0X110);
-	MakeName	(0XD61B4,	"EntitySprite154");
+	MakeName	(0XD61B4,	"MapSprite154");
 	MakeByte	(0XD62C4);
 	MakeArray	(0XD62C4,	0X168);
-	MakeName	(0XD62C4,	"EntitySprite155");
+	MakeName	(0XD62C4,	"MapSprite155");
 	MakeByte	(0XD642C);
 	MakeArray	(0XD642C,	0X1CA);
-	MakeName	(0XD642C,	"EntitySprite156");
+	MakeName	(0XD642C,	"MapSprite156");
 	MakeByte	(0XD65F6);
 	MakeArray	(0XD65F6,	0X1F6);
-	MakeName	(0XD65F6,	"EntitySprite157");
+	MakeName	(0XD65F6,	"MapSprite157");
 	MakeByte	(0XD67EC);
 	MakeArray	(0XD67EC,	0X1A4);
-	MakeName	(0XD67EC,	"EntitySprite158");
+	MakeName	(0XD67EC,	"MapSprite158");
 	MakeByte	(0XD6990);
 	MakeArray	(0XD6990,	0X19E);
-	MakeName	(0XD6990,	"EntitySprite159");
+	MakeName	(0XD6990,	"MapSprite159");
 	MakeByte	(0XD6B2E);
 	MakeArray	(0XD6B2E,	0X14E);
-	MakeName	(0XD6B2E,	"EntitySprite160");
+	MakeName	(0XD6B2E,	"MapSprite160");
 	MakeByte	(0XD6C7C);
 	MakeArray	(0XD6C7C,	0X16C);
-	MakeName	(0XD6C7C,	"EntitySprite161");
+	MakeName	(0XD6C7C,	"MapSprite161");
 	MakeByte	(0XD6DE8);
 	MakeArray	(0XD6DE8,	0X126);
-	MakeName	(0XD6DE8,	"EntitySprite162");
+	MakeName	(0XD6DE8,	"MapSprite162");
 	MakeByte	(0XD6F0E);
 	MakeArray	(0XD6F0E,	0X118);
-	MakeName	(0XD6F0E,	"EntitySprite163");
+	MakeName	(0XD6F0E,	"MapSprite163");
 	MakeByte	(0XD7026);
 	MakeArray	(0XD7026,	0X146);
-	MakeName	(0XD7026,	"EntitySprite164");
+	MakeName	(0XD7026,	"MapSprite164");
 	MakeByte	(0XD716C);
 	MakeArray	(0XD716C,	0X186);
-	MakeName	(0XD716C,	"EntitySprite165");
+	MakeName	(0XD716C,	"MapSprite165");
 	MakeByte	(0XD72F2);
 	MakeArray	(0XD72F2,	0X102);
-	MakeName	(0XD72F2,	"EntitySprite166");
+	MakeName	(0XD72F2,	"MapSprite166");
 	MakeByte	(0XD73F4);
 	MakeArray	(0XD73F4,	0X172);
-	MakeName	(0XD73F4,	"EntitySprite167");
+	MakeName	(0XD73F4,	"MapSprite167");
 	MakeByte	(0XD7566);
 	MakeArray	(0XD7566,	0X150);
-	MakeName	(0XD7566,	"EntitySprite168");
+	MakeName	(0XD7566,	"MapSprite168");
 	MakeByte	(0XD76B6);
 	MakeArray	(0XD76B6,	0X11C);
-	MakeName	(0XD76B6,	"EntitySprite169");
+	MakeName	(0XD76B6,	"MapSprite169");
 	MakeByte	(0XD77D2);
 	MakeArray	(0XD77D2,	0X164);
-	MakeName	(0XD77D2,	"EntitySprite170");
+	MakeName	(0XD77D2,	"MapSprite170");
 	MakeByte	(0XD7936);
 	MakeArray	(0XD7936,	0X15A);
-	MakeName	(0XD7936,	"EntitySprite171");
+	MakeName	(0XD7936,	"MapSprite171");
 	MakeByte	(0XD7A90);
 	MakeArray	(0XD7A90,	0X106);
-	MakeName	(0XD7A90,	"EntitySprite172");
+	MakeName	(0XD7A90,	"MapSprite172");
 	MakeByte	(0XD7B96);
 	MakeArray	(0XD7B96,	0X16E);
-	MakeName	(0XD7B96,	"EntitySprite173");
+	MakeName	(0XD7B96,	"MapSprite173");
 	MakeByte	(0XD7D04);
 	MakeArray	(0XD7D04,	0X1E2);
-	MakeName	(0XD7D04,	"EntitySprite174");
+	MakeName	(0XD7D04,	"MapSprite174");
 	MakeByte	(0XD7EE6);
 	MakeArray	(0XD7EE6,	0X158);
-	MakeName	(0XD7EE6,	"EntitySprite175");
+	MakeName	(0XD7EE6,	"MapSprite175");
 	MakeByte	(0XD803E);
 	MakeArray	(0XD803E,	0X1C0);
-	MakeName	(0XD803E,	"EntitySprite176");
+	MakeName	(0XD803E,	"MapSprite176");
 	MakeByte	(0XD81FE);
 	MakeArray	(0XD81FE,	0XB8);
-	MakeName	(0XD81FE,	"EntitySprite177");
+	MakeName	(0XD81FE,	"MapSprite177");
 	MakeByte	(0XD82B6);
 	MakeArray	(0XD82B6,	0XB4);
-	MakeName	(0XD82B6,	"EntitySprite178");
+	MakeName	(0XD82B6,	"MapSprite178");
 	MakeByte	(0XD836A);
 	MakeArray	(0XD836A,	0X150);
-	MakeName	(0XD836A,	"EntitySprite179");
+	MakeName	(0XD836A,	"MapSprite179");
 	MakeByte	(0XD84BA);
 	MakeArray	(0XD84BA,	0X18);
-	MakeName	(0XD84BA,	"EntitySprite180");
+	MakeName	(0XD84BA,	"MapSprite180");
 	MakeByte	(0XD84D2);
 	MakeArray	(0XD84D2,	0X18);
-	MakeName	(0XD84D2,	"EntitySprite181");
+	MakeName	(0XD84D2,	"MapSprite181");
 	MakeByte	(0XD84EA);
 	MakeArray	(0XD84EA,	0X18);
-	MakeName	(0XD84EA,	"EntitySprite182");
+	MakeName	(0XD84EA,	"MapSprite182");
 	MakeByte	(0XD8502);
 	MakeArray	(0XD8502,	0X1CA);
-	MakeName	(0XD8502,	"EntitySprite183");
+	MakeName	(0XD8502,	"MapSprite183");
 	MakeByte	(0XD86CC);
 	MakeArray	(0XD86CC,	0X144);
-	MakeName	(0XD86CC,	"EntitySprite184");
+	MakeName	(0XD86CC,	"MapSprite184");
 	MakeByte	(0XD8810);
 	MakeArray	(0XD8810,	0X1AE);
-	MakeName	(0XD8810,	"EntitySprite185");
+	MakeName	(0XD8810,	"MapSprite185");
 	MakeByte	(0XD89BE);
 	MakeArray	(0XD89BE,	0X184);
-	MakeName	(0XD89BE,	"EntitySprite186");
+	MakeName	(0XD89BE,	"MapSprite186");
 	MakeByte	(0XD8B42);
 	MakeArray	(0XD8B42,	0X194);
-	MakeName	(0XD8B42,	"EntitySprite187");
+	MakeName	(0XD8B42,	"MapSprite187");
 	MakeByte	(0XD8CD6);
 	MakeArray	(0XD8CD6,	0X1C2);
-	MakeName	(0XD8CD6,	"EntitySprite188");
+	MakeName	(0XD8CD6,	"MapSprite188");
 	MakeByte	(0XD8E98);
 	MakeArray	(0XD8E98,	0XB6);
-	MakeName	(0XD8E98,	"EntitySprite189");
+	MakeName	(0XD8E98,	"MapSprite189");
 	MakeByte	(0XD8F4E);
 	MakeArray	(0XD8F4E,	0X106);
-	MakeName	(0XD8F4E,	"EntitySprite190");
+	MakeName	(0XD8F4E,	"MapSprite190");
 	MakeByte	(0XD9054);
 	MakeArray	(0XD9054,	0X92);
-	MakeName	(0XD9054,	"EntitySprite191");
+	MakeName	(0XD9054,	"MapSprite191");
 	MakeByte	(0XD90E6);
 	MakeArray	(0XD90E6,	0X142);
-	MakeName	(0XD90E6,	"EntitySprite192");
+	MakeName	(0XD90E6,	"MapSprite192");
 	MakeByte	(0XD9228);
 	MakeArray	(0XD9228,	0X13A);
-	MakeName	(0XD9228,	"EntitySprite193");
+	MakeName	(0XD9228,	"MapSprite193");
 	MakeByte	(0XD9362);
 	MakeArray	(0XD9362,	0X142);
-	MakeName	(0XD9362,	"EntitySprite194");
+	MakeName	(0XD9362,	"MapSprite194");
 	MakeByte	(0XD94A4);
 	MakeArray	(0XD94A4,	0X1B0);
-	MakeName	(0XD94A4,	"EntitySprite195");
+	MakeName	(0XD94A4,	"MapSprite195");
 	MakeByte	(0XD9654);
 	MakeArray	(0XD9654,	0X17A);
-	MakeName	(0XD9654,	"EntitySprite196");
+	MakeName	(0XD9654,	"MapSprite196");
 	MakeByte	(0XD97CE);
 	MakeArray	(0XD97CE,	0X180);
-	MakeName	(0XD97CE,	"EntitySprite197");
+	MakeName	(0XD97CE,	"MapSprite197");
 	MakeByte	(0XD994E);
 	MakeArray	(0XD994E,	0X196);
-	MakeName	(0XD994E,	"EntitySprite198");
+	MakeName	(0XD994E,	"MapSprite198");
 	MakeByte	(0XD9AE4);
 	MakeArray	(0XD9AE4,	0X174);
-	MakeName	(0XD9AE4,	"EntitySprite199");
+	MakeName	(0XD9AE4,	"MapSprite199");
 	MakeByte	(0XD9C58);
 	MakeArray	(0XD9C58,	0X1AA);
-	MakeName	(0XD9C58,	"EntitySprite200");
+	MakeName	(0XD9C58,	"MapSprite200");
 	MakeByte	(0XD9E02);
 	MakeArray	(0XD9E02,	0X132);
-	MakeName	(0XD9E02,	"EntitySprite201");
+	MakeName	(0XD9E02,	"MapSprite201");
 	MakeByte	(0XD9F34);
 	MakeArray	(0XD9F34,	0X1AC);
-	MakeName	(0XD9F34,	"EntitySprite202");
+	MakeName	(0XD9F34,	"MapSprite202");
 	MakeByte	(0XDA0E0);
 	MakeArray	(0XDA0E0,	0X154);
-	MakeName	(0XDA0E0,	"EntitySprite203");
+	MakeName	(0XDA0E0,	"MapSprite203");
 	MakeByte	(0XDA234);
 	MakeArray	(0XDA234,	0X1A4);
-	MakeName	(0XDA234,	"EntitySprite204");
+	MakeName	(0XDA234,	"MapSprite204");
 	MakeByte	(0XDA3D8);
 	MakeArray	(0XDA3D8,	0X1B4);
-	MakeName	(0XDA3D8,	"EntitySprite205");
+	MakeName	(0XDA3D8,	"MapSprite205");
 	MakeByte	(0XDA58C);
 	MakeArray	(0XDA58C,	0X1A6);
-	MakeName	(0XDA58C,	"EntitySprite206");
+	MakeName	(0XDA58C,	"MapSprite206");
 	MakeByte	(0XDA732);
 	MakeArray	(0XDA732,	0X142);
-	MakeName	(0XDA732,	"EntitySprite207");
+	MakeName	(0XDA732,	"MapSprite207");
 	MakeByte	(0XDA874);
 	MakeArray	(0XDA874,	0X13A);
-	MakeName	(0XDA874,	"EntitySprite208");
+	MakeName	(0XDA874,	"MapSprite208");
 	MakeByte	(0XDA9AE);
 	MakeArray	(0XDA9AE,	0X142);
-	MakeName	(0XDA9AE,	"EntitySprite209");
+	MakeName	(0XDA9AE,	"MapSprite209");
 	MakeByte	(0XDAAF0);
 	MakeArray	(0XDAAF0,	0X17A);
-	MakeName	(0XDAAF0,	"EntitySprite210");
+	MakeName	(0XDAAF0,	"MapSprite210");
 	MakeByte	(0XDAC6A);
 	MakeArray	(0XDAC6A,	0X184);
-	MakeName	(0XDAC6A,	"EntitySprite211");
+	MakeName	(0XDAC6A,	"MapSprite211");
 	MakeByte	(0XDADEE);
 	MakeArray	(0XDADEE,	0X176);
-	MakeName	(0XDADEE,	"EntitySprite212");
+	MakeName	(0XDADEE,	"MapSprite212");
 	MakeByte	(0XDAF64);
 	MakeArray	(0XDAF64,	0X1A0);
-	MakeName	(0XDAF64,	"EntitySprite213");
+	MakeName	(0XDAF64,	"MapSprite213");
 	MakeByte	(0XDB104);
 	MakeArray	(0XDB104,	0X1B0);
-	MakeName	(0XDB104,	"EntitySprite214");
+	MakeName	(0XDB104,	"MapSprite214");
 	MakeByte	(0XDB2B4);
 	MakeArray	(0XDB2B4,	0X1A0);
-	MakeName	(0XDB2B4,	"EntitySprite215");
+	MakeName	(0XDB2B4,	"MapSprite215");
 	MakeByte	(0XDB454);
 	MakeArray	(0XDB454,	0X16E);
-	MakeName	(0XDB454,	"EntitySprite216");
+	MakeName	(0XDB454,	"MapSprite216");
 	MakeByte	(0XDB5C2);
 	MakeArray	(0XDB5C2,	0X120);
-	MakeName	(0XDB5C2,	"EntitySprite217");
+	MakeName	(0XDB5C2,	"MapSprite217");
 	MakeByte	(0XDB6E2);
 	MakeArray	(0XDB6E2,	0X164);
-	MakeName	(0XDB6E2,	"EntitySprite218");
+	MakeName	(0XDB6E2,	"MapSprite218");
 	MakeByte	(0XDB846);
 	MakeArray	(0XDB846,	0X1EA);
-	MakeName	(0XDB846,	"EntitySprite219");
+	MakeName	(0XDB846,	"MapSprite219");
 	MakeByte	(0XDBA30);
 	MakeArray	(0XDBA30,	0X15E);
-	MakeName	(0XDBA30,	"EntitySprite220");
+	MakeName	(0XDBA30,	"MapSprite220");
 	MakeByte	(0XDBB8E);
 	MakeArray	(0XDBB8E,	0X1B6);
-	MakeName	(0XDBB8E,	"EntitySprite221");
+	MakeName	(0XDBB8E,	"MapSprite221");
 	MakeByte	(0XDBD44);
 	MakeArray	(0XDBD44,	0X166);
-	MakeName	(0XDBD44,	"EntitySprite222");
+	MakeName	(0XDBD44,	"MapSprite222");
 	MakeByte	(0XDBEAA);
 	MakeArray	(0XDBEAA,	0X166);
-	MakeName	(0XDBEAA,	"EntitySprite223");
+	MakeName	(0XDBEAA,	"MapSprite223");
 	MakeByte	(0XDC010);
 	MakeArray	(0XDC010,	0X166);
-	MakeName	(0XDC010,	"EntitySprite224");
+	MakeName	(0XDC010,	"MapSprite224");
 	MakeByte	(0XDC176);
 	MakeArray	(0XDC176,	0X1E6);
-	MakeName	(0XDC176,	"EntitySprite225");
+	MakeName	(0XDC176,	"MapSprite225");
 	MakeByte	(0XDC35C);
 	MakeArray	(0XDC35C,	0X1DC);
-	MakeName	(0XDC35C,	"EntitySprite226");
+	MakeName	(0XDC35C,	"MapSprite226");
 	MakeByte	(0XDC538);
 	MakeArray	(0XDC538,	0X1CC);
-	MakeName	(0XDC538,	"EntitySprite227");
+	MakeName	(0XDC538,	"MapSprite227");
 	MakeByte	(0XDC704);
 	MakeArray	(0XDC704,	0X1FA);
-	MakeName	(0XDC704,	"EntitySprite228");
+	MakeName	(0XDC704,	"MapSprite228");
 	MakeByte	(0XDC8FE);
 	MakeArray	(0XDC8FE,	0X146);
-	MakeName	(0XDC8FE,	"EntitySprite229");
+	MakeName	(0XDC8FE,	"MapSprite229");
 	MakeByte	(0XDCA44);
 	MakeArray	(0XDCA44,	0X1E4);
-	MakeName	(0XDCA44,	"EntitySprite230");
+	MakeName	(0XDCA44,	"MapSprite230");
 	MakeByte	(0XDCC28);
 	MakeArray	(0XDCC28,	0XAE);
-	MakeName	(0XDCC28,	"EntitySprite231");
+	MakeName	(0XDCC28,	"MapSprite231");
 	MakeByte	(0XDCCD6);
 	MakeArray	(0XDCCD6,	0XAE);
-	MakeName	(0XDCCD6,	"EntitySprite232");
+	MakeName	(0XDCCD6,	"MapSprite232");
 	MakeByte	(0XDCD84);
 	MakeArray	(0XDCD84,	0XAE);
-	MakeName	(0XDCD84,	"EntitySprite233");
+	MakeName	(0XDCD84,	"MapSprite233");
 	MakeByte	(0XDCE32);
 	MakeArray	(0XDCE32,	0XBA);
-	MakeName	(0XDCE32,	"EntitySprite234");
+	MakeName	(0XDCE32,	"MapSprite234");
 	MakeByte	(0XDCEEC);
 	MakeArray	(0XDCEEC,	0XDA);
-	MakeName	(0XDCEEC,	"EntitySprite235");
+	MakeName	(0XDCEEC,	"MapSprite235");
 	MakeByte	(0XDCFC6);
 	MakeArray	(0XDCFC6,	0XB6);
-	MakeName	(0XDCFC6,	"EntitySprite236");
+	MakeName	(0XDCFC6,	"MapSprite236");
 	MakeByte	(0XDD07C);
 	MakeArray	(0XDD07C,	0X1A2);
-	MakeName	(0XDD07C,	"EntitySprite237");
+	MakeName	(0XDD07C,	"MapSprite237");
 	MakeByte	(0XDD21E);
 	MakeArray	(0XDD21E,	0X17C);
-	MakeName	(0XDD21E,	"EntitySprite238");
+	MakeName	(0XDD21E,	"MapSprite238");
 	MakeByte	(0XDD39A);
 	MakeArray	(0XDD39A,	0X186);
-	MakeName	(0XDD39A,	"EntitySprite239");
+	MakeName	(0XDD39A,	"MapSprite239");
 	MakeByte	(0XDD520);
 	MakeArray	(0XDD520,	0X146);
-	MakeName	(0XDD520,	"EntitySprite240");
+	MakeName	(0XDD520,	"MapSprite240");
 	MakeByte	(0XDD666);
 	MakeArray	(0XDD666,	0X13A);
-	MakeName	(0XDD666,	"EntitySprite241");
+	MakeName	(0XDD666,	"MapSprite241");
 	MakeByte	(0XDD7A0);
 	MakeArray	(0XDD7A0,	0X146);
-	MakeName	(0XDD7A0,	"EntitySprite242");
+	MakeName	(0XDD7A0,	"MapSprite242");
 	MakeByte	(0XDD8E6);
 	MakeArray	(0XDD8E6,	0X16E);
-	MakeName	(0XDD8E6,	"EntitySprite243");
+	MakeName	(0XDD8E6,	"MapSprite243");
 	MakeByte	(0XDDA54);
 	MakeArray	(0XDDA54,	0X14E);
-	MakeName	(0XDDA54,	"EntitySprite244");
+	MakeName	(0XDDA54,	"MapSprite244");
 	MakeByte	(0XDDBA2);
 	MakeArray	(0XDDBA2,	0X17C);
-	MakeName	(0XDDBA2,	"EntitySprite245");
+	MakeName	(0XDDBA2,	"MapSprite245");
 	MakeByte	(0XDDD1E);
 	MakeArray	(0XDDD1E,	0X184);
-	MakeName	(0XDDD1E,	"EntitySprite246");
+	MakeName	(0XDDD1E,	"MapSprite246");
 	MakeByte	(0XDDEA2);
 	MakeArray	(0XDDEA2,	0X184);
-	MakeName	(0XDDEA2,	"EntitySprite247");
+	MakeName	(0XDDEA2,	"MapSprite247");
 	MakeByte	(0XDE026);
 	MakeArray	(0XDE026,	0X176);
-	MakeName	(0XDE026,	"EntitySprite248");
+	MakeName	(0XDE026,	"MapSprite248");
 	MakeByte	(0XDE19C);
 	MakeArray	(0XDE19C,	0X188);
-	MakeName	(0XDE19C,	"EntitySprite249");
+	MakeName	(0XDE19C,	"MapSprite249");
 	MakeByte	(0XDE324);
 	MakeArray	(0XDE324,	0X128);
-	MakeName	(0XDE324,	"EntitySprite250");
+	MakeName	(0XDE324,	"MapSprite250");
 	MakeByte	(0XDE44C);
 	MakeArray	(0XDE44C,	0X1D0);
-	MakeName	(0XDE44C,	"EntitySprite251");
+	MakeName	(0XDE44C,	"MapSprite251");
 	MakeByte	(0XDE61C);
 	MakeArray	(0XDE61C,	0X1A8);
-	MakeName	(0XDE61C,	"EntitySprite252");
+	MakeName	(0XDE61C,	"MapSprite252");
 	MakeByte	(0XDE7C4);
 	MakeArray	(0XDE7C4,	0X196);
-	MakeName	(0XDE7C4,	"EntitySprite253");
+	MakeName	(0XDE7C4,	"MapSprite253");
 	MakeByte	(0XDE95A);
 	MakeArray	(0XDE95A,	0X1D8);
-	MakeName	(0XDE95A,	"EntitySprite254");
+	MakeName	(0XDE95A,	"MapSprite254");
 	MakeByte	(0XDEB32);
 	MakeArray	(0XDEB32,	0X132);
-	MakeName	(0XDEB32,	"EntitySprite255");
+	MakeName	(0XDEB32,	"MapSprite255");
 	MakeByte	(0XDEC64);
 	MakeArray	(0XDEC64,	0X1AE);
-	MakeName	(0XDEC64,	"EntitySprite256");
+	MakeName	(0XDEC64,	"MapSprite256");
 	MakeByte	(0XDEE12);
 	MakeArray	(0XDEE12,	0X154);
-	MakeName	(0XDEE12,	"EntitySprite257");
+	MakeName	(0XDEE12,	"MapSprite257");
 	MakeByte	(0XDEF66);
 	MakeArray	(0XDEF66,	0X1FA);
-	MakeName	(0XDEF66,	"EntitySprite258");
+	MakeName	(0XDEF66,	"MapSprite258");
 	MakeByte	(0XDF160);
 	MakeArray	(0XDF160,	0X144);
-	MakeName	(0XDF160,	"EntitySprite259");
+	MakeName	(0XDF160,	"MapSprite259");
 	MakeByte	(0XDF2A4);
 	MakeArray	(0XDF2A4,	0X1F0);
-	MakeName	(0XDF2A4,	"EntitySprite260");
+	MakeName	(0XDF2A4,	"MapSprite260");
 	MakeByte	(0XDF494);
 	MakeArray	(0XDF494,	0X196);
-	MakeName	(0XDF494,	"EntitySprite261");
+	MakeName	(0XDF494,	"MapSprite261");
 	MakeByte	(0XDF62A);
 	MakeArray	(0XDF62A,	0X180);
-	MakeName	(0XDF62A,	"EntitySprite262");
+	MakeName	(0XDF62A,	"MapSprite262");
 	MakeByte	(0XDF7AA);
 	MakeArray	(0XDF7AA,	0X1AA);
-	MakeName	(0XDF7AA,	"EntitySprite263");
+	MakeName	(0XDF7AA,	"MapSprite263");
 	MakeByte	(0XDF954);
 	MakeArray	(0XDF954,	0X150);
-	MakeName	(0XDF954,	"EntitySprite264");
+	MakeName	(0XDF954,	"MapSprite264");
 	MakeByte	(0XDFAA4);
 	MakeArray	(0XDFAA4,	0X150);
-	MakeName	(0XDFAA4,	"EntitySprite265");
+	MakeName	(0XDFAA4,	"MapSprite265");
 	MakeByte	(0XDFBF4);
 	MakeArray	(0XDFBF4,	0X17E);
-	MakeName	(0XDFBF4,	"EntitySprite266");
+	MakeName	(0XDFBF4,	"MapSprite266");
 	MakeByte	(0XDFD72);
 	MakeArray	(0XDFD72,	0X1EA);
-	MakeName	(0XDFD72,	"EntitySprite267");
+	MakeName	(0XDFD72,	"MapSprite267");
 	MakeByte	(0XDFF5C);
 	MakeArray	(0XDFF5C,	0X15E);
-	MakeName	(0XDFF5C,	"EntitySprite268");
+	MakeName	(0XDFF5C,	"MapSprite268");
 	MakeByte	(0XE00BA);
 	MakeArray	(0XE00BA,	0X1B6);
-	MakeName	(0XE00BA,	"EntitySprite269");
+	MakeName	(0XE00BA,	"MapSprite269");
 	MakeByte	(0XE0270);
 	MakeArray	(0XE0270,	0X188);
-	MakeName	(0XE0270,	"EntitySprite270");
+	MakeName	(0XE0270,	"MapSprite270");
 	MakeByte	(0XE03F8);
 	MakeArray	(0XE03F8,	0X138);
-	MakeName	(0XE03F8,	"EntitySprite271");
+	MakeName	(0XE03F8,	"MapSprite271");
 	MakeByte	(0XE0530);
 	MakeArray	(0XE0530,	0X1D0);
-	MakeName	(0XE0530,	"EntitySprite272");
+	MakeName	(0XE0530,	"MapSprite272");
 	MakeByte	(0XE0700);
 	MakeArray	(0XE0700,	0X1A8);
-	MakeName	(0XE0700,	"EntitySprite273");
+	MakeName	(0XE0700,	"MapSprite273");
 	MakeByte	(0XE08A8);
 	MakeArray	(0XE08A8,	0X196);
-	MakeName	(0XE08A8,	"EntitySprite274");
+	MakeName	(0XE08A8,	"MapSprite274");
 	MakeByte	(0XE0A3E);
 	MakeArray	(0XE0A3E,	0X1D8);
-	MakeName	(0XE0A3E,	"EntitySprite275");
+	MakeName	(0XE0A3E,	"MapSprite275");
 	MakeByte	(0XE0C16);
 	MakeArray	(0XE0C16,	0X16E);
-	MakeName	(0XE0C16,	"EntitySprite276");
+	MakeName	(0XE0C16,	"MapSprite276");
 	MakeByte	(0XE0D84);
 	MakeArray	(0XE0D84,	0X11C);
-	MakeName	(0XE0D84,	"EntitySprite277");
+	MakeName	(0XE0D84,	"MapSprite277");
 	MakeByte	(0XE0EA0);
 	MakeArray	(0XE0EA0,	0X15A);
-	MakeName	(0XE0EA0,	"EntitySprite278");
+	MakeName	(0XE0EA0,	"MapSprite278");
 	MakeByte	(0XE0FFA);
 	MakeArray	(0XE0FFA,	0X150);
-	MakeName	(0XE0FFA,	"EntitySprite279");
+	MakeName	(0XE0FFA,	"MapSprite279");
 	MakeByte	(0XE114A);
 	MakeArray	(0XE114A,	0X152);
-	MakeName	(0XE114A,	"EntitySprite280");
+	MakeName	(0XE114A,	"MapSprite280");
 	MakeByte	(0XE129C);
 	MakeArray	(0XE129C,	0X17E);
-	MakeName	(0XE129C,	"EntitySprite281");
+	MakeName	(0XE129C,	"MapSprite281");
 	MakeByte	(0XE141A);
 	MakeArray	(0XE141A,	0X192);
-	MakeName	(0XE141A,	"EntitySprite282");
+	MakeName	(0XE141A,	"MapSprite282");
 	MakeByte	(0XE15AC);
 	MakeArray	(0XE15AC,	0X166);
-	MakeName	(0XE15AC,	"EntitySprite283");
+	MakeName	(0XE15AC,	"MapSprite283");
 	MakeByte	(0XE1712);
 	MakeArray	(0XE1712,	0X17A);
-	MakeName	(0XE1712,	"EntitySprite284");
+	MakeName	(0XE1712,	"MapSprite284");
 	MakeByte	(0XE188C);
 	MakeArray	(0XE188C,	0X1BE);
-	MakeName	(0XE188C,	"EntitySprite285");
+	MakeName	(0XE188C,	"MapSprite285");
 	MakeByte	(0XE1A4A);
 	MakeArray	(0XE1A4A,	0X14E);
-	MakeName	(0XE1A4A,	"EntitySprite286");
+	MakeName	(0XE1A4A,	"MapSprite286");
 	MakeByte	(0XE1B98);
 	MakeArray	(0XE1B98,	0X1CE);
-	MakeName	(0XE1B98,	"EntitySprite287");
+	MakeName	(0XE1B98,	"MapSprite287");
 	MakeByte	(0XE1D66);
 	MakeArray	(0XE1D66,	0XEA);
-	MakeName	(0XE1D66,	"EntitySprite288");
+	MakeName	(0XE1D66,	"MapSprite288");
 	MakeByte	(0XE1E50);
 	MakeArray	(0XE1E50,	0XDC);
-	MakeName	(0XE1E50,	"EntitySprite289");
+	MakeName	(0XE1E50,	"MapSprite289");
 	MakeByte	(0XE1F2C);
 	MakeArray	(0XE1F2C,	0XFA);
-	MakeName	(0XE1F2C,	"EntitySprite290");
+	MakeName	(0XE1F2C,	"MapSprite290");
 	MakeByte	(0XE2026);
 	MakeArray	(0XE2026,	0X1C0);
-	MakeName	(0XE2026,	"EntitySprite291");
+	MakeName	(0XE2026,	"MapSprite291");
 	MakeByte	(0XE21E6);
 	MakeArray	(0XE21E6,	0X1E4);
-	MakeName	(0XE21E6,	"EntitySprite292");
+	MakeName	(0XE21E6,	"MapSprite292");
 	MakeByte	(0XE23CA);
 	MakeArray	(0XE23CA,	0X1B6);
-	MakeName	(0XE23CA,	"EntitySprite293");
+	MakeName	(0XE23CA,	"MapSprite293");
 	MakeByte	(0XE2580);
 	MakeArray	(0XE2580,	0X17A);
-	MakeName	(0XE2580,	"EntitySprite294");
+	MakeName	(0XE2580,	"MapSprite294");
 	MakeByte	(0XE26FA);
 	MakeArray	(0XE26FA,	0X13E);
-	MakeName	(0XE26FA,	"EntitySprite295");
+	MakeName	(0XE26FA,	"MapSprite295");
 	MakeByte	(0XE2838);
 	MakeArray	(0XE2838,	0X198);
-	MakeName	(0XE2838,	"EntitySprite296");
+	MakeName	(0XE2838,	"MapSprite296");
 	MakeByte	(0XE29D0);
 	MakeArray	(0XE29D0,	0X172);
-	MakeName	(0XE29D0,	"EntitySprite297");
+	MakeName	(0XE29D0,	"MapSprite297");
 	MakeByte	(0XE2B42);
 	MakeArray	(0XE2B42,	0X11C);
-	MakeName	(0XE2B42,	"EntitySprite298");
+	MakeName	(0XE2B42,	"MapSprite298");
 	MakeByte	(0XE2C5E);
 	MakeArray	(0XE2C5E,	0X15A);
-	MakeName	(0XE2C5E,	"EntitySprite299");
+	MakeName	(0XE2C5E,	"MapSprite299");
 	MakeByte	(0XE2DB8);
 	MakeArray	(0XE2DB8,	0X16C);
-	MakeName	(0XE2DB8,	"EntitySprite300");
+	MakeName	(0XE2DB8,	"MapSprite300");
 	MakeByte	(0XE2F24);
 	MakeArray	(0XE2F24,	0X146);
-	MakeName	(0XE2F24,	"EntitySprite301");
+	MakeName	(0XE2F24,	"MapSprite301");
 	MakeByte	(0XE306A);
 	MakeArray	(0XE306A,	0X14E);
-	MakeName	(0XE306A,	"EntitySprite302");
+	MakeName	(0XE306A,	"MapSprite302");
 	MakeByte	(0XE31B8);
 	MakeArray	(0XE31B8,	0X1C0);
-	MakeName	(0XE31B8,	"EntitySprite303");
+	MakeName	(0XE31B8,	"MapSprite303");
 	MakeByte	(0XE3378);
 	MakeArray	(0XE3378,	0X1E4);
-	MakeName	(0XE3378,	"EntitySprite304");
+	MakeName	(0XE3378,	"MapSprite304");
 	MakeByte	(0XE355C);
 	MakeArray	(0XE355C,	0X1B4);
-	MakeName	(0XE355C,	"EntitySprite305");
+	MakeName	(0XE355C,	"MapSprite305");
 	MakeByte	(0XE3710);
 	MakeArray	(0XE3710,	0X116);
-	MakeName	(0XE3710,	"EntitySprite306");
+	MakeName	(0XE3710,	"MapSprite306");
 	MakeByte	(0XE3826);
 	MakeArray	(0XE3826,	0X16E);
-	MakeName	(0XE3826,	"EntitySprite307");
+	MakeName	(0XE3826,	"MapSprite307");
 	MakeByte	(0XE3994);
 	MakeArray	(0XE3994,	0X11A);
-	MakeName	(0XE3994,	"EntitySprite308");
+	MakeName	(0XE3994,	"MapSprite308");
 	MakeByte	(0XE3AAE);
 	MakeArray	(0XE3AAE,	0X210);
-	MakeName	(0XE3AAE,	"EntitySprite309");
+	MakeName	(0XE3AAE,	"MapSprite309");
 	MakeByte	(0XE3CBE);
 	MakeArray	(0XE3CBE,	0X1E2);
-	MakeName	(0XE3CBE,	"EntitySprite310");
+	MakeName	(0XE3CBE,	"MapSprite310");
 	MakeByte	(0XE3EA0);
 	MakeArray	(0XE3EA0,	0X238);
-	MakeName	(0XE3EA0,	"EntitySprite311");
+	MakeName	(0XE3EA0,	"MapSprite311");
 	MakeByte	(0XE40D8);
 	MakeArray	(0XE40D8,	0X16C);
-	MakeName	(0XE40D8,	"EntitySprite312");
+	MakeName	(0XE40D8,	"MapSprite312");
 	MakeByte	(0XE4244);
 	MakeArray	(0XE4244,	0X130);
-	MakeName	(0XE4244,	"EntitySprite313");
+	MakeName	(0XE4244,	"MapSprite313");
 	MakeByte	(0XE4374);
 	MakeArray	(0XE4374,	0X168);
-	MakeName	(0XE4374,	"EntitySprite314");
+	MakeName	(0XE4374,	"MapSprite314");
 	MakeByte	(0XE44DC);
 	MakeArray	(0XE44DC,	0X16C);
-	MakeName	(0XE44DC,	"EntitySprite315");
+	MakeName	(0XE44DC,	"MapSprite315");
 	MakeByte	(0XE4648);
 	MakeArray	(0XE4648,	0X13E);
-	MakeName	(0XE4648,	"EntitySprite316");
+	MakeName	(0XE4648,	"MapSprite316");
 	MakeByte	(0XE4786);
 	MakeArray	(0XE4786,	0X16A);
-	MakeName	(0XE4786,	"EntitySprite317");
+	MakeName	(0XE4786,	"MapSprite317");
 	MakeByte	(0XE48F0);
 	MakeArray	(0XE48F0,	0X210);
-	MakeName	(0XE48F0,	"EntitySprite318");
+	MakeName	(0XE48F0,	"MapSprite318");
 	MakeByte	(0XE4B00);
 	MakeArray	(0XE4B00,	0X1E2);
-	MakeName	(0XE4B00,	"EntitySprite319");
+	MakeName	(0XE4B00,	"MapSprite319");
 	MakeByte	(0XE4CE2);
 	MakeArray	(0XE4CE2,	0X238);
-	MakeName	(0XE4CE2,	"EntitySprite320");
+	MakeName	(0XE4CE2,	"MapSprite320");
 	MakeByte	(0XE4F1A);
 	MakeArray	(0XE4F1A,	0X1CC);
-	MakeName	(0XE4F1A,	"EntitySprite321");
+	MakeName	(0XE4F1A,	"MapSprite321");
 	MakeByte	(0XE50E6);
 	MakeArray	(0XE50E6,	0X17C);
-	MakeName	(0XE50E6,	"EntitySprite322");
+	MakeName	(0XE50E6,	"MapSprite322");
 	MakeByte	(0XE5262);
 	MakeArray	(0XE5262,	0X19E);
-	MakeName	(0XE5262,	"EntitySprite323");
+	MakeName	(0XE5262,	"MapSprite323");
 	MakeByte	(0XE5400);
 	MakeArray	(0XE5400,	0X15C);
-	MakeName	(0XE5400,	"EntitySprite324");
+	MakeName	(0XE5400,	"MapSprite324");
 	MakeByte	(0XE555C);
 	MakeArray	(0XE555C,	0X10C);
-	MakeName	(0XE555C,	"EntitySprite325");
+	MakeName	(0XE555C,	"MapSprite325");
 	MakeByte	(0XE5668);
 	MakeArray	(0XE5668,	0X126);
-	MakeName	(0XE5668,	"EntitySprite326");
+	MakeName	(0XE5668,	"MapSprite326");
 	MakeByte	(0XE578E);
 	MakeArray	(0XE578E,	0X1D2);
-	MakeName	(0XE578E,	"EntitySprite327");
+	MakeName	(0XE578E,	"MapSprite327");
 	MakeByte	(0XE5960);
 	MakeArray	(0XE5960,	0X17C);
-	MakeName	(0XE5960,	"EntitySprite328");
+	MakeName	(0XE5960,	"MapSprite328");
 	MakeByte	(0XE5ADC);
 	MakeArray	(0XE5ADC,	0X19E);
-	MakeName	(0XE5ADC,	"EntitySprite329");
+	MakeName	(0XE5ADC,	"MapSprite329");
 	MakeByte	(0XE5C7A);
 	MakeArray	(0XE5C7A,	0X15C);
-	MakeName	(0XE5C7A,	"EntitySprite330");
+	MakeName	(0XE5C7A,	"MapSprite330");
 	MakeByte	(0XE5DD6);
 	MakeArray	(0XE5DD6,	0X11E);
-	MakeName	(0XE5DD6,	"EntitySprite331");
+	MakeName	(0XE5DD6,	"MapSprite331");
 	MakeByte	(0XE5EF4);
 	MakeArray	(0XE5EF4,	0X17A);
-	MakeName	(0XE5EF4,	"EntitySprite332");
+	MakeName	(0XE5EF4,	"MapSprite332");
 	MakeByte	(0XE606E);
 	MakeArray	(0XE606E,	0X15C);
-	MakeName	(0XE606E,	"EntitySprite333");
+	MakeName	(0XE606E,	"MapSprite333");
 	MakeByte	(0XE61CA);
 	MakeArray	(0XE61CA,	0X110);
-	MakeName	(0XE61CA,	"EntitySprite334");
+	MakeName	(0XE61CA,	"MapSprite334");
 	MakeByte	(0XE62DA);
 	MakeArray	(0XE62DA,	0X126);
-	MakeName	(0XE62DA,	"EntitySprite335");
+	MakeName	(0XE62DA,	"MapSprite335");
 	MakeByte	(0XE6400);
 	MakeArray	(0XE6400,	0X1B0);
-	MakeName	(0XE6400,	"EntitySprite336");
+	MakeName	(0XE6400,	"MapSprite336");
 	MakeByte	(0XE65B0);
 	MakeArray	(0XE65B0,	0X17C);
-	MakeName	(0XE65B0,	"EntitySprite337");
+	MakeName	(0XE65B0,	"MapSprite337");
 	MakeByte	(0XE672C);
 	MakeArray	(0XE672C,	0X1AE);
-	MakeName	(0XE672C,	"EntitySprite338");
+	MakeName	(0XE672C,	"MapSprite338");
 	MakeByte	(0XE68DA);
 	MakeArray	(0XE68DA,	0X170);
-	MakeName	(0XE68DA,	"EntitySprite339");
+	MakeName	(0XE68DA,	"MapSprite339");
 	MakeByte	(0XE6A4A);
 	MakeArray	(0XE6A4A,	0X168);
-	MakeName	(0XE6A4A,	"EntitySprite340");
+	MakeName	(0XE6A4A,	"MapSprite340");
 	MakeByte	(0XE6BB2);
 	MakeArray	(0XE6BB2,	0X194);
-	MakeName	(0XE6BB2,	"EntitySprite341");
+	MakeName	(0XE6BB2,	"MapSprite341");
 	MakeByte	(0XE6D46);
 	MakeArray	(0XE6D46,	0X210);
-	MakeName	(0XE6D46,	"EntitySprite342");
+	MakeName	(0XE6D46,	"MapSprite342");
 	MakeByte	(0XE6F56);
 	MakeArray	(0XE6F56,	0X1E2);
-	MakeName	(0XE6F56,	"EntitySprite343");
+	MakeName	(0XE6F56,	"MapSprite343");
 	MakeByte	(0XE7138);
 	MakeArray	(0XE7138,	0X238);
-	MakeName	(0XE7138,	"EntitySprite344");
+	MakeName	(0XE7138,	"MapSprite344");
 	MakeByte	(0XE7370);
 	MakeArray	(0XE7370,	0X1AC);
-	MakeName	(0XE7370,	"EntitySprite345");
+	MakeName	(0XE7370,	"MapSprite345");
 	MakeByte	(0XE751C);
 	MakeArray	(0XE751C,	0X15E);
-	MakeName	(0XE751C,	"EntitySprite346");
+	MakeName	(0XE751C,	"MapSprite346");
 	MakeByte	(0XE767A);
 	MakeArray	(0XE767A,	0X17C);
-	MakeName	(0XE767A,	"EntitySprite347");
+	MakeName	(0XE767A,	"MapSprite347");
 	MakeByte	(0XE77F6);
 	MakeArray	(0XE77F6,	0X184);
-	MakeName	(0XE77F6,	"EntitySprite348");
+	MakeName	(0XE77F6,	"MapSprite348");
 	MakeByte	(0XE797A);
 	MakeArray	(0XE797A,	0X14C);
-	MakeName	(0XE797A,	"EntitySprite349");
+	MakeName	(0XE797A,	"MapSprite349");
 	MakeByte	(0XE7AC6);
 	MakeArray	(0XE7AC6,	0X174);
-	MakeName	(0XE7AC6,	"EntitySprite350");
+	MakeName	(0XE7AC6,	"MapSprite350");
 	MakeByte	(0XE7C3A);
 	MakeArray	(0XE7C3A,	0X1BE);
-	MakeName	(0XE7C3A,	"EntitySprite351");
+	MakeName	(0XE7C3A,	"MapSprite351");
 	MakeByte	(0XE7DF8);
 	MakeArray	(0XE7DF8,	0X160);
-	MakeName	(0XE7DF8,	"EntitySprite352");
+	MakeName	(0XE7DF8,	"MapSprite352");
 	MakeByte	(0XE7F58);
 	MakeArray	(0XE7F58,	0X182);
-	MakeName	(0XE7F58,	"EntitySprite353");
+	MakeName	(0XE7F58,	"MapSprite353");
 	MakeByte	(0XE80DA);
 	MakeArray	(0XE80DA,	0X170);
-	MakeName	(0XE80DA,	"EntitySprite354");
+	MakeName	(0XE80DA,	"MapSprite354");
 	MakeByte	(0XE824A);
 	MakeArray	(0XE824A,	0X16E);
-	MakeName	(0XE824A,	"EntitySprite355");
+	MakeName	(0XE824A,	"MapSprite355");
 	MakeByte	(0XE83B8);
 	MakeArray	(0XE83B8,	0X196);
-	MakeName	(0XE83B8,	"EntitySprite356");
+	MakeName	(0XE83B8,	"MapSprite356");
 	MakeByte	(0XE854E);
 	MakeArray	(0XE854E,	0X184);
-	MakeName	(0XE854E,	"EntitySprite357");
+	MakeName	(0XE854E,	"MapSprite357");
 	MakeByte	(0XE86D2);
 	MakeArray	(0XE86D2,	0X14C);
-	MakeName	(0XE86D2,	"EntitySprite358");
+	MakeName	(0XE86D2,	"MapSprite358");
 	MakeByte	(0XE881E);
 	MakeArray	(0XE881E,	0X174);
-	MakeName	(0XE881E,	"EntitySprite359");
+	MakeName	(0XE881E,	"MapSprite359");
 	MakeByte	(0XE8992);
 	MakeArray	(0XE8992,	0X186);
-	MakeName	(0XE8992,	"EntitySprite360");
+	MakeName	(0XE8992,	"MapSprite360");
 	MakeByte	(0XE8B18);
 	MakeArray	(0XE8B18,	0X166);
-	MakeName	(0XE8B18,	"EntitySprite361");
+	MakeName	(0XE8B18,	"MapSprite361");
 	MakeByte	(0XE8C7E);
 	MakeArray	(0XE8C7E,	0X1B8);
-	MakeName	(0XE8C7E,	"EntitySprite362");
+	MakeName	(0XE8C7E,	"MapSprite362");
 	MakeByte	(0XE8E36);
 	MakeArray	(0XE8E36,	0X18C);
-	MakeName	(0XE8E36,	"EntitySprite363");
+	MakeName	(0XE8E36,	"MapSprite363");
 	MakeByte	(0XE8FC2);
 	MakeArray	(0XE8FC2,	0X160);
-	MakeName	(0XE8FC2,	"EntitySprite364");
+	MakeName	(0XE8FC2,	"MapSprite364");
 	MakeByte	(0XE9122);
 	MakeArray	(0XE9122,	0X18A);
-	MakeName	(0XE9122,	"EntitySprite365");
+	MakeName	(0XE9122,	"MapSprite365");
 	MakeByte	(0XE92AC);
 	MakeArray	(0XE92AC,	0X186);
-	MakeName	(0XE92AC,	"EntitySprite366");
+	MakeName	(0XE92AC,	"MapSprite366");
 	MakeByte	(0XE9432);
 	MakeArray	(0XE9432,	0X166);
-	MakeName	(0XE9432,	"EntitySprite367");
+	MakeName	(0XE9432,	"MapSprite367");
 	MakeByte	(0XE9598);
 	MakeArray	(0XE9598,	0X1B8);
-	MakeName	(0XE9598,	"EntitySprite368");
+	MakeName	(0XE9598,	"MapSprite368");
 	MakeByte	(0XE9750);
 	MakeArray	(0XE9750,	0X14E);
-	MakeName	(0XE9750,	"EntitySprite369");
+	MakeName	(0XE9750,	"MapSprite369");
 	MakeByte	(0XE989E);
 	MakeArray	(0XE989E,	0X14E);
-	MakeName	(0XE989E,	"EntitySprite370");
+	MakeName	(0XE989E,	"MapSprite370");
 	MakeByte	(0XE99EC);
 	MakeArray	(0XE99EC,	0X14E);
-	MakeName	(0XE99EC,	"EntitySprite371");
+	MakeName	(0XE99EC,	"MapSprite371");
+	MakeByte	(0XE9B3A);
+	MakeArray	(0XE9B3A,	0X14C);
+	MakeName	(0XE9B3A,	"MapSprite372");
+	MakeByte	(0XE9C86);
+	MakeArray	(0XE9C86,	0X140);
+	MakeName	(0XE9C86,	"MapSprite373");
+	MakeByte	(0XE9DC6);
+	MakeArray	(0XE9DC6,	0X124);
+	MakeName	(0XE9DC6,	"MapSprite374");
+	MakeByte	(0XE9EEA);
+	MakeArray	(0XE9EEA,	0XD6);
+	MakeName	(0XE9EEA,	"MapSprite375");
+	MakeByte	(0XE9FC0);
+	MakeArray	(0XE9FC0,	0XD6);
+	MakeName	(0XE9FC0,	"MapSprite376");
+	MakeByte	(0XEA096);
+	MakeArray	(0XEA096,	0XD6);
+	MakeName	(0XEA096,	"MapSprite377");
+	MakeByte	(0XEA16C);
+	MakeArray	(0XEA16C,	0X188);
+	MakeName	(0XEA16C,	"MapSprite378");
+	MakeByte	(0XEA2F4);
+	MakeArray	(0XEA2F4,	0X160);
+	MakeName	(0XEA2F4,	"MapSprite379");
+	MakeByte	(0XEA454);
+	MakeArray	(0XEA454,	0X18A);
+	MakeName	(0XEA454,	"MapSprite380");
+	MakeByte	(0XEA5DE);
+	MakeArray	(0XEA5DE,	0X182);
+	MakeName	(0XEA5DE,	"MapSprite381");
+	MakeByte	(0XEA760);
+	MakeArray	(0XEA760,	0X166);
+	MakeName	(0XEA760,	"MapSprite382");
+	MakeByte	(0XEA8C6);
+	MakeArray	(0XEA8C6,	0X1B6);
+	MakeName	(0XEA8C6,	"MapSprite383");
+	MakeByte	(0XEAA7C);
+	MakeArray	(0XEAA7C,	0X114);
+	MakeName	(0XEAA7C,	"MapSprite384");
 }
 
 //------------------------------------------------------------------------
@@ -136648,900 +136710,861 @@ static Bytes_32(void) {
         auto x;
 #define id x
 
-	MakeByte	(0XE9B3A);
-	MakeArray	(0XE9B3A,	0X14C);
-	MakeName	(0XE9B3A,	"EntitySprite372");
-	MakeByte	(0XE9C86);
-	MakeArray	(0XE9C86,	0X140);
-	MakeName	(0XE9C86,	"EntitySprite373");
-	MakeByte	(0XE9DC6);
-	MakeArray	(0XE9DC6,	0X124);
-	MakeName	(0XE9DC6,	"EntitySprite374");
-	MakeByte	(0XE9EEA);
-	MakeArray	(0XE9EEA,	0XD6);
-	MakeName	(0XE9EEA,	"EntitySprite375");
-	MakeByte	(0XE9FC0);
-	MakeArray	(0XE9FC0,	0XD6);
-	MakeName	(0XE9FC0,	"EntitySprite376");
-	MakeByte	(0XEA096);
-	MakeArray	(0XEA096,	0XD6);
-	MakeName	(0XEA096,	"EntitySprite377");
-	MakeByte	(0XEA16C);
-	MakeArray	(0XEA16C,	0X188);
-	MakeName	(0XEA16C,	"EntitySprite378");
-	MakeByte	(0XEA2F4);
-	MakeArray	(0XEA2F4,	0X160);
-	MakeName	(0XEA2F4,	"EntitySprite379");
-	MakeByte	(0XEA454);
-	MakeArray	(0XEA454,	0X18A);
-	MakeName	(0XEA454,	"EntitySprite380");
-	MakeByte	(0XEA5DE);
-	MakeArray	(0XEA5DE,	0X182);
-	MakeName	(0XEA5DE,	"EntitySprite381");
-	MakeByte	(0XEA760);
-	MakeArray	(0XEA760,	0X166);
-	MakeName	(0XEA760,	"EntitySprite382");
-	MakeByte	(0XEA8C6);
-	MakeArray	(0XEA8C6,	0X1B6);
-	MakeName	(0XEA8C6,	"EntitySprite383");
-	MakeByte	(0XEAA7C);
-	MakeArray	(0XEAA7C,	0X114);
-	MakeName	(0XEAA7C,	"EntitySprite384");
 	MakeByte	(0XEAB90);
 	MakeArray	(0XEAB90,	0X1BE);
-	MakeName	(0XEAB90,	"EntitySprite385");
+	MakeName	(0XEAB90,	"MapSprite385");
 	MakeByte	(0XEAD4E);
 	MakeArray	(0XEAD4E,	0X102);
-	MakeName	(0XEAD4E,	"EntitySprite386");
+	MakeName	(0XEAD4E,	"MapSprite386");
 	MakeByte	(0XEAE50);
 	MakeArray	(0XEAE50,	0X14C);
-	MakeName	(0XEAE50,	"EntitySprite387");
+	MakeName	(0XEAE50,	"MapSprite387");
 	MakeByte	(0XEAF9C);
 	MakeArray	(0XEAF9C,	0X140);
-	MakeName	(0XEAF9C,	"EntitySprite388");
+	MakeName	(0XEAF9C,	"MapSprite388");
 	MakeByte	(0XEB0DC);
 	MakeArray	(0XEB0DC,	0X118);
-	MakeName	(0XEB0DC,	"EntitySprite389");
+	MakeName	(0XEB0DC,	"MapSprite389");
 	MakeByte	(0XEB1F4);
 	MakeArray	(0XEB1F4,	0X114);
-	MakeName	(0XEB1F4,	"EntitySprite390");
+	MakeName	(0XEB1F4,	"MapSprite390");
 	MakeByte	(0XEB308);
 	MakeArray	(0XEB308,	0X1BE);
-	MakeName	(0XEB308,	"EntitySprite391");
+	MakeName	(0XEB308,	"MapSprite391");
 	MakeByte	(0XEB4C6);
 	MakeArray	(0XEB4C6,	0X102);
-	MakeName	(0XEB4C6,	"EntitySprite392");
+	MakeName	(0XEB4C6,	"MapSprite392");
 	MakeByte	(0XEB5C8);
 	MakeArray	(0XEB5C8,	0X130);
-	MakeName	(0XEB5C8,	"EntitySprite393");
+	MakeName	(0XEB5C8,	"MapSprite393");
 	MakeByte	(0XEB6F8);
 	MakeArray	(0XEB6F8,	0X114);
-	MakeName	(0XEB6F8,	"EntitySprite394");
+	MakeName	(0XEB6F8,	"MapSprite394");
 	MakeByte	(0XEB80C);
 	MakeArray	(0XEB80C,	0X138);
-	MakeName	(0XEB80C,	"EntitySprite395");
+	MakeName	(0XEB80C,	"MapSprite395");
 	MakeByte	(0XEB944);
 	MakeArray	(0XEB944,	0X130);
-	MakeName	(0XEB944,	"EntitySprite396");
+	MakeName	(0XEB944,	"MapSprite396");
 	MakeByte	(0XEBA74);
 	MakeArray	(0XEBA74,	0X15C);
-	MakeName	(0XEBA74,	"EntitySprite397");
+	MakeName	(0XEBA74,	"MapSprite397");
 	MakeByte	(0XEBBD0);
 	MakeArray	(0XEBBD0,	0X17E);
-	MakeName	(0XEBBD0,	"EntitySprite398");
+	MakeName	(0XEBBD0,	"MapSprite398");
 	MakeByte	(0XEBD4E);
 	MakeArray	(0XEBD4E,	0X130);
-	MakeName	(0XEBD4E,	"EntitySprite399");
+	MakeName	(0XEBD4E,	"MapSprite399");
 	MakeByte	(0XEBE7E);
 	MakeArray	(0XEBE7E,	0X114);
-	MakeName	(0XEBE7E,	"EntitySprite400");
+	MakeName	(0XEBE7E,	"MapSprite400");
 	MakeByte	(0XEBF92);
 	MakeArray	(0XEBF92,	0X138);
-	MakeName	(0XEBF92,	"EntitySprite401");
+	MakeName	(0XEBF92,	"MapSprite401");
 	MakeByte	(0XEC0CA);
 	MakeArray	(0XEC0CA,	0X130);
-	MakeName	(0XEC0CA,	"EntitySprite402");
+	MakeName	(0XEC0CA,	"MapSprite402");
 	MakeByte	(0XEC1FA);
 	MakeArray	(0XEC1FA,	0X15C);
-	MakeName	(0XEC1FA,	"EntitySprite403");
+	MakeName	(0XEC1FA,	"MapSprite403");
 	MakeByte	(0XEC356);
 	MakeArray	(0XEC356,	0X17E);
-	MakeName	(0XEC356,	"EntitySprite404");
+	MakeName	(0XEC356,	"MapSprite404");
 	MakeByte	(0XEC4D4);
 	MakeArray	(0XEC4D4,	0XDA);
-	MakeName	(0XEC4D4,	"EntitySprite405");
+	MakeName	(0XEC4D4,	"MapSprite405");
 	MakeByte	(0XEC5AE);
 	MakeArray	(0XEC5AE,	0XDA);
-	MakeName	(0XEC5AE,	"EntitySprite406");
+	MakeName	(0XEC5AE,	"MapSprite406");
 	MakeByte	(0XEC688);
 	MakeArray	(0XEC688,	0XDA);
-	MakeName	(0XEC688,	"EntitySprite407");
+	MakeName	(0XEC688,	"MapSprite407");
 	MakeByte	(0XEC762);
 	MakeArray	(0XEC762,	0X1A4);
-	MakeName	(0XEC762,	"EntitySprite408");
+	MakeName	(0XEC762,	"MapSprite408");
 	MakeByte	(0XEC906);
 	MakeArray	(0XEC906,	0X15A);
-	MakeName	(0XEC906,	"EntitySprite409");
+	MakeName	(0XEC906,	"MapSprite409");
 	MakeByte	(0XECA60);
 	MakeArray	(0XECA60,	0X1C0);
-	MakeName	(0XECA60,	"EntitySprite410");
+	MakeName	(0XECA60,	"MapSprite410");
 	MakeByte	(0XECC20);
 	MakeArray	(0XECC20,	0X1B0);
-	MakeName	(0XECC20,	"EntitySprite411");
+	MakeName	(0XECC20,	"MapSprite411");
 	MakeByte	(0XECDD0);
 	MakeArray	(0XECDD0,	0X168);
-	MakeName	(0XECDD0,	"EntitySprite412");
+	MakeName	(0XECDD0,	"MapSprite412");
 	MakeByte	(0XECF38);
 	MakeArray	(0XECF38,	0X1A2);
-	MakeName	(0XECF38,	"EntitySprite413");
+	MakeName	(0XECF38,	"MapSprite413");
 	MakeByte	(0XED0DA);
 	MakeArray	(0XED0DA,	0X1A4);
-	MakeName	(0XED0DA,	"EntitySprite414");
+	MakeName	(0XED0DA,	"MapSprite414");
 	MakeByte	(0XED27E);
 	MakeArray	(0XED27E,	0X15A);
-	MakeName	(0XED27E,	"EntitySprite415");
+	MakeName	(0XED27E,	"MapSprite415");
 	MakeByte	(0XED3D8);
 	MakeArray	(0XED3D8,	0X1C0);
-	MakeName	(0XED3D8,	"EntitySprite416");
+	MakeName	(0XED3D8,	"MapSprite416");
 	MakeByte	(0XED598);
 	MakeArray	(0XED598,	0X1B0);
-	MakeName	(0XED598,	"EntitySprite417");
+	MakeName	(0XED598,	"MapSprite417");
 	MakeByte	(0XED748);
 	MakeArray	(0XED748,	0X168);
-	MakeName	(0XED748,	"EntitySprite418");
+	MakeName	(0XED748,	"MapSprite418");
 	MakeByte	(0XED8B0);
 	MakeArray	(0XED8B0,	0X1A2);
-	MakeName	(0XED8B0,	"EntitySprite419");
+	MakeName	(0XED8B0,	"MapSprite419");
 	MakeByte	(0XEDA52);
 	MakeArray	(0XEDA52,	0X188);
-	MakeName	(0XEDA52,	"EntitySprite420");
+	MakeName	(0XEDA52,	"MapSprite420");
 	MakeByte	(0XEDBDA);
 	MakeArray	(0XEDBDA,	0X164);
-	MakeName	(0XEDBDA,	"EntitySprite421");
+	MakeName	(0XEDBDA,	"MapSprite421");
 	MakeByte	(0XEDD3E);
 	MakeArray	(0XEDD3E,	0X180);
-	MakeName	(0XEDD3E,	"EntitySprite422");
+	MakeName	(0XEDD3E,	"MapSprite422");
 	MakeByte	(0XEDEBE);
 	MakeArray	(0XEDEBE,	0X15A);
-	MakeName	(0XEDEBE,	"EntitySprite423");
+	MakeName	(0XEDEBE,	"MapSprite423");
 	MakeByte	(0XEE018);
 	MakeArray	(0XEE018,	0X13A);
-	MakeName	(0XEE018,	"EntitySprite424");
+	MakeName	(0XEE018,	"MapSprite424");
 	MakeByte	(0XEE152);
 	MakeArray	(0XEE152,	0X14A);
-	MakeName	(0XEE152,	"EntitySprite425");
+	MakeName	(0XEE152,	"MapSprite425");
 	MakeByte	(0XEE29C);
 	MakeArray	(0XEE29C,	0X15C);
-	MakeName	(0XEE29C,	"EntitySprite426");
+	MakeName	(0XEE29C,	"MapSprite426");
 	MakeByte	(0XEE3F8);
 	MakeArray	(0XEE3F8,	0X138);
-	MakeName	(0XEE3F8,	"EntitySprite427");
+	MakeName	(0XEE3F8,	"MapSprite427");
 	MakeByte	(0XEE530);
 	MakeArray	(0XEE530,	0X14A);
-	MakeName	(0XEE530,	"EntitySprite428");
+	MakeName	(0XEE530,	"MapSprite428");
 	MakeByte	(0XEE67A);
 	MakeArray	(0XEE67A,	0X184);
-	MakeName	(0XEE67A,	"EntitySprite429");
+	MakeName	(0XEE67A,	"MapSprite429");
 	MakeByte	(0XEE7FE);
 	MakeArray	(0XEE7FE,	0X164);
-	MakeName	(0XEE7FE,	"EntitySprite430");
+	MakeName	(0XEE7FE,	"MapSprite430");
 	MakeByte	(0XEE962);
 	MakeArray	(0XEE962,	0X17E);
-	MakeName	(0XEE962,	"EntitySprite431");
+	MakeName	(0XEE962,	"MapSprite431");
 	MakeByte	(0XEEAE0);
 	MakeArray	(0XEEAE0,	0XD8);
-	MakeName	(0XEEAE0,	"EntitySprite432");
+	MakeName	(0XEEAE0,	"MapSprite432");
 	MakeByte	(0XEEBB8);
 	MakeArray	(0XEEBB8,	0XD8);
-	MakeName	(0XEEBB8,	"EntitySprite433");
+	MakeName	(0XEEBB8,	"MapSprite433");
 	MakeByte	(0XEEC90);
 	MakeArray	(0XEEC90,	0XD8);
-	MakeName	(0XEEC90,	"EntitySprite434");
+	MakeName	(0XEEC90,	"MapSprite434");
 	MakeByte	(0XEED68);
 	MakeArray	(0XEED68,	0X148);
-	MakeName	(0XEED68,	"EntitySprite435");
+	MakeName	(0XEED68,	"MapSprite435");
 	MakeByte	(0XEEEB0);
 	MakeArray	(0XEEEB0,	0X118);
-	MakeName	(0XEEEB0,	"EntitySprite436");
+	MakeName	(0XEEEB0,	"MapSprite436");
 	MakeByte	(0XEEFC8);
 	MakeArray	(0XEEFC8,	0X12C);
-	MakeName	(0XEEFC8,	"EntitySprite437");
+	MakeName	(0XEEFC8,	"MapSprite437");
 	MakeByte	(0XEF0F4);
 	MakeArray	(0XEF0F4,	0X15C);
-	MakeName	(0XEF0F4,	"EntitySprite438");
+	MakeName	(0XEF0F4,	"MapSprite438");
 	MakeByte	(0XEF250);
 	MakeArray	(0XEF250,	0X13A);
-	MakeName	(0XEF250,	"EntitySprite439");
+	MakeName	(0XEF250,	"MapSprite439");
 	MakeByte	(0XEF38A);
 	MakeArray	(0XEF38A,	0X14A);
-	MakeName	(0XEF38A,	"EntitySprite440");
+	MakeName	(0XEF38A,	"MapSprite440");
 	MakeByte	(0XEF4D4);
 	MakeArray	(0XEF4D4,	0X1D4);
-	MakeName	(0XEF4D4,	"EntitySprite441");
+	MakeName	(0XEF4D4,	"MapSprite441");
 	MakeByte	(0XEF6A8);
 	MakeArray	(0XEF6A8,	0X146);
-	MakeName	(0XEF6A8,	"EntitySprite442");
+	MakeName	(0XEF6A8,	"MapSprite442");
 	MakeByte	(0XEF7EE);
 	MakeArray	(0XEF7EE,	0X1AC);
-	MakeName	(0XEF7EE,	"EntitySprite443");
+	MakeName	(0XEF7EE,	"MapSprite443");
 	MakeByte	(0XEF99A);
 	MakeArray	(0XEF99A,	0X14A);
-	MakeName	(0XEF99A,	"EntitySprite444");
+	MakeName	(0XEF99A,	"MapSprite444");
 	MakeByte	(0XEFAE4);
 	MakeArray	(0XEFAE4,	0X120);
-	MakeName	(0XEFAE4,	"EntitySprite445");
+	MakeName	(0XEFAE4,	"MapSprite445");
 	MakeByte	(0XEFC04);
 	MakeArray	(0XEFC04,	0X138);
-	MakeName	(0XEFC04,	"EntitySprite446");
+	MakeName	(0XEFC04,	"MapSprite446");
 	MakeByte	(0XEFD3C);
 	MakeArray	(0XEFD3C,	0X1D8);
-	MakeName	(0XEFD3C,	"EntitySprite447");
+	MakeName	(0XEFD3C,	"MapSprite447");
 	MakeByte	(0XEFF14);
 	MakeArray	(0XEFF14,	0X146);
-	MakeName	(0XEFF14,	"EntitySprite448");
+	MakeName	(0XEFF14,	"MapSprite448");
 	MakeByte	(0XF005A);
 	MakeArray	(0XF005A,	0X1B0);
-	MakeName	(0XF005A,	"EntitySprite449");
+	MakeName	(0XF005A,	"MapSprite449");
 	MakeByte	(0XF020A);
 	MakeArray	(0XF020A,	0X210);
-	MakeName	(0XF020A,	"EntitySprite450");
+	MakeName	(0XF020A,	"MapSprite450");
 	MakeByte	(0XF041A);
 	MakeArray	(0XF041A,	0X1E2);
-	MakeName	(0XF041A,	"EntitySprite451");
+	MakeName	(0XF041A,	"MapSprite451");
 	MakeByte	(0XF05FC);
 	MakeArray	(0XF05FC,	0X238);
-	MakeName	(0XF05FC,	"EntitySprite452");
+	MakeName	(0XF05FC,	"MapSprite452");
 	MakeByte	(0XF0834);
 	MakeArray	(0XF0834,	0XD8);
-	MakeName	(0XF0834,	"EntitySprite453");
+	MakeName	(0XF0834,	"MapSprite453");
 	MakeByte	(0XF090C);
 	MakeArray	(0XF090C,	0XD8);
-	MakeName	(0XF090C,	"EntitySprite460");
+	MakeName	(0XF090C,	"MapSprite460");
 	MakeByte	(0XF09E4);
 	MakeArray	(0XF09E4,	0XD8);
-	MakeName	(0XF09E4,	"EntitySprite461");
+	MakeName	(0XF09E4,	"MapSprite461");
 	MakeByte	(0XF0ABC);
 	MakeArray	(0XF0ABC,	0X1B4);
-	MakeName	(0XF0ABC,	"EntitySprite462");
+	MakeName	(0XF0ABC,	"MapSprite462");
 	MakeByte	(0XF0C70);
 	MakeArray	(0XF0C70,	0X17A);
-	MakeName	(0XF0C70,	"EntitySprite463");
+	MakeName	(0XF0C70,	"MapSprite463");
 	MakeByte	(0XF0DEA);
 	MakeArray	(0XF0DEA,	0X184);
-	MakeName	(0XF0DEA,	"EntitySprite464");
+	MakeName	(0XF0DEA,	"MapSprite464");
 	MakeByte	(0XF0F6E);
 	MakeArray	(0XF0F6E,	0X15C);
-	MakeName	(0XF0F6E,	"EntitySprite465");
+	MakeName	(0XF0F6E,	"MapSprite465");
 	MakeByte	(0XF10CA);
 	MakeArray	(0XF10CA,	0XFC);
-	MakeName	(0XF10CA,	"EntitySprite466");
+	MakeName	(0XF10CA,	"MapSprite466");
 	MakeByte	(0XF11C6);
 	MakeArray	(0XF11C6,	0X14A);
-	MakeName	(0XF11C6,	"EntitySprite467");
+	MakeName	(0XF11C6,	"MapSprite467");
 	MakeByte	(0XF1310);
 	MakeArray	(0XF1310,	0X166);
-	MakeName	(0XF1310,	"EntitySprite468");
+	MakeName	(0XF1310,	"MapSprite468");
 	MakeByte	(0XF1476);
 	MakeArray	(0XF1476,	0X17A);
-	MakeName	(0XF1476,	"EntitySprite469");
+	MakeName	(0XF1476,	"MapSprite469");
 	MakeByte	(0XF15F0);
 	MakeArray	(0XF15F0,	0X1B8);
-	MakeName	(0XF15F0,	"EntitySprite470");
+	MakeName	(0XF15F0,	"MapSprite470");
 	MakeByte	(0XF17A8);
 	MakeArray	(0XF17A8,	0X114);
-	MakeName	(0XF17A8,	"EntitySprite471");
+	MakeName	(0XF17A8,	"MapSprite471");
 	MakeByte	(0XF18BC);
 	MakeArray	(0XF18BC,	0X162);
-	MakeName	(0XF18BC,	"EntitySprite472");
+	MakeName	(0XF18BC,	"MapSprite472");
 	MakeByte	(0XF1A1E);
 	MakeArray	(0XF1A1E,	0X116);
-	MakeName	(0XF1A1E,	"EntitySprite473");
+	MakeName	(0XF1A1E,	"MapSprite473");
 	MakeByte	(0XF1B34);
 	MakeArray	(0XF1B34,	0X19C);
-	MakeName	(0XF1B34,	"EntitySprite477");
+	MakeName	(0XF1B34,	"MapSprite477");
 	MakeByte	(0XF1CD0);
 	MakeArray	(0XF1CD0,	0X10E);
-	MakeName	(0XF1CD0,	"EntitySprite478");
+	MakeName	(0XF1CD0,	"MapSprite478");
 	MakeByte	(0XF1DDE);
 	MakeArray	(0XF1DDE,	0X1A6);
-	MakeName	(0XF1DDE,	"EntitySprite479");
+	MakeName	(0XF1DDE,	"MapSprite479");
 	MakeByte	(0XF1F84);
 	MakeArray	(0XF1F84,	0X19E);
-	MakeName	(0XF1F84,	"EntitySprite480");
+	MakeName	(0XF1F84,	"MapSprite480");
 	MakeByte	(0XF2122);
 	MakeArray	(0XF2122,	0X168);
-	MakeName	(0XF2122,	"EntitySprite481");
+	MakeName	(0XF2122,	"MapSprite481");
 	MakeByte	(0XF228A);
 	MakeArray	(0XF228A,	0X17A);
-	MakeName	(0XF228A,	"EntitySprite482");
+	MakeName	(0XF228A,	"MapSprite482");
 	MakeByte	(0XF2404);
 	MakeArray	(0XF2404,	0X170);
-	MakeName	(0XF2404,	"EntitySprite483");
+	MakeName	(0XF2404,	"MapSprite483");
 	MakeByte	(0XF2574);
 	MakeArray	(0XF2574,	0X130);
-	MakeName	(0XF2574,	"EntitySprite511");
+	MakeName	(0XF2574,	"MapSprite511");
 	MakeByte	(0XF26A4);
 	MakeArray	(0XF26A4,	0X170);
-	MakeName	(0XF26A4,	"EntitySprite512");
+	MakeName	(0XF26A4,	"MapSprite512");
 	MakeByte	(0XF2814);
 	MakeArray	(0XF2814,	0X62);
-	MakeName	(0XF2814,	"EntitySprite513");
+	MakeName	(0XF2814,	"MapSprite513");
 	MakeByte	(0XF2876);
 	MakeArray	(0XF2876,	0X1E0);
-	MakeName	(0XF2876,	"EntitySprite514");
+	MakeName	(0XF2876,	"MapSprite514");
 	MakeByte	(0XF2A56);
 	MakeArray	(0XF2A56,	0XD4);
-	MakeName	(0XF2A56,	"EntitySprite515");
+	MakeName	(0XF2A56,	"MapSprite515");
 	MakeByte	(0XF2B2A);
 	MakeArray	(0XF2B2A,	0X4E);
-	MakeName	(0XF2B2A,	"EntitySprite516");
+	MakeName	(0XF2B2A,	"MapSprite516");
 	MakeByte	(0XF2B78);
 	MakeArray	(0XF2B78,	0X50);
-	MakeName	(0XF2B78,	"EntitySprite517");
+	MakeName	(0XF2B78,	"MapSprite517");
 	MakeByte	(0XF2BC8);
 	MakeArray	(0XF2BC8,	0X3E);
-	MakeName	(0XF2BC8,	"EntitySprite518");
+	MakeName	(0XF2BC8,	"MapSprite518");
 	MakeByte	(0XF2C06);
 	MakeArray	(0XF2C06,	0XB8);
-	MakeName	(0XF2C06,	"EntitySprite519");
+	MakeName	(0XF2C06,	"MapSprite519");
 	MakeByte	(0XF2CBE);
 	MakeArray	(0XF2CBE,	0X198);
-	MakeName	(0XF2CBE,	"EntitySprite520");
+	MakeName	(0XF2CBE,	"MapSprite520");
 	MakeByte	(0XF2E56);
 	MakeArray	(0XF2E56,	0X8C);
-	MakeName	(0XF2E56,	"EntitySprite521");
+	MakeName	(0XF2E56,	"MapSprite521");
 	MakeByte	(0XF2EE2);
 	MakeArray	(0XF2EE2,	0X142);
-	MakeName	(0XF2EE2,	"EntitySprite522");
+	MakeName	(0XF2EE2,	"MapSprite522");
 	MakeByte	(0XF3024);
 	MakeArray	(0XF3024,	0X126);
-	MakeName	(0XF3024,	"EntitySprite523");
+	MakeName	(0XF3024,	"MapSprite523");
 	MakeByte	(0XF314A);
 	MakeArray	(0XF314A,	0X176);
-	MakeName	(0XF314A,	"EntitySprite524");
+	MakeName	(0XF314A,	"MapSprite524");
 	MakeByte	(0XF32C0);
 	MakeArray	(0XF32C0,	0XC0);
-	MakeName	(0XF32C0,	"EntitySprite525");
+	MakeName	(0XF32C0,	"MapSprite525");
 	MakeByte	(0XF3380);
 	MakeArray	(0XF3380,	0XFA);
-	MakeName	(0XF3380,	"EntitySprite526");
+	MakeName	(0XF3380,	"MapSprite526");
 	MakeByte	(0XF347A);
 	MakeArray	(0XF347A,	0XB2);
-	MakeName	(0XF347A,	"EntitySprite527");
+	MakeName	(0XF347A,	"MapSprite527");
 	MakeByte	(0XF352C);
 	MakeArray	(0XF352C,	0XDA);
-	MakeName	(0XF352C,	"EntitySprite528");
+	MakeName	(0XF352C,	"MapSprite528");
 	MakeByte	(0XF3606);
 	MakeArray	(0XF3606,	0XC8);
-	MakeName	(0XF3606,	"EntitySprite529");
+	MakeName	(0XF3606,	"MapSprite529");
 	MakeByte	(0XF36CE);
 	MakeArray	(0XF36CE,	0X114);
-	MakeName	(0XF36CE,	"EntitySprite530");
+	MakeName	(0XF36CE,	"MapSprite530");
 	MakeByte	(0XF37E2);
 	MakeArray	(0XF37E2,	0X114);
-	MakeName	(0XF37E2,	"EntitySprite531");
+	MakeName	(0XF37E2,	"MapSprite531");
 	MakeByte	(0XF38F6);
 	MakeArray	(0XF38F6,	0XCA);
-	MakeName	(0XF38F6,	"EntitySprite532");
+	MakeName	(0XF38F6,	"MapSprite532");
 	MakeByte	(0XF39C0);
 	MakeArray	(0XF39C0,	0X102);
-	MakeName	(0XF39C0,	"EntitySprite533");
+	MakeName	(0XF39C0,	"MapSprite533");
 	MakeByte	(0XF3AC2);
 	MakeArray	(0XF3AC2,	0XF2);
-	MakeName	(0XF3AC2,	"EntitySprite534");
+	MakeName	(0XF3AC2,	"MapSprite534");
 	MakeByte	(0XF3BB4);
 	MakeArray	(0XF3BB4,	0X154);
-	MakeName	(0XF3BB4,	"EntitySprite535");
+	MakeName	(0XF3BB4,	"MapSprite535");
 	MakeByte	(0XF3D08);
 	MakeArray	(0XF3D08,	0XE8);
-	MakeName	(0XF3D08,	"EntitySprite536");
+	MakeName	(0XF3D08,	"MapSprite536");
 	MakeByte	(0XF3DF0);
 	MakeArray	(0XF3DF0,	0X126);
-	MakeName	(0XF3DF0,	"EntitySprite537");
+	MakeName	(0XF3DF0,	"MapSprite537");
 	MakeByte	(0XF3F16);
 	MakeArray	(0XF3F16,	0X7E);
-	MakeName	(0XF3F16,	"EntitySprite538");
+	MakeName	(0XF3F16,	"MapSprite538");
 	MakeByte	(0XF3F94);
 	MakeArray	(0XF3F94,	0X82);
-	MakeName	(0XF3F94,	"EntitySprite539");
+	MakeName	(0XF3F94,	"MapSprite539");
 	MakeByte	(0XF4016);
 	MakeArray	(0XF4016,	0X12E);
-	MakeName	(0XF4016,	"EntitySprite540");
+	MakeName	(0XF4016,	"MapSprite540");
 	MakeByte	(0XF4144);
 	MakeArray	(0XF4144,	0X210);
-	MakeName	(0XF4144,	"EntitySprite541");
+	MakeName	(0XF4144,	"MapSprite541");
 	MakeByte	(0XF4354);
 	MakeArray	(0XF4354,	0X62);
-	MakeName	(0XF4354,	"EntitySprite542");
+	MakeName	(0XF4354,	"MapSprite542");
 	MakeByte	(0XF43B6);
 	MakeArray	(0XF43B6,	0X6E);
-	MakeName	(0XF43B6,	"EntitySprite543");
+	MakeName	(0XF43B6,	"MapSprite543");
 	MakeByte	(0XF4424);
 	MakeArray	(0XF4424,	0XA2);
-	MakeName	(0XF4424,	"EntitySprite544");
+	MakeName	(0XF4424,	"MapSprite544");
 	MakeByte	(0XF44C6);
 	MakeArray	(0XF44C6,	0XFE);
-	MakeName	(0XF44C6,	"EntitySprite545");
+	MakeName	(0XF44C6,	"MapSprite545");
 	MakeByte	(0XF45C4);
 	MakeArray	(0XF45C4,	0XB6);
-	MakeName	(0XF45C4,	"EntitySprite546");
+	MakeName	(0XF45C4,	"MapSprite546");
 	MakeByte	(0XF467A);
 	MakeArray	(0XF467A,	0XAA);
-	MakeName	(0XF467A,	"EntitySprite547");
+	MakeName	(0XF467A,	"MapSprite547");
 	MakeByte	(0XF4724);
 	MakeArray	(0XF4724,	0XA0);
-	MakeName	(0XF4724,	"EntitySprite548");
+	MakeName	(0XF4724,	"MapSprite548");
 	MakeByte	(0XF47C4);
 	MakeArray	(0XF47C4,	0X84);
-	MakeName	(0XF47C4,	"EntitySprite549");
+	MakeName	(0XF47C4,	"MapSprite549");
 	MakeByte	(0XF4848);
 	MakeArray	(0XF4848,	0X76);
-	MakeName	(0XF4848,	"EntitySprite550");
+	MakeName	(0XF4848,	"MapSprite550");
 	MakeByte	(0XF48BE);
 	MakeArray	(0XF48BE,	0XBC);
-	MakeName	(0XF48BE,	"EntitySprite551");
+	MakeName	(0XF48BE,	"MapSprite551");
 	MakeByte	(0XF497A);
 	MakeArray	(0XF497A,	0XB0);
-	MakeName	(0XF497A,	"EntitySprite552");
+	MakeName	(0XF497A,	"MapSprite552");
 	MakeByte	(0XF4A2A);
 	MakeArray	(0XF4A2A,	0XB6);
-	MakeName	(0XF4A2A,	"EntitySprite553");
+	MakeName	(0XF4A2A,	"MapSprite553");
 	MakeByte	(0XF4AE0);
 	MakeArray	(0XF4AE0,	0XB2);
-	MakeName	(0XF4AE0,	"EntitySprite554");
+	MakeName	(0XF4AE0,	"MapSprite554");
 	MakeByte	(0XF4B92);
 	MakeArray	(0XF4B92,	0X13C);
-	MakeName	(0XF4B92,	"EntitySprite555");
+	MakeName	(0XF4B92,	"MapSprite555");
 	MakeByte	(0XF4CCE);
 	MakeArray	(0XF4CCE,	0X138);
-	MakeName	(0XF4CCE,	"EntitySprite556");
+	MakeName	(0XF4CCE,	"MapSprite556");
 	MakeByte	(0XF4E06);
 	MakeArray	(0XF4E06,	0X13E);
-	MakeName	(0XF4E06,	"EntitySprite557");
+	MakeName	(0XF4E06,	"MapSprite557");
 	MakeByte	(0XF4F44);
 	MakeArray	(0XF4F44,	0X88);
-	MakeName	(0XF4F44,	"EntitySprite558");
+	MakeName	(0XF4F44,	"MapSprite558");
 	MakeByte	(0XF4FCC);
 	MakeArray	(0XF4FCC,	0X80);
-	MakeName	(0XF4FCC,	"EntitySprite559");
+	MakeName	(0XF4FCC,	"MapSprite559");
 	MakeByte	(0XF504C);
 	MakeArray	(0XF504C,	0XBA);
-	MakeName	(0XF504C,	"EntitySprite560");
+	MakeName	(0XF504C,	"MapSprite560");
 	MakeByte	(0XF5106);
 	MakeArray	(0XF5106,	0XAA);
-	MakeName	(0XF5106,	"EntitySprite561");
+	MakeName	(0XF5106,	"MapSprite561");
 	MakeByte	(0XF51B0);
 	MakeArray	(0XF51B0,	0X4A);
-	MakeName	(0XF51B0,	"EntitySprite562");
+	MakeName	(0XF51B0,	"MapSprite562");
 	MakeByte	(0XF51FA);
 	MakeArray	(0XF51FA,	0X106);
-	MakeName	(0XF51FA,	"EntitySprite563");
+	MakeName	(0XF51FA,	"MapSprite563");
 	MakeByte	(0XF5300);
 	MakeArray	(0XF5300,	0X140);
-	MakeName	(0XF5300,	"EntitySprite567");
+	MakeName	(0XF5300,	"MapSprite567");
 	MakeByte	(0XF5440);
 	MakeArray	(0XF5440,	0X168);
-	MakeName	(0XF5440,	"EntitySprite568");
+	MakeName	(0XF5440,	"MapSprite568");
 	MakeByte	(0XF55A8);
 	MakeArray	(0XF55A8,	0X13C);
-	MakeName	(0XF55A8,	"EntitySprite569");
+	MakeName	(0XF55A8,	"MapSprite569");
 	MakeByte	(0XF56E4);
 	MakeArray	(0XF56E4,	0XD4);
-	MakeName	(0XF56E4,	"EntitySprite570");
+	MakeName	(0XF56E4,	"MapSprite570");
 	MakeByte	(0XF57B8);
 	MakeArray	(0XF57B8,	0XD4);
-	MakeName	(0XF57B8,	"EntitySprite571");
+	MakeName	(0XF57B8,	"MapSprite571");
 	MakeByte	(0XF588C);
 	MakeArray	(0XF588C,	0XD4);
-	MakeName	(0XF588C,	"EntitySprite572");
+	MakeName	(0XF588C,	"MapSprite572");
 	MakeByte	(0XF5960);
 	MakeArray	(0XF5960,	0X120);
-	MakeName	(0XF5960,	"EntitySprite573");
+	MakeName	(0XF5960,	"MapSprite573");
 	MakeByte	(0XF5A80);
 	MakeArray	(0XF5A80,	0X106);
-	MakeName	(0XF5A80,	"EntitySprite577");
+	MakeName	(0XF5A80,	"MapSprite577");
 	MakeByte	(0XF5B86);
 	MakeArray	(0XF5B86,	0X15A);
-	MakeName	(0XF5B86,	"EntitySprite578");
+	MakeName	(0XF5B86,	"MapSprite578");
 	MakeByte	(0XF5CE0);
 	MakeArray	(0XF5CE0,	0X17E);
-	MakeName	(0XF5CE0,	"EntitySprite579");
+	MakeName	(0XF5CE0,	"MapSprite579");
 	MakeByte	(0XF5E5E);
 	MakeArray	(0XF5E5E,	0X110);
-	MakeName	(0XF5E5E,	"EntitySprite580");
+	MakeName	(0XF5E5E,	"MapSprite580");
 	MakeByte	(0XF5F6E);
 	MakeArray	(0XF5F6E,	0X17E);
-	MakeName	(0XF5F6E,	"EntitySprite581");
+	MakeName	(0XF5F6E,	"MapSprite581");
 	MakeByte	(0XF60EC);
 	MakeArray	(0XF60EC,	0X166);
-	MakeName	(0XF60EC,	"EntitySprite582");
+	MakeName	(0XF60EC,	"MapSprite582");
 	MakeByte	(0XF6252);
 	MakeArray	(0XF6252,	0X12E);
-	MakeName	(0XF6252,	"EntitySprite583");
+	MakeName	(0XF6252,	"MapSprite583");
 	MakeByte	(0XF6380);
 	MakeArray	(0XF6380,	0X17C);
-	MakeName	(0XF6380,	"EntitySprite584");
+	MakeName	(0XF6380,	"MapSprite584");
 	MakeByte	(0XF64FC);
 	MakeArray	(0XF64FC,	0X162);
-	MakeName	(0XF64FC,	"EntitySprite585");
+	MakeName	(0XF64FC,	"MapSprite585");
 	MakeByte	(0XF665E);
 	MakeArray	(0XF665E,	0X126);
-	MakeName	(0XF665E,	"EntitySprite586");
+	MakeName	(0XF665E,	"MapSprite586");
 	MakeByte	(0XF6784);
 	MakeArray	(0XF6784,	0X15C);
-	MakeName	(0XF6784,	"EntitySprite587");
+	MakeName	(0XF6784,	"MapSprite587");
 	MakeByte	(0XF68E0);
 	MakeArray	(0XF68E0,	0X138);
-	MakeName	(0XF68E0,	"EntitySprite588");
+	MakeName	(0XF68E0,	"MapSprite588");
 	MakeByte	(0XF6A18);
 	MakeArray	(0XF6A18,	0X106);
-	MakeName	(0XF6A18,	"EntitySprite589");
+	MakeName	(0XF6A18,	"MapSprite589");
 	MakeByte	(0XF6B1E);
 	MakeArray	(0XF6B1E,	0X140);
-	MakeName	(0XF6B1E,	"EntitySprite590");
+	MakeName	(0XF6B1E,	"MapSprite590");
 	MakeByte	(0XF6C5E);
 	MakeArray	(0XF6C5E,	0X12A);
-	MakeName	(0XF6C5E,	"EntitySprite591");
+	MakeName	(0XF6C5E,	"MapSprite591");
 	MakeByte	(0XF6D88);
 	MakeArray	(0XF6D88,	0X120);
-	MakeName	(0XF6D88,	"EntitySprite592");
+	MakeName	(0XF6D88,	"MapSprite592");
 	MakeByte	(0XF6EA8);
 	MakeArray	(0XF6EA8,	0X13C);
-	MakeName	(0XF6EA8,	"EntitySprite593");
+	MakeName	(0XF6EA8,	"MapSprite593");
 	MakeByte	(0XF6FE4);
 	MakeArray	(0XF6FE4,	0X13C);
-	MakeName	(0XF6FE4,	"EntitySprite594");
+	MakeName	(0XF6FE4,	"MapSprite594");
 	MakeByte	(0XF7120);
 	MakeArray	(0XF7120,	0X16E);
-	MakeName	(0XF7120,	"EntitySprite595");
+	MakeName	(0XF7120,	"MapSprite595");
 	MakeByte	(0XF728E);
 	MakeArray	(0XF728E,	0X12C);
-	MakeName	(0XF728E,	"EntitySprite596");
+	MakeName	(0XF728E,	"MapSprite596");
 	MakeByte	(0XF73BA);
 	MakeArray	(0XF73BA,	0X15C);
-	MakeName	(0XF73BA,	"EntitySprite597");
+	MakeName	(0XF73BA,	"MapSprite597");
 	MakeByte	(0XF7516);
 	MakeArray	(0XF7516,	0X100);
-	MakeName	(0XF7516,	"EntitySprite598");
+	MakeName	(0XF7516,	"MapSprite598");
 	MakeByte	(0XF7616);
 	MakeArray	(0XF7616,	0X14E);
-	MakeName	(0XF7616,	"EntitySprite599");
+	MakeName	(0XF7616,	"MapSprite599");
 	MakeByte	(0XF7764);
 	MakeArray	(0XF7764,	0X104);
-	MakeName	(0XF7764,	"EntitySprite600");
+	MakeName	(0XF7764,	"MapSprite600");
 	MakeByte	(0XF7868);
 	MakeArray	(0XF7868,	0XDC);
-	MakeName	(0XF7868,	"EntitySprite601");
+	MakeName	(0XF7868,	"MapSprite601");
 	MakeByte	(0XF7944);
 	MakeArray	(0XF7944,	0XF6);
-	MakeName	(0XF7944,	"EntitySprite602");
+	MakeName	(0XF7944,	"MapSprite602");
 	MakeByte	(0XF7A3A);
 	MakeArray	(0XF7A3A,	0X12E);
-	MakeName	(0XF7A3A,	"EntitySprite603");
+	MakeName	(0XF7A3A,	"MapSprite603");
 	MakeByte	(0XF7B68);
 	MakeArray	(0XF7B68,	0X11E);
-	MakeName	(0XF7B68,	"EntitySprite604");
+	MakeName	(0XF7B68,	"MapSprite604");
 	MakeByte	(0XF7C86);
 	MakeArray	(0XF7C86,	0X132);
-	MakeName	(0XF7C86,	"EntitySprite605");
+	MakeName	(0XF7C86,	"MapSprite605");
 	MakeByte	(0XF7DB8);
 	MakeArray	(0XF7DB8,	0X174);
-	MakeName	(0XF7DB8,	"EntitySprite606");
+	MakeName	(0XF7DB8,	"MapSprite606");
 	MakeByte	(0XF7F2C);
 	MakeArray	(0XF7F2C,	0X11C);
-	MakeName	(0XF7F2C,	"EntitySprite607");
+	MakeName	(0XF7F2C,	"MapSprite607");
 	MakeByte	(0XF8048);
 	MakeArray	(0XF8048,	0X17A);
-	MakeName	(0XF8048,	"EntitySprite608");
+	MakeName	(0XF8048,	"MapSprite608");
 	MakeByte	(0XF81C2);
 	MakeArray	(0XF81C2,	0X154);
-	MakeName	(0XF81C2,	"EntitySprite564");
+	MakeName	(0XF81C2,	"MapSprite564");
 	MakeByte	(0XF8316);
 	MakeArray	(0XF8316,	0X144);
-	MakeName	(0XF8316,	"EntitySprite565");
+	MakeName	(0XF8316,	"MapSprite565");
 	MakeByte	(0XF845A);
 	MakeArray	(0XF845A,	0X184);
-	MakeName	(0XF845A,	"EntitySprite566");
+	MakeName	(0XF845A,	"MapSprite566");
 	MakeByte	(0XF85DE);
 	MakeArray	(0XF85DE,	0X142);
-	MakeName	(0XF85DE,	"EntitySprite612");
+	MakeName	(0XF85DE,	"MapSprite612");
 	MakeByte	(0XF8720);
 	MakeArray	(0XF8720,	0X11C);
-	MakeName	(0XF8720,	"EntitySprite613");
+	MakeName	(0XF8720,	"MapSprite613");
 	MakeByte	(0XF883C);
 	MakeArray	(0XF883C,	0X164);
-	MakeName	(0XF883C,	"EntitySprite614");
+	MakeName	(0XF883C,	"MapSprite614");
 	MakeByte	(0XF89A0);
 	MakeArray	(0XF89A0,	0X148);
-	MakeName	(0XF89A0,	"EntitySprite615");
+	MakeName	(0XF89A0,	"MapSprite615");
 	MakeByte	(0XF8AE8);
 	MakeArray	(0XF8AE8,	0X102);
-	MakeName	(0XF8AE8,	"EntitySprite616");
+	MakeName	(0XF8AE8,	"MapSprite616");
 	MakeByte	(0XF8BEA);
 	MakeArray	(0XF8BEA,	0X172);
-	MakeName	(0XF8BEA,	"EntitySprite617");
+	MakeName	(0XF8BEA,	"MapSprite617");
 	MakeByte	(0XF8D5C);
 	MakeArray	(0XF8D5C,	0X174);
-	MakeName	(0XF8D5C,	"EntitySprite618");
+	MakeName	(0XF8D5C,	"MapSprite618");
 	MakeByte	(0XF8ED0);
 	MakeArray	(0XF8ED0,	0X13C);
-	MakeName	(0XF8ED0,	"EntitySprite619");
+	MakeName	(0XF8ED0,	"MapSprite619");
 	MakeByte	(0XF900C);
 	MakeArray	(0XF900C,	0X17A);
-	MakeName	(0XF900C,	"EntitySprite620");
+	MakeName	(0XF900C,	"MapSprite620");
 	MakeByte	(0XF9186);
 	MakeArray	(0XF9186,	0X16C);
-	MakeName	(0XF9186,	"EntitySprite621");
+	MakeName	(0XF9186,	"MapSprite621");
 	MakeByte	(0XF92F2);
 	MakeArray	(0XF92F2,	0X13C);
-	MakeName	(0XF92F2,	"EntitySprite622");
+	MakeName	(0XF92F2,	"MapSprite622");
 	MakeByte	(0XF942E);
 	MakeArray	(0XF942E,	0X170);
-	MakeName	(0XF942E,	"EntitySprite623");
+	MakeName	(0XF942E,	"MapSprite623");
 	MakeByte	(0XF959E);
 	MakeArray	(0XF959E,	0X13E);
-	MakeName	(0XF959E,	"EntitySprite624");
+	MakeName	(0XF959E,	"MapSprite624");
 	MakeByte	(0XF96DC);
 	MakeArray	(0XF96DC,	0XFA);
-	MakeName	(0XF96DC,	"EntitySprite625");
+	MakeName	(0XF96DC,	"MapSprite625");
 	MakeByte	(0XF97D6);
 	MakeArray	(0XF97D6,	0X15C);
-	MakeName	(0XF97D6,	"EntitySprite626");
+	MakeName	(0XF97D6,	"MapSprite626");
 	MakeByte	(0XF9932);
 	MakeArray	(0XF9932,	0X196);
-	MakeName	(0XF9932,	"EntitySprite627");
+	MakeName	(0XF9932,	"MapSprite627");
 	MakeByte	(0XF9AC8);
 	MakeArray	(0XF9AC8,	0X184);
-	MakeName	(0XF9AC8,	"EntitySprite628");
+	MakeName	(0XF9AC8,	"MapSprite628");
 	MakeByte	(0XF9C4C);
 	MakeArray	(0XF9C4C,	0X19C);
-	MakeName	(0XF9C4C,	"EntitySprite629");
+	MakeName	(0XF9C4C,	"MapSprite629");
 	MakeByte	(0XF9DE8);
 	MakeArray	(0XF9DE8,	0X11C);
-	MakeName	(0XF9DE8,	"EntitySprite630");
+	MakeName	(0XF9DE8,	"MapSprite630");
 	MakeByte	(0XF9F04);
 	MakeArray	(0XF9F04,	0X18C);
-	MakeName	(0XF9F04,	"EntitySprite631");
+	MakeName	(0XF9F04,	"MapSprite631");
 	MakeByte	(0XFA090);
 	MakeArray	(0XFA090,	0X11E);
-	MakeName	(0XFA090,	"EntitySprite632");
+	MakeName	(0XFA090,	"MapSprite632");
 	MakeByte	(0XFA1AE);
 	MakeArray	(0XFA1AE,	0X110);
-	MakeName	(0XFA1AE,	"EntitySprite633");
+	MakeName	(0XFA1AE,	"MapSprite633");
 	MakeByte	(0XFA2BE);
 	MakeArray	(0XFA2BE,	0X10A);
-	MakeName	(0XFA2BE,	"EntitySprite634");
+	MakeName	(0XFA2BE,	"MapSprite634");
 	MakeByte	(0XFA3C8);
 	MakeArray	(0XFA3C8,	0X12A);
-	MakeName	(0XFA3C8,	"EntitySprite635");
+	MakeName	(0XFA3C8,	"MapSprite635");
 	MakeByte	(0XFA4F2);
 	MakeArray	(0XFA4F2,	0X182);
-	MakeName	(0XFA4F2,	"EntitySprite636");
+	MakeName	(0XFA4F2,	"MapSprite636");
 	MakeByte	(0XFA674);
 	MakeArray	(0XFA674,	0X126);
-	MakeName	(0XFA674,	"EntitySprite637");
+	MakeName	(0XFA674,	"MapSprite637");
 	MakeByte	(0XFA79A);
 	MakeArray	(0XFA79A,	0X1A4);
-	MakeName	(0XFA79A,	"EntitySprite638");
+	MakeName	(0XFA79A,	"MapSprite638");
 	MakeByte	(0XFA93E);
 	MakeArray	(0XFA93E,	0X12C);
-	MakeName	(0XFA93E,	"EntitySprite639");
+	MakeName	(0XFA93E,	"MapSprite639");
 	MakeByte	(0XFAA6A);
 	MakeArray	(0XFAA6A,	0XE8);
-	MakeName	(0XFAA6A,	"EntitySprite640");
+	MakeName	(0XFAA6A,	"MapSprite640");
 	MakeByte	(0XFAB52);
 	MakeArray	(0XFAB52,	0XEC);
-	MakeName	(0XFAB52,	"EntitySprite641");
+	MakeName	(0XFAB52,	"MapSprite641");
 	MakeByte	(0XFAC3E);
 	MakeArray	(0XFAC3E,	0X140);
-	MakeName	(0XFAC3E,	"EntitySprite489");
+	MakeName	(0XFAC3E,	"MapSprite489");
 	MakeByte	(0XFAD7E);
 	MakeArray	(0XFAD7E,	0X13E);
-	MakeName	(0XFAD7E,	"EntitySprite490");
+	MakeName	(0XFAD7E,	"MapSprite490");
 	MakeByte	(0XFAEBC);
 	MakeArray	(0XFAEBC,	0X15C);
-	MakeName	(0XFAEBC,	"EntitySprite491");
+	MakeName	(0XFAEBC,	"MapSprite491");
 	MakeByte	(0XFB018);
 	MakeArray	(0XFB018,	0X13C);
-	MakeName	(0XFB018,	"EntitySprite645");
+	MakeName	(0XFB018,	"MapSprite645");
 	MakeByte	(0XFB154);
 	MakeArray	(0XFB154,	0X11E);
-	MakeName	(0XFB154,	"EntitySprite646");
+	MakeName	(0XFB154,	"MapSprite646");
 	MakeByte	(0XFB272);
 	MakeArray	(0XFB272,	0X11A);
-	MakeName	(0XFB272,	"EntitySprite647");
+	MakeName	(0XFB272,	"MapSprite647");
 	MakeByte	(0XFB38C);
 	MakeArray	(0XFB38C,	0XD6);
-	MakeName	(0XFB38C,	"EntitySprite648");
+	MakeName	(0XFB38C,	"MapSprite648");
 	MakeByte	(0XFB462);
 	MakeArray	(0XFB462,	0XD8);
-	MakeName	(0XFB462,	"EntitySprite649");
+	MakeName	(0XFB462,	"MapSprite649");
 	MakeByte	(0XFB53A);
 	MakeArray	(0XFB53A,	0XD8);
-	MakeName	(0XFB53A,	"EntitySprite650");
+	MakeName	(0XFB53A,	"MapSprite650");
 	MakeByte	(0XFB612);
 	MakeArray	(0XFB612,	0X96);
-	MakeName	(0XFB612,	"EntitySprite651");
+	MakeName	(0XFB612,	"MapSprite651");
 	MakeByte	(0XFB6A8);
 	MakeArray	(0XFB6A8,	0X84);
-	MakeName	(0XFB6A8,	"EntitySprite652");
+	MakeName	(0XFB6A8,	"MapSprite652");
 	MakeByte	(0XFB72C);
 	MakeArray	(0XFB72C,	0XD4);
-	MakeName	(0XFB72C,	"EntitySprite653");
+	MakeName	(0XFB72C,	"MapSprite653");
 	MakeByte	(0XFB800);
 	MakeArray	(0XFB800,	0X106);
-	MakeName	(0XFB800,	"EntitySprite654");
+	MakeName	(0XFB800,	"MapSprite654");
 	MakeByte	(0XFB906);
 	MakeArray	(0XFB906,	0XFC);
-	MakeName	(0XFB906,	"EntitySprite655");
+	MakeName	(0XFB906,	"MapSprite655");
 	MakeByte	(0XFBA02);
 	MakeArray	(0XFBA02,	0XFC);
-	MakeName	(0XFBA02,	"EntitySprite656");
+	MakeName	(0XFBA02,	"MapSprite656");
 	MakeByte	(0XFBAFE);
 	MakeArray	(0XFBAFE,	0XB8);
-	MakeName	(0XFBAFE,	"EntitySprite657");
+	MakeName	(0XFBAFE,	"MapSprite657");
 	MakeByte	(0XFBBB6);
 	MakeArray	(0XFBBB6,	0X9A);
-	MakeName	(0XFBBB6,	"EntitySprite658");
+	MakeName	(0XFBBB6,	"MapSprite658");
 	MakeByte	(0XFBC50);
 	MakeArray	(0XFBC50,	0XB2);
-	MakeName	(0XFBC50,	"EntitySprite659");
+	MakeName	(0XFBC50,	"MapSprite659");
 	MakeByte	(0XFBD02);
 	MakeArray	(0XFBD02,	0X176);
-	MakeName	(0XFBD02,	"EntitySprite660");
+	MakeName	(0XFBD02,	"MapSprite660");
 	MakeByte	(0XFBE78);
 	MakeArray	(0XFBE78,	0X100);
-	MakeName	(0XFBE78,	"EntitySprite661");
+	MakeName	(0XFBE78,	"MapSprite661");
 	MakeByte	(0XFBF78);
 	MakeArray	(0XFBF78,	0X176);
-	MakeName	(0XFBF78,	"EntitySprite662");
+	MakeName	(0XFBF78,	"MapSprite662");
 	MakeByte	(0XFC0EE);
 	MakeArray	(0XFC0EE,	0X114);
-	MakeName	(0XFC0EE,	"EntitySprite663");
+	MakeName	(0XFC0EE,	"MapSprite663");
 	MakeByte	(0XFC202);
 	MakeArray	(0XFC202,	0X136);
-	MakeName	(0XFC202,	"EntitySprite664");
+	MakeName	(0XFC202,	"MapSprite664");
 	MakeByte	(0XFC338);
 	MakeArray	(0XFC338,	0X138);
-	MakeName	(0XFC338,	"EntitySprite665");
+	MakeName	(0XFC338,	"MapSprite665");
 	MakeByte	(0XFC470);
 	MakeArray	(0XFC470,	0X176);
-	MakeName	(0XFC470,	"EntitySprite666");
+	MakeName	(0XFC470,	"MapSprite666");
 	MakeByte	(0XFC5E6);
 	MakeArray	(0XFC5E6,	0X100);
-	MakeName	(0XFC5E6,	"EntitySprite667");
+	MakeName	(0XFC5E6,	"MapSprite667");
 	MakeByte	(0XFC6E6);
 	MakeArray	(0XFC6E6,	0X182);
-	MakeName	(0XFC6E6,	"EntitySprite668");
+	MakeName	(0XFC6E6,	"MapSprite668");
 	MakeByte	(0XFC868);
 	MakeArray	(0XFC868,	0X13C);
-	MakeName	(0XFC868,	"EntitySprite669");
+	MakeName	(0XFC868,	"MapSprite669");
 	MakeByte	(0XFC9A4);
 	MakeArray	(0XFC9A4,	0XEE);
-	MakeName	(0XFC9A4,	"EntitySprite670");
+	MakeName	(0XFC9A4,	"MapSprite670");
 	MakeByte	(0XFCA92);
 	MakeArray	(0XFCA92,	0X132);
-	MakeName	(0XFCA92,	"EntitySprite671");
+	MakeName	(0XFCA92,	"MapSprite671");
 	MakeByte	(0XFCBC4);
 	MakeArray	(0XFCBC4,	0X174);
-	MakeName	(0XFCBC4,	"EntitySprite672");
+	MakeName	(0XFCBC4,	"MapSprite672");
 	MakeByte	(0XFCD38);
 	MakeArray	(0XFCD38,	0X142);
-	MakeName	(0XFCD38,	"EntitySprite673");
+	MakeName	(0XFCD38,	"MapSprite673");
 	MakeByte	(0XFCE7A);
 	MakeArray	(0XFCE7A,	0X15E);
-	MakeName	(0XFCE7A,	"EntitySprite674");
+	MakeName	(0XFCE7A,	"MapSprite674");
 	MakeByte	(0XFCFD8);
 	MakeArray	(0XFCFD8,	0X19C);
-	MakeName	(0XFCFD8,	"EntitySprite675");
+	MakeName	(0XFCFD8,	"MapSprite675");
 	MakeByte	(0XFD174);
 	MakeArray	(0XFD174,	0X144);
-	MakeName	(0XFD174,	"EntitySprite676");
+	MakeName	(0XFD174,	"MapSprite676");
 	MakeByte	(0XFD2B8);
 	MakeArray	(0XFD2B8,	0X18C);
-	MakeName	(0XFD2B8,	"EntitySprite677");
+	MakeName	(0XFD2B8,	"MapSprite677");
 	MakeByte	(0XFD444);
 	MakeArray	(0XFD444,	0X15E);
-	MakeName	(0XFD444,	"EntitySprite678");
+	MakeName	(0XFD444,	"MapSprite678");
 	MakeByte	(0XFD5A2);
 	MakeArray	(0XFD5A2,	0X12E);
-	MakeName	(0XFD5A2,	"EntitySprite679");
+	MakeName	(0XFD5A2,	"MapSprite679");
 	MakeByte	(0XFD6D0);
 	MakeArray	(0XFD6D0,	0X16A);
-	MakeName	(0XFD6D0,	"EntitySprite680");
+	MakeName	(0XFD6D0,	"MapSprite680");
 	MakeByte	(0XFD83A);
 	MakeArray	(0XFD83A,	0X166);
-	MakeName	(0XFD83A,	"EntitySprite681");
+	MakeName	(0XFD83A,	"MapSprite681");
 	MakeByte	(0XFD9A0);
 	MakeArray	(0XFD9A0,	0X188);
-	MakeName	(0XFD9A0,	"EntitySprite682");
+	MakeName	(0XFD9A0,	"MapSprite682");
 	MakeByte	(0XFDB28);
 	MakeArray	(0XFDB28,	0X152);
-	MakeName	(0XFDB28,	"EntitySprite683");
+	MakeName	(0XFDB28,	"MapSprite683");
 	MakeByte	(0XFDC7A);
 	MakeArray	(0XFDC7A,	0X166);
-	MakeName	(0XFDC7A,	"EntitySprite684");
+	MakeName	(0XFDC7A,	"MapSprite684");
 	MakeByte	(0XFDDE0);
 	MakeArray	(0XFDDE0,	0X16E);
-	MakeName	(0XFDDE0,	"EntitySprite685");
+	MakeName	(0XFDDE0,	"MapSprite685");
 	MakeByte	(0XFDF4E);
 	MakeArray	(0XFDF4E,	0X154);
-	MakeName	(0XFDF4E,	"EntitySprite686");
+	MakeName	(0XFDF4E,	"MapSprite686");
 	MakeByte	(0XFE0A2);
 	MakeArray	(0XFE0A2,	0X122);
-	MakeName	(0XFE0A2,	"EntitySprite687");
+	MakeName	(0XFE0A2,	"MapSprite687");
 	MakeByte	(0XFE1C4);
 	MakeArray	(0XFE1C4,	0X18);
-	MakeName	(0XFE1C4,	"EntitySprite688");
+	MakeName	(0XFE1C4,	"MapSprite688");
 	MakeByte	(0XFE1DC);
 	MakeArray	(0XFE1DC,	0X100);
-	MakeName	(0XFE1DC,	"EntitySprite689");
+	MakeName	(0XFE1DC,	"MapSprite689");
 	MakeByte	(0XFE2DC);
 	MakeArray	(0XFE2DC,	0XA2);
-	MakeName	(0XFE2DC,	"EntitySprite690");
+	MakeName	(0XFE2DC,	"MapSprite690");
 	MakeByte	(0XFE37E);
 	MakeArray	(0XFE37E,	0XA2);
-	MakeName	(0XFE37E,	"EntitySprite691");
+	MakeName	(0XFE37E,	"MapSprite691");
 	MakeByte	(0XFE420);
 	MakeArray	(0XFE420,	0XA4);
-	MakeName	(0XFE420,	"EntitySprite692");
+	MakeName	(0XFE420,	"MapSprite692");
 	MakeByte	(0XFE4C4);
 	MakeArray	(0XFE4C4,	0X12C);
-	MakeName	(0XFE4C4,	"EntitySprite693");
+	MakeName	(0XFE4C4,	"MapSprite693");
 	MakeByte	(0XFE5F0);
 	MakeArray	(0XFE5F0,	0X1D4);
-	MakeName	(0XFE5F0,	"EntitySprite694");
+	MakeName	(0XFE5F0,	"MapSprite694");
 	MakeByte	(0XFE7C4);
 	MakeArray	(0XFE7C4,	0X15C);
-	MakeName	(0XFE7C4,	"EntitySprite695");
+	MakeName	(0XFE7C4,	"MapSprite695");
 	MakeByte	(0XFE920);
 	MakeArray	(0XFE920,	0X15E);
-	MakeName	(0XFE920,	"EntitySprite696");
+	MakeName	(0XFE920,	"MapSprite696");
 	MakeByte	(0XFEA7E);
 	MakeArray	(0XFEA7E,	0X1D2);
-	MakeName	(0XFEA7E,	"EntitySprite697");
+	MakeName	(0XFEA7E,	"MapSprite697");
 	MakeByte	(0XFEC50);
 	MakeArray	(0XFEC50,	0X166);
-	MakeName	(0XFEC50,	"EntitySprite698");
+	MakeName	(0XFEC50,	"MapSprite698");
 	MakeByte	(0XFEDB6);
 	MakeArray	(0XFEDB6,	0X138);
-	MakeName	(0XFEDB6,	"EntitySprite699");
+	MakeName	(0XFEDB6,	"MapSprite699");
 	MakeByte	(0XFEEEE);
 	MakeArray	(0XFEEEE,	0X1B8);
-	MakeName	(0XFEEEE,	"EntitySprite700");
+	MakeName	(0XFEEEE,	"MapSprite700");
 	MakeByte	(0XFF0A6);
 	MakeArray	(0XFF0A6,	0X13A);
-	MakeName	(0XFF0A6,	"EntitySprite701");
+	MakeName	(0XFF0A6,	"MapSprite701");
 	MakeByte	(0XFF1E0);
 	MakeArray	(0XFF1E0,	0X102);
-	MakeName	(0XFF1E0,	"EntitySprite702");
+	MakeName	(0XFF1E0,	"MapSprite702");
 	MakeByte	(0XFF2E2);
 	MakeArray	(0XFF2E2,	0X152);
-	MakeName	(0XFF2E2,	"EntitySprite703");
+	MakeName	(0XFF2E2,	"MapSprite703");
 	MakeByte	(0XFF434);
 	MakeArray	(0XFF434,	0X10E);
-	MakeName	(0XFF434,	"EntitySprite704");
+	MakeName	(0XFF434,	"MapSprite704");
 	MakeByte	(0XFF542);
 	MakeArray	(0XFF542,	0X124);
-	MakeName	(0XFF542,	"EntitySprite705");
+	MakeName	(0XFF542,	"MapSprite705");
 	MakeByte	(0XFF666);
 	MakeArray	(0XFF666,	0XEA);
-	MakeName	(0XFF666,	"EntitySprite706");
+	MakeName	(0XFF666,	"MapSprite706");
 	MakeByte	(0XFF750);
 	MakeArray	(0XFF750,	0X126);
-	MakeName	(0XFF750,	"EntitySprite707");
+	MakeName	(0XFF750,	"MapSprite707");
 	MakeByte	(0XFF876);
 	MakeArray	(0XFF876,	0X14E);
-	MakeName	(0XFF876,	"EntitySprite708");
+	MakeName	(0XFF876,	"MapSprite708");
 	MakeByte	(0XFF9C4);
 	MakeArray	(0XFF9C4,	0X136);
-	MakeName	(0XFF9C4,	"EntitySprite709");
+	MakeName	(0XFF9C4,	"MapSprite709");
 	MakeByte	(0XFFAFA);
 	MakeArray	(0XFFAFA,	0X14C);
-	MakeName	(0XFFAFA,	"EntitySprite710");
+	MakeName	(0XFFAFA,	"MapSprite710");
 	MakeByte	(0XFFC46);
 	MakeArray	(0XFFC46,	0X2);
-	MakeName	(0XFFC46,	"EntitySprite711");
+	MakeName	(0XFFC46,	"MapSprite711");
 	MakeArray	(0XFFC48,	0X3B8);
 	MakeDword	(x=0X100000);
 	OpOff		(x,	0,	0X0);
@@ -140561,7 +140584,7 @@ static Bytes_32(void) {
 	MakeDword	(x=0X1B30EE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1B30EE,	"pt_BattleEntities");
+	MakeName	(0X1B30EE,	"pt_BattleSpriteSets");
 	MakeDword	(x=0X1B30F2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -140696,52 +140719,136 @@ static Bytes_32(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X1B31A2);
 	MakeArray	(0X1B31A2,	0X140);
-	MakeName	(0X1B31A2,	"BattleEntitySetup00");
+	MakeName	(0X1B31A2,	"BattleSpriteSet00");
 	MakeByte	(0X1B32E2);
 	MakeArray	(0X1B32E2,	0X94);
-	MakeName	(0X1B32E2,	"BattleEntitySetup01");
+	MakeName	(0X1B32E2,	"BattleSpriteSet01");
 	MakeByte	(0X1B3376);
 	MakeArray	(0X1B3376,	0X7E);
-	MakeName	(0X1B3376,	"BattleEntitySetup02");
+	MakeName	(0X1B3376,	"BattleSpriteSet02");
 	MakeByte	(0X1B33F4);
 	MakeArray	(0X1B33F4,	0XE8);
-	MakeName	(0X1B33F4,	"BattleEntitySetup03");
+	MakeName	(0X1B33F4,	"BattleSpriteSet03");
 	MakeByte	(0X1B34DC);
 	MakeArray	(0X1B34DC,	0XC6);
-	MakeName	(0X1B34DC,	"BattleEntitySetup04");
+	MakeName	(0X1B34DC,	"BattleSpriteSet04");
 	MakeByte	(0X1B35A2);
 	MakeArray	(0X1B35A2,	0XBA);
-	MakeName	(0X1B35A2,	"BattleEntitySetup05");
+	MakeName	(0X1B35A2,	"BattleSpriteSet05");
 	MakeByte	(0X1B365C);
 	MakeArray	(0X1B365C,	0XC4);
-	MakeName	(0X1B365C,	"BattleEntitySetup06");
+	MakeName	(0X1B365C,	"BattleSpriteSet06");
 	MakeByte	(0X1B3720);
 	MakeArray	(0X1B3720,	0X102);
-	MakeName	(0X1B3720,	"BattleEntitySetup07");
+	MakeName	(0X1B3720,	"BattleSpriteSet07");
 	MakeByte	(0X1B3822);
 	MakeArray	(0X1B3822,	0X156);
-	MakeName	(0X1B3822,	"BattleEntitySetup08");
+	MakeName	(0X1B3822,	"BattleSpriteSet08");
 	MakeByte	(0X1B3978);
 	MakeArray	(0X1B3978,	0X130);
-	MakeName	(0X1B3978,	"BattleEntitySetup09");
+	MakeName	(0X1B3978,	"BattleSpriteSet09");
 	MakeByte	(0X1B3AA8);
 	MakeArray	(0X1B3AA8,	0X14A);
-	MakeName	(0X1B3AA8,	"BattleEntitySetup10");
+	MakeName	(0X1B3AA8,	"BattleSpriteSet10");
 	MakeByte	(0X1B3BF2);
 	MakeArray	(0X1B3BF2,	0X13E);
-	MakeName	(0X1B3BF2,	"BattleEntitySetup11");
+	MakeName	(0X1B3BF2,	"BattleSpriteSet11");
 	MakeByte	(0X1B3D30);
 	MakeArray	(0X1B3D30,	0X156);
-	MakeName	(0X1B3D30,	"BattleEntitySetup12");
+	MakeName	(0X1B3D30,	"BattleSpriteSet12");
 	MakeByte	(0X1B3E86);
 	MakeArray	(0X1B3E86,	0X17A);
-	MakeName	(0X1B3E86,	"BattleEntitySetup13");
+	MakeName	(0X1B3E86,	"BattleSpriteSet13");
 	MakeByte	(0X1B4000);
 	MakeArray	(0X1B4000,	0X16C);
-	MakeName	(0X1B4000,	"BattleEntitySetup14");
+	MakeName	(0X1B4000,	"BattleSpriteSet14");
 	MakeByte	(0X1B416C);
 	MakeArray	(0X1B416C,	0X16E);
-	MakeName	(0X1B416C,	"BattleEntitySetup15");
+	MakeName	(0X1B416C,	"BattleSpriteSet15");
+	MakeByte	(0X1B42DA);
+	MakeArray	(0X1B42DA,	0X118);
+	MakeName	(0X1B42DA,	"BattleSpriteSet16");
+	MakeByte	(0X1B43F2);
+	MakeArray	(0X1B43F2,	0X154);
+	MakeName	(0X1B43F2,	"BattleSpriteSet17");
+	MakeByte	(0X1B4546);
+	MakeArray	(0X1B4546,	0X178);
+	MakeName	(0X1B4546,	"BattleSpriteSet18");
+	MakeByte	(0X1B46BE);
+	MakeArray	(0X1B46BE,	0X16E);
+	MakeName	(0X1B46BE,	"BattleSpriteSet19");
+	MakeByte	(0X1B482C);
+	MakeArray	(0X1B482C,	0X124);
+	MakeName	(0X1B482C,	"BattleSpriteSet20");
+	MakeByte	(0X1B4950);
+	MakeArray	(0X1B4950,	0X154);
+	MakeName	(0X1B4950,	"BattleSpriteSet21");
+	MakeByte	(0X1B4AA4);
+	MakeArray	(0X1B4AA4,	0X156);
+	MakeName	(0X1B4AA4,	"BattleSpriteSet22");
+	MakeByte	(0X1B4BFA);
+	MakeArray	(0X1B4BFA,	0X132);
+	MakeName	(0X1B4BFA,	"BattleSpriteSet23");
+	MakeByte	(0X1B4D2C);
+	MakeArray	(0X1B4D2C,	0X17A);
+	MakeName	(0X1B4D2C,	"BattleSpriteSet24");
+	MakeByte	(0X1B4EA6);
+	MakeArray	(0X1B4EA6,	0X16C);
+	MakeName	(0X1B4EA6,	"BattleSpriteSet25");
+	MakeByte	(0X1B5012);
+	MakeArray	(0X1B5012,	0X16E);
+	MakeName	(0X1B5012,	"BattleSpriteSet26");
+	MakeByte	(0X1B5180);
+	MakeArray	(0X1B5180,	0X186);
+	MakeName	(0X1B5180,	"BattleSpriteSet27");
+	MakeByte	(0X1B5306);
+	MakeArray	(0X1B5306,	0X17A);
+	MakeName	(0X1B5306,	"BattleSpriteSet28");
+	MakeByte	(0X1B5480);
+	MakeArray	(0X1B5480,	0X17C);
+	MakeName	(0X1B5480,	"BattleSpriteSet29");
+	MakeByte	(0X1B55FC);
+	MakeArray	(0X1B55FC,	0X186);
+	MakeName	(0X1B55FC,	"BattleSpriteSet30");
+	MakeByte	(0X1B5782);
+	MakeArray	(0X1B5782,	0X17A);
+	MakeName	(0X1B5782,	"BattleSpriteSet31");
+	MakeByte	(0X1B58FC);
+	MakeArray	(0X1B58FC,	0X16E);
+	MakeName	(0X1B58FC,	"BattleSpriteSet32");
+	MakeByte	(0X1B5A6A);
+	MakeArray	(0X1B5A6A,	0X162);
+	MakeName	(0X1B5A6A,	"BattleSpriteSet33");
+	MakeByte	(0X1B5BCC);
+	MakeArray	(0X1B5BCC,	0X1AA);
+	MakeName	(0X1B5BCC,	"BattleSpriteSet34");
+	MakeByte	(0X1B5D76);
+	MakeArray	(0X1B5D76,	0X19E);
+	MakeName	(0X1B5D76,	"BattleSpriteSet35");
+	MakeByte	(0X1B5F14);
+	MakeArray	(0X1B5F14,	0X1AA);
+	MakeName	(0X1B5F14,	"BattleSpriteSet36");
+	MakeByte	(0X1B60BE);
+	MakeArray	(0X1B60BE,	0X192);
+	MakeName	(0X1B60BE,	"BattleSpriteSet37");
+	MakeByte	(0X1B6250);
+	MakeArray	(0X1B6250,	0X1AA);
+	MakeName	(0X1B6250,	"BattleSpriteSet38");
+	MakeByte	(0X1B63FA);
+	MakeArray	(0X1B63FA,	0X13E);
+	MakeName	(0X1B63FA,	"BattleSpriteSet39");
+	MakeByte	(0X1B6538);
+	MakeArray	(0X1B6538,	0X1B6);
+	MakeName	(0X1B6538,	"BattleSpriteSet40");
+	MakeByte	(0X1B66EE);
+	MakeArray	(0X1B66EE,	0X1C2);
+	MakeName	(0X1B66EE,	"BattleSpriteSet41");
+	MakeByte	(0X1B68B0);
+	MakeArray	(0X1B68B0,	0X1AA);
+	MakeName	(0X1B68B0,	"BattleSpriteSet42");
+	MakeByte	(0X1B6A5A);
+	MakeArray	(0X1B6A5A,	0X164);
+	MakeName	(0X1B6A5A,	"BattleSpriteSet43");
 }
 
 //------------------------------------------------------------------------
@@ -140751,93 +140858,9 @@ static Bytes_33(void) {
         auto x;
 #define id x
 
-	MakeByte	(0X1B42DA);
-	MakeArray	(0X1B42DA,	0X118);
-	MakeName	(0X1B42DA,	"BattleEntitySetup16");
-	MakeByte	(0X1B43F2);
-	MakeArray	(0X1B43F2,	0X154);
-	MakeName	(0X1B43F2,	"BattleEntitySetup17");
-	MakeByte	(0X1B4546);
-	MakeArray	(0X1B4546,	0X178);
-	MakeName	(0X1B4546,	"BattleEntitySetup18");
-	MakeByte	(0X1B46BE);
-	MakeArray	(0X1B46BE,	0X16E);
-	MakeName	(0X1B46BE,	"BattleEntitySetup19");
-	MakeByte	(0X1B482C);
-	MakeArray	(0X1B482C,	0X124);
-	MakeName	(0X1B482C,	"BattleEntitySetup20");
-	MakeByte	(0X1B4950);
-	MakeArray	(0X1B4950,	0X154);
-	MakeName	(0X1B4950,	"BattleEntitySetup21");
-	MakeByte	(0X1B4AA4);
-	MakeArray	(0X1B4AA4,	0X156);
-	MakeName	(0X1B4AA4,	"BattleEntitySetup22");
-	MakeByte	(0X1B4BFA);
-	MakeArray	(0X1B4BFA,	0X132);
-	MakeName	(0X1B4BFA,	"BattleEntitySetup23");
-	MakeByte	(0X1B4D2C);
-	MakeArray	(0X1B4D2C,	0X17A);
-	MakeName	(0X1B4D2C,	"BattleEntitySetup24");
-	MakeByte	(0X1B4EA6);
-	MakeArray	(0X1B4EA6,	0X16C);
-	MakeName	(0X1B4EA6,	"BattleEntitySetup25");
-	MakeByte	(0X1B5012);
-	MakeArray	(0X1B5012,	0X16E);
-	MakeName	(0X1B5012,	"BattleEntitySetup26");
-	MakeByte	(0X1B5180);
-	MakeArray	(0X1B5180,	0X186);
-	MakeName	(0X1B5180,	"BattleEntitySetup27");
-	MakeByte	(0X1B5306);
-	MakeArray	(0X1B5306,	0X17A);
-	MakeName	(0X1B5306,	"BattleEntitySetup28");
-	MakeByte	(0X1B5480);
-	MakeArray	(0X1B5480,	0X17C);
-	MakeName	(0X1B5480,	"BattleEntitySetup29");
-	MakeByte	(0X1B55FC);
-	MakeArray	(0X1B55FC,	0X186);
-	MakeName	(0X1B55FC,	"BattleEntitySetup30");
-	MakeByte	(0X1B5782);
-	MakeArray	(0X1B5782,	0X17A);
-	MakeName	(0X1B5782,	"BattleEntitySetup31");
-	MakeByte	(0X1B58FC);
-	MakeArray	(0X1B58FC,	0X16E);
-	MakeName	(0X1B58FC,	"BattleEntitySetup32");
-	MakeByte	(0X1B5A6A);
-	MakeArray	(0X1B5A6A,	0X162);
-	MakeName	(0X1B5A6A,	"BattleEntitySetup33");
-	MakeByte	(0X1B5BCC);
-	MakeArray	(0X1B5BCC,	0X1AA);
-	MakeName	(0X1B5BCC,	"BattleEntitySetup34");
-	MakeByte	(0X1B5D76);
-	MakeArray	(0X1B5D76,	0X19E);
-	MakeName	(0X1B5D76,	"BattleEntitySetup35");
-	MakeByte	(0X1B5F14);
-	MakeArray	(0X1B5F14,	0X1AA);
-	MakeName	(0X1B5F14,	"BattleEntitySetup36");
-	MakeByte	(0X1B60BE);
-	MakeArray	(0X1B60BE,	0X192);
-	MakeName	(0X1B60BE,	"BattleEntitySetup37");
-	MakeByte	(0X1B6250);
-	MakeArray	(0X1B6250,	0X1AA);
-	MakeName	(0X1B6250,	"BattleEntitySetup38");
-	MakeByte	(0X1B63FA);
-	MakeArray	(0X1B63FA,	0X13E);
-	MakeName	(0X1B63FA,	"BattleEntitySetup39");
-	MakeByte	(0X1B6538);
-	MakeArray	(0X1B6538,	0X1B6);
-	MakeName	(0X1B6538,	"BattleEntitySetup40");
-	MakeByte	(0X1B66EE);
-	MakeArray	(0X1B66EE,	0X1C2);
-	MakeName	(0X1B66EE,	"BattleEntitySetup41");
-	MakeByte	(0X1B68B0);
-	MakeArray	(0X1B68B0,	0X1AA);
-	MakeName	(0X1B68B0,	"BattleEntitySetup42");
-	MakeByte	(0X1B6A5A);
-	MakeArray	(0X1B6A5A,	0X164);
-	MakeName	(0X1B6A5A,	"BattleEntitySetup43");
 	MakeByte	(0X1B6BBE);
 	MakeArray	(0X1B6BBE,	0X1F2);
-	MakeName	(0X1B6BBE,	"BattleEntitySetup44");
+	MakeName	(0X1B6BBE,	"BattleSpriteSet44");
 	MakeByte	(0X1B6DB0);
 	MakeArray	(0X1B6DB0,	0XC);
 	MakeName	(0X1B6DB0,	"SpecialBattles");
@@ -140891,7 +140914,7 @@ static Bytes_33(void) {
 	MakeDword	(x=0X1B8028);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1B8028,	"pt_BattleSceneGrounds");
+	MakeName	(0X1B8028,	"pt_Grounds");
 	MakeDword	(x=0X1B802C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -140981,7 +141004,7 @@ static Bytes_33(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X1B80A0);
 	MakeArray	(0X1B80A0,	0X6);
-	MakeName	(0X1B80A0,	"battlesceneGround00");
+	MakeName	(0X1B80A0,	"Ground00");
 	MakeWord	(x=0X1B80A6);
 	OpOff		(x,	0,	0X1B80A6);
 	OpOff		(x,	128,	0X1B80A6);
@@ -140990,7 +141013,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80A6,	"bsg00_rpbase");
 	MakeByte	(0X1B80A8);
 	MakeArray	(0X1B80A8,	0X6);
-	MakeName	(0X1B80A8,	"battlesceneGround01");
+	MakeName	(0X1B80A8,	"Ground01");
 	MakeWord	(x=0X1B80AE);
 	OpOff		(x,	0,	0X1B80AE);
 	OpOff		(x,	128,	0X1B80AE);
@@ -140999,7 +141022,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80AE,	"bsg01_rpbase");
 	MakeByte	(0X1B80B0);
 	MakeArray	(0X1B80B0,	0X6);
-	MakeName	(0X1B80B0,	"battlesceneGround02");
+	MakeName	(0X1B80B0,	"Ground02");
 	MakeWord	(x=0X1B80B6);
 	OpOff		(x,	0,	0X1B80B6);
 	OpOff		(x,	128,	0X1B80B6);
@@ -141008,7 +141031,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80B6,	"bsg02_rpbase");
 	MakeByte	(0X1B80B8);
 	MakeArray	(0X1B80B8,	0X6);
-	MakeName	(0X1B80B8,	"battlesceneGround03");
+	MakeName	(0X1B80B8,	"Ground03");
 	MakeWord	(x=0X1B80BE);
 	OpOff		(x,	0,	0X1B80BE);
 	OpOff		(x,	128,	0X1B80BE);
@@ -141017,7 +141040,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80BE,	"bsg03_rpbase");
 	MakeByte	(0X1B80C0);
 	MakeArray	(0X1B80C0,	0X6);
-	MakeName	(0X1B80C0,	"battlesceneGround04");
+	MakeName	(0X1B80C0,	"Ground04");
 	MakeWord	(x=0X1B80C6);
 	OpOff		(x,	0,	0X1B80C6);
 	OpOff		(x,	128,	0X1B80C6);
@@ -141026,7 +141049,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80C6,	"bsg04_rpbase");
 	MakeByte	(0X1B80C8);
 	MakeArray	(0X1B80C8,	0X6);
-	MakeName	(0X1B80C8,	"battlesceneGround05");
+	MakeName	(0X1B80C8,	"Ground05");
 	MakeWord	(x=0X1B80CE);
 	OpOff		(x,	0,	0X1B80CE);
 	OpOff		(x,	128,	0X1B80CE);
@@ -141035,7 +141058,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80CE,	"bsg05_rpbase");
 	MakeByte	(0X1B80D0);
 	MakeArray	(0X1B80D0,	0X6);
-	MakeName	(0X1B80D0,	"battlesceneGround06");
+	MakeName	(0X1B80D0,	"Ground06");
 	MakeWord	(x=0X1B80D6);
 	OpOff		(x,	0,	0X1B80D6);
 	OpOff		(x,	128,	0X1B80D6);
@@ -141044,7 +141067,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80D6,	"bsg06_rpbase");
 	MakeByte	(0X1B80D8);
 	MakeArray	(0X1B80D8,	0X6);
-	MakeName	(0X1B80D8,	"battlesceneGround07");
+	MakeName	(0X1B80D8,	"Ground07");
 	MakeWord	(x=0X1B80DE);
 	OpOff		(x,	0,	0X1B80DE);
 	OpOff		(x,	128,	0X1B80DE);
@@ -141053,7 +141076,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80DE,	"bsg07_rpbase");
 	MakeByte	(0X1B80E0);
 	MakeArray	(0X1B80E0,	0X6);
-	MakeName	(0X1B80E0,	"battlesceneGround08");
+	MakeName	(0X1B80E0,	"Ground08");
 	MakeWord	(x=0X1B80E6);
 	OpOff		(x,	0,	0X1B80E6);
 	OpOff		(x,	128,	0X1B80E6);
@@ -141062,7 +141085,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80E6,	"bsg08_rpbase");
 	MakeByte	(0X1B80E8);
 	MakeArray	(0X1B80E8,	0X6);
-	MakeName	(0X1B80E8,	"battlesceneGround09");
+	MakeName	(0X1B80E8,	"Ground09");
 	MakeWord	(x=0X1B80EE);
 	OpOff		(x,	0,	0X1B80EE);
 	OpOff		(x,	128,	0X1B80EE);
@@ -141071,7 +141094,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80EE,	"bsg09_rpbase");
 	MakeByte	(0X1B80F0);
 	MakeArray	(0X1B80F0,	0X6);
-	MakeName	(0X1B80F0,	"battlesceneGround10");
+	MakeName	(0X1B80F0,	"Ground10");
 	MakeWord	(x=0X1B80F6);
 	OpOff		(x,	0,	0X1B80F6);
 	OpOff		(x,	128,	0X1B80F6);
@@ -141080,7 +141103,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80F6,	"bsg10_rpbase");
 	MakeByte	(0X1B80F8);
 	MakeArray	(0X1B80F8,	0X6);
-	MakeName	(0X1B80F8,	"battlesceneGround11");
+	MakeName	(0X1B80F8,	"Ground11");
 	MakeWord	(x=0X1B80FE);
 	OpOff		(x,	0,	0X1B80FE);
 	OpOff		(x,	128,	0X1B80FE);
@@ -141089,7 +141112,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B80FE,	"bsg11_rpbase");
 	MakeByte	(0X1B8100);
 	MakeArray	(0X1B8100,	0X6);
-	MakeName	(0X1B8100,	"battlesceneGround12");
+	MakeName	(0X1B8100,	"Ground12");
 	MakeWord	(x=0X1B8106);
 	OpOff		(x,	0,	0X1B8106);
 	OpOff		(x,	128,	0X1B8106);
@@ -141098,7 +141121,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8106,	"bsg12_rpbase");
 	MakeByte	(0X1B8108);
 	MakeArray	(0X1B8108,	0X6);
-	MakeName	(0X1B8108,	"battlesceneGround13");
+	MakeName	(0X1B8108,	"Ground13");
 	MakeWord	(x=0X1B810E);
 	OpOff		(x,	0,	0X1B810E);
 	OpOff		(x,	128,	0X1B810E);
@@ -141107,7 +141130,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B810E,	"bsg13_rpbase");
 	MakeByte	(0X1B8110);
 	MakeArray	(0X1B8110,	0X6);
-	MakeName	(0X1B8110,	"battlesceneGround14");
+	MakeName	(0X1B8110,	"Ground14");
 	MakeWord	(x=0X1B8116);
 	OpOff		(x,	0,	0X1B8116);
 	OpOff		(x,	128,	0X1B8116);
@@ -141116,7 +141139,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8116,	"bsg14_rpbase");
 	MakeByte	(0X1B8118);
 	MakeArray	(0X1B8118,	0X6);
-	MakeName	(0X1B8118,	"battlesceneGround15");
+	MakeName	(0X1B8118,	"Ground15");
 	MakeWord	(x=0X1B811E);
 	OpOff		(x,	0,	0X1B811E);
 	OpOff		(x,	128,	0X1B811E);
@@ -141125,7 +141148,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B811E,	"bsg15_rpbase");
 	MakeByte	(0X1B8120);
 	MakeArray	(0X1B8120,	0X6);
-	MakeName	(0X1B8120,	"battlesceneGround16");
+	MakeName	(0X1B8120,	"Ground16");
 	MakeWord	(x=0X1B8126);
 	OpOff		(x,	0,	0X1B8126);
 	OpOff		(x,	128,	0X1B8126);
@@ -141134,7 +141157,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8126,	"bsg16_rpbase");
 	MakeByte	(0X1B8128);
 	MakeArray	(0X1B8128,	0X6);
-	MakeName	(0X1B8128,	"battlesceneGround17");
+	MakeName	(0X1B8128,	"Ground17");
 	MakeWord	(x=0X1B812E);
 	OpOff		(x,	0,	0X1B812E);
 	OpOff		(x,	128,	0X1B812E);
@@ -141143,7 +141166,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B812E,	"bsg17_rpbase");
 	MakeByte	(0X1B8130);
 	MakeArray	(0X1B8130,	0X6);
-	MakeName	(0X1B8130,	"battlesceneGround18");
+	MakeName	(0X1B8130,	"Ground18");
 	MakeWord	(x=0X1B8136);
 	OpOff		(x,	0,	0X1B8136);
 	OpOff		(x,	128,	0X1B8136);
@@ -141152,7 +141175,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8136,	"bsg18_rpbase");
 	MakeByte	(0X1B8138);
 	MakeArray	(0X1B8138,	0X6);
-	MakeName	(0X1B8138,	"battlesceneGround19");
+	MakeName	(0X1B8138,	"Ground19");
 	MakeWord	(x=0X1B813E);
 	OpOff		(x,	0,	0X1B813E);
 	OpOff		(x,	128,	0X1B813E);
@@ -141161,7 +141184,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B813E,	"bsg19_rpbase");
 	MakeByte	(0X1B8140);
 	MakeArray	(0X1B8140,	0X6);
-	MakeName	(0X1B8140,	"battlesceneGround20");
+	MakeName	(0X1B8140,	"Ground20");
 	MakeWord	(x=0X1B8146);
 	OpOff		(x,	0,	0X1B8146);
 	OpOff		(x,	128,	0X1B8146);
@@ -141170,7 +141193,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8146,	"bsg20_rpbase");
 	MakeByte	(0X1B8148);
 	MakeArray	(0X1B8148,	0X6);
-	MakeName	(0X1B8148,	"battlesceneGround23");
+	MakeName	(0X1B8148,	"Ground23");
 	MakeWord	(x=0X1B814E);
 	OpOff		(x,	0,	0X1B814E);
 	OpOff		(x,	128,	0X1B814E);
@@ -141179,7 +141202,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B814E,	"bsg23_rpbase");
 	MakeByte	(0X1B8150);
 	MakeArray	(0X1B8150,	0X6);
-	MakeName	(0X1B8150,	"battlesceneGround24");
+	MakeName	(0X1B8150,	"Ground24");
 	MakeWord	(x=0X1B8156);
 	OpOff		(x,	0,	0X1B8156);
 	OpOff		(x,	128,	0X1B8156);
@@ -141188,7 +141211,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8156,	"bsg24_rpbase");
 	MakeByte	(0X1B8158);
 	MakeArray	(0X1B8158,	0X6);
-	MakeName	(0X1B8158,	"battlesceneGround25");
+	MakeName	(0X1B8158,	"Ground25");
 	MakeWord	(x=0X1B815E);
 	OpOff		(x,	0,	0X1B815E);
 	OpOff		(x,	128,	0X1B815E);
@@ -141197,7 +141220,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B815E,	"bsg25_rpbase");
 	MakeByte	(0X1B8160);
 	MakeArray	(0X1B8160,	0X6);
-	MakeName	(0X1B8160,	"battlesceneGround26");
+	MakeName	(0X1B8160,	"Ground26");
 	MakeWord	(x=0X1B8166);
 	OpOff		(x,	0,	0X1B8166);
 	OpOff		(x,	128,	0X1B8166);
@@ -141206,7 +141229,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B8166,	"bsg26_rpbase");
 	MakeByte	(0X1B8168);
 	MakeArray	(0X1B8168,	0X6);
-	MakeName	(0X1B8168,	"battlesceneGround27");
+	MakeName	(0X1B8168,	"Ground27");
 	MakeWord	(x=0X1B816E);
 	OpOff		(x,	0,	0X1B816E);
 	OpOff		(x,	128,	0X1B816E);
@@ -141215,7 +141238,7 @@ static Bytes_33(void) {
 	MakeName	(0X1B816E,	"bsg27_rpbase");
 	MakeByte	(0X1B8170);
 	MakeArray	(0X1B8170,	0X6);
-	MakeName	(0X1B8170,	"battlesceneGround28");
+	MakeName	(0X1B8170,	"Ground28");
 	MakeWord	(x=0X1B8176);
 	OpOff		(x,	0,	0X1B8176);
 	OpOff		(x,	128,	0X1B8176);
@@ -141224,34 +141247,34 @@ static Bytes_33(void) {
 	MakeName	(0X1B8176,	"bsg28_rpbase");
 	MakeByte	(0X1B8178);
 	MakeArray	(0X1B8178,	0X2C6);
-	MakeName	(0X1B8178,	"groundTiles00");
+	MakeName	(0X1B8178,	"GroundTiles00");
 	MakeByte	(0X1B843E);
 	MakeArray	(0X1B843E,	0X29A);
-	MakeName	(0X1B843E,	"groundTiles01");
+	MakeName	(0X1B843E,	"GroundTiles01");
 	MakeByte	(0X1B86D8);
 	MakeArray	(0X1B86D8,	0X26C);
-	MakeName	(0X1B86D8,	"groundTiles05");
+	MakeName	(0X1B86D8,	"GroundTiles05");
 	MakeByte	(0X1B8944);
 	MakeArray	(0X1B8944,	0X248);
-	MakeName	(0X1B8944,	"groundTiles14");
+	MakeName	(0X1B8944,	"GroundTiles14");
 	MakeByte	(0X1B8B8C);
 	MakeArray	(0X1B8B8C,	0X250);
-	MakeName	(0X1B8B8C,	"groundTiles03");
+	MakeName	(0X1B8B8C,	"GroundTiles03");
 	MakeByte	(0X1B8DDC);
 	MakeArray	(0X1B8DDC,	0X296);
-	MakeName	(0X1B8DDC,	"groundTiles08");
+	MakeName	(0X1B8DDC,	"GroundTiles08");
 	MakeByte	(0X1B9072);
 	MakeArray	(0X1B9072,	0X276);
-	MakeName	(0X1B9072,	"groundTiles09");
+	MakeName	(0X1B9072,	"GroundTiles09");
 	MakeByte	(0X1B92E8);
 	MakeArray	(0X1B92E8,	0X268);
-	MakeName	(0X1B92E8,	"groundTiles17");
+	MakeName	(0X1B92E8,	"GroundTiles17");
 	MakeByte	(0X1B9550);
 	MakeArray	(0X1B9550,	0X26E);
-	MakeName	(0X1B9550,	"groundTiles25");
+	MakeName	(0X1B9550,	"GroundTiles25");
 	MakeByte	(0X1B97BE);
 	MakeArray	(0X1B97BE,	0X2DC);
-	MakeName	(0X1B97BE,	"groundTiles26");
+	MakeName	(0X1B97BE,	"GroundTiles26");
 	MakeDword	(x=0X1B9A9A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -141393,7 +141416,7 @@ static Bytes_33(void) {
 	MakeName	(0X1BEAB6,	"WeaponSprite22");
 	MakeByte	(0X1BEE38);
 	MakeArray	(0X1BEE38,	0XA8);
-	MakeName	(0X1BEE38,	"plt_BattleSceneWeaponColors");
+	MakeName	(0X1BEE38,	"plt_WeaponPalettes");
 	MakeDword	(x=0X1BEEE0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -141951,7 +141974,7 @@ static Bytes_33(void) {
 	MakeDword	(x=0X1EE270);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1EE270,	"pt_CharacterStats");
+	MakeName	(0X1EE270,	"pt_AllyStats");
 	MakeDword	(x=0X1EE274);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -142047,97 +142070,97 @@ static Bytes_33(void) {
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X1EE2F0);
 	MakeArray	(0X1EE2F0,	0X2C);
-	MakeName	(0X1EE2F0,	"stats_Bowie");
+	MakeName	(0X1EE2F0,	"AllyStats00");
 	MakeByte	(0X1EE31C);
 	MakeArray	(0X1EE31C,	0X4F);
-	MakeName	(0X1EE31C,	"stats_Sarah");
+	MakeName	(0X1EE31C,	"AllyStats01");
 	MakeByte	(0X1EE36B);
 	MakeArray	(0X1EE36B,	0X33);
-	MakeName	(0X1EE36B,	"stats_Chester");
+	MakeName	(0X1EE36B,	"AllyStats02");
 	MakeByte	(0X1EE39E);
 	MakeArray	(0X1EE39E,	0X33);
-	MakeName	(0X1EE39E,	"stats_Jaha");
+	MakeName	(0X1EE39E,	"AllyStats03");
 	MakeByte	(0X1EE3D1);
 	MakeArray	(0X1EE3D1,	0X55);
-	MakeName	(0X1EE3D1,	"stats_Kazin");
+	MakeName	(0X1EE3D1,	"AllyStats04");
 	MakeByte	(0X1EE426);
 	MakeArray	(0X1EE426,	0X2E);
-	MakeName	(0X1EE426,	"stats_Slade");
+	MakeName	(0X1EE426,	"AllyStats05");
 	MakeByte	(0X1EE454);
 	MakeArray	(0X1EE454,	0X22);
-	MakeName	(0X1EE454,	"stats_Kiwi");
+	MakeName	(0X1EE454,	"AllyStats06");
 	MakeByte	(0X1EE476);
 	MakeArray	(0X1EE476,	0X22);
-	MakeName	(0X1EE476,	"stats_Peter");
+	MakeName	(0X1EE476,	"AllyStats07");
 	MakeByte	(0X1EE498);
 	MakeArray	(0X1EE498,	0X22);
-	MakeName	(0X1EE498,	"stats_May");
+	MakeName	(0X1EE498,	"AllyStats08");
 	MakeByte	(0X1EE4BA);
 	MakeArray	(0X1EE4BA,	0X22);
-	MakeName	(0X1EE4BA,	"stats_Gerhalt");
+	MakeName	(0X1EE4BA,	"AllyStats09");
 	MakeByte	(0X1EE4DC);
 	MakeArray	(0X1EE4DC,	0X22);
-	MakeName	(0X1EE4DC,	"stats_Luke");
+	MakeName	(0X1EE4DC,	"AllyStats10");
 	MakeByte	(0X1EE4FE);
 	MakeArray	(0X1EE4FE,	0X11);
-	MakeName	(0X1EE4FE,	"stats_Rohde");
+	MakeName	(0X1EE4FE,	"AllyStats11");
 	MakeByte	(0X1EE50F);
 	MakeArray	(0X1EE50F,	0X33);
-	MakeName	(0X1EE50F,	"stats_Rick");
+	MakeName	(0X1EE50F,	"AllyStats12");
 	MakeByte	(0X1EE542);
 	MakeArray	(0X1EE542,	0X33);
-	MakeName	(0X1EE542,	"stats_Elric");
+	MakeName	(0X1EE542,	"AllyStats13");
 	MakeByte	(0X1EE575);
 	MakeArray	(0X1EE575,	0X33);
-	MakeName	(0X1EE575,	"stats_Eric");
+	MakeName	(0X1EE575,	"AllyStats14");
 	MakeByte	(0X1EE5A8);
 	MakeArray	(0X1EE5A8,	0X4D);
-	MakeName	(0X1EE5A8,	"stats_Karna");
+	MakeName	(0X1EE5A8,	"AllyStats15");
 	MakeByte	(0X1EE5F5);
 	MakeArray	(0X1EE5F5,	0X33);
-	MakeName	(0X1EE5F5,	"stats_Randolf");
+	MakeName	(0X1EE5F5,	"AllyStats16");
 	MakeByte	(0X1EE628);
 	MakeArray	(0X1EE628,	0X5D);
-	MakeName	(0X1EE628,	"stats_Tyrin");
+	MakeName	(0X1EE628,	"AllyStats17");
 	MakeByte	(0X1EE685);
 	MakeArray	(0X1EE685,	0X33);
-	MakeName	(0X1EE685,	"stats_Janet");
+	MakeName	(0X1EE685,	"AllyStats18");
 	MakeByte	(0X1EE6B8);
 	MakeArray	(0X1EE6B8,	0X11);
-	MakeName	(0X1EE6B8,	"stats_Higins");
+	MakeName	(0X1EE6B8,	"AllyStats19");
 	MakeByte	(0X1EE6C9);
 	MakeArray	(0X1EE6C9,	0X11);
-	MakeName	(0X1EE6C9,	"stats_Skreech");
+	MakeName	(0X1EE6C9,	"AllyStats20");
 	MakeByte	(0X1EE6DA);
 	MakeArray	(0X1EE6DA,	0X21);
-	MakeName	(0X1EE6DA,	"stats_Taya");
+	MakeName	(0X1EE6DA,	"AllyStats21");
 	MakeByte	(0X1EE6FB);
 	MakeArray	(0X1EE6FB,	0X2B);
-	MakeName	(0X1EE6FB,	"stats_Frayja");
+	MakeName	(0X1EE6FB,	"AllyStats22");
 	MakeByte	(0X1EE726);
 	MakeArray	(0X1EE726,	0X11);
-	MakeName	(0X1EE726,	"stats_Jaro");
+	MakeName	(0X1EE726,	"AllyStats23");
 	MakeByte	(0X1EE737);
 	MakeArray	(0X1EE737,	0X11);
-	MakeName	(0X1EE737,	"stats_Gyan");
+	MakeName	(0X1EE737,	"AllyStats24");
 	MakeByte	(0X1EE748);
 	MakeArray	(0X1EE748,	0X29);
-	MakeName	(0X1EE748,	"stats_Sheela");
+	MakeName	(0X1EE748,	"AllyStats25");
 	MakeByte	(0X1EE771);
 	MakeArray	(0X1EE771,	0X11);
-	MakeName	(0X1EE771,	"stats_Zynk");
+	MakeName	(0X1EE771,	"AllyStats26");
 	MakeByte	(0X1EE782);
 	MakeArray	(0X1EE782,	0X2B);
-	MakeName	(0X1EE782,	"stats_Chaz");
+	MakeName	(0X1EE782,	"AllyStats27");
 	MakeByte	(0X1EE7AD);
 	MakeArray	(0X1EE7AD,	0X11);
-	MakeName	(0X1EE7AD,	"stats_Lemon");
+	MakeName	(0X1EE7AD,	"AllyStats28");
 	MakeByte	(0X1EE7BE);
 	MakeArray	(0X1EE7BE,	0X12);
-	MakeName	(0X1EE7BE,	"stats_Claude");
+	MakeName	(0X1EE7BE,	"AllyStats29");
 	MakeByte	(0X1EE7D0);
 	MakeArray	(0X1EE7D0,	0XC0);
-	MakeName	(0X1EE7D0,	"CharacterStartData");
+	MakeName	(0X1EE7D0,	"AllyStartData");
 	MakeByte	(0X1EE890);
 	MakeArray	(0X1EE890,	0XA0);
 	MakeName	(0X1EE890,	"ClassData");
