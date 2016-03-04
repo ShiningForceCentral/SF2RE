@@ -8,19 +8,19 @@ static main()
     SetFunctionCmt(0x57a, 
         "execute map script at a0", 1);
 
-    // relatedToBits031_sub_674
+    // RelatedToBits031_sub_674
     SetFunctionCmt(0x674, 
         "related to bit0, bit3 and bit1", 1);
 
-    // relatedToBit0_sub_67C
+    // RelatedToBit0_sub_67C
     SetFunctionCmt(0x67c, 
         "executes if bit0 set", 1);
 
-    // relatedToBit4_sub_700
+    // RelatedToBit4_sub_700
     SetFunctionCmt(0x700, 
         "related to bit4", 1);
 
-    // relatedToBits31_sub_740
+    // RelatedToBits31_sub_740
     SetFunctionCmt(0x740, 
         "executes if bit3 set or bit1 clear", 1);
 
@@ -52,19 +52,19 @@ static main()
     SetFunctionCmt(0xb96, 
         "waits for 0xc00004 (VDP DMA register) to be cleared", 1);
 
-    // getVdpRegStatus
+    // GetVdpRegStatus
     SetFunctionCmt(0xbac, 
         "d0 : vdp reg number", 1);
 
-    // setVdpReg
+    // SetVdpReg
     SetFunctionCmt(0xbc2, 
         "d0 : vdp reg command", 1);
 
-    // setFFDE94bit1
+    // SetFFDE94bit1
     SetFunctionCmt(0xc58, 
         "used to execute sub_740", 1);
 
-    // copyPaletteIncomplete
+    // CopyPaletteIncomplete
     SetFunctionCmt(0xcc4, 
         "looks like this piece of code is incomplete and useless", 1);
 
@@ -76,23 +76,23 @@ static main()
     SetFunctionCmt(0xf04, 
         "wait for D0 Vints", 1);
 
-    // set_FFDE94_bit0
+    // Set_FFDE94_bit0
     SetFunctionCmt(0xf1a, 
         "used to execute sub_67C", 1);
 
-    // setFFDE94b0andWait
+    // SetFFDE94b0andWait
     SetFunctionCmt(0xf24, 
         "execute sub_67C", 1);
 
-    // set_FFDE94_bit3
+    // Set_FFDE94_bit3
     SetFunctionCmt(0xf2a, 
         "used to execute sub_740", 1);
 
-    // setFFDE94b3andWait
+    // SetFFDE94b3andWait
     SetFunctionCmt(0xf34, 
         "set bit 3 of 0xFFDE94 and wait next Vint to execute sub_740", 1);
 
-    // bwahDMAstuffAgainbis
+    // BwahDMAstuffAgainbis
     SetFunctionCmt(0x119e, 
         "d0 = DMA destination ?", 1);
 
@@ -120,11 +120,11 @@ static main()
     SetFunctionCmt(0x1674, 
         "another random function taking debug mode into account", 1);
 
-    // playMusicAfterCurrentOne
+    // PlayMusicAfterCurrentOne
     SetFunctionCmt(0x16be, 
         "d0 : music index, or previous music if value $FB", 1);
 
-    // copyBytes
+    // CopyBytes
     SetFunctionCmt(0x16d6, 
         "    Copy D7 bytes from A0 to A1.\n\
     In: A0 = src address\n\
@@ -149,7 +149,7 @@ set default values in sprite table", 1);
     SetFunctionCmt(0x19f8, 
         "related to palette updating", 1);
 
-    // loadSpriteData
+    // LoadSpriteData
     SetFunctionCmt(0x1a84, 
         "Basic tile decompression\n\
 \n\
@@ -157,7 +157,7 @@ set default values in sprite table", 1);
         A1 = dest address in RAM\n\
 ", 1);
 
-    // loadTileData
+    // LoadTileData
     SetFunctionCmt(0x1e48, 
         "Stack tile decompression\n\
 \n\
@@ -189,9 +189,13 @@ Out: D1 = block flag word", 1);
     SetFunctionCmt(0x2a8c, 
         "loads all map properties (map coords, entities, etc.)", 1);
 
-    // displayBlackScreen
+    // InitDisplay
     SetFunctionCmt(0x3022, 
         "or something like that ?", 1);
+
+    // VintFunc_3930
+    SetFunctionCmt(0x3930, 
+        "Related to camera position ?", 1);
 
     // ToggleRoofOnMapLoad
     SetFunctionCmt(0x3f2c, 
@@ -203,13 +207,13 @@ Out: D1 = block flag word", 1);
 \n\
 Out: D2 = item idx", 1);
 
-    // LoadBattleMapMusic
+    // LoadBattleMusic
     SetFunctionCmt(0x4544, 
         "overrides music index if we're in a battle", 1);
 
     // WaitForCameraToCatchUp
     SetFunctionCmt(0x4708, 
-        "wait for end of scrolling ?", 1);
+        "wait for end of scrolling", 1);
 
     // IsMapScrollingToFollowCameraTarget
     SetFunctionCmt(0x4728, 
@@ -217,12 +221,12 @@ Out: D2 = item idx", 1);
 \n\
 Out: Z = is scrolling", 1);
 
-    // createWindow
+    // CreateWindow
     SetFunctionCmt(0x4802, 
         "d0 = width height, d1 = X Y pos\n\
 returns a1 = window tiles end, d0 = window slot", 1);
 
-    // setWindowDestination
+    // SetWindowDestination
     SetFunctionCmt(0x4866, 
         "    startWindowTransition ???\n\
     In: D0 = window number\n\
@@ -399,7 +403,7 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     SetFunctionCmt(0x6a38, 
         "related to text box", 1);
 
-    // checkSRAM
+    // CheckSRAM
     SetFunctionCmt(0x6ea6, 
         "check saves ?", 1);
 
@@ -413,11 +417,11 @@ d7 = number of bytes to copy", 1);
     SetFunctionCmt(0x701c, 
         "and calculate checksum", 1);
 
-    // sub_7034
+    // WitchSuspend
     SetFunctionCmt(0x7034, 
-        "witch suspend screen ?", 1);
+        "witch suspend screen", 1);
 
-    // MainBattleAndMapLoop
+    // MainBattleAndExplorationLoop
     SetFunctionCmt(0x75c4, 
         "In: D0 = map idx\n\
     D1 = player X coord\n\
@@ -585,7 +589,7 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
         "In: D0 = char idx\n\
     D1 = item slot", 1);
 
-    // isItemEquippable
+    // IsItemEquippable
     SetFunctionCmt(0x8f60, 
         "In: D1 = item idx\n\
     D2 = item type bitmask (for ANDing the item type bitfield)\n\
@@ -598,11 +602,11 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
 Out: D2 = char ATK with item equipped\n\
      D3 = char DEF with item equipped", 1);
 
-    // isItemUsableInBattle
+    // IsItemUsableInBattle
     SetFunctionCmt(0x90cc, 
         "carry set : YES", 1);
 
-    // isItemUsableWeaponInBattle
+    // IsItemUsableWeaponInBattle
     SetFunctionCmt(0x90e6, 
         "carry set : NO", 1);
 
@@ -641,7 +645,7 @@ Out: D1 = spell idx\n\
     D1 = spell idx\n\
 Out: D2 = result (0 = learned new spell, 1 = upgraded spell, 2 = no room)", 1);
 
-    // getSpellCost
+    // GetSpellCost
     SetFunctionCmt(0x927e, 
         "    Get MP cost of spell.\n\
     In: D1 = spell index\n\
@@ -672,14 +676,14 @@ Out: D1 = word", 1);
     SetFunctionCmt(0x936c, 
         "clamp byte # D7 of entity D0's information - D1 between D5 and D6", 1);
 
-    // getDistanceBetweenEntities
+    // GetDistanceBetweenEntities
     SetFunctionCmt(0x941e, 
         "Gets distance between two entities (simple X and Y calculation, no obstructions)\n\
 In: D0 = from entity\n\
     D1 = to entity\n\
 Out: D2 = distance", 1);
 
-    // initGameSettings
+    // InitGameSettings
     SetFunctionCmt(0x9844, 
         "Clear all flags and important game variables.", 1);
 
@@ -730,13 +734,13 @@ Out: A0 = RAM address of deals slot\n\
     A4 = address in RAM of attacker idx\n\
     A5 = address in RAM of target idx", 1);
 
-    // createBattleSceneText
+    // CreateBattleSceneText
     SetFunctionCmt(0xa05c, 
         "Loads proper battle scene text script depending on attack action.\n\
 In: A3 = RAM index containing action type\n\
     A4 = RAM index containing attacker index", 1);
 
-    // createBattleSceneAnimation
+    // CreateBattleSceneAnimation
     SetFunctionCmt(0xa200, 
         "    Loads proper battle scene sprite/magic animation properties.\n\
     In: A3 = ", 1);
@@ -760,7 +764,7 @@ Out: D4 = effect idx", 1);
     In: D4 = projectile\n\
         D5 = special script idx", 1);
 
-    // getAmountOfEXPForEncounter
+    // GetAmountOfEXPForEncounter
     SetFunctionCmt(0xa968, 
         "Gets amount of EXP gained from encounter based on attacker level and target level.\n\
 In: A4 = address of attacker byte in RAM\n\
@@ -803,7 +807,7 @@ Out: D3 = message idx", 1);
     A4 = address in RAM of attacker idx\n\
     A5 = address in RAM of target idx", 1);
 
-    // convertCoordToOffset
+    // ConvertCoordToOffset
     SetFunctionCmt(0xc09a, 
         "    Convert coordinate to offset and add to address argument.\n\
     In: A0 = start of grid\n\
@@ -819,7 +823,7 @@ Out: D3 = message idx", 1);
     SetFunctionCmt(0xc0c4, 
         "    Clear moveable tile data at RAM:4400 and RAM:4d00.", 1);
 
-    // getTargetAtCoordOffset
+    // GetTargetAtCoordOffset
     SetFunctionCmt(0xc0e8, 
         "    Get value at converted coordinate offset.\n\
     In: D1 = X coord\n\
@@ -838,20 +842,20 @@ Out: D3 = message idx", 1);
     SetFunctionCmt(0xc144, 
         "get terrain type of tile under entity D0 -> D0", 1);
 
-    // getTerrainAtCoordOffset
+    // GetTerrain
     SetFunctionCmt(0xc160, 
         "    Get obstruction at converted coordinate offset.\n\
     In: D1 = X coord\n\
         D2 = Y coord\n\
     Out: D0 = target at offset", 1);
 
-    // setMovableAtCoord
+    // SetMovableAtCoord
     SetFunctionCmt(0xc204, 
         "    Set coord to movable in movable grid.\n\
     In: D1 = X coord\n\
         D2 = Y coord", 1);
 
-    // getResistanceToSpell
+    // GetResistanceToSpell
     SetFunctionCmt(0xc22a, 
         "    Get resistance to spell of combatant.\n\
     In: D0 = combatant idx\n\
@@ -876,13 +880,13 @@ Out: D1 = whether combatant is inflicted with MUDDLE 2", 1);
         "In: D0 = item user\n\
     D1 = item idx", 1);
 
-    // createSpellRangeGrid
+    // CreateSpellRangeGrid
     SetFunctionCmt(0xc478, 
         "    Clear and update target/movable grids based on spell properties.\n\
     In: D0 = spell user\n\
         D1 = spell idx", 1);
 
-    // applyRelativeCoordListToGrids
+    // ApplyRelativeCoordListToGrids
     SetFunctionCmt(0xc510, 
         "    Apply coord list at A0 and add any targets to target list.\n\
     In: A0 = address of relative coord list\n\
@@ -978,7 +982,7 @@ Out: D1 = item idx\n\
     SetFunctionCmt(0xeba4, 
         "In: D0 = char idx", 1);
 
-    // sub_100B4
+    // j_EndKiss
     SetFunctionCmt(0x100b4, 
         "related to end kiss", 1);
 
@@ -1012,7 +1016,7 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x103b8, 
         "In: -$C(A6) = window slot idx", 1);
 
-    // loadIHighlightableSpellIcon
+    // LoadIHighlightableSpellIcon
     SetFunctionCmt(0x10940, 
         "    Copy spell icon to RAM.\n\
     In: A1 = dest in RAM\n\
@@ -1023,7 +1027,7 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x11862, 
         "write one column of HP/MP bar pixels into A1", 1);
 
-    // adjustStringLengthForSpecialChars
+    // AdjustStringLengthForSpecialChars
     SetFunctionCmt(0x11898, 
         "check ASCII name at A0 for two special chars ???\n\
 ", 1);
@@ -1032,11 +1036,11 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x11aae, 
         "display d0 stat value or \"??\" if above 99", 1);
 
-    // copyFighterMinistatusWindowTileColumn
+    // CopyFighterMinistatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
         "draw tiles from A0 into A1 (one column)", 1);
 
-    // memberStatsScreen
+    // MemberStatsScreen
     SetFunctionCmt(0x11c2a, 
         "Create and display member stats screen\n\
 \n\
@@ -1046,21 +1050,21 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x11eea, 
         "In: A1 = address of VDP tile order in RAM", 1);
 
-    // getPortraitIdx
+    // GetPortraitIdx
     SetFunctionCmt(0x1263a, 
         "    Get index of portrait based on char index for any character.\n\
     In: D0 = char idx\n\
     Out: D0 = adjusted portrait idx", 1);
 
-    // sub_12DEC
+    // EndKiss
     SetFunctionCmt(0x12dec, 
         "related to end kiss", 1);
 
-    // loadCharPortrait
+    // LoadCharPortrait
     SetFunctionCmt(0x13394, 
         "    In: D0 = char idx", 1);
 
-    // getSelectedMember
+    // GetSelectedMember
     SetFunctionCmt(0x13462, 
         "    Get index of currently selected force member (in menus).\n\
     Out: D0 = selected index (capped to 255)", 1);
@@ -1089,21 +1093,21 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x15534, 
         "must be related to portrait display", 1);
 
-    // updatePortrait
+    // UpdatePortrait
     SetFunctionCmt(0x155c4, 
         "d1 = alternate/original, d7 = tile number", 1);
 
-    // loadPortrait
+    // LoadPortrait
     SetFunctionCmt(0x1562a, 
         "    In: D0 = portrait idx", 1);
 
-    // getCharPortraitIdx
+    // GetCharPortraitIdx
     SetFunctionCmt(0x15736, 
         "    Get index of portrait based on char index for force members.\n\
     In: D0 = char idx\n\
     Out: D0 = adjusted portrait idx", 1);
 
-    // ExecuteNumberPrompt
+    // NumberPrompt
     SetFunctionCmt(0x16282, 
         "In: D0 = default num\n\
     D1 = min num\n\
@@ -1114,7 +1118,7 @@ Out: D0 = chosen num", 1);
     SetFunctionCmt(0x16398, 
         "In: A6 = prompt stack", 1);
 
-    // executeBattlesceneScript
+    // ExecuteBattlesceneScript
     SetFunctionCmt(0x18398, 
         "battlescene scripting ?", 1);
 
@@ -1188,7 +1192,7 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1922a, 
         "same params as previous command", 1);
 
-    // makeActorIdle
+    // MakeActorIdle
     SetFunctionCmt(0x195e2, 
         "make actor idle", 1);
 
@@ -1216,56 +1220,76 @@ Out: D1 = 0 if animates, 1 if not", 1);
     SetFunctionCmt(0x199de, 
         "load palette D1 of battle sprite D0", 1);
 
-    // loadBattleSpriteData
+    // LoadAllyBattleSprite
     SetFunctionCmt(0x19a0c, 
         "    In: D0 = battle sprite idx\n\
         D1 = frame idx", 1);
 
-    // sub_19A5C
+    // sub_19A2A
+    SetFunctionCmt(0x19a2a, 
+        "Load ally battlesprite and set FFDE94 bit 3 and wait", 1);
+
+    // LoadWeaponSprite
     SetFunctionCmt(0x19a5c, 
         "???\n\
 In: D0 = weapon sprite idx", 1);
 
-    // loadEnemyBattleSprite
+    // sub_19B24
+    SetFunctionCmt(0x19b24, 
+        "loads enemy battle sprite", 1);
+
+    // LoadEnemyBattleSprite
     SetFunctionCmt(0x19b44, 
         "d0 : battle sprite index", 1);
 
-    // loadSpellAnimationGraphics
+    // sub_19BCC
+    SetFunctionCmt(0x19bcc, 
+        "loads battlescene ground", 1);
+
+    // LoadSpellGraphics
     SetFunctionCmt(0x19ca4, 
         "    Loads spell animation tiles.\n\
     In: D0 = spell animation tileset index", 1);
 
-    // getBattleSpriteAndPalette
+    // sub_19CE8
+    SetFunctionCmt(0x19ce8, 
+        "loads spell graphics", 1);
+
+    // GetBattleSpriteAndPalette
     SetFunctionCmt(0x19d3e, 
         "get battle sprite # and palette # for character related to entity D0 -> D1 (sprite), D2 (palette)", 1);
 
-    // getWeaponSpriteAndPalette
+    // GetWeaponSpriteAndPalette
     SetFunctionCmt(0x19db0, 
         "get battle sprite # and palette # for entity D0's equipped weapon -> D2 (sprite), D3 (palette)", 1);
 
-    // executeSpellAnimation
+    // ExecuteSpellAnimation
     SetFunctionCmt(0x19ee6, 
         "spell animation subroutine", 1);
 
-    // execSpellAnimationFlash
+    // ExecSpellAnimationFlash
     SetFunctionCmt(0x1a2a6, 
         "    In: D0 = color to flash", 1);
 
-    // clearSpellAnimationProperties
+    // ClearSpellAnimationProperties
     SetFunctionCmt(0x1a2d4, 
         "    Clears a portion at RAM:b406 and RAM:b532 for spell properties.", 1);
 
-    // sub_1A32C
+    // LoadInvocationSpell
     SetFunctionCmt(0x1a32c, 
         "code for invocations", 1);
 
-    // boltAnimation
+    // sub_1B93C
+    SetFunctionCmt(0x1b93c, 
+        "desoul ?", 1);
+
+    // spellanim_Bolt
     SetFunctionCmt(0x1ce50, 
         "looks related to BOLT", 1);
 
-    // j_CaravanActions
-    SetFunctionCmt(0x20010, 
-        "seems related to caravan", 1);
+    // UpdateBattlesceneGraphics
+    SetFunctionCmt(0x1ee2c, 
+        "and other stuff ?", 1);
 
     // DoesCurrentShopContainItem
     SetFunctionCmt(0x20834, 
@@ -1284,10 +1308,6 @@ Out: A0 = address", 1);
     // sub_219EC
     SetFunctionCmt(0x219ec, 
         "copy available targets list ?", 1);
-
-    // CaravanActions
-    SetFunctionCmt(0x21fd2, 
-        "seems related to caravan", 1);
 
     // DisplaySpecialCaravanDescription
     SetFunctionCmt(0x22864, 
@@ -1309,22 +1329,6 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x229ec, 
         "check specific item index + code offset to run when used in field", 1);
 
-    // FieldItem_IncreaseATK
-    SetFunctionCmt(0x22aae, 
-        "boost attack ?", 1);
-
-    // FieldItem_IncreaseDEF
-    SetFunctionCmt(0x22ad6, 
-        "boost def ?", 1);
-
-    // FieldItem_IncreaseAGI
-    SetFunctionCmt(0x22afe, 
-        "boost agi ?", 1);
-
-    // FieldItem_IncreaseMOV
-    SetFunctionCmt(0x22b26, 
-        "boost mov ?", 1);
-
     // sub_22C60
     SetFunctionCmt(0x22c60, 
         "get first entity's X, Y and facing", 1);
@@ -1339,7 +1343,7 @@ Out: A0 = address", 1);
      D3 = chosen Y\n\
      D4 = copied P1 input state bitfield", 1);
 
-    // getEntityNumberOfCombatant
+    // GetEntityNumberOfCombatant
     SetFunctionCmt(0x22f30, 
         "    Convert combatant number to entity number.\n\
     In: D0 = combatant number\n\
@@ -1355,14 +1359,6 @@ Out: D0 = entity event idx", 1);
         "In: D0 = entity idx\n\
 Out: D2 = entity X\n\
      D3 = entity Y", 1);
-
-    // SetEntityBlinkingFlag
-    SetFunctionCmt(0x2345a, 
-        "is it vertical speed ?", 1);
-
-    // ClearEntityBlinkingFlag
-    SetFunctionCmt(0x23474, 
-        "is it vertical speed ?", 1);
 
     // SetEntityPosition
     SetFunctionCmt(0x2376a, 
@@ -1441,7 +1437,7 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x25a94, 
         "init vint contextual functions", 1);
 
-    // endGame
+    // EndGame
     SetFunctionCmt(0x279d8, 
         "need to verify", 1);
 
@@ -1465,11 +1461,11 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x445ca, 
         "declare new entity ?", 1);
 
-    // clearEntities
+    // ClearEntities
     SetFunctionCmt(0x4465a, 
         "clear entities in memory", 1);
 
-    // getCharacterSpriteIdx
+    // GetCharacterSpriteIdx
     SetFunctionCmt(0x449c6, 
         "In: D0 = char idx\n\
 Out: D4 = sprite idx\n\
@@ -1649,7 +1645,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x476e8, 
         "    Get index of current portrait for textbox and load it.", 1);
 
-    // getMapSetupEntityList
+    // GetMapSetupEntityList
     SetFunctionCmt(0x47790, 
         "returns entity list of map setup in a0", 1);
 
@@ -1725,15 +1721,15 @@ Out: carry = 0 if respawn, 1 if not", 1);
     D4 = enemy starting tile y (from battle def)\n\
 Out: carry = if anyone is on D3/D4", 1);
 
-    // setEnemyBaseATK
+    // SetEnemyBaseATK
     SetFunctionCmt(0x1b15aa, 
         "sets Enemy ATK according to difficulty", 1);
 
-    // getEnemyAITargetPos
+    // GetEnemyAITargetPos
     SetFunctionCmt(0x1b15f8, 
         "coords of anchor point used in AI byte D0 -> D1, D2", 1);
 
-    // getAddrOfBattleDataSection
+    // GetAddrOfBattleDataSection
     SetFunctionCmt(0x1b1630, 
         "get address of subsection D1 (list sizes, force defs, enemy defs, region defs, point defs) of current battle -> A0\n\
       \n\

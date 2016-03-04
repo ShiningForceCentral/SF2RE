@@ -38,8 +38,6 @@ static main(void) {
 	fixMapSetupsSection4();
 	Message(" DONE.\nRelative Pointer Tables...");		
 	fixRPTs();
-	Message(" DONE.\nBranch Tables...");		
-	fixBTs();
 	Message(" DONE.\nInstruction Representations...");			
 	fixInstructionRepresentations();
 	Message(" DONE.\nSingle Instructions...");		
@@ -52,10 +50,13 @@ static main(void) {
 }
 
 static fixRJTs() {
+	makeRjt(0x4F1C,0x4FBC);
 	makeRjt(0x10408,0x10410);
 	makeRjt(0x107F8,0x10800);
 	makeRjt(0x10CBE,0x10CC6);
 	makeRjt(0x14080,0x14088);
+	makeRjt(0x183C0,0x183EA);
+	makeRjt(0x1B7E8,0x1B828);	
 	makeRjt(0x19F1C,0x19F5C);
 	makeRjt(0x1A048,0x1A088);
 	makeRjt(0x2200C,0x22014);
@@ -73,12 +74,6 @@ static fixRPTs() {
 	makeRpt(0x47B2C,0x47B8C);
 	makeRpt(0x47BE8,0x47C48);
 	makeRpt(0x47CF4,0x47D54);
-}
-
-static fixBTs() {
-	makeBt(0x4F1C,0x4FBC);
-	makeBt(0x183C0,0x183EA);
-	makeBt(0x1B7E8,0x1B828);
 }
 
 
@@ -195,22 +190,6 @@ static fix(pattern, manualInstruction, wrongInstString, newInstString){
 }
 
 static makeRpt(base, end){
-	auto addr;
-	addr = base;
-	while(addr < end){
-		//Jump(addr);
-		MakeData(addr, FF_WORD, 0x2, 0);
-		if(Word(addr) > 0x8000) {
-			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
-		}
-		else{
-			OpOffEx(addr, -1, REF_OFF32, -1, base, 0);
-		}
-		addr = addr+2;
-	}
-}
-
-static makeBt(base, end){
 	auto addr;
 	addr = base;
 	while(addr < end){
