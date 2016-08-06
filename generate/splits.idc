@@ -103,7 +103,7 @@ writestr(file,"\n");
 
 static writeBattleEntries(file){
 	auto i,index;
-	for(i=0;i<=43;i++){
+	for(i=0;i<=44;i++){
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
 		writestr(file,form("#dir\tbattles/entries/battle%s\n",index));
