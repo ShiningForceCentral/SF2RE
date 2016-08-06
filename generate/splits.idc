@@ -80,9 +80,11 @@ writestr(file,"#dir	graphics/technical/windowlayouts\n");
 writestr(file,"#dir	maps/\n");
 writestr(file,"#dir	maps/global/\n");
 writestr(file,"#dir	maps/entries/\n");
+writeMapEntries(file);
 writestr(file,"#dir	battles/\n");
 writestr(file,"#dir	battles/global/\n");
 writestr(file,"#dir	battles/entries/\n");
+writeBattleEntries(file);
 writestr(file,"#dir	data/\n");
 writestr(file,"#dir	data/items\n");
 writestr(file,"#dir	data/spells\n");
@@ -97,6 +99,24 @@ writestr(file,"#dir	sound/\n");
 writestr(file,"\n");
 writestr(file,"/***********************Data***************************/\n");
 writestr(file,"\n");
+}
+
+static writeBattleEntries(file){
+	auto i,index;
+	for(i=0;i<=43;i++){
+		index = ltoa(i,10);
+		if(strlen(index)==1)index=form("0%s",index);
+		writestr(file,form("#dir\tbattles/entries/battle%s\n",index));
+	}
+}
+
+static writeMapEntries(file){
+	auto i,index;
+	for(i=0;i<=78;i++){
+		index = ltoa(i,10);
+		if(strlen(index)==1)index=form("0%s",index);
+		writestr(file,form("#dir\tmaps/entries/map%s\n",index));
+	}
 }
 
 
@@ -461,7 +481,7 @@ static splitMaps(file) {
 		index = ltoa(i,10);
 		if(strlen(index)==1)index=form("0%s",index);
 		MakeNameEx(dref,form("Map%s",index),0);
-		writestr(file,form("#dir\tmaps/entries/map%s\n",index));
+		//writestr(file,form("#dir\tmaps/entries/map%s\n",index));
 		MakeData(dref, FF_BYTE, 0x1, 0);
 		MakeData(dref+1, FF_BYTE, 0x1, 0);
 		MakeData(dref+2, FF_BYTE, 0x1, 0);
