@@ -115,7 +115,7 @@ static produceMain(){
 	produceSection(file,"05",0x20000,	0x28000,		626,	"Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine");
 	produceSection(file,"06",0x28000,	0x44000,		6681,	"Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Script Huffman Trees, Scriptbanks");
 	produceSpecificSectionSeven(file,"07",0x44000,	0x64000,		2931,	"Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
-	produceSection(file,"08",0x64000,	0xC8000,		953 ,	"Map Tiles, Map Palettes, Map Data");
+	produceSpecificSectionEight(file,"08",0x64000,	0xC8000,		953 ,	"Map Tiles, Map Palettes, Map Data");
 	produceSection(file,"09",0xC8000,	0x100000,		1315,"Entity Sprites");
 	produceSection(file,"10",0x100000,0x130000,		432,	"Backgrounds, invocation sprites, title screen");
 	produceSection(file,"11",0x130000,0x180000,		429,	"Enemy battle sprites");
@@ -957,6 +957,29 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	fclose(file);
 	Message("DONE.\n");	
 }
+
+
+static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComment){
+	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+	auto output, name, indent, comment, commentEx, commentIndent;
+	fileName = form("sf2-%s.asm",sectionName);
+	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
+	action = 1;
+	writestr(mainFile,form("   include \"%s\"\t\t; %s\n",fileName,sectionComment));
+	file = fopen(fileName,"w");
+	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
+	writestr(file,form("\n; FREE SPACE : %d bytes.\n\n\n",fs));	
+
+	produceAsmSection(file,0x64000,0x6400C);
+	produceAsmScript(file,"maps\\global\\maptilesets",0x6400C,0x9494A,"Map palettes table");	
+	produceAsmScript(file,"maps\\global\\mappalettes",0x9494A,0x94B8A,"Map palettes table");
+	produceAsmScript(file,"maps\\global\\mapentries",0x94B8A,0xC7ECC,"Map entries table");
+	produceAsmSection(file,0xC7ECC,0xC8000);
+
+	fclose(file);
+	Message("DONE.\n");	
+}
+
 
 static produceAsmScript(mainFile,sectionName,start,end,sectionComment){
 	auto ea,itemSize,action,currentLine,previousLine,fileName,file;

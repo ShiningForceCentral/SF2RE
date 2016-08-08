@@ -129,7 +129,7 @@ static splitPTs(file){
 	 *	splitPT(start, end, lastEntryDataEnd, chunkEnd, "ptName", "entryName", "binDir", 0, "binName", indexLength, align, file);
 	 */
 	splitPT(0x6400C, 0x641D8, 0x9494A, 0x9494A, "pt_MapTilesets", "MapTileset", "graphics/maps/maptilesets/", 0, "maptileset", 3, 0, file);
-	splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "graphics/palettes/", 0, "mappalette", 2, 0, file);		
+	splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "graphics/maps/mappalettes/", 0, "mappalette", 2, 0, file);		
 	splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_MapSprites", "MapSprite", "graphics/mapsprites/", 0, "mapsprite", 3, 15, file);	
 	splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "graphics/battles/backgrounds/", 0, "background", 2, 0, file);
 	splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattleSprites", "EnemyBattleSprite", "graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
@@ -169,8 +169,6 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x853A,0x855A,"ClassTypes","data/allies/classes/classtypes.bin",file);
 	
-	splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","graphics/technical/iconhighlighttiles.bin",file);
-	
 	splitSingleChunk(0xACCA,0xACEA,"CriticalHitSettings","data/allies/classes/criticalhitsettings.bin",file);
 	
 	splitSingleChunk(0xBCF0,0xBD24,"ItemBreakMessages","data/items/itembreakmessages.bin",file);
@@ -186,6 +184,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","data/allies/allynames.bin",file);
 	splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","data/enemies/enemynames.bin",file);
 	MakeAlign(0xFF87, 0x10000-0xFF87,15);
+	
+	splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","graphics/technical/iconhighlighttiles.bin",file);	
 	
 	splitSingleChunk(0x10E1C,0x10EF4,"DiamondMenuLayout","graphics/technical/menus/diamondmenulayout.bin",file);
 	splitSingleChunk(0x10EF4,0x10FCC,"UnidentifiedLayout01","graphics/technical/menus/unidentifiedlayout01.bin",file);
@@ -235,6 +235,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x21F92,0x21FD2,"MithrilWeaponLists","data/items/mithrilweapons.bin",file);
 	
 	splitSingleChunk(0x228A2,0x228A8,"SpecialCaravanDescriptions","data/items/specialcaravandescriptions.bin",file);
+	
+	splitSingleChunk(0x229E2,0x229EC,"UsableOutsideBattleItems","data/items/usableoutsidebattleitems.bin",file);
 	
 	splitSingleChunk(0x23658,0x23758,"UnitCursorTiles","graphics/technical/unitcursortiles.bin",file);
 	
@@ -482,12 +484,11 @@ static splitMaps(file) {
 		if(strlen(index)==1)index=form("0%s",index);
 		MakeNameEx(dref,form("Map%s",index),0);
 		//writestr(file,form("#dir\tmaps/entries/map%s\n",index));
-		MakeData(dref, FF_BYTE, 0x1, 0);
-		MakeData(dref+1, FF_BYTE, 0x1, 0);
-		MakeData(dref+2, FF_BYTE, 0x1, 0);
-		MakeData(dref+3, FF_BYTE, 0x1, 0);
-		MakeData(dref+4, FF_BYTE, 0x1, 0);
-		MakeData(dref+5, FF_BYTE, 0x1, 0);
+				MakeData(dref,FF_BYTE,0x6,0);
+				if(strstr(GetDisasm(dref),"incbin")==-1){	
+					SetManualInsn(dref, form("incbin \"maps/entries/map%s/00-tilesets.bin\"",index));
+					writestr(file,form("#split\t0x%s,0x%s,maps/entries/map%s/00-tilesets.bin\n",ltoa(dref,16),ltoa(dref+6,16),index));
+				}		
 		for(s=0;s!=10;s++){
 			from = dref+6+4*s;
 			MakeDword(from);
