@@ -193,7 +193,7 @@ Out: D1 = block flag word", 1);
     SetFunctionCmt(0x3022, 
         "or something like that ?", 1);
 
-    // VintFunc_3930
+    // VInt_3930
     SetFunctionCmt(0x3930, 
         "Related to camera position ?", 1);
 
@@ -269,7 +269,7 @@ returns a1 = window tiles end, d0 = window slot", 1);
     SetFunctionCmt(0x53fe, 
         "related to moving an entity", 1);
 
-    // checkIfSameDestForOtherEntity
+    // CheckIfSameDestForOtherEntity
     SetFunctionCmt(0x5610, 
         "check if another entity has the same destination as current entity\n\
 Z=1 if that's the case", 1);
@@ -372,7 +372,7 @@ In: A0 = entity RAM addr", 1);
     SetFunctionCmt(0x6052, 
         "In: D0 = entity idx", 1);
 
-    // changeEntitySprite
+    // ChangeEntitySprite
     SetFunctionCmt(0x60a8, 
         "a0 : entity address\n\
 d6 : facing", 1);
@@ -399,7 +399,7 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     D2 - VDP tile idx for right border of line\n\
     D3 - amount to add to D1 each time a tile is copied (0 for top and bottom border lines, 1 for inner box)", 1);
 
-    // hideTextBox
+    // HideTextBox
     SetFunctionCmt(0x6a38, 
         "related to text box", 1);
 
@@ -974,7 +974,7 @@ Out: D1 = item idx\n\
     SetFunctionCmt(0xdd78, 
         "create enemy move order from movecost lists", 1);
 
-    // sub_DEFC
+    // j_sub_DEFC_0
     SetFunctionCmt(0xdefc, 
         "In: D0 = char idx", 1);
 
@@ -1287,7 +1287,7 @@ In: D0 = weapon sprite idx", 1);
     SetFunctionCmt(0x1ce50, 
         "looks related to BOLT", 1);
 
-    // UpdateBattlesceneGraphics
+    // VInt_UpdateBattlesceneGraphics
     SetFunctionCmt(0x1ee2c, 
         "and other stuff ?", 1);
 
@@ -1441,6 +1441,12 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x279d8, 
         "need to verify", 1);
 
+    // InitDecoder
+    SetFunctionCmt(0x2e10e, 
+        "Initialise Huffman decoder\n\
+- clear Huffman (script) data\n\
+- set starting tree", 1);
+
     // sub_4401C
     SetFunctionCmt(0x4401c, 
         "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
@@ -1489,23 +1495,23 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x44dd8, 
         "location in memory of entity # D0 -> A0", 1);
 
-    // waitForFollowersStopped
+    // WaitForFollowersStopped
     SetFunctionCmt(0x45204, 
         "still to confirm", 1);
 
-    // waitForHeroAndFollowersStopped
+    // WaitForHeroAndFollowersStopped
     SetFunctionCmt(0x4520e, 
         "to confirm", 1);
 
-    // waitForPartyEntitiesIdle
+    // WaitForPartyEntitiesIdle
     SetFunctionCmt(0x45218, 
         "to confirm", 1);
 
-    // applyActscriptToHeroAndFollowers
+    // ApplyActscriptToHeroAndFollowers
     SetFunctionCmt(0x4524c, 
         "might be related to followers", 1);
 
-    // applyActscriptToFollowers
+    // ApplyActscriptToFollowers
     SetFunctionCmt(0x45254, 
         "to confirm", 1);
 
@@ -1583,13 +1589,13 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x47008, 
         "xx character", 1);
 
-    // getEntityAddressFromPlayableCharacterIdx
+    // GetEntityAddressFromPlayableCharacterIdx
     SetFunctionCmt(0x4704a, 
         "    Get address of entity information. Could be a force member or an opponent\n\
     In: D0 = playable character from FFB140\n\
     Out: A5 = entity info address in RAM", 1);
 
-    // adjustScriptPointerByCharAliveStatus
+    // AdjustScriptPointerByCharAliveStatus
     SetFunctionCmt(0x47080, 
         "move script pointer d7 forward if character dead", 1);
 
@@ -1649,7 +1655,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x47790, 
         "returns entity list of map setup in a0", 1);
 
-    // getCurrentMapSetup
+    // GetCurrentMapSetup
     SetFunctionCmt(0x4779e, 
         "returns map setup address in a0", 1);
 
@@ -1675,7 +1681,7 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     SetFunctionCmt(0x1ac4f0, 
         "something with targetting grid or ???", 1);
 
-    // clearTerrainListObstructions
+    // ClearTerrainListObstructions
     SetFunctionCmt(0x1ac654, 
         "clear upper two bits from all tiles in terrain list", 1);
 

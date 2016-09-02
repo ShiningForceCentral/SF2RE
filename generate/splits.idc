@@ -276,8 +276,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x2DDDE,0x2E08E,"StaticWidthFont","graphics/technical/fonts/staticwidthfont.bin",file);
 	splitSingleChunk(0x2E08E,0x2E10E,"TitleScreenPalettes","graphics/specialscreens/titlescreen/titlescreenpalettes.bin",file);
 	
-	splitSingleChunk(0x2E196,0x2E394,"TextBankTreePointers","scripting/textbanks/textbanktreepointers.bin",file);
-	splitSingleChunk(0x2E394,0x2EB34,"TextBankTreeData","scripting/textbanks/textbanktreedata.bin",file);
+	splitSingleChunk(0x2E196,0x2E394,"TextBankTreeOffsets","scripting/textbanks/huffmantreeoffsets.bin",file);
+	splitSingleChunk(0x2E394,0x2EB34,"TextBankTreeData","scripting/textbanks/huffmantrees.bin",file);
 	
 	splitSingleChunk(0x4201E,0x425ED,"GameStaff","scripting/gamestaff.bin",file);
 	MakeAlign(0x425ED, 0x44000-0x425ED,14);
