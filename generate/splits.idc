@@ -622,7 +622,7 @@ static splitTextbanks(file) {
 	start = 0x41FDA;
 	end = 0x4201E;
 	addr = start;
-	lastEntryDataEnd = 0x41FDA;
+	lastEntryDataEnd = 0x41FD9;
 	chunkEnd = 0x4201E;
 	action=1;
 	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);		
