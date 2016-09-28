@@ -381,6 +381,7 @@ static parseCutscenes(){
 static parseCS(start,end){
 
 	auto ea,cmd,cmdLength,cmdName,cmdComment,i,action;
+	auto textIndex;
 	
 	cmdLength = 2;
 	ea = start;
@@ -417,7 +418,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==0x0000){
 			cmdName = "0000 DISPLAY SINGLE TEXTBOX";
-			cmdComment = form("%s %s",cmdName, ltoa(Word(ea+2),16));
+			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
+			textIndex++;
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -425,7 +427,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0001){
 			cmdName = "0001 DISPLAY SINGLE TEXT BOX WITH VARS";
-			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16));
+			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getTextLine(textIndex));
+			textIndex++;
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -434,7 +437,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0002){
 			cmdName = "0002 DISPLAY TEXT BOX";
-			cmdComment = form("%s %s",cmdName, ltoa(Word(ea+2),16));
+			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
+			textIndex++;
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -442,7 +446,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0003){
 			cmdName = "0003 DISPLAY TEXTBOX WITH VARS";
-			cmdComment = form("%s %s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16));
+			cmdComment = form("%s %s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16),getTextLine(textIndex));
+			textIndex++;
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -452,7 +457,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0004){
 			cmdName = "0004 SET TEXT INDEX";
-			cmdComment = form("%s %s",cmdName,ltoa(Word(ea+2),16));
+			textIndex = Word(ea+2);
+			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -1226,6 +1232,37 @@ static undefineByte(addr){
 		SetManualInsn(addr,"");
 }
 
+
+static getTextLine(index){
+
+			auto textbanksFile, lineNumber, currentLine, dialogLine;
+			index = ltoa(index,16);
+			while(strlen(index)<4){
+				index=form("0%s",index);
+			}
+			lineNumber = 0;
+			textbanksFile = fopen("textbanks.txt","r");
+			while(dialogLine==""){
+				lineNumber = lineNumber + 1;
+				currentLine = readstr(textbanksFile);
+				/* if(lineNumber % 100 == 0) {
+				 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
+				} */
+				if(currentLine==-1){
+					Message(form("\nCould not find dialog line for current parameter 0x%s",index));
+					break;
+				}
+				if(strlen(currentLine)>=4 && substr(currentLine,0,4)==index){
+					dialogLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
+				}
+			}
+			fclose(textbanksFile);
+			
+			return dialogLine;
+
+}
+
+
 /**********************************************
  *																						*
  *																						*
@@ -1646,3 +1683,4 @@ static makeRelativeOffsetFromCmd(addr){
 		}
 
 }
+

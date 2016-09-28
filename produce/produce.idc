@@ -177,7 +177,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
 	produceAsmSection(file,0x44000,0x448C4);
 	produceAsmScript(file,"battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
-	produceAsmScript(file,"battles\\global\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
+	produceAsmScript(file,"scripting\\entityactscripts\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
 	produceAsmSection(file,0x449C6,0x44DE2);
 	produceAsmScript(file,"scripting\\entityactscripts\\eas_main",0x44DE2,0x45202,"Main entity actscripts");
 	produceAsmSection(file,0x45202,0x45284);
