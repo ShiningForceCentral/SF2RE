@@ -381,7 +381,7 @@ static parseCutscenes(){
 static parseCS(start,end){
 
 	auto ea,cmd,cmdLength,cmdName,cmdComment,i,action;
-	auto textIndex;
+	auto textIndex,flag;
 	
 	cmdLength = 2;
 	ea = start;
@@ -521,7 +521,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x000C){
 			cmdName = "000C JUMP IF SET FLAG";
-			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16));
+			flag = Word(ea+2);
+			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16),getFlagDesc(flag));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -530,7 +531,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x000D){
 			cmdName = "000D JUMP IF CLEAR FLAG";
-			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16));
+			flag = Word(ea+2);
+			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16),getFlagDesc(flag));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -557,7 +559,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0010){
 			cmdName = "0010 SET FLAG";
-			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16));
+			flag = Word(ea+2);
+			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -581,7 +584,8 @@ static parseCS(start,end){
 		}
 		else if(cmd==	0x0013){
 			cmdName = "0013 SET STORY FLAG";
-			cmdComment = form("%s %s",cmdName,ltoa(Word(ea+2),16));
+			flag = Word(ea+2) + 0x190;
+			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getFlagDesc(flag));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
@@ -1263,6 +1267,36 @@ static getTextLine(index){
 }
 
 
+static getFlagDesc(flag){
+
+			auto flagmapFile, lineNumber, currentLine, flagDesc;
+			flag = ltoa(flag,16);
+			while(strlen(flag)<4){
+				flag=form("0%s",flag);
+			}
+			lineNumber = 0;
+			flagmapFile = fopen("flagmap.txt","r");
+			while(flagDesc==""){
+				lineNumber = lineNumber + 1;
+				currentLine = readstr(flagmapFile);
+				/* if(lineNumber % 100 == 0) {
+				 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
+				} */
+				if(currentLine==-1){
+					Message(form("\nCould not find dialog line for current parameter 0x%s",flag));
+					break;
+				}
+				if(strlen(currentLine)>=4 && substr(currentLine,0,4)==flag){
+					flagDesc = form("%s",substr(currentLine,5,strlen(currentLine)-1));
+				}
+			}
+			fclose(flagmapFile);
+			
+			return flagDesc;
+
+}
+
+
 /**********************************************
  *																						*
  *																						*
@@ -1274,7 +1308,7 @@ static getTextLine(index){
 
 static parseEAS(start,end){
 
-	auto ea,cmdLength,cmdName,cmdComment,tab,action;
+	auto ea,cmdLength,cmdName,cmdComment,tab,action,flag;
 	
 	cmdLength = 2;
 	ea = start;
@@ -1595,7 +1629,8 @@ static parseEAS(start,end){
 		}
 		else if(Word(ea)==0x0031){
 			cmdName = "0031 BRANCH IF SET FLAG";
-			cmdComment = form("%s %s TO CURRENT ADDR. + $%s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16));
+			flag = Word(ea+2);
+			cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);			
@@ -1605,7 +1640,8 @@ static parseEAS(start,end){
 		}
 		else if(Word(ea)==0x0032){
 			cmdName = "0032 BRANCH IF CLEARED FLAG";
-			cmdComment = form("%s %s TO CURRENT ADDR. + $%s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16));
+			flag = Word(ea+2);
+			cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
