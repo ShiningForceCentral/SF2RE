@@ -456,7 +456,7 @@ static parseCS(start,end){
 			MakeWord(ea+6);	
 		}
 		else if(cmd==	0x0004){
-			cmdName = "0004 SET TEXT INDEX";
+			cmdName = "0004 INIT TEXT CURSOR";
 			textIndex = Word(ea+2);
 			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));
 			cmdLength = 4;

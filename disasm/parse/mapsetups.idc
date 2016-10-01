@@ -46,8 +46,8 @@ static parseMapSetups(){
 				flag = ltoa(Word(ea),16);
 				MakeDword(ea+2);
 				OpOff(ea+2,0,0);
-				MakeNameEx(Dword(ea+2),form("ms_map%s_flag%s",mapId,flag),0);
-				parseMapSetup(Dword(ea+2),form("ms_map%s_flag%s",mapId,flag));		
+				MakeNameEx(Dword(ea+2),form("ms_map%s_%s",mapId,flag),0);
+				parseMapSetup(Dword(ea+2),form("ms_map%s_%s",mapId,flag));		
 				ea = ea + 6;
 			}
 		}

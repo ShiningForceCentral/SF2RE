@@ -45,9 +45,10 @@ static nameMapSetups(){
 				ea = ea + 6;
 			}
 			else{
-				flag = ltoa(Word(ea),16);
-				MakeNameExC(Dword(ea+2),form("ms_map%s_flag%s",mapId,flag),0);
-				nameMapSetup(Dword(ea+2),form("ms_map%s_flag%s",mapId,flag));		
+				flag = Word(ea);
+				MakeRptCmt(ea,getFlagDesc(flag));
+				MakeNameExC(Dword(ea+2),form("ms_map%s_flag%s",mapId,ltoa(flag,16)),0);
+				nameMapSetup(Dword(ea+2),form("ms_map%s_flag%s",mapId,ltoa(flag,16)));		
 				ea = ea + 6;
 			}
 		}
@@ -92,11 +93,15 @@ static parseMapSetupSection2(ea,baseName){
 
 static parseMapSetupSection3(ea,baseName){
 	auto base;
-	MakeNameExC(ea,form("%s_Section3",baseName),0);
+	MakeNameExC(ea,form("%s_ZoneEvents",baseName),0);
 }
 
 static parseMapSetupSection4(ea,baseName){
-	MakeNameExC(ea,form("%s_Section4",baseName),0);
+	MakeNameExC(ea,form("%s_AreaDescriptions",baseName),0);
+	/* TODO
+	 * parse base line index
+	 * and comment each area with corresponding line !
+	 */
 }
 
 static parseMapSetupSection5(ea,baseName){
@@ -143,4 +148,33 @@ static undefineByte(addr){
 		MakeUnkn(addr,DOUNK_DELNAMES);
 		MakeNameEx(addr,"",0);
 		SetManualInsn(addr,"");
+}
+
+static getFlagDesc(flag){
+
+			auto flagmapFile, lineNumber, currentLine, flagDesc;
+			flag = ltoa(flag,16);
+			while(strlen(flag)<4){
+				flag=form("0%s",flag);
+			}
+			lineNumber = 0;
+			flagmapFile = fopen("flagmap.txt","r");
+			while(flagDesc==""){
+				lineNumber = lineNumber + 1;
+				currentLine = readstr(flagmapFile);
+				/* if(lineNumber % 100 == 0) {
+				 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
+				} */
+				if(currentLine==-1){
+					Message(form("\nCould not find dialog line for current parameter 0x%s",flag));
+					break;
+				}
+				if(strlen(currentLine)>=4 && substr(currentLine,0,4)==flag){
+					flagDesc = form("%s",substr(currentLine,5,strlen(currentLine)-1));
+				}
+			}
+			fclose(flagmapFile);
+			
+			return flagDesc;
+
 }

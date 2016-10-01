@@ -81,8 +81,8 @@
 004C=Zynk is a follower
 004D=Old man is a follower
 
-004E=set in loc_7494
-004F=both of these can be set in the witch screens...
+004E=Difficulty
+004F=Difficulty
 
 0050=set @ loc_257D0 (battle won?)
 
@@ -91,6 +91,7 @@
 0054=Rohde is a follower
 
 0058=checks if a game has been saved for copying purposes? (or if saved from battle?)
+0059=YES/NO prompt answer
 
 0070=cleared, set, and checked in ASM x09EC4..x09F27 (CheckForTaros ASM)
 
