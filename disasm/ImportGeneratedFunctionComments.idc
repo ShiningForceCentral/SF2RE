@@ -44,10 +44,6 @@ static main()
     SetFunctionCmt(0x896, 
         "set function trigger, or set all triggers if param=0", 1);
 
-    // ParseFadingFX
-    SetFunctionCmt(0xaba, 
-        "fade subroutine to comment again ;_;", 1);
-
     // WaitForDMAFree
     SetFunctionCmt(0xb96, 
         "waits for 0xc00004 (VDP DMA register) to be cleared", 1);
@@ -70,11 +66,11 @@ static main()
 
     // WaitForVInt
     SetFunctionCmt(0xeee, 
-        "wait until VInt func is called, which clears RAM:def7", 1);
+        "Wait until VInt func is called, i.e. next frame", 1);
 
     // Sleep
     SetFunctionCmt(0xf04, 
-        "wait for D0 Vints", 1);
+        "wait for D0 Vints/frames", 1);
 
     // Set_FFDE94_bit0
     SetFunctionCmt(0xf1a, 
@@ -92,13 +88,25 @@ static main()
     SetFunctionCmt(0xf34, 
         "set bit 3 of 0xFFDE94 and wait next Vint to execute sub_740", 1);
 
-    // BwahDMAstuffAgainbis
-    SetFunctionCmt(0x119e, 
-        "d0 = DMA destination ?", 1);
+    // sub_10DC
+    SetFunctionCmt(0x10dc, 
+        "DMA stuff", 1);
 
-    // sub_134A
-    SetFunctionCmt(0x134a, 
-        "beforeBwahDMAstuffAgain", 1);
+    // sub_119E
+    SetFunctionCmt(0x119e, 
+        "DMA stuff. d0 = DMA destination ?", 1);
+
+    // sub_1372
+    SetFunctionCmt(0x1372, 
+        "DMA preparation stuff", 1);
+
+    // sub_13C0
+    SetFunctionCmt(0x13c0, 
+        "DMA stuff", 1);
+
+    // sub_13E4
+    SetFunctionCmt(0x13e4, 
+        "DMA stuff", 1);
 
     // DmaVramFill
     SetFunctionCmt(0x140e, 
@@ -136,6 +144,10 @@ static main()
         "In: D0 = number of sprites\n\
 \n\
 set default values in sprite table", 1);
+
+    // sub_179C
+    SetFunctionCmt(0x179c, 
+        "related to spell animations", 1);
 
     // sub_1942
     SetFunctionCmt(0x1942, 
@@ -196,6 +208,10 @@ Out: D1 = block flag word", 1);
     // VInt_3930
     SetFunctionCmt(0x3930, 
         "Related to camera position ?", 1);
+
+    // sub_3E40
+    SetFunctionCmt(0x3e40, 
+        "uses door open SFX", 1);
 
     // ToggleRoofOnMapLoad
     SetFunctionCmt(0x3f2c, 
@@ -452,6 +468,10 @@ Out: D0 = new map idx", 1);
     D2 = player Y coord to check\n\
 Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
+
+    // VInt_WitchBlink
+    SetFunctionCmt(0x7d54, 
+        "witch blink function ?", 1);
 
     // j_GetClass
     SetFunctionCmt(0x8004, 
@@ -738,7 +758,8 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0xa05c, 
         "Loads proper battle scene text script depending on attack action.\n\
 In: A3 = RAM index containing action type\n\
-    A4 = RAM index containing attacker index", 1);
+    A4 = RAM index containing attacker index\n\
+HARDCODED enemy and text indexes", 1);
 
     // CreateBattleSceneAnimation
     SetFunctionCmt(0xa200, 
@@ -756,7 +777,8 @@ In: A3 = RAM index containing action type\n\
     SetFunctionCmt(0xa54e, 
         "In: A2 = cutscene stack\n\
     A3 = battle action in RAM\n\
-Out: D4 = effect idx", 1);
+Out: D4 = effect idx\n\
+HARDCODED class, enemy and weapon indexes", 1);
 
     // WriteSkirmishScript_AnimateSprite
     SetFunctionCmt(0xa6e8, 
@@ -1016,12 +1038,20 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x103b8, 
         "In: -$C(A6) = window slot idx", 1);
 
+    // sub_107EA
+    SetFunctionCmt(0x107ea, 
+        "related to menu choice", 1);
+
     // LoadIHighlightableSpellIcon
     SetFunctionCmt(0x10940, 
         "    Copy spell icon to RAM.\n\
     In: A1 = dest in RAM\n\
         D0 = spell idx\n\
     Out: A1 = end of affected section after copy", 1);
+
+    // sub_10CB0
+    SetFunctionCmt(0x10cb0, 
+        "related to menu choice", 1);
 
     // sub_11862
     SetFunctionCmt(0x11862, 
@@ -1040,7 +1070,7 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x11ac6, 
         "draw tiles from A0 into A1 (one column)", 1);
 
-    // MemberStatsScreen
+    // BuildMemberStatsScreen
     SetFunctionCmt(0x11c2a, 
         "Create and display member stats screen\n\
 \n\
@@ -1056,10 +1086,6 @@ In: D0 = character idx", 1);
     In: D0 = char idx\n\
     Out: D0 = adjusted portrait idx", 1);
 
-    // EndKiss
-    SetFunctionCmt(0x12dec, 
-        "related to end kiss", 1);
-
     // LoadCharPortrait
     SetFunctionCmt(0x13394, 
         "    In: D0 = char idx", 1);
@@ -1068,6 +1094,18 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x13462, 
         "    Get index of currently selected force member (in menus).\n\
     Out: D0 = selected index (capped to 255)", 1);
+
+    // sub_14074
+    SetFunctionCmt(0x14074, 
+        "related to menu choice", 1);
+
+    // sub_1477E
+    SetFunctionCmt(0x1477e, 
+        "related to item unequip and cursed items", 1);
+
+    // sub_14B28
+    SetFunctionCmt(0x14b28, 
+        "related to gold display", 1);
 
     // sub_14BB0
     SetFunctionCmt(0x14bb0, 
@@ -1089,10 +1127,6 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x15422, 
         "d0 = FFAFE7, related to DMA", 1);
 
-    // VInt_HandlePortraitBlinking
-    SetFunctionCmt(0x15534, 
-        "must be related to portrait display", 1);
-
     // UpdatePortrait
     SetFunctionCmt(0x155c4, 
         "d1 = alternate/original, d7 = tile number", 1);
@@ -1107,6 +1141,10 @@ In: D0 = character idx", 1);
     In: D0 = char idx\n\
     Out: D0 = adjusted portrait idx", 1);
 
+    // sub_1586E
+    SetFunctionCmt(0x1586e, 
+        "related to battlefield options", 1);
+
     // NumberPrompt
     SetFunctionCmt(0x16282, 
         "In: D0 = default num\n\
@@ -1117,10 +1155,6 @@ Out: D0 = chosen num", 1);
     // ModifyPromptNumber
     SetFunctionCmt(0x16398, 
         "In: A6 = prompt stack", 1);
-
-    // ExecuteBattlesceneScript
-    SetFunctionCmt(0x18398, 
-        "battlescene scripting ?", 1);
 
     // bsc00_animateEnemyAction
     SetFunctionCmt(0x183f4, 
@@ -1283,10 +1317,6 @@ In: D0 = weapon sprite idx", 1);
     SetFunctionCmt(0x1b93c, 
         "desoul ?", 1);
 
-    // spellanim_Bolt
-    SetFunctionCmt(0x1ce50, 
-        "looks related to BOLT", 1);
-
     // VInt_UpdateBattlesceneGraphics
     SetFunctionCmt(0x1ee2c, 
         "and other stuff ?", 1);
@@ -1390,6 +1420,10 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x23c58, 
         "number of force members living, number of enemies living -> D2, D3", 1);
 
+    // GetEgressPositionForBattle
+    SetFunctionCmt(0x23e50, 
+        "HARDCODED battle->map relationship ?", 1);
+
     // sub_23EB0
     SetFunctionCmt(0x23eb0, 
         "In: D0 = combatant idx", 1);
@@ -1397,10 +1431,6 @@ Out: Z = entity is NOT follower", 1);
     // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
         "handle after-turn effects (status effects, HP/MP regen/degen, etc)", 1);
-
-    // SpawnEnemySkipCamera
-    SetFunctionCmt(0x2448a, 
-        "?", 1);
 
     // UpdateTargetListForCombatant
     SetFunctionCmt(0x24642, 
@@ -1441,6 +1471,10 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x279d8, 
         "need to verify", 1);
 
+    // sub_28F62
+    SetFunctionCmt(0x28f62, 
+        "Something related to P2 START during SEGA logo ... some kind of checksum calculation ?", 1);
+
     // InitDecoder
     SetFunctionCmt(0x2e10e, 
         "Initialise Huffman decoder\n\
@@ -1476,7 +1510,7 @@ Out: D0 = new X\n\
         "In: D0 = char idx\n\
 Out: D4 = sprite idx\n\
 \n\
-wtf I need to figure out that implementation, many strange exceptions", 1);
+HARDCODED values", 1);
 
     // GetCombatantSpriteIdx
     SetFunctionCmt(0x44a7c, 
@@ -1523,7 +1557,7 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x455ac, 
         "warp out ?", 1);
 
-    // GetEntityPortraitAndSpeechSound
+    // GetEntityPortraitAndSpeechSfx
     SetFunctionCmt(0x45638, 
         "In: D0 = entity idx\n\
 Out: D1 = portrait idx\n\
@@ -1672,6 +1706,10 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     // ExecuteBattleCutscene_Region
     SetFunctionCmt(0x47e82, 
         "executes cutscenes activated by regions", 1);
+
+    // sub_4CD56
+    SetFunctionCmt(0x4cd56, 
+        "Jaro joins the Force", 1);
 
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
