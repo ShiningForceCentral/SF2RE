@@ -109,11 +109,11 @@ static produceMain(){
 	writeHeader(file);
 
 	produceSection(file,"01",0x0,			0x8000,			90,		"Technical Layer, Low Level Game Engine, Map/Exploration Engine, Entity Script Commands, Witch Functions");
-	produceSection(file,"02",0x8000,	0x10000,		121,	"Character Stats Engine, Item Effects Engine");
+	produceSection(file,"02",0x8000,	0x10000,		121,	"Character Stats Engine, Battle engine, Enemy AI Engine, Item Effects Engine");
 	produceSection(file,"03",0x10000,	0x18000,		38,		"Menu Engine");
 	produceSection(file,"04",0x18000,	0x20000,		532,	"BattleScene Engine");
-	produceSection(file,"05",0x20000,	0x28000,		626,	"Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine");
-	produceSection(file,"06",0x28000,	0x44000,		6681,	"Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Script Huffman Trees, Scriptbanks");
+	produceSection(file,"05",0x20000,	0x28000,		626,	"Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine, Battle Engine, Exploration Engine, Special Sprites");
+	produceSection(file,"06",0x28000,	0x44000,		6681,	"Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Text Huffman Trees, Textbanks");
 	produceSpecificSectionSeven(file,"07",0x44000,	0x64000,		2931,	"Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
 	produceSpecificSectionEight(file,"08",0x64000,	0xC8000,		953 ,	"Map Tiles, Map Palettes, Map Data");
 	produceSection(file,"09",0xC8000,	0x100000,		1315,"Entity Sprites");

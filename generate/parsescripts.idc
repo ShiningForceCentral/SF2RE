@@ -949,7 +949,7 @@ static parseCS(start,end){
 			MakeWord(ea);
 		}
 		else if(cmd==	0x003E){
-			cmdName = "003E SIMILAR TO TINT MAP";
+			cmdName = "003E FLICKER ONCE";
 			cmdComment = form("%s",cmdName);
 			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);

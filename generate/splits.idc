@@ -204,7 +204,7 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x1607C,0x160B5,"NameEntryWindowLayout","graphics/technical/windowlayouts/nameentrywindowlayout.bin",file);
 	splitSingleChunk(0x160B5,0x16204,"AlphabetWindowLayout","graphics/technical/windowlayouts/alphabetwindowlayout.bin",file);
-	splitSingleChunk(0x16204,0x1623A,"AlphabetEndWindowLayout","graphics/technical/windowlayouts/alphabetendwindowwindowlayout.bin",file);
+	splitSingleChunk(0x16204,0x1623A,"AlphabetEndWindowLayout","graphics/technical/windowlayouts/alphabetendwindowlayout.bin",file);
 	
 	splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","graphics/technical/windowlayouts/timerwindowwindowlayout.bin",file);
 	
@@ -260,7 +260,7 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x29002,0x29A02,"VariableWidthFont","graphics/technical/fonts/variablewidthfont.bin",file);
 	
-	splitSingleChunk(0x29A02,0x2A9C2,"MenuTiles_Uncompressed","graphics/technical/menus/menutiles.bin",file);
+	splitSingleChunk(0x29A02,0x2A9C2,"MenuTiles_Uncompressed","graphics/technical/menus/mainmenutiles.bin",file);
 	splitSingleChunk(0x2A9C2,0x2ACF6,"MenuTiles_Item","graphics/technical/menus/menutilesitem.bin",file);
 	splitSingleChunk(0x2ACF6,0x2B072,"MenuTiles_BattleField","graphics/technical/menus/menutilesbattlefield.bin",file);
 	splitSingleChunk(0x2B072,0x2B418,"MenuTiles_Church","graphics/technical/menus/menutileschurch.bin",file);
