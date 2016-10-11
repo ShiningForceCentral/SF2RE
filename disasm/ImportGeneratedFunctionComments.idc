@@ -60,6 +60,10 @@ static main()
     SetFunctionCmt(0xc58, 
         "used to execute sub_740", 1);
 
+    // StoreVdpCommandster
+    SetFunctionCmt(0xc80, 
+        "Palette transfer ?", 1);
+
     // CopyPaletteIncomplete
     SetFunctionCmt(0xcc4, 
         "looks like this piece of code is incomplete and useless", 1);
@@ -419,10 +423,6 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     SetFunctionCmt(0x6a38, 
         "related to text box", 1);
 
-    // CheckSRAM
-    SetFunctionCmt(0x6ea6, 
-        "check saves ?", 1);
-
     // CopyBytesToSRAM
     SetFunctionCmt(0x7004, 
         "a0 = source address\n\
@@ -468,10 +468,6 @@ Out: D0 = new map idx", 1);
     D2 = player Y coord to check\n\
 Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
-
-    // VInt_WitchBlink
-    SetFunctionCmt(0x7d54, 
-        "witch blink function ?", 1);
 
     // j_GetClass
     SetFunctionCmt(0x8004, 
@@ -1313,6 +1309,10 @@ In: D0 = weapon sprite idx", 1);
     SetFunctionCmt(0x1a32c, 
         "code for invocations", 1);
 
+    // sa1F_OddeyeBeam
+    SetFunctionCmt(0x1b716, 
+        "and maybe Zynk's beam too ?", 1);
+
     // sub_1B93C
     SetFunctionCmt(0x1b93c, 
         "desoul ?", 1);
@@ -1342,10 +1342,6 @@ Out: A0 = address", 1);
     // DisplaySpecialCaravanDescription
     SetFunctionCmt(0x22864, 
         "only used for chirrup sandals", 1);
-
-    // sub_228A8
-    SetFunctionCmt(0x228a8, 
-        "textbox?", 1);
 
     // sub_22926
     SetFunctionCmt(0x22926, 
@@ -1420,6 +1416,10 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x23c58, 
         "number of force members living, number of enemies living -> D2, D3", 1);
 
+    // sub_23D98
+    SetFunctionCmt(0x23d98, 
+        "spell launch", 1);
+
     // GetEgressPositionForBattle
     SetFunctionCmt(0x23e50, 
         "HARDCODED battle->map relationship ?", 1);
@@ -1463,13 +1463,9 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x2594a, 
         "deal with \"system\" event (RAM:a84a)", 1);
 
-    // SetBattleVIntFuncs
+    // SetBattleVIntFunctions
     SetFunctionCmt(0x25a94, 
         "init vint contextual functions", 1);
-
-    // EndGame
-    SetFunctionCmt(0x279d8, 
-        "need to verify", 1);
 
     // sub_28F62
     SetFunctionCmt(0x28f62, 
@@ -1552,10 +1548,6 @@ Out: D4 = sprite idx", 1);
     // sub_45268
     SetFunctionCmt(0x45268, 
         "related to Caravan ... warp into Caravan ?", 1);
-
-    // sub_455AC
-    SetFunctionCmt(0x455ac, 
-        "warp out ?", 1);
 
     // GetEntityPortraitAndSpeechSfx
     SetFunctionCmt(0x45638, 
@@ -1702,6 +1694,10 @@ Out: D1 = portrait idx\n\
         "cutscene at the start of battle (after units are placed and battle officially begins)\n\
 \n\
 only seems to happen in first \"above Pacalon\" battle", 1);
+
+    // ApplyPositionsAfterEnemyLeaderDies
+    SetFunctionCmt(0x47d9e, 
+        "After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.", 1);
 
     // ExecuteBattleCutscene_Region
     SetFunctionCmt(0x47e82, 

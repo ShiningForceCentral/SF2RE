@@ -1612,7 +1612,7 @@ static parseEAS(start,end){
 		}
 		else if(Word(ea)==0x0023){
 			cmdName = "0023 SEND SOUND COMMAND";
-			cmdComment = form("%s $%s",cmdName,ltoa(Word(ea+2),16));
+			cmdComment = form("%s %s",cmdName,getSoundName(Word(ea+2)));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
