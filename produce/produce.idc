@@ -161,13 +161,18 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\romheader",0x0,0x200,"ROM Header");
 	produceAsmScript(file,"code\\gameflow\\start\\systeminit",0x200,0x2DE,"System init functions");
 	produceAsmScript(file,"code\\gameflow\\start\\gamestart",0x2DE,0x45A,"Start function");
-	produceAsmScript(file,"code\\common\\tech\\interrupts\\interruptsengine",0x45A,0x14A6,"Interrupts engine");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\trap0_soundcommand",0x45A,0x490,"Trap 0 - Sound Command");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\errors",0x490,0x556,"Error interrupts");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\trap5_textbox",0x556,0x57A,"Trap 5 - Text Box");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\trap6_mapscript",0x57A,0x592,"Trap 6 - Map Script");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\hint",0x592,0x594,"Horizontal Interrupt - Triggered at each line display");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\vintengine",0x594,0x14A6,"Vertical Interrupt Engine - Main Technical Engine - Triggered at each frame display");
 	produceAsmScript(file,"code\\common\\scripting\\text\\asciinumber",0x14A6,0x150E,"ASCII number function");
 	produceAsmScript(file,"code\\common\\tech\\input",0x150E,0x1600,"Input functions");
-	produceAsmScript(file,"code\\common\\tech\\randomizing",0x1600,0x16BE,"Randomizing function");
+	produceAsmScript(file,"code\\common\\tech\\randomnumbergenerator",0x1600,0x16BE,"RNG functions");
 	produceAsmScript(file,"code\\common\\tech\\sound\\music",0x16BE,0x16D6,"Sound function");
 	produceAsmScript(file,"code\\common\\tech\\bytecopy",0x16D6,0x1700,"Byte-copy function");
-	produceAsmScript(file,"code\\common\\tech\\interrupts\\flags",0x1700,0x1770,"Flag function");
+	produceAsmScript(file,"code\\common\\tech\\interrupts\\trap1-4_flags",0x1700,0x1770,"Trap 1-4 - Flag Functions");
 	produceAsmScript(file,"code\\common\\tech\\graphics\\graphics",0x1770,0x20E6,"Graphics functions");
 	produceAsmScript(file,"code\\common\\maps\\mapload",0x20E6,0x2F6A,"Map loading functions");
 	produceAsmScript(file,"code\\common\\tech\\graphics\\display",0x2F6A,0x31CC,"Display function");
@@ -286,7 +291,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
 	produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
 	produceAsmScript(file,"code\\common\\tech\\graphics\\specialsprites",0x25BFC,0x2791C,"Special Sprites functions");
-	produceAsmScript(file,"code\\specialscreens\\suspend\\suepend",0x2791C,0x279D8,"Suspend functions");
+	produceAsmScript(file,"code\\specialscreens\\suspend\\suspend",0x2791C,0x279D8,"Suspend functions");
 	produceAsmScript(file,"code\\specialscreens\\witchend\\witchend",0x279D8,0x27D8C,"Witch end functions");
 	produceAsmSection(file,0x27D8C,0x28000);
 
