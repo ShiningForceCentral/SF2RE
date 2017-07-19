@@ -73,7 +73,6 @@ writestr(file,"#dir	data/graphics/maps\n");
 writestr(file,"#dir	data/graphics/maps/maptilesets\n");
 writestr(file,"#dir	data/graphics/maps/mappalettes\n");
 writestr(file,"#dir	data/graphics/icons\n");
-writestr(file,"#dir	data/graphics/palettes\n");
 writestr(file,"#dir	data/graphics/tech\n");
 writestr(file,"#dir	data/graphics/tech/menus\n");
 writestr(file,"#dir	data/graphics/tech/fonts\n");
@@ -154,7 +153,7 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0xB1E,0xB96,"FadingData","data/graphics/tech/fadingdata.bin",file);
 	
-	splitSingleChunk(0x309E,0x30BE,"plt_DisplayInit","data/graphics/tech/displayinitpalette.bin",file);	
+	splitSingleChunk(0x309E,0x30BE,"plt_BasePalette","data/graphics/tech/basepalette.bin",file);	
 	
 	splitSingleChunk(0x31CE,0x364E,"MapOffsetHashTable","data/maps/global/mapoffsethashtable.bin",file);
 	
@@ -348,7 +347,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1EF142, 0x1EF4BA, "JewelsEndScreenTiles","data/graphics/specialscreens/endingjewels/endingjewelstiles.bin",file);
 	splitSingleChunk(0x1EF4BA, 0x1EF4DA, "plt_SuspendString","data/graphics/specialscreens/suspendscreen/suspendstringpalette.bin",file);
 	splitSingleChunk(0x1EF4DA, 0x1EF5A6, "SuspendStringTiles","data/graphics/specialscreens/suspendscreen/suspendstringtiles.bin",file);
-	splitSingleChunk(0x1EF5A6, 0x1EF5E6, "BasePalette","data/graphics/tech/basepalette.bin",file);
+	splitSingleChunk(0x1EF5A6, 0x1EF5E6, "unused_BasePalettes","data/graphics/tech/unusedbasepalettes.bin",file);
 	splitSingleChunk(0x1EF5E6, 0x1EFE33, "BaseTiles","data/graphics/tech/basetiles.bin",file);
 	MakeAlign(0x1EFE33, 0x1F0000-0x1EFE33,15);
 	splitSingleChunk(0x1F0000, 0x1F8000, "","data/sound/musicbank1.bin",file);
