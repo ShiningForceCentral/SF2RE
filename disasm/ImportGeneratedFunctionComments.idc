@@ -173,7 +173,7 @@ set default values in sprite table", 1);
         A1 = dest address in RAM\n\
 ", 1);
 
-    // LoadTileData
+    // LoadCompressedData
     SetFunctionCmt(0x1e48, 
         "Stack tile decompression\n\
 \n\
@@ -1467,9 +1467,9 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x25a94, 
         "init vint contextual functions", 1);
 
-    // sub_28F62
+    // CalculateRomChecksum
     SetFunctionCmt(0x28f62, 
-        "Something related to P2 START during SEGA logo ... some kind of checksum calculation ?", 1);
+        "Checksum", 1);
 
     // InitDecoder
     SetFunctionCmt(0x2e10e, 

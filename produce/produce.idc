@@ -10,7 +10,7 @@ static main(void) {
 
 	Message("PRODUCING ASM...\n");
 
-	produceMacros();
+	//produceMacros();
 	produceEnums();
 	produceConst();
 	produceMain();
@@ -19,6 +19,7 @@ static main(void) {
 
 }
 
+/*
 static produceMacros(){
 	auto file;
 	Message("\nWriting Macros to sf2macros.asm ...");	
@@ -39,6 +40,7 @@ static produceMacros(){
 	fclose(file);	
 	Message("DONE.");	
 }
+*/
 
 static produceEnums(){
 	auto i,j,enumQty,id,enumName,enumSize,constant,constId,output,file;
@@ -1421,6 +1423,8 @@ static produceAsmSectionWithPrettyParam(file,start,end,prettyWriteFunctions){
 
 static writeHeader(file){
 	writestr(file,"\n");
+	writestr(file,"   EXPANDED_ROM: equ $0\n");	
+	writestr(file,"\n");
 	writestr(file,"   include \"sf2macros.asm\"\n");	
 	writestr(file,"   include \"sf2enums.asm\"\n");
 	writestr(file,"   include \"sf2const.asm\"\n");
@@ -1537,8 +1541,16 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 			comment = formatRptCmt(commentEx);
 		}
 	}
+	lineA = LineA(ea,0);
 	disasm = GetDisasm(ea);
 	cmtIdx = strstr(disasm,";");
+	lineB = LineB(ea,0);
+	if(lineA!=""){
+		lineA = form("%s\n",lineA);
+	}
+	if(lineB!=""){
+		lineB = form("%s\n",lineB);
+	}	
 	if(cmtIdx!=-1){
 		disasm = substr(disasm,0,cmtIdx);
 	}
