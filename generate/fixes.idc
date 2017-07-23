@@ -173,6 +173,7 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x27D8E,"align $28000");
 	SetManualInsn(0x425ED,"align $44000");
 	SetManualInsn(0x6348C,"align $64000");
+	SetManualInsn(0xC7ECC,"align $C8000");
 	SetManualInsn(0x12FADE,"align $130000");
 	SetManualInsn(0x1B7C9A,"align $1B8000");
 	SetManualInsn(0x1C7F7C,"align $1C8000");

@@ -1153,7 +1153,7 @@ static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmSection(file,0x64000,0x6400C);
 	produceAsmScript(file,"data\\maps\\global\\maptilesets",0x6400C,0x9494A,"Map palettes table");	
 	produceAsmScript(file,"data\\maps\\global\\mappalettes",0x9494A,0x94B8A,"Map palettes table");
-	produceAsmScript(file,"data\\maps\\entries\\mapentries",0x94B8A,0xC7ECC,"Map entries table");
+	produceAsmScriptWithConditionalInclude(file,"data\\maps\\entries\\mapentries",0x94B8A,0xC7ECC,"Map entries table",1);
 	produceAsmSection(file,0xC7ECC,0xC8000);
 
 	fclose(file);
@@ -1328,7 +1328,9 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 
 	produceAsmSection(file,0x1E0000,0x1EE270);
 	produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");	
-	produceAsmSection(file,0x1EE7D0,0x1F0000);
+	produceAsmSection(file,0x1EE7D0,0x1EF4DA);
+	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\suspend\\suspendstring",0x1EF4DA,0x1EF5A6,"Suspend String",1);	
+	produceAsmSection(file,0x1EF5A6,0x1F0000);
 
 	fclose(file);
 	Message("DONE.\n");	

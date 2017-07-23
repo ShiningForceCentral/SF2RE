@@ -356,14 +356,23 @@ static splitSingleChunks(file) {
 }
 
 static splitSingleChunk(start, end, nameString, binPath, splitFile){
-	auto j;
+	splitSingleChunkWithConditionalIncbin(start, end, nameString, binPath, splitFile, 0);
+}
+
+static splitSingleChunkWithConditionalIncbin(start, end, nameString, binPath, splitFile, incbinType){
+	auto j,incbin;
 	//Message("Cleaning from %a to %a ...\n",start,end);
 	for(j=start+1;j<end;j++){undefineByte(j);}
 	MakeData(start,FF_BYTE,end-start,1);
 	if(nameString!=""){
 		MakeNameEx(start,nameString,0);
 	}
-	SetManualInsn   (start, form("incbin \"%s\"",binPath));
+	if(incbinType==1){
+		incbin = "incbinIfVanillaRom";
+	}else{
+		incbin = "incbin";
+	}
+	SetManualInsn   (start, form("%s \"%s\"",incbin,binPath));
 	writestr(splitFile,form("#split\t0x%s,0x%s,%s\n",ltoa(start,16),ltoa(end,16),binPath));
 	//Jump(start);
 }
