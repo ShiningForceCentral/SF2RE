@@ -225,7 +225,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1FAD6,0x1FADD,"AllyBSpriteIdleAnimate","data/stats/allies/allyidlesprites.bin",file);
 	splitSingleChunk(0x1FADD,0x1FAEA,"EnemyBSpriteIdleAnimate","data/stats/enemies/enemyidlesprites.bin",file);
 	
-	MakeAlign(0x1FDEC, 0x20000-0x1FDEC,15);
+	MakeAlign(0x1FDEC, 0x20000-0x1FDEC,17);
 	
 	splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
 	

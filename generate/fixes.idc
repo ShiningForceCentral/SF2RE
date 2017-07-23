@@ -42,6 +42,8 @@ static main(void) {
 	fixInstructionRepresentations();
 	Message(" DONE.\nSingle Instructions...");		
 	fixSingleInstructions();
+	Message(" DONE.\nROM Expand Tweaks...");		
+	insertRomExpandTweaks();
 	Message(" DONE.\n");
 	
 	Message("END OF FIXES.\n");
@@ -152,6 +154,7 @@ static fixInstructionRepresentations(){
  
 static fixSingleInstructions(){
 
+	/* Operators being interpreted as offsets wrongly */
 	OpHex(0x128C0,1);
 	OpHex(0x19C58,0);	
 	OpHex(0x1B3A0,0);
@@ -159,6 +162,28 @@ static fixSingleInstructions(){
 	OpHex(0x27A36,1);
 	OpHex(0x27B16,0);
 	OpHex(0x478A6,0);	
+
+}
+
+static insertRomExpandTweaks(){
+
+	/* Align directives being not permissive enough 
+	to remove data chunks for ROM expansion */
+	SetManualInsn(0x17FDA,"align $18000");
+	SetManualInsn(0x27D8E,"align $28000");
+	SetManualInsn(0x425ED,"align $44000");
+	SetManualInsn(0x6348C,"align $64000");
+	SetManualInsn(0x12FADE,"align $130000");
+	SetManualInsn(0x1B7C9A,"align $1B8000");
+	SetManualInsn(0x1C7F7C,"align $1C8000");
+	SetManualInsn(0x1DFA46,"align $1E0000");
+	SetManualInsn(0x1EFE33,"align $1F0000");
+	
+	/* Conditional manual instructions when implied by moved data */
+	SetManualInsn(0x1B1640,"conditionalPc lea,pt_BattleSpriteSets,a0");
+	
+	
+
 
 }
 

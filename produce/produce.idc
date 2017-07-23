@@ -1263,7 +1263,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScript(file,"data\\battles\\global\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data");	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");	
 	produceAsmSection(file,0x1B1A66,0x1B30EE);		
-	produceAsmScript(file,"data\\battles\\global\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets");	
+	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DB0,0x1B6DDA,"Data related to UpgradeUnitIdx function");	
 	produceAsmSection(file,0x1B6DDA,0x1B8000);
 
@@ -1373,15 +1373,26 @@ static produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sect
 
 }
 
-
 static produceAsmScript(mainFile,sectionName,start,end,sectionComment){
+	
+	produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sectionComment,0);
+
+}
+
+
+static produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sectionComment,conditionalIncludeType){
 	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
-	auto output, name, indent, comment, commentEx, commentIndent, offsets;
+	auto output, include, name, indent, comment, commentEx, commentIndent, offsets;
 	fileName = form("%s.asm",sectionName);
 	Message(form("Writing assembly script section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	//form("0x%s..0x%s %s",ltoa(start,16),ltoa(end,16),sectionComment)
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	if(conditionalIncludeType==1){
+		include = "includeIfVanillaRom";
+	}else{
+		include = "include";
+	}
+	writestr(mainFile,form("\t\t%s \"%s\"\t\t; %s\n",include,fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	offsets = form("0x%s..0x%s",ltoa(start,16),ltoa(end,16));
 	writestr(file,form("\n; ASM FILE %s.asm :\n; %s : %s\n",sectionName,offsets,sectionComment));
