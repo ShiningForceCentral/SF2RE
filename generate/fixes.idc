@@ -174,14 +174,21 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x425ED,"align $44000");
 	SetManualInsn(0x6348C,"align $64000");
 	SetManualInsn(0xC7ECC,"align $C8000");
+	SetManualInsn(0xFFC48,"align $100000");
 	SetManualInsn(0x12FADE,"align $130000");
+	SetManualInsn(0x17FE4F,"align $180000");
+	SetManualInsn(0x1ABE52,"align $1AC000");
 	SetManualInsn(0x1B7C9A,"align $1B8000");
 	SetManualInsn(0x1C7F7C,"align $1C8000");
+	SetManualInsn(0x1D7E26,"align $1D8000");
 	SetManualInsn(0x1DFA46,"align $1E0000");
 	SetManualInsn(0x1EFE33,"align $1F0000");
 	
 	/* Conditional manual instructions when implied by moved data */
 	SetManualInsn(0x1B1640,"conditionalPc lea,pt_BattleSpriteSets,a0");
+	SetManualInsn(0x25CBA,"conditionalPc lea,(SpecialSprites_EvilSpirit+$20),a0");
+	SetManualInsn(0x25CC8,"conditionalPc lea,SpecialSprites_EvilSpiritAlt,a0");
+	SetManualInsn(0x25CCE,"conditionalPc lea,(SpecialSprites_Zeon+$20),a0");
 	
 	
 
