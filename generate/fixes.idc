@@ -189,6 +189,13 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x25CBA,"conditionalPc lea,(SpecialSprites_EvilSpirit+$20),a0");
 	SetManualInsn(0x25CC8,"conditionalPc lea,SpecialSprites_EvilSpiritAlt,a0");
 	SetManualInsn(0x25CCE,"conditionalPc lea,(SpecialSprites_Zeon+$20),a0");
+	SetManualInsn(0x10003C,"conditionalPc lea,TitleScreenTiles,a0");
+	SetManualInsn(0x10005E,"conditionalPc lea,TitleScreenLayoutA,a0");
+	SetManualInsn(0x100070,"conditionalPc lea,TitleScreenLayoutA,a0");
+	SetManualInsn(0x1000AC,"conditionalPc lea,TitleScreenLayoutB,a0");
+	SetManualInsn(0x10010E,"conditionalPc lea,plt_TitleScreen,a0");
+	SetManualInsn(0x100248,"conditionalPc lea,TitleScreenLayoutA,a0");
+	SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
 	
 	
 
