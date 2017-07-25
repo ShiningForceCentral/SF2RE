@@ -196,6 +196,14 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x10010E,"conditionalPc lea,plt_TitleScreen,a0");
 	SetManualInsn(0x100248,"conditionalPc lea,TitleScreenLayoutA,a0");
 	SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
+	SetManualInsn(0x1AD0E0,"conditionalPc lea,pt_BattleTerrainData,a0");
+	SetManualInsn(0x477A8,"conditionalPc lea,MapSetups,a1");
+	SetManualInsn(0x54CAA,"conditionalBsr sub_4F48A");
+	SetManualInsn(0x427C,"conditionalWordAddr lea,BattleMapCoords,a0");
+	SetManualInsn(0x783A,"conditionalPc lea,BattleMapCoords,a0");
+	SetManualInsn(0x79B2,"conditionalPc lea,BattleMapCoords,a0");
+	SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoords,a0");
+	SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoords,a0");
 	
 	
 
