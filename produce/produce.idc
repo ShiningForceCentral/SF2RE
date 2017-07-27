@@ -1212,6 +1212,7 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\specialscreens\\title\\title",0x100008,0x1002BE,"Title screen functions");	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics",1);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds",1);	
+	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",2);	
 	produceAsmScript(file,"data\\graphics\\battles\\spells\\invocations\\entries",0x12A2F8,0x12FADE,"Invocation sprites");	
 	produceAsmSection(file,0x12FADE,0x130000);
 
