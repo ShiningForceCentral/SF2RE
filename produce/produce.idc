@@ -468,7 +468,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
 	produceAsmScript(file,"data\\maps\\global\\mapsetups",0x4F6E2,0x4FA70,"Map setups table");
 
-	writestr(file,"\t\tincludeIfVanillaRom data\\maps\\global\\mapsetupsstorage.asm\n");
+	//writestr(file,"\t\tincludeIfVanillaRom data\\maps\\global\\mapsetupsstorage.asm\n");
+	writestr(file,"\t\tinclude data\\maps\\global\\mapsetupsstorage.asm\n");
 	mapSetupsFile = fopen("disasm\\data\\maps\\global\\mapsetupsstorage.asm","w");
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\pt",0x4FA70,0x4FA88,"");
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\s1",0x4FA88,0x4FA8A,"");
@@ -1234,7 +1235,7 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
 
 	produceAsmSection(file,0x130000,0x130004);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
-	writestr(file,"\t\tincludeIfExpandedRom data\\maps\\global\\mapsetupsstorage.asm\n");	
+	//writestr(file,"\t\tincludeIfExpandedRom data\\maps\\global\\mapsetupsstorage.asm\n");	
 	produceAsmSection(file,0x17FE4F,0x180000);
 
 	fclose(file);
