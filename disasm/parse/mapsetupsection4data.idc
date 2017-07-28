@@ -28,7 +28,7 @@ static parseMapSetupSection4(ea){
 		}
 		else{
 			if(Word(ea+4) > 0x8000) {
-				OpOffEx(ea+4, -1, REF_OFF32, base + Word(ea+4) - 0x10000, base, 0x10000);
+				OpOffEx(ea+4, -1, REF_LOW16, base + (Word(ea+4)+0xFFFF0000), base, 0);
 				MakeCode(base+Word(ea+4)-0x10000);
 			}
 			else{

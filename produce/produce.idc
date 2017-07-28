@@ -334,7 +334,7 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
 	writestr(file,"\t\talignIfExpandedRom $43800\n");
 	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7A36,0x7BDE,"Map coords data",2);	
 	writestr(file,"\t\talignIfExpandedRom $43C00\n");
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
+	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
 	produceAsmSection(file,0x425ED,0x44000);	
 
 	fclose(file);
@@ -358,7 +358,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"code\\common\\scripting\\map\\mapfunctions",0x440CC,0x44338,"Map functions");
 	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions",0x44338,0x444A2,"Followers functions");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_1",0x444A2,0x448C4,"Entity functions");
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
+	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
+	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x449C6,0x44DE2,"Entity functions");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
@@ -468,7 +469,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
 	produceAsmScript(file,"data\\maps\\global\\mapsetups",0x4F6E2,0x4FA70,"Map setups table");
 
-	//writestr(file,"\t\tincludeIfVanillaRom data\\maps\\global\\mapsetupsstorage.asm\n");
+	writestr(file,"\t\t;includeIfVanillaRom data\\maps\\global\\mapsetupsstorage.asm\n");
 	writestr(file,"\t\tinclude data\\maps\\global\\mapsetupsstorage.asm\n");
 	mapSetupsFile = fopen("disasm\\data\\maps\\global\\mapsetupsstorage.asm","w");
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\pt",0x4FA70,0x4FA88,"");
@@ -1235,7 +1236,7 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
 
 	produceAsmSection(file,0x130000,0x130004);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
-	//writestr(file,"\t\tincludeIfExpandedRom data\\maps\\global\\mapsetupsstorage.asm\n");	
+	writestr(file,"\t\t;includeIfExpandedRom data\\maps\\global\\mapsetupsstorage.asm\n");	
 	produceAsmSection(file,0x17FE4F,0x180000);
 
 	fclose(file);

@@ -195,10 +195,10 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x1000AC,"conditionalPc lea,TitleScreenLayoutB,a0");
 	SetManualInsn(0x10010E,"conditionalPc lea,plt_TitleScreen,a0");
 	SetManualInsn(0x100248,"conditionalPc lea,TitleScreenLayoutA,a0");
-	SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
+	//SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
 	SetManualInsn(0x1AD0E0,"conditionalPc lea,pt_BattleTerrainData,a0");
 	//SetManualInsn(0x477A8,"conditionalPc lea,MapSetups,a1");
-	SetManualInsn(0x54CAA,"conditionalBsr sub_4F48A");
+	//SetManualInsn(0x54CAA,"conditionalBsr sub_4F48A");
 	SetManualInsn(0x427C,"conditionalWordAddr lea,BattleMapCoords,a0");
 	SetManualInsn(0x783A,"conditionalPc lea,BattleMapCoords,a0");
 	SetManualInsn(0x79B2,"conditionalPc lea,BattleMapCoords,a0");
@@ -244,7 +244,7 @@ static makeRpt(base, end){
 		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
-			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
+			OpOffEx(addr, -1, REF_LOW16, base + (Word(addr)+0xFFFF0000), base, 0);
 		}
 		else{
 			OpOffEx(addr, -1, REF_OFF32, -1, base, 0);
@@ -260,7 +260,7 @@ static makeRjt(base, end){
 		//Jump(addr);
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
-			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
+			OpOffEx(addr, -1, REF_LOW16, base + (Word(addr)+0xFFFF0000), base, 0);
 		}
 		else{
 			OpOffEx(addr, -1, REF_OFF32, -1, base, 0);
@@ -278,7 +278,7 @@ static makeRjtWithOneWordBetweenEachEntry(base, end){
 		addr = addr+2;
 		MakeData(addr, FF_WORD, 0x2, 0);
 		if(Word(addr) > 0x8000) {
-			OpOffEx(addr, -1, REF_OFF32, base + Word(addr) - 0x10000, base, 0x10000);
+			OpOffEx(addr, -1, REF_LOW16, base + (Word(addr)+0xFFFF0000), base, 0);
 		}
 		else{
 			OpOffEx(addr, -1, REF_OFF32, -1, base, 0);
@@ -374,7 +374,7 @@ static fixSingleMapSetuSection4(ea){
 
 static makeRelativeOffset(ea,base){
 		if(Word(ea) > 0x8000) {
-			OpOffEx(ea, -1, REF_OFF32, base + Word(ea) - 0x10000, base, 0x10000);
+			OpOffEx(ea, -1, REF_LOW16, base + (Word(ea)+0xFFFF0000), base, 0);
 		}
 		else{
 			OpOffEx(ea, -1, REF_OFF32, -1, base, 0);

@@ -1711,8 +1711,13 @@ static parseEAS(start,end){
 
 static makeRelativeOffsetFromCmd(addr){
 
+	auto type, target, base;
+	
+	base = addr-2;
+	target = base + (Word(addr)+0xFFFF0000);
+
 		if(Word(addr) > 0x8000) {
-			OpOffEx(addr, -1, REF_OFF32, addr - 2 + Word(addr) - 0x10000, addr-2, 0x10000);
+			OpOffEx(addr, -1, REF_LOW16, target, base, 0);
 		}
 		else{
 			OpOffEx(addr, -1, REF_OFF32, -1, addr-2, 0);

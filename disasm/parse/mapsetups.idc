@@ -131,7 +131,7 @@ static parseMapSetupSection2(ea,baseName){
 		undefineByte(ea+3);
 		MakeWord(ea+2);
 		if(Word(ea+2) > 0x8000) {
-			OpOffEx(ea+2, -1, REF_OFF32, base + Word(ea+2) - 0x10000, base, 0x10000);
+			OpOffEx(ea+2, -1, REF_LOW16, base + (Word(ea+2)+0xFFFF0000), base, 0);
 			MakeCode(base+Word(ea+2)-0x10000);
 		}
 		else{
@@ -146,7 +146,7 @@ static parseMapSetupSection2(ea,baseName){
 	undefineByte(ea+3);
 	MakeWord(ea+2);
 	if(Word(ea+2) > 0x8000) {
-		OpOffEx(ea+2, -1, REF_OFF32, base + Word(ea+2) - 0x10000, base, 0x10000);
+		OpOffEx(ea+2, -1, REF_LOW16, base + (Word(ea+2)+0xFFFF0000), base, 0);
 		MakeCode(base+Word(ea+2)-0x10000);
 	}
 	else{
@@ -170,7 +170,7 @@ static parseMapSetupSection3(ea,baseName){
 		undefineByte(ea+3);
 		MakeWord(ea+2);
 		if(Word(ea+2) > 0x8000) {
-			OpOffEx(ea+2, -1, REF_OFF32, base + Word(ea+2) - 0x10000, base, 0x10000);
+			OpOffEx(ea+2, -1, REF_LOW16, base + (Word(ea+4)+0xFFFF0000), base, 0);
 			MakeCode(base+Word(ea+2)-0x10000);
 		}
 		else{
@@ -185,7 +185,7 @@ static parseMapSetupSection3(ea,baseName){
 	undefineByte(ea+3);
 	MakeWord(ea+2);
 	if(Word(ea+2) > 0x8000) {
-		OpOffEx(ea+2, -1, REF_OFF32, base + Word(ea+2) - 0x10000, base, 0x10000);
+		OpOffEx(ea+2, -1, REF_LOW16, base + (Word(ea+4)+0xFFFF0000), base, 0);
 		MakeCode(base+Word(ea+2)-0x10000);
 	}
 	else{
@@ -215,7 +215,7 @@ static parseMapSetupSection5(ea,baseName){
 		MakeByte(ea+3);	
 		MakeWord(ea+4);		
 		if(Word(ea+4) > 0x8000) {
-			OpOffEx(ea+4, -1, REF_OFF32, base + Word(ea+4) - 0x10000, base, 0x10000);
+			OpOffEx(ea+4, -1, REF_LOW16, base + (Word(ea+4)+0xFFFF0000), base, 0);
 			MakeCode(base+Word(ea+4)-0x10000);
 		}
 		else{
@@ -230,7 +230,7 @@ static parseMapSetupSection5(ea,baseName){
 	MakeByte(ea+3);	
 	MakeWord(ea+4);		
 	if(Word(ea+4) > 0x8000) {
-		OpOffEx(ea+4, -1, REF_OFF32, base + Word(ea+4) - 0x10000, base, 0x10000);
+		OpOffEx(ea+4, -1, REF_LOW16, base + (Word(ea+4)+0xFFFF0000), base, 0);
 		MakeCode(base+Word(ea+4)-0x10000);
 	}
 	else{
