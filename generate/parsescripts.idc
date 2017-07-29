@@ -401,7 +401,9 @@ static parseCS(start,end){
 		//Jump(ea);
 		
 		if(Word(ea)==0xFFFF){
+			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
 			MakeWord(ea);
+			SetManualInsn(ea,"csc_end");
 			MakeRptCmt(ea,"END OF CUTSCENE SCRIPT");
 			break;
 		}		
@@ -410,114 +412,115 @@ static parseCS(start,end){
 		
 		if(Word(ea)>0x7FFF){
 			cmdName = "WAIT";
-			cmdComment = form("%s %s",cmdName,ltoa(Byte(ea+1),16));
+			cmdComment = form("%s $%s FRAMES",cmdName,ltoa(Byte(ea+1),16));
 			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeByte(ea);
-			MakeByte(ea+1);						
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("csWait $%s",ltoa(Byte(ea+1),16)));					
 		}
 		else if(cmd==0x0000){
-			cmdName = "0000 DISPLAY SINGLE TEXTBOX";
-			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
+			cmdName = "0000 DISPLAY NEXT SINGLE LINE - ";
+			cmdComment = form("%s $%s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
 			textIndex++;
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("nextSingleText $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0001){
-			cmdName = "0001 DISPLAY SINGLE TEXT BOX WITH VARS";
-			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getTextLine(textIndex));
+			cmdName = "0001 DISPLAY NEXT SINGLE LINE WITH VARS";
+			cmdComment = form("%s - $%s $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getTextLine(textIndex));
 			textIndex++;
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			MakeWord(ea+4);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("nextSingleTextVar $%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16)));
 		}
 		else if(cmd==	0x0002){
-			cmdName = "0002 DISPLAY TEXT BOX";
-			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
+			cmdName = "0002 DISPLAY NEXT LINE";
+			cmdComment = form("%s - $%s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));	
 			textIndex++;
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("nextText $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0003){
-			cmdName = "0003 DISPLAY TEXTBOX WITH VARS";
-			cmdComment = form("%s %s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16),getTextLine(textIndex));
+			cmdName = "0003 DISPLAY NEXT LINE WITH VARS";
+			cmdComment = form("%s - $%s $%s $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16),getTextLine(textIndex));
 			textIndex++;
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			MakeWord(ea+4);	
-			MakeWord(ea+6);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("nextTextVar $%s,$%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16)));
 		}
 		else if(cmd==	0x0004){
 			cmdName = "0004 INIT TEXT CURSOR";
 			textIndex = Word(ea+2);
-			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));
+			cmdComment = form("%s - $%s : %s",cmdName,ltoa(Word(ea+2),16),getTextLine(textIndex));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);					
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("textCursor $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0005){
 			cmdName = "0005 PLAY SOUND";
-			cmdComment = form("%s %s",cmdName,getSoundName(Word(ea+2)));
+			cmdComment = form("%s - $%s : %s",cmdName,ltoa(Word(ea+2),16),getSoundName(Word(ea+2)));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);				
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("playSound %s",getSoundName(Word(ea+2))));
 		}
 		else if(cmd==	0x0006){
 			cmdName = "0006 DO NOTHING";
 			cmdComment = form("%s",cmdName);
 			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,"csc06");
 		}
 		else if(cmd==	0x0007){
 			cmdName = "0007 EXECUTE MAP SYSTEM EVENT";
-			cmdComment = form("%s %s",cmdName, ltoa(Dword(ea+2),16));
+			cmdComment = form("%s $%s",cmdName, ltoa(Dword(ea+2),16));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeDword(ea+2);
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("mapSysEvent $%s",ltoa(Dword(ea+2),16)));
 		}
 		else if(cmd==	0x0008){
 			cmdName = "0008 JOIN FORCE";
-			cmdComment = form("%s %s",cmdName,ltoa(Word(ea+2),16));
+			cmdComment = form("%s $%s",cmdName,ltoa(Word(ea+2),16));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);		
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("join $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0009){
 			cmdName = "0009 HIDE TEXTBOX AND PORTRAIT";
 			cmdComment = form("%s",cmdName);
 			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,"hideText");
 		}				
 		else if(cmd==	0x000A){
 			cmdName = "000A EXECUTE SUBROUTINE";
-			cmdComment = form("%s %s",cmdName,ltoa(Dword(ea+2),16));
+			cmdComment = form("%s %s",cmdName,GetTrueName(Dword(ea+2)));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			OpOff(ea+2,0,0);	
-			MakeCode(Dword(ea+2));
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("executeSubroutine %s",GetTrueName(Dword(ea+2))));
 		}
 		else if(cmd==	0x000B){
 			cmdName = "000B JUMP";
-			cmdComment = form("%s %s",cmdName,ltoa(Dword(ea+2),16));
+			cmdComment = form("%s %s",cmdName,GetTrueName(Dword(ea+2)));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			OpOff(ea+2,0,0);			
+			if(GetTrueName(Dword(ea+2))==""){
+				MakeNameEx(Dword(ea+2),form("cs_%s",ltoa(Dword(ea+2),16)),SN_AUTO);
+			}
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("jump %s",GetTrueName(Dword(ea+2))));
 		}
 		else if(cmd==	0x000C){
 			cmdName = "000C JUMP IF SET FLAG";
@@ -525,9 +528,11 @@ static parseCS(start,end){
 			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16),getFlagDesc(flag));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			OpOff(ea+4,0,0);	
+			if(GetTrueName(Dword(ea+4))==""){
+				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),SN_AUTO);
+			}
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("jumpIfFlagSet $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
 		}
 		else if(cmd==	0x000D){
 			cmdName = "000D JUMP IF CLEAR FLAG";
@@ -535,27 +540,33 @@ static parseCS(start,end){
 			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16),getFlagDesc(flag));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			OpOff(ea+4,0,0);				
+			if(GetTrueName(Dword(ea+4))==""){
+				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),SN_AUTO);
+			}
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("jumpIfFlagClear $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
 		}
 		else if(cmd==	0x000E){
 			cmdName = "000E JUMP IF CHARACTER DEAD";
 			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			OpOff(ea+4,0,0);					
+			if(GetTrueName(Dword(ea+4))==""){
+				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),SN_AUTO);
+			}
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("jumpIfDead $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
 		}
 		else if(cmd==	0x000F){
 			cmdName = "000F JUMP IF CHARACTER ALIVE";
 			cmdComment = form("%s %s %s",cmdName,ltoa(Word(ea+2),16),ltoa(Dword(ea+4),16));
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);			
-			OpOff(ea+4,0,0);			
+			if(GetTrueName(Dword(ea+4))==""){
+				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),SN_AUTO);
+			}
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("jumpIfAlive $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
 		}
 		else if(cmd==	0x0010){
 			cmdName = "0010 SET FLAG";
