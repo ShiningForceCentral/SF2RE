@@ -574,24 +574,29 @@ static parseCS(start,end){
 			cmdComment = form("%s %s %s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);				
-			MakeWord(ea+4);
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			if(ltoa(Word(ea+4)==0){
+				SetManualInsn(ea,form("clearFlag %s",ltoa(Word(ea+2),16)));
+			}else{
+				SetManualInsn(ea,form("setFlag %s",ltoa(Word(ea+2),16)));
+			}
+			
 		}
 		else if(cmd==	0x0011){
 			cmdName = "0011 STORY YESNO PROMPT";
 			cmdComment = form("%s",cmdName);
 			cmdLength = 2;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);	
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,"YesNoPrompt");
 		}
 		else if(cmd==	0x0012){
 			cmdName = "0012 EXECUTE CONTEXTUAL MENU";
 			cmdComment = form("%s %s",cmdName,ltoa(Word(ea+2),16));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);				
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("contextualMenu $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0013){
 			cmdName = "0013 SET STORY FLAG";
@@ -599,11 +604,11 @@ static parseCS(start,end){
 			cmdComment = form("%s %s : %s",cmdName,ltoa(Word(ea+2),16),getFlagDesc(flag));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
-			MakeWord(ea);
-			MakeWord(ea+2);					
+			MakeData(ea,FF_BYTE,cmdLength,1);
+			SetManualInsn(ea,form("setStoryFlag $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0014){
-			cmdName = "0014 SET MANUAL ACTSCRIPT";
+			cmdName = "0014 SET CUSTOM ACTSCRIPT";
 			cmdComment = form("%s %s",cmdName,ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),ltoa(Dword(ea+4),16));
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_DELNAMES);
@@ -612,7 +617,7 @@ static parseCS(start,end){
 			MakeByte(ea+3);							
 			cmdLength = parseEAS(ea+4,0xFFFFFF) + 2 - ea;
 			MakeWord(ea+cmdLength-2);
-			MakeRptCmt(ea+cmdLength-2,"0014 END OF MANUAL ACTSCRIPT");
+			MakeRptCmt(ea+cmdLength-2,"0014 END OF CUSTOM ACTSCRIPT");
 		}
 		else if(cmd==	0x0015){
 			cmdName = "0015 SET ACTSCRIPT";
