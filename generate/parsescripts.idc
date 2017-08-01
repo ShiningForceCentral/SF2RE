@@ -401,7 +401,7 @@ static parseCS(start,end){
 		//Jump(ea);
 		
 		if(Word(ea)==0xFFFF){
-			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
+			MakeUnknown(ea,2,DOUNK_SIMPLE);
 			MakeWord(ea);
 			SetManualInsn(ea,"csc_end");
 			MakeRptCmt(ea,"END OF CUTSCENE SCRIPT");
