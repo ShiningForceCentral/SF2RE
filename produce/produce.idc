@@ -1543,7 +1543,7 @@ static writeItem(file,ea){
 
 static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	auto name,tabLength,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
-	tabLength = 2;
+	tabLength = 8;
 	indent = "\t\t";
 	commentIndent = "\t\t\t\t";
 	name = GetTrueName(ea);
@@ -1602,7 +1602,7 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(strlen(disasm)>(strlen(commentIndent)*tabLength)&&comment!=""){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
-	output = form("%s%s%s%s\n%s",lineA,name,disasm,comment,lineB);
+	output = form("%s%s%s%s\n%s",name,lineA,disasm,comment,lineB);
 	writestr(file,output);
 }
 
