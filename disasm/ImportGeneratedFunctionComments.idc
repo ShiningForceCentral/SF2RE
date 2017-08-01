@@ -1703,10 +1703,6 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     SetFunctionCmt(0x47e82, 
         "executes cutscenes activated by regions", 1);
 
-    // sub_4CD56
-    SetFunctionCmt(0x4cd56, 
-        "Jaro joins the Force", 1);
-
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
         "wait during d0 frames", 1);
