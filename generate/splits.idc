@@ -215,6 +215,8 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
 	MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
 	
+	splitSingleChunk(0x198A8,0x198C8,"plt_BattleSceneBasePalette","data/graphics/battles/plt_battlescenebasepalette.bin",file);
+	
 	splitSingleChunk(0x19E5E,0x19E6E,"TerrainBackgrounds","data/battles/global/terrainbackgrounds.bin",file);
 	
 	splitSingleChunk(0x1F806,0x1F914,"AllyBattleSprites","data/stats/allies/allybattlesprites.bin",file);
@@ -576,7 +578,7 @@ static splitGrounds(file) {
 			/*MakeData(dref, FF_WORD, 0x2, 0);
 			MakeData(dref+2, FF_WORD, 0x2, 0);
 			MakeData(dref+4, FF_WORD, 0x2, 0);*/
-			splitSingleChunk(dref, dref+6, "", form("data/graphics/battles/grounds/ground%s_palette.bin",index),file);		
+			splitSingleChunk(dref, dref+6, "", form("data/graphics/battles/grounds/groundpalette%s.bin",index),file);		
 			MakeData(dref+6, FF_WORD, 0x2, 0);
 			MakeNameExC(dref+6,form("bsg%s_rpbase",index),0);
 			base = dref+6;
