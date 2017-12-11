@@ -1599,9 +1599,13 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(strlen(name)>(strlen(indent)*tabLength)){
 		name = form("%s\n%s",name,indent);
 	}
+	if(strstr(lineA,"\n")!=-1){
+		lineA = form("%s%s",lineA,indent);
+	}
 	if(strlen(disasm)>(strlen(commentIndent)*tabLength)&&comment!=""){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
+	//Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));		
 	output = form("%s%s%s%s\n%s",name,lineA,disasm,comment,lineB);
 	writestr(file,output);
 }

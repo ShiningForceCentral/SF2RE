@@ -193,6 +193,12 @@ barrel = 00\n\
 In: D0 = barrel\n\
 Out: D1 = block flag word", 1);
 
+    // LoadMapBlocks
+    SetFunctionCmt(0x2372, 
+        "decompress map blocks ?\n\
+a0 : input ROM block data\n\
+a1 : output RAM data", 1);
+
     // sub_2670
     SetFunctionCmt(0x2670, 
         "related to 4 choices apparently", 1);
@@ -1242,7 +1248,7 @@ Out: D1 = 0 if animates, 1 if not", 1);
 In: D0 = enemy bsprite idx\n\
 Out: D1 = 0 if animates, 1 if not", 1);
 
-    // sub_19884
+    // InitializeBattleScenePalettes
     SetFunctionCmt(0x19884, 
         "clears plt 1-2 and 1-2bis, sets plt 3bis", 1);
 
@@ -1702,6 +1708,10 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     // ExecuteBattleCutscene_Region
     SetFunctionCmt(0x47e82, 
         "executes cutscenes activated by regions", 1);
+
+    // csub_4CD56
+    SetFunctionCmt(0x4cd56, 
+        "Jaro joins the Force", 1);
 
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
