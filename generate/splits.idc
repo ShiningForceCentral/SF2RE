@@ -481,7 +481,7 @@ static splitMaps(file) {
 	chunkEnd = 0xC8000;
 	action=1;
 	sectionNamesForFiles="0=blocks;1=layout;2=areas;3=flag-events;4=step-events;5=roof-events;6=warp-events;7=chest-items;8=other-items;9=animations;10";
-	sectionNamesForLabels="0=Blocks;1=Layout;2=Areas;3=FlagEvents;4=StepEvents;5=RootEvents;6=WarpEvents;7=ChestItems;8=OtherItems;9=Animations;10";
+	sectionNamesForLabels="0=Blocks;1=Layout;2=Areas;3=FlagEvents;4=StepEvents;5=RoofEvents;6=WarpEvents;7=ChestItems;8=OtherItems;9=Animations;10";
 	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);	
 	for(j=start;j<chunkEnd;j++){undefineByte(j);}
 	MakeNameEx(addr,"pt_MapData",0);

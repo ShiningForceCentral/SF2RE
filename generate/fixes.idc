@@ -161,7 +161,16 @@ static fixSingleInstructions(){
 	OpHex(0x27982,1);
 	OpHex(0x27A36,1);
 	OpHex(0x27B16,0);
-	OpHex(0x478A6,0);	
+	OpHex(0x478A6,0);
+	
+	
+	OpHex(0x55FE8,0);
+	OpHex(0x55FD0,0);
+	OpHex(0x55FD8,0);
+	OpHex(0x55FE8,0);
+	OpHex(0x56008,0);
+	OpHex(0x56030,0);
+	MakeNameEx(0xFC,"",0);	
 
 }
 
