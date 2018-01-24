@@ -826,13 +826,13 @@ static parseCS(start,end){
 			SetManualInsn(ea,form("followEntity $%s,$%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16)));
 		}
 		else if(cmd==	0x002D){
-			cmdName = "002D MOVE ENTITY";
+			cmdName = "002D ENTITY ACTION SEQUENCE";
 			cmdComment = "";
-			cmdLength = 6;
+			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("moveEntity $%s,$%s,$%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),ltoa(Byte(ea+4),16),ltoa(Byte(ea+5),16)));
-			cmdLength = cmdLength + parseCSC19Data(ea+6);
+			SetManualInsn(ea,form("entityActions $%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16)));
+			cmdLength = cmdLength + parseEntityActions(ea+4);
 		}
 		else if(cmd==	0x002E){
 			cmdName = "002E HIDE ENTITY";
@@ -1217,19 +1217,52 @@ static getSoundName(cmd){
 	return form("$%s",ltoa(cmd,16));
 }
 
-static parseCSC19Data(addr){
-	auto length;
+static parseEntityActions(addr){
+	auto length, type, param;
 	length = 2;
 	while(Word(addr)<0x8000){
 		MakeUnknown(addr,2,DOUNK_SIMPLE);
 		MakeData(addr,FF_BYTE,2,0);
-		SetManualInsn(addr,form("moreMove $%s,$%s",ltoa(Byte(addr),16),ltoa(Byte(addr+1),16)));
+		type = Byte(addr);
+		if(type==0){
+			SetManualInsn(addr,form(" moveRight %s",ltoa(Byte(addr+1),10)));
+		}else if(type==1){
+			SetManualInsn(addr,form(" moveUp %s",ltoa(Byte(addr+1),10)));
+		}else if(type==2){
+			SetManualInsn(addr,form(" moveLeft %s",ltoa(Byte(addr+1),10)));
+		}else if(type==3){
+			SetManualInsn(addr,form(" moveDown %s",ltoa(Byte(addr+1),10)));
+		}else if(type==4){
+			SetManualInsn(addr,form(" moveUpRight %s",ltoa(Byte(addr+1),10)));
+		}else if(type==5){
+			SetManualInsn(addr,form(" moveUpLeft %s",ltoa(Byte(addr+1),10)));
+		}else if(type==6){
+			SetManualInsn(addr,form(" moveDownLeft %s",ltoa(Byte(addr+1),10)));
+		}else if(type==7){
+			SetManualInsn(addr,form(" moveDownRight %s",ltoa(Byte(addr+1),10)));
+		}else if(type==8){
+			SetManualInsn(addr,form(" faceRight %s",ltoa(Byte(addr+1),10)));
+		}else if(type==9){
+			SetManualInsn(addr,form(" faceUp %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xA){
+			SetManualInsn(addr,form(" faceLeft %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xB){
+			SetManualInsn(addr,form(" faceDown %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xC){
+			SetManualInsn(addr,form(" actionC %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xD){
+			SetManualInsn(addr,form(" jumpUp %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xE){
+			SetManualInsn(addr,form(" jumpRight %s",ltoa(Byte(addr+1),10)));
+		}else if(type==0xF){
+			SetManualInsn(addr,form(" jumpLeft %s",ltoa(Byte(addr+1),10)));
+		}
 		addr = addr + 2;
 		length = length + 2;
 	}
 	MakeUnknown(addr,2,DOUNK_SIMPLE);
 	MakeWord(addr);
-	SetManualInsn(addr,form("endMove $%s",ltoa(Word(addr),16)));
+	SetManualInsn(addr,form("endActions"));
 	return length;
 }
 
