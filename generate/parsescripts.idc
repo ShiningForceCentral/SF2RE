@@ -76,10 +76,10 @@ static parseCutscenes(){
 	// END CUTSCENE
 	parseCS(0x49058,0x492CC);	
 	
-	//parseCS(0x4931C,0x4933E);									
+	parseCS(0x4931C,0x4933E);									
 	parseCS(0x4933E,0x49358);
-	parseCS(0x49358,0x49384);
-	parseCS(0x49384,0x493A2);		
+	parseCS(0x49358,0x4937E);
+	parseCS(0x4937E,0x493A2);		
 	
 	// unused broken cutscenes ? 	parseCS(0x493CE,0x493EC);
 	//														parseCS(0x493FA,0x494AC);	
@@ -482,12 +482,12 @@ static parseCS(start,end){
 			SetManualInsn(ea,"csc06");
 		}
 		else if(cmd==	0x0007){
-			cmdName = "0007 EXECUTE MAP SYSTEM EVENT";
+			cmdName = "0007 EXECUTE MAP WARP EVENT";
 			cmdComment = "";
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("mapSysEvent $%s,$%s,$%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),ltoa(Byte(ea+4),16),ltoa(Byte(ea+5),16)));
+			SetManualInsn(ea,form("warp $%s,$%s,$%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),ltoa(Byte(ea+4),16),ltoa(Byte(ea+5),16)));
 		}
 		else if(cmd==	0x0008){
 			cmdName = "0008 JOIN FORCE";
@@ -566,7 +566,7 @@ static parseCS(start,end){
 				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
 			}
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("jumpIfDead $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
+			SetManualInsn(ea,form("jumpIfDefeated $%s,%s"ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
 		}
 		else if(cmd==	0x000F){
 			cmdName = "000F JUMP IF CHARACTER ALIVE";
@@ -602,12 +602,12 @@ static parseCS(start,end){
 			SetManualInsn(ea,"yesNo");
 		}
 		else if(cmd==	0x0012){
-			cmdName = "0012 EXECUTE CONTEXTUAL MENU";
+			cmdName = "0012 OPEN MENU";
 			cmdComment = "";
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("contextualMenu %s",ltoa(Word(ea+2),10)));
+			SetManualInsn(ea,form("menu %s",ltoa(Word(ea+2),10)));
 		}
 		else if(cmd==	0x0013){
 			cmdName = "0013 SET STORY FLAG";
@@ -643,10 +643,12 @@ static parseCS(start,end){
 				MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
 			}
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			if(Byte(ea+3)!=0){
-				SetManualInsn(ea,form("setActscriptWait $%s,%s",ltoa(Byte(ea+2),16),GetTrueName(Dword(ea+4))));
-			}else{
+			if(Byte(ea+3)==0){
 				SetManualInsn(ea,form("setActscript $%s,%s",ltoa(Byte(ea+2),16),GetTrueName(Dword(ea+4))));
+			}else if(Byte(ea+3)==0xFF){
+				SetManualInsn(ea,form("setActscriptWait $%s,%s",ltoa(Byte(ea+2),16),GetTrueName(Dword(ea+4))));
+			}else {
+				SetManualInsn(ea,form("csc15 $%s,$%s,%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),GetTrueName(Dword(ea+4))));
 			}
 		}
 		else if(cmd==	0x0016){
@@ -687,7 +689,7 @@ static parseCS(start,end){
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("entitySprite $%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16)));			
+			SetManualInsn(ea,form("setSprite $%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16)));			
 		}
 		else if(cmd==	0x001B){
 			cmdName = "001B START ENTITY ANIMATION";
@@ -751,7 +753,7 @@ static parseCS(start,end){
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("animEntityFadeInOut $%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16)));			
+			SetManualInsn(ea,form("animEntityFX $%s,%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),10)));			
 		}
 		else if(cmd==	0x0023){
 			cmdName = "0023 SET ENTITY FACING";
@@ -783,7 +785,7 @@ static parseCS(start,end){
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("entityNod $%s",ltoa(Word(ea+2),16)));
+			SetManualInsn(ea,form("nod $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0027){
 			cmdName = "0027 MAKE ENTITY SHAKE HEAD";
@@ -791,7 +793,7 @@ static parseCS(start,end){
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("entityShakeHead $%s",ltoa(Word(ea+2),16)));
+			SetManualInsn(ea,form("headshake $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x0028){
 			cmdName = "0028 MOVE ENTITY NEXT TO PLAYER";
@@ -799,7 +801,7 @@ static parseCS(start,end){
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("moveEntityNextToPlayer $%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16)));	
+			SetManualInsn(ea,form("moveNextToPlayer $%s,%s",ltoa(Word(ea+2),16),getDirection(Word(ea+4))));	
 		}
 		else if(cmd==	0x0029){
 			cmdName = "0029 SET ENTITY DEST";
@@ -807,7 +809,7 @@ static parseCS(start,end){
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("setEntityDest $%s,%s,%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));	
+			SetManualInsn(ea,form("setDest $%s,%s,%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));	
 		}
 		else if(cmd==	0x002A){
 			cmdName = "002A MAKE ENTITY SHIVER";
@@ -815,7 +817,7 @@ static parseCS(start,end){
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("entityShiver $%s",ltoa(Word(ea+2),16)));
+			SetManualInsn(ea,form("shiver $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x002B){
 			cmdName = "002B NEW ENTITY";
@@ -852,7 +854,7 @@ static parseCS(start,end){
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("hideEntity $%s",ltoa(Word(ea+2),16)));
+			SetManualInsn(ea,form("hide $%s",ltoa(Word(ea+2),16)));
 		}
 		else if(cmd==	0x002F){
 			cmdName = "002F FLY";

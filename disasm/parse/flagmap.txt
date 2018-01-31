@@ -95,6 +95,19 @@
 005A=Battle region flag 0
 005B=Battle region flag 1
 005C=Battle region flag 2
+005D=Battle region flag 3
+005E=Battle region flag 4
+005F=Battle region flag 5
+0060=Battle region flag 6
+0061=Battle region flag 7
+0062=Battle region flag 8
+0063=Battle region flag 9
+0064=Battle region flag 10
+0065=Battle region flag 11
+0066=Battle region flag 12
+0067=Battle region flag 13
+0068=Battle region flag 14
+0069=Battle region flag 15
 
 0070=Currently attacking Taros with Achille Sword
 
