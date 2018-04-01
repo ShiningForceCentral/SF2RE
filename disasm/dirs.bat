@@ -21,8 +21,8 @@ mkdir disasm\code\common\tech\sram
 mkdir disasm\code\common\tech\sound
 mkdir disasm\code\common\tech\graphics
 mkdir disasm\code\common\maps
-mkdir disasm\code\common\items
 mkdir disasm\code\common\stats
+mkdir disasm\code\common\stats\items
 mkdir disasm\code\common\stats\allies
 mkdir disasm\code\common\stats\enemies
 mkdir disasm\code\common\menus\
@@ -67,10 +67,15 @@ mkdir disasm\data\scripting\map
 mkdir disasm\layout
 
 mkdir disasm\data\stats
+mkdir disasm\data\stats\items
 mkdir disasm\data\stats\allies
 mkdir disasm\data\stats\allies\growths
+mkdir disasm\data\stats\allies\stats
 mkdir disasm\data\graphics
 mkdir disasm\data\graphics\mapsprites
+mkdir disasm\data\graphics\maps
+mkdir disasm\data\graphics\maps\mappalettes
+mkdir disasm\data\graphics\maps\maptilesets
 mkdir disasm\data\graphics\portraits
 mkdir disasm\data\graphics\battles
 mkdir disasm\data\graphics\battles\grounds
