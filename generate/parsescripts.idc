@@ -1263,7 +1263,7 @@ static parseEntityActions(addr){
 		}else if(type==0xB){
 			SetManualInsn(addr,form(" faceDown %s",ltoa(Byte(addr+1),10)));
 		}else if(type==0xC){
-			SetManualInsn(addr,form(" actionC %s",ltoa(Byte(addr+1),10)));
+			SetManualInsn(addr,form(" eaWait %s",ltoa(Byte(addr+1),10)));
 		}else if(type==0xD){
 			SetManualInsn(addr,form(" jumpUp %s",ltoa(Byte(addr+1),10)));
 		}else if(type==0xE){
