@@ -126,11 +126,14 @@ static main()
 
     // UpdateRandomSeed
     SetFunctionCmt(0x1600, 
-        "randomize a few bits in D7 based on RAM:dea4", 1);
+        "d6 determines the random number max value\n\
+(number of seed upper bits)", 1);
 
     // GetRandomOrDebugValue
     SetFunctionCmt(0x1674, 
-        "another random function taking debug mode into account", 1);
+        "input D0=value range\n\
+output D0=random value\n\
+debug mode allows values 0-3 depending on player direction", 1);
 
     // PlayMusicAfterCurrentOne
     SetFunctionCmt(0x16be, 
@@ -219,7 +222,7 @@ a1 : output RAM data", 1);
     SetFunctionCmt(0x3930, 
         "Related to camera position ?", 1);
 
-    // sub_3E40
+    // OpenDoor
     SetFunctionCmt(0x3e40, 
         "uses door open SFX", 1);
 
@@ -227,11 +230,15 @@ a1 : output RAM data", 1);
     SetFunctionCmt(0x3f2c, 
         "display (or don't) map roof depending on player's start location", 1);
 
-    // sub_4232
-    SetFunctionCmt(0x4232, 
-        "something with chests/vases/etc\n\
-\n\
-Out: D2 = item idx", 1);
+    // GetItem
+    SetFunctionCmt(0x4262, 
+        "IN : \n\
+- d0\d1 : candidate coordinates\n\
+OUT :\n\
+- d0 : layout block offset\n\
+- d1 : item flag\n\
+- d2 : item index\n\
+- a2 : map layout offset", 1);
 
     // LoadBattleMusic
     SetFunctionCmt(0x4544, 
@@ -475,9 +482,17 @@ Out: D0 = new map idx", 1);
 Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
 
+    // sub_7C5E
+    SetFunctionCmt(0x7c5e, 
+        "Display witch screen ?", 1);
+
     // j_GetClass
     SetFunctionCmt(0x8004, 
         "get entity's class index ?", 1);
+
+    // j_GetCharacterWord34
+    SetFunctionCmt(0x8064, 
+        "related to AI control on 0x0004 ?", 1);
 
     // j_IsInBattleParty
     SetFunctionCmt(0x827c, 
@@ -812,6 +827,10 @@ Out: D6 = damage", 1);
     A4 = address in RAM of attacker idx\n\
     A5 = address in RAM of target idx", 1);
 
+    // spell07_Muddle
+    SetFunctionCmt(0xb488, 
+        "muddle", 1);
+
     // GetSpellPowerAdjustedForClass
     SetFunctionCmt(0xbb56, 
         "    Miscellaneous hacks to alter spell damage. (125% if promoted, damage divided if SORC spells)\n\
@@ -1129,6 +1148,10 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x15422, 
         "d0 = FFAFE7, related to DMA", 1);
 
+    // ClosePortraitEyes
+    SetFunctionCmt(0x154f6, 
+        "Close princess Ellis' eyes when unconscious.", 1);
+
     // UpdatePortrait
     SetFunctionCmt(0x155c4, 
         "d1 = alternate/original, d7 = tile number", 1);
@@ -1424,7 +1447,7 @@ Out: Z = entity is NOT follower", 1);
 
     // sub_23D98
     SetFunctionCmt(0x23d98, 
-        "spell launch", 1);
+        "battlefield spell/item use", 1);
 
     // GetEgressPositionForBattle
     SetFunctionCmt(0x23e50, 
@@ -1465,9 +1488,25 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x25772, 
         "if flag D1 is set, display def-con textbox", 1);
 
-    // sub_2594A
+    // ProcessMapEvent
     SetFunctionCmt(0x2594a, 
         "deal with \"system\" event (RAM:a84a)", 1);
+
+    // ProcessMapEventType2
+    SetFunctionCmt(0x25a4c, 
+        "Event type 2", 1);
+
+    // ProcessMapEventType3
+    SetFunctionCmt(0x25a54, 
+        "Event type 3", 1);
+
+    // ProcessMapEventType4
+    SetFunctionCmt(0x25a5c, 
+        "Event type 4", 1);
+
+    // ProcessMapEventType5
+    SetFunctionCmt(0x25a64, 
+        "Event type 5", 1);
 
     // SetBattleVIntFunctions
     SetFunctionCmt(0x25a94, 
@@ -1491,13 +1530,9 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x44088, 
         "triggers a map setup function according to up to 4 criterias in d1-d4", 1);
 
-    // sub_44098
+    // j_MapEventType2
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
-
-    // sub_443B2
-    SetFunctionCmt(0x443b2, 
-        "initialize followers ?", 1);
 
     // DeclareNewEntity
     SetFunctionCmt(0x445ca, 
@@ -1506,13 +1541,6 @@ Out: D0 = new X\n\
     // ClearEntities
     SetFunctionCmt(0x4465a, 
         "clear entities in memory", 1);
-
-    // GetCharacterSpriteIdx
-    SetFunctionCmt(0x449c6, 
-        "In: D0 = char idx\n\
-Out: D4 = sprite idx\n\
-\n\
-HARDCODED values", 1);
 
     // GetCombatantSpriteIdx
     SetFunctionCmt(0x44a7c, 
@@ -1551,7 +1579,7 @@ Out: D4 = sprite idx", 1);
     SetFunctionCmt(0x45254, 
         "to confirm", 1);
 
-    // sub_45268
+    // MapEventType2
     SetFunctionCmt(0x45268, 
         "related to Caravan ... warp into Caravan ?", 1);
 
@@ -1561,17 +1589,13 @@ Out: D4 = sprite idx", 1);
 Out: D1 = portrait idx\n\
      D2 = speech sound idx", 1);
 
-    // csc35_
+    // csc35_setBlocksVar
     SetFunctionCmt(0x46582, 
         "similar to setBlocks", 1);
 
-    // csc36_
+    // csc36_resetMap
     SetFunctionCmt(0x4658e, 
         "related to loading a map", 1);
-
-    // csc45_
-    SetFunctionCmt(0x46700, 
-        "related to camera adjust to lpayer", 1);
 
     // csc15_setEntityActscript
     SetFunctionCmt(0x46978, 
@@ -1591,11 +1615,15 @@ Out: D1 = portrait idx\n\
 
     // csc1B_startEntityAnim
     SetFunctionCmt(0x46a6c, 
-        "if character xxxx dead, then do it to entity yyyy ?!", 1);
+        "if character dead, then get new character index from next word ? This doesn't make sense.", 1);
 
     // csc1C_stopEntityAnim
     SetFunctionCmt(0x46a82, 
         "if character xxxx dead, then do it to entity yyyy ?!", 1);
+
+    // csc20_updateDefeatedAllies
+    SetFunctionCmt(0x46af0, 
+        "if X Pos == -1, then dead", 1);
 
     // csc22_animateEntityFadeInOrOut
     SetFunctionCmt(0x46b42, 
@@ -1613,13 +1641,9 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x46c5a, 
         "wtf, copy entity number of entity 00xx into entity number of entity 00yy ?!", 1);
 
-    // csc52_
-    SetFunctionCmt(0x46f58, 
-        "related to 2 entities", 1);
-
-    // csc56_
-    SetFunctionCmt(0x47008, 
-        "xx character", 1);
+    // csc2F_fly
+    SetFunctionCmt(0x46ea8, 
+        "specific entity behaviour for skreech join cutscene", 1);
 
     // GetEntityAddressFromPlayableCharacterIdx
     SetFunctionCmt(0x4704a, 
@@ -1716,6 +1740,12 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
         "wait during d0 frames", 1);
+
+    // LoadEndCreditsFont
+    SetFunctionCmt(0x1ac29c, 
+        "Load base tiles and ...  generate font from basetile font !\n\
+Stretches characters from 1 tile to 2 tiles vertically.\n\
+Also creates a shadow effect using palette index 2.", 1);
 
     // sub_1AC4F0
     SetFunctionCmt(0x1ac4f0, 
