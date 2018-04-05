@@ -157,13 +157,13 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x31CE,0x364E,"MapOffsetHashTable","data/maps/global/mapoffsethashtable.bin",file);
 	
-	splitSingleChunk(0x7186,0x71C0,"DebugModeAvailableMaps","data/maps/global/debugmodeavailablemaps.bin",file);
+	//splitSingleChunk(0x7186,0x71C0,"DebugModeAvailableMaps","data/maps/global/debugmodeavailablemaps.bin",file);
 	
-	splitSingleChunk(0x7988,0x799C,"FlagSwitchedMaps","data/maps/global/flagswitchedmaps.bin",file);
+	//splitSingleChunk(0x7988,0x799C,"FlagSwitchedMaps","data/maps/global/flagswitchedmaps.bin",file);
 	
 	splitSingleChunk(0x7A36,0x7B71,"BattleMapCoords","data/battles/global/battlemapcoords.bin",file);
-	splitSingleChunk(0x7B71,0x7BCA,"SavepointMapCoords","data/maps/global/savepointmapcoords.bin",file);
-	splitSingleChunk(0x7BCA,0x7BDE,"RaftResetMapCoords","data/maps/global/raftresetmapcoords.bin",file);
+	splitSingleChunk(0x7B71,0x7BCA,"SavepointMapCoords","data/battles/global/savepointmapcoords.bin",file);
+	splitSingleChunk(0x7BCA,0x7BDE,"RaftResetMapCoords","data/battles/global/raftresetmapcoords.bin",file);
 	
 	MakeAlign(0x7FA6, 0x8000-0x7FA6,15);
 	
@@ -242,7 +242,7 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x23658,0x23758,"UnitCursorTiles","data/graphics/tech/unitcursortiles.bin",file);
 	
-	splitSingleChunk(0x239AE,0x239C8,"ChestGoldAmounts","data/maps/global/chestgoldamounts.bin",file);
+	//splitSingleChunk(0x239AE,0x239C8,"ChestGoldAmounts","data/maps/global/chestgoldamounts.bin",file);
 	
 	splitSingleChunk(0x25DF6,0x261A6,"SpecialSprites_Taros","data/graphics/specialsprites/taros.bin",file);
 	splitSingleChunk(0x261A6,0x26552,"SpecialSprites_Kraken","data/graphics/specialsprites/kraken.bin",file);
@@ -284,7 +284,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x4201E,0x425ED,"GameStaff","data/scripting/gamestaff.bin",file);
 	MakeAlign(0x425ED, 0x44000-0x425ED,14);
 	
-	splitSingleChunk(0x4428A,0x44298,"OverworldMaps","data/maps/global/overworldmaps.bin",file);
+	//splitSingleChunk(0x4428A,0x44298,"OverworldMaps","data/maps/global/overworldmaps.bin",file);
 	splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","data/overworldfollowers.bin",file);
 	splitSingleChunk(0x4433C,0x4438A,"Followers","data/followers.bin",file);
 	

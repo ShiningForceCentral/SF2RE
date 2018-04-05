@@ -190,14 +190,17 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\common\\tech\\sram\\sramfunctions",0x6E94,0x7034,"SRAM functions");
 	produceAsmScript(file,"code\\specialscreens\\suspend\\witchsuspend",0x7034,0x7094,"Witch suspend function");	
 	produceAsmScript(file,"code\\specialscreens\\witchend\\witchendinit",0x7094,0x70D2,"Witch end function");
-	produceAsmScript(file,"code\\gameflow\\start\\gameinit",0x70D2,0x71C0,"Game init");	
+	produceAsmScript(file,"code\\gameflow\\start\\gameinit",0x70D2,0x7186,"Game init");	
+	produceAsmScript(file,"data\\maps\\global\\debugmodemaps",0x7186,0x71C0,"Debug mode maps");	
 	produceAsmScript(file,"code\\gameflow\\start\\gameintro",0x71C0,0x7406,"Game intro");	
 	produceAsmScript(file,"code\\specialscreens\\witch\\witchactions",0x7406,0x75C4,"Witch actions");	
 	produceAsmScript(file,"code\\gameflow\\mainloop",0x75C4,0x75EC,"Main loop");	
 	produceAsmScript(file,"code\\common\\maps\\egressinit",0x75EC,0x764E,"Egress map init function");	
 	produceAsmScript(file,"code\\gameflow\\start\\basetiles",0x764E,0x769C,"Base tiles loading");	
 	produceAsmScript(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions");	
-	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7A36,"Map init functions");	
+	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");	
+	produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");	
+	produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");	
 	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7A36,0x7BDE,"Map coords data",1);	
 	produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");	
 	produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");	
@@ -289,9 +292,11 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions",0x21FD2,0x229CA,"Caravan functions");	
 	produceAsmScript(file,"code\\common\\stats\\items\\itemactions",0x229CA,0x22BC2,"Item functions");	
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_0",0x22BC2,0x2379A,"Battle functions");
-	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_0",0x2379A,0x23A84,"Exploration functions");
+	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_0",0x2379A,0x239AE,"Exploration functions");
+	produceAsmScript(file,"data\\stats\\items\\chestgoldamounts",0x239AE,0x239C8,"Chest gold amounts");
+	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_1",0x239C8,0x23A84,"Exploration functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_1",0x23A84,0x257C0,"Battle functions");
-	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_1",0x257C0,0x25A94,"Exploration functions");
+	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_2",0x257C0,0x25A94,"Exploration functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
 	produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
 	produceAsmScript(file,"code\\common\\tech\\graphics\\specialsprites",0x25BFC,0x25DF6,"Special Sprites functions");
@@ -354,9 +359,10 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSectionNoPretty(file,0x44000,0x440CC);
-	produceAsmScript(file,"code\\common\\scripting\\map\\mapfunctions",0x440CC,0x44338,"Map functions");
-	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions",0x44338,0x444A2,"Followers functions");
+	produceAsmSectionNoPretty(file,0x44000,0x440CC);
+	produceAsmScript(file,"code\\common\\scripting\\map\\mapfunctions",0x440CC,0x4428A,"Map functions");
+	produceAsmScript(file,"data\\maps\\global\\overworldmaps",0x4428A,0x44298,"Overworld maps");
+	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions",0x44298,0x444A2,"Followers functions");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_1",0x444A2,0x448C4,"Entity functions");
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
 	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
