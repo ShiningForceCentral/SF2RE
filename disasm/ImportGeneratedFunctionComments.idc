@@ -92,9 +92,12 @@ static main()
     SetFunctionCmt(0xf34, 
         "set bit 3 of 0xFFDE94 and wait next Vint to execute sub_740", 1);
 
-    // sub_10DC
+    // DmaFromRamToVram
     SetFunctionCmt(0x10dc, 
-        "DMA stuff", 1);
+        "DMA\n\
+a0 : RAM Source\n\
+a1 : VRAM Destination\n\
+d0 : length", 1);
 
     // sub_119E
     SetFunctionCmt(0x119e, 
@@ -481,10 +484,6 @@ Out: D0 = new map idx", 1);
     D2 = player Y coord to check\n\
 Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
-
-    // sub_7C5E
-    SetFunctionCmt(0x7c5e, 
-        "Display witch screen ?", 1);
 
     // j_GetClass
     SetFunctionCmt(0x8004, 
@@ -1805,7 +1804,7 @@ Out: carry = if anyone is on D3/D4", 1);
     SetFunctionCmt(0x1b15f8, 
         "coords of anchor point used in AI byte D0 -> D1, D2", 1);
 
-    // GetAddrOfBattleDataSection
+    // GetBattleSpriteSet
     SetFunctionCmt(0x1b1630, 
         "get address of subsection D1 (list sizes, force defs, enemy defs, region defs, point defs) of current battle -> A0\n\
       \n\

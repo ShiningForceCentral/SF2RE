@@ -359,10 +359,12 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSectionNoPretty(file,0x44000,0x440CC);
+	produceAsmSectionNoPretty(file,0x44000,0x440CC);
 	produceAsmScript(file,"code\\common\\scripting\\map\\mapfunctions",0x440CC,0x4428A,"Map functions");
 	produceAsmScript(file,"data\\maps\\global\\overworldmaps",0x4428A,0x44298,"Overworld maps");
-	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions",0x44298,0x444A2,"Followers functions");
+	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions_1",0x44298,0x44338,"Follower functions, part 1");
+	produceAsmScript(file,"data\\scripting\\entity\\followers",0x44338,0x4438A,"Follower declarations");
+	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions_2",0x4438A,0x444A2,"Follower functions, part 2");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_1",0x444A2,0x448C4,"Entity functions");
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
 	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");

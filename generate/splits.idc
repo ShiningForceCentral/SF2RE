@@ -285,13 +285,13 @@ static splitSingleChunks(file) {
 	MakeAlign(0x425ED, 0x44000-0x425ED,14);
 	
 	//splitSingleChunk(0x4428A,0x44298,"OverworldMaps","data/maps/global/overworldmaps.bin",file);
-	splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","data/overworldfollowers.bin",file);
-	splitSingleChunk(0x4433C,0x4438A,"Followers","data/followers.bin",file);
+	//splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","data/overworldfollowers.bin",file);
+	//splitSingleChunk(0x4433C,0x4438A,"Followers","data/followers.bin",file);
 	
 	splitSingleChunk(0x44A5E,0x44A7C,"AllySprites","data/stats/allies/allyspriteids.bin",file);
 	splitSingleChunk(0x44AA4,0x44B4A,"EnemySprites","data/stats/enemies/enemyspriteids.bin",file);
 	
-	splitSingleChunk(0x4567A,0x45858,"SpriteToPortraitnBlip","data/spritedialogdefs.bin",file);
+	splitSingleChunk(0x4567A,0x45858,"SpriteDialogProperties","data/spritedialogdefs.bin",file);
 	
 	splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","data/battles/global/enemyleaderpresence.bin",file);
 	
