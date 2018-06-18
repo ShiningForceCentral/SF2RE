@@ -149,7 +149,7 @@ debug mode allows values 0-3 depending on player direction", 1);
         A1 = dest address\n\
         D7 = number of bytes to copy", 1);
 
-    // InitSprites
+    // InitSpriteTable
     SetFunctionCmt(0x1770, 
         "In: D0 = number of sprites\n\
 \n\
@@ -573,7 +573,8 @@ Out: D2 = item type (0 = item, 1 = weapon, FFFF = ring)", 1);
     // AddItem
     SetFunctionCmt(0x8ca2, 
         "In: D0 = char idx\n\
-    D1 = item entry", 1);
+    D1 = item entry\n\
+OUT : D2 = set if not slot available", 1);
 
     // BreakItem
     SetFunctionCmt(0x8cd4, 
@@ -1804,15 +1805,14 @@ Out: carry = if anyone is on D3/D4", 1);
     SetFunctionCmt(0x1b15f8, 
         "coords of anchor point used in AI byte D0 -> D1, D2", 1);
 
-    // GetBattleSpriteSet
+    // GetBattleSpriteSetSubsection
     SetFunctionCmt(0x1b1630, 
-        "get address of subsection D1 (list sizes, force defs, enemy defs, region defs, point defs) of current battle -> A0\n\
-      \n\
-                    if D1 = 2, size of monster list -> D1", 1);
+        "Get current battle subsection d1 -> A0\n\
+Subsection size -> d1", 1);
 
-    // GetMonsterStartPos
+    // GetCombatantStartPos
     SetFunctionCmt(0x1b169e, 
-        "starting X and Y of monster (D0 - 0x80) -> D1, D2", 1);
+        "Starting X and Y of entity d0 -> d1, d2", 1);
 
     // DoesBattleUpgrade
     SetFunctionCmt(0x1b1780, 

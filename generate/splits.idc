@@ -174,7 +174,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0xBCF0,0xBD24,"ItemBreakMessages","data/stats/items/itembreakmessages.bin",file);
 	
 	splitSingleChunk(0xBE52,0xBECC,"EnemyItemDrops","data/battles/global/enemyitemdrops.bin",file);
-	splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/battles/global/enemygold.bin",file);
+	splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/stats/enemies/enemygold.bin",file);
 	
 	splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
 	
@@ -314,7 +314,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","data/graphics/battles/spells/animations/boltanimdataa.bin",file);
 	splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","data/graphics/battles/spells/animations/boltanimdatab.bin",file);		
 	
-	splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/battles/global/enemydata.bin",file);
+	splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/stats/enemies/enemydata.bin",file);
 	
 	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","data/battles/global/specialbattles.bin",file);	
 	

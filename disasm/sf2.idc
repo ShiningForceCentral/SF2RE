@@ -2075,7 +2075,7 @@ static Bytes_0(void) {
 	MakeCode	(x=0X175E);
 	OpHex		(x,	1);
 	MakeCode	(0X1770);
-	MakeName	(0X1770,	"InitSprites");
+	MakeName	(0X1770,	"InitSpriteTable");
 	MakeCode	(x=0X1774);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -7831,7 +7831,7 @@ static Bytes_1(void) {
 	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
 	MakeName	(0X84DC,	"GetEnemyID");
 	MakeCode	(x=0X84E2);
-	OpEnumEx		(x,	0,	GetEnum("Codes"),0);
+	OpHex		(x,	0);
 	MakeCode	(0X84E8);
 	MakeCode	(0X84EA);
 	MakeCode	(x=0X84EE);
@@ -10056,6 +10056,7 @@ static Bytes_2(void) {
 	MakeCode	(0XBD78);
 	MakeCode	(x=0XBD7A);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeRptCmt	(0XBD80,	"HARDCODED special items with 1/32 drop chances");
 	MakeCode	(x=0XBD80);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0XBD88);
@@ -12976,11 +12977,6 @@ static Bytes_2(void) {
 	OpOff		(x,	128,	0X107F8);
 	OpOff		(x,	1,	0X107F8);
 	OpOff		(x,	129,	0X107F8);
-	MakeWord	(x=0X107FE);
-	OpOff		(x,	0,	0X107F8);
-	OpOff		(x,	128,	0X107F8);
-	OpOff		(x,	1,	0X107F8);
-	OpOff		(x,	129,	0X107F8);
 }
 
 //------------------------------------------------------------------------
@@ -12990,6 +12986,11 @@ static Bytes_3(void) {
         auto x;
 #define id x
 
+	MakeWord	(x=0X107FE);
+	OpOff		(x,	0,	0X107F8);
+	OpOff		(x,	128,	0X107F8);
+	OpOff		(x,	1,	0X107F8);
+	OpOff		(x,	129,	0X107F8);
 	MakeCode	(x=0X10800);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -17840,12 +17841,6 @@ static Bytes_3(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X18928);
-	MakeCode	(x=0X1892A);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeCode	(x=0X1892E);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -17855,6 +17850,12 @@ static Bytes_4(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0X1892A);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X1892E);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1893E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -23401,12 +23402,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(x=0X1E242);
 	OpEnumEx		(x,	0,	GetEnum("Sfx"),0);
-	MakeCode	(0X1E244);
-	MakeCode	(0X1E25E);
-	MakeCode	(x=0X1E260);
-	OpOff		(x,	1,	0X0);
-	OpOff		(x,	129,	0X0);
-	MakeByte	(0X1E290);
 }
 
 //------------------------------------------------------------------------
@@ -23416,6 +23411,12 @@ static Bytes_5(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X1E244);
+	MakeCode	(0X1E25E);
+	MakeCode	(x=0X1E260);
+	OpOff		(x,	1,	0X0);
+	OpOff		(x,	129,	0X0);
+	MakeByte	(0X1E290);
 	MakeCode	(x=0X1E2D4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -27898,6 +27899,7 @@ static Bytes_6(void) {
 	MakeCode	(x=0X23AD4);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeRptCmt	(0X23ADA,	"clear battle region flags");
 	MakeRptCmt	(0X23B0A,	"start of battle loop");
 	MakeCode	(x=0X23B14);
 	OpOff		(x,	0,	0X0);
@@ -31828,9 +31830,6 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X44E60);
 	OpOff		(x,	1,	0X44E60);
 	OpOff		(x,	129,	0X44E60);
-	MakeByte	(0X44E64);
-	MakeArray	(0X44E64,	0X4);
-	MakeName	(0X44E64,	"eas_Raft");
 }
 
 //------------------------------------------------------------------------
@@ -31840,6 +31839,9 @@ static Bytes_7(void) {
         auto x;
 #define id x
 
+	MakeByte	(0X44E64);
+	MakeArray	(0X44E64,	0X4);
+	MakeName	(0X44E64,	"eas_Raft");
 	MakeByte	(0X44E68);
 	MakeArray	(0X44E68,	0X4);
 	MakeByte	(0X44E6C);
@@ -119014,13 +119016,14 @@ static Bytes_28(void) {
 	MakeCode	(0X1AC00C);
 	MakeName	(0X1AC00C,	"j_RespawnEnemyIfOpen");
 	MakeCode	(0X1AC010);
+	MakeName	(0X1AC010,	"j_InitEnemyList");
 	MakeCode	(0X1AC014);
 	MakeName	(0X1AC014,	"j_getEnemyAITargetPos");
 	MakeCode	(0X1AC018);
-	MakeName	(0X1AC018,	"j_getAddrOfBattleCombatants");
+	MakeName	(0X1AC018,	"j_GetBattleSpriteSetSubsection");
 	MakeCode	(0X1AC01C);
 	MakeCode	(0X1AC020);
-	MakeName	(0X1AC020,	"j_GetMonsterStartPos");
+	MakeName	(0X1AC020,	"j_GetCombatantStartPos");
 	MakeCode	(0X1AC024);
 	MakeCode	(0X1AC028);
 	MakeCode	(0X1AC02C);
@@ -119285,6 +119288,7 @@ static Bytes_28(void) {
 	MakeCode	(x=0X1AC9AC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X1AC9B8,	"AI-related data, 3 entries, for battles 36, 43 and 0");
 	MakeDword	(x=0X1AC9BC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -119294,6 +119298,9 @@ static Bytes_28(void) {
 	MakeDword	(x=0X1AC9C4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X1AC9C8,	"Prism Flowers battle");
+	MakeRptCmt	(0X1AC9E0,	"Zeon Battle");
+	MakeRptCmt	(0X1AC9F0,	"Secret Bonus Battle");
 	MakeCode	(0X1AC9FC);
 	MakeCode	(0X1ACA0C);
 	MakeCode	(0X1ACA1E);
@@ -119672,7 +119679,6 @@ static Bytes_28(void) {
 	MakeCode	(x=0X1B1242);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeRptCmt	(0X1B1248,	"init some enemy list ?");
 	MakeCode	(0X1B1270);
 	MakeCode	(0X1B1272);
 	MakeName	(0X1B1272,	"InitAllForceBattlePositions");
@@ -119700,6 +119706,7 @@ static Bytes_28(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1B14D8);
+	MakeName	(0X1B14D8,	"InitEnemyList");
 	MakeCode	(x=0X1B14DC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -119719,15 +119726,20 @@ static Bytes_28(void) {
 	MakeName	(0X1B15F8,	"GetEnemyAITargetPos");
 	MakeCode	(0X1B1612);
 	MakeCode	(0X1B1630);
-	MakeName	(0X1B1630,	"GetBattleSpriteSet");
+	MakeName	(0X1B1630,	"GetBattleSpriteSetSubsection");
 	MakeCode	(x=0X1B163A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1B1640);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X1B164C,	"0 = Section sizes");
+	MakeRptCmt	(0X1B165A,	"1 = Allies");
+	MakeRptCmt	(0X1B166E,	"2 = Enemies");
+	MakeRptCmt	(0X1B1684,	"3 = AI-regions");
+	MakeRptCmt	(0X1B1696,	"4 = AI-points");
 	MakeCode	(0X1B169E);
-	MakeName	(0X1B169E,	"GetMonsterStartPos");
+	MakeName	(0X1B169E,	"GetCombatantStartPos");
 	MakeCode	(0X1B16BE);
 	MakeCode	(0X1B16CA);
 	MakeCode	(0X1B16E2);
@@ -121621,7 +121633,7 @@ static Bytes_28(void) {
 	MakeRptCmt	(0XFF5F00,	"obstruction data for battle map (terrain)");
 	MakeByte	(0XFF5F00);
 	MakeArray	(0XFF5F00,	0X100);
-	MakeName	(0XFF5F00,	"TERRAIN_DATA");
+	MakeName	(0XFF5F00,	"BATTLE_TERRAIN");
 	MakeByte	(0XFF6000);
 	MakeArray	(0XFF6000,	0X800);
 	MakeName	(0XFF6000,	"MAP_LAYOUT_HISTORY_MAP_SIZES");
@@ -122196,9 +122208,9 @@ static Bytes_28(void) {
 	MakeByte	(0XFFB59A);
 	MakeArray	(0XFFB59A,	0X90);
 	MakeWord	(0XFFB62A);
-	MakeName	(0XFFB62A,	"RAM_BattleScene_GoldGain");
+	MakeName	(0XFFB62A,	"BATTLESCENE_GOLD");
 	MakeWord	(0XFFB62C);
-	MakeName	(0XFFB62C,	"RAM_BattleScene_EXPGain");
+	MakeName	(0XFFB62C,	"BATTLESCENE_EXP");
 	MakeByte	(0XFFB62E);
 	MakeArray	(0XFFB62E,	0X2);
 	MakeName	(0XFFB62E,	"BATTLESCENE_ACTION_TYPE");
@@ -122257,6 +122269,7 @@ static Bytes_28(void) {
 	MakeRptCmt	(0XFFB6A2,	"looks like an enemylist");
 	MakeByte	(0XFFB6A2);
 	MakeArray	(0XFFB6A2,	0X20);
+	MakeName	(0XFFB6A2,	"ENEMY_LIST");
 	MakeByte	(0XFFB6C2);
 	MakeArray	(0XFFB6C2,	0X10);
 	MakeName	(0XFFB6C2,	"MOVE_COST_LIST");
@@ -122384,7 +122397,7 @@ static Bytes_28(void) {
 	MakeRptCmt	(0XFFDC80,	"8 bytes per entry : 0-1 = Y pos ; 6-7 = X pos");
 	MakeByte	(0XFFDC80);
 	MakeArray	(0XFFDC80,	0X3);
-	MakeName	(0XFFDC80,	"SPRITE_Y");
+	MakeName	(0XFFDC80,	"SPRITE_TABLE");
 	MakeRptCmt	(0XFFDC83,	"linked VDP sprite idx?");
 	MakeByte	(0XFFDC83);
 	MakeName	(0XFFDC83,	"SPRITE_LINK");
@@ -122456,6 +122469,15 @@ static Bytes_28(void) {
 	MakeRptCmt	(0XFFDE9C,	"first direction moved (same as above) if still moving (or holding move buttons)");
 	MakeByte	(0XFFDE9C);
 	MakeName	(0XFFDE9C,	"PRIMARY_WALKING_DIRECTION");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_29(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XFFDE9D);
 	MakeByte	(0XFFDE9E);
 	MakeByte	(0XFFDE9F);
@@ -122466,15 +122488,6 @@ static Bytes_28(void) {
 	MakeRptCmt	(0XFFDEA4,	"random seed (updated every second when idle on map, every tick when idle in menu)");
 	MakeWord	(0XFFDEA4);
 	MakeName	(0XFFDEA4,	"RANDOM_SEED");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_29(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0XFFDEA6);
 	MakeWord	(0XFFDEA8);
 	MakeWord	(0XFFDEAA);
@@ -122592,15 +122605,15 @@ static Bytes_29(void) {
 	MakeName	(0XFFF686,	"GAME_FLAGS");
 	MakeRptCmt	(0XFFF706,	"camera lock x1");
 	MakeByte	(0XFFF706);
-	MakeName	(0XFFF706,	"CAMERA_LOCK_START_X");
+	MakeName	(0XFFF706,	"BATTLE_AREA_X");
 	MakeByte	(0XFFF707);
-	MakeName	(0XFFF707,	"CAMERA_LOCK_START_Y");
+	MakeName	(0XFFF707,	"BATTLE_AREA_Y");
 	MakeRptCmt	(0XFFF708,	"camera lock x2");
 	MakeByte	(0XFFF708);
-	MakeName	(0XFFF708,	"CAMERA_LOCK_END_X");
+	MakeName	(0XFFF708,	"BATTLE_AREA_WIDTH");
 	MakeByte	(0XFFF709);
 	MakeArray	(0XFFF709,	0X7);
-	MakeName	(0XFFF709,	"CAMERA_LOCK_END_Y");
+	MakeName	(0XFFF709,	"BATTLE_AREA_HEIGHT");
 	MakeRptCmt	(0XFFF710,	"holds which player entity type we are (00=BOWIE, 01=caravan, 02=raft)");
 	MakeByte	(0XFFF710);
 	MakeName	(0XFFF710,	"PLAYER_TYPE");
@@ -128491,7 +128504,7 @@ static Functions_1(void) {
 	MakeFunction    (0X1AC00C,0X1AC010);
 	SetFunctionFlags(0X1AC00C,0x80);
 	MakeFunction    (0X1AC010,0X1AC014);
-	SetFunctionFlags(0X1AC010,0x80);
+	SetFunctionFlags(0X1AC010,0xc0);
 	MakeFunction    (0X1AC014,0X1AC018);
 	SetFunctionFlags(0X1AC014,0x80);
 	MakeFunction    (0X1AC018,0X1AC01C);

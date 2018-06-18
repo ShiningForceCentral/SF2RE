@@ -386,16 +386,16 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"data\\maps\\entries\\map46\\mapsetups\\s6_47992",0x47992,0x47A4E,"Map 46 init function");
 	produceAsmScript(file,"code\\common\\scripting\\map\\ms_empty",0x47A4E,0x47A50,"Empty mapscript");
 	produceAsmScript(file,"code\\gameflow\\battle\\beforebattlecutscenesstart",0x47A50,0x47A88,"Before battle cutscenes function start");
-	produceAsmScript(file,"data\\battles\\global\\beforebattlecutscenes",0x47A88,0x47AE8,"Before battle cutscenes");
+	produceAsmScript(file,"data\\battles\\beforebattlecutscenes",0x47A88,0x47AE8,"Before battle cutscenes");
 	produceAsmScript(file,"code\\gameflow\\battle\\beforebattlecutscenesend",0x47AE8,0x47AEE,"Before battle cutscenes function end");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlestartcutscenesstart",0x47AEE,0x47B2C,"Battle start cutscenes function start");
-	produceAsmScript(file,"data\\battles\\global\\battlestartcutscenes",0x47B2C,0x47B8C,"Battle start cutscenes");
+	produceAsmScript(file,"data\\battles\\battlestartcutscenes",0x47B2C,0x47B8C,"Battle start cutscenes");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlestartcutscenesend",0x47B8C,0x47B92,"Battle start cutscenes function end");
 	produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesstart",0x47B92,0x47BE8,"Battle end cutscenes function start");
-	produceAsmScript(file,"data\\battles\\global\\battleendcutscenes",0x47BE8,0x47C48,"Enemy defeated cutscenes");
+	produceAsmScript(file,"data\\battles\\battleendcutscenes",0x47BE8,0x47C48,"Enemy defeated cutscenes");
 	produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesend",0x47C48,0x47CBC,"Battle end cutscenes function end");
 	produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesstart",0x47CBC,0x47CF4,"After battle cutscenes function start");
-	produceAsmScript(file,"data\\battles\\global\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
+	produceAsmScript(file,"data\\battles\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
 	produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesend",0x47D54,0x47D6A,"After battle cutscenes function end");
 	produceAsmScript(file,"data\\battles\\global\\afterbattlejoins",0x47D6A,0x47D9E,"After battle joins (unused)");
 	produceAsmScript(file,"code\\gameflow\\battle\\afterenemyleaderdeathpositions",0x47D9E,0x47E82,"After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.");
@@ -1199,7 +1199,7 @@ static produceSpecificSectionNine(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites",1);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",2);	
 	writestr(file,"\t\talignIfExpandedRom $E0000\n");			
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);	
+	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);	
 	produceAsmSection(file,0xFFC48,0x100000);
 
 	fclose(file);
@@ -1293,7 +1293,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");	
 	produceAsmSection(file,0x1B1A66,0x1B30EE);		
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
+	produceAsmScriptWithConditionalInclude(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DB0,0x1B6DDA,"Data related to UpgradeUnitIdx function");	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
 	produceAsmSection(file,0x1B7C9A,0x1B8000);
