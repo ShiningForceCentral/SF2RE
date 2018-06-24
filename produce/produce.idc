@@ -265,7 +265,9 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine",0x18000,0x1FDEB,"Battlescene engine");	
+	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x1FA8A,"Battlescene engine");
+	produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB8,"Battle custom backgrounds table");
+	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x1FAB8,0x1FDEB,"Battlescene engine");	
 	produceAsmSection(file,0x1FDEB,0x20000);
 
 	fclose(file);

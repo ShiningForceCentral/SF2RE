@@ -222,7 +222,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1F806,0x1F914,"AllyBattleSprites","data/stats/allies/allybattlesprites.bin",file);
 	splitSingleChunk(0x1F914,0x1F9E2,"EnemyBattleSprites","data/stats/enemies/enemybattlesprites.bin",file);
 	splitSingleChunk(0x1F9E2,0x1FA8A,"WeaponBattleSprites","data/stats/items/weaponsprites.bin",file);
-	splitSingleChunk(0x1FA8A,0x1FAB8,"CustomBackgrounds","data/battles/global/custombackgrounds.bin",file);
+	//splitSingleChunk(0x1FA8A,0x1FAB8,"CustomBackgrounds","data/battles/global/custombackgrounds.bin",file);
 	
 	splitSingleChunk(0x1FAD6,0x1FADD,"AllyBSpriteIdleAnimate","data/stats/allies/allyidlesprites.bin",file);
 	splitSingleChunk(0x1FADD,0x1FAEA,"EnemyBSpriteIdleAnimate","data/stats/enemies/enemyidlesprites.bin",file);
