@@ -1290,7 +1290,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_0",0x1AC000,0x1AC068,"Jump interface for section functions");	
 	produceAsmScript(file,"code\\common\\scripting\\endcredits",0x1AC068,0x1AC29C,"Ending credits functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AD104,"Battle init, terrain, AI stuff to split more properly");			
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
+	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");	
 	produceAsmSection(file,0x1B1A66,0x1B30EE);		
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
