@@ -12,11 +12,35 @@ static main(void){
 static parseAll(){
 
 	Message("\nPARSING...\n");
-	Message(" Music bank ...");	
+	Message(" Music bank ...");
+	createEnums();	
 	parseMusicBank();	
 	Message("\n DONE.\n");		
 	Message("END OF PARSING.\n");	
 
+}
+
+static createEnums(){
+	createNotes();
+}
+
+static createNotes(){
+	auto enumid,octave,code;
+	enumid = AddEnum(-1,"NOTES",0);
+	for(octave=0;octave<7;octave++){
+		code=AddConstEx(enumid,form("C%d",octave+1),12*octave+0,-1);
+		AddConstEx(enumid,form("Cs%d",octave+1),12*octave+1,-1);
+		AddConstEx(enumid,form("D%d",octave+1),12*octave+2,-1);
+		AddConstEx(enumid,form("Ds%d",octave+1),12*octave+3,-1);
+		AddConstEx(enumid,form("E%d",octave+1),12*octave+4,-1);
+		AddConstEx(enumid,form("F%d",octave+1),12*octave+5,-1);
+		AddConstEx(enumid,form("Fs%d",octave+1),12*octave+6,-1);
+		AddConstEx(enumid,form("G%d",octave+1),12*octave+7,-1);
+		AddConstEx(enumid,form("Gs%d",octave+1),12*octave+8,-1);
+		AddConstEx(enumid,form("A%d",octave+1),12*octave+9,-1);
+		AddConstEx(enumid,form("As%d",octave+1),12*octave+10,-1);
+		AddConstEx(enumid,form("B%d",octave+1),12*octave+11,-1);
+	}
 }
 
 static parseMusicBank(){
@@ -123,40 +147,40 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("ymInst %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("  ymInst %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0xFD){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("ymVol 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  ymVol 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xFC){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
 				if(Byte(ea+1)<0x80){
-					SetManualInsn(ea,form("release 0%sh",ltoa(Byte(ea+1),16)));
+					SetManualInsn(ea,form("  release 0%sh",ltoa(Byte(ea+1),16)));
 				}else if(Byte(ea+1)==0x80){
-					SetManualInsn(ea,"ymSustain");
+					SetManualInsn(ea,"  ymSustain");
 				}else if(Byte(ea+1)<0xFF){
-					SetManualInsn(ea,form("ymSlide 0%sh",ltoa(Byte(ea+1)-0x80,16)));
+					SetManualInsn(ea,form("  ymSlide 0%sh",ltoa(Byte(ea+1)-0x80,16)));
 				}else {
-					SetManualInsn(ea,"ymStopSlide");
+					SetManualInsn(ea,"  ymStopSlide");
 				}
 			}else if(cmd==0xFB){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("vibrato 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  vibrato 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xFA){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("ymStereo 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  ymStereo 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xF9){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("shifting 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  shifting 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xF8){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
@@ -184,29 +208,29 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("length %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("  length %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0x70){
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,"silence");
+				SetManualInsn(ea,"        silence");
 			}else if(cmd>=0x80){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
 				if(ymChannel==5 && dac==0){
-					SetManualInsn(ea,form("sampleL %s,%s",ltoa(Byte(ea)-0x80,10),ltoa(Byte(ea+1),10)));
+					SetManualInsn(ea,form("        sampleL %s,%s",ltoa(Byte(ea)-0x80,10),ltoa(Byte(ea+1),10)));
 				}else{
-					SetManualInsn(ea,form("noteL %s,%s",ltoa(Byte(ea)-0x80,10),ltoa(Byte(ea+1),10)));
+					SetManualInsn(ea,form("        noteL %s,%s",getYmNote(Byte(ea)-0x80),ltoa(Byte(ea+1),10)));
 				}
 			}else {
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
 				if(ymChannel==5 && dac==0){
-					SetManualInsn(ea,form("sample %s",ltoa(Byte(ea),10)));
+					SetManualInsn(ea,form("        sample  %s",ltoa(Byte(ea),10)));
 				}else{
-					SetManualInsn(ea,form("note %s",ltoa(Byte(ea),10)));
+					SetManualInsn(ea,form("        note  %s",getYmNote(Byte(ea))));
 				}
 			}
 		
@@ -255,27 +279,27 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("psgInst %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("  psgInst %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0xFC){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("release 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  release 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xFB){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("vibrato 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  vibrato 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xFA){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("ymTimer 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  ymTimer 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xF9){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("shifting 0%sh",ltoa(Byte(ea+1),16)));
+				SetManualInsn(ea,form("  shifting 0%sh",ltoa(Byte(ea+1),16)));
 			}else if(cmd==0xF8){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
@@ -303,22 +327,22 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("length %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("  length %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0x70){
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,"silence");
+				SetManualInsn(ea,"        silence");
 			}else if(cmd>=0x80){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("noteL %s,%s",ltoa(Byte(ea)-0x80,10),ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("        psgNoteL %s,%s",getPsgNote(Byte(ea)-0x80),ltoa(Byte(ea+1),10)));
 			}else {
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("note %s",ltoa(Byte(ea),10)));
+				SetManualInsn(ea,form("        psgNote  %s",getPsgNote(Byte(ea))));
 			}
 		
 		
@@ -332,7 +356,49 @@ static parseMusic(start,end,index){
 
 }
 
+static getYmNote(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	id = GetEnum("NOTES");
+	enumSize = GetEnumSize(id);
+	constant = GetFirstConst(id,-1);
+	//Message(form("Getting Ym Note %d ...",cmd));	
+	while(constant!=-1){
+			j=0;
+			constId = GetConstEx(id,constant,j,-1);
+			while(constId != -1){
+				if(constant==cmd){
+					//Message(form(" Found Ym Note %s\n",GetConstName(constId)));
+					return GetConstName(constId);
+				}
+				j++;
+				constId = GetConstEx(id,constant,j,-1);
+			}
+			constant = GetNextConst(id,constant,-1);
+	}
+	return form("%s",ltoa(cmd,10));
+}
 
+static getPsgNote(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	id = GetEnum("NOTES");
+	enumSize = GetEnumSize(id);
+	constant = GetFirstConst(id,-1);
+	//Message(form("Getting Psg Note %d ...",cmd));	
+	while(constant!=-1){
+			j=0;
+			constId = GetConstEx(id,constant,j,-1);
+			while(constId != -1){
+				if(constant==cmd+9){
+					//Message(form(" Found Psg Note %s\n",GetConstName(constId)));
+					return GetConstName(constId);
+				}
+				j++;
+				constId = GetConstEx(id,constant,j,-1);
+			}
+			constant = GetNextConst(id,constant,-1);
+	}
+	return form("%s",ltoa(cmd,10));
+}
 
 
 /* 

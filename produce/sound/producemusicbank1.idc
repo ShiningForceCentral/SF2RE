@@ -157,6 +157,7 @@ static writeHeader(file){
 	writestr(file,"   listing off\n");
 	writestr(file,"   phase	0\n");
 	writestr(file,"   include \"..\\musicmacros.asm\"\n");
+	writestr(file,"   include \"..\\musicenums.asm\"\n");
 	writestr(file,"   org 08000h\n");
 	writestr(file,"\n");
 }
