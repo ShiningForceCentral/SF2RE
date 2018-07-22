@@ -208,7 +208,7 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("  length %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("        silenceL %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0x70){
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
@@ -327,7 +327,7 @@ static parseMusic(start,end,index){
 				cmdLength = 2;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 				MakeData(ea,FF_BYTE,cmdLength,1);
-				SetManualInsn(ea,form("  length %s",ltoa(Byte(ea+1),10)));
+				SetManualInsn(ea,form("        silenceL    %s",ltoa(Byte(ea+1),10)));
 			}else if(cmd==0x70){
 				cmdLength = 1;
 				MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
