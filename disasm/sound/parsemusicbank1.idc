@@ -54,7 +54,7 @@ static parseMusicBank(){
 		MakeNameEx(target,form("Music_%s",ltoa(i+32,10)),0);
 		OpOff(addr,0,0);
 		Message(form("\n  Music %d at 0x%s...",i+32,ltoa(target,16)));	
-		parseMusic(target,target+0x1000,i);
+		parseMusic(target,target+0x1000,i+32);
 		Message(" DONE.\n");
 		/*if(AskYN(1,"Next Music ?")!=1){
 			break;
