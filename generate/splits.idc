@@ -224,10 +224,12 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1F9E2,0x1FA8A,"WeaponBattleSprites","data/stats/items/weaponsprites.bin",file);
 	//splitSingleChunk(0x1FA8A,0x1FAB8,"CustomBackgrounds","data/battles/global/custombackgrounds.bin",file);
 	
-	splitSingleChunk(0x1FAD6,0x1FADD,"AllyBSpriteIdleAnimate","data/stats/allies/allyidlesprites.bin",file);
-	splitSingleChunk(0x1FADD,0x1FAEA,"EnemyBSpriteIdleAnimate","data/stats/enemies/enemyidlesprites.bin",file);
+	//splitSingleChunk(0x1FAD6,0x1FADD,"AllyBSpriteIdleAnimate","data/stats/allies/allyidlesprites.bin",file);
+	//splitSingleChunk(0x1FADD,0x1FAEA,"EnemyBSpriteIdleAnimate","data/stats/enemies/enemyidlesprites.bin",file);
 	
-	MakeAlign(0x1FDEC, 0x20000-0x1FDEC,17);
+	splitSingleChunk(0x1FAEA,0x1FDEA,"BackgroundLayout","data/graphics/tech/backgroundlayout.bin",file);
+	
+	MakeAlign(0x1FDEA, 0x20000-0x1FDEA,17);
 	
 	splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
 	

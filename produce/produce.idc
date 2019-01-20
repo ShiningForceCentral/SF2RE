@@ -267,8 +267,11 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
 
 	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x1FA8A,"Battlescene engine");
 	produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB8,"Battle custom backgrounds table");
-	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x1FAB8,0x1FDEB,"Battlescene engine");	
-	produceAsmSection(file,0x1FDEB,0x20000);
+	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x1FAB8,0x1FAD6,"Battlescene engine");	
+	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
+	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
+	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_2",0x1FAEA,0x1FDEA,"Battlescene engine");	
+	produceAsmSection(file,0x1FDEA,0x20000);
 
 	fclose(file);
 	Message("DONE.\n");	
