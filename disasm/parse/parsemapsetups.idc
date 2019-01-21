@@ -30,6 +30,7 @@ static parseAllMapSetupsSection1(){
 				SetManualInsn   (addr, form("msFlag %d, %s",Word(addr),GetTrueName(Dword(addr+2))));
 			}
 			parseMapSetupSection1(Dword(Dword(addr+2)));
+			parseMapSetupSection2(Dword(Dword(addr+2)+4));
 			addr = addr+6;
 		}
 		for(j=addr;j<addr+1;j++){undefineByte(addr);}
@@ -90,7 +91,60 @@ static parseEntityMoveSequence(addr){
 	SetManualInsn   (addr, "emsEnd");
 }
 
+static parseEntityMoveSequence(addr){
 
+	while(Word(addr)!=0xFFFF){
+		undefineByte(addr);
+		MakeByte(addr);
+		SetManualInsn   (addr, form("dc.b %s",getDirection(Byte(addr))));
+		addr++;
+	}
+	undefineByte(addr);
+	MakeWord(addr);
+	SetManualInsn   (addr, "emsEnd");
+}
+
+static parseMapSetupSection2(ea){
+	auto base, j, entity, facing, offset, target, functionName;
+	base = ea;
+	if(Word(ea)==0x4E75){
+		//map 52 curious case
+		MakeWord(ea);
+	}
+	else{
+		while(Byte(ea)!=0xFD){
+			for(j=ea;j<ea+4;j++){undefineByte(j);}
+			MakeData(ea,FF_BYTE,4,1);
+			entity = Byte(ea);
+			facing = getDirection(Byte(ea+1));
+			offset = Word(ea+2);
+			if(offset>0x7FFF){
+				target = base+offset-0x10000;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+			}else{
+				target = base+offset;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, form("%s-%s",GetTrueName(target),GetTrueName(base))));
+			}
+			ea = ea+4;
+		}
+		for(j=ea;j<ea+4;j++){undefineByte(j);}
+		MakeData(ea,FF_BYTE,4,1);
+		entity = Byte(ea);
+		facing = getDirection(Byte(ea+1));
+		offset = Word(ea+2);
+		if(offset>0x7FFF){
+			target = base+offset-0x10000;
+			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+			SetManualInsn   (ea, form("msDefaultEntityEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+		}else{
+			target = base+offset;
+			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+			SetManualInsn   (ea, form("msDefaultEntityEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
+		}
+	}
+}
 
 /* 
  *	Makes sure byte at addr is
