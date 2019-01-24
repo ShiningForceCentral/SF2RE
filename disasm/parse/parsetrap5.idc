@@ -53,7 +53,10 @@ static scanTrap5(){
 		
 			OpEnumEx(addr,0,GetEnum("Traps"),0);
 			MakeWord(addr+2);
-		
+			//MakeUnkn(addr+1,DOUNK_DELNAMES);
+			//MakeUnkn(addr+2,DOUNK_DELNAMES);
+			//MakeUnkn(addr+3,DOUNK_DELNAMES);
+			//MakeData(addr,FF_BYTE,4,1);
 			parameter = ltoa(Word(addr+2),16);
 			while(strlen(parameter)<4){
 				parameter=form("0%s",parameter);
@@ -77,8 +80,21 @@ static scanTrap5(){
 			}
 			fclose(textbanksFile);
 			
+			if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
+				MakeUnkn(addr,DOUNK_DELNAMES);
+				MakeUnkn(addr+1,DOUNK_DELNAMES);
+				MakeUnkn(addr+2,DOUNK_DELNAMES);
+				MakeUnkn(addr+3,DOUNK_DELNAMES);
+				MakeData(addr,FF_BYTE,4,1);
+				SetManualInsn(addr, form("trapText $%s          ;%s", ltoa(Word(addr+2),16), dialogLine));
+			}else{
+				SetManualInsn(addr, " ");
+				SetManualInsn(addr+2, form("trapText $%s          ;%s", ltoa(Word(addr+2),16), dialogLine));
+			}
+			
 			if (dialogLine!=""){
-				newComment = form(dialogLine);
+				//newComment = form(dialogLine);
+				newComment = "";
 				//action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
 				if (action==-1) return;
 				if (action==1){
