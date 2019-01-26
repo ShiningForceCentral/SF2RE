@@ -87,10 +87,10 @@ static scanTrap5(){
 					MakeUnkn(addr+2,DOUNK_DELNAMES);
 					MakeUnkn(addr+3,DOUNK_DELNAMES);
 					MakeData(addr,FF_BYTE,4,1);
-					SetManualInsn(addr, "closeTextBox");
+					SetManualInsn(addr, "clsTxt");
 				}else{
 					SetManualInsn(addr, " ");
-					SetManualInsn(addr+2, "closeTextBox");
+					SetManualInsn(addr+2, "clsTxt");
 				}
 			}
 			
@@ -100,10 +100,10 @@ static scanTrap5(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("textBox $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
+				SetManualInsn(addr, form("txt $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("textBox $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
+				SetManualInsn(addr+2, form("txt $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
 			}
 			
 			if (dialogLine!=""){

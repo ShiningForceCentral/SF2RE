@@ -76,10 +76,10 @@ static scanTrap0(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("soundCommand %s", param));
+				SetManualInsn(addr, form("sndCom %s", param));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("soundCommand %s", param));
+				SetManualInsn(addr+2, form("sndCom %s", param));
 			}
 			
 			//cont = AskYN(1,"Continue ?");

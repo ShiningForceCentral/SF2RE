@@ -55,7 +55,7 @@ static scanTrap1(){
 	for(addr=FindBinary(addr+1,7,trapHexString);addr!=BADADDR;addr=FindBinary(addr+1,7,trapHexString)){
 		flagDescription = "";
 		//Jump(addr);
-		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1){
+		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
 		
 			OpEnumEx(addr,0,GetEnum("Traps"),0);
 			MakeWord(addr+2);
@@ -90,10 +90,10 @@ static scanTrap1(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("checkFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr, form("chkFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("checkFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr+2, form("chkFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}
 			
 			/*
@@ -147,7 +147,7 @@ static scanTrap2(){
 	for(addr=FindBinary(addr+1,7,trapHexString);addr!=BADADDR;addr=FindBinary(addr+1,7,trapHexString)){
 		flagDescription = "";
 		//Jump(addr);
-		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1){
+		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
 		
 			OpEnumEx(addr,0,GetEnum("Traps"),0);
 			MakeWord(addr+2);
@@ -182,10 +182,10 @@ static scanTrap2(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("setFlag $%s            ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr, form("setFlg $%s            ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("setFlag $%s            ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr+2, form("setFlg $%s            ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}
 			
 			/*
@@ -239,7 +239,7 @@ static scanTrap3(){
 	for(addr=FindBinary(addr+1,7,trapHexString);addr!=BADADDR;addr=FindBinary(addr+1,7,trapHexString)){
 		flagDescription = "";
 		//Jump(addr);
-		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1){
+		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
 		
 			OpEnumEx(addr,0,GetEnum("Traps"),0);
 			MakeWord(addr+2);
@@ -274,10 +274,10 @@ static scanTrap3(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("clearFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr, form("clrFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("clearFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr+2, form("clrFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}
 			
 			/*
@@ -331,7 +331,7 @@ static scanTrap4(){
 	for(addr=FindBinary(addr+1,7,trapHexString);addr!=BADADDR;addr=FindBinary(addr+1,7,trapHexString)){
 		flagDescription = "";
 		//Jump(addr);
-		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1){
+		if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
 		
 			OpEnumEx(addr,0,GetEnum("Traps"),0);
 			MakeWord(addr+2);
@@ -366,10 +366,10 @@ static scanTrap4(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("checkFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr, form("checkFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("checkFlag $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
+				SetManualInsn(addr+2, form("checkFlg $%s          ;%s", ltoa(Word(addr+2),16), flagDescription));
 			}
 			
 			/*
