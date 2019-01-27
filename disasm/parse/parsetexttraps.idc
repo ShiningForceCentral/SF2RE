@@ -63,7 +63,7 @@ static scanTrap5(){
 			}
 			//Message(form("\nBinary value 0x4E45 with parameter value 0x%s at address 0x%s in code : searching for dialog line.",ltoa(Word(addr+2),16),ltoa(addr,16)));
 			
-			if(parameter!="FFFF"){
+			if(Word(addr+2)!=0xFFFF){
 				textbanksFile = fopen("textbanks.txt","r");
 				while(dialogLine==""){
 					lineNumber = lineNumber + 1;
@@ -80,6 +80,20 @@ static scanTrap5(){
 					}
 				}
 				fclose(textbanksFile);
+				if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
+					MakeUnkn(addr,DOUNK_DELNAMES);
+					MakeUnkn(addr+1,DOUNK_DELNAMES);
+					MakeUnkn(addr+2,DOUNK_DELNAMES);
+					MakeUnkn(addr+3,DOUNK_DELNAMES);
+					MakeData(addr,FF_BYTE,4,1);
+					SetManualInsn(addr, form("txt $%s", ltoa(Word(addr+2),16)));
+					MakeRptCmt(addr,dialogLine);
+				}else{
+					SetManualInsn(addr, " ");
+					SetManualInsn(addr+2, form("txt $%s", ltoa(Word(addr+2),16)));
+					MakeRptCmt(addr,"");
+					MakeRptCmt(addr+2,dialogLine);
+				}				
 			}else{			
 				if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
 					MakeUnkn(addr,DOUNK_DELNAMES);
@@ -94,18 +108,7 @@ static scanTrap5(){
 				}
 			}
 			
-			if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
-				MakeUnkn(addr,DOUNK_DELNAMES);
-				MakeUnkn(addr+1,DOUNK_DELNAMES);
-				MakeUnkn(addr+2,DOUNK_DELNAMES);
-				MakeUnkn(addr+3,DOUNK_DELNAMES);
-				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("txt $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
-			}else{
-				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("txt $%s            ;%s", ltoa(Word(addr+2),16), dialogLine));
-			}
-			
+			/*
 			if (dialogLine!=""){
 				//newComment = form(dialogLine);
 				newComment = "";
@@ -120,6 +123,7 @@ static scanTrap5(){
 					Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
 				}
 			}
+			*/
 			//cont = AskYN(1,"Continue ?");
 			if (cont==-1 || cont==0) return;	
 		}
