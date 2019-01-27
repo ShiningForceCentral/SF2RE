@@ -5,12 +5,12 @@
 
 static main(void){
 
-	//if(AskYN(1,"Parse cutscene at current cursor position ?")!=1){
+	if(AskYN(1,"Parse cutscene at current cursor position ?")!=1){
 		parseAll();
-	//}
-	//else{
-	//	parseSingleCS(ScreenEA());
-	//}
+	}
+	else{
+		parseSingleCS(ScreenEA());
+	}
 	
 
 

@@ -90,11 +90,11 @@ static scanTrap1(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("chkFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr, form("chkFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,flagDescription);
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("chkFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr+2, form("chkFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,"");
 				MakeRptCmt(addr+2,flagDescription);
 			}
@@ -185,11 +185,11 @@ static scanTrap2(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("setFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr, form("setFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,flagDescription);
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("setFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr+2, form("setFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,"");
 				MakeRptCmt(addr+2,flagDescription);
 			}
@@ -280,11 +280,11 @@ static scanTrap3(){
 				MakeUnkn(addr+2,DOUNK_DELNAMES);
 				MakeUnkn(addr+3,DOUNK_DELNAMES);
 				MakeData(addr,FF_BYTE,4,1);
-				SetManualInsn(addr, form("clrFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr, form("clrFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,flagDescription);
 			}else{
 				SetManualInsn(addr, " ");
-				SetManualInsn(addr+2, form("clrFlg $%s", ltoa(Word(addr+2),16)));
+				SetManualInsn(addr+2, form("clrFlg  $%s", ltoa(Word(addr+2),16)));
 				MakeRptCmt(addr,"");
 				MakeRptCmt(addr+2,flagDescription);
 			}

@@ -86,11 +86,11 @@ static scanTrap5(){
 					MakeUnkn(addr+2,DOUNK_DELNAMES);
 					MakeUnkn(addr+3,DOUNK_DELNAMES);
 					MakeData(addr,FF_BYTE,4,1);
-					SetManualInsn(addr, form("txt $%s", ltoa(Word(addr+2),16)));
+					SetManualInsn(addr, form("txt     $%s", ltoa(Word(addr+2),16)));
 					MakeRptCmt(addr,dialogLine);
 				}else{
 					SetManualInsn(addr, " ");
-					SetManualInsn(addr+2, form("txt $%s", ltoa(Word(addr+2),16)));
+					SetManualInsn(addr+2, form("txt     $%s", ltoa(Word(addr+2),16)));
 					MakeRptCmt(addr,"");
 					MakeRptCmt(addr+2,dialogLine);
 				}				

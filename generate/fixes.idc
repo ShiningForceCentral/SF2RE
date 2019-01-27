@@ -129,7 +129,7 @@ static fixInstructionRepresentations(){
 	fix("4E F8","jmp     (%s).w","jmp loc","jmp (loc).w");
 	fix("4E FA","jmp     %s(pc)","jmp loc","jmp loc(pc)");
 	
-	fix("41 FA","lea     %s(pc), a0","lea loc, a0","lea loc(pc),a0");
+	fixWithMapscriptException("41 FA","lea     %s(pc), a0","lea loc, a0","lea loc(pc),a0");
 	fix("43 FA","lea     %s(pc), a1","lea loc, a1","lea loc(pc),a1");
 	fix("45 FA","lea     %s(pc), a2","lea loc, a2","lea loc(pc),a2");
 	fix("47 FA","lea     %s(pc), a3","lea loc, a3","lea loc(pc),a3");
@@ -231,6 +231,33 @@ static fix(pattern, manualInstruction, wrongInstString, newInstString){
 	for(addr=0;addr!=BADADDR;addr=FindBinary(addr+1,7,pattern)){
 		opnd = GetOpnd(addr,0);
 		if (opnd!=""){
+			rep = form(manualInstruction,opnd);
+			//Jump(addr);
+			//action = AskYN(1,form("Change representation from %s to %s ?",wrongInstString, newInstString));
+			if (action==-1) break;
+			if (action==1){
+				//Message(form("\n0x%d : %s changed to %s",addr,wrongInstString, newInstString));
+				SetManualInsn(addr,rep);
+			}
+			else{
+				//Message(form("\n0x%d : %s NOT changed to %s",addr,wrongInstString, newInstString));
+			}
+		}
+	}
+}
+
+static fixWithMapscriptException(pattern, manualInstruction, wrongInstString, newInstString){
+
+	auto addr; // current location
+	auto opnd; // operand found at current location
+	auto action; // action asked to user
+	auto rep; // proper representation of instruction
+	action = 1;
+	
+	// Start search from current address on screen
+	for(addr=0;addr!=BADADDR;addr=FindBinary(addr+1,7,pattern)){
+		opnd = GetOpnd(addr,0);
+		if (opnd!="" && Word(addr+4)!=0x4E46){
 			rep = form(manualInstruction,opnd);
 			//Jump(addr);
 			//action = AskYN(1,form("Change representation from %s to %s ?",wrongInstString, newInstString));
