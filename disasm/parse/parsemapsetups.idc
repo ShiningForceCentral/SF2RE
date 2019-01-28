@@ -31,6 +31,7 @@ static parseAllMapSetupsSection1(){
 			}
 			parseMapSetupSection1(Dword(Dword(addr+2)));
 			parseMapSetupSection2(Dword(Dword(addr+2)+4));
+			parseMapSetupSection3(Dword(Dword(addr+2)+4+4));
 			addr = addr+6;
 		}
 		for(j=addr;j<addr+1;j++){undefineByte(addr);}
@@ -142,6 +143,48 @@ static parseMapSetupSection2(ea){
 			target = base+offset;
 			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
 			SetManualInsn   (ea, form("msDefaultEntityEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
+		}
+	}
+}
+
+static parseMapSetupSection3(ea){
+	auto base, j, x, y, offset, target, functionName;
+	base = ea;
+	if(Word(ea)==0x4E75){
+		//map 52 curious case
+		MakeWord(ea);
+	}
+	else{
+		while(Byte(ea)!=0xFD){
+			for(j=ea;j<ea+4;j++){undefineByte(j);}
+			MakeData(ea,FF_BYTE,4,1);
+			x = Byte(ea);
+			y = getDirection(Byte(ea+1));
+			offset = Word(ea+2);
+			if(offset>0x7FFF){
+				target = base+offset-0x10000;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+			}else{
+				target = base+offset;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, form("%s-%s",GetTrueName(target),GetTrueName(base))));
+			}
+			ea = ea+4;
+		}
+		if(ea!=0x54458){
+			for(j=ea;j<ea+4;j++){undefineByte(j);}
+			MakeData(ea,FF_BYTE,4,1);
+			offset = Word(ea+2);
+			if(offset>0x7FFF){
+				target = base+offset-0x10000;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+			}else{
+				target = base+offset;
+				if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+				SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
+			}
 		}
 	}
 }
