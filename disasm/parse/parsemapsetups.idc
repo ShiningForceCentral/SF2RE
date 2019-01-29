@@ -6,32 +6,35 @@
 
 static main(void){
 
-	Message("\nPARSING MAP SETUP Section 1 : Entities ...\n");
-	parseAllMapSetupsSection1();	
+	Message("\nPARSING MAP SETUP Sections ...\n");
+	parseAllMapSetupsSections();	
 	Message("END OF PARSING.\n");	
 
 
 }
 
-static parseAllMapSetupsSection1(){
-	auto addr,j,firstMs;
+static parseAllMapSetupsSections(){
+	auto addr,j,firstMs, map, flag;
 	addr = 0x4F6E2;
 	while(Word(addr)!=0xFFFF){
 		firstMs = 1;
+		map = Word(addr);
 		while(Word(addr)!=0xFFFD){
 			if(firstMs){
+				flag = 0;
 				for(j=addr;j<addr+6;j++){undefineByte(j);}
 				MakeData(addr,FF_BYTE,6,1);
 				SetManualInsn   (addr, form("msMap %d, %s",Word(addr),GetTrueName(Dword(addr+2))));
 				firstMs = 0;
 			}else{
+				flag = Word(addr);
 				for(j=addr;j<addr+6;j++){undefineByte(j);}
 				MakeData(addr,FF_BYTE,6,1);
 				SetManualInsn   (addr, form("msFlag %d, %s",Word(addr),GetTrueName(Dword(addr+2))));
 			}
-			parseMapSetupSection1(Dword(Dword(addr+2)));
-			parseMapSetupSection2(Dword(Dword(addr+2)+4));
-			parseMapSetupSection3(Dword(Dword(addr+2)+4+4));
+			parseMapSetupSection1(Dword(Dword(addr+2)),map,flag);
+			parseMapSetupSection2(Dword(Dword(addr+2)+4),map,flag);
+			parseMapSetupSection3(Dword(Dword(addr+2)+4+4),map,flag);
 			addr = addr+6;
 		}
 		for(j=addr;j<addr+1;j++){undefineByte(addr);}
@@ -46,7 +49,7 @@ static parseAllMapSetupsSection1(){
 }
 
 
-static parseMapSetupSection1(ea){
+static parseMapSetupSection1(ea,map,flag){
 	auto j, x, y, facing, sprite, scriptName, walkX, walkY, walkDist;
 
 	while(Word(ea)!=0xFFFF){
@@ -105,30 +108,45 @@ static parseEntityMoveSequence(addr){
 	SetManualInsn   (addr, "emsEnd");
 }
 
-static parseMapSetupSection2(ea){
-	auto base, j, entity, facing, offset, target, functionName;
+static parseMapSetupSection2(ea,map,flag){
+	auto base, j, entity, facing, offset, target, functionName, index, flagName, functionRef;
 	base = ea;
+	index = 0;
 	if(Word(ea)==0x4E75){
-		//map 52 curious case
+		//map 52 bug
 		MakeWord(ea);
 	}
 	else{
+		if(flag!=0){
+			flagName = form("_%s",ltoa(flag,16));
+		}else{
+			flagName = "";
+		}
 		while(Byte(ea)!=0xFD){
 			for(j=ea;j<ea+4;j++){undefineByte(j);}
 			MakeData(ea,FF_BYTE,4,1);
 			entity = Byte(ea);
 			facing = getDirection(Byte(ea+1));
 			offset = Word(ea+2);
+			functionName = form("Map%s%s_EntityEvent%s",ltoa(map,10),flagName,ltoa(index,10));
 			if(offset>0x7FFF){
 				target = base+offset-0x10000;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
 			}else{
 				target = base+offset;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, form("%s-%s",GetTrueName(target),GetTrueName(base))));
 			}
+			if(substr(GetTrueName(target),0,3)!="Map"){
+				MakeNameEx(target,functionName,0);
+			}else{
+				functionName = GetTrueName(target);
+			}		
+			if(offset>0x7FFF){
+				functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+			}else{
+				functionRef = form("%s-%s",functionName,GetTrueName(base));
+			}
+			SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, functionRef));	
 			ea = ea+4;
+			index = index+1;
 		}
 		for(j=ea;j<ea+4;j++){undefineByte(j);}
 		MakeData(ea,FF_BYTE,4,1);
@@ -147,44 +165,54 @@ static parseMapSetupSection2(ea){
 	}
 }
 
-static parseMapSetupSection3(ea){
-	auto base, j, x, y, offset, target, functionName;
+static parseMapSetupSection3(ea,map,flag){
+	auto base, j, x, y, offset, target, functionName, index, flagName, functionRef;
 	base = ea;
-	if(Word(ea)==0x4E75){
-		//map 52 curious case
-		MakeWord(ea);
+	index = 0;
+	if(flag!=0){
+		flagName = form("_%s",ltoa(flag,16));
+	}else{
+		flagName = "";
 	}
-	else{
-		while(Byte(ea)!=0xFD){
-			for(j=ea;j<ea+4;j++){undefineByte(j);}
-			MakeData(ea,FF_BYTE,4,1);
-			x = Byte(ea);
-			y = getDirection(Byte(ea+1));
-			offset = Word(ea+2);
-			if(offset>0x7FFF){
-				target = base+offset-0x10000;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
-			}else{
-				target = base+offset;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("entevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, form("%s-%s",GetTrueName(target),GetTrueName(base))));
-			}
-			ea = ea+4;
+	while(Byte(ea)!=0xFD){
+		for(j=ea;j<ea+4;j++){undefineByte(j);}
+		MakeData(ea,FF_BYTE,4,1);
+		x = Byte(ea);
+		y = getDirection(Byte(ea+1));
+		offset = Word(ea+2);
+		functionName = form("Map%s%s_ZoneEvent%s",ltoa(map,10),flagName,ltoa(index,10));
+		if(offset>0x7FFF){
+			target = base+offset-0x10000;
+		}else{
+			target = base+offset;
 		}
-		if(ea!=0x54458){
-			for(j=ea;j<ea+4;j++){undefineByte(j);}
-			MakeData(ea,FF_BYTE,4,1);
-			offset = Word(ea+2);
-			if(offset>0x7FFF){
-				target = base+offset-0x10000;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
-			}else{
-				target = base+offset;
-				if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-				SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
-			}
+		if(substr(GetTrueName(target),0,3)!="Map"){
+			MakeNameEx(target,functionName,0);
+		}else{
+			functionName = GetTrueName(target);
+		}		
+		if(offset>0x7FFF){
+			functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+		}else{
+			functionRef = form("%s-%s",functionName,GetTrueName(base));
+		}
+		SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, functionRef));	
+		ea = ea+4;
+		index = index+1;
+	}
+	// Map 44 bug
+	if(ea!=0x54458){
+		for(j=ea;j<ea+4;j++){undefineByte(j);}
+		MakeData(ea,FF_BYTE,4,1);
+		offset = Word(ea+2);
+		if(offset>0x7FFF){
+			target = base+offset-0x10000;
+			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+			SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+		}else{
+			target = base+offset;
+			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+			SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
 		}
 	}
 }
