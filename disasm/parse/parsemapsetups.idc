@@ -35,6 +35,7 @@ static parseAllMapSetupsSections(){
 			parseMapSetupSection1(Dword(Dword(addr+2)),map,flag);
 			parseMapSetupSection2(Dword(Dword(addr+2)+4),map,flag);
 			parseMapSetupSection3(Dword(Dword(addr+2)+4+4),map,flag);
+			parseMapSetupSection4(Dword(Dword(addr+2)+4+4+4),map,flag);
 			addr = addr+6;
 		}
 		for(j=addr;j<addr+1;j++){undefineByte(addr);}
@@ -215,6 +216,124 @@ static parseMapSetupSection3(ea,map,flag){
 			SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
 		}
 	}
+}
+
+static parseMapSetupSection4(ea,map,flag){
+	auto base, j, x, y, parameter, textbanksFile, dialogLine, lineNumber, currentLine, baseInvestigationLineIndex, baseDescriptionLineIndex, investigationLineIndex, descriptionLineIndex, investigationLine, descriptionLine, offset, target, functionName, index, flagName, functionRef;
+	index = 0;
+	if(flag!=0){
+		flagName = form("_%s",ltoa(flag,16));
+	}else{
+		flagName = "";
+	}
+	baseInvestigationLineIndex = 0x1A7;
+	if(Word(ea)!=0x4E75){	
+		// parse text start index
+		baseDescriptionLineIndex = Word(ea+2);
+		parameter = ltoa(baseDescriptionLineIndex,16);
+		while(strlen(parameter)<4){
+			parameter=form("0%s",parameter);
+		}
+		textbanksFile = fopen("textbanks.txt","r");
+		while(dialogLine==""){
+			lineNumber = lineNumber + 1;
+			currentLine = readstr(textbanksFile);
+			if(currentLine==-1){
+				Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
+				break;
+			}
+			if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+				dialogLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
+			}
+		}
+		fclose(textbanksFile);
+		//Message(form("\n%s",dialogLine));
+		MakeRptCmt(ea,dialogLine);
+		
+		// get entry table address
+		ea = ea+6+Word(ea+6);
+		base = ea;
+		
+		// parse table
+		while(Byte(ea)!=0xFD){
+			for(j=ea;j<ea+6;j++){undefineByte(j);}
+			MakeData(ea,FF_BYTE,6,1);
+			x = Byte(ea);
+			y = Byte(ea+1);
+			if(Word(ea+2)==0){
+				investigationLineIndex = Byte(ea+4);
+				parameter = ltoa(baseInvestigationLineIndex+investigationLineIndex,16);
+				while(strlen(parameter)<4){
+					parameter=form("0%s",parameter);
+				}
+				textbanksFile = fopen("textbanks.txt","r");
+				while(investigationLine==""){
+					lineNumber = lineNumber + 1;
+					currentLine = readstr(textbanksFile);
+					if(currentLine==-1){
+						Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
+						break;
+					}
+					if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+						investigationLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
+					}
+				}
+				fclose(textbanksFile);
+				descriptionLineIndex = Byte(ea+5);
+				parameter = ltoa(baseDescriptionLineIndex+descriptionLineIndex,16);
+				while(strlen(parameter)<4){
+					parameter=form("0%s",parameter);
+				}
+				textbanksFile = fopen("textbanks.txt","r");
+				while(descriptionLine==""){
+					lineNumber = lineNumber + 1;
+					currentLine = readstr(textbanksFile);
+					if(currentLine==-1){
+						Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
+						break;
+					}
+					if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+						descriptionLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
+					}
+				}
+				fclose(textbanksFile);
+				SetManualInsn   (ea, form("msDesc %d, %d, %d, %d", x, y, investigationLineIndex, descriptionLineIndex));
+				MakeRptCmt(ea, form("%s\n%s",investigationLine,descriptionLine));
+				investigationLine = "";
+				descriptionLine = "";
+			}else{
+				offset = Word(ea+4);
+				functionName = form("Map%s%s_DescFunc%s",ltoa(map,10),flagName,ltoa(index,10));
+				if(offset>0x7FFF){
+					target = base+offset-0x10000;
+				}else{
+					target = base+offset;
+				}
+				if(substr(GetTrueName(target),0,3)!="Map"){
+					MakeNameEx(target,functionName,0);
+				}else{
+					functionName = GetTrueName(target);
+				}		
+				if(offset>0x7FFF){
+					functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+				}else{
+					functionRef = form("%s-%s",functionName,GetTrueName(base));
+				}
+				if(Byte(ea+2)==0){
+					SetManualInsn   (ea, form("msDescFunction %d, %d, %s", x, y, functionRef));	
+				}else{
+					SetManualInsn   (ea, form("msDescFunctionD6 %d, %d, $%s, %s", x, y, ltoa(Byte(ea+2),16), functionRef));	
+				}
+				index = index + 1;
+			}
+			ea = ea+6;
+		}
+		for(j=ea;j<ea+2;j++){undefineByte(j);}
+		MakeData(ea,FF_BYTE,2,1);
+		SetManualInsn   (ea, "msDescEnd");	
+	
+	}
+
 }
 
 /* 
