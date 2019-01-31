@@ -36,6 +36,7 @@ static parseAllMapSetupsSections(){
 			parseMapSetupSection2(Dword(Dword(addr+2)+4),map,flag);
 			parseMapSetupSection3(Dword(Dword(addr+2)+4+4),map,flag);
 			parseMapSetupSection4(Dword(Dword(addr+2)+4+4+4),map,flag);
+			parseMapSetupSection5(Dword(Dword(addr+2)+4+4+4+4),map,flag);
 			addr = addr+6;
 		}
 		for(j=addr;j<addr+1;j++){undefineByte(addr);}
@@ -335,6 +336,61 @@ static parseMapSetupSection4(ea,map,flag){
 	}
 
 }
+
+
+static parseMapSetupSection5(ea,map,flag){
+	auto base, j, x, y, facing, item, offset, target, functionName, index, flagName, functionRef;
+	base = ea;
+	index = 0;
+	if(flag!=0){
+		flagName = form("_%s",ltoa(flag,16));
+	}else{
+		flagName = "";
+	}
+	while(Byte(ea)!=0xFD){
+		for(j=ea;j<ea+6;j++){undefineByte(j);}
+		MakeData(ea,FF_BYTE,6,1);
+		x = Byte(ea);
+		y = Byte(ea+1);
+		facing = Byte(ea+2);
+		item = Byte(ea+3);
+		offset = Word(ea+4);
+		functionName = form("Map%s%s_ItemEvent%s",ltoa(map,10),flagName,ltoa(index,10));
+		if(offset>0x7FFF){
+			target = base+offset-0x10000;
+		}else{
+			target = base+offset;
+		}
+		if(substr(GetTrueName(target),0,3)!="Map"){
+			MakeNameEx(target,functionName,0);
+		}else{
+			functionName = GetTrueName(target);
+		}		
+		if(offset>0x7FFF){
+			functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+		}else{
+			functionRef = form("%s-%s",functionName,GetTrueName(base));
+		}
+		SetManualInsn   (ea, form("msItemEvent %d, %d, %s, %d, %s", x, y, getDirection(facing), item, functionRef));
+		Message(form("0x%s: %s\n",ltoa(ea,16),functionName));	
+		ea = ea+6;
+		index = index+1;
+	}
+	for(j=ea;j<ea+6;j++){undefineByte(j);}
+	MakeData(ea,FF_BYTE,6,1);
+	offset = Word(ea+4);
+	if(offset>0x7FFF){
+		target = base+offset-0x10000;
+		if(GetTrueName(target)==""){MakeNameEx(target,form("dftitemevt_%s",ltoa(target,16)),0);}
+		SetManualInsn   (ea, form("msDefaultItemEvent %s", form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
+	}else{
+		target = base+offset;
+		if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
+		SetManualInsn   (ea, form("msDefaultItemEvent %s", form("%s-%s",GetTrueName(target),GetTrueName(base))));
+	}
+}
+
+
 
 /* 
  *	Makes sure byte at addr is
