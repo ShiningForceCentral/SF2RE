@@ -1322,6 +1322,10 @@ In: D0 = weapon sprite idx", 1);
     SetFunctionCmt(0x19db0, 
         "get battle sprite # and palette # for entity D0's equipped weapon -> D2 (sprite), D3 (palette)", 1);
 
+    // sub_19E96
+    SetFunctionCmt(0x19e96, 
+        "Get a boolean depending on background id", 1);
+
     // ExecuteSpellAnimation
     SetFunctionCmt(0x19ee6, 
         "spell animation subroutine", 1);
@@ -1526,7 +1530,7 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x4401c, 
         "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
 
-    // sub_44088
+    // j_RunMapSetupItemEvent
     SetFunctionCmt(0x44088, 
         "triggers a map setup function according to up to 4 criterias in d1-d4", 1);
 
@@ -1699,7 +1703,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x474e0, 
         "xxxx", 1);
 
-    // ExecuteEntityEvent
+    // RunMapSetupEntityEvent
     SetFunctionCmt(0x4761a, 
         "In: D0 = entity event idx", 1);
 
@@ -1736,6 +1740,10 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     // csub_4CD56
     SetFunctionCmt(0x4cd56, 
         "Jaro joins the Force", 1);
+
+    // Map8_DescFunc6
+    SetFunctionCmt(0x562ba, 
+        "set after you open the tree in Ribble with the wooden plank", 1);
 
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
