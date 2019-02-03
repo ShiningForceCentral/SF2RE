@@ -143,7 +143,7 @@ static produceLayoutFile(){
 	produceSection(file,			"16",	0x1D8000,	0x1E0000,	126,	"0x1D8000..0x1E0000 : Icons");
 	produceSpecificSectionSeventeen(file,	"17",	0x1E0000,	0x1F0000,	462,	"0x1E0000..0x1F0000 : PCM Banks, YM Instruments, sound driver, char stats, witch screens");
 	produceSection(file,			"18",	0x1F0000,	0x200000,	1038,	"0x1F0000..0x200000 : Music banks 1 and 0");
-	writestr(file,"\t\tconditionalRomExpand\t\t\t\t; if EXPANDED_ROM = 1, then include next layout file to fill the ROM up to 0x3FFFFF");
+	writestr(file,"                conditionalRomExpand    ; if EXPANDED_ROM = 1, then include next layout file to fill the ROM up to 0x3FFFFF");
 
 	fclose(file);
 
@@ -156,7 +156,7 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	fileName = form("layout\\sf2-%s-0x00000%s-0x00%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -218,7 +218,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 	fileName = form("layout\\sf2-%s-0x00%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -241,7 +241,7 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -260,7 +260,7 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -284,7 +284,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -322,7 +322,7 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -336,14 +336,14 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\common\\scripting\\text\\decoding",0x2E10E,0x2E196,"Text decoding functions");	
 	produceAsmSection(file,0x2E196,0x2EB34);
 	produceAsmScriptWithConditionalInclude(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",1);
-	writestr(file,"\t\talignIfExpandedRom $30000\n");
+	writestr(file,"                alignIfExpandedRom $30000\n");
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",2);	
-	writestr(file,"\t\talignIfExpandedRom $38000\n");
+	writestr(file,"                alignIfExpandedRom $38000\n");
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2);	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
-	writestr(file,"\t\talignIfExpandedRom $43800\n");
+	writestr(file,"                alignIfExpandedRom $43800\n");
 	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7A36,0x7BDE,"Map coords data",2);	
-	writestr(file,"\t\talignIfExpandedRom $43C00\n");
+	writestr(file,"                alignIfExpandedRom $43C00\n");
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
 	produceAsmSection(file,0x425ED,0x44000);	
 
@@ -359,7 +359,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -415,7 +415,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"data\\scripting\\map\\cs_intro_stormeffect",0x48FE2,0x49058,"Storm Effect");
 	produceAsmScript(file,"data\\scripting\\map\\cs_end",0x49058,0x494BC,"End cutscene");
 
-	writestr(file,"\t\tinclude data\\battles\\entries\\battlecutscenesstorage.asm\n");
+	writestr(file,"                include data\\battles\\entries\\battlecutscenesstorage.asm\n");
 	battleCutscenesFile = fopen("disasm\\data\\battles\\entries\\battlecutscenesstorage.asm","w");
 	produceAsmScript(battleCutscenesFile,"data\\battles\\entries\\battle01\\cs_beforebattle",0x494BC,0x496DC,"Cutscene before battle 1");
 	produceAsmScript(battleCutscenesFile,"data\\battles\\entries\\battle01\\cs_afterbattle",0x496DC,0x4980E,"Cutscene after battle 1");
@@ -482,8 +482,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
 	produceAsmScript(file,"data\\maps\\mapsetups",0x4F6E2,0x4FA70,"Map setups table");
 
-	writestr(file,"\t\t;includeIfVanillaRom data\\maps\\mapsetupsstorage.asm\n");
-	writestr(file,"\t\tinclude data\\maps\\mapsetupsstorage.asm\n");
+	writestr(file,"                ;includeIfVanillaRom data\\maps\\mapsetupsstorage.asm\n");
+	writestr(file,"                include data\\maps\\mapsetupsstorage.asm\n");
 	mapSetupsFile = fopen("disasm\\data\\maps\\mapsetupsstorage.asm","w");
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\pointertable",0x4FA70,0x4FA88,"");
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\s1_entities",0x4FA88,0x4FA8A,"");
@@ -1173,14 +1173,14 @@ static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComm
 	fileName = form("layout\\sf2-%s-0x0%s-0x0%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmSection(file,0x64000,0x6400C);
 	produceAsmScript(file,"data\\graphics\\maps\\maptilesets\\entries",0x6400C,0x9494A,"Map Tilesets");	
-	writestr(file,"\t\talignIfExpandedRom $C7000\n");
+	writestr(file,"                alignIfExpandedRom $C7000\n");
 	produceAsmScript(file,"data\\graphics\\maps\\mappalettes\\entries",0x9494A,0x94B8A,"Map palettes");
 	produceAsmScriptWithConditionalInclude(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
 	produceAsmSection(file,0xC7ECC,0xC8000);
@@ -1196,14 +1196,14 @@ static produceSpecificSectionNine(mainFile,sectionName,start,end,fs,sectionComme
 	fileName = form("layout\\sf2-%s-0x0%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites",1);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",2);	
-	writestr(file,"\t\talignIfExpandedRom $E0000\n");			
+	writestr(file,"                alignIfExpandedRom $E0000\n");			
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);	
 	produceAsmSection(file,0xFFC48,0x100000);
 
@@ -1218,7 +1218,7 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1242,14 +1242,14 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmSection(file,0x130000,0x130004);
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
-	writestr(file,"\t\t;includeIfExpandedRom data\\maps\\mapsetupsstorage.asm\n");	
+	writestr(file,"                ;includeIfExpandedRom data\\maps\\mapsetupsstorage.asm\n");	
 	produceAsmSection(file,0x17FE4F,0x180000);
 
 	fclose(file);
@@ -1263,7 +1263,7 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1287,7 +1287,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1314,7 +1314,7 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1339,7 +1339,7 @@ static produceSpecificSectionFifteen(mainFile,sectionName,start,end,fs,sectionCo
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1359,7 +1359,7 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 	fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1387,7 +1387,7 @@ static produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sect
 	Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
 	//form("0x%s..0x%s %s",ltoa(start,16),ltoa(end,16),sectionComment)
 	action = 1;
-	writestr(mainFile,form("\t\tinclude \"%s\"\t\t; %s\n",fileName,sectionComment));
+	writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
@@ -1435,7 +1435,7 @@ static produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sec
 	}else{
 		include = "include";
 	}
-	writestr(mainFile,form("\t\t%s \"%s\"\t\t; %s\n",include,fileName,sectionComment));
+	writestr(mainFile,form("                %s \"%s\"    ; %s\n",include,fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	offsets = form("0x%s..0x%s",ltoa(start,16),ltoa(end,16));
 	writestr(file,form("\n; ASM FILE %s.asm :\n; %s : %s\n",sectionName,offsets,sectionComment));
@@ -1538,7 +1538,7 @@ static undefineMultipleLineArray(ea){
 	auto type;
 			type = GuessType(ea);
 			if(strstr(type,"char[")!=-1&&(strstr(GetDisasm(ea),"incbin")==-1)){
-					Message(form("\n%a : %s \t\t<== UNDEFINE if on multiple lines.",ea,GuessType(ea)));
+					Message(form("\n%a : %s     <== UNDEFINE if on multiple lines.",ea,GuessType(ea)));
 			}	
 }
 
@@ -1555,10 +1555,9 @@ static writeItem(file,ea){
 }
 
 static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
-	auto name,tabLength,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
-	tabLength = 8;
-	indent = "\t\t";
-	commentIndent = "\t\t\t\t";
+	auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
+	indent = "                ";
+	commentIndent = "                                        ";
 	name = GetTrueName(ea);
 	if(name==""){
 		name = Name(ea);
@@ -1574,7 +1573,7 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 			name = form("%s%s%s",name,ln,indent);
 		}
 		else{
-			while(strlen(name)<(strlen(indent)*tabLength)){
+			while(strlen(name)<(strlen(indent))){
 				name = form("%s ",name);
 			}		
 			undefineMultipleLineArray(ea);
@@ -1609,13 +1608,13 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(comment!=""){
 		comment = form("; %s",comment);
 	}
-	if(strlen(name)>(strlen(indent)*tabLength)){
+	if(strlen(name)>(strlen(indent))){
 		name = form("%s\n%s",name,indent);
 	}
 	if(strstr(lineA,"\n")!=-1){
 		lineA = form("%s%s",lineA,indent);
 	}
-	if(strlen(disasm)>(strlen(commentIndent)*tabLength)&&comment!=""){
+	if(strlen(disasm)>(strlen(commentIndent))&&comment!=""){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
 	//Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));		
@@ -1657,7 +1656,7 @@ static formatRptCmt(cmt){
 	if(index!=-1){
 		before = substr(cmt,0,index+1);
 		after = substr(cmt,index+1,strlen(cmt));
-		result = form("%s\t\t\t\t\t\t\t\t\t\t\t\t\t\t; %s",before,formatRptCmt(after));
+		result = form("%s                                        ; %s",before,formatRptCmt(after));
 		return result;
 	}
 	else{
