@@ -180,7 +180,7 @@ static parseMapSetupSection3(ea,map,flag){
 		for(j=ea;j<ea+4;j++){undefineByte(j);}
 		MakeData(ea,FF_BYTE,4,1);
 		x = Byte(ea);
-		y = getDirection(Byte(ea+1));
+		y = Byte(ea+1);
 		offset = Word(ea+2);
 		functionName = form("Map%s%s_ZoneEvent%s",ltoa(map,10),flagName,ltoa(index,10));
 		if(offset>0x7FFF){
@@ -198,7 +198,7 @@ static parseMapSetupSection3(ea,map,flag){
 		}else{
 			functionRef = form("%s-%s",functionName,GetTrueName(base));
 		}
-		SetManualInsn   (ea, form("msZoneEvent %d, %s, %s", x, y, functionRef));	
+		SetManualInsn   (ea, form("msZoneEvent %d, %d, %s", x, y, functionRef));	
 		ea = ea+4;
 		index = index+1;
 	}
