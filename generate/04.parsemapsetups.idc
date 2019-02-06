@@ -155,15 +155,27 @@ static parseMapSetupSection2(ea,map,flag){
 		entity = Byte(ea);
 		facing = getDirection(Byte(ea+1));
 		offset = Word(ea+2);
-		if(offset>0x7FFF){
-			target = base+offset-0x10000;
-			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-			SetManualInsn   (ea, form("msDefaultEntityEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
-		}else{
-			target = base+offset;
-			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-			SetManualInsn   (ea, form("msDefaultEntityEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
-		}
+			functionName = form("Map%s%s_DefaultEntityEvent",ltoa(map,10),flagName);
+			if(offset>0x7FFF){
+				target = base+offset-0x10000;
+			}else{
+				target = base+offset;
+			}
+			if(substr(GetTrueName(target),0,3)!="Map"){
+				MakeNameEx(target,functionName,0);
+			}else{
+				functionName = GetTrueName(target);
+			}		
+			if(offset>0x7FFF){
+				functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+			}else{
+				functionRef = form("%s-%s",functionName,GetTrueName(base));
+			}
+			if(Byte(ea+1)==0){
+				SetManualInsn   (ea, form("msDefaultEntityEvent %s", functionRef));
+			}else{
+				SetManualInsn   (ea, form("msDftEntityEvent %d, %s", Byte(ea+1), functionRef));
+			}
 	}
 }
 
@@ -207,14 +219,26 @@ static parseMapSetupSection3(ea,map,flag){
 		for(j=ea;j<ea+4;j++){undefineByte(j);}
 		MakeData(ea,FF_BYTE,4,1);
 		offset = Word(ea+2);
+		functionName = form("Map%s%s_DefaultZoneEvent",ltoa(map,10),flagName);
 		if(offset>0x7FFF){
 			target = base+offset-0x10000;
-			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-			SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
 		}else{
 			target = base+offset;
-			if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-			SetManualInsn   (ea, form("msDefaultZoneEvent %d, %s", Byte(ea+1), form("%s-%s",GetTrueName(target),GetTrueName(base))));
+		}
+		if(substr(GetTrueName(target),0,3)!="Map"){
+			MakeNameEx(target,functionName,0);
+		}else{
+			functionName = GetTrueName(target);
+		}		
+		if(offset>0x7FFF){
+			functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+		}else{
+			functionRef = form("%s-%s",functionName,GetTrueName(base));
+		}
+		if(Byte(ea+1)==0){
+			SetManualInsn   (ea, form("msDefaultZoneEvent %s", functionRef));
+		}else{
+			SetManualInsn   (ea, form("msDftZoneEvent %d, %s", Byte(ea+1), functionRef));
 		}
 	}
 }
@@ -374,22 +398,30 @@ static parseMapSetupSection5(ea,map,flag){
 			functionRef = form("%s-%s",functionName,GetTrueName(base));
 		}
 		SetManualInsn   (ea, form("msItemEvent %d, %d, %s, %d, %s", x, y, getDirection(facing), item, functionRef));
-		Message(form("0x%s: %s\n",ltoa(ea,16),functionName));	
+		//Message(form("0x%s: %s\n",ltoa(ea,16),functionName));	
 		ea = ea+6;
 		index = index+1;
 	}
 	for(j=ea;j<ea+6;j++){undefineByte(j);}
 	MakeData(ea,FF_BYTE,6,1);
 	offset = Word(ea+4);
-	if(offset>0x7FFF){
-		target = base+offset-0x10000;
-		if(GetTrueName(target)==""){MakeNameEx(target,form("dftitemevt_%s",ltoa(target,16)),0);}
-		SetManualInsn   (ea, form("msDefaultItemEvent %s", form("(%s-%s) & $FFFF",GetTrueName(target),GetTrueName(base))));
-	}else{
-		target = base+offset;
-		if(GetTrueName(target)==""){MakeNameEx(target,form("dftentevt_%s",ltoa(target,16)),0);}
-		SetManualInsn   (ea, form("msDefaultItemEvent %s", form("%s-%s",GetTrueName(target),GetTrueName(base))));
-	}
+		functionName = form("Map%s%s_DefaultItemEvent%s",ltoa(map,10),flagName,ltoa(index,10));
+		if(offset>0x7FFF){
+			target = base+offset-0x10000;
+		}else{
+			target = base+offset;
+		}
+		if(substr(GetTrueName(target),0,3)!="Map"){
+			MakeNameEx(target,functionName,0);
+		}else{
+			functionName = GetTrueName(target);
+		}		
+		if(offset>0x7FFF){
+			functionRef = form("(%s-%s) & $FFFF",functionName,GetTrueName(base));
+		}else{
+			functionRef = form("%s-%s",functionName,GetTrueName(base));
+		}
+		SetManualInsn   (ea, form("msDefaultItemEvent %s", functionRef));
 }
 
 

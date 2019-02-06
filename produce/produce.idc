@@ -1596,16 +1596,16 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	disasm = GetDisasm(ea);
 	cmtIdx = strstr(disasm,";");
 	lineB = LineB(ea,0);
-	if(lineA!=""){
+	if(lineA!="" && lineA!=" "){
 		lineA = form("%s\n",lineA);
 	}
-	if(lineB!=""){
+	if(lineB!="" && lineB!=" "){
 		lineB = form("%s\n",lineB);
 	}	
 	if(cmtIdx!=-1){
 		disasm = substr(disasm,0,cmtIdx);
 	}
-	if(comment!=""){
+	if(comment!="" && comment!=" "){
 		comment = form("; %s",comment);
 	}
 	if(strlen(name)>(strlen(indent))){
@@ -1614,7 +1614,7 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(strstr(lineA,"\n")!=-1){
 		lineA = form("%s%s",lineA,indent);
 	}
-	if(strlen(disasm)>(strlen(commentIndent))&&comment!=""){
+	if(strlen(disasm)>(strlen(commentIndent))&&comment!=""&&comment!=" "){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
 	//Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));		

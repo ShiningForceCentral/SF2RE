@@ -29,6 +29,8 @@ static splitAll(){
 	splitPTs(file);
 	Message(" DONE.\nSingle Chunks...");	
 	splitSingleChunks(file);	
+	Message(" DONE.\nMapsprites ...");
+	splitMapsprites(file);
 	Message(" DONE.\nMaps ...");
 	splitMaps(file);
 	Message(" DONE.\nGrounds...");	
@@ -130,7 +132,7 @@ static splitPTs(file){
 	 */
 	splitPT(0x6400C, 0x641D8, 0x9494A, 0x9494A, "pt_MapTilesets", "MapTileset", "data/graphics/maps/maptilesets/", 0, "maptileset", 3, 0, file);
 	splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "data/graphics/maps/mappalettes/", 0, "mappalette", 2, 0, file);		
-	splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_MapSprites", "MapSprite", "data/graphics/mapsprites/", 0, "mapsprite", 3, 15, file);	
+	//splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_MapSprites", "MapSprite", "data/graphics/mapsprites/", 0, "mapsprite", 3, 15, file);	
 	splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "data/graphics/battles/backgrounds/", 0, "background", 2, 0, file);
 	splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattleSprites", "EnemyBattleSprite", "data/graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
 	splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattleSprites", "AllyBattleSprite", "data/graphics/battles/battlesprites/allies/", 0, "allybattlesprite", 2, 0, file);
@@ -471,6 +473,95 @@ static splitPT(start, end, lastEntryDataEnd, chunkEnd, ptName, entryName, binDir
 	if(align!=0)MakeAlign(lastEntryDataEnd,chunkEnd-lastEntryDataEnd,align);
 }
 
+
+static splitMapsprites(file) {
+	auto i,j,x,s,index,path;
+	auto start,end,lastEntryDataEnd,chunkEnd,addr,dataEnd,from,dref,section,action,binDirIndex,binNameIndex,ptName,binDir,entryDirs,binName,indexLength,align,entryName;
+	auto facingId;
+	i = 0;
+	start = 0xC8000;
+	end = 0xC8B40;
+	addr = start;
+	lastEntryDataEnd = 0xFFC48;
+	chunkEnd = 0x100000;
+	ptName = "pt_MapSprites";
+	entryName = "MapSprite";
+	binDir = "data/graphics/mapsprites/";
+	entryDirs = 0;
+	binName = "mapsprite";
+	indexLength = 3;
+	align = 15;
+	action=1;
+	// Cleaning whole chunk
+	//Message("Cleaning from %a to %a ...\n",start,chunkEnd);
+	for(j=start;j<chunkEnd;j++){undefineByte(j);}
+	// Naming pointer table
+	MakeNameEx(addr,ptName,0);
+	// Prepare whole chunk with new names and Data XRefs
+	while(addr<end&&action==1){
+		MakeDword(addr);
+		dref = Dword(addr);
+		add_dref(addr,dref,dr_O);
+		dref = Dfirst(addr);		
+		//Jump(dref);
+		index = ltoa(i/3,10);
+		facingId = i%3;
+		while(strlen(index)<indexLength){
+			index=form("0%s",index);
+		}
+		MakeNameExC(dref,form("%s%s_%d",entryName,index,facingId),0);
+		addr=addr+4;
+		i++;
+	}
+	/*
+	 *	Each entry is delimited by its address and the next DATA XRef coming from current chunk
+	 *	It can then be made into data and replaced by an incbin manual instruction.
+	 */
+	i = 0;
+	addr = start;
+	while(addr!=end&&action==1){
+		dref = Dfirst(addr);		
+		//Jump(dref); 
+		dataEnd = 0;
+		j = dref+1;
+		// Finding entry's data end
+		while(dataEnd==0){
+			from = DfirstB(j);
+			while(from!=BADADDR){
+				if(from>=start&&from<chunkEnd){
+					dataEnd = j;
+				}
+	      from=DnextB(addr,from);      
+			}
+			j++;
+			if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+		}
+		index = ltoa(i/3,10);
+		facingId = i%3;
+		while(strlen(index)<indexLength){
+			index=form("0%s",index);
+		}
+		index = form("%s-%d",index,facingId);
+		//Message(form("Processing entry %s%s from %s, to %s\n",entryName,index,ltoa(dref,16),ltoa(dataEnd,16)));
+		MakeData(dref,FF_BYTE,dataEnd-dref,1);
+		if(strstr(GetDisasm(dref),"incbin")==-1){	
+			if(entryDirs==0){
+				binDirIndex = "";
+				binNameIndex = index;
+			} else{
+				binDirIndex = index;
+				binNameIndex = "";
+			}
+			SetManualInsn   (dref, form("incbin \"%s%s%s%s.bin\"",binDir,binDirIndex,binName,binNameIndex));
+			writestr(file,form("#split\t0x%s,0x%s,%s%s%s%s.bin\n",ltoa(dref,16),ltoa(dataEnd,16),binDir,binDirIndex,binName,binNameIndex));
+		}
+		addr=addr+4;
+		i++;
+		//action = AskYN(1,"Ok ?");
+	}
+	// Put align instruction for padding until chunkEnd
+	if(align!=0)MakeAlign(lastEntryDataEnd,chunkEnd-lastEntryDataEnd,align);
+}
 
 static splitMaps(file) {
 	auto i,j,x,s,index,path;
