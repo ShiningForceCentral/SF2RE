@@ -78,7 +78,7 @@
 004D=Old man is a follower
 004E=Difficulty bit 0
 004F=Difficulty bit 1
-0050=Set @ loc_257D0, also set during exploration loop at 0x25824
+0050=?
 0051=
 0052=Frayja is a follower
 0053=King + Minister are followers
@@ -86,7 +86,7 @@
 0055=
 0056=
 0057=
-0058=checks if a game has been saved for copying purposes ? (or if saved from battle?)
+0058=Game saved from battle
 0059=YES/NO prompt answer
 005A=Battle region flag 0
 005B=Battle region flag 1
