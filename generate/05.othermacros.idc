@@ -8,6 +8,8 @@ static main(void){
 	Message("\nPARSING DATA STRUCTURES INTO MACROS ...\n");
 	parseFlaggedSwitchedMaps();
 	parseBattleMapCoords();	
+	parseSavePointMapCoords();
+	parseRaftResetMapCoords();
 	Message("END OF PARSING.\n");	
 }
 
@@ -70,6 +72,39 @@ static parseBattleMapCoords(){
 		triggerY = Byte(addr+6);
 		SetManualInsn(addr, form("battleMapCoords %d, %d, %d, %d, %d, %d, %d", map, x, y, width, height, triggerX, triggerY));
 		addr = addr+7;
+	}
+}
+
+
+static parseSavePointMapCoords(){
+	auto addr, j, map, x, y, facing;
+	auto parameter;
+	addr = 0x7B71;
+	while(addr<0x7BCD){
+		for(j=addr;j<addr+4;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,4,1);
+		map = Byte(addr);
+		x = Byte(addr+1);
+		y = Byte(addr+2);
+		facing = Byte(addr+3);
+		SetManualInsn(addr, form("savePointMapCoords %d, %d, %d, %d", map, x, y, facing));
+		addr = addr+4;
+	}
+}
+
+static parseRaftResetMapCoords(){
+	auto addr, j, map, raftMap, x, y;
+	auto parameter;
+	addr = 0x7BCE;
+	while(addr<0x7BDE){
+		for(j=addr;j<addr+4;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,4,1);
+		map = Byte(addr);
+		raftMap = Byte(addr+1);
+		x = Byte(addr+2);
+		y = Byte(addr+3);
+		SetManualInsn(addr, form("raftResetMapCoords %d, %d, %d, %d", map, raftMap, x, y));
+		addr = addr+4;
 	}
 }
 

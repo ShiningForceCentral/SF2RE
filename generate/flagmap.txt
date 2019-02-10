@@ -339,7 +339,7 @@
 0183=Set after the first set of tile changes in the Oddeye battle
 0184=Set after the second set of tile changes in the Oddeye battle
 
-018F=Set after first battle's cutscene OR first save? Checked at witch screens
+018F=Set after first battle's cutscene OR first save
 0190=Battle 0 unlocked
 0191=Battle 1 unlocked
 0192=Battle 2 unlocked

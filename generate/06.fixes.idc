@@ -211,8 +211,8 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x427C,"conditionalWordAddr lea,BattleMapCoordinates,a0");
 	SetManualInsn(0x783A,"conditionalPc lea,BattleMapCoordinates,a0");
 	SetManualInsn(0x79B2,"conditionalPc lea,BattleMapCoordinates,a0");
-	SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoords,a0");
-	SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoords,a0");
+	SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoordinates,a0");
+	SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoordinates-4,a0");
 	
 	
 
