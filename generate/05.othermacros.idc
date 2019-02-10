@@ -7,7 +7,7 @@
 static main(void){
 	Message("\nPARSING DATA STRUCTURES INTO MACROS ...\n");
 	parseFlaggedSwitchedMaps();
-	//parseBattleMapCoords();	
+	parseBattleMapCoords();	
 	Message("END OF PARSING.\n");	
 }
 
@@ -50,6 +50,27 @@ static parseFlaggedSwitchedMaps(){
 	for(j=addr;j<addr+1;j++){undefineByte(j);}
 	MakeWord(addr);
 	SetManualInsn(addr, "flagSwitchedMapsEnd");
+}
+
+
+
+static parseBattleMapCoords(){
+	auto addr, j, map, x, y, width, height, triggerX, triggerY;
+	auto parameter;
+	addr = 0x7A36;
+	while(addr<0x7B71){
+		for(j=addr;j<addr+7;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,7,1);
+		map = Byte(addr);
+		x = Byte(addr+1);
+		y = Byte(addr+2);
+		width = Byte(addr+3);
+		height = Byte(addr+4);
+		triggerX = Byte(addr+5);
+		triggerY = Byte(addr+6);
+		SetManualInsn(addr, form("battleMapCoords %d, %d, %d, %d, %d, %d, %d", map, x, y, width, height, triggerX, triggerY));
+		addr = addr+7;
+	}
 }
 
 

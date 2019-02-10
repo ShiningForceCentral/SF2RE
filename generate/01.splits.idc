@@ -163,7 +163,7 @@ static splitSingleChunks(file) {
 	
 	//splitSingleChunk(0x7988,0x799C,"FlagSwitchedMaps","data/maps/global/flagswitchedmaps.bin",file);
 	
-	splitSingleChunk(0x7A36,0x7B71,"BattleMapCoords","data/battles/global/battlemapcoords.bin",file);
+	//splitSingleChunk(0x7A36,0x7B71,"BattleMapCoords","data/battles/global/battlemapcoords.bin",file);
 	splitSingleChunk(0x7B71,0x7BCA,"SavepointMapCoords","data/battles/global/savepointmapcoords.bin",file);
 	splitSingleChunk(0x7BCA,0x7BDE,"RaftResetMapCoords","data/battles/global/raftresetmapcoords.bin",file);
 	

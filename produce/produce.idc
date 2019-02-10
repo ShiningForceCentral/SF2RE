@@ -201,7 +201,8 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");	
 	produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");	
 	produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");	
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7A36,0x7BDE,"Map coords data",1);	
+	produceAsmScript(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords");	
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7B71,0x7BDE,"Map coords data",1);	
 	produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");	
 	produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");	
 	produceAsmScript(file,"code\\gameflow\\start\\regioncheck",0x7EC6,0x7FA4,"Region check function");	
@@ -342,7 +343,7 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2);	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
 	writestr(file,"                alignIfExpandedRom $43800\n");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7A36,0x7BDE,"Map coords data",2);	
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\maps\\mapcoords",0x7B71,0x7BDE,"Map coords data",2);	
 	writestr(file,"                alignIfExpandedRom $43C00\n");
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
 	produceAsmSection(file,0x425ED,0x44000);	
