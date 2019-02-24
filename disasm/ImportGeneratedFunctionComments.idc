@@ -8,65 +8,17 @@ static main()
     SetFunctionCmt(0x57a, 
         "execute map script at a0", 1);
 
-    // RelatedToBits031_sub_674
-    SetFunctionCmt(0x674, 
-        "related to bit0, bit3 and bit1", 1);
-
-    // RelatedToBit0_sub_67C
-    SetFunctionCmt(0x67c, 
-        "executes if bit0 set", 1);
-
-    // RelatedToBit4_sub_700
-    SetFunctionCmt(0x700, 
-        "related to bit4", 1);
-
-    // RelatedToBits31_sub_740
-    SetFunctionCmt(0x740, 
-        "executes if bit3 set or bit1 clear", 1);
-
-    // Trap9_ClearPointers
-    SetFunctionCmt(0x7f6, 
-        "clear pointers", 1);
-
-    // Trap9_SetFunctionAndTrigger
-    SetFunctionCmt(0x814, 
-        "declare function and set trigger", 1);
-
-    // Trap9_ClearFunctionAndTrigger
-    SetFunctionCmt(0x83c, 
-        "remove declared function and clear trigger", 1);
-
-    // Trap9_ClearTrigger
-    SetFunctionCmt(0x864, 
-        "clear function trigger, or clear all triggers if param=0", 1);
-
-    // Trap9_SetTrigger
-    SetFunctionCmt(0x896, 
-        "set function trigger, or set all triggers if param=0", 1);
-
-    // WaitForDMAFree
-    SetFunctionCmt(0xb96, 
-        "waits for 0xc00004 (VDP DMA register) to be cleared", 1);
-
-    // GetVdpRegStatus
-    SetFunctionCmt(0xbac, 
-        "d0 : vdp reg number", 1);
-
-    // SetVdpReg
-    SetFunctionCmt(0xbc2, 
-        "d0 : vdp reg command", 1);
-
-    // SetFFDE94bit1
-    SetFunctionCmt(0xc58, 
-        "used to execute sub_740", 1);
-
-    // StoreVdpCommandster
+    // ApplyVIntCramDMA
     SetFunctionCmt(0xc80, 
-        "Palette transfer ?", 1);
+        "VDP CRAM", 1);
 
-    // CopyPaletteIncomplete
+    // sub_CC4
     SetFunctionCmt(0xcc4, 
-        "looks like this piece of code is incomplete and useless", 1);
+        "Unused palette copy", 1);
+
+    // sub_E7C
+    SetFunctionCmt(0xe7c, 
+        "unused DMA", 1);
 
     // WaitForVInt
     SetFunctionCmt(0xeee, 
@@ -74,63 +26,83 @@ static main()
 
     // Sleep
     SetFunctionCmt(0xf04, 
-        "wait for D0 Vints/frames", 1);
+        "Wait for D0 VInts/Frames", 1);
 
-    // Set_FFDE94_bit0
-    SetFunctionCmt(0xf1a, 
-        "used to execute sub_67C", 1);
+    // sub_F3A
+    SetFunctionCmt(0xf3a, 
+        "unused", 1);
 
-    // SetFFDE94b0andWait
-    SetFunctionCmt(0xf24, 
-        "execute sub_67C", 1);
+    // sub_F76
+    SetFunctionCmt(0xf76, 
+        "unused", 1);
 
-    // Set_FFDE94_bit3
-    SetFunctionCmt(0xf2a, 
-        "used to execute sub_740", 1);
+    // sub_F90
+    SetFunctionCmt(0xf90, 
+        "unused", 1);
 
-    // SetFFDE94b3andWait
-    SetFunctionCmt(0xf34, 
-        "set bit 3 of 0xFFDE94 and wait next Vint to execute sub_740", 1);
+    // sub_1014
+    SetFunctionCmt(0x1014, 
+        "unused", 1);
 
-    // DmaFromRamToVram
+    // ApplyImmediateVramDMA
     SetFunctionCmt(0x10dc, 
-        "DMA\n\
-a0 : RAM Source\n\
-a1 : VRAM Destination\n\
-d0 : length", 1);
+        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
 
-    // sub_119E
+    // ApplyVIntVramDMA
     SetFunctionCmt(0x119e, 
-        "DMA stuff. d0 = DMA destination ?", 1);
+        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
+
+    // sub_1234
+    SetFunctionCmt(0x1234, 
+        "unused", 1);
+
+    // UpdateVDPVScrollData
+    SetFunctionCmt(0x12d2, 
+        "VDP Vertical Scroll Data", 1);
+
+    // sub_134A
+    SetFunctionCmt(0x134a, 
+        "unused", 1);
+
+    // sub_135A
+    SetFunctionCmt(0x135a, 
+        "unused", 1);
 
     // sub_1372
     SetFunctionCmt(0x1372, 
-        "DMA preparation stuff", 1);
+        "unused", 1);
+
+    // ApplyImmediateVramDMAOnCompressedTiles
+    SetFunctionCmt(0x1382, 
+        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
 
     // sub_13C0
     SetFunctionCmt(0x13c0, 
-        "DMA stuff", 1);
+        "unused DMA code", 1);
 
     // sub_13E4
     SetFunctionCmt(0x13e4, 
-        "DMA stuff", 1);
+        "unused DMA code", 1);
 
-    // DmaVramFill
+    // DMAandWait
+    SetFunctionCmt(0x1408, 
+        "unused", 1);
+
+    // ApplyVramDMAFill
     SetFunctionCmt(0x140e, 
-        "d0:DMA destination - d1:DMA length - d2:sent to VDP Data", 1);
-
-    // WriteAsciiNumber
-    SetFunctionCmt(0x14a6, 
-        "write D0 into RAM:de80 to D7 places", 1);
+        "D0=Destination, D1=Length, D2=Filler value", 1);
 
     // UpdatePlayerInputs
     SetFunctionCmt(0x150e, 
         "converts data ports 1/2 information into P1/2 inputs State A/B", 1);
 
+    // sub_15A4
+    SetFunctionCmt(0x15a4, 
+        "unused", 1);
+
     // UpdateRandomSeed
     SetFunctionCmt(0x1600, 
-        "d6 determines the random number max value\n\
-(number of seed upper bits)", 1);
+        "d6 = random number max value (number of seed upper bits)", 1);
 
     // GetRandomOrDebugValue
     SetFunctionCmt(0x1674, 
@@ -144,16 +116,11 @@ debug mode allows values 0-3 depending on player direction", 1);
 
     // CopyBytes
     SetFunctionCmt(0x16d6, 
-        "    Copy D7 bytes from A0 to A1.\n\
-    In: A0 = src address\n\
-        A1 = dest address\n\
-        D7 = number of bytes to copy", 1);
+        "A0=Source, A1=Destination, D7=Length", 1);
 
-    // InitSpriteTable
+    // InitSprites
     SetFunctionCmt(0x1770, 
-        "In: D0 = number of sprites\n\
-\n\
-set default values in sprite table", 1);
+        "D0 = Number of sprites to initialize", 1);
 
     // sub_179C
     SetFunctionCmt(0x179c, 
@@ -165,31 +132,23 @@ set default values in sprite table", 1);
 
     // sub_19C8
     SetFunctionCmt(0x19c8, 
-        "moves palettes, no idea why", 1);
+        "Palette copies to figure out", 1);
 
     // sub_19F8
     SetFunctionCmt(0x19f8, 
-        "related to palette updating", 1);
+        "related to palette updating, maybe unused", 1);
 
     // LoadSpriteData
     SetFunctionCmt(0x1a84, 
-        "Basic tile decompression\n\
-\n\
-    In: A0 = address of compressed data\n\
-        A1 = dest address in RAM\n\
-", 1);
+        "Basic tile decompression : A0=Source, A1=Destination", 1);
 
     // LoadCompressedData
     SetFunctionCmt(0x1e48, 
-        "Stack tile decompression\n\
-\n\
-    In: A0 = address of compressed data\n\
-        A1 = dest address in RAM", 1);
+        "Stack decompression : A0=Source, A1=Destination", 1);
 
     // LoadMapLayoutData
     SetFunctionCmt(0x20e6, 
-        "In: A0 = compressed map layout data (block indexes)\n\
-    A1 = RAM address to put map layout data", 1);
+        "A0=Source, A1=Destination", 1);
 
     // ReadMapLayoutBarrelForBlockFlags
     SetFunctionCmt(0x2296, 
@@ -205,10 +164,6 @@ Out: D1 = block flag word", 1);
 a0 : input ROM block data\n\
 a1 : output RAM data", 1);
 
-    // sub_2670
-    SetFunctionCmt(0x2670, 
-        "related to 4 choices apparently", 1);
-
     // LoadMapTilesets
     SetFunctionCmt(0x29e2, 
         "In: D1 = map index", 1);
@@ -216,10 +171,6 @@ a1 : output RAM data", 1);
     // LoadMap
     SetFunctionCmt(0x2a8c, 
         "loads all map properties (map coords, entities, etc.)", 1);
-
-    // InitDisplay
-    SetFunctionCmt(0x3022, 
-        "or something like that ?", 1);
 
     // VInt_3930
     SetFunctionCmt(0x3930, 
@@ -242,10 +193,6 @@ OUT :\n\
 - d1 : item flag\n\
 - d2 : item index\n\
 - a2 : map layout offset", 1);
-
-    // LoadBattleMusic
-    SetFunctionCmt(0x4544, 
-        "overrides music index if we're in a battle", 1);
 
     // WaitForCameraToCatchUp
     SetFunctionCmt(0x4708, 
@@ -288,6 +235,10 @@ returns a1 = window tiles end, d0 = window slot", 1);
     In: D0 = window idx\n\
         D1 = X/Y coord, stacked into a word\n\
     Out: A1 = address of window coord", 1);
+
+    // sub_4EC6
+    SetFunctionCmt(0x4ec6, 
+        "related to sprite updates during VInt", 1);
 
     // esc00_wait
     SetFunctionCmt(0x4fbc, 
@@ -404,7 +355,7 @@ In: A0 = entity RAM addr", 1);
     SetFunctionCmt(0x6024, 
         "load all entities for the current map", 1);
 
-    // sub_6052
+    // UpdateEntityProperties
     SetFunctionCmt(0x6052, 
         "In: D0 = entity idx", 1);
 
@@ -453,7 +404,7 @@ d7 = number of bytes to copy", 1);
     SetFunctionCmt(0x7034, 
         "witch suspend screen", 1);
 
-    // MainBattleAndExplorationLoop
+    // MainLoop
     SetFunctionCmt(0x75c4, 
         "In: D0 = map idx\n\
     D1 = player X coord\n\
@@ -463,7 +414,7 @@ d7 = number of bytes to copy", 1);
     D7 = battle idx (FFFF for none)\n\
 ...more", 1);
 
-    // GetEgressPositionForMap
+    // GetSavePointForMap
     SetFunctionCmt(0x75ec, 
         "In: D0 = from map idx\n\
 Out: D0 = to map idx\n\
@@ -471,13 +422,13 @@ Out: D0 = to map idx\n\
      D2 = Y\n\
      D3 = facing", 1);
 
-    // AlterMapIndexIfChanged
+    // CheckMapSwitch
     SetFunctionCmt(0x7956, 
         "Alters map index if certain flags are set (Granseal, Pacalon, etc)\n\
 In: D0 = map idx\n\
 Out: D0 = new map idx", 1);
 
-    // GetNextBattleOnMap
+    // CheckBattle
     SetFunctionCmt(0x799c, 
         "In: D0 = map idx (if not supplied, will be pulled from CURRENT_MAP)\n\
     D1 = player X coord to check\n\
@@ -1436,11 +1387,15 @@ Out: D2 = entity X\n\
         "In: D0 = entity idx\n\
 Out: Z = entity is NOT follower", 1);
 
+    // CheckArea
+    SetFunctionCmt(0x23862, 
+        "Get item or area description", 1);
+
     // GetChestGoldAmount
     SetFunctionCmt(0x2399c, 
         "get amount of gold (D2 - 0x80) as an offset from the gold table (see constants)", 1);
 
-    // ExecuteBattleLoop
+    // BattleLoop
     SetFunctionCmt(0x23a84, 
         "In: D0 = map idx\n\
     D1 = battle idx", 1);
@@ -1492,9 +1447,17 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x25772, 
         "if flag D1 is set, display def-con textbox", 1);
 
-    // ProcessMapEvent
-    SetFunctionCmt(0x2594a, 
-        "deal with \"system\" event (RAM:a84a)", 1);
+    // sub_258A8
+    SetFunctionCmt(0x258a8, 
+        "update main entity properties", 1);
+
+    // WaitForEvent
+    SetFunctionCmt(0x2591c, 
+        "Wait for event OR player action (A/C button)", 1);
+
+    // ProcessMapEventType1
+    SetFunctionCmt(0x25978, 
+        "Warp", 1);
 
     // ProcessMapEventType2
     SetFunctionCmt(0x25a4c, 
@@ -1512,9 +1475,17 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x25a64, 
         "Event type 5", 1);
 
-    // SetBattleVIntFunctions
+    // ProcessMapEventType6
+    SetFunctionCmt(0x25a7c, 
+        "Zone Event", 1);
+
+    // SetBaseVIntFunctions
     SetFunctionCmt(0x25a94, 
         "init vint contextual functions", 1);
+
+    // ProcessPlayerAction
+    SetFunctionCmt(0x25ad6, 
+        "Manage debug actions, entity events, item finds, area descriptions, caravan or main menu", 1);
 
     // CalculateRomChecksum
     SetFunctionCmt(0x28f62, 
@@ -1525,10 +1496,6 @@ Out: D0 = new X\n\
         "Initialise Huffman decoder\n\
 - clear Huffman (script) data\n\
 - set starting tree", 1);
-
-    // sub_4401C
-    SetFunctionCmt(0x4401c, 
-        "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
 
     // j_RunMapSetupItemEvent
     SetFunctionCmt(0x44088, 
@@ -1550,10 +1517,6 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x44a7c, 
         "In: A6 = battle vars stack ???\n\
 Out: D4 = sprite idx", 1);
-
-    // sub_44C02
-    SetFunctionCmt(0x44c02, 
-        "set entity D0's movescript to 0x460ce (default? don't move?)", 1);
 
     // WaitForEntityToStopMoving
     SetFunctionCmt(0x44da4, 
@@ -1585,7 +1548,11 @@ Out: D4 = sprite idx", 1);
 
     // MapEventType2
     SetFunctionCmt(0x45268, 
-        "related to Caravan ... warp into Caravan ?", 1);
+        "Control Caravan", 1);
+
+    // MapEventType3
+    SetFunctionCmt(0x453c6, 
+        "Control Raft", 1);
 
     // GetEntityPortraitAndSpeechSfx
     SetFunctionCmt(0x45638, 
@@ -1659,6 +1626,10 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x47080, 
         "move script pointer d7 forward if character dead", 1);
 
+    // sub_4709E
+    SetFunctionCmt(0x4709e, 
+        "Launches DMA", 1);
+
     // ExecuteMapScript
     SetFunctionCmt(0x4712c, 
         "In: A0 = script address", 1);
@@ -1719,6 +1690,14 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x4779e, 
         "returns map setup address in a0", 1);
 
+    // sub_4781A
+    SetFunctionCmt(0x4781a, 
+        "reset entity flags and sprite", 1);
+
+    // sub_47832
+    SetFunctionCmt(0x47832, 
+        "reset entity flags and sprite and facing ?", 1);
+
     // j_ExecuteBattleCutscene_Intro_0
     SetFunctionCmt(0x47a50, 
         "cutscene before the battle begins", 1);
@@ -1733,7 +1712,7 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     SetFunctionCmt(0x47d9e, 
         "After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.", 1);
 
-    // ExecuteBattleCutscene_Region
+    // ExecuteBattleRegionCutscene
     SetFunctionCmt(0x47e82, 
         "executes cutscenes activated by regions", 1);
 
@@ -1745,9 +1724,45 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     SetFunctionCmt(0x562ba, 
         "set after you open the tree in Ribble with the wooden plank", 1);
 
+    // sub_5FD7C
+    SetFunctionCmt(0x5fd7c, 
+        "unused", 1);
+
+    // sub_5FD92
+    SetFunctionCmt(0x5fd92, 
+        "unused", 1);
+
+    // sub_6051E
+    SetFunctionCmt(0x6051e, 
+        "unused descriptions which look similar to the default ones for map 5", 1);
+
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
         "wait during d0 frames", 1);
+
+    // sub_1AC024
+    SetFunctionCmt(0x1ac024, 
+        "AI-related", 1);
+
+    // sub_1AC028
+    SetFunctionCmt(0x1ac028, 
+        "AI-related", 1);
+
+    // sub_1AC030
+    SetFunctionCmt(0x1ac030, 
+        "AI-related", 1);
+
+    // sub_1AC038
+    SetFunctionCmt(0x1ac038, 
+        "AI-related", 1);
+
+    // sub_1AC054
+    SetFunctionCmt(0x1ac054, 
+        "Battle-related", 1);
+
+    // sub_1AC05C
+    SetFunctionCmt(0x1ac05c, 
+        "AI-related", 1);
 
     // LoadEndCreditsFont
     SetFunctionCmt(0x1ac29c, 
@@ -1755,13 +1770,49 @@ only seems to happen in first \"above Pacalon\" battle", 1);
 Stretches characters from 1 tile to 2 tiles vertically.\n\
 Also creates a shadow effect using palette index 2.", 1);
 
+    // sub_1AC38E
+    SetFunctionCmt(0x1ac38e, 
+        "AI-related", 1);
+
     // sub_1AC4F0
     SetFunctionCmt(0x1ac4f0, 
         "something with targetting grid or ???", 1);
 
+    // sub_1AC5AA
+    SetFunctionCmt(0x1ac5aa, 
+        "AI-related", 1);
+
     // ClearTerrainListObstructions
     SetFunctionCmt(0x1ac654, 
         "clear upper two bits from all tiles in terrain list", 1);
+
+    // sub_1AC69A
+    SetFunctionCmt(0x1ac69a, 
+        "AI-related", 1);
+
+    // sub_1AC728
+    SetFunctionCmt(0x1ac728, 
+        "AI-related", 1);
+
+    // sub_1AC7FE
+    SetFunctionCmt(0x1ac7fe, 
+        "AI-related", 1);
+
+    // sub_1AC8A0
+    SetFunctionCmt(0x1ac8a0, 
+        "AI-related", 1);
+
+    // sub_1AC9FC
+    SetFunctionCmt(0x1ac9fc, 
+        "AI-related", 1);
+
+    // sub_1ACA72
+    SetFunctionCmt(0x1aca72, 
+        "AI-related", 1);
+
+    // sub_1ACAD6
+    SetFunctionCmt(0x1acad6, 
+        "AI-related", 1);
 
     // CheckTriggerRegionFlag
     SetFunctionCmt(0x1ace32, 
@@ -1781,6 +1832,10 @@ Out: D0 = 0000 if activated and dead, FFFF if not", 1);
     SetFunctionCmt(0x1ad0dc, 
         "loads terrain data for current battle", 1);
 
+    // BattleDebugFunction1B120A
+    SetFunctionCmt(0x1b120a, 
+        "Never called, probably what remains of some debugging code ?", 1);
+
     // InitEnemyBattlePosition
     SetFunctionCmt(0x1b130c, 
         "(also checks for Jaro)", 1);
@@ -1795,7 +1850,7 @@ Out: carry = 0 if respawn, 1 if not", 1);
     SetFunctionCmt(0x1b140a, 
         "In: A0 = address of current combatant from battle def", 1);
 
-    // sub_1B1504
+    // InitEnemyItems
     SetFunctionCmt(0x1b1504, 
         "handle custom item idx of monster list entry starting at A0 -> ???", 1);
 
@@ -1822,9 +1877,17 @@ Subsection size -> d1", 1);
     SetFunctionCmt(0x1b169e, 
         "Starting X and Y of entity d0 -> d1, d2", 1);
 
+    // sub_1B16FE
+    SetFunctionCmt(0x1b16fe, 
+        "Battle-related", 1);
+
     // DoesBattleUpgrade
     SetFunctionCmt(0x1b1780, 
-        "check if battle can be upgraded based on index in RAM:f712 (0x0000=no, 0xffff=yes) -> D1", 1);
+        "Check if current battle can be upgraded (0x0000=no, 0xffff=yes) -> D1", 1);
+
+    // UpgradeBattle
+    SetFunctionCmt(0x1b17bc, 
+        "Strange use case where \"Battle completed\" flag is set for battle 4 in spite of being alreeady set earlier.", 1);
 
     // ShouldBattleUpgrade
     SetFunctionCmt(0x1b17fe, 
