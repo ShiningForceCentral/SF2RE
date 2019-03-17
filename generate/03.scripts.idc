@@ -520,6 +520,8 @@ static parseCS(start,end){
 			MakeCode(Dword(ea+2));
 			MakeFunction(Dword(ea+2),BADADDR);
 			MakeData(ea,FF_BYTE,cmdLength,1);
+			AddCodeXref(ea,Dword(ea+2),fl_CF);
+			Message(form("\n0x%s: Added new code XRef from 0x%s",ltoa(Dword(ea+2),16),ltoa(ea,16)));
 			SetManualInsn(ea,form("executeSubroutine %s",GetTrueName(Dword(ea+2))));
 		}
 		else if(cmd==	0x000B){
