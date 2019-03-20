@@ -71,6 +71,7 @@ mkdir disasm\data\stats\items
 mkdir disasm\data\stats\allies
 mkdir disasm\data\stats\allies\growths
 mkdir disasm\data\stats\allies\stats
+mkdir disasm\data\stats\enemies
 mkdir disasm\data\graphics
 mkdir disasm\data\graphics\mapsprites
 mkdir disasm\data\graphics\maps

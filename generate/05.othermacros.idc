@@ -10,6 +10,9 @@ static main(void){
 	parseBattleMapCoords();	
 	parseSavePointMapCoords();
 	parseRaftResetMapCoords();
+	parseAllyBattleSprites();
+	parseEnemyBattleSprites();
+	parseWeaponSprites();
 	Message("END OF PARSING.\n");	
 }
 
@@ -105,6 +108,55 @@ static parseRaftResetMapCoords(){
 		y = Byte(addr+3);
 		SetManualInsn(addr, form("raftResetMapCoords %d, %d, %d, %d", map, raftMap, x, y));
 		addr = addr+4;
+	}
+}
+
+static parseAllyBattleSprites(){
+	auto addr, j, baseClass, sprite, palette, promotedClass, promotedSprite, promotedPalette, specialClass, specialSprite, specialPalette;
+	auto parameter;
+	addr = 0x1F806;
+	while(addr<0x1F914){
+		for(j=addr;j<addr+9;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,9,1);
+		baseClass = Byte(addr);
+		sprite = Byte(addr+1);
+		palette = Byte(addr+2);
+		promotedClass = Byte(addr+3);
+		promotedSprite = Byte(addr+4);
+		promotedPalette = Byte(addr+5);
+		specialClass = Byte(addr+6);
+		specialSprite = Byte(addr+7);
+		specialPalette = Byte(addr+8);
+		SetManualInsn(addr, form("allyBattleSprites %d, %d, %d, %d, %d, %d, %d, %d, %d", baseClass, sprite, palette, promotedClass, promotedSprite, promotedPalette, specialClass, specialSprite, specialPalette));
+		addr = addr+9;
+	}
+}
+
+static parseEnemyBattleSprites(){
+	auto addr, j, sprite, palette;
+	auto parameter;
+	addr = 0x1F914;
+	while(addr<0x1F9E2){
+		for(j=addr;j<addr+2;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,2,1);
+		sprite = Byte(addr);
+		palette = Byte(addr+1);
+		SetManualInsn(addr, form("enemyBattleSprite %d, %d", sprite, palette));
+		addr = addr+2;
+	}
+}
+
+static parseWeaponSprites(){
+	auto addr, j, sprite, palette;
+	auto parameter;
+	addr = 0x1F9E2;
+	while(addr<0x1FA8A){
+		for(j=addr;j<addr+2;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,2,1);
+		sprite = Byte(addr);
+		palette = Byte(addr+1);
+		SetManualInsn(addr, form("weaponSprite %d, %d", sprite, palette));
+		addr = addr+2;
 	}
 }
 

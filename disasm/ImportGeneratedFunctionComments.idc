@@ -20,10 +20,6 @@ static main()
     SetFunctionCmt(0xe7c, 
         "unused DMA", 1);
 
-    // WaitForVInt
-    SetFunctionCmt(0xeee, 
-        "Wait until VInt func is called, i.e. next frame", 1);
-
     // Sleep
     SetFunctionCmt(0xf04, 
         "Wait for D0 VInts/Frames", 1);
@@ -100,9 +96,9 @@ static main()
     SetFunctionCmt(0x15a4, 
         "unused", 1);
 
-    // UpdateRandomSeed
+    // GenerateRandomNumber
     SetFunctionCmt(0x1600, 
-        "d6 = random number max value (number of seed upper bits)", 1);
+        "In: D6=Value range, Out: D7=Random value", 1);
 
     // GetRandomOrDebugValue
     SetFunctionCmt(0x1674, 
@@ -172,10 +168,6 @@ a1 : output RAM data", 1);
     SetFunctionCmt(0x2a8c, 
         "loads all map properties (map coords, entities, etc.)", 1);
 
-    // VInt_3930
-    SetFunctionCmt(0x3930, 
-        "Related to camera position ?", 1);
-
     // OpenDoor
     SetFunctionCmt(0x3e40, 
         "uses door open SFX", 1);
@@ -194,15 +186,17 @@ OUT :\n\
 - d2 : item index\n\
 - a2 : map layout offset", 1);
 
-    // WaitForCameraToCatchUp
-    SetFunctionCmt(0x4708, 
-        "wait for end of scrolling", 1);
+    // UpdateVdpPlaneA
+    SetFunctionCmt(0x4344, 
+        "Updates plane A", 1);
 
-    // IsMapScrollingToFollowCameraTarget
+    // UpdateVdpPlaneB
+    SetFunctionCmt(0x43a4, 
+        "Updates plane B", 1);
+
+    // IsMapScrollingToViewTarget
     SetFunctionCmt(0x4728, 
-        "8 = foreground x, 4 = foreground y, 2 = background x, 1 = background y\n\
-\n\
-Out: Z = is scrolling", 1);
+        "Out: Z = is scrolling", 1);
 
     // CreateWindow
     SetFunctionCmt(0x4802, 
@@ -211,30 +205,23 @@ returns a1 = window tiles end, d0 = window slot", 1);
 
     // SetWindowDestination
     SetFunctionCmt(0x4866, 
-        "    startWindowTransition ???\n\
-    In: D0 = window number\n\
-    Cross: getAddressOfWindowInfo", 1);
+        "In DO=Windows index, D1=Value ($8080->X/Y), Out A0=Window properties", 1);
 
     // MoveWindowWithSFX
     SetFunctionCmt(0x48f4, 
-        "set window D0's dest to D1 (xxyy) and play window switching sound", 1);
+        "D0=Windows index, D1=Destination, D2=Anim max", 1);
 
-    // MoveWindowWithoutSFX
+    // MoveWindow
     SetFunctionCmt(0x48f8, 
-        "set window D0's dest to D1 (xxyy)", 1);
+        "D0=Windows index, D1=Destination, D2=Anim max", 1);
 
     // GetWindowInfo
     SetFunctionCmt(0x4c38, 
-        "    Get address in RAM of window info, starting at RAM:a87e.\n\
-    In: D0 = window idx\n\
-    Out: A0 = address of window info", 1);
+        "In D0=Window index, Out A0=Address", 1);
 
-    // GetAddressOfWindowTileDataStartingAtCoord
+    // GetWindowTileAddress
     SetFunctionCmt(0x4c44, 
-        "    Get address of specific tile based on coord for a window.\n\
-    In: D0 = window idx\n\
-        D1 = X/Y coord, stacked into a word\n\
-    Out: A1 = address of window coord", 1);
+        "In D0=Windows index, D1=Tile coords, Out A1=Address", 1);
 
     // sub_4EC6
     SetFunctionCmt(0x4ec6, 
@@ -345,24 +332,13 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5d5a, 
         "clear timer and update next entity", 1);
 
-    // UpdateEntityData
-    SetFunctionCmt(0x5d6c, 
-        "update entity based on entity params (all movement is done here, it seems like)\n\
-\n\
-In: A0 = entity RAM addr", 1);
-
-    // LoadMapEntitySprites
-    SetFunctionCmt(0x6024, 
-        "load all entities for the current map", 1);
-
     // UpdateEntityProperties
     SetFunctionCmt(0x6052, 
-        "In: D0 = entity idx", 1);
+        "In D0=Entity index", 1);
 
     // ChangeEntitySprite
     SetFunctionCmt(0x60a8, 
-        "a0 : entity address\n\
-d6 : facing", 1);
+        "A0=Entity address, D6=Facing", 1);
 
     // GetMapPixelCoordRAMOffset
     SetFunctionCmt(0x61fc, 
@@ -435,6 +411,10 @@ Out: D0 = new map idx", 1);
     D2 = player Y coord to check\n\
 Out: D7 = battle idx to trigger (FFFF if none)\n\
 ...more", 1);
+
+    // UpdateWitchLayoutZone
+    SetFunctionCmt(0x7d28, 
+        "D1=Width/Height", 1);
 
     // j_GetClass
     SetFunctionCmt(0x8004, 
@@ -1230,31 +1210,21 @@ Out: D1 = 0 if animates, 1 if not", 1);
     SetFunctionCmt(0x199de, 
         "load palette D1 of battle sprite D0", 1);
 
-    // LoadAllyBattleSprite
+    // LoadAllyBattleSpriteFrame
     SetFunctionCmt(0x19a0c, 
-        "    In: D0 = battle sprite idx\n\
-        D1 = frame idx", 1);
+        "D0=Battlesprite idx, D1=Frame idx", 1);
 
-    // sub_19A2A
+    // VIntLoadAllyBattleSpriteFrame
     SetFunctionCmt(0x19a2a, 
-        "Load ally battlesprite and set FFDE94 bit 3 and wait", 1);
+        "D0=Battlesprite idx, D1=Frame idx", 1);
 
     // LoadWeaponSprite
     SetFunctionCmt(0x19a5c, 
-        "???\n\
-In: D0 = weapon sprite idx", 1);
-
-    // sub_19B24
-    SetFunctionCmt(0x19b24, 
-        "loads enemy battle sprite", 1);
+        "D0=Weapon sprite idx", 1);
 
     // LoadEnemyBattleSprite
     SetFunctionCmt(0x19b44, 
         "d0 : battle sprite index", 1);
-
-    // sub_19BCC
-    SetFunctionCmt(0x19bcc, 
-        "loads battlescene ground", 1);
 
     // LoadSpellGraphics
     SetFunctionCmt(0x19ca4, 
@@ -1454,34 +1424,6 @@ Out: D0 = new X\n\
     // WaitForEvent
     SetFunctionCmt(0x2591c, 
         "Wait for event OR player action (A/C button)", 1);
-
-    // ProcessMapEventType1
-    SetFunctionCmt(0x25978, 
-        "Warp", 1);
-
-    // ProcessMapEventType2
-    SetFunctionCmt(0x25a4c, 
-        "Event type 2", 1);
-
-    // ProcessMapEventType3
-    SetFunctionCmt(0x25a54, 
-        "Event type 3", 1);
-
-    // ProcessMapEventType4
-    SetFunctionCmt(0x25a5c, 
-        "Event type 4", 1);
-
-    // ProcessMapEventType5
-    SetFunctionCmt(0x25a64, 
-        "Event type 5", 1);
-
-    // ProcessMapEventType6
-    SetFunctionCmt(0x25a7c, 
-        "Zone Event", 1);
-
-    // SetBaseVIntFunctions
-    SetFunctionCmt(0x25a94, 
-        "init vint contextual functions", 1);
 
     // ProcessPlayerAction
     SetFunctionCmt(0x25ad6, 
