@@ -178,13 +178,13 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0xBE52,0xBECC,"EnemyItemDrops","data/battles/global/enemyitemdrops.bin",file);
 	splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/stats/enemies/enemygold.bin",file);
 	
-	splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
+	//splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
 	
 	splitSingleChunk(0xD824,0xD8F4,"MoveTypeTerrainCosts","data/battles/global/movetypeterraincosts.bin",file);
 	
-	splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","data/stats/spells/spellnames.bin",file);
-	splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","data/stats/allies/allynames.bin",file);
-	splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","data/stats/enemies/enemynames.bin",file);
+	//splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","data/stats/spells/spellnames.bin",file);
+	//splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","data/stats/allies/allynames.bin",file);
+	//splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","data/stats/enemies/enemynames.bin",file);
 	MakeAlign(0xFF87, 0x10000-0xFF87,15);
 	
 	splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","data/graphics/tech/iconhighlighttiles.bin",file);	
@@ -211,10 +211,10 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
 	
 	splitSingleChunk(0x16A62,0x16EA6,"MemberStatsWindowLayout","data/graphics/tech/windowlayouts/memberstatswindowslayout.bin",file);
-	splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","data/stats/items/itemdefs.bin",file);
-	splitSingleChunk(0x176A6,0x1796E,"SpellDefs","data/stats/spells/spelldefs.bin",file);
-	splitSingleChunk(0x1796E,0x17F3E,"ItemNames","data/stats/items/itemnames.bin",file);
-	splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
+	//splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","data/stats/items/itemdefs.bin",file);
+	//splitSingleChunk(0x176A6,0x1796E,"SpellDefs","data/stats/spells/spelldefs.bin",file);
+	//splitSingleChunk(0x1796E,0x17F3E,"ItemNames","data/stats/items/itemnames.bin",file);
+	//splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
 	MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
 	
 	splitSingleChunk(0x198A8,0x198C8,"plt_BattleSceneBasePalette","data/graphics/battles/plt_battlescenebasepalette.bin",file);
@@ -233,7 +233,8 @@ static splitSingleChunks(file) {
 	
 	MakeAlign(0x1FDEA, 0x20000-0x1FDEA,17);
 	
-	splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
+	//splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
+	splitSingleChunk(0x20981,0x20A02,"DebugShop","data/stats/items/debugshop.bin",file);
 	
 	splitSingleChunk(0x21046,0x21072,"Promotions","data/stats/allies/promotions.bin",file);
 	
@@ -292,8 +293,8 @@ static splitSingleChunks(file) {
 	//splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","data/overworldfollowers.bin",file);
 	//splitSingleChunk(0x4433C,0x4438A,"Followers","data/followers.bin",file);
 	
-	splitSingleChunk(0x44A5E,0x44A7C,"AllySprites","data/stats/allies/allyspriteids.bin",file);
-	splitSingleChunk(0x44AA4,0x44B4A,"EnemySprites","data/stats/enemies/enemyspriteids.bin",file);
+	//splitSingleChunk(0x44A5E,0x44A7C,"AllySprites","data/stats/allies/allyspriteids.bin",file);
+	//splitSingleChunk(0x44AA4,0x44B4A,"EnemySprites","data/stats/enemies/enemyspriteids.bin",file);
 	
 	splitSingleChunk(0x4567A,0x45858,"SpriteDialogProperties","data/spritedialogdefs.bin",file);
 	
@@ -318,7 +319,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","data/graphics/battles/spells/animations/boltanimdataa.bin",file);
 	splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","data/graphics/battles/spells/animations/boltanimdatab.bin",file);		
 	
-	splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/stats/enemies/enemydata.bin",file);
+	//splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/stats/enemies/enemydata.bin",file);
 	
 	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","data/battles/global/specialbattles.bin",file);	
 	
@@ -346,8 +347,8 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
 	
-	splitSingleChunk(0x1EE7D0, 0x1EE890, "AllyStartData","data/stats/allies/allystartdata.bin",file);
-	splitSingleChunk(0x1EE890, 0x1EE930, "ClassData","data/stats/allies/classes/classdata.bin",file);
+	//splitSingleChunk(0x1EE7D0, 0x1EE890, "AllyStartData","data/stats/allies/allystartdata.bin",file);
+	//splitSingleChunk(0x1EE890, 0x1EE930, "ClassData","data/stats/allies/classes/classdata.bin",file);
 	splitSingleChunk(0x1EE930, 0x1EF102, "JewelsEndScreenLayout","data/graphics/specialscreens/endingjewels/endingjewelslayout.bin",file);
 	splitSingleChunk(0x1EF102, 0x1EF142, "plt_JewelsEndScreen","data/graphics/specialscreens/endingjewels/endingjewelspalette.bin",file);
 	splitSingleChunk(0x1EF142, 0x1EF4BA, "JewelsEndScreenTiles","data/graphics/specialscreens/endingjewels/endingjewelstiles.bin",file);
