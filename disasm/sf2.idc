@@ -37,11 +37,11 @@ static GenInfo(void) {
 	Tabs(1);
 	Comments(0);
 	Voids(0);
-	XrefShow(200);
+	XrefShow(32);
 	AutoShow(1);
 	Indent(16);
 	CmtIndent(40);
-	TailDepth(0x10);
+	TailDepth(0x20);
 }
 
 //------------------------------------------------------------------------
@@ -215,6 +215,14 @@ static Enums_0(id) {
 	AddConstEx(id,"ENEMYAI_THRESHOLD_HEAL1",	0X2,	-1);
 	AddConstEx(id,"ENEMYAI_THRESHOLD_HEAL2",	0XE,	-1);
 	AddConstEx(id,"ENEMYAI_THRESHOLD_HEAL3",	0X1C,	-1);
+	id = AddEnum(-1,"Icon_Offsets",0x1100000);
+	AddConstEx(id,"ICON_OFFSET_CRACKS",	0X6F00,	-1);
+	id = AddEnum(-1,"IconDef_Idx",0x1100000);
+	AddConstEx(id,"ICONIDX_NOTHING",	0X7F,	-1);
+	AddConstEx(id,"ICONIDX_UNARMED",	0X80,	-1);
+	AddConstEx(id,"ICONIDX_HEAL",	0X82,	-1);
+	AddConstEx(id,"ICONIDX_JEWEL_OF_LIGHT",	0X92,	-1);
+	AddConstEx(id,"ICONIDX_JEWEL_OF_EVIL",	0X93,	-1);
 	id = AddEnum(-1,"Controller_Input_A_Bitmap",0x1100000);
 	AddConstEx(id,"INPUT_A_UP",	0X0,	-1);
 	AddConstEx(id,"INPUT_A_DOWN",	0X1,	-1);
@@ -260,6 +268,7 @@ static Enums_0(id) {
 	AddConstEx(id,"ITEMIDX_LIFE_RING",	0X7C,	-1);
 	AddConstEx(id,"ITEMIDX_CHIRRUP_SANDALS",	0X7E,	-1);
 	AddConstEx(id,"ITEMIDX_NOTHING",	0X7F,	-1);
+	AddConstEx(id,"ITEMIDX_CHEST_GOLD_AMOUNTS_START",	0X80,	-1);
 	id = AddEnum(-1,"ItemDef_Type_Bitfield",0x100000);
 	AddConstEx(id,"ITEMTYPE_BIT_WEAPON",	0X1,	-1);
 	AddConstEx(id,"ITEMTYPE_IDX_WEAPON",	0X1,	-1);
@@ -452,6 +461,7 @@ static Enums_0(id) {
 	AddConstEx(id,"SPELL_MASK_RESIST",	0X3,	-1);
 	AddConstEx(id,"SPELL_OFFSET_LV",	0X6,	-1);
 	AddConstEx(id,"SPELL_IDX_REALMASK",	0X3F,	-1);
+	AddConstEx(id,"SPELL_DEFS_COUNTER",	0X63,	-1);
 	AddConstEx(id,"SPELL_MASK_LV",	0XC0,	-1);
 	AddConstEx(id,"SPELL_MASK",	0XFF,	-1);
 	AddConstEx(id,"SPELL_MASK_ALLRESIST",	0XC0FF,	-1);
@@ -949,7 +959,8 @@ static Bytes_0(void) {
 	MakeDword	(x=0X1A8);
 	OpHex		(x,	0);
 	MakeRptCmt	(0X1AC,	"Ram End Adress");
-	MakeDword	(0X1AC);
+	MakeDword	(x=0X1AC);
+	OpHex		(x,	0);
 	MakeRptCmt	(0X1B0,	"SRam data");
 	MakeDword	(0X1B0);
 	MakeRptCmt	(0X1B4,	"Sram Start Address");
@@ -1859,6 +1870,8 @@ static Bytes_0(void) {
 	MakeCode	(x=0X11A8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X11BC);
+	OpHex		(x,	0);
 	MakeRptCmt	(0X11C0,	"Apply auto-increment from D1");
 	MakeRptCmt	(0X11D4,	"Apply DMA Length from D0");
 	MakeRptCmt	(0X11F2,	"Apply source address from A0");
@@ -3940,6 +3953,7 @@ static Bytes_0(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X40EA);
 	MakeCode	(0X40F2);
+	MakeName	(0X40F2,	"csub_56632_0");
 	MakeCode	(x=0X40F6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -4582,7 +4596,6 @@ static Bytes_0(void) {
 	MakeCode	(x=0X4CCE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeRptCmt	(0X4CDA,	"number of entities, for iterating");
 }
 
 //------------------------------------------------------------------------
@@ -4592,6 +4605,7 @@ static Bytes_1(void) {
         auto x;
 #define id x
 
+	MakeRptCmt	(0X4CDA,	"number of entities, for iterating");
 	MakeCode	(x=0X4CDE);
 	OpEnumEx		(x,	0,	GetEnum("Map_Entity"),0);
 	MakeCode	(x=0X4D0A);
@@ -5177,7 +5191,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X5242,	"Caravan is unlocked");
 	MakeByte	(0X5242);
 	MakeArray	(0X5242,	0X4);
-	MakeRptCmt	(0X5244,	"Caravan is unlocked");
 	MakeCode	(0X5246);
 	MakeCode	(x=0X5248);
 	OpOff		(x,	1,	0X0);
@@ -5189,7 +5202,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X5264,	"Raft is unlocked");
 	MakeByte	(0X5264);
 	MakeArray	(0X5264,	0X4);
-	MakeRptCmt	(0X5266,	"Raft is unlocked");
 	MakeCode	(0X5268);
 	MakeCode	(x=0X526A);
 	OpOff		(x,	1,	0X0);
@@ -6635,7 +6647,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X714E,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeByte	(0X714E);
 	MakeArray	(0X714E,	0X4);
-	MakeRptCmt	(0X7150,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeCode	(0X7152);
 	MakeCode	(x=0X7160);
 	OpOff		(x,	0,	0X0);
@@ -6960,12 +6971,10 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X749A,	"Difficulty bit 0");
 	MakeByte	(0X749A);
 	MakeArray	(0X749A,	0X4);
-	MakeRptCmt	(0X749C,	"Difficulty bit 0");
 	MakeCode	(0X749E);
 	MakeRptCmt	(0X74A4,	"Difficulty bit 1");
 	MakeByte	(0X74A4);
 	MakeArray	(0X74A4,	0X4);
-	MakeRptCmt	(0X74A6,	"Difficulty bit 1");
 	MakeRptCmt	(0X74A8,	"HARDCODED text index for difficulty choice reactions");
 	MakeCode	(0X74A8);
 	MakeRptCmt	(0X74B0,	"\"Now, good luck!{N}You have no time to waste!{W1}\"");
@@ -7014,7 +7023,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X752A,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeByte	(0X752A);
 	MakeArray	(0X752A,	0X4);
-	MakeRptCmt	(0X752C,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeCode	(0X752E);
 	MakeCode	(0X753A);
 	MakeCode	(x=0X753C);
@@ -7085,7 +7093,6 @@ static Bytes_1(void) {
 	MakeRptCmt	(0X7620,	"Raft is unlocked");
 	MakeByte	(0X7620);
 	MakeArray	(0X7620,	0X4);
-	MakeRptCmt	(0X7622,	"Raft is unlocked");
 	MakeCode	(0X7624);
 	MakeRptCmt	(0X7626,	"Some egress locations imply to put the raft back in an initial place");
 	MakeCode	(x=0X7626);
@@ -7170,11 +7177,13 @@ static Bytes_1(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X7894);
 	MakeCode	(0X78B6);
-	MakeCode	(0X78BC);
+	MakeCode	(x=0X78BC);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X78C0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0X7920);
+	MakeCode	(x=0X7920);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeName	(0X7920,	"LevelUpWholeForce");
 	MakeCode	(0X7930);
 	MakeCode	(0X7956);
@@ -7189,14 +7198,11 @@ static Bytes_1(void) {
 	MakeCode	(x=0X797E);
 	OpHex		(x,	0);
 	MakeCode	(0X7982);
-	MakeRptCmt	(0X7988,	"Set after the end of battle 7's long sequence, cleared at docks?");
 	MakeByte	(0X7988);
 	MakeArray	(0X7988,	0X6);
 	MakeName	(0X7988,	"FlagSwitchedMaps");
-	MakeRptCmt	(0X798E,	"Battle 30 completed");
 	MakeByte	(0X798E);
 	MakeArray	(0X798E,	0X6);
-	MakeRptCmt	(0X7994,	"Set after the Nazca ship shootdown scene");
 	MakeByte	(0X7994);
 	MakeArray	(0X7994,	0X6);
 	MakeWord	(0X799A);
@@ -8526,15 +8532,6 @@ static Bytes_1(void) {
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(0X8C28);
 	MakeName	(0X8C28,	"GetItemType");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X8C2C);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef"),0);
 	MakeCode	(x=0X8C2E);
@@ -8553,6 +8550,15 @@ static Bytes_2(void) {
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Type_Bitfield"),0);
 	MakeCode	(0X8C56);
 	MakeName	(0X8C56,	"GetEquippedRing");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X8C5A);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Type_Bitfield"),0);
 	MakeName	(0X8C5E,	"GetEquippedItemByType");
@@ -8656,7 +8662,7 @@ static Bytes_2(void) {
 	MakeCode	(x=0X8DBC);
 	OpEnumEx		(x,	0,	GetEnum("CharEntry_Offsets"),0);
 	MakeCode	(x=0X8DC2);
-	OpEnumEx		(x,	0,	GetEnum("ItemDef"),0);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeCode	(x=0X8DC6);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X8DCC);
@@ -8886,16 +8892,28 @@ static Bytes_2(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X9166,	"number of items");
+	MakeCode	(x=0X9170);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeCode	(0X917E);
 	MakeCode	(0X9194);
 	MakeName	(0X9194,	"GetItemSlotContainingIndex");
+	MakeCode	(x=0X919A);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X91A0);
+	OpEnumEx		(x,	0,	GetEnum("CharEntry"),0);
+	MakeCode	(x=0X91AC);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeCode	(0X91C6);
 	MakeName	(0X91C6,	"FindSpellName");
+	MakeCode	(x=0X91C8);
+	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
 	MakeCode	(0X91DA);
 	MakeName	(0X91DA,	"GetSpellDefAddress");
 	MakeCode	(x=0X91DC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X91E2);
+	OpEnumEx		(x,	0,	GetEnum("SpellEntry"),0);
 	MakeCode	(x=0X91E8);
 	OpEnumEx		(x,	0,	GetEnum("SpellDef"),0);
 	MakeCode	(x=0X91F0);
@@ -9212,7 +9230,7 @@ static Bytes_2(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X9A50);
-	OpEnumEx		(x,	0,	GetEnum("ItemDef"),0);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeCode	(x=0X9A58);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -9290,7 +9308,6 @@ static Bytes_2(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -9480,7 +9497,6 @@ static Bytes_2(void) {
 	MakeRptCmt	(0X9ED2,	"Currently attacking Taros with Achille Sword");
 	MakeByte	(0X9ED2);
 	MakeArray	(0X9ED2,	0X4);
-	MakeRptCmt	(0X9ED4,	"Currently attacking Taros with Achille Sword");
 	MakeCode	(0X9ED6);
 	MakeCode	(x=0X9EDC);
 	OpEnumEx		(x,	0,	GetEnum("Battle"),0);
@@ -9489,12 +9505,10 @@ static Bytes_2(void) {
 	MakeRptCmt	(0X9F04,	"Currently attacking Taros with Achille Sword");
 	MakeByte	(0X9F04);
 	MakeArray	(0X9F04,	0X4);
-	MakeRptCmt	(0X9F06,	"Currently attacking Taros with Achille Sword");
 	MakeCode	(0X9F08);
 	MakeRptCmt	(0X9F16,	"Currently attacking Taros with Achille Sword");
 	MakeByte	(0X9F16);
 	MakeArray	(0X9F16,	0X4);
-	MakeRptCmt	(0X9F18,	"Currently attacking Taros with Achille Sword");
 	MakeCode	(0X9F1A);
 	MakeCode	(x=0X9F1C);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene_Stack"),0);
@@ -9649,9 +9663,16 @@ static Bytes_2(void) {
 	MakeCode	(x=0XA396);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0XA3B6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0XA3BC);
-	MakeCode	(0XA3CE);
+	MakeCode	(x=0XA3BE);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0XA3CE);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(0XA3D4);
+	MakeCode	(x=0XA3D6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0XA3E6);
 	MakeCode	(0XA3F4);
 	MakeName	(0XA3F4,	"WriteSkirmishScript_DoAction");
@@ -10434,9 +10455,95 @@ static Bytes_2(void) {
 	OpEnumEx		(x,	0,	GetEnum("SpellEntry"),0);
 	MakeCode	(x=0XC244);
 	OpEnumEx		(x,	0,	GetEnum("SpellEntry"),0);
+	MakeRptCmt	(0XC24E,	"HEAL");
 	MakeByte	(0XC24E);
-	MakeArray	(0XC24E,	0X2C);
 	MakeName	(0XC24E,	"SpellElements");
+	MakeRptCmt	(0XC24F,	"AURA");
+	MakeByte	(0XC24F);
+	MakeRptCmt	(0XC250,	"DETOX");
+	MakeByte	(0XC250);
+	MakeRptCmt	(0XC251,	"BOOST");
+	MakeByte	(0XC251);
+	MakeRptCmt	(0XC252,	"SLOW");
+	MakeByte	(0XC252);
+	MakeRptCmt	(0XC253,	"ATTACK");
+	MakeByte	(0XC253);
+	MakeRptCmt	(0XC254,	"DISPEL");
+	MakeByte	(0XC254);
+	MakeRptCmt	(0XC255,	"MUDDLE");
+	MakeByte	(0XC255);
+	MakeRptCmt	(0XC256,	"DESOUL");
+	MakeByte	(0XC256);
+	MakeRptCmt	(0XC257,	"SLEEP");
+	MakeByte	(0XC257);
+	MakeRptCmt	(0XC258,	"EGRESS");
+	MakeByte	(0XC258);
+	MakeRptCmt	(0XC259,	"BLAZE");
+	MakeByte	(0XC259);
+	MakeRptCmt	(0XC25A,	"FREEZE");
+	MakeByte	(0XC25A);
+	MakeRptCmt	(0XC25B,	"BOLT");
+	MakeByte	(0XC25B);
+	MakeRptCmt	(0XC25C,	"BLAST");
+	MakeByte	(0XC25C);
+	MakeRptCmt	(0XC25D,	"SPOIT");
+	MakeByte	(0XC25D);
+	MakeRptCmt	(0XC25E,	"HEALIN");
+	MakeByte	(0XC25E);
+	MakeRptCmt	(0XC25F,	"FLAME");
+	MakeByte	(0XC25F);
+	MakeRptCmt	(0XC260,	"SNOW");
+	MakeByte	(0XC260);
+	MakeRptCmt	(0XC261,	"DEMON");
+	MakeByte	(0XC261);
+	MakeRptCmt	(0XC262,	"POWER");
+	MakeByte	(0XC262);
+	MakeRptCmt	(0XC263,	"GUARD");
+	MakeByte	(0XC263);
+	MakeRptCmt	(0XC264,	"SPEED");
+	MakeByte	(0XC264);
+	MakeRptCmt	(0XC265,	"IDATEN");
+	MakeByte	(0XC265);
+	MakeRptCmt	(0XC266,	"HEALTH");
+	MakeByte	(0XC266);
+	MakeRptCmt	(0XC267,	"B.ROCK");
+	MakeByte	(0XC267);
+	MakeRptCmt	(0XC268,	"LASER");
+	MakeByte	(0XC268);
+	MakeRptCmt	(0XC269,	"KATON");
+	MakeByte	(0XC269);
+	MakeRptCmt	(0XC26A,	"RAIJIN");
+	MakeByte	(0XC26A);
+	MakeRptCmt	(0XC26B,	"DAO");
+	MakeByte	(0XC26B);
+	MakeRptCmt	(0XC26C,	"APOLLO");
+	MakeByte	(0XC26C);
+	MakeRptCmt	(0XC26D,	"NEPTUN");
+	MakeByte	(0XC26D);
+	MakeRptCmt	(0XC26E,	"ATLAS");
+	MakeByte	(0XC26E);
+	MakeRptCmt	(0XC26F,	"POWDER");
+	MakeByte	(0XC26F);
+	MakeRptCmt	(0XC270,	"G.TEAR");
+	MakeByte	(0XC270);
+	MakeRptCmt	(0XC271,	"HANNY");
+	MakeByte	(0XC271);
+	MakeRptCmt	(0XC272,	"BRAVE");
+	MakeByte	(0XC272);
+	MakeRptCmt	(0XC273,	"F.BALL");
+	MakeByte	(0XC273);
+	MakeRptCmt	(0XC274,	"BREZAD");
+	MakeByte	(0XC274);
+	MakeRptCmt	(0XC275,	"THUNDR");
+	MakeByte	(0XC275);
+	MakeRptCmt	(0XC276,	"AQUA");
+	MakeByte	(0XC276);
+	MakeRptCmt	(0XC277,	"KIWI");
+	MakeByte	(0XC277);
+	MakeRptCmt	(0XC278,	"SHINE");
+	MakeByte	(0XC278);
+	MakeRptCmt	(0XC279,	"ODDEYE");
+	MakeByte	(0XC279);
 	MakeCode	(0XC27A);
 	MakeCode	(0XC2A4);
 	MakeCode	(0XC2C8);
@@ -10619,7 +10726,11 @@ static Bytes_2(void) {
 	MakeCode	(x=0XC698);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0XC69C);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0XC6A2);
+	MakeCode	(x=0XC6A4);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(x=0XC6C8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -10649,8 +10760,16 @@ static Bytes_2(void) {
 	MakeName	(0XC7F2,	"MakeTargetList");
 	MakeRptCmt	(0XC7F6,	"generate list of targets: opposite alignment of D0");
 	MakeName	(0XC7FA,	"MakeTargetListAllies");
+	MakeCode	(x=0XC802);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0XC804);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0XC80A);
 	MakeName	(0XC80A,	"MakeTargetListMonsters");
+	MakeCode	(x=0XC812);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0XC816);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0XC81C);
 	MakeName	(0XC81C,	"MakeTargetListEverybody");
 	MakeCode	(x=0XC822);
@@ -10689,6 +10808,10 @@ static Bytes_2(void) {
 	MakeCode	(0XC8E6);
 	MakeCode	(0XC8F0);
 	MakeCode	(0XC900);
+	MakeCode	(x=0XC904);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0XC908);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0XC934);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -11012,7 +11135,16 @@ static Bytes_2(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0XD236,	"flip enemy bit, to get the opposite type when muddled");
-	MakeCode	(0XD248);
+	MakeCode	(x=0XD236);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0XD240);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0XD242);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0XD248);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0XD24C);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0XD25E,	"combatant is dead, so skip");
 	MakeCode	(0XD262);
 	MakeCode	(0XD296);
@@ -12665,6 +12797,15 @@ static Bytes_2(void) {
 	MakeCode	(x=0XF7D8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0XF7DE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -12712,14 +12853,364 @@ static Bytes_2(void) {
 	MakeByte	(0XF9C2);
 	MakeByte	(0XF9C3);
 	MakeByte	(0XF9C4);
-	MakeArray	(0XF9C4,	0X112);
+	MakeArray	(0XF9C4,	0X5);
 	MakeName	(0XF9C4,	"SpellNames");
+	MakeByte	(0XF9C9);
+	MakeArray	(0XF9C9,	0X5);
+	MakeByte	(0XF9CE);
+	MakeArray	(0XF9CE,	0X6);
+	MakeByte	(0XF9D4);
+	MakeArray	(0XF9D4,	0X6);
+	MakeByte	(0XF9DA);
+	MakeArray	(0XF9DA,	0X5);
+	MakeByte	(0XF9DF);
+	MakeArray	(0XF9DF,	0X7);
+	MakeByte	(0XF9E6);
+	MakeArray	(0XF9E6,	0X7);
+	MakeByte	(0XF9ED);
+	MakeArray	(0XF9ED,	0X7);
+	MakeByte	(0XF9F4);
+	MakeArray	(0XF9F4,	0X7);
+	MakeByte	(0XF9FB);
+	MakeArray	(0XF9FB,	0X6);
+	MakeByte	(0XFA01);
+	MakeArray	(0XFA01,	0X7);
+	MakeByte	(0XFA08);
+	MakeArray	(0XFA08,	0X6);
+	MakeByte	(0XFA0E);
+	MakeArray	(0XFA0E,	0X7);
+	MakeByte	(0XFA15);
+	MakeArray	(0XFA15,	0X5);
+	MakeByte	(0XFA1A);
+	MakeArray	(0XFA1A,	0X6);
+	MakeByte	(0XFA20);
+	MakeArray	(0XFA20,	0X6);
+	MakeByte	(0XFA26);
+	MakeArray	(0XFA26,	0X7);
+	MakeByte	(0XFA2D);
+	MakeArray	(0XFA2D,	0X6);
+	MakeByte	(0XFA33);
+	MakeArray	(0XFA33,	0X5);
+	MakeByte	(0XFA38);
+	MakeArray	(0XFA38,	0X6);
+	MakeByte	(0XFA3E);
+	MakeArray	(0XFA3E,	0X6);
+	MakeByte	(0XFA44);
+	MakeArray	(0XFA44,	0X6);
+	MakeByte	(0XFA4A);
+	MakeArray	(0XFA4A,	0X6);
+	MakeByte	(0XFA50);
+	MakeArray	(0XFA50,	0X7);
+	MakeByte	(0XFA57);
+	MakeArray	(0XFA57,	0X7);
+	MakeByte	(0XFA5E);
+	MakeArray	(0XFA5E,	0X7);
+	MakeByte	(0XFA65);
+	MakeArray	(0XFA65,	0X6);
+	MakeByte	(0XFA6B);
+	MakeArray	(0XFA6B,	0X6);
+	MakeByte	(0XFA71);
+	MakeArray	(0XFA71,	0X7);
+	MakeByte	(0XFA78);
+	MakeArray	(0XFA78,	0X4);
+	MakeByte	(0XFA7C);
+	MakeArray	(0XFA7C,	0X7);
+	MakeByte	(0XFA83);
+	MakeArray	(0XFA83,	0X7);
+	MakeByte	(0XFA8A);
+	MakeArray	(0XFA8A,	0X6);
+	MakeByte	(0XFA90);
+	MakeArray	(0XFA90,	0X7);
+	MakeByte	(0XFA97);
+	MakeArray	(0XFA97,	0X7);
+	MakeByte	(0XFA9E);
+	MakeArray	(0XFA9E,	0X6);
+	MakeByte	(0XFAA4);
+	MakeArray	(0XFAA4,	0X6);
+	MakeByte	(0XFAAA);
+	MakeArray	(0XFAAA,	0X7);
+	MakeByte	(0XFAB1);
+	MakeArray	(0XFAB1,	0X7);
+	MakeByte	(0XFAB8);
+	MakeArray	(0XFAB8,	0X7);
+	MakeByte	(0XFABF);
+	MakeArray	(0XFABF,	0X5);
+	MakeByte	(0XFAC4);
+	MakeArray	(0XFAC4,	0X5);
+	MakeByte	(0XFAC9);
+	MakeArray	(0XFAC9,	0X6);
+	MakeByte	(0XFACF);
+	MakeArray	(0XFACF,	0X7);
 	MakeByte	(0XFAD6);
-	MakeArray	(0XFAD6,	0XB4);
+	MakeArray	(0XFAD6,	0X6);
 	MakeName	(0XFAD6,	"AllyNames");
+	MakeByte	(0XFADC);
+	MakeArray	(0XFADC,	0X6);
+	MakeByte	(0XFAE2);
+	MakeArray	(0XFAE2,	0X8);
+	MakeByte	(0XFAEA);
+	MakeArray	(0XFAEA,	0X5);
+	MakeByte	(0XFAEF);
+	MakeArray	(0XFAEF,	0X6);
+	MakeByte	(0XFAF5);
+	MakeArray	(0XFAF5,	0X6);
+	MakeByte	(0XFAFB);
+	MakeArray	(0XFAFB,	0X5);
+	MakeByte	(0XFB00);
+	MakeArray	(0XFB00,	0X6);
+	MakeByte	(0XFB06);
+	MakeArray	(0XFB06,	0X4);
+	MakeByte	(0XFB0A);
+	MakeArray	(0XFB0A,	0X8);
+	MakeByte	(0XFB12);
+	MakeArray	(0XFB12,	0X5);
+	MakeByte	(0XFB17);
+	MakeArray	(0XFB17,	0X6);
+	MakeByte	(0XFB1D);
+	MakeArray	(0XFB1D,	0X5);
+	MakeByte	(0XFB22);
+	MakeArray	(0XFB22,	0X6);
+	MakeByte	(0XFB28);
+	MakeArray	(0XFB28,	0X5);
+	MakeByte	(0XFB2D);
+	MakeArray	(0XFB2D,	0X6);
+	MakeByte	(0XFB33);
+	MakeArray	(0XFB33,	0X8);
+	MakeByte	(0XFB3B);
+	MakeArray	(0XFB3B,	0X6);
+	MakeByte	(0XFB41);
+	MakeArray	(0XFB41,	0X6);
+	MakeByte	(0XFB47);
+	MakeArray	(0XFB47,	0X7);
+	MakeByte	(0XFB4E);
+	MakeArray	(0XFB4E,	0X8);
+	MakeByte	(0XFB56);
+	MakeArray	(0XFB56,	0X5);
+	MakeByte	(0XFB5B);
+	MakeArray	(0XFB5B,	0X7);
+	MakeByte	(0XFB62);
+	MakeArray	(0XFB62,	0X5);
+	MakeByte	(0XFB67);
+	MakeArray	(0XFB67,	0X5);
+	MakeByte	(0XFB6C);
+	MakeArray	(0XFB6C,	0X7);
+	MakeByte	(0XFB73);
+	MakeArray	(0XFB73,	0X5);
+	MakeByte	(0XFB78);
+	MakeArray	(0XFB78,	0X5);
+	MakeByte	(0XFB7D);
+	MakeArray	(0XFB7D,	0X6);
+	MakeByte	(0XFB83);
+	MakeArray	(0XFB83,	0X7);
 	MakeByte	(0XFB8A);
-	MakeArray	(0XFB8A,	0X3FD);
+	MakeArray	(0XFB8A,	0X5);
 	MakeName	(0XFB8A,	"EnemyNames");
+	MakeByte	(0XFB8F);
+	MakeArray	(0XFB8F,	0X9);
+	MakeByte	(0XFB98);
+	MakeArray	(0XFB98,	0XE);
+	MakeByte	(0XFBA6);
+	MakeArray	(0XFBA6,	0XD);
+	MakeByte	(0XFBB3);
+	MakeArray	(0XFBB3,	0X7);
+	MakeByte	(0XFBBA);
+	MakeArray	(0XFBBA,	0XB);
+	MakeByte	(0XFBC5);
+	MakeArray	(0XFBC5,	0XB);
+	MakeByte	(0XFBD0);
+	MakeArray	(0XFBD0,	0XA);
+	MakeByte	(0XFBDA);
+	MakeArray	(0XFBDA,	0X7);
+	MakeByte	(0XFBE1);
+	MakeArray	(0XFBE1,	0X6);
+	MakeByte	(0XFBE7);
+	MakeArray	(0XFBE7,	0XB);
+	MakeByte	(0XFBF2);
+	MakeArray	(0XFBF2,	0XA);
+	MakeByte	(0XFBFC);
+	MakeArray	(0XFBFC,	0X4);
+	MakeByte	(0XFC00);
+	MakeArray	(0XFC00,	0X5);
+	MakeByte	(0XFC05);
+	MakeArray	(0XFC05,	0X7);
+	MakeByte	(0XFC0C);
+	MakeArray	(0XFC0C,	0X4);
+	MakeByte	(0XFC10);
+	MakeArray	(0XFC10,	0XE);
+	MakeByte	(0XFC1E);
+	MakeArray	(0XFC1E,	0X9);
+	MakeByte	(0XFC27);
+	MakeArray	(0XFC27,	0XD);
+	MakeByte	(0XFC34);
+	MakeArray	(0XFC34,	0XA);
+	MakeByte	(0XFC3E);
+	MakeArray	(0XFC3E,	0X5);
+	MakeByte	(0XFC43);
+	MakeArray	(0XFC43,	0XC);
+	MakeByte	(0XFC4F);
+	MakeArray	(0XFC4F,	0X9);
+	MakeByte	(0XFC58);
+	MakeArray	(0XFC58,	0XE);
+	MakeByte	(0XFC66);
+	MakeArray	(0XFC66,	0X9);
+	MakeByte	(0XFC6F);
+	MakeArray	(0XFC6F,	0X8);
+	MakeByte	(0XFC77);
+	MakeArray	(0XFC77,	0XA);
+	MakeByte	(0XFC81);
+	MakeArray	(0XFC81,	0XC);
+	MakeByte	(0XFC8D);
+	MakeArray	(0XFC8D,	0XC);
+	MakeByte	(0XFC99);
+	MakeArray	(0XFC99,	0XB);
+	MakeByte	(0XFCA4);
+	MakeArray	(0XFCA4,	0X9);
+	MakeByte	(0XFCAD);
+	MakeArray	(0XFCAD,	0X8);
+	MakeByte	(0XFCB5);
+	MakeArray	(0XFCB5,	0XB);
+	MakeByte	(0XFCC0);
+	MakeArray	(0XFCC0,	0X6);
+	MakeByte	(0XFCC6);
+	MakeArray	(0XFCC6,	0XE);
+	MakeByte	(0XFCD4);
+	MakeArray	(0XFCD4,	0X7);
+	MakeByte	(0XFCDB);
+	MakeArray	(0XFCDB,	0XB);
+	MakeByte	(0XFCE6);
+	MakeArray	(0XFCE6,	0XA);
+	MakeByte	(0XFCF0);
+	MakeArray	(0XFCF0,	0XB);
+	MakeByte	(0XFCFB);
+	MakeArray	(0XFCFB,	0X6);
+	MakeByte	(0XFD01);
+	MakeArray	(0XFD01,	0X9);
+	MakeByte	(0XFD0A);
+	MakeArray	(0XFD0A,	0XC);
+	MakeByte	(0XFD16);
+	MakeArray	(0XFD16,	0XB);
+	MakeByte	(0XFD21);
+	MakeArray	(0XFD21,	0X9);
+	MakeByte	(0XFD2A);
+	MakeArray	(0XFD2A,	0X6);
+	MakeByte	(0XFD30);
+	MakeArray	(0XFD30,	0XD);
+	MakeByte	(0XFD3D);
+	MakeArray	(0XFD3D,	0X7);
+	MakeByte	(0XFD44);
+	MakeArray	(0XFD44,	0XC);
+	MakeByte	(0XFD50);
+	MakeArray	(0XFD50,	0XF);
+	MakeByte	(0XFD5F);
+	MakeArray	(0XFD5F,	0X8);
+	MakeByte	(0XFD67);
+	MakeArray	(0XFD67,	0XB);
+	MakeByte	(0XFD72);
+	MakeArray	(0XFD72,	0XD);
+	MakeByte	(0XFD7F);
+	MakeArray	(0XFD7F,	0X6);
+	MakeByte	(0XFD85);
+	MakeArray	(0XFD85,	0XD);
+	MakeByte	(0XFD92);
+	MakeArray	(0XFD92,	0XE);
+	MakeByte	(0XFDA0);
+	MakeArray	(0XFDA0,	0XB);
+	MakeByte	(0XFDAB);
+	MakeArray	(0XFDAB,	0XD);
+	MakeByte	(0XFDB8);
+	MakeArray	(0XFDB8,	0XE);
+	MakeByte	(0XFDC6);
+	MakeArray	(0XFDC6,	0XD);
+	MakeByte	(0XFDD3);
+	MakeArray	(0XFDD3,	0XB);
+	MakeByte	(0XFDDE);
+	MakeArray	(0XFDDE,	0XF);
+	MakeByte	(0XFDED);
+	MakeArray	(0XFDED,	0X5);
+	MakeByte	(0XFDF2);
+	MakeArray	(0XFDF2,	0XC);
+	MakeByte	(0XFDFE);
+	MakeArray	(0XFDFE,	0XB);
+	MakeByte	(0XFE09);
+	MakeArray	(0XFE09,	0XA);
+	MakeByte	(0XFE13);
+	MakeArray	(0XFE13,	0XC);
+	MakeByte	(0XFE1F);
+	MakeArray	(0XFE1F,	0X9);
+	MakeByte	(0XFE28);
+	MakeArray	(0XFE28,	0XB);
+	MakeByte	(0XFE33);
+	MakeArray	(0XFE33,	0X6);
+	MakeByte	(0XFE39);
+	MakeArray	(0XFE39,	0XC);
+	MakeByte	(0XFE45);
+	MakeArray	(0XFE45,	0XB);
+	MakeByte	(0XFE50);
+	MakeArray	(0XFE50,	0X6);
+	MakeByte	(0XFE56);
+	MakeArray	(0XFE56,	0X7);
+	MakeByte	(0XFE5D);
+	MakeArray	(0XFE5D,	0XC);
+	MakeByte	(0XFE69);
+	MakeArray	(0XFE69,	0XD);
+	MakeByte	(0XFE76);
+	MakeArray	(0XFE76,	0XD);
+	MakeByte	(0XFE83);
+	MakeArray	(0XFE83,	0XC);
+	MakeByte	(0XFE8F);
+	MakeArray	(0XFE8F,	0XB);
+	MakeByte	(0XFE9A);
+	MakeArray	(0XFE9A,	0XB);
+	MakeByte	(0XFEA5);
+	MakeArray	(0XFEA5,	0XC);
+	MakeByte	(0XFEB1);
+	MakeArray	(0XFEB1,	0XC);
+	MakeByte	(0XFEBD);
+	MakeArray	(0XFEBD,	0XC);
+	MakeByte	(0XFEC9);
+	MakeArray	(0XFEC9,	0XC);
+	MakeByte	(0XFED5);
+	MakeArray	(0XFED5,	0X7);
+	MakeByte	(0XFEDC);
+	MakeArray	(0XFEDC,	0XC);
+	MakeByte	(0XFEE8);
+	MakeArray	(0XFEE8,	0XC);
+	MakeByte	(0XFEF4);
+	MakeArray	(0XFEF4,	0XB);
+	MakeByte	(0XFEFF);
+	MakeArray	(0XFEFF,	0XC);
+	MakeByte	(0XFF0B);
+	MakeArray	(0XFF0B,	0X6);
+	MakeByte	(0XFF11);
+	MakeArray	(0XFF11,	0X5);
+	MakeByte	(0XFF16);
+	MakeArray	(0XFF16,	0X8);
+	MakeByte	(0XFF1E);
+	MakeArray	(0XFF1E,	0X8);
+	MakeByte	(0XFF26);
+	MakeArray	(0XFF26,	0X8);
+	MakeByte	(0XFF2E);
+	MakeArray	(0XFF2E,	0XD);
+	MakeByte	(0XFF3B);
+	MakeArray	(0XFF3B,	0XA);
+	MakeByte	(0XFF45);
+	MakeArray	(0XFF45,	0X6);
+	MakeByte	(0XFF4B);
+	MakeArray	(0XFF4B,	0X8);
+	MakeByte	(0XFF53);
+	MakeArray	(0XFF53,	0X6);
+	MakeByte	(0XFF59);
+	MakeArray	(0XFF59,	0X5);
+	MakeRptCmt	(0XFF5E,	"here is the cause of the infamous JAR bug, an innocent typo :)");
+	MakeByte	(0XFF5E);
+	MakeArray	(0XFF5E,	0X5);
+	MakeRptCmt	(0XFF62,	"here is the cause of the infamous JAR bug, an innocent typo :)");
+	MakeByte	(0XFF63);
+	MakeArray	(0XFF63,	0XC);
+	MakeByte	(0XFF6F);
+	MakeArray	(0XFF6F,	0XC);
+	MakeByte	(0XFF7B);
+	MakeArray	(0XFF7B,	0XC);
 	MakeArray	(0XFF87,	0X79);
 	MakeCode	(0X10000);
 	MakeName	(0X10000,	"j_ExecuteMenu");
@@ -12777,19 +13268,10 @@ static Bytes_2(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X1008C,	"p_ItemDefs");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X10090);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X10090,	"p_SpellData");
+	MakeName	(0X10090,	"p_SpellDefs");
 	MakeCode	(0X10094);
 	MakeName	(0X10094,	"j_NumberPrompt");
 	MakeCode	(0X10098);
@@ -13170,6 +13652,8 @@ static Bytes_3(void) {
 	MakeCode	(x=0X10764);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X10772);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeCode	(x=0X10778);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	OpOff		(x,	1,	0X0);
@@ -13258,11 +13742,20 @@ static Bytes_3(void) {
 	MakeCode	(x=0X10920);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0X10940);
+	MakeCode	(x=0X10940);
+	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
 	MakeName	(0X10940,	"LoadIHighlightableSpellIcon");
-	MakeCode	(0X10950);
-	MakeCode	(0X10958);
+	MakeCode	(x=0X10944);
+	OpEnumEx		(x,	0,	GetEnum("SpellDef_Idx"),0);
+	MakeCode	(x=0X1094A);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
+	MakeCode	(x=0X10950);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
+	MakeCode	(x=0X10958);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeName	(0X10958,	"LoadHighlightableItemIcon");
+	MakeCode	(x=0X1095E);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeName	(0X10962,	"LoadHighlightableIcon");
 	MakeRptCmt	(0X10970,	"icon offset");
 	MakeCode	(x=0X10976);
@@ -14738,7 +15231,6 @@ static Bytes_3(void) {
 	MakeRptCmt	(0X123F8,	"Set after Bowie obtains the jewel of light/evil... whichever it is");
 	MakeByte	(0X123F8);
 	MakeArray	(0X123F8,	0X4);
-	MakeRptCmt	(0X123FA,	"Set after Bowie obtains the jewel of light/evil... whichever it is");
 	MakeCode	(0X123FC);
 	MakeCode	(x=0X12400);
 	OpOff		(x,	0,	0X0);
@@ -14752,7 +15244,6 @@ static Bytes_3(void) {
 	MakeRptCmt	(0X12426,	"Set after Bowie obtains King Galam's jewel");
 	MakeByte	(0X12426);
 	MakeArray	(0X12426,	0X4);
-	MakeRptCmt	(0X12428,	"Set after Bowie obtains King Galam's jewel");
 	MakeCode	(0X1242A);
 	MakeCode	(x=0X1242C);
 	OpStkvar	(x,	0);
@@ -14765,12 +15256,26 @@ static Bytes_3(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X12452);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X1245C);
+	OpEnumEx		(x,	0,	GetEnum("SpellDef_Idx"),0);
+	MakeCode	(x=0X1247C);
+	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
+	MakeCode	(x=0X12480);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeCode	(x=0X124C2);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X124CC);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X124D8);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X124F2);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X12502);
+	OpEnumEx		(x,	0,	GetEnum("Icon_Offsets"),0);
+	MakeCode	(x=0X12556);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
+	MakeCode	(x=0X1258C);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeCode	(x=0X125C2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -15452,6 +15957,8 @@ static Bytes_3(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X13988);
 	OpHex		(x,	0);
+	MakeCode	(x=0X13992);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeCode	(x=0X139A0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -15496,6 +16003,8 @@ static Bytes_3(void) {
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X13B22);
 	OpHex		(x,	0);
+	MakeCode	(x=0X13B30);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeCode	(0X13B48);
 	MakeCode	(x=0X13B4A);
 	OpOff		(x,	0,	0X0);
@@ -15505,9 +16014,15 @@ static Bytes_3(void) {
 	MakeCode	(x=0X13B5A);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeName	(0X13B5A,	"LoadItemIcon");
-	MakeCode	(0X13B68);
+	MakeCode	(x=0X13B68);
+	OpEnumEx		(x,	0,	GetEnum("SpellEntry_Idx"),0);
 	MakeName	(0X13B68,	"LoadSpellIcon");
-	MakeCode	(0X13B7E);
+	MakeCode	(x=0X13B72);
+	OpEnumEx		(x,	0,	GetEnum("SpellDef_Idx"),0);
+	MakeCode	(x=0X13B78);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
+	MakeCode	(x=0X13B7E);
+	OpEnumEx		(x,	0,	GetEnum("IconDef_Idx"),0);
 	MakeName	(0X13B82,	"LoadIcon");
 	MakeRptCmt	(0X13B8A,	"icon offset");
 	MakeCode	(0X13BAE);
@@ -16565,6 +17080,8 @@ static Bytes_3(void) {
 	MakeName	(0X15706,	"MenuLayout_15706");
 	MakeCode	(0X15736);
 	MakeName	(0X15736,	"GetCharPortraitIdx");
+	MakeCode	(x=0X15738);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0X15746,	"stupid CMP mechanism for alternate portraits, need to improve that one day");
 	MakeRptCmt	(0X1574A,	"HARDCODED promotion classes which trigger new portraits");
 	MakeCode	(0X15772);
@@ -16930,6 +17447,7 @@ static Bytes_3(void) {
 	MakeCode	(0X16282);
 	MakeName	(0X16282,	"NumberPrompt");
 	MakeCode	(x=0X16286);
+	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
 	MakeCode	(x=0X1628A);
 	OpEnumEx		(x,	1,	GetEnum("Windowing"),0);
@@ -17131,6 +17649,15 @@ static Bytes_3(void) {
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X166EA);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
@@ -17271,18 +17798,983 @@ static Bytes_3(void) {
 	MakeByte	(0X16A62);
 	MakeArray	(0X16A62,	0X444);
 	MakeName	(0X16A62,	"MemberStatsWindowLayout");
+	MakeRptCmt	(0X16EA6,	"Medical Herb");
 	MakeByte	(0X16EA6);
-	MakeArray	(0X16EA6,	0X800);
+	MakeArray	(0X16EA6,	0X10);
 	MakeName	(0X16EA6,	"ItemDefs");
+	MakeRptCmt	(0X16EB6,	"Healing Seed");
+	MakeByte	(0X16EB6);
+	MakeArray	(0X16EB6,	0X10);
+	MakeRptCmt	(0X16EC6,	"Healing Drop");
+	MakeByte	(0X16EC6);
+	MakeArray	(0X16EC6,	0X10);
+	MakeRptCmt	(0X16ED6,	"Antidote");
+	MakeByte	(0X16ED6);
+	MakeArray	(0X16ED6,	0X10);
+	MakeRptCmt	(0X16EE6,	"Angel Wing");
+	MakeByte	(0X16EE6);
+	MakeArray	(0X16EE6,	0X10);
+	MakeRptCmt	(0X16EF6,	"Fairy Powder");
+	MakeByte	(0X16EF6);
+	MakeArray	(0X16EF6,	0X10);
+	MakeRptCmt	(0X16F06,	"Healing Water");
+	MakeByte	(0X16F06);
+	MakeArray	(0X16F06,	0X10);
+	MakeRptCmt	(0X16F16,	"Fairy Tear");
+	MakeByte	(0X16F16);
+	MakeArray	(0X16F16,	0X10);
+	MakeRptCmt	(0X16F26,	"Healing Rain");
+	MakeByte	(0X16F26);
+	MakeArray	(0X16F26,	0X10);
+	MakeRptCmt	(0X16F36,	"Power Water");
+	MakeByte	(0X16F36);
+	MakeArray	(0X16F36,	0X10);
+	MakeRptCmt	(0X16F46,	"Protect Milk");
+	MakeByte	(0X16F46);
+	MakeArray	(0X16F46,	0X10);
+	MakeRptCmt	(0X16F56,	"Quick Chicken");
+	MakeByte	(0X16F56);
+	MakeArray	(0X16F56,	0X10);
+	MakeRptCmt	(0X16F66,	"Running Pimento");
+	MakeByte	(0X16F66);
+	MakeArray	(0X16F66,	0X10);
+	MakeRptCmt	(0X16F76,	"Cheerful Bread");
+	MakeByte	(0X16F76);
+	MakeArray	(0X16F76,	0X10);
+	MakeRptCmt	(0X16F86,	"Bright Honey");
+	MakeByte	(0X16F86);
+	MakeArray	(0X16F86,	0X10);
+	MakeRptCmt	(0X16F96,	"Brave Apple");
+	MakeByte	(0X16F96);
+	MakeArray	(0X16F96,	0X10);
+	MakeRptCmt	(0X16FA6,	"Shining Ball");
+	MakeByte	(0X16FA6);
+	MakeArray	(0X16FA6,	0X10);
+	MakeRptCmt	(0X16FB6,	"Blizzard");
+	MakeByte	(0X16FB6);
+	MakeArray	(0X16FB6,	0X10);
+	MakeRptCmt	(0X16FC6,	"Holy Thunder");
+	MakeByte	(0X16FC6);
+	MakeArray	(0X16FC6,	0X10);
+	MakeRptCmt	(0X16FD6,	"Power Ring");
+	MakeByte	(0X16FD6);
+	MakeArray	(0X16FD6,	0X10);
+	MakeRptCmt	(0X16FE6,	"Protect Ring");
+	MakeByte	(0X16FE6);
+	MakeArray	(0X16FE6,	0X10);
+	MakeRptCmt	(0X16FF6,	"Quick Ring");
+	MakeByte	(0X16FF6);
+	MakeArray	(0X16FF6,	0X10);
+	MakeRptCmt	(0X17006,	"Running Ring");
+	MakeByte	(0X17006);
+	MakeArray	(0X17006,	0X10);
+	MakeRptCmt	(0X17016,	"White Ring");
+	MakeByte	(0X17016);
+	MakeArray	(0X17016,	0X10);
+	MakeRptCmt	(0X17026,	"Black Ring");
+	MakeByte	(0X17026);
+	MakeArray	(0X17026,	0X10);
+	MakeRptCmt	(0X17036,	"Evil Ring");
+	MakeByte	(0X17036);
+	MakeArray	(0X17036,	0X10);
+	MakeRptCmt	(0X17046,	"Leather Glove");
+	MakeByte	(0X17046);
+	MakeArray	(0X17046,	0X10);
+	MakeRptCmt	(0X17056,	"Power Glove");
+	MakeByte	(0X17056);
+	MakeArray	(0X17056,	0X10);
+	MakeRptCmt	(0X17066,	"Brass Knuckles");
+	MakeByte	(0X17066);
+	MakeArray	(0X17066,	0X10);
+	MakeRptCmt	(0X17076,	"Iron Knuckles");
+	MakeByte	(0X17076);
+	MakeArray	(0X17076,	0X10);
+	MakeRptCmt	(0X17086,	"Misty Knuckles");
+	MakeByte	(0X17086);
+	MakeArray	(0X17086,	0X10);
+	MakeRptCmt	(0X17096,	"Giant Knuckles");
+	MakeByte	(0X17096);
+	MakeArray	(0X17096,	0X10);
+	MakeRptCmt	(0X170A6,	"Evil Knuckles");
+	MakeByte	(0X170A6);
+	MakeArray	(0X170A6,	0X10);
+	MakeRptCmt	(0X170B6,	"Short Axe");
+	MakeByte	(0X170B6);
+	MakeArray	(0X170B6,	0X10);
+	MakeRptCmt	(0X170C6,	"Hand Axe");
+	MakeByte	(0X170C6);
+	MakeArray	(0X170C6,	0X10);
+	MakeRptCmt	(0X170D6,	"Middle Axe");
+	MakeByte	(0X170D6);
+	MakeArray	(0X170D6,	0X10);
+	MakeRptCmt	(0X170E6,	"Power Axe");
+	MakeByte	(0X170E6);
+	MakeArray	(0X170E6,	0X10);
+	MakeRptCmt	(0X170F6,	"Battle Axe");
+	MakeByte	(0X170F6);
+	MakeArray	(0X170F6,	0X10);
+	MakeRptCmt	(0X17106,	"Large Axe");
+	MakeByte	(0X17106);
+	MakeArray	(0X17106,	0X10);
+	MakeRptCmt	(0X17116,	"Great Axe");
+	MakeByte	(0X17116);
+	MakeArray	(0X17116,	0X10);
+	MakeRptCmt	(0X17126,	"Heat Axe");
+	MakeByte	(0X17126);
+	MakeArray	(0X17126,	0X10);
+	MakeRptCmt	(0X17136,	"Atlas Axe");
+	MakeByte	(0X17136);
+	MakeArray	(0X17136,	0X10);
+	MakeRptCmt	(0X17146,	"Ground Axe");
+	MakeByte	(0X17146);
+	MakeArray	(0X17146,	0X10);
+	MakeRptCmt	(0X17156,	"Rune Axe");
+	MakeByte	(0X17156);
+	MakeArray	(0X17156,	0X10);
+	MakeRptCmt	(0X17166,	"Evil Axe");
+	MakeByte	(0X17166);
+	MakeArray	(0X17166,	0X10);
+	MakeRptCmt	(0X17176,	"Wooden Arrow");
+	MakeByte	(0X17176);
+	MakeArray	(0X17176,	0X10);
+	MakeRptCmt	(0X17186,	"Iron Arrow");
+	MakeByte	(0X17186);
+	MakeArray	(0X17186,	0X10);
+	MakeRptCmt	(0X17196,	"Steel Arrow");
+	MakeByte	(0X17196);
+	MakeArray	(0X17196,	0X10);
+	MakeRptCmt	(0X171A6,	"Robin Arrow");
+	MakeByte	(0X171A6);
+	MakeArray	(0X171A6,	0X10);
+	MakeRptCmt	(0X171B6,	"Assault Shell");
+	MakeByte	(0X171B6);
+	MakeArray	(0X171B6,	0X10);
+	MakeRptCmt	(0X171C6,	"Great Shot");
+	MakeByte	(0X171C6);
+	MakeArray	(0X171C6,	0X10);
+	MakeRptCmt	(0X171D6,	"Nazca Cannon");
+	MakeByte	(0X171D6);
+	MakeArray	(0X171D6,	0X10);
+	MakeRptCmt	(0X171E6,	"Buster Shot");
+	MakeByte	(0X171E6);
+	MakeArray	(0X171E6,	0X10);
+	MakeRptCmt	(0X171F6,	"Hyper Cannon");
+	MakeByte	(0X171F6);
+	MakeArray	(0X171F6,	0X10);
+	MakeRptCmt	(0X17206,	"Grand Cannon");
+	MakeByte	(0X17206);
+	MakeArray	(0X17206,	0X10);
+	MakeRptCmt	(0X17216,	"Evil Shot");
+	MakeByte	(0X17216);
+	MakeArray	(0X17216,	0X10);
+	MakeRptCmt	(0X17226,	"Wooden Stick");
+	MakeByte	(0X17226);
+	MakeArray	(0X17226,	0X10);
+	MakeRptCmt	(0X17236,	"Short Sword");
+	MakeByte	(0X17236);
+	MakeArray	(0X17236,	0X10);
+	MakeRptCmt	(0X17246,	"Middle Sword");
+	MakeByte	(0X17246);
+	MakeArray	(0X17246,	0X10);
+	MakeRptCmt	(0X17256,	"Long Sword");
+	MakeByte	(0X17256);
+	MakeArray	(0X17256,	0X10);
+	MakeRptCmt	(0X17266,	"Steel Sword");
+	MakeByte	(0X17266);
+	MakeArray	(0X17266,	0X10);
+	MakeRptCmt	(0X17276,	"Achilles Sword");
+	MakeByte	(0X17276);
+	MakeArray	(0X17276,	0X10);
+	MakeRptCmt	(0X17286,	"Broad Sword");
+	MakeByte	(0X17286);
+	MakeArray	(0X17286,	0X10);
+	MakeRptCmt	(0X17296,	"Buster Sword");
+	MakeByte	(0X17296);
+	MakeArray	(0X17296,	0X10);
+	MakeRptCmt	(0X172A6,	"Great Sword");
+	MakeByte	(0X172A6);
+	MakeArray	(0X172A6,	0X10);
+	MakeRptCmt	(0X172B6,	"Critical Sword");
+	MakeByte	(0X172B6);
+	MakeArray	(0X172B6,	0X10);
+	MakeRptCmt	(0X172C6,	"Battle Sword");
+	MakeByte	(0X172C6);
+	MakeArray	(0X172C6,	0X10);
+	MakeRptCmt	(0X172D6,	"Force Sword");
+	MakeByte	(0X172D6);
+	MakeArray	(0X172D6,	0X10);
+	MakeRptCmt	(0X172E6,	"Counter Sword");
+	MakeByte	(0X172E6);
+	MakeArray	(0X172E6,	0X10);
+	MakeRptCmt	(0X172F6,	"Levanter");
+	MakeByte	(0X172F6);
+	MakeArray	(0X172F6,	0X10);
+	MakeRptCmt	(0X17306,	"Dark Sword");
+	MakeByte	(0X17306);
+	MakeArray	(0X17306,	0X10);
+	MakeRptCmt	(0X17316,	"Wooden Sword");
+	MakeByte	(0X17316);
+	MakeArray	(0X17316,	0X10);
+	MakeRptCmt	(0X17326,	"Short Spear");
+	MakeByte	(0X17326);
+	MakeArray	(0X17326,	0X10);
+	MakeRptCmt	(0X17336,	"Bronze Lance");
+	MakeByte	(0X17336);
+	MakeArray	(0X17336,	0X10);
+	MakeRptCmt	(0X17346,	"Spear");
+	MakeByte	(0X17346);
+	MakeArray	(0X17346,	0X10);
+	MakeRptCmt	(0X17356,	"Steel Lance");
+	MakeByte	(0X17356);
+	MakeArray	(0X17356,	0X10);
+	MakeRptCmt	(0X17366,	"Power Spear");
+	MakeByte	(0X17366);
+	MakeArray	(0X17366,	0X10);
+	MakeRptCmt	(0X17376,	"Heavy Lance");
+	MakeByte	(0X17376);
+	MakeArray	(0X17376,	0X10);
+	MakeRptCmt	(0X17386,	"Javelin");
+	MakeByte	(0X17386);
+	MakeArray	(0X17386,	0X10);
+	MakeRptCmt	(0X17396,	"Chrome Lance");
+	MakeByte	(0X17396);
+	MakeArray	(0X17396,	0X10);
+	MakeRptCmt	(0X173A6,	"Valkyrie");
+	MakeByte	(0X173A6);
+	MakeArray	(0X173A6,	0X10);
+	MakeRptCmt	(0X173B6,	"Holy Lance");
+	MakeByte	(0X173B6);
+	MakeArray	(0X173B6,	0X10);
+	MakeRptCmt	(0X173C6,	"Mist Javelin");
+	MakeByte	(0X173C6);
+	MakeArray	(0X173C6,	0X10);
+	MakeRptCmt	(0X173D6,	"Halberd");
+	MakeByte	(0X173D6);
+	MakeArray	(0X173D6,	0X10);
+	MakeRptCmt	(0X173E6,	"Evil Lance");
+	MakeByte	(0X173E6);
+	MakeArray	(0X173E6,	0X10);
+	MakeRptCmt	(0X173F6,	"Wooden Rod");
+	MakeByte	(0X173F6);
+	MakeArray	(0X173F6,	0X10);
+	MakeRptCmt	(0X17406,	"Short Rod");
+	MakeByte	(0X17406);
+	MakeArray	(0X17406,	0X10);
+	MakeRptCmt	(0X17416,	"Bronze Rod");
+	MakeByte	(0X17416);
+	MakeArray	(0X17416,	0X10);
+	MakeRptCmt	(0X17426,	"Iron Rod");
+	MakeByte	(0X17426);
+	MakeArray	(0X17426,	0X10);
+	MakeRptCmt	(0X17436,	"Power Stick");
+	MakeByte	(0X17436);
+	MakeArray	(0X17436,	0X10);
+	MakeRptCmt	(0X17446,	"Flail");
+	MakeByte	(0X17446);
+	MakeArray	(0X17446,	0X10);
+	MakeRptCmt	(0X17456,	"Guardian Staff");
+	MakeByte	(0X17456);
+	MakeArray	(0X17456,	0X10);
+	MakeRptCmt	(0X17466,	"Indra Staff");
+	MakeByte	(0X17466);
+	MakeArray	(0X17466,	0X10);
+	MakeRptCmt	(0X17476,	"Mage Staff");
+	MakeByte	(0X17476);
+	MakeArray	(0X17476,	0X10);
+	MakeRptCmt	(0X17486,	"Wish Staff");
+	MakeByte	(0X17486);
+	MakeArray	(0X17486,	0X10);
+	MakeRptCmt	(0X17496,	"Great Rod");
+	MakeByte	(0X17496);
+	MakeArray	(0X17496,	0X10);
+	MakeRptCmt	(0X174A6,	"Supply Staff");
+	MakeByte	(0X174A6);
+	MakeArray	(0X174A6,	0X10);
+	MakeRptCmt	(0X174B6,	"Holy Staff");
+	MakeByte	(0X174B6);
+	MakeArray	(0X174B6,	0X10);
+	MakeRptCmt	(0X174C6,	"Freeze Staff");
+	MakeByte	(0X174C6);
+	MakeArray	(0X174C6,	0X10);
+	MakeRptCmt	(0X174D6,	"Goddess Staff");
+	MakeByte	(0X174D6);
+	MakeArray	(0X174D6,	0X10);
+	MakeRptCmt	(0X174E6,	"Mystery Staff");
+	MakeByte	(0X174E6);
+	MakeArray	(0X174E6,	0X10);
+	MakeRptCmt	(0X174F6,	"Demon Rod");
+	MakeByte	(0X174F6);
+	MakeArray	(0X174F6,	0X10);
+	MakeRptCmt	(0X17506,	"Iron Ball");
+	MakeByte	(0X17506);
+	MakeArray	(0X17506,	0X10);
+	MakeRptCmt	(0X17516,	"Short Knife");
+	MakeByte	(0X17516);
+	MakeArray	(0X17516,	0X10);
+	MakeRptCmt	(0X17526,	"Dagger");
+	MakeByte	(0X17526);
+	MakeArray	(0X17526,	0X10);
+	MakeRptCmt	(0X17536,	"Knife");
+	MakeByte	(0X17536);
+	MakeArray	(0X17536,	0X10);
+	MakeRptCmt	(0X17546,	"Thieve's Dagger");
+	MakeByte	(0X17546);
+	MakeArray	(0X17546,	0X10);
+	MakeRptCmt	(0X17556,	"Katana");
+	MakeByte	(0X17556);
+	MakeArray	(0X17556,	0X10);
+	MakeRptCmt	(0X17566,	"Ninja Katana");
+	MakeByte	(0X17566);
+	MakeArray	(0X17566,	0X10);
+	MakeRptCmt	(0X17576,	"Gisarme");
+	MakeByte	(0X17576);
+	MakeArray	(0X17576,	0X10);
+	MakeRptCmt	(0X17586,	"Taros Sword");
+	MakeByte	(0X17586);
+	MakeArray	(0X17586,	0X10);
+	MakeRptCmt	(0X17596,	"Right of Hope");
+	MakeByte	(0X17596);
+	MakeArray	(0X17596,	0X10);
+	MakeRptCmt	(0X175A6,	"Wooden Panel");
+	MakeByte	(0X175A6);
+	MakeArray	(0X175A6,	0X10);
+	MakeRptCmt	(0X175B6,	"Sky Orb");
+	MakeByte	(0X175B6);
+	MakeArray	(0X175B6,	0X10);
+	MakeRptCmt	(0X175C6,	"Cannon");
+	MakeByte	(0X175C6);
+	MakeArray	(0X175C6,	0X10);
+	MakeRptCmt	(0X175D6,	"Dry Stone");
+	MakeByte	(0X175D6);
+	MakeArray	(0X175D6,	0X10);
+	MakeRptCmt	(0X175E6,	"Dynamite");
+	MakeByte	(0X175E6);
+	MakeArray	(0X175E6,	0X10);
+	MakeRptCmt	(0X175F6,	"Arm of Golem");
+	MakeByte	(0X175F6);
+	MakeArray	(0X175F6,	0X10);
+	MakeRptCmt	(0X17606,	"Pegasus Wing");
+	MakeByte	(0X17606);
+	MakeArray	(0X17606,	0X10);
+	MakeRptCmt	(0X17616,	"Warrior Pride");
+	MakeByte	(0X17616);
+	MakeArray	(0X17616,	0X10);
+	MakeRptCmt	(0X17626,	"Silver Tank");
+	MakeByte	(0X17626);
+	MakeArray	(0X17626,	0X10);
+	MakeRptCmt	(0X17636,	"Secret Book");
+	MakeByte	(0X17636);
+	MakeArray	(0X17636,	0X10);
+	MakeRptCmt	(0X17646,	"Vigor Ball");
+	MakeByte	(0X17646);
+	MakeArray	(0X17646,	0X10);
+	MakeRptCmt	(0X17656,	"Mithril");
+	MakeByte	(0X17656);
+	MakeArray	(0X17656,	0X10);
+	MakeRptCmt	(0X17666,	"Life Ring");
+	MakeByte	(0X17666);
+	MakeArray	(0X17666,	0X10);
+	MakeRptCmt	(0X17676,	"Cotton Balloon");
+	MakeByte	(0X17676);
+	MakeArray	(0X17676,	0X10);
+	MakeRptCmt	(0X17686,	"Chirrup Sandals");
+	MakeByte	(0X17686);
+	MakeArray	(0X17686,	0X10);
+	MakeRptCmt	(0X17696,	"Empty");
+	MakeByte	(0X17696);
+	MakeArray	(0X17696,	0X10);
+	MakeRptCmt	(0X176A6,	"HEAL 1");
 	MakeByte	(0X176A6);
-	MakeArray	(0X176A6,	0X2C8);
+	MakeArray	(0X176A6,	0X8);
 	MakeName	(0X176A6,	"SpellDefs");
+	MakeRptCmt	(0X176AE,	"HEAL 2");
+	MakeByte	(0X176AE);
+	MakeArray	(0X176AE,	0X8);
+	MakeRptCmt	(0X176B6,	"HEAL 3");
+	MakeByte	(0X176B6);
+	MakeArray	(0X176B6,	0X8);
+	MakeRptCmt	(0X176BE,	"HEAL 4");
+	MakeByte	(0X176BE);
+	MakeArray	(0X176BE,	0X8);
+	MakeRptCmt	(0X176C6,	"AURA 1");
+	MakeByte	(0X176C6);
+	MakeArray	(0X176C6,	0X8);
+	MakeRptCmt	(0X176CE,	"AURA 2");
+	MakeByte	(0X176CE);
+	MakeArray	(0X176CE,	0X8);
+	MakeRptCmt	(0X176D6,	"AURA 3");
+	MakeByte	(0X176D6);
+	MakeArray	(0X176D6,	0X8);
+	MakeRptCmt	(0X176DE,	"AURA 4");
+	MakeByte	(0X176DE);
+	MakeArray	(0X176DE,	0X8);
+	MakeRptCmt	(0X176E6,	"DETOX 1");
+	MakeByte	(0X176E6);
+	MakeArray	(0X176E6,	0X8);
+	MakeRptCmt	(0X176EE,	"DETOX 2");
+	MakeByte	(0X176EE);
+	MakeArray	(0X176EE,	0X8);
+	MakeRptCmt	(0X176F6,	"DETOX 3");
+	MakeByte	(0X176F6);
+	MakeArray	(0X176F6,	0X8);
+	MakeRptCmt	(0X176FE,	"DETOX 4");
+	MakeByte	(0X176FE);
+	MakeArray	(0X176FE,	0X8);
+	MakeRptCmt	(0X17706,	"BOOST 1");
+	MakeByte	(0X17706);
+	MakeArray	(0X17706,	0X8);
+	MakeRptCmt	(0X1770E,	"BOOST 2");
+	MakeByte	(0X1770E);
+	MakeArray	(0X1770E,	0X8);
+	MakeRptCmt	(0X17716,	"SLOW 1");
+	MakeByte	(0X17716);
+	MakeArray	(0X17716,	0X8);
+	MakeRptCmt	(0X1771E,	"SLOW 2");
+	MakeByte	(0X1771E);
+	MakeArray	(0X1771E,	0X8);
+	MakeRptCmt	(0X17726,	"ATTACK 1");
+	MakeByte	(0X17726);
+	MakeArray	(0X17726,	0X8);
+	MakeRptCmt	(0X1772E,	"DISPEL 1");
+	MakeByte	(0X1772E);
+	MakeArray	(0X1772E,	0X8);
+	MakeRptCmt	(0X17736,	"MUDDLE 1");
+	MakeByte	(0X17736);
+	MakeArray	(0X17736,	0X8);
+	MakeRptCmt	(0X1773E,	"MUDDLE 2");
+	MakeByte	(0X1773E);
+	MakeArray	(0X1773E,	0X8);
+	MakeRptCmt	(0X17746,	"DESOUL 1");
+	MakeByte	(0X17746);
+	MakeArray	(0X17746,	0X8);
+	MakeRptCmt	(0X1774E,	"DESOUL 2");
+	MakeByte	(0X1774E);
+	MakeArray	(0X1774E,	0X8);
+	MakeRptCmt	(0X17756,	"SLEEP 1");
+	MakeByte	(0X17756);
+	MakeArray	(0X17756,	0X8);
+	MakeRptCmt	(0X1775E,	"EGRESS 1");
+	MakeByte	(0X1775E);
+	MakeArray	(0X1775E,	0X8);
+	MakeRptCmt	(0X17766,	"BLAZE 1");
+	MakeByte	(0X17766);
+	MakeArray	(0X17766,	0X8);
+	MakeRptCmt	(0X1776E,	"BLAZE 2");
+	MakeByte	(0X1776E);
+	MakeArray	(0X1776E,	0X8);
+	MakeRptCmt	(0X17776,	"BLAZE 3");
+	MakeByte	(0X17776);
+	MakeArray	(0X17776,	0X8);
+	MakeRptCmt	(0X1777E,	"BLAZE 4");
+	MakeByte	(0X1777E);
+	MakeArray	(0X1777E,	0X8);
+	MakeRptCmt	(0X17786,	"FREEZE 1");
+	MakeByte	(0X17786);
+	MakeArray	(0X17786,	0X8);
+	MakeRptCmt	(0X1778E,	"FREEZE 2");
+	MakeByte	(0X1778E);
+	MakeArray	(0X1778E,	0X8);
+	MakeRptCmt	(0X17796,	"FREEZE 3");
+	MakeByte	(0X17796);
+	MakeArray	(0X17796,	0X8);
+	MakeRptCmt	(0X1779E,	"FREEZE 4");
+	MakeByte	(0X1779E);
+	MakeArray	(0X1779E,	0X8);
+	MakeRptCmt	(0X177A6,	"BOLT 1");
+	MakeByte	(0X177A6);
+	MakeArray	(0X177A6,	0X8);
+	MakeRptCmt	(0X177AE,	"BOLT 2");
+	MakeByte	(0X177AE);
+	MakeArray	(0X177AE,	0X8);
+	MakeRptCmt	(0X177B6,	"BOLT 3");
+	MakeByte	(0X177B6);
+	MakeArray	(0X177B6,	0X8);
+	MakeRptCmt	(0X177BE,	"BOLT 4");
+	MakeByte	(0X177BE);
+	MakeArray	(0X177BE,	0X8);
+	MakeRptCmt	(0X177C6,	"BLAST 1");
+	MakeByte	(0X177C6);
+	MakeArray	(0X177C6,	0X8);
+	MakeRptCmt	(0X177CE,	"BLAST 2");
+	MakeByte	(0X177CE);
+	MakeArray	(0X177CE,	0X8);
+	MakeRptCmt	(0X177D6,	"BLAST 3");
+	MakeByte	(0X177D6);
+	MakeArray	(0X177D6,	0X8);
+	MakeRptCmt	(0X177DE,	"BLAST 4");
+	MakeByte	(0X177DE);
+	MakeArray	(0X177DE,	0X8);
+	MakeRptCmt	(0X177E6,	"SPOIT 1");
+	MakeByte	(0X177E6);
+	MakeArray	(0X177E6,	0X8);
+	MakeRptCmt	(0X177EE,	"HEALIN 1");
+	MakeByte	(0X177EE);
+	MakeArray	(0X177EE,	0X8);
+	MakeRptCmt	(0X177F6,	"HEALIN 2");
+	MakeByte	(0X177F6);
+	MakeArray	(0X177F6,	0X8);
+	MakeRptCmt	(0X177FE,	"HEALIN 3");
+	MakeByte	(0X177FE);
+	MakeArray	(0X177FE,	0X8);
+	MakeRptCmt	(0X17806,	"FLAME 1");
+	MakeByte	(0X17806);
+	MakeArray	(0X17806,	0X8);
+	MakeRptCmt	(0X1780E,	"FLAME 2");
+	MakeByte	(0X1780E);
+	MakeArray	(0X1780E,	0X8);
+	MakeRptCmt	(0X17816,	"FLAME 3");
+	MakeByte	(0X17816);
+	MakeArray	(0X17816,	0X8);
+	MakeRptCmt	(0X1781E,	"SNOW 1");
+	MakeByte	(0X1781E);
+	MakeArray	(0X1781E,	0X8);
+	MakeRptCmt	(0X17826,	"SNOW 2");
+	MakeByte	(0X17826);
+	MakeArray	(0X17826,	0X8);
+	MakeRptCmt	(0X1782E,	"SNOW 3");
+	MakeByte	(0X1782E);
+	MakeArray	(0X1782E,	0X8);
+	MakeRptCmt	(0X17836,	"DEMON 1");
+	MakeByte	(0X17836);
+	MakeArray	(0X17836,	0X8);
+	MakeRptCmt	(0X1783E,	"DEMON 2");
+	MakeByte	(0X1783E);
+	MakeArray	(0X1783E,	0X8);
+	MakeRptCmt	(0X17846,	"POWER 1");
+	MakeByte	(0X17846);
+	MakeArray	(0X17846,	0X8);
+	MakeRptCmt	(0X1784E,	"GUARD 1");
+	MakeByte	(0X1784E);
+	MakeArray	(0X1784E,	0X8);
+	MakeRptCmt	(0X17856,	"SPEED 1");
+	MakeByte	(0X17856);
+	MakeArray	(0X17856,	0X8);
+	MakeRptCmt	(0X1785E,	"IDATEN 1");
+	MakeByte	(0X1785E);
+	MakeArray	(0X1785E,	0X8);
+	MakeRptCmt	(0X17866,	"HEALTH 1");
+	MakeByte	(0X17866);
+	MakeArray	(0X17866,	0X8);
+	MakeRptCmt	(0X1786E,	"B.ROCK 1");
+	MakeByte	(0X1786E);
+	MakeArray	(0X1786E,	0X8);
+	MakeRptCmt	(0X17876,	"LASER 1");
+	MakeByte	(0X17876);
+	MakeArray	(0X17876,	0X8);
+	MakeRptCmt	(0X1787E,	"KATON 1");
+	MakeByte	(0X1787E);
+	MakeArray	(0X1787E,	0X8);
+	MakeRptCmt	(0X17886,	"KATON 2");
+	MakeByte	(0X17886);
+	MakeArray	(0X17886,	0X8);
+	MakeRptCmt	(0X1788E,	"KATON 3");
+	MakeByte	(0X1788E);
+	MakeArray	(0X1788E,	0X8);
+	MakeRptCmt	(0X17896,	"RAIJIN 1");
+	MakeByte	(0X17896);
+	MakeArray	(0X17896,	0X8);
+	MakeRptCmt	(0X1789E,	"RAIJIN 2");
+	MakeByte	(0X1789E);
+	MakeArray	(0X1789E,	0X8);
+	MakeRptCmt	(0X178A6,	"RAIJIN 3");
+	MakeByte	(0X178A6);
+	MakeArray	(0X178A6,	0X8);
+	MakeRptCmt	(0X178AE,	"DAO 1");
+	MakeByte	(0X178AE);
+	MakeArray	(0X178AE,	0X8);
+	MakeRptCmt	(0X178B6,	"DAO 2");
+	MakeByte	(0X178B6);
+	MakeArray	(0X178B6,	0X8);
+	MakeRptCmt	(0X178BE,	"APOLLO 1");
+	MakeByte	(0X178BE);
+	MakeArray	(0X178BE,	0X8);
+	MakeRptCmt	(0X178C6,	"APOLLO 2");
+	MakeByte	(0X178C6);
+	MakeArray	(0X178C6,	0X8);
+	MakeRptCmt	(0X178CE,	"NEPTUN 1");
+	MakeByte	(0X178CE);
+	MakeArray	(0X178CE,	0X8);
+	MakeRptCmt	(0X178D6,	"NEPTUN 2");
+	MakeByte	(0X178D6);
+	MakeArray	(0X178D6,	0X8);
+	MakeRptCmt	(0X178DE,	"ATLAS 1");
+	MakeByte	(0X178DE);
+	MakeArray	(0X178DE,	0X8);
+	MakeRptCmt	(0X178E6,	"ATLAS 2");
+	MakeByte	(0X178E6);
+	MakeArray	(0X178E6,	0X8);
+	MakeRptCmt	(0X178EE,	"POWDER 1");
+	MakeByte	(0X178EE);
+	MakeArray	(0X178EE,	0X8);
+	MakeRptCmt	(0X178F6,	"G.TEAR 1");
+	MakeByte	(0X178F6);
+	MakeArray	(0X178F6,	0X8);
+	MakeRptCmt	(0X178FE,	"G.TEAR 2");
+	MakeByte	(0X178FE);
+	MakeArray	(0X178FE,	0X8);
+	MakeRptCmt	(0X17906,	"HANNY 1");
+	MakeByte	(0X17906);
+	MakeArray	(0X17906,	0X8);
+	MakeRptCmt	(0X1790E,	"BRAVE 1");
+	MakeByte	(0X1790E);
+	MakeArray	(0X1790E,	0X8);
+	MakeRptCmt	(0X17916,	"F.BALL 1");
+	MakeByte	(0X17916);
+	MakeArray	(0X17916,	0X8);
+	MakeRptCmt	(0X1791E,	"BREZAD 1");
+	MakeByte	(0X1791E);
+	MakeArray	(0X1791E,	0X8);
+	MakeRptCmt	(0X17926,	"THUNDR 1");
+	MakeByte	(0X17926);
+	MakeArray	(0X17926,	0X8);
+	MakeRptCmt	(0X1792E,	"AQUA 1");
+	MakeByte	(0X1792E);
+	MakeArray	(0X1792E,	0X8);
+	MakeRptCmt	(0X17936,	"AQUA 2");
+	MakeByte	(0X17936);
+	MakeArray	(0X17936,	0X8);
+	MakeRptCmt	(0X1793E,	"KIWI 1");
+	MakeByte	(0X1793E);
+	MakeArray	(0X1793E,	0X8);
+	MakeRptCmt	(0X17946,	"KIWI 2");
+	MakeByte	(0X17946);
+	MakeArray	(0X17946,	0X8);
+	MakeRptCmt	(0X1794E,	"KIWI 3");
+	MakeByte	(0X1794E);
+	MakeArray	(0X1794E,	0X8);
+	MakeRptCmt	(0X17956,	"KIWI 4");
+	MakeByte	(0X17956);
+	MakeArray	(0X17956,	0X8);
+	MakeRptCmt	(0X1795E,	"SHINE 1");
+	MakeByte	(0X1795E);
+	MakeArray	(0X1795E,	0X8);
+	MakeRptCmt	(0X17966,	"ODDEYE 1");
+	MakeByte	(0X17966);
+	MakeArray	(0X17966,	0X8);
 	MakeByte	(0X1796E);
-	MakeArray	(0X1796E,	0X5D0);
+	MakeArray	(0X1796E,	0XD);
 	MakeName	(0X1796E,	"ItemNames");
+	MakeByte	(0X1797B);
+	MakeArray	(0X1797B,	0XD);
+	MakeByte	(0X17988);
+	MakeArray	(0X17988,	0XD);
+	MakeByte	(0X17995);
+	MakeArray	(0X17995,	0X9);
+	MakeByte	(0X1799E);
+	MakeArray	(0X1799E,	0XB);
+	MakeByte	(0X179A9);
+	MakeArray	(0X179A9,	0XD);
+	MakeByte	(0X179B6);
+	MakeArray	(0X179B6,	0XE);
+	MakeByte	(0X179C4);
+	MakeArray	(0X179C4,	0XB);
+	MakeByte	(0X179CF);
+	MakeArray	(0X179CF,	0XD);
+	MakeByte	(0X179DC);
+	MakeArray	(0X179DC,	0XC);
+	MakeByte	(0X179E8);
+	MakeArray	(0X179E8,	0XD);
+	MakeByte	(0X179F5);
+	MakeArray	(0X179F5,	0XE);
+	MakeByte	(0X17A03);
+	MakeArray	(0X17A03,	0X10);
+	MakeByte	(0X17A13);
+	MakeArray	(0X17A13,	0XF);
+	MakeByte	(0X17A22);
+	MakeArray	(0X17A22,	0XD);
+	MakeByte	(0X17A2F);
+	MakeArray	(0X17A2F,	0XC);
+	MakeByte	(0X17A3B);
+	MakeArray	(0X17A3B,	0XD);
+	MakeByte	(0X17A48);
+	MakeArray	(0X17A48,	0X9);
+	MakeByte	(0X17A51);
+	MakeArray	(0X17A51,	0XD);
+	MakeByte	(0X17A5E);
+	MakeArray	(0X17A5E,	0XB);
+	MakeByte	(0X17A69);
+	MakeArray	(0X17A69,	0XD);
+	MakeByte	(0X17A76);
+	MakeArray	(0X17A76,	0XB);
+	MakeByte	(0X17A81);
+	MakeArray	(0X17A81,	0XD);
+	MakeByte	(0X17A8E);
+	MakeArray	(0X17A8E,	0XB);
+	MakeByte	(0X17A99);
+	MakeArray	(0X17A99,	0XB);
+	MakeByte	(0X17AA4);
+	MakeArray	(0X17AA4,	0XA);
+	MakeByte	(0X17AAE);
+	MakeArray	(0X17AAE,	0XE);
+	MakeByte	(0X17ABC);
+	MakeArray	(0X17ABC,	0XC);
+	MakeByte	(0X17AC8);
+	MakeArray	(0X17AC8,	0XF);
+	MakeByte	(0X17AD7);
+	MakeArray	(0X17AD7,	0XE);
+	MakeByte	(0X17AE5);
+	MakeArray	(0X17AE5,	0XF);
+	MakeByte	(0X17AF4);
+	MakeArray	(0X17AF4,	0XF);
+	MakeByte	(0X17B03);
+	MakeArray	(0X17B03,	0XE);
+	MakeByte	(0X17B11);
+	MakeArray	(0X17B11,	0XA);
+	MakeByte	(0X17B1B);
+	MakeArray	(0X17B1B,	0X9);
+	MakeByte	(0X17B24);
+	MakeArray	(0X17B24,	0XB);
+	MakeByte	(0X17B2F);
+	MakeArray	(0X17B2F,	0XA);
+	MakeByte	(0X17B39);
+	MakeArray	(0X17B39,	0XB);
+	MakeByte	(0X17B44);
+	MakeArray	(0X17B44,	0XA);
+	MakeByte	(0X17B4E);
+	MakeArray	(0X17B4E,	0XA);
+	MakeByte	(0X17B58);
+	MakeArray	(0X17B58,	0X9);
+	MakeByte	(0X17B61);
+	MakeArray	(0X17B61,	0XA);
+	MakeByte	(0X17B6B);
+	MakeArray	(0X17B6B,	0XB);
+	MakeByte	(0X17B76);
+	MakeArray	(0X17B76,	0X9);
+	MakeByte	(0X17B7F);
+	MakeArray	(0X17B7F,	0X9);
+	MakeByte	(0X17B88);
+	MakeArray	(0X17B88,	0XD);
+	MakeByte	(0X17B95);
+	MakeArray	(0X17B95,	0XB);
+	MakeByte	(0X17BA0);
+	MakeArray	(0X17BA0,	0XC);
+	MakeByte	(0X17BAC);
+	MakeArray	(0X17BAC,	0XC);
+	MakeByte	(0X17BB8);
+	MakeArray	(0X17BB8,	0XE);
+	MakeByte	(0X17BC6);
+	MakeArray	(0X17BC6,	0XB);
+	MakeByte	(0X17BD1);
+	MakeArray	(0X17BD1,	0XD);
+	MakeByte	(0X17BDE);
+	MakeArray	(0X17BDE,	0XC);
+	MakeByte	(0X17BEA);
+	MakeArray	(0X17BEA,	0XD);
+	MakeByte	(0X17BF7);
+	MakeArray	(0X17BF7,	0XD);
+	MakeByte	(0X17C04);
+	MakeArray	(0X17C04,	0XA);
+	MakeByte	(0X17C0E);
+	MakeArray	(0X17C0E,	0XD);
+	MakeByte	(0X17C1B);
+	MakeArray	(0X17C1B,	0XC);
+	MakeByte	(0X17C27);
+	MakeArray	(0X17C27,	0XD);
+	MakeByte	(0X17C34);
+	MakeArray	(0X17C34,	0XB);
+	MakeByte	(0X17C3F);
+	MakeArray	(0X17C3F,	0XC);
+	MakeByte	(0X17C4B);
+	MakeArray	(0X17C4B,	0XF);
+	MakeByte	(0X17C5A);
+	MakeArray	(0X17C5A,	0XC);
+	MakeByte	(0X17C66);
+	MakeArray	(0X17C66,	0XD);
+	MakeByte	(0X17C73);
+	MakeArray	(0X17C73,	0XC);
+	MakeByte	(0X17C7F);
+	MakeArray	(0X17C7F,	0XF);
+	MakeByte	(0X17C8E);
+	MakeArray	(0X17C8E,	0XD);
+	MakeByte	(0X17C9B);
+	MakeArray	(0X17C9B,	0XC);
+	MakeByte	(0X17CA7);
+	MakeArray	(0X17CA7,	0XE);
+	MakeByte	(0X17CB5);
+	MakeArray	(0X17CB5,	0X9);
+	MakeByte	(0X17CBE);
+	MakeArray	(0X17CBE,	0XB);
+	MakeByte	(0X17CC9);
+	MakeArray	(0X17CC9,	0XD);
+	MakeByte	(0X17CD6);
+	MakeArray	(0X17CD6,	0XC);
+	MakeByte	(0X17CE2);
+	MakeArray	(0X17CE2,	0XD);
+	MakeByte	(0X17CEF);
+	MakeArray	(0X17CEF,	0X6);
+	MakeByte	(0X17CF5);
+	MakeArray	(0X17CF5,	0XC);
+	MakeByte	(0X17D01);
+	MakeArray	(0X17D01,	0XC);
+	MakeByte	(0X17D0D);
+	MakeArray	(0X17D0D,	0XC);
+	MakeByte	(0X17D19);
+	MakeArray	(0X17D19,	0X8);
+	MakeByte	(0X17D21);
+	MakeArray	(0X17D21,	0XD);
+	MakeByte	(0X17D2E);
+	MakeArray	(0X17D2E,	0X9);
+	MakeByte	(0X17D37);
+	MakeArray	(0X17D37,	0XB);
+	MakeByte	(0X17D42);
+	MakeArray	(0X17D42,	0XD);
+	MakeByte	(0X17D4F);
+	MakeArray	(0X17D4F,	0X8);
+	MakeByte	(0X17D57);
+	MakeArray	(0X17D57,	0XB);
+	MakeByte	(0X17D62);
+	MakeArray	(0X17D62,	0XB);
+	MakeByte	(0X17D6D);
+	MakeArray	(0X17D6D,	0XA);
+	MakeByte	(0X17D77);
+	MakeArray	(0X17D77,	0XB);
+	MakeByte	(0X17D82);
+	MakeArray	(0X17D82,	0X9);
+	MakeByte	(0X17D8B);
+	MakeArray	(0X17D8B,	0XC);
+	MakeByte	(0X17D97);
+	MakeArray	(0X17D97,	0X6);
+	MakeByte	(0X17D9D);
+	MakeArray	(0X17D9D,	0XF);
+	MakeByte	(0X17DAC);
+	MakeArray	(0X17DAC,	0XC);
+	MakeByte	(0X17DB8);
+	MakeArray	(0X17DB8,	0XB);
+	MakeByte	(0X17DC3);
+	MakeArray	(0X17DC3,	0XB);
+	MakeByte	(0X17DCE);
+	MakeArray	(0X17DCE,	0XA);
+	MakeByte	(0X17DD8);
+	MakeArray	(0X17DD8,	0XD);
+	MakeByte	(0X17DE5);
+	MakeArray	(0X17DE5,	0XB);
+	MakeByte	(0X17DF0);
+	MakeArray	(0X17DF0,	0XD);
+	MakeByte	(0X17DFD);
+	MakeArray	(0X17DFD,	0XE);
+	MakeByte	(0X17E0B);
+	MakeArray	(0X17E0B,	0XE);
+	MakeByte	(0X17E19);
+	MakeArray	(0X17E19,	0XA);
+	MakeByte	(0X17E23);
+	MakeArray	(0X17E23,	0XA);
+	MakeByte	(0X17E2D);
+	MakeArray	(0X17E2D,	0XC);
+	MakeByte	(0X17E39);
+	MakeArray	(0X17E39,	0X7);
+	MakeByte	(0X17E40);
+	MakeArray	(0X17E40,	0X6);
+	MakeByte	(0X17E46);
+	MakeArray	(0X17E46,	0X10);
+	MakeByte	(0X17E56);
+	MakeArray	(0X17E56,	0X7);
+	MakeByte	(0X17E5D);
+	MakeArray	(0X17E5D,	0XD);
+	MakeByte	(0X17E6A);
+	MakeArray	(0X17E6A,	0X8);
+	MakeByte	(0X17E72);
+	MakeArray	(0X17E72,	0XC);
+	MakeByte	(0X17E7E);
+	MakeArray	(0X17E7E,	0XE);
+	MakeByte	(0X17E8C);
+	MakeArray	(0X17E8C,	0XD);
+	MakeByte	(0X17E99);
+	MakeArray	(0X17E99,	0X8);
+	MakeByte	(0X17EA1);
+	MakeArray	(0X17EA1,	0X7);
+	MakeByte	(0X17EA8);
+	MakeArray	(0X17EA8,	0XA);
+	MakeByte	(0X17EB2);
+	MakeArray	(0X17EB2,	0X9);
+	MakeByte	(0X17EBB);
+	MakeArray	(0X17EBB,	0XD);
+	MakeByte	(0X17EC8);
+	MakeArray	(0X17EC8,	0XD);
+	MakeByte	(0X17ED5);
+	MakeArray	(0X17ED5,	0XE);
+	MakeByte	(0X17EE3);
+	MakeArray	(0X17EE3,	0XC);
+	MakeByte	(0X17EEF);
+	MakeArray	(0X17EEF,	0XC);
+	MakeByte	(0X17EFB);
+	MakeArray	(0X17EFB,	0XB);
+	MakeByte	(0X17F06);
+	MakeArray	(0X17F06,	0X8);
+	MakeByte	(0X17F0E);
+	MakeArray	(0X17F0E,	0XA);
+	MakeByte	(0X17F18);
+	MakeArray	(0X17F18,	0XF);
+	MakeByte	(0X17F27);
+	MakeArray	(0X17F27,	0X10);
+	MakeByte	(0X17F37);
+	MakeArray	(0X17F37,	0X6);
+	MakeRptCmt	(0X17F3D,	"make sure end of variable length table is word-aligned");
+	MakeByte	(0X17F3D);
 	MakeByte	(0X17F3E);
-	MakeArray	(0X17F3E,	0X9C);
+	MakeArray	(0X17F3E,	0X5);
 	MakeName	(0X17F3E,	"ClassNames");
+	MakeByte	(0X17F43);
+	MakeArray	(0X17F43,	0X5);
+	MakeByte	(0X17F48);
+	MakeArray	(0X17F48,	0X5);
+	MakeByte	(0X17F4D);
+	MakeArray	(0X17F4D,	0X5);
+	MakeByte	(0X17F52);
+	MakeArray	(0X17F52,	0X5);
+	MakeByte	(0X17F57);
+	MakeArray	(0X17F57,	0X5);
+	MakeByte	(0X17F5C);
+	MakeArray	(0X17F5C,	0X5);
+	MakeByte	(0X17F61);
+	MakeArray	(0X17F61,	0X5);
+	MakeByte	(0X17F66);
+	MakeArray	(0X17F66,	0X5);
+	MakeByte	(0X17F6B);
+	MakeArray	(0X17F6B,	0X5);
+	MakeByte	(0X17F70);
+	MakeArray	(0X17F70,	0X5);
+	MakeByte	(0X17F75);
+	MakeArray	(0X17F75,	0X5);
+	MakeByte	(0X17F7A);
+	MakeArray	(0X17F7A,	0X5);
+	MakeByte	(0X17F7F);
+	MakeArray	(0X17F7F,	0X5);
+	MakeByte	(0X17F84);
+	MakeArray	(0X17F84,	0X5);
+	MakeByte	(0X17F89);
+	MakeArray	(0X17F89,	0X5);
+	MakeByte	(0X17F8E);
+	MakeArray	(0X17F8E,	0X4);
+	MakeByte	(0X17F92);
+	MakeArray	(0X17F92,	0X4);
+	MakeByte	(0X17F96);
+	MakeArray	(0X17F96,	0X5);
+	MakeByte	(0X17F9B);
+	MakeArray	(0X17F9B,	0X5);
+	MakeByte	(0X17FA0);
+	MakeArray	(0X17FA0,	0X5);
+	MakeByte	(0X17FA5);
+	MakeArray	(0X17FA5,	0X5);
+	MakeByte	(0X17FAA);
+	MakeArray	(0X17FAA,	0X5);
+	MakeByte	(0X17FAF);
+	MakeArray	(0X17FAF,	0X5);
+	MakeByte	(0X17FB4);
+	MakeArray	(0X17FB4,	0X5);
+	MakeByte	(0X17FB9);
+	MakeArray	(0X17FB9,	0X5);
+	MakeByte	(0X17FBE);
+	MakeArray	(0X17FBE,	0X5);
+	MakeByte	(0X17FC3);
+	MakeArray	(0X17FC3,	0X5);
+	MakeByte	(0X17FC8);
+	MakeArray	(0X17FC8,	0X5);
+	MakeByte	(0X17FCD);
+	MakeArray	(0X17FCD,	0X4);
+	MakeByte	(0X17FD1);
+	MakeArray	(0X17FD1,	0X4);
+	MakeByte	(0X17FD5);
+	MakeArray	(0X17FD5,	0X5);
 	MakeArray	(0X17FDA,	0X26);
 	MakeCode	(0X18000);
 	MakeName	(0X18000,	"j_rts");
@@ -17687,15 +19179,6 @@ static Bytes_3(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeName	(0X183F4,	"bsc00_animateEnemyAction");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X18406);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -19059,6 +20542,8 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X19DB0);
 	MakeName	(0X19DB0,	"GetWeaponSpriteAndPalette");
+	MakeCode	(x=0X19DC2);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
 	MakeRptCmt	(0X19DC6,	"HARDCODED start index for weapon items with battle scene graphics");
 	MakeRptCmt	(0X19DCE,	"HARDCODED end index for weapon items with battle scene graphics");
 	MakeCode	(x=0X19DD6);
@@ -21230,6 +22715,15 @@ static Bytes_4(void) {
 	MakeCode	(x=0X1B44E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1B45E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -23286,15 +24780,6 @@ static Bytes_4(void) {
 	MakeCode	(x=0X1DDC4);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X1DDCC);
 	MakeCode	(x=0X1DDE4);
 	OpOff		(x,	1,	0X0);
@@ -24204,441 +25689,658 @@ static Bytes_5(void) {
 	MakeByte	(0X1F6B6);
 	MakeByte	(0X1F776);
 	MakeByte	(0X1F7BE);
+	MakeRptCmt	(0X1F806,	"BOWIE");
 	MakeByte	(0X1F806);
 	MakeArray	(0X1F806,	0X9);
 	MakeName	(0X1F806,	"AllyBattleSpritesTable");
+	MakeRptCmt	(0X1F80F,	"SARAH");
 	MakeByte	(0X1F80F);
 	MakeArray	(0X1F80F,	0X9);
+	MakeRptCmt	(0X1F818,	"CHESTER");
 	MakeByte	(0X1F818);
 	MakeArray	(0X1F818,	0X9);
+	MakeRptCmt	(0X1F821,	"JAHA");
 	MakeByte	(0X1F821);
 	MakeArray	(0X1F821,	0X9);
+	MakeRptCmt	(0X1F82A,	"KAZIN");
 	MakeByte	(0X1F82A);
 	MakeArray	(0X1F82A,	0X9);
+	MakeRptCmt	(0X1F833,	"SLADE");
 	MakeByte	(0X1F833);
 	MakeArray	(0X1F833,	0X9);
+	MakeRptCmt	(0X1F83C,	"KIWI");
 	MakeByte	(0X1F83C);
 	MakeArray	(0X1F83C,	0X9);
+	MakeRptCmt	(0X1F845,	"PETER");
 	MakeByte	(0X1F845);
 	MakeArray	(0X1F845,	0X9);
+	MakeRptCmt	(0X1F84E,	"MAY");
 	MakeByte	(0X1F84E);
 	MakeArray	(0X1F84E,	0X9);
+	MakeRptCmt	(0X1F857,	"GERHALT");
 	MakeByte	(0X1F857);
 	MakeArray	(0X1F857,	0X9);
+	MakeRptCmt	(0X1F860,	"LUKE");
 	MakeByte	(0X1F860);
 	MakeArray	(0X1F860,	0X9);
+	MakeRptCmt	(0X1F869,	"ROHDE");
 	MakeByte	(0X1F869);
 	MakeArray	(0X1F869,	0X9);
+	MakeRptCmt	(0X1F872,	"RICK");
 	MakeByte	(0X1F872);
 	MakeArray	(0X1F872,	0X9);
+	MakeRptCmt	(0X1F87B,	"ELRIC");
 	MakeByte	(0X1F87B);
 	MakeArray	(0X1F87B,	0X9);
+	MakeRptCmt	(0X1F884,	"ERIC");
 	MakeByte	(0X1F884);
 	MakeArray	(0X1F884,	0X9);
+	MakeRptCmt	(0X1F88D,	"KARNA");
 	MakeByte	(0X1F88D);
 	MakeArray	(0X1F88D,	0X9);
+	MakeRptCmt	(0X1F896,	"RANDOLF");
 	MakeByte	(0X1F896);
 	MakeArray	(0X1F896,	0X9);
+	MakeRptCmt	(0X1F89F,	"TYRIN");
 	MakeByte	(0X1F89F);
 	MakeArray	(0X1F89F,	0X9);
+	MakeRptCmt	(0X1F8A8,	"JANET");
 	MakeByte	(0X1F8A8);
 	MakeArray	(0X1F8A8,	0X9);
+	MakeRptCmt	(0X1F8B1,	"HIGINS");
 	MakeByte	(0X1F8B1);
 	MakeArray	(0X1F8B1,	0X9);
+	MakeRptCmt	(0X1F8BA,	"SKREECH");
 	MakeByte	(0X1F8BA);
 	MakeArray	(0X1F8BA,	0X9);
+	MakeRptCmt	(0X1F8C3,	"TAYA");
 	MakeByte	(0X1F8C3);
 	MakeArray	(0X1F8C3,	0X9);
+	MakeRptCmt	(0X1F8CC,	"FRAYJA");
 	MakeByte	(0X1F8CC);
 	MakeArray	(0X1F8CC,	0X9);
+	MakeRptCmt	(0X1F8D5,	"JARO");
 	MakeByte	(0X1F8D5);
 	MakeArray	(0X1F8D5,	0X9);
+	MakeRptCmt	(0X1F8DE,	"GYAN");
 	MakeByte	(0X1F8DE);
 	MakeArray	(0X1F8DE,	0X9);
+	MakeRptCmt	(0X1F8E7,	"SHEELA");
 	MakeByte	(0X1F8E7);
 	MakeArray	(0X1F8E7,	0X9);
+	MakeRptCmt	(0X1F8F0,	"ZYNK");
 	MakeByte	(0X1F8F0);
 	MakeArray	(0X1F8F0,	0X9);
+	MakeRptCmt	(0X1F8F9,	"CHAZ");
 	MakeByte	(0X1F8F9);
 	MakeArray	(0X1F8F9,	0X9);
+	MakeRptCmt	(0X1F902,	"LEMON");
 	MakeByte	(0X1F902);
 	MakeArray	(0X1F902,	0X9);
+	MakeRptCmt	(0X1F90B,	"CLAUDE");
 	MakeByte	(0X1F90B);
 	MakeArray	(0X1F90B,	0X9);
+	MakeRptCmt	(0X1F914,	"OOZE");
 	MakeByte	(0X1F914);
 	MakeArray	(0X1F914,	0X2);
 	MakeName	(0X1F914,	"EnemyBattleSpritesTable");
+	MakeRptCmt	(0X1F916,	"HUGE RAT");
 	MakeByte	(0X1F916);
 	MakeArray	(0X1F916,	0X2);
+	MakeRptCmt	(0X1F918,	"GALAM SOLDIER");
 	MakeByte	(0X1F918);
 	MakeArray	(0X1F918,	0X2);
+	MakeRptCmt	(0X1F91A,	"GALAM KNIGHT");
 	MakeByte	(0X1F91A);
 	MakeArray	(0X1F91A,	0X2);
+	MakeRptCmt	(0X1F91C,	"GOBLIN");
 	MakeByte	(0X1F91C);
 	MakeArray	(0X1F91C,	0X2);
+	MakeRptCmt	(0X1F91E,	"GREEN OOZE");
 	MakeByte	(0X1F91E);
 	MakeArray	(0X1F91E,	0X2);
+	MakeRptCmt	(0X1F920,	"DARK DWARF");
 	MakeByte	(0X1F920);
 	MakeArray	(0X1F920,	0X2);
+	MakeRptCmt	(0X1F922,	"HOBGOBLIN");
 	MakeByte	(0X1F922);
 	MakeArray	(0X1F922,	0X2);
+	MakeRptCmt	(0X1F924,	"ZOMBIE");
 	MakeByte	(0X1F924);
 	MakeArray	(0X1F924,	0X2);
+	MakeRptCmt	(0X1F926,	"GOLEM");
 	MakeByte	(0X1F926);
 	MakeArray	(0X1F926,	0X2);
+	MakeRptCmt	(0X1F928,	"KRAKEN LEG");
 	MakeByte	(0X1F928);
 	MakeArray	(0X1F928,	0X2);
+	MakeRptCmt	(0X1F92A,	"SOULSOWER");
 	MakeByte	(0X1F92A);
 	MakeArray	(0X1F92A,	0X2);
+	MakeRptCmt	(0X1F92C,	"ORC");
 	MakeByte	(0X1F92C);
 	MakeArray	(0X1F92C,	0X2);
+	MakeRptCmt	(0X1F92E,	"PAWN");
 	MakeByte	(0X1F92E);
 	MakeArray	(0X1F92E,	0X2);
+	MakeRptCmt	(0X1F930,	"KNIGHT");
 	MakeByte	(0X1F930);
 	MakeArray	(0X1F930,	0X2);
+	MakeRptCmt	(0X1F932,	"RAT");
 	MakeByte	(0X1F932);
 	MakeArray	(0X1F932,	0X2);
+	MakeRptCmt	(0X1F934,	"BUBBLING OOZE");
 	MakeByte	(0X1F934);
 	MakeArray	(0X1F934,	0X2);
+	MakeRptCmt	(0X1F936,	"SKELETON");
 	MakeByte	(0X1F936);
 	MakeArray	(0X1F936,	0X2);
+	MakeRptCmt	(0X1F938,	"DARK SOLDIER");
 	MakeByte	(0X1F938);
 	MakeArray	(0X1F938,	0X2);
+	MakeRptCmt	(0X1F93A,	"LIZARDMAN");
 	MakeByte	(0X1F93A);
 	MakeArray	(0X1F93A,	0X2);
+	MakeRptCmt	(0X1F93C,	"WORM");
 	MakeByte	(0X1F93C);
 	MakeArray	(0X1F93C,	0X2);
+	MakeRptCmt	(0X1F93E,	"DARK KNIGHT");
 	MakeByte	(0X1F93E);
 	MakeArray	(0X1F93E,	0X2);
+	MakeRptCmt	(0X1F940,	"ORC LORD");
 	MakeByte	(0X1F940);
 	MakeArray	(0X1F940,	0X2);
+	MakeRptCmt	(0X1F942,	"DEVIL SOLDIER");
 	MakeByte	(0X1F942);
 	MakeArray	(0X1F942,	0X2);
+	MakeRptCmt	(0X1F944,	"CERBERUS");
 	MakeByte	(0X1F944);
 	MakeArray	(0X1F944,	0X2);
+	MakeRptCmt	(0X1F946,	"MUD MAN");
 	MakeByte	(0X1F946);
 	MakeArray	(0X1F946,	0X2);
+	MakeRptCmt	(0X1F948,	"DRAGONEWT");
 	MakeByte	(0X1F948);
 	MakeArray	(0X1F948,	0X2);
+	MakeRptCmt	(0X1F94A,	"PURPLE WORM");
 	MakeByte	(0X1F94A);
 	MakeArray	(0X1F94A,	0X2);
+	MakeRptCmt	(0X1F94C,	"EXECUTIONER");
 	MakeByte	(0X1F94C);
 	MakeArray	(0X1F94C,	0X2);
+	MakeRptCmt	(0X1F94E,	"HELL HOUND");
 	MakeByte	(0X1F94E);
 	MakeArray	(0X1F94E,	0X2);
+	MakeRptCmt	(0X1F950,	"MINOTAUR");
 	MakeByte	(0X1F950);
 	MakeArray	(0X1F950,	0X2);
+	MakeRptCmt	(0X1F952,	"CYCLOPS");
 	MakeByte	(0X1F952);
 	MakeArray	(0X1F952,	0X2);
+	MakeRptCmt	(0X1F954,	"BURST ROCK");
 	MakeByte	(0X1F954);
 	MakeArray	(0X1F954,	0X2);
+	MakeRptCmt	(0X1F956,	"HYDRA");
 	MakeByte	(0X1F956);
 	MakeArray	(0X1F956,	0X2);
+	MakeRptCmt	(0X1F958,	"CHAOS WARRIOR");
 	MakeByte	(0X1F958);
 	MakeArray	(0X1F958,	0X2);
+	MakeRptCmt	(0X1F95A,	"REAPER");
 	MakeByte	(0X1F95A);
 	MakeArray	(0X1F95A,	0X2);
+	MakeRptCmt	(0X1F95C,	"EVIL BEAST");
 	MakeByte	(0X1F95C);
 	MakeArray	(0X1F95C,	0X2);
+	MakeRptCmt	(0X1F95E,	"PYROHYDRA");
 	MakeByte	(0X1F95E);
 	MakeArray	(0X1F95E,	0X2);
+	MakeRptCmt	(0X1F960,	"ZEON GUARD");
 	MakeByte	(0X1F960);
 	MakeArray	(0X1F960,	0X2);
+	MakeRptCmt	(0X1F962,	"GIZMO");
 	MakeByte	(0X1F962);
 	MakeArray	(0X1F962,	0X2);
+	MakeRptCmt	(0X1F964,	"HUGE BAT");
 	MakeByte	(0X1F964);
 	MakeArray	(0X1F964,	0X2);
+	MakeRptCmt	(0X1F966,	"VAMPIRE BAT");
 	MakeByte	(0X1F966);
 	MakeArray	(0X1F966,	0X2);
+	MakeRptCmt	(0X1F968,	"EVIL CLOUD");
 	MakeByte	(0X1F968);
 	MakeArray	(0X1F968,	0X2);
+	MakeRptCmt	(0X1F96A,	"GARGOYLE");
 	MakeByte	(0X1F96A);
 	MakeArray	(0X1F96A,	0X2);
+	MakeRptCmt	(0X1F96C,	"HARPY");
 	MakeByte	(0X1F96C);
 	MakeArray	(0X1F96C,	0X2);
+	MakeRptCmt	(0X1F96E,	"LESSER DEMON");
 	MakeByte	(0X1F96E);
 	MakeArray	(0X1F96E,	0X2);
+	MakeRptCmt	(0X1F970,	"WYVERN");
 	MakeByte	(0X1F970);
 	MakeArray	(0X1F970,	0X2);
+	MakeRptCmt	(0X1F972,	"HARPY QUEEN");
 	MakeByte	(0X1F972);
 	MakeArray	(0X1F972,	0X2);
+	MakeRptCmt	(0X1F974,	"PEGASUS KNIGHT");
 	MakeByte	(0X1F974);
 	MakeArray	(0X1F974,	0X2);
+	MakeRptCmt	(0X1F976,	"GRIFFIN");
 	MakeByte	(0X1F976);
 	MakeArray	(0X1F976,	0X2);
+	MakeRptCmt	(0X1F978,	"MIST DEMON");
 	MakeByte	(0X1F978);
 	MakeArray	(0X1F978,	0X2);
+	MakeRptCmt	(0X1F97A,	"WHITE DRAGON");
 	MakeByte	(0X1F97A);
 	MakeArray	(0X1F97A,	0X2);
+	MakeRptCmt	(0X1F97C,	"DEMON");
 	MakeByte	(0X1F97C);
 	MakeArray	(0X1F97C,	0X2);
+	MakeRptCmt	(0X1F97E,	"CHAOS DRAGON");
 	MakeByte	(0X1F97E);
 	MakeArray	(0X1F97E,	0X2);
+	MakeRptCmt	(0X1F980,	"DEVIL GRIFFIN");
 	MakeByte	(0X1F980);
 	MakeArray	(0X1F980,	0X2);
+	MakeRptCmt	(0X1F982,	"ARCH DEMON");
 	MakeByte	(0X1F982);
 	MakeArray	(0X1F982,	0X2);
+	MakeRptCmt	(0X1F984,	"GALAM ARCHER");
 	MakeByte	(0X1F984);
 	MakeArray	(0X1F984,	0X2);
+	MakeRptCmt	(0X1F986,	"HUNTER GOBLIN");
 	MakeByte	(0X1F986);
 	MakeArray	(0X1F986,	0X2);
+	MakeRptCmt	(0X1F988,	"DEATH ARCHER");
 	MakeByte	(0X1F988);
 	MakeArray	(0X1F988,	0X2);
+	MakeRptCmt	(0X1F98A,	"KRAKEN ARM");
 	MakeByte	(0X1F98A);
 	MakeArray	(0X1F98A,	0X2);
+	MakeRptCmt	(0X1F98C,	"ARROW LAUNCHER");
 	MakeByte	(0X1F98C);
 	MakeArray	(0X1F98C,	0X2);
+	MakeRptCmt	(0X1F98E,	"ROOK");
 	MakeByte	(0X1F98E);
 	MakeArray	(0X1F98E,	0X2);
+	MakeRptCmt	(0X1F990,	"DARK SNIPER");
 	MakeByte	(0X1F990);
 	MakeArray	(0X1F990,	0X2);
+	MakeRptCmt	(0X1F992,	"BOW MASTER");
 	MakeByte	(0X1F992);
 	MakeArray	(0X1F992,	0X2);
+	MakeRptCmt	(0X1F994,	"BOW RIDER");
 	MakeByte	(0X1F994);
 	MakeArray	(0X1F994,	0X2);
+	MakeRptCmt	(0X1F996,	"DARK GUNNER");
 	MakeByte	(0X1F996);
 	MakeArray	(0X1F996,	0X2);
+	MakeRptCmt	(0X1F998,	"HORSEMAN");
 	MakeByte	(0X1F998);
 	MakeArray	(0X1F998,	0X2);
+	MakeRptCmt	(0X1F99A,	"GALAM MAGE");
 	MakeByte	(0X1F99A);
 	MakeArray	(0X1F99A,	0X2);
+	MakeRptCmt	(0X1F99C,	"WITCH");
 	MakeByte	(0X1F99C);
 	MakeArray	(0X1F99C,	0X2);
+	MakeRptCmt	(0X1F99E,	"MASTER MAGE");
 	MakeByte	(0X1F99E);
 	MakeArray	(0X1F99E,	0X2);
+	MakeRptCmt	(0X1F9A0,	"DARK MADAM");
 	MakeByte	(0X1F9A0);
 	MakeArray	(0X1F9A0,	0X2);
+	MakeRptCmt	(0X1F9A2,	"QUEEN");
 	MakeByte	(0X1F9A2);
 	MakeArray	(0X1F9A2,	0X2);
+	MakeRptCmt	(0X1F9A4,	"WIZARD");
 	MakeByte	(0X1F9A4);
 	MakeArray	(0X1F9A4,	0X2);
+	MakeRptCmt	(0X1F9A6,	"NECROMANCER");
 	MakeByte	(0X1F9A6);
 	MakeArray	(0X1F9A6,	0X2);
+	MakeRptCmt	(0X1F9A8,	"CHAOS WIZARD");
 	MakeByte	(0X1F9A8);
 	MakeArray	(0X1F9A8,	0X2);
+	MakeRptCmt	(0X1F9AA,	"DEMON MASTER");
 	MakeByte	(0X1F9AA);
 	MakeArray	(0X1F9AA,	0X2);
+	MakeRptCmt	(0X1F9AC,	"DARK CLERIC");
 	MakeByte	(0X1F9AC);
 	MakeArray	(0X1F9AC,	0X2);
+	MakeRptCmt	(0X1F9AE,	"DEATH MONK");
 	MakeByte	(0X1F9AE);
 	MakeArray	(0X1F9AE,	0X2);
+	MakeRptCmt	(0X1F9B0,	"BLACK MONK");
 	MakeByte	(0X1F9B0);
 	MakeArray	(0X1F9B0,	0X2);
+	MakeRptCmt	(0X1F9B2,	"HIGH PRIEST");
 	MakeByte	(0X1F9B2);
 	MakeArray	(0X1F9B2,	0X2);
+	MakeRptCmt	(0X1F9B4,	"EVIL BISHOP");
 	MakeByte	(0X1F9B4);
 	MakeArray	(0X1F9B4,	0X2);
+	MakeRptCmt	(0X1F9B6,	"DARK BISHOP");
 	MakeByte	(0X1F9B6);
 	MakeArray	(0X1F9B6,	0X2);
+	MakeRptCmt	(0X1F9B8,	"MASTER MONK");
 	MakeByte	(0X1F9B8);
 	MakeArray	(0X1F9B8,	0X2);
+	MakeRptCmt	(0X1F9BA,	"SHAMAN");
 	MakeByte	(0X1F9BA);
 	MakeArray	(0X1F9BA,	0X2);
+	MakeRptCmt	(0X1F9BC,	"EVIL BISHOP");
 	MakeByte	(0X1F9BC);
 	MakeArray	(0X1F9BC,	0X2);
+	MakeRptCmt	(0X1F9BE,	"BLUE SHAMAN");
 	MakeByte	(0X1F9BE);
 	MakeArray	(0X1F9BE,	0X2);
+	MakeRptCmt	(0X1F9C0,	"DARK SMOKE");
 	MakeByte	(0X1F9C0);
 	MakeArray	(0X1F9C0,	0X2);
+	MakeRptCmt	(0X1F9C2,	"KRAKEN HEAD");
 	MakeByte	(0X1F9C2);
 	MakeArray	(0X1F9C2,	0X2);
+	MakeRptCmt	(0X1F9C4,	"TAROS");
 	MakeByte	(0X1F9C4);
 	MakeArray	(0X1F9C4,	0X2);
+	MakeRptCmt	(0X1F9C6,	"KING");
 	MakeByte	(0X1F9C6);
 	MakeArray	(0X1F9C6,	0X2);
+	MakeRptCmt	(0X1F9C8,	"WILLARD");
 	MakeByte	(0X1F9C8);
 	MakeArray	(0X1F9C8,	0X2);
+	MakeRptCmt	(0X1F9CA,	"ZALBARD");
 	MakeByte	(0X1F9CA);
 	MakeArray	(0X1F9CA,	0X2);
+	MakeRptCmt	(0X1F9CC,	"CAMEELA");
 	MakeByte	(0X1F9CC);
 	MakeArray	(0X1F9CC,	0X2);
+	MakeRptCmt	(0X1F9CE,	"PRISM FLOWER");
 	MakeByte	(0X1F9CE);
 	MakeArray	(0X1F9CE,	0X2);
+	MakeRptCmt	(0X1F9D0,	"RED BARON");
 	MakeByte	(0X1F9D0);
 	MakeArray	(0X1F9D0,	0X2);
+	MakeRptCmt	(0X1F9D2,	"GESHP");
 	MakeByte	(0X1F9D2);
 	MakeArray	(0X1F9D2,	0X2);
+	MakeRptCmt	(0X1F9D4,	"ODD EYE");
 	MakeByte	(0X1F9D4);
 	MakeArray	(0X1F9D4,	0X2);
+	MakeRptCmt	(0X1F9D6,	"GALAM");
 	MakeByte	(0X1F9D6);
 	MakeArray	(0X1F9D6,	0X2);
+	MakeRptCmt	(0X1F9D8,	"ZEON");
 	MakeByte	(0X1F9D8);
 	MakeArray	(0X1F9D8,	0X2);
+	MakeRptCmt	(0X1F9DA,	"JAR");
 	MakeByte	(0X1F9DA);
 	MakeArray	(0X1F9DA,	0X2);
+	MakeRptCmt	(0X1F9DC,	"MASTER MAGE");
 	MakeByte	(0X1F9DC);
 	MakeArray	(0X1F9DC,	0X2);
+	MakeRptCmt	(0X1F9DE,	"NECROMANCER");
 	MakeByte	(0X1F9DE);
 	MakeArray	(0X1F9DE,	0X2);
+	MakeRptCmt	(0X1F9E0,	"BLUE SHAMAN");
 	MakeByte	(0X1F9E0);
 	MakeArray	(0X1F9E0,	0X2);
+	MakeRptCmt	(0X1F9E2,	"Leather Glove");
 	MakeByte	(0X1F9E2);
 	MakeArray	(0X1F9E2,	0X2);
 	MakeName	(0X1F9E2,	"WeaponSprites");
+	MakeRptCmt	(0X1F9E4,	"Power Glove");
 	MakeByte	(0X1F9E4);
 	MakeArray	(0X1F9E4,	0X2);
+	MakeRptCmt	(0X1F9E6,	"Brass Knuckles");
 	MakeByte	(0X1F9E6);
 	MakeArray	(0X1F9E6,	0X2);
+	MakeRptCmt	(0X1F9E8,	"Iron Knuckles");
 	MakeByte	(0X1F9E8);
 	MakeArray	(0X1F9E8,	0X2);
+	MakeRptCmt	(0X1F9EA,	"Misty Knuckles");
 	MakeByte	(0X1F9EA);
 	MakeArray	(0X1F9EA,	0X2);
+	MakeRptCmt	(0X1F9EC,	"Giant Knuckles");
 	MakeByte	(0X1F9EC);
 	MakeArray	(0X1F9EC,	0X2);
+	MakeRptCmt	(0X1F9EE,	"Evil Knuckles");
 	MakeByte	(0X1F9EE);
 	MakeArray	(0X1F9EE,	0X2);
+	MakeRptCmt	(0X1F9F0,	"Short Axe");
 	MakeByte	(0X1F9F0);
 	MakeArray	(0X1F9F0,	0X2);
+	MakeRptCmt	(0X1F9F2,	"Hand Axe");
 	MakeByte	(0X1F9F2);
 	MakeArray	(0X1F9F2,	0X2);
+	MakeRptCmt	(0X1F9F4,	"Middle Axe");
 	MakeByte	(0X1F9F4);
 	MakeArray	(0X1F9F4,	0X2);
+	MakeRptCmt	(0X1F9F6,	"Power Axe");
 	MakeByte	(0X1F9F6);
 	MakeArray	(0X1F9F6,	0X2);
+	MakeRptCmt	(0X1F9F8,	"Battle Axe");
 	MakeByte	(0X1F9F8);
 	MakeArray	(0X1F9F8,	0X2);
+	MakeRptCmt	(0X1F9FA,	"Large Axe");
 	MakeByte	(0X1F9FA);
 	MakeArray	(0X1F9FA,	0X2);
+	MakeRptCmt	(0X1F9FC,	"Great Axe");
 	MakeByte	(0X1F9FC);
 	MakeArray	(0X1F9FC,	0X2);
+	MakeRptCmt	(0X1F9FE,	"Heat Axe");
 	MakeByte	(0X1F9FE);
 	MakeArray	(0X1F9FE,	0X2);
+	MakeRptCmt	(0X1FA00,	"Atlas Axe");
 	MakeByte	(0X1FA00);
 	MakeArray	(0X1FA00,	0X2);
+	MakeRptCmt	(0X1FA02,	"Ground Axe");
 	MakeByte	(0X1FA02);
 	MakeArray	(0X1FA02,	0X2);
+	MakeRptCmt	(0X1FA04,	"Rune Axe");
 	MakeByte	(0X1FA04);
 	MakeArray	(0X1FA04,	0X2);
+	MakeRptCmt	(0X1FA06,	"Evil Axe");
 	MakeByte	(0X1FA06);
 	MakeArray	(0X1FA06,	0X2);
+	MakeRptCmt	(0X1FA08,	"Wooden Arrow");
 	MakeByte	(0X1FA08);
 	MakeArray	(0X1FA08,	0X2);
+	MakeRptCmt	(0X1FA0A,	"Iron Arrow");
 	MakeByte	(0X1FA0A);
 	MakeArray	(0X1FA0A,	0X2);
+	MakeRptCmt	(0X1FA0C,	"Steel Arrow");
 	MakeByte	(0X1FA0C);
 	MakeArray	(0X1FA0C,	0X2);
+	MakeRptCmt	(0X1FA0E,	"Robin Arrow");
 	MakeByte	(0X1FA0E);
 	MakeArray	(0X1FA0E,	0X2);
+	MakeRptCmt	(0X1FA10,	"Assault Shell");
 	MakeByte	(0X1FA10);
 	MakeArray	(0X1FA10,	0X2);
+	MakeRptCmt	(0X1FA12,	"Great Shot");
 	MakeByte	(0X1FA12);
 	MakeArray	(0X1FA12,	0X2);
+	MakeRptCmt	(0X1FA14,	"Nazca Cannon");
 	MakeByte	(0X1FA14);
 	MakeArray	(0X1FA14,	0X2);
+	MakeRptCmt	(0X1FA16,	"Buster Shot");
 	MakeByte	(0X1FA16);
 	MakeArray	(0X1FA16,	0X2);
+	MakeRptCmt	(0X1FA18,	"Hyper Cannon");
 	MakeByte	(0X1FA18);
 	MakeArray	(0X1FA18,	0X2);
+	MakeRptCmt	(0X1FA1A,	"Grand Cannon");
 	MakeByte	(0X1FA1A);
 	MakeArray	(0X1FA1A,	0X2);
+	MakeRptCmt	(0X1FA1C,	"Evil Shot");
 	MakeByte	(0X1FA1C);
 	MakeArray	(0X1FA1C,	0X2);
+	MakeRptCmt	(0X1FA1E,	"Wooden Stick");
 	MakeByte	(0X1FA1E);
 	MakeArray	(0X1FA1E,	0X2);
+	MakeRptCmt	(0X1FA20,	"Short Sword");
 	MakeByte	(0X1FA20);
 	MakeArray	(0X1FA20,	0X2);
+	MakeRptCmt	(0X1FA22,	"Middle Sword");
 	MakeByte	(0X1FA22);
 	MakeArray	(0X1FA22,	0X2);
+	MakeRptCmt	(0X1FA24,	"Long Sword");
 	MakeByte	(0X1FA24);
 	MakeArray	(0X1FA24,	0X2);
+	MakeRptCmt	(0X1FA26,	"Steel Sword");
 	MakeByte	(0X1FA26);
 	MakeArray	(0X1FA26,	0X2);
+	MakeRptCmt	(0X1FA28,	"Achilles Sword");
 	MakeByte	(0X1FA28);
 	MakeArray	(0X1FA28,	0X2);
+	MakeRptCmt	(0X1FA2A,	"Broad Sword");
 	MakeByte	(0X1FA2A);
 	MakeArray	(0X1FA2A,	0X2);
+	MakeRptCmt	(0X1FA2C,	"Buster Sword");
 	MakeByte	(0X1FA2C);
 	MakeArray	(0X1FA2C,	0X2);
+	MakeRptCmt	(0X1FA2E,	"Great Sword");
 	MakeByte	(0X1FA2E);
 	MakeArray	(0X1FA2E,	0X2);
+	MakeRptCmt	(0X1FA30,	"Critical Sword");
 	MakeByte	(0X1FA30);
 	MakeArray	(0X1FA30,	0X2);
+	MakeRptCmt	(0X1FA32,	"Battle Sword");
 	MakeByte	(0X1FA32);
 	MakeArray	(0X1FA32,	0X2);
+	MakeRptCmt	(0X1FA34,	"Force Sword");
 	MakeByte	(0X1FA34);
 	MakeArray	(0X1FA34,	0X2);
+	MakeRptCmt	(0X1FA36,	"Counter Sword");
 	MakeByte	(0X1FA36);
 	MakeArray	(0X1FA36,	0X2);
+	MakeRptCmt	(0X1FA38,	"Levanter");
 	MakeByte	(0X1FA38);
 	MakeArray	(0X1FA38,	0X2);
+	MakeRptCmt	(0X1FA3A,	"Dark Sword");
 	MakeByte	(0X1FA3A);
 	MakeArray	(0X1FA3A,	0X2);
+	MakeRptCmt	(0X1FA3C,	"Wooden Sword");
 	MakeByte	(0X1FA3C);
 	MakeArray	(0X1FA3C,	0X2);
+	MakeRptCmt	(0X1FA3E,	"Short Spear");
 	MakeByte	(0X1FA3E);
 	MakeArray	(0X1FA3E,	0X2);
+	MakeRptCmt	(0X1FA40,	"Bronze Lance");
 	MakeByte	(0X1FA40);
 	MakeArray	(0X1FA40,	0X2);
+	MakeRptCmt	(0X1FA42,	"Spear");
 	MakeByte	(0X1FA42);
 	MakeArray	(0X1FA42,	0X2);
+	MakeRptCmt	(0X1FA44,	"Steel Lance");
 	MakeByte	(0X1FA44);
 	MakeArray	(0X1FA44,	0X2);
+	MakeRptCmt	(0X1FA46,	"Power Spear");
 	MakeByte	(0X1FA46);
 	MakeArray	(0X1FA46,	0X2);
+	MakeRptCmt	(0X1FA48,	"Heavy Lance");
 	MakeByte	(0X1FA48);
 	MakeArray	(0X1FA48,	0X2);
+	MakeRptCmt	(0X1FA4A,	"Javelin");
 	MakeByte	(0X1FA4A);
 	MakeArray	(0X1FA4A,	0X2);
+	MakeRptCmt	(0X1FA4C,	"Chrome Lance");
 	MakeByte	(0X1FA4C);
 	MakeArray	(0X1FA4C,	0X2);
+	MakeRptCmt	(0X1FA4E,	"Valkyrie");
 	MakeByte	(0X1FA4E);
 	MakeArray	(0X1FA4E,	0X2);
+	MakeRptCmt	(0X1FA50,	"Holy Lance");
 	MakeByte	(0X1FA50);
 	MakeArray	(0X1FA50,	0X2);
+	MakeRptCmt	(0X1FA52,	"Mist Javelin");
 	MakeByte	(0X1FA52);
 	MakeArray	(0X1FA52,	0X2);
+	MakeRptCmt	(0X1FA54,	"Halberd");
 	MakeByte	(0X1FA54);
 	MakeArray	(0X1FA54,	0X2);
+	MakeRptCmt	(0X1FA56,	"Evil Lance");
 	MakeByte	(0X1FA56);
 	MakeArray	(0X1FA56,	0X2);
+	MakeRptCmt	(0X1FA58,	"Wooden Rod");
 	MakeByte	(0X1FA58);
 	MakeArray	(0X1FA58,	0X2);
+	MakeRptCmt	(0X1FA5A,	"Short Rod");
 	MakeByte	(0X1FA5A);
 	MakeArray	(0X1FA5A,	0X2);
+	MakeRptCmt	(0X1FA5C,	"Bronze Rod");
 	MakeByte	(0X1FA5C);
 	MakeArray	(0X1FA5C,	0X2);
+	MakeRptCmt	(0X1FA5E,	"Iron Rod");
 	MakeByte	(0X1FA5E);
 	MakeArray	(0X1FA5E,	0X2);
+	MakeRptCmt	(0X1FA60,	"Power Stick");
 	MakeByte	(0X1FA60);
 	MakeArray	(0X1FA60,	0X2);
+	MakeRptCmt	(0X1FA62,	"Flail");
 	MakeByte	(0X1FA62);
 	MakeArray	(0X1FA62,	0X2);
+	MakeRptCmt	(0X1FA64,	"Guardian Staff");
 	MakeByte	(0X1FA64);
 	MakeArray	(0X1FA64,	0X2);
+	MakeRptCmt	(0X1FA66,	"Indra Staff");
 	MakeByte	(0X1FA66);
 	MakeArray	(0X1FA66,	0X2);
+	MakeRptCmt	(0X1FA68,	"Mage Staff");
 	MakeByte	(0X1FA68);
 	MakeArray	(0X1FA68,	0X2);
+	MakeRptCmt	(0X1FA6A,	"Wish Staff");
 	MakeByte	(0X1FA6A);
 	MakeArray	(0X1FA6A,	0X2);
+	MakeRptCmt	(0X1FA6C,	"Great Rod");
 	MakeByte	(0X1FA6C);
 	MakeArray	(0X1FA6C,	0X2);
+	MakeRptCmt	(0X1FA6E,	"Supply Staff");
 	MakeByte	(0X1FA6E);
 	MakeArray	(0X1FA6E,	0X2);
+	MakeRptCmt	(0X1FA70,	"Holy Staff");
 	MakeByte	(0X1FA70);
 	MakeArray	(0X1FA70,	0X2);
+	MakeRptCmt	(0X1FA72,	"Freeze Staff");
 	MakeByte	(0X1FA72);
 	MakeArray	(0X1FA72,	0X2);
+	MakeRptCmt	(0X1FA74,	"Goddess Staff");
 	MakeByte	(0X1FA74);
 	MakeArray	(0X1FA74,	0X2);
+	MakeRptCmt	(0X1FA76,	"Mystery Staff");
 	MakeByte	(0X1FA76);
 	MakeArray	(0X1FA76,	0X2);
+	MakeRptCmt	(0X1FA78,	"Demon Rod");
 	MakeByte	(0X1FA78);
 	MakeArray	(0X1FA78,	0X2);
+	MakeRptCmt	(0X1FA7A,	"Iron Ball");
 	MakeByte	(0X1FA7A);
 	MakeArray	(0X1FA7A,	0X2);
+	MakeRptCmt	(0X1FA7C,	"Short Knife");
 	MakeByte	(0X1FA7C);
 	MakeArray	(0X1FA7C,	0X2);
+	MakeRptCmt	(0X1FA7E,	"Dagger");
 	MakeByte	(0X1FA7E);
 	MakeArray	(0X1FA7E,	0X2);
+	MakeRptCmt	(0X1FA80,	"Knife");
 	MakeByte	(0X1FA80);
 	MakeArray	(0X1FA80,	0X2);
+	MakeRptCmt	(0X1FA82,	"Thieve's Dagger");
 	MakeByte	(0X1FA82);
 	MakeArray	(0X1FA82,	0X2);
+	MakeRptCmt	(0X1FA84,	"Katana");
 	MakeByte	(0X1FA84);
 	MakeArray	(0X1FA84,	0X2);
+	MakeRptCmt	(0X1FA86,	"Ninja Katana");
 	MakeByte	(0X1FA86);
 	MakeArray	(0X1FA86,	0X2);
+	MakeRptCmt	(0X1FA88,	"Gisarme");
 	MakeByte	(0X1FA88);
 	MakeArray	(0X1FA88,	0X2);
 	MakeRptCmt	(0X1FA8A,	"One byte per battle entry : same background index for all battlefield, or $FF for background depending on map block.");
@@ -25291,8 +26993,69 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeByte	(0X20878);
-	MakeArray	(0X20878,	0X18A);
+	MakeArray	(0X20878,	0X6);
 	MakeName	(0X20878,	"ShopItems");
+	MakeByte	(0X2087E);
+	MakeArray	(0X2087E,	0X8);
+	MakeByte	(0X20886);
+	MakeArray	(0X20886,	0XA);
+	MakeByte	(0X20890);
+	MakeArray	(0X20890,	0XC);
+	MakeByte	(0X2089C);
+	MakeArray	(0X2089C,	0XC);
+	MakeByte	(0X208A8);
+	MakeArray	(0X208A8,	0XD);
+	MakeByte	(0X208B5);
+	MakeArray	(0X208B5,	0XD);
+	MakeByte	(0X208C2);
+	MakeArray	(0X208C2,	0X7);
+	MakeByte	(0X208C9);
+	MakeArray	(0X208C9,	0XB);
+	MakeByte	(0X208D4);
+	MakeArray	(0X208D4,	0XB);
+	MakeByte	(0X208DF);
+	MakeArray	(0X208DF,	0XB);
+	MakeByte	(0X208EA);
+	MakeArray	(0X208EA,	0XD);
+	MakeByte	(0X208F7);
+	MakeArray	(0X208F7,	0XD);
+	MakeByte	(0X20904);
+	MakeArray	(0X20904,	0XD);
+	MakeByte	(0X20911);
+	MakeArray	(0X20911,	0XD);
+	MakeByte	(0X2091E);
+	MakeArray	(0X2091E,	0X5);
+	MakeByte	(0X20923);
+	MakeArray	(0X20923,	0X5);
+	MakeByte	(0X20928);
+	MakeArray	(0X20928,	0X5);
+	MakeByte	(0X2092D);
+	MakeArray	(0X2092D,	0X7);
+	MakeByte	(0X20934);
+	MakeArray	(0X20934,	0X7);
+	MakeByte	(0X2093B);
+	MakeArray	(0X2093B,	0X7);
+	MakeByte	(0X20942);
+	MakeArray	(0X20942,	0X7);
+	MakeByte	(0X20949);
+	MakeArray	(0X20949,	0X7);
+	MakeByte	(0X20950);
+	MakeArray	(0X20950,	0X7);
+	MakeByte	(0X20957);
+	MakeArray	(0X20957,	0X7);
+	MakeByte	(0X2095E);
+	MakeArray	(0X2095E,	0X7);
+	MakeByte	(0X20965);
+	MakeArray	(0X20965,	0X7);
+	MakeByte	(0X2096C);
+	MakeArray	(0X2096C,	0X7);
+	MakeByte	(0X20973);
+	MakeArray	(0X20973,	0X7);
+	MakeByte	(0X2097A);
+	MakeArray	(0X2097A,	0X7);
+	MakeByte	(0X20981);
+	MakeArray	(0X20981,	0X81);
+	MakeName	(0X20981,	"DebugShop");
 	MakeCode	(0X20A02);
 	MakeName	(0X20A02,	"ChurchMenuActions");
 	MakeCode	(x=0X20A06);
@@ -25628,7 +27391,6 @@ static Bytes_5(void) {
 	MakeRptCmt	(0X20FF0,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeByte	(0X20FF0);
 	MakeArray	(0X20FF0,	0X4);
-	MakeRptCmt	(0X20FF2,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	ExtLinA		(0X20FF4,	0,	"                enableSram");
 	ExtLinB		(0X20FF4,	0,	"                disableSram");
 	MakeCode	(0X20FF4);
@@ -25745,7 +27507,8 @@ static Bytes_5(void) {
 	MakeCode	(0X21236);
 	MakeCode	(0X21238);
 	MakeName	(0X21238,	"WaitForMusicResumeAndPlayerInput");
-	MakeCode	(0X2124A);
+	MakeCode	(x=0X2124A);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X2126E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -25824,6 +27587,15 @@ static Bytes_5(void) {
 	MakeCode	(x=0X213D4);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X213DA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -26546,7 +28318,6 @@ static Bytes_5(void) {
 	MakeRptCmt	(0X221B4,	"Astral is a follower");
 	MakeByte	(0X221B4);
 	MakeArray	(0X221B4,	0X4);
-	MakeRptCmt	(0X221B6,	"Astral is a follower");
 	MakeCode	(0X221B8);
 	MakeCode	(0X221BE);
 	MakeRptCmt	(0X221E2,	"\"It's a tool.{W2}\"");
@@ -26927,7 +28698,6 @@ static Bytes_5(void) {
 	MakeRptCmt	(0X228AE,	"Astral is a follower");
 	MakeByte	(0X228AE);
 	MakeArray	(0X228AE,	0X4);
-	MakeRptCmt	(0X228B0,	"Astral is a follower");
 	MakeCode	(0X228B2);
 	MakeRptCmt	(0X228B4,	"ROHDE portrait idx");
 	MakeRptCmt	(0X228B8,	"Astral portrait idx");
@@ -27675,15 +29445,6 @@ static Bytes_5(void) {
 	MakeCode	(0X234C8);
 	MakeCode	(x=0X234CC);
 	OpEnumEx		(x,	0,	GetEnum("Map_Entity"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X234D2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -27933,6 +29694,10 @@ static Bytes_6(void) {
 	MakeByte	(0X238CE);
 	MakeArray	(0X238CE,	0X4);
 	MakeCode	(0X238D2);
+	MakeCode	(x=0X238D4);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X238D8);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeRptCmt	(0X238E0,	"\"But, it was empty.{W1}\"");
 	MakeByte	(0X238E0);
 	MakeArray	(0X238E0,	0X4);
@@ -27942,6 +29707,10 @@ static Bytes_6(void) {
 	MakeByte	(0X238F2);
 	MakeArray	(0X238F2,	0X4);
 	MakeCode	(0X238F6);
+	MakeCode	(x=0X238F8);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X238FC);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeRptCmt	(0X23904,	"\"It was dark inside.{W1}\"");
 	MakeByte	(0X23904);
 	MakeArray	(0X23904,	0X4);
@@ -27951,6 +29720,10 @@ static Bytes_6(void) {
 	MakeByte	(0X23916);
 	MakeArray	(0X23916,	0X4);
 	MakeCode	(0X2391A);
+	MakeCode	(x=0X2391C);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X23920);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeRptCmt	(0X23928,	"\"It was empty.{W1}\"");
 	MakeByte	(0X23928);
 	MakeArray	(0X23928,	0X4);
@@ -27960,6 +29733,10 @@ static Bytes_6(void) {
 	MakeByte	(0X2393A);
 	MakeArray	(0X2393A,	0X4);
 	MakeCode	(0X2393E);
+	MakeCode	(x=0X23940);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X23944);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeRptCmt	(0X2394C,	"\"Nothing was there.{W1}\"");
 	MakeByte	(0X2394C);
 	MakeArray	(0X2394C,	0X4);
@@ -27969,6 +29746,10 @@ static Bytes_6(void) {
 	MakeByte	(0X2395E);
 	MakeArray	(0X2395E,	0X4);
 	MakeCode	(0X23962);
+	MakeCode	(x=0X23964);
+	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X23968);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeRptCmt	(0X23970,	"\"Nothing was there.{W1}\"");
 	MakeByte	(0X23970);
 	MakeArray	(0X23970,	0X4);
@@ -27985,7 +29766,8 @@ static Bytes_6(void) {
 	MakeArray	(0X23994,	0X4);
 	MakeCode	(x=0X23998);
 	OpHex		(x,	0);
-	MakeCode	(0X2399C);
+	MakeCode	(x=0X2399C);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeName	(0X2399C,	"GetChestGoldAmount");
 	MakeCode	(x=0X239A0);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
@@ -28023,6 +29805,8 @@ static Bytes_6(void) {
 	MakeCode	(x=0X239CA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X239CE);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X239D6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -28085,11 +29869,9 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X23A88,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeByte	(0X23A88);
 	MakeArray	(0X23A88,	0X4);
-	MakeRptCmt	(0X23A8A,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeRptCmt	(0X23A8C,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeByte	(0X23A8C);
 	MakeArray	(0X23A8C,	0X4);
-	MakeRptCmt	(0X23A8E,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeCode	(0X23A90);
 	MakeCode	(x=0X23A92);
 	OpOff		(x,	0,	0X0);
@@ -28099,7 +29881,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X23A98,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeByte	(0X23A98);
 	MakeArray	(0X23A98,	0X4);
-	MakeRptCmt	(0X23A9A,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeCode	(0X23A9C);
 	MakeCode	(x=0X23AA2);
 	OpOff		(x,	0,	0X0);
@@ -28256,11 +30037,9 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X23D84,	"Battle 4 unlocked");
 	MakeByte	(0X23D84);
 	MakeArray	(0X23D84,	0X4);
-	MakeRptCmt	(0X23D86,	"Battle 4 unlocked");
 	MakeRptCmt	(0X23D88,	"Battle 4 completed");
 	MakeByte	(0X23D88);
 	MakeArray	(0X23D88,	0X4);
-	MakeRptCmt	(0X23D8A,	"Battle 4 completed");
 	MakeCode	(0X23D8C);
 	MakeCode	(0X23D98);
 	MakeCode	(x=0X23D9C);
@@ -28327,12 +30106,10 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X23E5C,	"Battle 38 unlocked");
 	MakeByte	(0X23E5C);
 	MakeArray	(0X23E5C,	0X4);
-	MakeRptCmt	(0X23E5E,	"Battle 38 unlocked");
 	MakeCode	(0X23E60);
 	MakeRptCmt	(0X23E66,	"Battle 39 unlocked");
 	MakeByte	(0X23E66);
 	MakeArray	(0X23E66,	0X4);
-	MakeRptCmt	(0X23E68,	"Battle 39 unlocked");
 	MakeCode	(0X23E6A);
 	MakeCode	(0X23E76);
 	MakeCode	(0X23E82);
@@ -28354,7 +30131,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X23ED6,	"Currently attacking Taros with Achille Sword");
 	MakeByte	(0X23ED6);
 	MakeArray	(0X23ED6,	0X4);
-	MakeRptCmt	(0X23ED8,	"Currently attacking Taros with Achille Sword");
 	MakeCode	(0X23EDA);
 	MakeCode	(x=0X23EF0);
 	OpOff		(x,	1,	0X0);
@@ -29249,6 +31025,8 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X250BC);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry_Props"),0);
+	MakeCode	(x=0X250C0);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X250E2);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -29263,6 +31041,8 @@ static Bytes_6(void) {
 	MakeCode	(x=0X250FC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X25100);
+	OpEnumEx		(x,	0,	GetEnum("ItemDef_Idx"),0);
 	MakeCode	(x=0X2510A);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -29320,7 +31100,8 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeCode	(0X251B8);
+	MakeCode	(x=0X251B8);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeName	(0X251B8,	"BattlefieldMenuActions");
 	MakeCode	(x=0X251E4);
 	OpOff		(x,	1,	0X0);
@@ -29330,6 +31111,10 @@ static Bytes_6(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X25226);
+	MakeCode	(x=0X25228);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X2522E);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(x=0X25236);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -29368,7 +31153,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X252C6,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeByte	(0X252C6);
 	MakeArray	(0X252C6,	0X4);
-	MakeRptCmt	(0X252C8,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeCode	(x=0X252CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -29387,7 +31171,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X252F2,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeByte	(0X252F2);
 	MakeArray	(0X252F2,	0X4);
-	MakeRptCmt	(0X252F4,	"checks if a game has been saved for copying purposes ? (or if saved from battle?)");
 	MakeCode	(0X252F6);
 	MakeCode	(0X252FA);
 	MakeCode	(x=0X25318);
@@ -29461,13 +31244,23 @@ static Bytes_6(void) {
 	MakeByte	(0X25506);
 	MakeArray	(0X25506,	0X4);
 	MakeCode	(0X2550A);
-	MakeCode	(0X2550C);
+	MakeCode	(x=0X2550C);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeName	(0X2550C,	"UpdateAllEnemyAI");
+	MakeCode	(x=0X25510);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeName	(0X25520,	"UpdateEnemyAI");
 	MakeCode	(x=0X25544);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X25544,	"CreateRandomizedTurnOrder");
+	MakeCode	(x=0X25558);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X25568);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeRptCmt	(0X2556C,	"that is technically a bug.\n As we're iterating enemy combatants, we should be moving value $1F instead");
+	MakeCode	(x=0X2557C);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X25580);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -29536,7 +31329,13 @@ static Bytes_6(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X256E6);
+	MakeCode	(x=0X256F0);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X25712);
+	MakeCode	(x=0X25714);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X2571A);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(x=0X25722);
 	OpHex		(x,	0);
 	MakeCode	(0X2572A);
@@ -29605,7 +31404,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X25822,	"Set @ loc_257D0, also set during exploration loop at 0x25824");
 	MakeByte	(0X25822);
 	MakeArray	(0X25822,	0X4);
-	MakeRptCmt	(0X25824,	"Set @ loc_257D0, also set during exploration loop at 0x25824");
 	MakeCode	(0X25826);
 	MakeCode	(0X25828);
 	MakeCode	(x=0X25840);
@@ -29735,7 +31533,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X259DE,	"Battle 30 completed");
 	MakeByte	(0X259DE);
 	MakeArray	(0X259DE,	0X4);
-	MakeRptCmt	(0X259E0,	"Battle 30 completed");
 	MakeCode	(0X259E2);
 	MakeCode	(x=0X259E8);
 	OpOff		(x,	1,	0X0);
@@ -29946,6 +31743,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(x=0X25BD6);
 	OpEnumEx		(x,	0,	GetEnum("VintActions"),0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X25BD8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -30415,7 +32221,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X27C38,	"Battle 0 unlocked");
 	MakeByte	(0X27C38);
 	MakeArray	(0X27C38,	0X4);
-	MakeRptCmt	(0X27C3A,	"Battle 0 unlocked");
 	MakeCode	(0X27C3C);
 	MakeCode	(x=0X27C4E);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -31142,7 +32947,8 @@ static Bytes_6(void) {
 	MakeCode	(x=0X440F6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0X44146);
+	MakeCode	(x=0X44146);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X4415A);
 	MakeCode	(0X44170);
 	MakeCode	(0X44180);
@@ -31168,7 +32974,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X441F0,	"Raft is unlocked");
 	MakeByte	(0X441F0);
 	MakeArray	(0X441F0,	0X4);
-	MakeRptCmt	(0X441F2,	"Raft is unlocked");
 	MakeCode	(0X441F4);
 	MakeCode	(x=0X441F8);
 	OpOff		(x,	0,	0X0);
@@ -31262,7 +33067,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X442C0,	"Caravan is unlocked");
 	MakeByte	(0X442C0);
 	MakeArray	(0X442C0,	0X4);
-	MakeRptCmt	(0X442C2,	"Caravan is unlocked");
 	MakeCode	(0X442C4);
 	MakeCode	(x=0X442CA);
 	OpOff		(x,	0,	0X0);
@@ -31271,6 +33075,8 @@ static Bytes_6(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X442F6,	"HARDCODED max force member index");
+	MakeCode	(x=0X442F6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X44302);
 	MakeRptCmt	(0X44304,	"optional mapsprite index for non-force members");
 	MakeCode	(0X44332);
@@ -31361,7 +33167,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X443BE,	"Caravan is unlocked");
 	MakeByte	(0X443BE);
 	MakeArray	(0X443BE,	0X4);
-	MakeRptCmt	(0X443C0,	"Caravan is unlocked");
 	MakeCode	(0X443C2);
 	MakeCode	(x=0X443CA);
 	OpOff		(x,	0,	0X0);
@@ -31382,7 +33187,6 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X44420,	"Raft is unlocked");
 	MakeByte	(0X44420);
 	MakeArray	(0X44420,	0X4);
-	MakeRptCmt	(0X44422,	"Raft is unlocked");
 	MakeCode	(0X44424);
 	MakeCode	(x=0X44428);
 	OpOff		(x,	0,	0X0);
@@ -31493,6 +33297,8 @@ static Bytes_6(void) {
 	MakeCode	(x=0X446AC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X446B0);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X4471A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -31500,6 +33306,10 @@ static Bytes_6(void) {
 	MakeCode	(x=0X4473E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X44742);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X44744);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
 	MakeCode	(x=0X447C2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -31730,7 +33540,8 @@ static Bytes_6(void) {
 	OpOff		(x,	1,	0X449C2);
 	OpOff		(x,	129,	0X449C2);
 	MakeComm	(0X449C6,	"HARDCODED Force member max index");
-	MakeCode	(0X449C6);
+	MakeCode	(x=0X449C6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeName	(0X449C6,	"GetForceMemberSpriteIdx");
 	MakeCode	(0X449D2);
 	MakeCode	(x=0X449D6);
@@ -31742,9 +33553,9 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X449F6,	"Rohde joined");
 	MakeByte	(0X449F6);
 	MakeArray	(0X449F6,	0X4);
-	MakeRptCmt	(0X449F8,	"Rohde joined");
 	MakeCode	(0X449FA);
 	MakeCode	(0X44A04);
+	MakeRptCmt	(0X44A0A,	"sprite IDs for each force character in battle");
 	MakeCode	(x=0X44A0A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -31757,19 +33568,343 @@ static Bytes_6(void) {
 	MakeRptCmt	(0X44A36,	"TORT");
 	MakeCode	(0X44A42);
 	MakeCode	(0X44A4E);
-	MakeRptCmt	(0X44A5E,	"sprite IDs for each force character in battle");
+	MakeRptCmt	(0X44A5E,	"BOWIE");
 	MakeByte	(0X44A5E);
-	MakeArray	(0X44A5E,	0X1E);
-	MakeName	(0X44A5E,	"AllySprites");
+	MakeName	(0X44A5E,	"AllyMapSprites");
+	MakeRptCmt	(0X44A5F,	"SARAH");
+	MakeByte	(0X44A5F);
+	MakeRptCmt	(0X44A60,	"CHESTER");
+	MakeByte	(0X44A60);
+	MakeRptCmt	(0X44A61,	"JAHA");
+	MakeByte	(0X44A61);
+	MakeRptCmt	(0X44A62,	"KAZIN");
+	MakeByte	(0X44A62);
+	MakeRptCmt	(0X44A63,	"SLADE");
+	MakeByte	(0X44A63);
+	MakeRptCmt	(0X44A64,	"KIWI");
+	MakeByte	(0X44A64);
+	MakeRptCmt	(0X44A65,	"PETER");
+	MakeByte	(0X44A65);
+	MakeRptCmt	(0X44A66,	"MAY");
+	MakeByte	(0X44A66);
+	MakeRptCmt	(0X44A67,	"GERHALT");
+	MakeByte	(0X44A67);
+	MakeRptCmt	(0X44A68,	"LUKE");
+	MakeByte	(0X44A68);
+	MakeRptCmt	(0X44A69,	"ROHDE");
+	MakeByte	(0X44A69);
+	MakeRptCmt	(0X44A6A,	"RICK");
+	MakeByte	(0X44A6A);
+	MakeRptCmt	(0X44A6B,	"ELRIC");
+	MakeByte	(0X44A6B);
+	MakeRptCmt	(0X44A6C,	"ERIC");
+	MakeByte	(0X44A6C);
+	MakeRptCmt	(0X44A6D,	"KARNA");
+	MakeByte	(0X44A6D);
+	MakeRptCmt	(0X44A6E,	"RANDOLF");
+	MakeByte	(0X44A6E);
+	MakeRptCmt	(0X44A6F,	"TYRIN");
+	MakeByte	(0X44A6F);
+	MakeRptCmt	(0X44A70,	"JANET");
+	MakeByte	(0X44A70);
+	MakeRptCmt	(0X44A71,	"HIGINS");
+	MakeByte	(0X44A71);
+	MakeRptCmt	(0X44A72,	"SKREECH");
+	MakeByte	(0X44A72);
+	MakeRptCmt	(0X44A73,	"TAYA");
+	MakeByte	(0X44A73);
+	MakeRptCmt	(0X44A74,	"FRAYJA");
+	MakeByte	(0X44A74);
+	MakeRptCmt	(0X44A75,	"JARO");
+	MakeByte	(0X44A75);
+	MakeRptCmt	(0X44A76,	"GYAN");
+	MakeByte	(0X44A76);
+	MakeRptCmt	(0X44A77,	"SHEELA");
+	MakeByte	(0X44A77);
+	MakeRptCmt	(0X44A78,	"ZYNK");
+	MakeByte	(0X44A78);
+	MakeRptCmt	(0X44A79,	"CHAZ");
+	MakeByte	(0X44A79);
+	MakeRptCmt	(0X44A7A,	"LEMON");
+	MakeByte	(0X44A7A);
+	MakeRptCmt	(0X44A7B,	"CLAUDE");
+	MakeByte	(0X44A7B);
 	MakeCode	(0X44A7C);
 	MakeName	(0X44A7C,	"GetCombatantSpriteIdx");
 	MakeCode	(0X44A8E);
 	MakeCode	(x=0X44A98);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X44AA4,	"OOZE");
 	MakeByte	(0X44AA4);
-	MakeArray	(0X44AA4,	0XA6);
-	MakeName	(0X44AA4,	"EnemySprites");
+	MakeName	(0X44AA4,	"EnemyMapSprites");
+	MakeRptCmt	(0X44AA5,	"HUGE RAT");
+	MakeByte	(0X44AA5);
+	MakeRptCmt	(0X44AA6,	"GALAM SOLDIER");
+	MakeByte	(0X44AA6);
+	MakeRptCmt	(0X44AA7,	"GALAM KNIGHT");
+	MakeByte	(0X44AA7);
+	MakeRptCmt	(0X44AA8,	"GOBLIN");
+	MakeByte	(0X44AA8);
+	MakeRptCmt	(0X44AA9,	"GREEN OOZE");
+	MakeByte	(0X44AA9);
+	MakeRptCmt	(0X44AAA,	"DARK DWARF");
+	MakeByte	(0X44AAA);
+	MakeRptCmt	(0X44AAB,	"HOBGOBLIN");
+	MakeByte	(0X44AAB);
+	MakeRptCmt	(0X44AAC,	"ZOMBIE");
+	MakeByte	(0X44AAC);
+	MakeRptCmt	(0X44AAD,	"GOLEM");
+	MakeByte	(0X44AAD);
+	MakeRptCmt	(0X44AAE,	"KRAKEN LEG");
+	MakeByte	(0X44AAE);
+	MakeRptCmt	(0X44AAF,	"SOULSOWER");
+	MakeByte	(0X44AAF);
+	MakeRptCmt	(0X44AB0,	"ORC");
+	MakeByte	(0X44AB0);
+	MakeRptCmt	(0X44AB1,	"PAWN");
+	MakeByte	(0X44AB1);
+	MakeRptCmt	(0X44AB2,	"KNIGHT");
+	MakeByte	(0X44AB2);
+	MakeRptCmt	(0X44AB3,	"RAT");
+	MakeByte	(0X44AB3);
+	MakeRptCmt	(0X44AB4,	"BUBBLING OOZE");
+	MakeByte	(0X44AB4);
+	MakeRptCmt	(0X44AB5,	"SKELETON");
+	MakeByte	(0X44AB5);
+	MakeRptCmt	(0X44AB6,	"DARK SOLDIER");
+	MakeByte	(0X44AB6);
+	MakeRptCmt	(0X44AB7,	"LIZARDMAN");
+	MakeByte	(0X44AB7);
+	MakeRptCmt	(0X44AB8,	"WORM");
+	MakeByte	(0X44AB8);
+	MakeRptCmt	(0X44AB9,	"DARK KNIGHT");
+	MakeByte	(0X44AB9);
+	MakeRptCmt	(0X44ABA,	"ORC LORD");
+	MakeByte	(0X44ABA);
+	MakeRptCmt	(0X44ABB,	"DEVIL SOLDIER");
+	MakeByte	(0X44ABB);
+	MakeRptCmt	(0X44ABC,	"CERBERUS");
+	MakeByte	(0X44ABC);
+	MakeRptCmt	(0X44ABD,	"MUD MAN");
+	MakeByte	(0X44ABD);
+	MakeRptCmt	(0X44ABE,	"DRAGONEWT");
+	MakeByte	(0X44ABE);
+	MakeRptCmt	(0X44ABF,	"PURPLE WORM");
+	MakeByte	(0X44ABF);
+	MakeRptCmt	(0X44AC0,	"EXECUTIONER");
+	MakeByte	(0X44AC0);
+	MakeRptCmt	(0X44AC1,	"HELL HOUND");
+	MakeByte	(0X44AC1);
+	MakeRptCmt	(0X44AC2,	"MINOTAUR");
+	MakeByte	(0X44AC2);
+	MakeRptCmt	(0X44AC3,	"CYCLOPS");
+	MakeByte	(0X44AC3);
+	MakeRptCmt	(0X44AC4,	"BURST ROCK");
+	MakeByte	(0X44AC4);
+	MakeRptCmt	(0X44AC5,	"HYDRA");
+	MakeByte	(0X44AC5);
+	MakeRptCmt	(0X44AC6,	"CHAOS WARRIOR");
+	MakeByte	(0X44AC6);
+	MakeRptCmt	(0X44AC7,	"REAPER");
+	MakeByte	(0X44AC7);
+	MakeRptCmt	(0X44AC8,	"EVIL BEAST");
+	MakeByte	(0X44AC8);
+	MakeRptCmt	(0X44AC9,	"PYROHYDRA");
+	MakeByte	(0X44AC9);
+	MakeRptCmt	(0X44ACA,	"ZEON GUARD");
+	MakeByte	(0X44ACA);
+	MakeRptCmt	(0X44ACB,	"GIZMO");
+	MakeByte	(0X44ACB);
+	MakeRptCmt	(0X44ACC,	"HUGE BAT");
+	MakeByte	(0X44ACC);
+	MakeRptCmt	(0X44ACD,	"VAMPIRE BAT");
+	MakeByte	(0X44ACD);
+	MakeRptCmt	(0X44ACE,	"EVIL CLOUD");
+	MakeByte	(0X44ACE);
+	MakeRptCmt	(0X44ACF,	"GARGOYLE");
+	MakeByte	(0X44ACF);
+	MakeRptCmt	(0X44AD0,	"HARPY");
+	MakeByte	(0X44AD0);
+	MakeRptCmt	(0X44AD1,	"LESSER DEMON");
+	MakeByte	(0X44AD1);
+	MakeRptCmt	(0X44AD2,	"WYVERN");
+	MakeByte	(0X44AD2);
+	MakeRptCmt	(0X44AD3,	"HARPY QUEEN");
+	MakeByte	(0X44AD3);
+	MakeRptCmt	(0X44AD4,	"PEGASUS KNIGHT");
+	MakeByte	(0X44AD4);
+	MakeRptCmt	(0X44AD5,	"GRIFFIN");
+	MakeByte	(0X44AD5);
+	MakeRptCmt	(0X44AD6,	"MIST DEMON");
+	MakeByte	(0X44AD6);
+	MakeRptCmt	(0X44AD7,	"WHITE DRAGON");
+	MakeByte	(0X44AD7);
+	MakeRptCmt	(0X44AD8,	"DEMON");
+	MakeByte	(0X44AD8);
+	MakeRptCmt	(0X44AD9,	"CHAOS DRAGON");
+	MakeByte	(0X44AD9);
+	MakeRptCmt	(0X44ADA,	"DEVIL GRIFFIN");
+	MakeByte	(0X44ADA);
+	MakeRptCmt	(0X44ADB,	"ARCH DEMON");
+	MakeByte	(0X44ADB);
+	MakeRptCmt	(0X44ADC,	"GALAM ARCHER");
+	MakeByte	(0X44ADC);
+	MakeRptCmt	(0X44ADD,	"HUNTER GOBLIN");
+	MakeByte	(0X44ADD);
+	MakeRptCmt	(0X44ADE,	"DEATH ARCHER");
+	MakeByte	(0X44ADE);
+	MakeRptCmt	(0X44ADF,	"KRAKEN ARM");
+	MakeByte	(0X44ADF);
+	MakeRptCmt	(0X44AE0,	"ARROW LAUNCHER");
+	MakeByte	(0X44AE0);
+	MakeRptCmt	(0X44AE1,	"ROOK");
+	MakeByte	(0X44AE1);
+	MakeRptCmt	(0X44AE2,	"DARK SNIPER");
+	MakeByte	(0X44AE2);
+	MakeRptCmt	(0X44AE3,	"BOW MASTER");
+	MakeByte	(0X44AE3);
+	MakeRptCmt	(0X44AE4,	"BOW RIDER");
+	MakeByte	(0X44AE4);
+	MakeRptCmt	(0X44AE5,	"DARK GUNNER");
+	MakeByte	(0X44AE5);
+	MakeRptCmt	(0X44AE6,	"HORSEMAN");
+	MakeByte	(0X44AE6);
+	MakeRptCmt	(0X44AE7,	"GALAM MAGE");
+	MakeByte	(0X44AE7);
+	MakeRptCmt	(0X44AE8,	"WITCH");
+	MakeByte	(0X44AE8);
+	MakeRptCmt	(0X44AE9,	"MASTER MAGE");
+	MakeByte	(0X44AE9);
+	MakeRptCmt	(0X44AEA,	"DARK MADAM");
+	MakeByte	(0X44AEA);
+	MakeRptCmt	(0X44AEB,	"QUEEN");
+	MakeByte	(0X44AEB);
+	MakeRptCmt	(0X44AEC,	"WIZARD");
+	MakeByte	(0X44AEC);
+	MakeRptCmt	(0X44AED,	"NECROMANCER");
+	MakeByte	(0X44AED);
+	MakeRptCmt	(0X44AEE,	"CHAOS WIZARD");
+	MakeByte	(0X44AEE);
+	MakeRptCmt	(0X44AEF,	"DEMON MASTER");
+	MakeByte	(0X44AEF);
+	MakeRptCmt	(0X44AF0,	"DARK CLERIC");
+	MakeByte	(0X44AF0);
+	MakeRptCmt	(0X44AF1,	"DEATH MONK");
+	MakeByte	(0X44AF1);
+	MakeRptCmt	(0X44AF2,	"BLACK MONK");
+	MakeByte	(0X44AF2);
+	MakeRptCmt	(0X44AF3,	"HIGH PRIEST");
+	MakeByte	(0X44AF3);
+	MakeRptCmt	(0X44AF4,	"EVIL BISHOP");
+	MakeByte	(0X44AF4);
+	MakeRptCmt	(0X44AF5,	"DARK BISHOP");
+	MakeByte	(0X44AF5);
+	MakeRptCmt	(0X44AF6,	"MASTER MONK");
+	MakeByte	(0X44AF6);
+	MakeRptCmt	(0X44AF7,	"SHAMAN");
+	MakeByte	(0X44AF7);
+	MakeRptCmt	(0X44AF8,	"EVIL BISHOP");
+	MakeByte	(0X44AF8);
+	MakeRptCmt	(0X44AF9,	"BLUE SHAMAN");
+	MakeByte	(0X44AF9);
+	MakeRptCmt	(0X44AFA,	"DARK SMOKE");
+	MakeByte	(0X44AFA);
+	MakeRptCmt	(0X44AFB,	"KRAKEN HEAD");
+	MakeByte	(0X44AFB);
+	MakeRptCmt	(0X44AFC,	"TAROS");
+	MakeByte	(0X44AFC);
+	MakeRptCmt	(0X44AFD,	"KING");
+	MakeByte	(0X44AFD);
+	MakeRptCmt	(0X44AFE,	"WILLARD");
+	MakeByte	(0X44AFE);
+	MakeRptCmt	(0X44AFF,	"ZALBARD");
+	MakeByte	(0X44AFF);
+	MakeRptCmt	(0X44B00,	"CAMEELA");
+	MakeByte	(0X44B00);
+	MakeRptCmt	(0X44B01,	"PRISM FLOWER");
+	MakeByte	(0X44B01);
+	MakeRptCmt	(0X44B02,	"RED BARON");
+	MakeByte	(0X44B02);
+	MakeRptCmt	(0X44B03,	"GESHP");
+	MakeByte	(0X44B03);
+	MakeRptCmt	(0X44B04,	"ODD EYE");
+	MakeByte	(0X44B04);
+	MakeRptCmt	(0X44B05,	"GALAM");
+	MakeByte	(0X44B05);
+	MakeRptCmt	(0X44B06,	"ZEON");
+	MakeByte	(0X44B06);
+	MakeRptCmt	(0X44B07,	"JAR");
+	MakeByte	(0X44B07);
+	MakeRptCmt	(0X44B08,	"MASTER MAGE");
+	MakeByte	(0X44B08);
+	MakeRptCmt	(0X44B09,	"NECROMANCER");
+	MakeByte	(0X44B09);
+	MakeRptCmt	(0X44B0A,	"BLUE SHAMAN");
+	MakeByte	(0X44B0A);
+	MakeByte	(0X44B0B);
+	MakeByte	(0X44B0C);
+	MakeByte	(0X44B0D);
+	MakeByte	(0X44B0E);
+	MakeByte	(0X44B0F);
+	MakeByte	(0X44B10);
+	MakeByte	(0X44B11);
+	MakeByte	(0X44B12);
+	MakeByte	(0X44B13);
+	MakeByte	(0X44B14);
+	MakeByte	(0X44B15);
+	MakeByte	(0X44B16);
+	MakeByte	(0X44B17);
+	MakeByte	(0X44B18);
+	MakeByte	(0X44B19);
+	MakeByte	(0X44B1A);
+	MakeByte	(0X44B1B);
+	MakeByte	(0X44B1C);
+	MakeByte	(0X44B1D);
+	MakeByte	(0X44B1E);
+	MakeByte	(0X44B1F);
+	MakeByte	(0X44B20);
+	MakeByte	(0X44B21);
+	MakeByte	(0X44B22);
+	MakeByte	(0X44B23);
+	MakeByte	(0X44B24);
+	MakeByte	(0X44B25);
+	MakeByte	(0X44B26);
+	MakeByte	(0X44B27);
+	MakeByte	(0X44B28);
+	MakeByte	(0X44B29);
+	MakeByte	(0X44B2A);
+	MakeByte	(0X44B2B);
+	MakeByte	(0X44B2C);
+	MakeByte	(0X44B2D);
+	MakeByte	(0X44B2E);
+	MakeByte	(0X44B2F);
+	MakeByte	(0X44B30);
+	MakeByte	(0X44B31);
+	MakeByte	(0X44B32);
+	MakeByte	(0X44B33);
+	MakeByte	(0X44B34);
+	MakeByte	(0X44B35);
+	MakeByte	(0X44B36);
+	MakeByte	(0X44B37);
+	MakeByte	(0X44B38);
+	MakeByte	(0X44B39);
+	MakeByte	(0X44B3A);
+	MakeByte	(0X44B3B);
+	MakeByte	(0X44B3C);
+	MakeByte	(0X44B3D);
+	MakeByte	(0X44B3E);
+	MakeByte	(0X44B3F);
+	MakeByte	(0X44B40);
+	MakeByte	(0X44B41);
+	MakeByte	(0X44B42);
+	MakeByte	(0X44B43);
+	MakeByte	(0X44B44);
+	MakeByte	(0X44B45);
+	MakeByte	(0X44B46);
+	MakeByte	(0X44B47);
+	MakeByte	(0X44B48);
+	MakeByte	(0X44B49);
 	MakeCode	(0X44B4A);
 	MakeName	(0X44B4A,	"SetEntityActscript");
 	MakeCode	(x=0X44B52);
@@ -31841,15 +33976,6 @@ static Bytes_6(void) {
 	MakeName	(0X44C84,	"HideEntity");
 	MakeCode	(x=0X44C94);
 	OpEnumEx		(x,	1,	GetEnum("Map_Entity"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X44C9A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -33965,6 +36091,15 @@ static Bytes_7(void) {
 	MakeArray	(0X463E4,	0X4);
 	MakeByte	(0X463E8);
 	MakeArray	(0X463E8,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X463EA);
 	MakeArray	(0X463EA,	0X4);
 	MakeByte	(0X463EE);
@@ -34527,6 +36662,8 @@ static Bytes_7(void) {
 	OpEnumEx		(x,	1,	GetEnum("Map_Entity"),0);
 	MakeCode	(0X46A48);
 	MakeName	(0X46A48,	"csc1A_setEntitySprite");
+	MakeCode	(x=0X46A50);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X46A6C);
 	MakeName	(0X46A6C,	"csc1B_startEntityAnim");
 	MakeCode	(x=0X46A7A);
@@ -34835,6 +36972,8 @@ static Bytes_7(void) {
 	MakeCode	(0X47080);
 	MakeName	(0X47080,	"AdjustScriptPointerByCharAliveStatus");
 	MakeRptCmt	(0X47086,	"HARDCODED force member index limit");
+	MakeCode	(x=0X47086);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0X4708A,	"it must be a force member");
 	MakeCode	(0X4709E);
 	MakeCode	(0X470CA);
@@ -35706,6 +37845,8 @@ static Bytes_7(void) {
 	MakeCode	(0X478C6);
 	MakeName	(0X478C6,	"ResetAlliesBattleStats");
 	MakeRptCmt	(0X478CC,	"HARDCODED max number of allies");
+	MakeCode	(x=0X478CC);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X4790E);
 	MakeName	(0X4790E,	"DisplayHeadquartersQuote");
 	MakeCode	(0X47924);
@@ -36310,15 +38451,6 @@ static Bytes_7(void) {
 	OpOff		(x,	1,	0X47BE8);
 	OpOff		(x,	129,	0X47BE8);
 	MakeName	(0X47BE8,	"rpt_EnemyDefeatedCutscenes");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X47BEA);
 	OpOff		(x,	0,	0X47BE8);
 	OpOff		(x,	128,	0X47BE8);
@@ -36561,6 +38693,10 @@ static Bytes_8(void) {
 	MakeCode	(x=0X47C4E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X47C56);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0X47C5A);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X47C5C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36898,7 +39034,13 @@ static Bytes_8(void) {
 	MakeRptCmt	(0X47DD8,	"6-byte entries ?");
 	MakeRptCmt	(0X47DDE,	"dead code ?");
 	MakeCode	(0X47DDE);
+	MakeCode	(x=0X47DEE);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0X47DF0,	"HARDCODED $1D limit for number of allies ?");
+	MakeCode	(x=0X47DF0);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X47DFC);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeRptCmt	(0X47E00,	"move enemy as well");
 	MakeRptCmt	(0X47E4C,	"if character alive, apply positions");
 	MakeCode	(0X47E66);
@@ -38491,6 +40633,15 @@ static Bytes_8(void) {
 	MakeArray	(0X48A3E,	0X4);
 	MakeByte	(0X48A42);
 	MakeArray	(0X48A42,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X48A44);
 	MakeArray	(0X48A44,	0X2);
 	MakeWord	(0X48A46);
@@ -39813,88 +41964,6 @@ static Bytes_8(void) {
 	MakeComm	(0X49454,	"\"{NAME} received{N}the {ITEM}.\"");
 	MakeByte	(0X49454);
 	MakeArray	(0X49454,	0X6);
-	MakeByte	(0X4945A);
-	MakeByte	(0X4945B);
-	MakeByte	(0X4945C);
-	MakeByte	(0X4945D);
-	MakeByte	(0X4945E);
-	MakeByte	(0X4945F);
-	MakeByte	(0X49460);
-	MakeByte	(0X49461);
-	MakeByte	(0X49462);
-	MakeByte	(0X49463);
-	MakeByte	(0X49464);
-	MakeByte	(0X49465);
-	MakeByte	(0X49466);
-	MakeByte	(0X49467);
-	MakeByte	(0X49468);
-	MakeByte	(0X49469);
-	MakeByte	(0X4946A);
-	MakeByte	(0X4946B);
-	MakeByte	(0X4946C);
-	MakeByte	(0X4946D);
-	MakeByte	(0X4946E);
-	MakeByte	(0X4946F);
-	MakeByte	(0X49470);
-	MakeByte	(0X49471);
-	MakeByte	(0X49472);
-	MakeByte	(0X49473);
-	MakeByte	(0X49474);
-	MakeByte	(0X49475);
-	MakeByte	(0X49476);
-	MakeByte	(0X49477);
-	MakeByte	(0X49478);
-	MakeByte	(0X49479);
-	MakeByte	(0X4947A);
-	MakeByte	(0X4947B);
-	MakeByte	(0X4947C);
-	MakeByte	(0X4947D);
-	MakeByte	(0X4947E);
-	MakeByte	(0X4947F);
-	MakeByte	(0X49480);
-	MakeByte	(0X49481);
-	MakeByte	(0X49482);
-	MakeByte	(0X49483);
-	MakeByte	(0X49484);
-	MakeByte	(0X49485);
-	MakeByte	(0X49486);
-	MakeByte	(0X49487);
-	MakeByte	(0X49488);
-	MakeByte	(0X49489);
-	MakeByte	(0X4948A);
-	MakeByte	(0X4948B);
-	MakeByte	(0X4948C);
-	MakeByte	(0X4948D);
-	MakeByte	(0X4948E);
-	MakeByte	(0X4948F);
-	MakeByte	(0X49490);
-	MakeByte	(0X49491);
-	MakeByte	(0X49492);
-	MakeByte	(0X49493);
-	MakeByte	(0X49494);
-	MakeByte	(0X49495);
-	MakeByte	(0X49496);
-	MakeByte	(0X49497);
-	MakeByte	(0X49498);
-	MakeByte	(0X49499);
-	MakeByte	(0X4949A);
-	MakeByte	(0X4949B);
-	MakeByte	(0X4949C);
-	MakeByte	(0X4949D);
-	MakeByte	(0X4949E);
-	MakeByte	(0X4949F);
-	MakeByte	(0X494A0);
-	MakeByte	(0X494A1);
-	MakeByte	(0X494A2);
-	MakeByte	(0X494A3);
-	MakeByte	(0X494A4);
-	MakeByte	(0X494A5);
-	MakeByte	(0X494A6);
-	MakeByte	(0X494A7);
-	MakeByte	(0X494A8);
-	MakeByte	(0X494A9);
-	MakeByte	(0X494AA);
-	MakeByte	(0X494AB);
 	MakeRptCmt	(0X494AC,	"  0030 BRANCH TO CURRENT ADDR. + $BD50");
 	MakeWord	(0X494AC);
 	MakeWord	(x=0X494AE);
@@ -40756,15 +42825,6 @@ static Bytes_8(void) {
 	MakeComm	(0X49B62,	"\"This is the Jewel of Light{N}that I stole from the shrine.{W2}\"");
 	MakeByte	(0X49B62);
 	MakeArray	(0X49B62,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X49B66,	"\"The other jewel is missing.{N}I'll give you this one now.{W1}\"");
 	MakeByte	(0X49B66);
 	MakeArray	(0X49B66,	0X4);
@@ -42667,6 +44727,15 @@ static Bytes_9(void) {
 	MakeRptCmt	(0X4A97C,	"  ");
 	MakeByte	(0X4A97C);
 	MakeArray	(0X4A97C,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X4A97E,	"  ");
 	MakeByte	(0X4A97E);
 	MakeArray	(0X4A97E,	0X6);
@@ -44708,15 +46777,6 @@ static Bytes_9(void) {
 	MakeArray	(0X4BA1E,	0X2);
 	MakeByte	(0X4BA20);
 	MakeArray	(0X4BA20,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X4BA24,	"  ");
 	MakeByte	(0X4BA24);
 	MakeArray	(0X4BA24,	0X4);
@@ -46562,6 +48622,15 @@ static Bytes_10(void) {
 	MakeComm	(0X4C858,	"\"I'm not Volcanon.  I never{N}tell people the future, even{N}if it could prevent death.{W1}\"");
 	MakeByte	(0X4C858);
 	MakeArray	(0X4C858,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4C85C);
 	MakeArray	(0X4C85C,	0X4);
 	MakeComm	(0X4C860,	"\"Death?!  Not ours I hope.{W1}\"");
@@ -48436,15 +50505,6 @@ static Bytes_10(void) {
 	MakeName	(0X4D832,	"ce_4D832");
 	MakeByte	(0X4D838);
 	MakeArray	(0X4D838,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4D840);
 	MakeArray	(0X4D840,	0X8);
 	MakeByte	(0X4D848);
@@ -50368,6 +52428,15 @@ static Bytes_11(void) {
 	MakeComm	(0X4E852,	"\"That's enough out of you!{W1}\"");
 	MakeByte	(0X4E852);
 	MakeArray	(0X4E852,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4E856);
 	MakeArray	(0X4E856,	0X4);
 	MakeByte	(0X4E85A);
@@ -52355,15 +54424,6 @@ static Bytes_11(void) {
 	MakeByte	(0X4FA46);
 	MakeArray	(0X4FA46,	0X6);
 	MakeWord	(0X4FA4C);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4FA4E);
 	MakeArray	(0X4FA4E,	0X6);
 	MakeWord	(0X4FA54);
@@ -52427,12 +54487,10 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FAA6,	"Battle 38 completed");
 	MakeByte	(0X4FAA6);
 	MakeArray	(0X4FAA6,	0X4);
-	MakeRptCmt	(0X4FAA8,	"Battle 38 completed");
 	MakeCode	(0X4FAAA);
 	MakeRptCmt	(0X4FAAC,	"Battle 38 unlocked");
 	MakeByte	(0X4FAAC);
 	MakeArray	(0X4FAAC,	0X4);
-	MakeRptCmt	(0X4FAAE,	"Battle 38 unlocked");
 	MakeCode	(x=0X4FAB0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -52445,12 +54503,10 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FAC0,	"Battle 39 completed");
 	MakeByte	(0X4FAC0);
 	MakeArray	(0X4FAC0,	0X4);
-	MakeRptCmt	(0X4FAC2,	"Battle 39 completed");
 	MakeCode	(0X4FAC4);
 	MakeRptCmt	(0X4FAC6,	"Battle 39 unlocked");
 	MakeByte	(0X4FAC6);
 	MakeArray	(0X4FAC6,	0X4);
-	MakeRptCmt	(0X4FAC8,	"Battle 39 unlocked");
 	MakeCode	(x=0X4FACA);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -52529,14 +54585,12 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FB38,	"Elric joined");
 	MakeByte	(0X4FB38);
 	MakeArray	(0X4FB38,	0X4);
-	MakeRptCmt	(0X4FB3A,	"Elric joined");
 	MakeCode	(0X4FB3C);
 	MakeByte	(0X4FB4C);
 	MakeArray	(0X4FB4C,	0X6);
 	MakeRptCmt	(0X4FB52,	"Set after Elric opens the passage to Devil's Tail");
 	MakeByte	(0X4FB52);
 	MakeArray	(0X4FB52,	0X4);
-	MakeRptCmt	(0X4FB54,	"Set after Elric opens the passage to Devil's Tail");
 	MakeCode	(0X4FB56);
 	MakeCode	(0X4FB58);
 	MakeName	(0X4FB58,	"Map67_DefaultZoneEvent");
@@ -52727,7 +54781,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FCEA,	"Set after Elric opens the passage to Devil's Tail");
 	MakeByte	(0X4FCEA);
 	MakeArray	(0X4FCEA,	0X4);
-	MakeRptCmt	(0X4FCEC,	"Set after Elric opens the passage to Devil's Tail");
 	MakeCode	(0X4FCEE);
 	MakeRptCmt	(0X4FCF0,	"\"There's a wobbly rock.{W1}\"");
 	MakeByte	(0X4FCF0);
@@ -52748,7 +54801,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FD10,	"Elric joined");
 	MakeByte	(0X4FD10);
 	MakeArray	(0X4FD10,	0X4);
-	MakeRptCmt	(0X4FD12,	"Elric joined");
 	MakeCode	(0X4FD14);
 	MakeRptCmt	(0X4FD1C,	"\"That rock looks{N}suspicious....{W1}\"");
 	MakeByte	(0X4FD1C);
@@ -52859,7 +54911,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FDC4,	"Battle 9 unlocked");
 	MakeByte	(0X4FDC4);
 	MakeArray	(0X4FDC4,	0X4);
-	MakeRptCmt	(0X4FDC6,	"Battle 9 unlocked");
 	MakeCode	(x=0X4FDC8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -52926,7 +54977,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FE24,	"Battle 10 unlocked");
 	MakeByte	(0X4FE24);
 	MakeArray	(0X4FE24,	0X4);
-	MakeRptCmt	(0X4FE26,	"Battle 10 unlocked");
 	MakeCode	(x=0X4FE28);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -53012,24 +55062,20 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FE9E,	"Set after coming back to New Granseal after Creed's Mansion,when Astral joins");
 	MakeByte	(0X4FE9E);
 	MakeArray	(0X4FE9E,	0X4);
-	MakeRptCmt	(0X4FEA0,	"Set after coming back to New Granseal after Creed's Mansion,when Astral joins");
 	MakeCode	(0X4FEA2);
 	MakeRptCmt	(0X4FEA4,	"TEMP FLAG #00");
 	MakeByte	(0X4FEA4);
 	MakeArray	(0X4FEA4,	0X4);
-	MakeRptCmt	(0X4FEA6,	"TEMP FLAG #00");
 	MakeCode	(0X4FEA8);
 	MakeRptCmt	(0X4FEAA,	"TEMP FLAG #00");
 	MakeByte	(0X4FEAA);
 	MakeArray	(0X4FEAA,	0X4);
-	MakeRptCmt	(0X4FEAC,	"TEMP FLAG #00");
 	MakeCode	(0X4FEAE);
 	MakeByte	(0X4FEDA);
 	MakeArray	(0X4FEDA,	0X6);
 	MakeRptCmt	(0X4FEE0,	"Set after Rohde clears the blockage at the North Cliff cave");
 	MakeByte	(0X4FEE0);
 	MakeArray	(0X4FEE0,	0X4);
-	MakeRptCmt	(0X4FEE2,	"Set after Rohde clears the blockage at the North Cliff cave");
 	MakeCode	(0X4FEE4);
 	MakeCode	(x=0X4FEE6);
 	OpOff		(x,	1,	0X0);
@@ -53045,7 +55091,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FF00,	"TEMP FLAG #00");
 	MakeByte	(0X4FF00);
 	MakeArray	(0X4FF00,	0X4);
-	MakeRptCmt	(0X4FF02,	"TEMP FLAG #00");
 	MakeCode	(0X4FF04);
 	MakeCode	(x=0X4FF06);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -53070,7 +55115,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X4FF34,	"Luke joined");
 	MakeByte	(0X4FF34);
 	MakeArray	(0X4FF34,	0X4);
-	MakeRptCmt	(0X4FF36,	"Luke joined");
 	MakeCode	(0X4FF38);
 	MakeByte	(0X4FF3A);
 	MakeArray	(0X4FF3A,	0X6);
@@ -53584,24 +55628,20 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X5034E,	"Set after ship arrives in Parmecia and you regain control of Bowie");
 	MakeByte	(0X5034E);
 	MakeArray	(0X5034E,	0X4);
-	MakeRptCmt	(0X50350,	"Set after ship arrives in Parmecia and you regain control of Bowie");
 	MakeCode	(0X50352);
 	MakeRptCmt	(0X50354,	"Battle 8 completed");
 	MakeByte	(0X50354);
 	MakeArray	(0X50354,	0X4);
-	MakeRptCmt	(0X50356,	"Battle 8 completed");
 	MakeCode	(0X50358);
 	MakeRptCmt	(0X5035A,	"Set after you automatically walk into New Granseal after it is built");
 	MakeByte	(0X5035A);
 	MakeArray	(0X5035A,	0X4);
-	MakeRptCmt	(0X5035C,	"Set after you automatically walk into New Granseal after it is built");
 	MakeCode	(0X5035E);
 	MakeByte	(0X50360);
 	MakeArray	(0X50360,	0X6);
 	MakeRptCmt	(0X50366,	"Set after you automatically walk into New Granseal after it is built");
 	MakeByte	(0X50366);
 	MakeArray	(0X50366,	0X4);
-	MakeRptCmt	(0X50368,	"Set after you automatically walk into New Granseal after it is built");
 	MakeCode	(0X5036A);
 	MakeCode	(0X5036C);
 	MakeCode	(0X5036E);
@@ -54253,6 +56293,15 @@ static Bytes_12(void) {
 	MakeComm	(0X50938,	"\"They worked hard to build{N}their new town.{W1}\"");
 	MakeByte	(0X50938);
 	MakeArray	(0X50938,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5093C);
 	MakeArray	(0X5093C,	0X4);
 	MakeByte	(0X50940);
@@ -54307,37 +56356,30 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50992,	"Battle 27 unlocked");
 	MakeByte	(0X50992);
 	MakeArray	(0X50992,	0X4);
-	MakeRptCmt	(0X50994,	"Battle 27 unlocked");
 	MakeCode	(x=0X50996);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X5099E,	"Battle 28 unlocked");
 	MakeByte	(0X5099E);
 	MakeArray	(0X5099E,	0X4);
-	MakeRptCmt	(0X509A0,	"Battle 28 unlocked");
 	MakeRptCmt	(0X509A2,	"Battle 29 unlocked");
 	MakeByte	(0X509A2);
 	MakeArray	(0X509A2,	0X4);
-	MakeRptCmt	(0X509A4,	"Battle 29 unlocked");
 	MakeRptCmt	(0X509A6,	"Battle 30 unlocked");
 	MakeByte	(0X509A6);
 	MakeArray	(0X509A6,	0X4);
-	MakeRptCmt	(0X509A8,	"Battle 30 unlocked");
 	MakeCode	(0X509AA);
 	MakeRptCmt	(0X509AC,	"Set after Frayja asks to go to Moun with you");
 	MakeByte	(0X509AC);
 	MakeArray	(0X509AC,	0X4);
-	MakeRptCmt	(0X509AE,	"Set after Frayja asks to go to Moun with you");
 	MakeCode	(0X509B0);
 	MakeRptCmt	(0X509B2,	"Battle 32 completed");
 	MakeByte	(0X509B2);
 	MakeArray	(0X509B2,	0X4);
-	MakeRptCmt	(0X509B4,	"Battle 32 completed");
 	MakeCode	(0X509B6);
 	MakeRptCmt	(0X509B8,	"Battle 32 unlocked");
 	MakeByte	(0X509B8);
 	MakeArray	(0X509B8,	0X4);
-	MakeRptCmt	(0X509BA,	"Battle 32 unlocked");
 	MakeCode	(x=0X509BC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -54443,7 +56485,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50A2E,	"Battle 35 unlocked");
 	MakeByte	(0X50A2E);
 	MakeArray	(0X50A2E,	0X4);
-	MakeRptCmt	(0X50A30,	"Battle 35 unlocked");
 	MakeCode	(x=0X50A32);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -54502,7 +56543,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50A74,	"Battle 37 unlocked");
 	MakeByte	(0X50A74);
 	MakeArray	(0X50A74,	0X4);
-	MakeRptCmt	(0X50A76,	"Battle 37 unlocked");
 	MakeCode	(x=0X50A78);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -54536,12 +56576,10 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50AA4,	"Set after using the Dry Stone to open the way to the Dwarven Village");
 	MakeByte	(0X50AA4);
 	MakeArray	(0X50AA4,	0X4);
-	MakeRptCmt	(0X50AA6,	"Set after using the Dry Stone to open the way to the Dwarven Village");
 	MakeCode	(0X50AA8);
 	MakeRptCmt	(0X50AAA,	"Set after using the Dry Stone to open the way to the Dwarven Village");
 	MakeByte	(0X50AAA);
 	MakeArray	(0X50AAA,	0X4);
-	MakeRptCmt	(0X50AAC,	"Set after using the Dry Stone to open the way to the Dwarven Village");
 	MakeByte	(0X50AAE);
 	MakeArray	(0X50AAE,	0X6);
 	MakeCode	(0X50AB4);
@@ -54877,14 +56915,12 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50DE6,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeByte	(0X50DE6);
 	MakeArray	(0X50DE6,	0X4);
-	MakeRptCmt	(0X50DE8,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeCode	(0X50DEA);
 	MakeByte	(0X50DEC);
 	MakeArray	(0X50DEC,	0X6);
 	MakeRptCmt	(0X50DF2,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeByte	(0X50DF2);
 	MakeArray	(0X50DF2,	0X4);
-	MakeRptCmt	(0X50DF4,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeCode	(0X50DF6);
 	MakeCode	(x=0X50DF8);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -54919,14 +56955,12 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50E32,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeByte	(0X50E32);
 	MakeArray	(0X50E32,	0X4);
-	MakeRptCmt	(0X50E34,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeCode	(0X50E36);
 	MakeByte	(0X50E38);
 	MakeArray	(0X50E38,	0X6);
 	MakeRptCmt	(0X50E3E,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeByte	(0X50E3E);
 	MakeArray	(0X50E3E,	0X4);
-	MakeRptCmt	(0X50E40,	"Set after the guards have listened to Sarah and allowed you into the castle");
 	MakeCode	(0X50E42);
 	MakeCode	(x=0X50E44);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -54940,7 +56974,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50E60,	"Set after Bowie is intercepted by his mother going downstairs");
 	MakeByte	(0X50E60);
 	MakeArray	(0X50E60,	0X4);
-	MakeRptCmt	(0X50E62,	"Set after Bowie is intercepted by his mother going downstairs");
 	MakeCode	(0X50E64);
 	MakeCode	(x=0X50E66);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -54951,7 +56984,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50E6C,	"Set after Astral's second basement line");
 	MakeByte	(0X50E6C);
 	MakeArray	(0X50E6C,	0X4);
-	MakeRptCmt	(0X50E6E,	"Set after Astral's second basement line");
 	MakeCode	(0X50E70);
 	MakeCode	(x=0X50E72);
 	OpOff		(x,	0,	0X0);
@@ -55007,14 +57039,12 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50ED8,	"Set after the messenger scene");
 	MakeByte	(0X50ED8);
 	MakeArray	(0X50ED8,	0X4);
-	MakeRptCmt	(0X50EDA,	"Set after the messenger scene");
 	MakeCode	(0X50EDC);
 	MakeByte	(0X50EDE);
 	MakeArray	(0X50EDE,	0X6);
 	MakeRptCmt	(0X50EE4,	"Set after the messenger scene");
 	MakeByte	(0X50EE4);
 	MakeArray	(0X50EE4,	0X4);
-	MakeRptCmt	(0X50EE6,	"Set after the messenger scene");
 	MakeCode	(0X50EE8);
 	MakeName	(0X50EE8,	"Map3_DefaultZoneEvent");
 	MakeByte	(0X50EEA);
@@ -55037,11 +57067,9 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50F02,	"Battle 2 unlocked");
 	MakeByte	(0X50F02);
 	MakeArray	(0X50F02,	0X4);
-	MakeRptCmt	(0X50F04,	"Battle 2 unlocked");
 	MakeRptCmt	(0X50F06,	"Sarah + Chester are followers");
 	MakeByte	(0X50F06);
 	MakeArray	(0X50F06,	0X4);
-	MakeRptCmt	(0X50F08,	"Sarah + Chester are followers");
 	MakeCode	(0X50F0A);
 	MakeName	(0X50F0A,	"Map3_261_ZoneEvent0");
 	MakeByte	(0X50F0C);
@@ -55093,12 +57121,10 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50F5A,	"Set after Astral's second basement line");
 	MakeByte	(0X50F5A);
 	MakeArray	(0X50F5A,	0X4);
-	MakeRptCmt	(0X50F5C,	"Set after Astral's second basement line");
 	MakeCode	(0X50F5E);
 	MakeRptCmt	(0X50F60,	"TEMP FLAG #00");
 	MakeByte	(0X50F60);
 	MakeArray	(0X50F60,	0X4);
-	MakeRptCmt	(0X50F62,	"TEMP FLAG #00");
 	MakeCode	(0X50F64);
 	MakeRptCmt	(0X50F66,	"\"Hi, {LEADER}!{N}How are you?{W2}\"");
 	MakeByte	(0X50F66);
@@ -55112,14 +57138,12 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50F72,	"TEMP FLAG #00");
 	MakeByte	(0X50F72);
 	MakeArray	(0X50F72,	0X4);
-	MakeRptCmt	(0X50F74,	"TEMP FLAG #00");
 	MakeCode	(0X50F76);
 	MakeByte	(0X50F78);
 	MakeArray	(0X50F78,	0X6);
 	MakeRptCmt	(0X50F7E,	"TEMP FLAG #00");
 	MakeByte	(0X50F7E);
 	MakeArray	(0X50F7E,	0X4);
-	MakeRptCmt	(0X50F80,	"TEMP FLAG #00");
 	MakeCode	(0X50F82);
 	MakeRptCmt	(0X50F84,	"\"What's wrong with you?{N}Your seat is next to{N}{NAME;2}!{W1}\"");
 	MakeByte	(0X50F84);
@@ -55128,7 +57152,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50F8A,	"Sarah + Chester are followers");
 	MakeByte	(0X50F8A);
 	MakeArray	(0X50F8A,	0X4);
-	MakeRptCmt	(0X50F8C,	"Sarah + Chester are followers");
 	MakeCode	(0X50F8E);
 	MakeByte	(0X50F90);
 	MakeArray	(0X50F90,	0X6);
@@ -55142,7 +57165,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X50F9E,	"Set after Astral's second basement line");
 	MakeByte	(0X50F9E);
 	MakeArray	(0X50F9E,	0X4);
-	MakeRptCmt	(0X50FA0,	"Set after Astral's second basement line");
 	MakeCode	(0X50FA2);
 	MakeRptCmt	(0X50FA4,	"\"Hooo...I'm sleepy.{N}{NAME;3} must be sleeping{N}soundly about now.{W1}\"");
 	MakeByte	(0X50FA4);
@@ -55290,7 +57312,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X51056,	"Set after Astral's second basement line");
 	MakeByte	(0X51056);
 	MakeArray	(0X51056,	0X4);
-	MakeRptCmt	(0X51058,	"Set after Astral's second basement line");
 	MakeCode	(0X5105A);
 	MakeName	(0X5105A,	"Map3_DefaultEntityEvent");
 	MakeByte	(0X5105C);
@@ -55364,7 +57385,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X510D6,	"TEMP FLAG #00");
 	MakeByte	(0X510D6);
 	MakeArray	(0X510D6,	0X4);
-	MakeRptCmt	(0X510D8,	"TEMP FLAG #00");
 	MakeRptCmt	(0X510DA,	"\"Good luck, {LEADER}.{N}Your father would have{N}been proud of you.{W1}\"");
 	MakeByte	(0X510DA);
 	MakeArray	(0X510DA,	0X4);
@@ -55774,15 +57794,6 @@ static Bytes_12(void) {
 	MakeRptCmt	(0X5134A,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}STUDY OF YOGURT{W1}\"");
 	MakeByte	(0X5134A);
 	MakeArray	(0X5134A,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X51350,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}SCIENCE 101{W1}\"");
 	MakeByte	(0X51350);
 	MakeArray	(0X51350,	0X6);
@@ -55828,7 +57839,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X51390,	"Set after Astral's second basement line");
 	MakeByte	(0X51390);
 	MakeArray	(0X51390,	0X4);
-	MakeRptCmt	(0X51392,	"Set after Astral's second basement line");
 	MakeCode	(0X51394);
 	MakeByte	(0X51396);
 	MakeArray	(0X51396,	0X6);
@@ -55840,7 +57850,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X513A8,	"Set after the messenger scene");
 	MakeByte	(0X513A8);
 	MakeArray	(0X513A8,	0X4);
-	MakeRptCmt	(0X513AA,	"Set after the messenger scene");
 	MakeCode	(0X513AC);
 	MakeCode	(x=0X513AE);
 	OpHex		(x,	0);
@@ -56375,7 +58384,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X51734,	"Set after the soldiers are swallowed up by the earthquake");
 	MakeByte	(0X51734);
 	MakeArray	(0X51734,	0X4);
-	MakeRptCmt	(0X51736,	"Set after the soldiers are swallowed up by the earthquake");
 	MakeCode	(0X51738);
 	MakeByte	(0X5173A);
 	MakeArray	(0X5173A,	0X6);
@@ -56839,7 +58847,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X51B0E,	"Kazin is a follower");
 	MakeByte	(0X51B0E);
 	MakeArray	(0X51B0E,	0X4);
-	MakeRptCmt	(0X51B10,	"Kazin is a follower");
 	MakeCode	(0X51B12);
 	MakeByte	(0X51B14);
 	MakeArray	(0X51B14,	0X8);
@@ -57434,7 +59441,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X51EFC,	"Set after Galam and Lemon leave with their army");
 	MakeByte	(0X51EFC);
 	MakeArray	(0X51EFC,	0X4);
-	MakeRptCmt	(0X51EFE,	"Set after Galam and Lemon leave with their army");
 	MakeCode	(0X51F00);
 	MakeCode	(x=0X51F02);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -57448,14 +59454,12 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X51F0E,	"Set after the Galam guards catch you sneaking around, but before battle");
 	MakeByte	(0X51F0E);
 	MakeArray	(0X51F0E,	0X4);
-	MakeRptCmt	(0X51F10,	"Set after the Galam guards catch you sneaking around, but before battle");
 	MakeCode	(0X51F12);
 	MakeByte	(0X51F14);
 	MakeArray	(0X51F14,	0X6);
 	MakeRptCmt	(0X51F1A,	"Set after the Galam guards catch you sneaking around, but before battle");
 	MakeByte	(0X51F1A);
 	MakeArray	(0X51F1A,	0X4);
-	MakeRptCmt	(0X51F1C,	"Set after the Galam guards catch you sneaking around, but before battle");
 	MakeCode	(0X51F1E);
 	MakeByte	(0X51F20);
 	MakeArray	(0X51F20,	0X6);
@@ -57504,6 +59508,15 @@ static Bytes_13(void) {
 	MakeName	(0X51F76,	"ms_map16_InitFunction");
 	MakeRptCmt	(0X51F78,	"Set after the Galam guards catch you sneaking around, but before battle");
 	MakeWord	(0X51F78);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X51F7A);
 	MakeByte	(0X51F88);
 	MakeArray	(0X51F88,	0X4);
@@ -58124,7 +60137,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X523C6,	"TEMP FLAG #00");
 	MakeByte	(0X523C6);
 	MakeArray	(0X523C6,	0X4);
-	MakeRptCmt	(0X523C8,	"TEMP FLAG #00");
 	MakeCode	(0X523CA);
 	MakeRptCmt	(0X523CC,	"\"Don't tell anybody{N}that I neglected my work.{N}If you do{D1}.{D1}.{D1}.{D1}I'll kill you!{W1}\"");
 	MakeByte	(0X523CC);
@@ -58168,7 +60180,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X52400,	"Set after prison scene, ending in Slade unlocking/Sarah accusing");
 	MakeByte	(0X52400);
 	MakeArray	(0X52400,	0X4);
-	MakeRptCmt	(0X52402,	"Set after prison scene, ending in Slade unlocking/Sarah accusing");
 	MakeCode	(0X52404);
 	MakeCode	(x=0X52406);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -58183,7 +60194,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X52418,	"Set after you try to go upstairs, and Slade opens the secret tunnel");
 	MakeByte	(0X52418);
 	MakeArray	(0X52418,	0X4);
-	MakeRptCmt	(0X5241A,	"Set after you try to go upstairs, and Slade opens the secret tunnel");
 	MakeCode	(0X5241C);
 	MakeRptCmt	(0X5241E,	"\"You'll be captured if you go{N}that way.{W2}\"");
 	MakeByte	(0X5241E);
@@ -58205,7 +60215,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X5243A,	"Slade is a follower");
 	MakeByte	(0X5243A);
 	MakeArray	(0X5243A,	0X4);
-	MakeRptCmt	(0X5243C,	"Slade is a follower");
 	MakeCode	(0X5243E);
 	MakeCode	(0X52440);
 	MakeName	(0X52440,	"Map17_DefaultZoneEvent");
@@ -58234,18 +60243,15 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X5245C,	"Set after initial wake-up in prison sequence");
 	MakeByte	(0X5245C);
 	MakeArray	(0X5245C,	0X4);
-	MakeRptCmt	(0X5245E,	"Set after initial wake-up in prison sequence");
 	MakeRptCmt	(0X52460,	"Set after Galam and Lemon leave with their army");
 	MakeByte	(0X52460);
 	MakeArray	(0X52460,	0X4);
-	MakeRptCmt	(0X52462,	"Set after Galam and Lemon leave with their army");
 	MakeCode	(0X52464);
 	MakeByte	(0X52470);
 	MakeArray	(0X52470,	0X6);
 	MakeRptCmt	(0X52476,	"Set after prison wake-up sequence IF 0297 is *not* also set");
 	MakeByte	(0X52476);
 	MakeArray	(0X52476,	0X4);
-	MakeRptCmt	(0X52478,	"Set after prison wake-up sequence IF 0297 is *not* also set");
 	MakeCode	(0X5247A);
 	MakeByte	(0X5247C);
 	MakeArray	(0X5247C,	0X8);
@@ -59160,15 +61166,6 @@ static Bytes_13(void) {
 	MakeCode	(x=0X52B00);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X52B00,	"Map18_EntityEvent1");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X52B02,	"\"What should I do?{N}My mother is visiting{N}Granseal!{W2}\"");
 	MakeWord	(0X52B02);
 	MakeRptCmt	(0X52B04,	"\"I didn't know a war was{N}going to start!{W1}\"");
@@ -59477,7 +61474,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52DC2,	"Set after Astral talks Lemon into heading to the Ancient Tower");
 	MakeByte	(0X52DC2);
 	MakeArray	(0X52DC2,	0X4);
-	MakeRptCmt	(0X52DC4,	"Set after Astral talks Lemon into heading to the Ancient Tower");
 	MakeCode	(0X52DC6);
 	MakeCode	(x=0X52DC8);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -59490,11 +61486,9 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52DD4,	"King + Minister are followers");
 	MakeByte	(0X52DD4);
 	MakeArray	(0X52DD4,	0X4);
-	MakeRptCmt	(0X52DD6,	"King + Minister are followers");
 	MakeRptCmt	(0X52DD8,	"Set after stepping in front of the Minister");
 	MakeByte	(0X52DD8);
 	MakeArray	(0X52DD8,	0X4);
-	MakeRptCmt	(0X52DDA,	"Set after stepping in front of the Minister");
 	MakeCode	(0X52DDC);
 	MakeCode	(x=0X52DDE);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -59507,7 +61501,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52DEA,	"Set after Astral delivers an \"oh crap, earthquake\" line in the castle");
 	MakeByte	(0X52DEA);
 	MakeArray	(0X52DEA,	0X4);
-	MakeRptCmt	(0X52DEC,	"Set after Astral delivers an \"oh crap, earthquake\" line in the castle");
 	MakeCode	(0X52DEE);
 	MakeCode	(x=0X52DF0);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -59520,7 +61513,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52DFC,	"Set after Astral delivers his \"should be safe\" line in castle");
 	MakeByte	(0X52DFC);
 	MakeArray	(0X52DFC,	0X4);
-	MakeRptCmt	(0X52DFE,	"Set after Astral delivers his \"should be safe\" line in castle");
 	MakeCode	(0X52E00);
 	MakeByte	(0X52E02);
 	MakeArray	(0X52E02,	0X4);
@@ -59565,7 +61557,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52E44,	"TEMP FLAG #00");
 	MakeByte	(0X52E44);
 	MakeArray	(0X52E44,	0X4);
-	MakeRptCmt	(0X52E46,	"TEMP FLAG #00");
 	MakeRptCmt	(0X52E48,	"\"I'm going to the Ancient{N}Shrine in the south to{N}kill some rats.{W1}\"");
 	MakeByte	(0X52E48);
 	MakeArray	(0X52E48,	0X4);
@@ -59717,7 +61708,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X52EFE,	"Set after talking to Astral about going to the tower");
 	MakeByte	(0X52EFE);
 	MakeArray	(0X52EFE,	0X4);
-	MakeRptCmt	(0X52F00,	"Set after talking to Astral about going to the tower");
 	MakeCode	(0X52F02);
 	MakeByte	(0X52F04);
 	MakeArray	(0X52F04,	0X6);
@@ -60071,7 +62061,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X530F6,	"Set after agreeing to go to the tower with Astral");
 	MakeByte	(0X530F6);
 	MakeArray	(0X530F6,	0X4);
-	MakeRptCmt	(0X530F8,	"Set after agreeing to go to the tower with Astral");
 	MakeCode	(0X530FA);
 	MakeByte	(0X530FC);
 	MakeArray	(0X530FC,	0X6);
@@ -60091,7 +62080,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53118,	"Set after you agree to go to see Hawel");
 	MakeByte	(0X53118);
 	MakeArray	(0X53118,	0X4);
-	MakeRptCmt	(0X5311A,	"Set after you agree to go to see Hawel");
 	MakeCode	(0X5311C);
 	MakeCode	(x=0X5311E);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -60102,7 +62090,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X5314C,	"Set after stepping in front of the Minister");
 	MakeByte	(0X5314C);
 	MakeArray	(0X5314C,	0X4);
-	MakeRptCmt	(0X5314E,	"Set after stepping in front of the Minister");
 	MakeCode	(0X53150);
 	MakeCode	(x=0X53168);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -60943,6 +62930,15 @@ static Bytes_14(void) {
 	MakeArray	(0X537B4,	0X4);
 	MakeByte	(0X537B8);
 	MakeArray	(0X537B8,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X537BC);
 	MakeArray	(0X537BC,	0X4);
 	MakeByte	(0X537C0);
@@ -60965,7 +62961,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X537D6,	"TEMP FLAG #00");
 	MakeByte	(0X537D6);
 	MakeArray	(0X537D6,	0X4);
-	MakeRptCmt	(0X537D8,	"TEMP FLAG #00");
 	MakeRptCmt	(0X537DA,	"\"to go to school again?{W1}\"");
 	MakeByte	(0X537DA);
 	MakeArray	(0X537DA,	0X4);
@@ -61261,21 +63256,18 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53970,	"Set after the scene in the King's bedroom");
 	MakeByte	(0X53970);
 	MakeArray	(0X53970,	0X4);
-	MakeRptCmt	(0X53972,	"Set after the scene in the King's bedroom");
 	MakeCode	(0X53974);
 	MakeByte	(0X53976);
 	MakeArray	(0X53976,	0X6);
 	MakeRptCmt	(0X5397C,	"Set after the scene in the King's bedroom");
 	MakeByte	(0X5397C);
 	MakeArray	(0X5397C,	0X4);
-	MakeRptCmt	(0X5397E,	"Set after the scene in the King's bedroom");
 	MakeCode	(0X53980);
 	MakeByte	(0X53982);
 	MakeArray	(0X53982,	0X6);
 	MakeRptCmt	(0X53988,	"Battle 7 completed");
 	MakeByte	(0X53988);
 	MakeArray	(0X53988,	0X4);
-	MakeRptCmt	(0X5398A,	"Battle 7 completed");
 	MakeCode	(0X5398C);
 	MakeByte	(0X5398E);
 	MakeArray	(0X5398E,	0X6);
@@ -62028,7 +64020,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53EB4,	"TEMP FLAG #00");
 	MakeByte	(0X53EB4);
 	MakeArray	(0X53EB4,	0X4);
-	MakeRptCmt	(0X53EB6,	"TEMP FLAG #00");
 	MakeCode	(0X53EB8);
 	MakeRptCmt	(0X53EBA,	"\"This west tower leads to{N}the Ancient Tower.{W2}\"");
 	MakeByte	(0X53EBA);
@@ -62036,7 +64027,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53EBE,	"TEMP FLAG #00");
 	MakeByte	(0X53EBE);
 	MakeArray	(0X53EBE,	0X4);
-	MakeRptCmt	(0X53EC0,	"TEMP FLAG #00");
 	MakeRptCmt	(0X53EC2,	"\"The Ancient Tower is a{N}sacred place where only the{N}King can go.{W1}\"");
 	MakeByte	(0X53EC2);
 	MakeArray	(0X53EC2,	0X4);
@@ -62047,14 +64037,12 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53ECC,	"TEMP FLAG #00");
 	MakeByte	(0X53ECC);
 	MakeArray	(0X53ECC,	0X4);
-	MakeRptCmt	(0X53ECE,	"TEMP FLAG #00");
 	MakeCode	(0X53ED0);
 	MakeByte	(0X53ED2);
 	MakeArray	(0X53ED2,	0X6);
 	MakeRptCmt	(0X53ED8,	"TEMP FLAG #00");
 	MakeByte	(0X53ED8);
 	MakeArray	(0X53ED8,	0X4);
-	MakeRptCmt	(0X53EDA,	"TEMP FLAG #00");
 	MakeCode	(0X53EDC);
 	MakeCode	(x=0X53EDE);
 	OpOff		(x,	0,	0X0);
@@ -62106,7 +64094,6 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X53F1C,	"Battle 7 completed");
 	MakeByte	(0X53F1C);
 	MakeArray	(0X53F1C,	0X4);
-	MakeRptCmt	(0X53F1E,	"Battle 7 completed");
 	MakeCode	(0X53F20);
 	MakeByte	(0X53F22);
 	MakeArray	(0X53F22,	0X6);
@@ -62368,15 +64355,12 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X540AC,	"Set after event at Hawel's house");
 	MakeByte	(0X540AC);
 	MakeArray	(0X540AC,	0X4);
-	MakeRptCmt	(0X540AE,	"Set after event at Hawel's house");
 	MakeRptCmt	(0X540B0,	"Set after event at Hawel's house");
 	MakeByte	(0X540B0);
 	MakeArray	(0X540B0,	0X4);
-	MakeRptCmt	(0X540B2,	"Set after event at Hawel's house");
 	MakeRptCmt	(0X540B4,	"Kazin is a follower");
 	MakeByte	(0X540B4);
 	MakeArray	(0X540B4,	0X4);
-	MakeRptCmt	(0X540B6,	"Kazin is a follower");
 	MakeCode	(x=0X540B8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -62517,15 +64501,6 @@ static Bytes_14(void) {
 	MakeArray	(0X541AC,	0X4);
 	MakeByte	(0X541B0);
 	MakeArray	(0X541B0,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X541B4);
 	MakeArray	(0X541B4,	0X2);
 	MakeByte	(0X541B6);
@@ -62898,6 +64873,7 @@ static Bytes_15(void) {
 	OpOff		(x,	1,	0X54458);
 	OpOff		(x,	129,	0X54458);
 	MakeCode	(0X5445C);
+	MakeName	(0X5445C,	"nullsub_3");
 	MakeByte	(0X5445E);
 	MakeArray	(0X5445E,	0X4);
 	MakeName	(0X5445E,	"ms_map44_EntityEvents");
@@ -64046,7 +66022,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X54CB4,	"Set after the dwarf gives you dynamite");
 	MakeByte	(0X54CB4);
 	MakeArray	(0X54CB4,	0X4);
-	MakeRptCmt	(0X54CB6,	"Set after the dwarf gives you dynamite");
 	MakeCode	(0X54CB8);
 	MakeRptCmt	(0X54CBA,	"\"Oh, your hands are full.{N}I'll give it to you later.{W1}\"");
 	MakeByte	(0X54CBA);
@@ -64088,7 +66063,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X54CF4,	"Set after the scene with the sailor and soldier in New Granseal (Peter intro)");
 	MakeByte	(0X54CF4);
 	MakeArray	(0X54CF4,	0X4);
-	MakeRptCmt	(0X54CF6,	"Set after the scene with the sailor and soldier in New Granseal (Peter intro)");
 	MakeCode	(0X54CF8);
 	MakeRptCmt	(0X54CFA,	"Set after the event in the basement of Creed's Mansion");
 	MakeByte	(0X54CFA);
@@ -64103,7 +66077,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X54D0C,	"Set after returning to New Granseal, when the soldier greets you");
 	MakeByte	(0X54D0C);
 	MakeArray	(0X54D0C,	0X4);
-	MakeRptCmt	(0X54D0E,	"Set after returning to New Granseal, when the soldier greets you");
 	MakeCode	(0X54D10);
 	MakeCode	(x=0X54D12);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -64116,7 +66089,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X54D1E,	"Set after the scene with Peter and the kids in New Granseal");
 	MakeByte	(0X54D1E);
 	MakeArray	(0X54D1E,	0X4);
-	MakeRptCmt	(0X54D20,	"Set after the scene with Peter and the kids in New Granseal");
 	MakeCode	(0X54D22);
 	MakeCode	(x=0X54D24);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -64133,7 +66105,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X54D36,	"Set after the scene with Janet, when you go to leave New Granseal");
 	MakeByte	(0X54D36);
 	MakeArray	(0X54D36,	0X4);
-	MakeRptCmt	(0X54D38,	"Set after the scene with Janet, when you go to leave New Granseal");
 	MakeCode	(0X54D3A);
 	MakeName	(0X54D3A,	"Map6_DefaultZoneEvent");
 	MakeComm	(0X54D3C,	"\"A book...{N}GREAT VOYAGE{W1}\"");
@@ -64245,6 +66216,15 @@ static Bytes_15(void) {
 	MakeName	(0X54E4C,	"ms_map6_Section5");
 	MakeCode	(0X54E52);
 	MakeName	(0X54E52,	"Map6_DefaultItemEvent0");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X54E54);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X54E54,	"ms_map6_InitFunction");
@@ -65251,7 +67231,6 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X555DC,	"TEMP FLAG #00");
 	MakeByte	(0X555DC);
 	MakeArray	(0X555DC,	0X4);
-	MakeRptCmt	(0X555DE,	"TEMP FLAG #00");
 	MakeCode	(0X555E0);
 	MakeRptCmt	(0X555E2,	"\"{LEADER}, I expect{N}you to find a lot of{N}allies!{W1}\"");
 	MakeByte	(0X555E2);
@@ -65616,11 +67595,9 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X557CE,	"Set after the scene with Peter at the Castle (ends with you leaving the Castle)");
 	MakeByte	(0X557CE);
 	MakeArray	(0X557CE,	0X4);
-	MakeRptCmt	(0X557D0,	"Set after the scene with Peter at the Castle (ends with you leaving the Castle)");
 	MakeRptCmt	(0X557D2,	"Peter is a follower");
 	MakeByte	(0X557D2);
 	MakeArray	(0X557D2,	0X4);
-	MakeRptCmt	(0X557D4,	"Peter is a follower");
 	MakeCode	(0X557D6);
 	MakeRptCmt	(0X557D8,	"Set after coming back to New Granseal after Creed's Mansion,when Astral joins");
 	MakeByte	(0X557D8);
@@ -65631,11 +67608,9 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X557E4,	"Set after coming back to New Granseal after Creed's Mansion,when Astral joins");
 	MakeByte	(0X557E4);
 	MakeArray	(0X557E4,	0X4);
-	MakeRptCmt	(0X557E6,	"Set after coming back to New Granseal after Creed's Mansion,when Astral joins");
 	MakeRptCmt	(0X557E8,	"Astral is a follower");
 	MakeByte	(0X557E8);
 	MakeArray	(0X557E8,	0X4);
-	MakeRptCmt	(0X557EA,	"Astral is a follower");
 	MakeCode	(0X557EC);
 	MakeName	(0X557EC,	"Map7_DefaultZoneEvent");
 	MakeComm	(0X557EE,	"\"A book...{N}DARK SOL{W1}\"");
@@ -65671,11 +67646,9 @@ static Bytes_15(void) {
 	MakeRptCmt	(0X55828,	"Set after the \"one year has passed\" text, after New Granseal is built");
 	MakeByte	(0X55828);
 	MakeArray	(0X55828,	0X4);
-	MakeRptCmt	(0X5582A,	"Set after the \"one year has passed\" text, after New Granseal is built");
 	MakeRptCmt	(0X5582C,	"Battle 11 unlocked");
 	MakeByte	(0X5582C);
 	MakeArray	(0X5582C,	0X4);
-	MakeRptCmt	(0X5582E,	"Battle 11 unlocked");
 	MakeCode	(0X55830);
 	MakeByte	(0X55832);
 	MakeArray	(0X55832,	0X4);
@@ -65714,15 +67687,6 @@ static Bytes_15(void) {
 	MakeWord	(0X55878);
 	MakeByte	(0X5587A);
 	MakeArray	(0X5587A,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5587E);
 	MakeArray	(0X5587E,	0X4);
 	MakeComm	(0X55882,	"\"(Cough)...our town is being{N}rebuilt, as you can see.{W2}\"");
@@ -66815,7 +68779,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56096,	"TEMP FLAG #00");
 	MakeByte	(0X56096);
 	MakeArray	(0X56096,	0X4);
-	MakeRptCmt	(0X56098,	"TEMP FLAG #00");
 	MakeRptCmt	(0X5609A,	"\"Our ancestors came from{N}Rune, a southern island,{N}long ago.{W2}\"");
 	MakeByte	(0X5609A);
 	MakeArray	(0X5609A,	0X4);
@@ -67018,7 +68981,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X561D0,	"Set after the scene where Bowie brings the plank above deck, also set after the initial Ribble scene, where the guy runs away");
 	MakeByte	(0X561D0);
 	MakeArray	(0X561D0,	0X4);
-	MakeRptCmt	(0X561D2,	"Set after the scene where Bowie brings the plank above deck, also set after the initial Ribble scene, where the guy runs away");
 	MakeRptCmt	(0X561D4,	"TEMP FLAG #02");
 	MakeByte	(0X561D4);
 	MakeArray	(0X561D4,	0X4);
@@ -67034,7 +68996,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X561E6,	"Set after the scene in Ribble where the mayor confronts Bowie");
 	MakeByte	(0X561E6);
 	MakeArray	(0X561E6,	0X4);
-	MakeRptCmt	(0X561E8,	"Set after the scene in Ribble where the mayor confronts Bowie");
 	MakeCode	(0X561EA);
 	MakeName	(0X561EA,	"Map8_DefaultZoneEvent");
 	MakeComm	(0X561EC,	"\"It reads...{N}NO STRANGERS!{N}-Shopkeeper{W1}\"");
@@ -67135,7 +69096,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56302,	"Set after you open the tree in Ribble with the wooden plank");
 	MakeByte	(0X56302);
 	MakeArray	(0X56302,	0X4);
-	MakeRptCmt	(0X56304,	"Set after you open the tree in Ribble with the wooden plank");
 	MakeCode	(0X56306);
 	MakeRptCmt	(0X56308,	"remove wooden panel from items ?");
 	MakeName	(0X56312,	"Map8_DefaultItemEvent2");
@@ -67672,6 +69632,15 @@ static Bytes_16(void) {
 	MakeName	(0X56756,	"Map9_EntityEvent2");
 	MakeRptCmt	(0X56758,	"\"Hassan is a port town.{W2}{N}But, we've had no trading{N}recently.{W1}\"");
 	MakeWord	(0X56758);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X5675A);
 	MakeCode	(x=0X5675C);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -67748,12 +69717,10 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X567FE,	"Set after talking to Rohde in Hassan if you DON'T have the Achilles Sword?");
 	MakeByte	(0X567FE);
 	MakeArray	(0X567FE,	0X4);
-	MakeRptCmt	(0X56800,	"Set after talking to Rohde in Hassan if you DON'T have the Achilles Sword?");
 	MakeCode	(0X56802);
 	MakeRptCmt	(0X56804,	"Set after talking to Rohde in Hassan if you DON'T have the Achilles Sword?");
 	MakeByte	(0X56804);
 	MakeArray	(0X56804,	0X4);
-	MakeRptCmt	(0X56806,	"Set after talking to Rohde in Hassan if you DON'T have the Achilles Sword?");
 	MakeCode	(0X56808);
 	MakeRptCmt	(0X5680A,	"\"Yes, I'm {NAME;11}.{N}I'm really busy now.{W2}{N}Time is dear to me.{N}Please don't bother me.{W1}\"");
 	MakeByte	(0X5680A);
@@ -67767,12 +69734,10 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56824,	"Set after presenting the Achilles Sword to Rohde (yes/no to the Caravan regardless)");
 	MakeByte	(0X56824);
 	MakeArray	(0X56824,	0X4);
-	MakeRptCmt	(0X56826,	"Set after presenting the Achilles Sword to Rohde (yes/no to the Caravan regardless)");
 	MakeCode	(0X56828);
 	MakeRptCmt	(0X5682A,	"Set after telling Rohde that you're going to get the Caravan");
 	MakeByte	(0X5682A);
 	MakeArray	(0X5682A,	0X4);
-	MakeRptCmt	(0X5682C,	"Set after telling Rohde that you're going to get the Caravan");
 	MakeCode	(0X5682E);
 	MakeByte	(0X5683A);
 	MakeArray	(0X5683A,	0X6);
@@ -67788,7 +69753,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X5684E,	"TEMP FLAG #00");
 	MakeByte	(0X5684E);
 	MakeArray	(0X5684E,	0X4);
-	MakeRptCmt	(0X56850,	"TEMP FLAG #00");
 	MakeCode	(0X56852);
 	MakeCode	(0X56854);
 	MakeName	(0X56854,	"Map9_DefaultEntityEvent");
@@ -67814,7 +69778,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56872,	"Set after talking to the priest in upstairs Hassan");
 	MakeByte	(0X56872);
 	MakeArray	(0X56872,	0X4);
-	MakeRptCmt	(0X56874,	"Set after talking to the priest in upstairs Hassan");
 	MakeCode	(0X56876);
 	MakeCode	(0X56878);
 	MakeName	(0X56878,	"Map9_DefaultZoneEvent");
@@ -67854,7 +69817,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X568BC,	"Set after presenting the Achilles Sword to Rohde (yes/no to the Caravan regardless)");
 	MakeByte	(0X568BC);
 	MakeArray	(0X568BC,	0X4);
-	MakeRptCmt	(0X568BE,	"Set after presenting the Achilles Sword to Rohde (yes/no to the Caravan regardless)");
 	MakeCode	(0X568C0);
 	MakeName	(0X568C2,	"Map9_DefaultItemEvent1");
 	MakeCode	(x=0X568C4);
@@ -67866,12 +69828,10 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X568D4,	"Caravan is unlocked");
 	MakeByte	(0X568D4);
 	MakeArray	(0X568D4,	0X4);
-	MakeRptCmt	(0X568D6,	"Caravan is unlocked");
 	MakeCode	(0X568D8);
 	MakeRptCmt	(0X568E4,	"Rick joined");
 	MakeByte	(0X568E4);
 	MakeArray	(0X568E4,	0X4);
-	MakeRptCmt	(0X568E6,	"Rick joined");
 	MakeCode	(0X568E8);
 	MakeByte	(0X568F6);
 	MakeArray	(0X568F6,	0X4);
@@ -68669,7 +70629,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56F2A,	"Set after you agree to kill Zeon in Bedoe (King's yes/no dialog)");
 	MakeByte	(0X56F2A);
 	MakeArray	(0X56F2A,	0X4);
-	MakeRptCmt	(0X56F2C,	"Set after you agree to kill Zeon in Bedoe (King's yes/no dialog)");
 	MakeCode	(0X56F2E);
 	MakeRptCmt	(0X56F30,	"\"Then you may stay in Bedoe.{W2}\"");
 	MakeByte	(0X56F30);
@@ -68729,7 +70688,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56F74,	"Set after the hatchling in Bedoe shows you he can almost fly");
 	MakeByte	(0X56F74);
 	MakeArray	(0X56F74,	0X4);
-	MakeRptCmt	(0X56F76,	"Set after the hatchling in Bedoe shows you he can almost fly");
 	MakeCode	(0X56F78);
 	MakeRptCmt	(0X56F7A,	"\"See.  I told you!{N}I can fly...sort of.{W1}\"");
 	MakeByte	(0X56F7A);
@@ -68770,7 +70728,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56FA8,	"Set after the King of Bedoe speaks to his soldiers and they disperse");
 	MakeByte	(0X56FA8);
 	MakeArray	(0X56FA8,	0X4);
-	MakeRptCmt	(0X56FAA,	"Set after the King of Bedoe speaks to his soldiers and they disperse");
 	MakeCode	(0X56FAC);
 	MakeCode	(x=0X56FAE);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -68783,7 +70740,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56FBA,	"Set after you approach the King of Bedoe, starts with Luke speaking to Peter");
 	MakeByte	(0X56FBA);
 	MakeArray	(0X56FBA,	0X4);
-	MakeRptCmt	(0X56FBC,	"Set after you approach the King of Bedoe, starts with Luke speaking to Peter");
 	MakeCode	(0X56FBE);
 	MakeByte	(0X56FC0);
 	MakeArray	(0X56FC0,	0X4);
@@ -68801,14 +70757,12 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X56FCE,	"Set after the scene where Skreech falls in Bedoe");
 	MakeByte	(0X56FCE);
 	MakeArray	(0X56FCE,	0X4);
-	MakeRptCmt	(0X56FD0,	"Set after the scene where Skreech falls in Bedoe");
 	MakeCode	(0X56FD2);
 	MakeByte	(0X56FD4);
 	MakeArray	(0X56FD4,	0X6);
 	MakeRptCmt	(0X56FDA,	"Set after the scene where Skreech falls in Bedoe");
 	MakeByte	(0X56FDA);
 	MakeArray	(0X56FDA,	0X4);
-	MakeRptCmt	(0X56FDC,	"Set after the scene where Skreech falls in Bedoe");
 	MakeCode	(0X56FDE);
 	MakeComm	(0X56FE0,	"\"ITEMS{W1}\"");
 	MakeCode	(0X56FE0);
@@ -68861,11 +70815,9 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X5703C,	"Set after the initial Bedoe scene (where the guards confront you)");
 	MakeByte	(0X5703C);
 	MakeArray	(0X5703C,	0X4);
-	MakeRptCmt	(0X5703E,	"Set after the initial Bedoe scene (where the guards confront you)");
 	MakeRptCmt	(0X57040,	"Set after the King of Bedoe speaks to his soldiers and they disperse");
 	MakeByte	(0X57040);
 	MakeArray	(0X57040,	0X4);
-	MakeRptCmt	(0X57042,	"Set after the King of Bedoe speaks to his soldiers and they disperse");
 	MakeCode	(0X57044);
 	MakeCode	(x=0X5708E);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -68876,7 +70828,6 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X5709E,	"Set after the scene where Skreech falls in Bedoe");
 	MakeByte	(0X5709E);
 	MakeArray	(0X5709E,	0X4);
-	MakeRptCmt	(0X570A0,	"Set after the scene where Skreech falls in Bedoe");
 	MakeCode	(0X570A2);
 	MakeByte	(0X570B0);
 	MakeArray	(0X570B0,	0X4);
@@ -68943,15 +70894,6 @@ static Bytes_16(void) {
 	MakeArray	(0X57126,	0X2);
 	MakeByte	(0X57128);
 	MakeArray	(0X57128,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5712A);
 	MakeComm	(0X5712C,	"\"Don't be so uppity!{W1}\"");
 	MakeByte	(0X5712C);
@@ -70317,11 +72259,9 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X57A7E,	"Set after speaking with Volcanon");
 	MakeByte	(0X57A7E);
 	MakeArray	(0X57A7E,	0X4);
-	MakeRptCmt	(0X57A80,	"Set after speaking with Volcanon");
 	MakeRptCmt	(0X57A82,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeByte	(0X57A82);
 	MakeArray	(0X57A82,	0X4);
-	MakeRptCmt	(0X57A84,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeCode	(0X57A86);
 	MakeComm	(0X57A88,	"\"A big statue of a heroic{N}bird.{W1}\"");
 	MakeCode	(0X57A88);
@@ -70715,7 +72655,6 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X57D10,	"Battle 18 completed");
 	MakeByte	(0X57D10);
 	MakeArray	(0X57D10,	0X4);
-	MakeRptCmt	(0X57D12,	"Battle 18 completed");
 	MakeCode	(0X57D14);
 	MakeByte	(0X57D22);
 	MakeArray	(0X57D22,	0X4);
@@ -71076,7 +73015,6 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X58064,	"TEMP FLAG #00");
 	MakeByte	(0X58064);
 	MakeArray	(0X58064,	0X4);
-	MakeRptCmt	(0X58066,	"TEMP FLAG #00");
 	MakeRptCmt	(0X58068,	"\"Oh, you defeated that{N}hobgoblin?  Wow!{W2}\"");
 	MakeByte	(0X58068);
 	MakeArray	(0X58068,	0X4);
@@ -71101,7 +73039,6 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X58084,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeByte	(0X58084);
 	MakeArray	(0X58084,	0X4);
-	MakeRptCmt	(0X58086,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeCode	(0X58088);
 	MakeRptCmt	(0X5808A,	"\"In ancient times, there{N}were magic tunnels.{W2}{N}People traveled easily{N}through the tunnels.{W1}\"");
 	MakeByte	(0X5808A);
@@ -71181,6 +73118,15 @@ static Bytes_17(void) {
 	MakeName	(0X58102,	"Map13_EntityEvent11");
 	MakeRptCmt	(0X58104,	"\"Clank!  Clank!{N}All of our weapons are made{N}by me!{W2}{N}But, who uses them in this{N}peaceful country?{W1}\"");
 	MakeWord	(0X58104);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X58106);
 	MakeCode	(x=0X58108);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -71300,12 +73246,10 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X581A8,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeByte	(0X581A8);
 	MakeArray	(0X581A8,	0X4);
-	MakeRptCmt	(0X581AA,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeCode	(0X581AC);
 	MakeRptCmt	(0X581AE,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeByte	(0X581AE);
 	MakeArray	(0X581AE,	0X4);
-	MakeRptCmt	(0X581B0,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeCode	(0X581B2);
 	MakeRptCmt	(0X581B4,	"TEMP FLAG #04");
 	MakeByte	(0X581B4);
@@ -71345,11 +73289,9 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X581EA,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeByte	(0X581EA);
 	MakeArray	(0X581EA,	0X4);
-	MakeRptCmt	(0X581EC,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeRptCmt	(0X581EE,	"Raft is unlocked");
 	MakeByte	(0X581EE);
 	MakeArray	(0X581EE,	0X4);
-	MakeRptCmt	(0X581F0,	"Raft is unlocked");
 	MakeCode	(x=0X581F2);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -71411,7 +73353,6 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X58246,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeByte	(0X58246);
 	MakeArray	(0X58246,	0X4);
-	MakeRptCmt	(0X58248,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeCode	(0X5824A);
 	MakeByte	(0X5824C);
 	MakeArray	(0X5824C,	0X6);
@@ -71420,24 +73361,20 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X5825E,	"Set after Oddler wanders down from the mountain");
 	MakeByte	(0X5825E);
 	MakeArray	(0X5825E,	0X4);
-	MakeRptCmt	(0X58260,	"Set after Oddler wanders down from the mountain");
 	MakeCode	(0X58262);
 	MakeRptCmt	(0X58264,	"Set after you agree to kill Zeon in Bedoe (King's yes/no dialog)");
 	MakeByte	(0X58264);
 	MakeArray	(0X58264,	0X4);
-	MakeRptCmt	(0X58266,	"Set after you agree to kill Zeon in Bedoe (King's yes/no dialog)");
 	MakeCode	(0X58268);
 	MakeRptCmt	(0X5826A,	"Set after returning to Polca from Bedoe and seeing the devils vs. birds scene");
 	MakeByte	(0X5826A);
 	MakeArray	(0X5826A,	0X4);
-	MakeRptCmt	(0X5826C,	"Set after returning to Polca from Bedoe and seeing the devils vs. birds scene");
 	MakeCode	(0X5826E);
 	MakeByte	(0X58270);
 	MakeArray	(0X58270,	0X6);
 	MakeRptCmt	(0X58276,	"Set after returning to Polca from Bedoe and seeing the devils vs. birds scene");
 	MakeByte	(0X58276);
 	MakeArray	(0X58276,	0X4);
-	MakeRptCmt	(0X58278,	"Set after returning to Polca from Bedoe and seeing the devils vs. birds scene");
 	MakeCode	(0X5827A);
 	MakeCode	(x=0X5827C);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -71448,14 +73385,12 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X58282,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeByte	(0X58282);
 	MakeArray	(0X58282,	0X4);
-	MakeRptCmt	(0X58284,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeCode	(0X58286);
 	MakeByte	(0X58288);
 	MakeArray	(0X58288,	0X6);
 	MakeRptCmt	(0X5828E,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeByte	(0X5828E);
 	MakeArray	(0X5828E,	0X4);
-	MakeRptCmt	(0X58290,	"Set after the mayor first tries to have you take Oddler with you (Peter declines)");
 	MakeCode	(0X58292);
 	MakeCode	(x=0X58294);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -71466,14 +73401,12 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X5829A,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeByte	(0X5829A);
 	MakeArray	(0X5829A,	0X4);
-	MakeRptCmt	(0X5829C,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeCode	(0X5829E);
 	MakeByte	(0X582A0);
 	MakeArray	(0X582A0,	0X6);
 	MakeRptCmt	(0X582A6,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeByte	(0X582A6);
 	MakeArray	(0X582A6,	0X4);
-	MakeRptCmt	(0X582A8,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeCode	(0X582AA);
 	MakeName	(0X582AA,	"Map13_DefaultZoneEvent");
 	MakeComm	(0X582AC,	"\"A book...{N}VIVA, FRIENDSHIP!{W1}\"");
@@ -71512,12 +73445,10 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X582EC,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeByte	(0X582EC);
 	MakeArray	(0X582EC,	0X4);
-	MakeRptCmt	(0X582EE,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeCode	(0X582F0);
 	MakeRptCmt	(0X582FE,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeByte	(0X582FE);
 	MakeArray	(0X582FE,	0X4);
-	MakeRptCmt	(0X58300,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeCode	(0X58302);
 	MakeByte	(0X58310);
 	MakeArray	(0X58310,	0X4);
@@ -72574,15 +74505,6 @@ static Bytes_17(void) {
 	MakeComm	(0X58AB8,	"\"You're right.{W1}\"");
 	MakeByte	(0X58AB8);
 	MakeArray	(0X58AB8,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X58ABC,	"\"Anyway, now we have a raft!{W1}\"");
 	MakeByte	(0X58ABC);
 	MakeArray	(0X58ABC,	0X4);
@@ -73261,7 +75183,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X58F1E,	"Set after the scene where Bowie brings the plank above deck, also set after the initial Ribble scene, where the guy runs away");
 	MakeByte	(0X58F1E);
 	MakeArray	(0X58F1E,	0X4);
-	MakeRptCmt	(0X58F20,	"Set after the scene where Bowie brings the plank above deck, also set after the initial Ribble scene, where the guy runs away");
 	MakeCode	(x=0X58F22);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -74054,7 +75975,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59536,	"TEMP FLAG #00");
 	MakeByte	(0X59536);
 	MakeArray	(0X59536,	0X4);
-	MakeRptCmt	(0X59538,	"TEMP FLAG #00");
 	MakeCode	(0X5953A);
 	MakeRptCmt	(0X5953C,	"\"He's just kidding, but to{N}tell the truth, the Cotton{W2}\"");
 	MakeByte	(0X5953C);
@@ -74065,7 +75985,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59544,	"TEMP FLAG #00");
 	MakeByte	(0X59544);
 	MakeArray	(0X59544,	0X4);
-	MakeRptCmt	(0X59546,	"TEMP FLAG #00");
 	MakeCode	(0X59548);
 	MakeRptCmt	(0X5954A,	"\"Some adventurers live in the{N}north-east part of Floor{W2}\"");
 	MakeByte	(0X5954A);
@@ -74083,7 +76002,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5955A,	"Set after the Desktop King tells you to fight on the chessboard");
 	MakeByte	(0X5955A);
 	MakeArray	(0X5955A,	0X4);
-	MakeRptCmt	(0X5955C,	"Set after the Desktop King tells you to fight on the chessboard");
 	MakeCode	(0X5955E);
 	MakeRptCmt	(0X59560,	"\"So, you were not able to see{N}Creed?{W2}\"");
 	MakeByte	(0X59560);
@@ -74100,7 +76018,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59570,	"Set after the Desktop King tells you to fight on the chessboard");
 	MakeByte	(0X59570);
 	MakeArray	(0X59570,	0X4);
-	MakeRptCmt	(0X59572,	"Set after the Desktop King tells you to fight on the chessboard");
 	MakeCode	(0X59574);
 	MakeRptCmt	(0X59576,	"\"Bravo!  I'd give you an army{N}if you'd stay here.{W1}\"");
 	MakeByte	(0X59576);
@@ -74239,7 +76156,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5963A,	"Set after the scene where Goliath places you on the Desktop");
 	MakeByte	(0X5963A);
 	MakeArray	(0X5963A,	0X4);
-	MakeRptCmt	(0X5963C,	"Set after the scene where Goliath places you on the Desktop");
 	MakeRptCmt	(0X5963E,	"Battle 22 completed");
 	MakeByte	(0X5963E);
 	MakeArray	(0X5963E,	0X4);
@@ -74253,7 +76169,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59650,	"Set after the scene that plays after you win the chess battle");
 	MakeByte	(0X59650);
 	MakeArray	(0X59650,	0X4);
-	MakeRptCmt	(0X59652,	"Set after the scene that plays after you win the chess battle");
 	MakeCode	(0X59654);
 	MakeByte	(0X59656);
 	MakeArray	(0X59656,	0X4);
@@ -74930,6 +76845,15 @@ static Bytes_18(void) {
 	OpOff		(x,	1,	0X59B44);
 	OpOff		(x,	129,	0X59B44);
 	MakeName	(0X59B60,	"Map23_EntityEvent0");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X59B62,	"\"Welcome.  Travelers often{N}stop by here to rest.{W2}\"");
 	MakeWord	(0X59B62);
 	MakeRptCmt	(0X59B64,	"\"You may stay here as{N}long as you like.{W1}\"");
@@ -75109,7 +77033,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59C44,	"Battle 44 completed");
 	MakeByte	(0X59C44);
 	MakeArray	(0X59C44,	0X4);
-	MakeRptCmt	(0X59C46,	"Battle 44 completed");
 	MakeCode	(0X59C48);
 	MakeRptCmt	(0X59C4C,	"\"Welcome to the fairy woods{N}special stage!{W2}\"");
 	MakeByte	(0X59C4C);
@@ -75208,7 +77131,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59D02,	"Battle 44 completed");
 	MakeByte	(0X59D02);
 	MakeArray	(0X59D02,	0X4);
-	MakeRptCmt	(0X59D04,	"Battle 44 completed");
 	MakeCode	(0X59D06);
 	MakeDword	(x=0X59D08);
 	OpOff		(x,	0,	0X0);
@@ -75317,7 +77239,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59DCA,	"Set after the man tries to lift the giant ring in Floor World");
 	MakeByte	(0X59DCA);
 	MakeArray	(0X59DCA,	0X4);
-	MakeRptCmt	(0X59DCC,	"Set after the man tries to lift the giant ring in Floor World");
 	MakeCode	(0X59DCE);
 	MakeCode	(0X59DD0);
 	MakeName	(0X59DD0,	"Map26_DefaultZoneEvent");
@@ -75339,7 +77260,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59DE8,	"Set after the Cotton Balloon pops and you land in Floor World");
 	MakeByte	(0X59DE8);
 	MakeArray	(0X59DE8,	0X4);
-	MakeRptCmt	(0X59DEA,	"Set after the Cotton Balloon pops and you land in Floor World");
 	MakeCode	(x=0X59DEC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -75585,7 +77505,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X59FA6,	"Set after the scene where you're surprised by Willard inside the wall");
 	MakeByte	(0X59FA6);
 	MakeArray	(0X59FA6,	0X4);
-	MakeRptCmt	(0X59FA8,	"Set after the scene where you're surprised by Willard inside the wall");
 	MakeCode	(0X59FAA);
 	MakeName	(0X59FAA,	"Map27_DefaultZoneEvent");
 	MakeCode	(0X59FAC);
@@ -75925,7 +77844,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5A23A,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeByte	(0X5A23A);
 	MakeArray	(0X5A23A,	0X4);
-	MakeRptCmt	(0X5A23C,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeCode	(0X5A23E);
 	MakeCode	(x=0X5A240);
 	OpOff		(x,	0,	0X0);
@@ -75939,7 +77857,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5A250,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeByte	(0X5A250);
 	MakeArray	(0X5A250,	0X4);
-	MakeRptCmt	(0X5A252,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeCode	(0X5A254);
 	MakeByte	(0X5A256);
 	MakeArray	(0X5A256,	0X4);
@@ -75957,7 +77874,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5A266,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeByte	(0X5A266);
 	MakeArray	(0X5A266,	0X4);
-	MakeRptCmt	(0X5A268,	"Set after talking to one of the dwarves in the mine near the Fairy Woods");
 	MakeCode	(0X5A26A);
 	MakeRptCmt	(0X5A26C,	"\"Hey, visit us in the Dwarven{N}Village when you come to{N}Grans!{W1}\"");
 	MakeByte	(0X5A26C);
@@ -75994,7 +77910,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5A2B2,	"Set after the dwarf gives Bowie the cannon");
 	MakeByte	(0X5A2B2);
 	MakeArray	(0X5A2B2,	0X4);
-	MakeRptCmt	(0X5A2B4,	"Set after the dwarf gives Bowie the cannon");
 	MakeByte	(0X5A2B6);
 	MakeArray	(0X5A2B6,	0X4);
 	MakeByte	(0X5A2BA);
@@ -76023,11 +77938,9 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X5A2DE,	"Set after the fairy cures the sick dwarf in the mine");
 	MakeByte	(0X5A2DE);
 	MakeArray	(0X5A2DE,	0X4);
-	MakeRptCmt	(0X5A2E0,	"Set after the fairy cures the sick dwarf in the mine");
 	MakeRptCmt	(0X5A2E2,	"Fairy is a follower");
 	MakeByte	(0X5A2E2);
 	MakeArray	(0X5A2E2,	0X4);
-	MakeRptCmt	(0X5A2E4,	"Fairy is a follower");
 	MakeCode	(0X5A2E6);
 	MakeName	(0X5A2E6,	"Map30_DefaultZoneEvent");
 	MakeCode	(0X5A2E8);
@@ -76220,15 +78133,6 @@ static Bytes_18(void) {
 	MakeComm	(0X5A446,	"\"What?{W1}\"");
 	MakeByte	(0X5A446);
 	MakeArray	(0X5A446,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5A44A);
 	MakeArray	(0X5A44A,	0X4);
 	MakeByte	(0X5A44E);
@@ -76771,11 +78675,9 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X5A81E,	"Set after the fairy tags along at Creed's");
 	MakeByte	(0X5A81E);
 	MakeArray	(0X5A81E,	0X4);
-	MakeRptCmt	(0X5A820,	"Set after the fairy tags along at Creed's");
 	MakeRptCmt	(0X5A822,	"Set after the fairy tags along at Creed's");
 	MakeByte	(0X5A822);
 	MakeArray	(0X5A822,	0X4);
-	MakeRptCmt	(0X5A824,	"Set after the fairy tags along at Creed's");
 	MakeCode	(0X5A826);
 	MakeByte	(0X5A828);
 	MakeArray	(0X5A828,	0X8);
@@ -77132,7 +79034,6 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X5AAA4,	"Set after the first scene with Goliath at Creed's Mansion");
 	MakeByte	(0X5AAA4);
 	MakeArray	(0X5AAA4,	0X4);
-	MakeRptCmt	(0X5AAA6,	"Set after the first scene with Goliath at Creed's Mansion");
 	MakeCode	(0X5AAA8);
 	MakeRptCmt	(0X5AAAA,	"Set after the fairy tags along at Creed's");
 	MakeByte	(0X5AAAA);
@@ -77147,15 +79048,12 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X5AABC,	"Set after Oddler elects to stay behind at Creed's Mansion");
 	MakeByte	(0X5AABC);
 	MakeArray	(0X5AABC,	0X4);
-	MakeRptCmt	(0X5AABE,	"Set after Oddler elects to stay behind at Creed's Mansion");
 	MakeRptCmt	(0X5AAC0,	"Fairy is a follower");
 	MakeByte	(0X5AAC0);
 	MakeArray	(0X5AAC0,	0X4);
-	MakeRptCmt	(0X5AAC2,	"Fairy is a follower");
 	MakeRptCmt	(0X5AAC4,	"Oddler is a follower");
 	MakeByte	(0X5AAC4);
 	MakeArray	(0X5AAC4,	0X4);
-	MakeRptCmt	(0X5AAC6,	"Oddler is a follower");
 	MakeCode	(0X5AAC8);
 	MakeCode	(x=0X5AACA);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -77263,7 +79161,6 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X5AB8E,	"Set after the scene where Creed restores the Force and heads down the basement");
 	MakeByte	(0X5AB8E);
 	MakeArray	(0X5AB8E,	0X4);
-	MakeRptCmt	(0X5AB90,	"Set after the scene where Creed restores the Force and heads down the basement");
 	MakeCode	(x=0X5AB92);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -78474,6 +80371,15 @@ static Bytes_19(void) {
 	MakeArray	(0X5B448,	0X2);
 	MakeByte	(0X5B44A);
 	MakeArray	(0X5B44A,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5B44C);
 	MakeArray	(0X5B44C,	0X2);
 	MakeWord	(0X5B44E);
@@ -78783,11 +80689,9 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X5B6AA,	"Set after the event in the basement of Creed's Mansion");
 	MakeByte	(0X5B6AA);
 	MakeArray	(0X5B6AA,	0X4);
-	MakeRptCmt	(0X5B6AC,	"Set after the event in the basement of Creed's Mansion");
 	MakeRptCmt	(0X5B6AE,	"Set after the event in the basement of Creed's Mansion");
 	MakeByte	(0X5B6AE);
 	MakeArray	(0X5B6AE,	0X4);
-	MakeRptCmt	(0X5B6B0,	"Set after the event in the basement of Creed's Mansion");
 	MakeCode	(0X5B6B2);
 	MakeName	(0X5B6B2,	"Map34_DefaultZoneEvent");
 	MakeCode	(0X5B6B4);
@@ -79914,15 +81818,6 @@ static Bytes_19(void) {
 	MakeComm	(0X5BF4E,	"\"No!  Evil Spirit exploded!{W2}\"");
 	MakeByte	(0X5BF4E);
 	MakeArray	(0X5BF4E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X5BF52,	"\"That's Zeon's power.{W2}\"");
 	MakeByte	(0X5BF52);
 	MakeArray	(0X5BF52,	0X4);
@@ -80316,7 +82211,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C2FE,	"Set after you approach the pond to rescue Elric at the Harpy Pond");
 	MakeByte	(0X5C2FE);
 	MakeArray	(0X5C2FE,	0X4);
-	MakeRptCmt	(0X5C300,	"Set after you approach the pond to rescue Elric at the Harpy Pond");
 	MakeCode	(0X5C302);
 	MakeCode	(x=0X5C304);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -80564,7 +82458,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C4C6,	"Set after the scene at the cliffs before Bedoe, where the devils are searching");
 	MakeByte	(0X5C4C6);
 	MakeArray	(0X5C4C6,	0X4);
-	MakeRptCmt	(0X5C4C8,	"Set after the scene at the cliffs before Bedoe, where the devils are searching");
 	MakeCode	(x=0X5C4CA);
 	OpOff		(x,	0,	0X5C4A8);
 	OpOff		(x,	128,	0X5C4A8);
@@ -80606,7 +82499,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C4E8,	"Set after Peter delivers his lines after the cliffs before Bedoe battle");
 	MakeByte	(0X5C4E8);
 	MakeArray	(0X5C4E8,	0X4);
-	MakeRptCmt	(0X5C4EA,	"Set after Peter delivers his lines after the cliffs before Bedoe battle");
 	MakeCode	(0X5C4EC);
 	MakeByte	(0X5C4EE);
 	MakeArray	(0X5C4EE,	0X4);
@@ -80855,7 +82747,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C690,	"TEMP FLAG #00");
 	MakeByte	(0X5C690);
 	MakeArray	(0X5C690,	0X4);
-	MakeRptCmt	(0X5C692,	"TEMP FLAG #00");
 	MakeCode	(0X5C694);
 	MakeName	(0X5C694,	"Map61_DefaultEntityEvent");
 	MakeByte	(0X5C696);
@@ -80886,7 +82777,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C6B8,	"Set after the old man opens the door to the Woodel Panel shrine interior");
 	MakeByte	(0X5C6B8);
 	MakeArray	(0X5C6B8,	0X4);
-	MakeRptCmt	(0X5C6BA,	"Set after the old man opens the door to the Woodel Panel shrine interior");
 	MakeCode	(0X5C6BC);
 	MakeName	(0X5C6BC,	"Map61_DefaultZoneEvent");
 	MakeCode	(0X5C6BE);
@@ -81070,14 +82960,12 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C808,	"???");
 	MakeByte	(0X5C808);
 	MakeArray	(0X5C808,	0X4);
-	MakeRptCmt	(0X5C80A,	"???");
 	MakeCode	(0X5C80C);
 	MakeByte	(0X5C80E);
 	MakeArray	(0X5C80E,	0X6);
 	MakeRptCmt	(0X5C814,	"???");
 	MakeByte	(0X5C814);
 	MakeArray	(0X5C814,	0X4);
-	MakeRptCmt	(0X5C816,	"???");
 	MakeCode	(0X5C818);
 	MakeRptCmt	(0X5C81A,	"\"Sorry, guys!  We can't go to{N}Grans Island this way.{W1}\"");
 	MakeByte	(0X5C81A);
@@ -81112,7 +83000,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5C846,	"TEMP FLAG #00");
 	MakeByte	(0X5C846);
 	MakeArray	(0X5C846,	0X4);
-	MakeRptCmt	(0X5C848,	"TEMP FLAG #00");
 	MakeCode	(0X5C84A);
 	MakeCode	(x=0X5C84C);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -81385,14 +83272,12 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5CA02,	"TEMP FLAG #00");
 	MakeByte	(0X5CA02);
 	MakeArray	(0X5CA02,	0X4);
-	MakeRptCmt	(0X5CA04,	"TEMP FLAG #00");
 	MakeCode	(0X5CA06);
 	MakeByte	(0X5CA08);
 	MakeArray	(0X5CA08,	0X6);
 	MakeRptCmt	(0X5CA0E,	"TEMP FLAG #00");
 	MakeByte	(0X5CA0E);
 	MakeArray	(0X5CA0E,	0X4);
-	MakeRptCmt	(0X5CA10,	"TEMP FLAG #00");
 	MakeCode	(0X5CA12);
 	MakeCode	(x=0X5CA14);
 	OpOff		(x,	0,	0X0);
@@ -82141,7 +84026,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D01A,	"Set after Skreech's join scene has played in Tristan");
 	MakeByte	(0X5D01A);
 	MakeArray	(0X5D01A,	0X4);
-	MakeRptCmt	(0X5D01C,	"Set after Skreech's join scene has played in Tristan");
 	MakeCode	(0X5D01E);
 	MakeComm	(0X5D020,	"\"A statue of beautiful Mitula.{W1}\"");
 	MakeCode	(0X5D020);
@@ -82297,6 +84181,15 @@ static Bytes_20(void) {
 	MakeArray	(0X5D156,	0X8);
 	MakeByte	(0X5D15E);
 	MakeArray	(0X5D15E,	0X8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5D166,	"\"{LEADER} saved...{W2}\"");
 	MakeByte	(0X5D166);
 	MakeArray	(0X5D166,	0X4);
@@ -82498,7 +84391,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D2B8,	"Set after the merchant in Ketto runs to his store");
 	MakeByte	(0X5D2B8);
 	MakeArray	(0X5D2B8,	0X4);
-	MakeRptCmt	(0X5D2BA,	"Set after the merchant in Ketto runs to his store");
 	MakeByte	(0X5D2BC);
 	MakeArray	(0X5D2BC,	0X6);
 	MakeCode	(0X5D2C2);
@@ -82517,7 +84409,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D2DC,	"TEMP FLAG #00");
 	MakeByte	(0X5D2DC);
 	MakeArray	(0X5D2DC,	0X4);
-	MakeRptCmt	(0X5D2DE,	"TEMP FLAG #00");
 	MakeCode	(0X5D2E0);
 	MakeCode	(0X5D2E8);
 	MakeName	(0X5D2E8,	"nullsub_131");
@@ -82843,7 +84734,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D52C,	"Set after talking to the painter in Moun for the first time");
 	MakeByte	(0X5D52C);
 	MakeArray	(0X5D52C,	0X4);
-	MakeRptCmt	(0X5D52E,	"Set after talking to the painter in Moun for the first time");
 	MakeByte	(0X5D530);
 	MakeArray	(0X5D530,	0X6);
 	MakeCode	(0X5D536);
@@ -82851,6 +84741,7 @@ static Bytes_20(void) {
 	MakeArray	(0X5D538,	0X6);
 	MakeCode	(0X5D53E);
 	MakeCode	(0X5D540);
+	MakeName	(0X5D540,	"nullsub_4");
 	MakeCode	(x=0X5D542);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -82882,7 +84773,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D56C,	"Set after making the Arm of Golem appear in Moun");
 	MakeByte	(0X5D56C);
 	MakeArray	(0X5D56C,	0X4);
-	MakeRptCmt	(0X5D56E,	"Set after making the Arm of Golem appear in Moun");
 	MakeCode	(0X5D570);
 	MakeCode	(0X5D572);
 	MakeComm	(0X5D574,	"\"A book...{N}MYSTERY OF NAZCA{W1}\"");
@@ -82941,7 +84831,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D5EE,	"Set after picking up the Arm of Golem in Moun");
 	MakeByte	(0X5D5EE);
 	MakeArray	(0X5D5EE,	0X4);
-	MakeRptCmt	(0X5D5F0,	"Set after picking up the Arm of Golem in Moun");
 	MakeCode	(0X5D5F2);
 	MakeRptCmt	(0X5D5FE,	"\"But {LEADER}'s hands{N}are full.{W1}\"");
 	MakeByte	(0X5D5FE);
@@ -82983,7 +84872,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D636,	"Set after making the Arm of Golem appear in Moun");
 	MakeByte	(0X5D636);
 	MakeArray	(0X5D636,	0X4);
-	MakeRptCmt	(0X5D638,	"Set after making the Arm of Golem appear in Moun");
 	MakeCode	(0X5D63A);
 	MakeByte	(0X5D63C);
 	MakeArray	(0X5D63C,	0X6);
@@ -83287,7 +85175,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D8B2,	"Set after speaking to a centaur at Pacalon castle (the one who moves and shivers)");
 	MakeByte	(0X5D8B2);
 	MakeArray	(0X5D8B2,	0X4);
-	MakeRptCmt	(0X5D8B4,	"Set after speaking to a centaur at Pacalon castle (the one who moves and shivers)");
 	MakeRptCmt	(0X5D8B6,	"\"Oh, I can't.  I'm too hungry!{W1}\"");
 	MakeByte	(0X5D8B6);
 	MakeArray	(0X5D8B6,	0X4);
@@ -83375,15 +85262,6 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X5D916,	"\"I didn't wish to see such{N}an uncouth princess.{W1}\"");
 	MakeByte	(0X5D916);
 	MakeArray	(0X5D916,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X5D91A);
 	MakeCode	(0X5D91C);
 	MakeName	(0X5D91C,	"Map36_EntityEvent12");
@@ -83425,11 +85303,9 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5D960,	"Set after Frayja asks to go to Moun with you");
 	MakeByte	(0X5D960);
 	MakeArray	(0X5D960,	0X4);
-	MakeRptCmt	(0X5D962,	"Set after Frayja asks to go to Moun with you");
 	MakeRptCmt	(0X5D964,	"Frayja is a follower");
 	MakeByte	(0X5D964);
 	MakeArray	(0X5D964,	0X4);
-	MakeRptCmt	(0X5D966,	"Frayja is a follower");
 	MakeCode	(0X5D968);
 	MakeCode	(x=0X5D96A);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -83862,7 +85738,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DC28,	"TEMP FLAG #00");
 	MakeByte	(0X5DC28);
 	MakeArray	(0X5DC28,	0X4);
-	MakeRptCmt	(0X5DC2A,	"TEMP FLAG #00");
 	MakeCode	(0X5DC2C);
 	MakeRptCmt	(0X5DC2E,	"\"(Sob...sob...){N}He's gone....{W2}\"");
 	MakeByte	(0X5DC2E);
@@ -83885,7 +85760,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DC48,	"TEMP FLAG #00");
 	MakeByte	(0X5DC48);
 	MakeArray	(0X5DC48,	0X4);
-	MakeRptCmt	(0X5DC4A,	"TEMP FLAG #00");
 	MakeCode	(0X5DC4C);
 	MakeRptCmt	(0X5DC50,	"\"The Nazca Ship crashed?{W1}\"");
 	MakeByte	(0X5DC50);
@@ -83987,7 +85861,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DCEA,	"Set after the Petro death scene in Roft");
 	MakeByte	(0X5DCEA);
 	MakeArray	(0X5DCEA,	0X4);
-	MakeRptCmt	(0X5DCEC,	"Set after the Petro death scene in Roft");
 	MakeCode	(0X5DCEE);
 	MakeCode	(x=0X5DCF0);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -84004,7 +85877,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DD02,	"Zynk is a follower");
 	MakeByte	(0X5DD02);
 	MakeArray	(0X5DD02,	0X4);
-	MakeRptCmt	(0X5DD04,	"Zynk is a follower");
 	MakeCode	(0X5DD06);
 	MakeRptCmt	(0X5DD08,	"Set after Zynk leaves you at the Galam Drawbridge (for Roft/Petro death scene)");
 	MakeByte	(0X5DD08);
@@ -84023,7 +85895,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DD20,	"Zynk is a follower");
 	MakeByte	(0X5DD20);
 	MakeArray	(0X5DD20,	0X4);
-	MakeRptCmt	(0X5DD22,	"Zynk is a follower");
 	MakeCode	(0X5DD24);
 	MakeComm	(0X5DD26,	"\"A book...{N}MAN-EATING PLANTS{W1}\"");
 	MakeCode	(0X5DD26);
@@ -84059,7 +85930,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DD5E,	"Set after the Petro death scene in Roft");
 	MakeByte	(0X5DD5E);
 	MakeArray	(0X5DD5E,	0X4);
-	MakeRptCmt	(0X5DD60,	"Set after the Petro death scene in Roft");
 	MakeRptCmt	(0X5DD62,	"Zynk joined");
 	MakeByte	(0X5DD62);
 	MakeArray	(0X5DD62,	0X4);
@@ -84082,7 +85952,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5DD84,	"Set after the initial scene on entering Roft (where the guy thinks you're Galam)");
 	MakeByte	(0X5DD84);
 	MakeArray	(0X5DD84,	0X4);
-	MakeRptCmt	(0X5DD86,	"Set after the initial scene on entering Roft (where the guy thinks you're Galam)");
 	MakeRptCmt	(0X5DD88,	"TEMP FLAG #02");
 	MakeByte	(0X5DD88);
 	MakeArray	(0X5DD88,	0X4);
@@ -84448,11 +86317,9 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5E068,	"Zynk is a follower");
 	MakeByte	(0X5E068);
 	MakeArray	(0X5E068,	0X4);
-	MakeRptCmt	(0X5E06A,	"Zynk is a follower");
 	MakeRptCmt	(0X5E06C,	"Set after the scene where Zynk stops you as you leave the Moun underground");
 	MakeByte	(0X5E06C);
 	MakeArray	(0X5E06C,	0X4);
-	MakeRptCmt	(0X5E06E,	"Set after the scene where Zynk stops you as you leave the Moun underground");
 	MakeCode	(0X5E070);
 	MakeCode	(x=0X5E072);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -84534,7 +86401,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5E0C8,	"Set after the Gyan join scene in the Moun underground");
 	MakeByte	(0X5E0C8);
 	MakeArray	(0X5E0C8,	0X4);
-	MakeRptCmt	(0X5E0CA,	"Set after the Gyan join scene in the Moun underground");
 	MakeCode	(0X5E0CC);
 	MakeByte	(0X5E0CE);
 	MakeArray	(0X5E0CE,	0X4);
@@ -84999,7 +86865,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5E3BC,	"Set after Zalbard taunts you in the scene outside the Mitula Shrine");
 	MakeByte	(0X5E3BC);
 	MakeArray	(0X5E3BC,	0X4);
-	MakeRptCmt	(0X5E3BE,	"Set after Zalbard taunts you in the scene outside the Mitula Shrine");
 	MakeCode	(0X5E3C0);
 	MakeName	(0X5E3C0,	"Map0_DefaultZoneEvent");
 	MakeByte	(0X5E3C2);
@@ -85464,7 +87329,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5E71A,	"Set after the Taya join scene has played inside the Mitula Shrine");
 	MakeByte	(0X5E71A);
 	MakeArray	(0X5E71A,	0X4);
-	MakeRptCmt	(0X5E71C,	"Set after the Taya join scene has played inside the Mitula Shrine");
 	MakeCode	(0X5E71E);
 	MakeByte	(0X5E720);
 	MakeArray	(0X5E720,	0X4);
@@ -85499,7 +87363,6 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5E752,	"Set after the Taya join scene has played inside the Mitula Shrine");
 	MakeByte	(0X5E752);
 	MakeArray	(0X5E752,	0X4);
-	MakeRptCmt	(0X5E754,	"Set after the Taya join scene has played inside the Mitula Shrine");
 	MakeCode	(0X5E756);
 	MakeByte	(0X5E758);
 	MakeArray	(0X5E758,	0X6);
@@ -85557,6 +87420,15 @@ static Bytes_21(void) {
 	MakeComm	(0X5E7D2,	"\"Hey!  The evil is gone!{N}Did you chase them away?{W1}\"");
 	MakeByte	(0X5E7D2);
 	MakeArray	(0X5E7D2,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5E7D6);
 	MakeArray	(0X5E7D6,	0X4);
 	MakeByte	(0X5E7DA);
@@ -86030,26 +87902,21 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5EAFC,	"Set after the Nazca ship shootdown scene");
 	MakeByte	(0X5EAFC);
 	MakeArray	(0X5EAFC,	0X4);
-	MakeRptCmt	(0X5EAFE,	"Set after the Nazca ship shootdown scene");
 	MakeCode	(x=0X5EB00);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeRptCmt	(0X5EB06,	"Battle 36 unlocked");
 	MakeByte	(0X5EB06);
 	MakeArray	(0X5EB06,	0X4);
-	MakeRptCmt	(0X5EB08,	"Battle 36 unlocked");
 	MakeRptCmt	(0X5EB0A,	"Battle 40 unlocked");
 	MakeByte	(0X5EB0A);
 	MakeArray	(0X5EB0A,	0X4);
-	MakeRptCmt	(0X5EB0C,	"Battle 40 unlocked");
 	MakeRptCmt	(0X5EB0E,	"Battle 42 unlocked");
 	MakeByte	(0X5EB0E);
 	MakeArray	(0X5EB0E,	0X4);
-	MakeRptCmt	(0X5EB10,	"Battle 42 unlocked");
 	MakeRptCmt	(0X5EB12,	"Battle 43 unlocked");
 	MakeByte	(0X5EB12);
 	MakeArray	(0X5EB12,	0X4);
-	MakeRptCmt	(0X5EB14,	"Battle 43 unlocked");
 	MakeCode	(0X5EB16);
 	MakeRptCmt	(0X5EB18,	"Battle 43 unlocked");
 	MakeByte	(0X5EB18);
@@ -86688,15 +88555,6 @@ static Bytes_21(void) {
 	MakeArray	(0X5F014,	0X4);
 	MakeByte	(0X5F018);
 	MakeArray	(0X5F018,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5F01A);
 	MakeArray	(0X5F01A,	0X4);
 	MakeByte	(0X5F01E);
@@ -87219,7 +89077,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X5F486,	"Set after opening Devil's Head with the Force Sword");
 	MakeByte	(0X5F486);
 	MakeArray	(0X5F486,	0X4);
-	MakeRptCmt	(0X5F488,	"Set after opening Devil's Head with the Force Sword");
 	MakeRptCmt	(0X5F48A,	"Lemon joined");
 	MakeByte	(0X5F48A);
 	MakeArray	(0X5F48A,	0X4);
@@ -87229,7 +89086,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X5F496,	"Lemon is a follower");
 	MakeByte	(0X5F496);
 	MakeArray	(0X5F496,	0X4);
-	MakeRptCmt	(0X5F498,	"Lemon is a follower");
 	MakeCode	(0X5F49A);
 	MakeCode	(x=0X5F4A0);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -87867,7 +89723,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X5FAB6,	"TEMP FLAG #00");
 	MakeByte	(0X5FAB6);
 	MakeArray	(0X5FAB6,	0X4);
-	MakeRptCmt	(0X5FAB8,	"TEMP FLAG #00");
 	MakeCode	(0X5FABA);
 	MakeByte	(0X5FABC);
 	MakeArray	(0X5FABC,	0X4);
@@ -88292,7 +90147,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X5FE1E,	"Set after the you're pulled toward the Force Sword in the Jewel Cave");
 	MakeByte	(0X5FE1E);
 	MakeArray	(0X5FE1E,	0X4);
-	MakeRptCmt	(0X5FE20,	"Set after the you're pulled toward the Force Sword in the Jewel Cave");
 	MakeCode	(0X5FE22);
 	MakeName	(0X5FE22,	"Map42_DefaultZoneEvent");
 	MakeComm	(0X5FE24,	"\"Nothing special there.{W1}\"");
@@ -88327,7 +90181,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X5FE74,	"Set after you pull the Force Sword out");
 	MakeByte	(0X5FE74);
 	MakeArray	(0X5FE74,	0X4);
-	MakeRptCmt	(0X5FE76,	"Set after you pull the Force Sword out");
 	MakeCode	(0X5FE78);
 	MakeCode	(x=0X5FE7A);
 	OpOff		(x,	0,	0X0);
@@ -89164,7 +91017,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X604C2,	"Set after recruiting Lemon in Yeel");
 	MakeByte	(0X604C2);
 	MakeArray	(0X604C2,	0X4);
-	MakeRptCmt	(0X604C4,	"Set after recruiting Lemon in Yeel");
 	MakeCode	(0X604C6);
 	MakeName	(0X604C6,	"Map5_212_DefaultEntityEvent");
 	MakeByte	(0X604C8);
@@ -89204,7 +91056,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X604FC,	"Set after Chaz and the priest go downstars in Yeel");
 	MakeByte	(0X604FC);
 	MakeArray	(0X604FC,	0X4);
-	MakeRptCmt	(0X604FE,	"Set after Chaz and the priest go downstars in Yeel");
 	MakeCode	(0X60500);
 	MakeCode	(x=0X60502);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -89221,11 +91072,9 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X60514,	"Lemon is a follower");
 	MakeByte	(0X60514);
 	MakeArray	(0X60514,	0X4);
-	MakeRptCmt	(0X60516,	"Lemon is a follower");
 	MakeRptCmt	(0X60518,	"Set after recruiting Lemon in Yeel");
 	MakeByte	(0X60518);
 	MakeArray	(0X60518,	0X4);
-	MakeRptCmt	(0X6051A,	"Set after recruiting Lemon in Yeel");
 	MakeCode	(0X6051C);
 	MakeCode	(0X6051E);
 	MakeCode	(x=0X60522);
@@ -89303,6 +91152,15 @@ static Bytes_22(void) {
 	OpOff		(x,	128,	0X0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X605AC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -89315,7 +91173,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X605BE,	"Set after recruiting Lemon in Yeel");
 	MakeByte	(0X605BE);
 	MakeArray	(0X605BE,	0X4);
-	MakeRptCmt	(0X605C0,	"Set after recruiting Lemon in Yeel");
 	MakeCode	(0X605C2);
 	MakeRptCmt	(0X605C4,	"Lemon joined");
 	MakeByte	(0X605C4);
@@ -89376,7 +91233,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X6062A,	"Set after Lemon jumps off the cliff in Yeel");
 	MakeByte	(0X6062A);
 	MakeArray	(0X6062A,	0X4);
-	MakeRptCmt	(0X6062C,	"Set after Lemon jumps off the cliff in Yeel");
 	MakeCode	(0X6062E);
 	MakeByte	(0X60630);
 	MakeArray	(0X60630,	0X6);
@@ -89390,7 +91246,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X60646,	"Lemon joined");
 	MakeByte	(0X60646);
 	MakeArray	(0X60646,	0X4);
-	MakeRptCmt	(0X60648,	"Lemon joined");
 	MakeCode	(0X6064A);
 	MakeByte	(0X6064C);
 	MakeArray	(0X6064C,	0X6);
@@ -89413,7 +91268,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X60678,	"Set after the scene in underground Yeel where Chaz paces and consults books");
 	MakeByte	(0X60678);
 	MakeArray	(0X60678,	0X4);
-	MakeRptCmt	(0X6067A,	"Set after the scene in underground Yeel where Chaz paces and consults books");
 	MakeRptCmt	(0X6067C,	"Chaz joined");
 	MakeByte	(0X6067C);
 	MakeArray	(0X6067C,	0X4);
@@ -89440,7 +91294,6 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X606BA,	"Set after recruiting Lemon in Yeel");
 	MakeByte	(0X606BA);
 	MakeArray	(0X606BA,	0X4);
-	MakeRptCmt	(0X606BC,	"Set after recruiting Lemon in Yeel");
 	MakeRptCmt	(0X606BE,	"Set after playing the piano in Yeel (during the late game)");
 	MakeByte	(0X606BE);
 	MakeArray	(0X606BE,	0X4);
@@ -90484,15 +92337,6 @@ static Bytes_22(void) {
 	MakeComm	(0X60E5C,	"\"Yes, {NAME;7} is right.{N}{LEADER} is our leader!{W1}\"");
 	MakeByte	(0X60E5C);
 	MakeArray	(0X60E5C,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X60E60);
 	MakeArray	(0X60E60,	0X8);
 	MakeByte	(0X60E68);
@@ -91092,11 +92936,9 @@ static Bytes_23(void) {
 	MakeRptCmt	(0X6126E,	"Zynk is a follower");
 	MakeByte	(0X6126E);
 	MakeArray	(0X6126E,	0X4);
-	MakeRptCmt	(0X61270,	"Zynk is a follower");
 	MakeRptCmt	(0X61272,	"Set after Zynk leaves you at the Galam Drawbridge (for Roft/Petro death scene)");
 	MakeByte	(0X61272);
 	MakeArray	(0X61272,	0X4);
-	MakeRptCmt	(0X61274,	"Set after Zynk leaves you at the Galam Drawbridge (for Roft/Petro death scene)");
 	MakeCode	(0X61276);
 	MakeName	(0X61276,	"Map18_212_DefaultZoneEvent");
 	MakeComm	(0X61278,	"\"It reads...{N}RESPECT YOUR PARENTS{W1}\"");
@@ -91126,7 +92968,6 @@ static Bytes_23(void) {
 	MakeRptCmt	(0X612A4,	"Set after the scene with Zeon plays as you leave the Galam Drawbridge area");
 	MakeByte	(0X612A4);
 	MakeArray	(0X612A4,	0X4);
-	MakeRptCmt	(0X612A6,	"Set after the scene with Zeon plays as you leave the Galam Drawbridge area");
 	MakeCode	(0X612A8);
 	MakeByte	(0X612BE);
 	MakeArray	(0X612BE,	0X4);
@@ -91412,7 +93253,6 @@ static Bytes_23(void) {
 	MakeRptCmt	(0X614BE,	"Set after the first time you talk to Creed on path up Ancient Tower");
 	MakeByte	(0X614BE);
 	MakeArray	(0X614BE,	0X4);
-	MakeRptCmt	(0X614C0,	"Set after the first time you talk to Creed on path up Ancient Tower");
 	MakeRptCmt	(0X614C2,	"\"There is no church around{N}here.  Think of me as a{N}priest.{W1}\"");
 	MakeByte	(0X614C2);
 	MakeArray	(0X614C2,	0X4);
@@ -91446,15 +93286,12 @@ static Bytes_23(void) {
 	MakeRptCmt	(0X614F0,	"Set after the first time you talk to Creed on path up Ancient Tower");
 	MakeByte	(0X614F0);
 	MakeArray	(0X614F0,	0X4);
-	MakeRptCmt	(0X614F2,	"Set after the first time you talk to Creed on path up Ancient Tower");
 	MakeRptCmt	(0X614F4,	"Battle 41 unlocked");
 	MakeByte	(0X614F4);
 	MakeArray	(0X614F4,	0X4);
-	MakeRptCmt	(0X614F6,	"Battle 41 unlocked");
 	MakeRptCmt	(0X614F8,	"Will be set with the 0387, but only if the event isn't triggered by speaking");
 	MakeByte	(0X614F8);
 	MakeArray	(0X614F8,	0X4);
-	MakeRptCmt	(0X614FA,	"Will be set with the 0387, but only if the event isn't triggered by speaking");
 	MakeCode	(0X614FC);
 	MakeName	(0X614FC,	"Map56_DefaultZoneEvent");
 	MakeCode	(0X614FE);
@@ -93032,6 +94869,15 @@ static Bytes_23(void) {
 	MakeArray	(0X6205A,	0X4);
 	MakeByte	(0X6205E);
 	MakeArray	(0X6205E,	0X8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X62066);
 	MakeArray	(0X62066,	0X8);
 	MakeComm	(0X6206E,	"\"Noooooooooo!{W1}\"");
@@ -94150,15 +95996,6 @@ static Bytes_23(void) {
 	OpOff		(x,	1,	0X62820);
 	OpOff		(x,	129,	0X62820);
 	MakeName	(0X62828,	"Map3_21F_DefaultZoneEvent");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X6282A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -96693,6 +98530,15 @@ static Bytes_24(void) {
 	MakeByte	(0X94A8A);
 	MakeArray	(0X94A8A,	0X20);
 	MakeName	(0X94A8A,	"MapPalette08");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X94AAA);
 	MakeArray	(0X94AAA,	0X20);
 	MakeName	(0X94AAA,	"MapPalette09");
@@ -98042,15 +99888,6 @@ static Bytes_24(void) {
 	MakeByte	(0XA3952);
 	MakeArray	(0XA3952,	0X6);
 	MakeName	(0XA3952,	"Map18");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XA3958);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -100992,6 +102829,15 @@ static Bytes_25(void) {
 	MakeByte	(0XBD260);
 	MakeArray	(0XBD260,	0X2);
 	MakeName	(0XBD260,	"Map67s5_RoofEvents");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XBD262);
 	MakeArray	(0XBD262,	0X2A);
 	MakeName	(0XBD262,	"Map67s6_WarpEvents");
@@ -102476,15 +104322,6 @@ static Bytes_25(void) {
 	MakeDword	(x=0XC8400);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XC8404);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -105446,6 +107283,15 @@ static Bytes_26(void) {
 	MakeByte	(0XF4FCC);
 	MakeArray	(0XF4FCC,	0X80);
 	MakeName	(0XF4FCC,	"MapSprite186_1");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XF504C);
 	MakeArray	(0XF504C,	0XBA);
 	MakeName	(0XF504C,	"MapSprite186_2");
@@ -106676,15 +108522,6 @@ static Bytes_26(void) {
 	MakeDword	(x=0X180078);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X18007C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -108762,6 +110599,10 @@ static Bytes_27(void) {
 	MakeCode	(0X1B1270);
 	MakeCode	(0X1B1272);
 	MakeName	(0X1B1272,	"InitAllForceBattlePositions");
+	MakeCode	(x=0X1B1276);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X1B1278);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(x=0X1B1290);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -108770,6 +110611,10 @@ static Bytes_27(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1B12F2);
 	MakeName	(0X1B12F2,	"InitAllEnemyBattlePositions");
+	MakeCode	(x=0X1B12F6);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0X1B12FA);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X1B130C);
 	MakeName	(0X1B130C,	"InitEnemyBattlePosition");
 	MakeCode	(x=0X1B1310);
@@ -108800,6 +110645,14 @@ static Bytes_27(void) {
 	MakeCode	(0X1B1546);
 	MakeCode	(0X1B1554);
 	MakeName	(0X1B1554,	"GetEnemyOriginalPosOccupied");
+	MakeCode	(x=0X1B1558);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X1B155A);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
+	MakeCode	(x=0X1B157C);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),1);
+	MakeCode	(x=0X1B1580);
+	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
 	MakeCode	(0X1B15AA);
 	MakeName	(0X1B15AA,	"SetEnemyBaseATK");
 	MakeCode	(0X1B15E0);
@@ -108947,9 +110800,316 @@ static Bytes_27(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1B1A56);
+	MakeRptCmt	(0X1B1A66,	"OOZE");
 	MakeByte	(0X1B1A66);
-	MakeArray	(0X1B1A66,	0X1688);
+	MakeArray	(0X1B1A66,	0X38);
 	MakeName	(0X1B1A66,	"EnemyData");
+	MakeRptCmt	(0X1B1A9E,	"HUGE RAT");
+	MakeByte	(0X1B1A9E);
+	MakeArray	(0X1B1A9E,	0X38);
+	MakeRptCmt	(0X1B1AD6,	"GALAM SOLDIER");
+	MakeByte	(0X1B1AD6);
+	MakeArray	(0X1B1AD6,	0X38);
+	MakeRptCmt	(0X1B1B0E,	"GALAM KNIGHT");
+	MakeByte	(0X1B1B0E);
+	MakeArray	(0X1B1B0E,	0X38);
+	MakeRptCmt	(0X1B1B46,	"GOBLIN");
+	MakeByte	(0X1B1B46);
+	MakeArray	(0X1B1B46,	0X38);
+	MakeRptCmt	(0X1B1B7E,	"GREEN OOZE");
+	MakeByte	(0X1B1B7E);
+	MakeArray	(0X1B1B7E,	0X38);
+	MakeRptCmt	(0X1B1BB6,	"DARK DWARF");
+	MakeByte	(0X1B1BB6);
+	MakeArray	(0X1B1BB6,	0X38);
+	MakeRptCmt	(0X1B1BEE,	"HOBGOBLIN");
+	MakeByte	(0X1B1BEE);
+	MakeArray	(0X1B1BEE,	0X38);
+	MakeRptCmt	(0X1B1C26,	"ZOMBIE");
+	MakeByte	(0X1B1C26);
+	MakeArray	(0X1B1C26,	0X38);
+	MakeRptCmt	(0X1B1C5E,	"GOLEM");
+	MakeByte	(0X1B1C5E);
+	MakeArray	(0X1B1C5E,	0X38);
+	MakeRptCmt	(0X1B1C96,	"KRAKEN LEG");
+	MakeByte	(0X1B1C96);
+	MakeArray	(0X1B1C96,	0X38);
+	MakeRptCmt	(0X1B1CCE,	"SOULSOWER");
+	MakeByte	(0X1B1CCE);
+	MakeArray	(0X1B1CCE,	0X38);
+	MakeRptCmt	(0X1B1D06,	"ORC");
+	MakeByte	(0X1B1D06);
+	MakeArray	(0X1B1D06,	0X38);
+	MakeRptCmt	(0X1B1D3E,	"PAWN");
+	MakeByte	(0X1B1D3E);
+	MakeArray	(0X1B1D3E,	0X38);
+	MakeRptCmt	(0X1B1D76,	"KNIGHT");
+	MakeByte	(0X1B1D76);
+	MakeArray	(0X1B1D76,	0X38);
+	MakeRptCmt	(0X1B1DAE,	"RAT");
+	MakeByte	(0X1B1DAE);
+	MakeArray	(0X1B1DAE,	0X38);
+	MakeRptCmt	(0X1B1DE6,	"BUBBLING OOZE");
+	MakeByte	(0X1B1DE6);
+	MakeArray	(0X1B1DE6,	0X38);
+	MakeRptCmt	(0X1B1E1E,	"SKELETON");
+	MakeByte	(0X1B1E1E);
+	MakeArray	(0X1B1E1E,	0X38);
+	MakeRptCmt	(0X1B1E56,	"DARK SOLDIER");
+	MakeByte	(0X1B1E56);
+	MakeArray	(0X1B1E56,	0X38);
+	MakeRptCmt	(0X1B1E8E,	"LIZARDMAN");
+	MakeByte	(0X1B1E8E);
+	MakeArray	(0X1B1E8E,	0X38);
+	MakeRptCmt	(0X1B1EC6,	"WORM");
+	MakeByte	(0X1B1EC6);
+	MakeArray	(0X1B1EC6,	0X38);
+	MakeRptCmt	(0X1B1EFE,	"DARK KNIGHT");
+	MakeByte	(0X1B1EFE);
+	MakeArray	(0X1B1EFE,	0X38);
+	MakeRptCmt	(0X1B1F36,	"ORC LORD");
+	MakeByte	(0X1B1F36);
+	MakeArray	(0X1B1F36,	0X38);
+	MakeRptCmt	(0X1B1F6E,	"DEVIL SOLDIER");
+	MakeByte	(0X1B1F6E);
+	MakeArray	(0X1B1F6E,	0X38);
+	MakeRptCmt	(0X1B1FA6,	"CERBERUS");
+	MakeByte	(0X1B1FA6);
+	MakeArray	(0X1B1FA6,	0X38);
+	MakeRptCmt	(0X1B1FDE,	"MUD MAN");
+	MakeByte	(0X1B1FDE);
+	MakeArray	(0X1B1FDE,	0X38);
+	MakeRptCmt	(0X1B2016,	"DRAGONEWT");
+	MakeByte	(0X1B2016);
+	MakeArray	(0X1B2016,	0X38);
+	MakeRptCmt	(0X1B204E,	"PURPLE WORM");
+	MakeByte	(0X1B204E);
+	MakeArray	(0X1B204E,	0X38);
+	MakeRptCmt	(0X1B2086,	"EXECUTIONER");
+	MakeByte	(0X1B2086);
+	MakeArray	(0X1B2086,	0X38);
+	MakeRptCmt	(0X1B20BE,	"HELL HOUND");
+	MakeByte	(0X1B20BE);
+	MakeArray	(0X1B20BE,	0X38);
+	MakeRptCmt	(0X1B20F6,	"MINOTAUR");
+	MakeByte	(0X1B20F6);
+	MakeArray	(0X1B20F6,	0X38);
+	MakeRptCmt	(0X1B212E,	"CYCLOPS");
+	MakeByte	(0X1B212E);
+	MakeArray	(0X1B212E,	0X38);
+	MakeRptCmt	(0X1B2166,	"BURST ROCK");
+	MakeByte	(0X1B2166);
+	MakeArray	(0X1B2166,	0X38);
+	MakeRptCmt	(0X1B219E,	"HYDRA");
+	MakeByte	(0X1B219E);
+	MakeArray	(0X1B219E,	0X38);
+	MakeRptCmt	(0X1B21D6,	"CHAOS WARRIOR");
+	MakeByte	(0X1B21D6);
+	MakeArray	(0X1B21D6,	0X38);
+	MakeRptCmt	(0X1B220E,	"REAPER");
+	MakeByte	(0X1B220E);
+	MakeArray	(0X1B220E,	0X38);
+	MakeRptCmt	(0X1B2246,	"EVIL BEAST");
+	MakeByte	(0X1B2246);
+	MakeArray	(0X1B2246,	0X38);
+	MakeRptCmt	(0X1B227E,	"PYROHYDRA");
+	MakeByte	(0X1B227E);
+	MakeArray	(0X1B227E,	0X38);
+	MakeRptCmt	(0X1B22B6,	"ZEON GUARD");
+	MakeByte	(0X1B22B6);
+	MakeArray	(0X1B22B6,	0X38);
+	MakeRptCmt	(0X1B22EE,	"GIZMO");
+	MakeByte	(0X1B22EE);
+	MakeArray	(0X1B22EE,	0X38);
+	MakeRptCmt	(0X1B2326,	"HUGE BAT");
+	MakeByte	(0X1B2326);
+	MakeArray	(0X1B2326,	0X38);
+	MakeRptCmt	(0X1B235E,	"VAMPIRE BAT");
+	MakeByte	(0X1B235E);
+	MakeArray	(0X1B235E,	0X38);
+	MakeRptCmt	(0X1B2396,	"EVIL CLOUD");
+	MakeByte	(0X1B2396);
+	MakeArray	(0X1B2396,	0X38);
+	MakeRptCmt	(0X1B23CE,	"GARGOYLE");
+	MakeByte	(0X1B23CE);
+	MakeArray	(0X1B23CE,	0X38);
+	MakeRptCmt	(0X1B2406,	"HARPY");
+	MakeByte	(0X1B2406);
+	MakeArray	(0X1B2406,	0X38);
+	MakeRptCmt	(0X1B243E,	"LESSER DEMON");
+	MakeByte	(0X1B243E);
+	MakeArray	(0X1B243E,	0X38);
+	MakeRptCmt	(0X1B2476,	"WYVERN");
+	MakeByte	(0X1B2476);
+	MakeArray	(0X1B2476,	0X38);
+	MakeRptCmt	(0X1B24AE,	"HARPY QUEEN");
+	MakeByte	(0X1B24AE);
+	MakeArray	(0X1B24AE,	0X38);
+	MakeRptCmt	(0X1B24E6,	"PEGASUS KNIGHT");
+	MakeByte	(0X1B24E6);
+	MakeArray	(0X1B24E6,	0X38);
+	MakeRptCmt	(0X1B251E,	"GRIFFIN");
+	MakeByte	(0X1B251E);
+	MakeArray	(0X1B251E,	0X38);
+	MakeRptCmt	(0X1B2556,	"MIST DEMON");
+	MakeByte	(0X1B2556);
+	MakeArray	(0X1B2556,	0X38);
+	MakeRptCmt	(0X1B258E,	"WHITE DRAGON");
+	MakeByte	(0X1B258E);
+	MakeArray	(0X1B258E,	0X38);
+	MakeRptCmt	(0X1B25C6,	"DEMON");
+	MakeByte	(0X1B25C6);
+	MakeArray	(0X1B25C6,	0X38);
+	MakeRptCmt	(0X1B25FE,	"CHAOS DRAGON");
+	MakeByte	(0X1B25FE);
+	MakeArray	(0X1B25FE,	0X38);
+	MakeRptCmt	(0X1B2636,	"DEVIL GRIFFIN");
+	MakeByte	(0X1B2636);
+	MakeArray	(0X1B2636,	0X38);
+	MakeRptCmt	(0X1B266E,	"ARCH DEMON");
+	MakeByte	(0X1B266E);
+	MakeArray	(0X1B266E,	0X38);
+	MakeRptCmt	(0X1B26A6,	"GALAM ARCHER");
+	MakeByte	(0X1B26A6);
+	MakeArray	(0X1B26A6,	0X38);
+	MakeRptCmt	(0X1B26DE,	"HUNTER GOBLIN");
+	MakeByte	(0X1B26DE);
+	MakeArray	(0X1B26DE,	0X38);
+	MakeRptCmt	(0X1B2716,	"DEATH ARCHER");
+	MakeByte	(0X1B2716);
+	MakeArray	(0X1B2716,	0X38);
+	MakeRptCmt	(0X1B274E,	"KRAKEN ARM");
+	MakeByte	(0X1B274E);
+	MakeArray	(0X1B274E,	0X38);
+	MakeRptCmt	(0X1B2786,	"ARROW LAUNCHER");
+	MakeByte	(0X1B2786);
+	MakeArray	(0X1B2786,	0X38);
+	MakeRptCmt	(0X1B27BE,	"ROOK");
+	MakeByte	(0X1B27BE);
+	MakeArray	(0X1B27BE,	0X38);
+	MakeRptCmt	(0X1B27F6,	"DARK SNIPER");
+	MakeByte	(0X1B27F6);
+	MakeArray	(0X1B27F6,	0X38);
+	MakeRptCmt	(0X1B282E,	"BOW MASTER");
+	MakeByte	(0X1B282E);
+	MakeArray	(0X1B282E,	0X38);
+	MakeRptCmt	(0X1B2866,	"BOW RIDER");
+	MakeByte	(0X1B2866);
+	MakeArray	(0X1B2866,	0X38);
+	MakeRptCmt	(0X1B289E,	"DARK GUNNER");
+	MakeByte	(0X1B289E);
+	MakeArray	(0X1B289E,	0X38);
+	MakeRptCmt	(0X1B28D6,	"HORSEMAN");
+	MakeByte	(0X1B28D6);
+	MakeArray	(0X1B28D6,	0X38);
+	MakeRptCmt	(0X1B290E,	"GALAM MAGE");
+	MakeByte	(0X1B290E);
+	MakeArray	(0X1B290E,	0X38);
+	MakeRptCmt	(0X1B2946,	"WITCH");
+	MakeByte	(0X1B2946);
+	MakeArray	(0X1B2946,	0X38);
+	MakeRptCmt	(0X1B297E,	"MASTER MAGE");
+	MakeByte	(0X1B297E);
+	MakeArray	(0X1B297E,	0X38);
+	MakeRptCmt	(0X1B29B6,	"DARK MADAM");
+	MakeByte	(0X1B29B6);
+	MakeArray	(0X1B29B6,	0X38);
+	MakeRptCmt	(0X1B29EE,	"QUEEN");
+	MakeByte	(0X1B29EE);
+	MakeArray	(0X1B29EE,	0X38);
+	MakeRptCmt	(0X1B2A26,	"WIZARD");
+	MakeByte	(0X1B2A26);
+	MakeArray	(0X1B2A26,	0X38);
+	MakeRptCmt	(0X1B2A5E,	"NECROMANCER");
+	MakeByte	(0X1B2A5E);
+	MakeArray	(0X1B2A5E,	0X38);
+	MakeRptCmt	(0X1B2A96,	"CHAOS WIZARD");
+	MakeByte	(0X1B2A96);
+	MakeArray	(0X1B2A96,	0X38);
+	MakeRptCmt	(0X1B2ACE,	"DEMON MASTER");
+	MakeByte	(0X1B2ACE);
+	MakeArray	(0X1B2ACE,	0X38);
+	MakeRptCmt	(0X1B2B06,	"DARK CLERIC");
+	MakeByte	(0X1B2B06);
+	MakeArray	(0X1B2B06,	0X38);
+	MakeRptCmt	(0X1B2B3E,	"DEATH MONK");
+	MakeByte	(0X1B2B3E);
+	MakeArray	(0X1B2B3E,	0X38);
+	MakeRptCmt	(0X1B2B76,	"BLACK MONK");
+	MakeByte	(0X1B2B76);
+	MakeArray	(0X1B2B76,	0X38);
+	MakeRptCmt	(0X1B2BAE,	"HIGH PRIEST");
+	MakeByte	(0X1B2BAE);
+	MakeArray	(0X1B2BAE,	0X38);
+	MakeRptCmt	(0X1B2BE6,	"EVIL BISHOP");
+	MakeByte	(0X1B2BE6);
+	MakeArray	(0X1B2BE6,	0X38);
+	MakeRptCmt	(0X1B2C1E,	"DARK BISHOP");
+	MakeByte	(0X1B2C1E);
+	MakeArray	(0X1B2C1E,	0X38);
+	MakeRptCmt	(0X1B2C56,	"MASTER MONK");
+	MakeByte	(0X1B2C56);
+	MakeArray	(0X1B2C56,	0X38);
+	MakeRptCmt	(0X1B2C8E,	"SHAMAN");
+	MakeByte	(0X1B2C8E);
+	MakeArray	(0X1B2C8E,	0X38);
+	MakeRptCmt	(0X1B2CC6,	"EVIL BISHOP");
+	MakeByte	(0X1B2CC6);
+	MakeArray	(0X1B2CC6,	0X38);
+	MakeRptCmt	(0X1B2CFE,	"BLUE SHAMAN");
+	MakeByte	(0X1B2CFE);
+	MakeArray	(0X1B2CFE,	0X38);
+	MakeRptCmt	(0X1B2D36,	"DARK SMOKE");
+	MakeByte	(0X1B2D36);
+	MakeArray	(0X1B2D36,	0X38);
+	MakeRptCmt	(0X1B2D6E,	"KRAKEN HEAD");
+	MakeByte	(0X1B2D6E);
+	MakeArray	(0X1B2D6E,	0X38);
+	MakeRptCmt	(0X1B2DA6,	"TAROS");
+	MakeByte	(0X1B2DA6);
+	MakeArray	(0X1B2DA6,	0X38);
+	MakeRptCmt	(0X1B2DDE,	"KING");
+	MakeByte	(0X1B2DDE);
+	MakeArray	(0X1B2DDE,	0X38);
+	MakeRptCmt	(0X1B2E16,	"WILLARD");
+	MakeByte	(0X1B2E16);
+	MakeArray	(0X1B2E16,	0X38);
+	MakeRptCmt	(0X1B2E4E,	"ZALBARD");
+	MakeByte	(0X1B2E4E);
+	MakeArray	(0X1B2E4E,	0X38);
+	MakeRptCmt	(0X1B2E86,	"CAMEELA");
+	MakeByte	(0X1B2E86);
+	MakeArray	(0X1B2E86,	0X38);
+	MakeRptCmt	(0X1B2EBE,	"PRISM FLOWER");
+	MakeByte	(0X1B2EBE);
+	MakeArray	(0X1B2EBE,	0X38);
+	MakeRptCmt	(0X1B2EF6,	"RED BARON");
+	MakeByte	(0X1B2EF6);
+	MakeArray	(0X1B2EF6,	0X38);
+	MakeRptCmt	(0X1B2F2E,	"GESHP");
+	MakeByte	(0X1B2F2E);
+	MakeArray	(0X1B2F2E,	0X38);
+	MakeRptCmt	(0X1B2F66,	"ODD EYE");
+	MakeByte	(0X1B2F66);
+	MakeArray	(0X1B2F66,	0X38);
+	MakeRptCmt	(0X1B2F9E,	"GALAM");
+	MakeByte	(0X1B2F9E);
+	MakeArray	(0X1B2F9E,	0X38);
+	MakeRptCmt	(0X1B2FD6,	"ZEON");
+	MakeByte	(0X1B2FD6);
+	MakeArray	(0X1B2FD6,	0X38);
+	MakeRptCmt	(0X1B300E,	"JAR");
+	MakeByte	(0X1B300E);
+	MakeArray	(0X1B300E,	0X38);
+	MakeRptCmt	(0X1B3046,	"MASTER MAGE");
+	MakeByte	(0X1B3046);
+	MakeArray	(0X1B3046,	0X38);
+	MakeRptCmt	(0X1B307E,	"NECROMANCER");
+	MakeByte	(0X1B307E);
+	MakeArray	(0X1B307E,	0X38);
+	MakeRptCmt	(0X1B30B6,	"BLUE SHAMAN");
+	MakeByte	(0X1B30B6);
+	MakeArray	(0X1B30B6,	0X38);
 	MakeRptCmt	(0X1B30EE,	"battle entity data");
 	MakeDword	(x=0X1B30EE);
 	OpOff		(x,	0,	0X0);
@@ -109244,6 +111404,15 @@ static Bytes_27(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X1B8008,	"p_plt_BattleSceneWeaponColors");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_28(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0X1B800C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -110290,15 +112459,15 @@ static Bytes_27(void) {
 	MakeDword	(x=0X1EE004);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1EE004,	"p_pt_CharacterStats");
+	MakeName	(0X1EE004,	"p_pt_AllyStats");
 	MakeDword	(x=0X1EE008);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1EE008,	"p_CharacterStartData");
+	MakeName	(0X1EE008,	"p_AllyStartDefs");
 	MakeDword	(x=0X1EE00C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeName	(0X1EE00C,	"p_ClassData");
+	MakeName	(0X1EE00C,	"p_ClassDefs");
 	MakeDword	(x=0X1EE010);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -110516,12 +112685,198 @@ static Bytes_27(void) {
 	MakeByte	(0X1EE7BE);
 	MakeArray	(0X1EE7BE,	0X12);
 	MakeName	(0X1EE7BE,	"AllyStats29");
+	MakeRptCmt	(0X1EE7D0,	"BOWIE");
 	MakeByte	(0X1EE7D0);
-	MakeArray	(0X1EE7D0,	0XC0);
-	MakeName	(0X1EE7D0,	"AllyStartData");
+	MakeArray	(0X1EE7D0,	0X6);
+	MakeName	(0X1EE7D0,	"AllyStartDefs");
+	MakeRptCmt	(0X1EE7D6,	"SARAH");
+	MakeByte	(0X1EE7D6);
+	MakeArray	(0X1EE7D6,	0X6);
+	MakeRptCmt	(0X1EE7DC,	"CHESTER");
+	MakeByte	(0X1EE7DC);
+	MakeArray	(0X1EE7DC,	0X6);
+	MakeRptCmt	(0X1EE7E2,	"JAHA");
+	MakeByte	(0X1EE7E2);
+	MakeArray	(0X1EE7E2,	0X6);
+	MakeRptCmt	(0X1EE7E8,	"KAZIN");
+	MakeByte	(0X1EE7E8);
+	MakeArray	(0X1EE7E8,	0X6);
+	MakeRptCmt	(0X1EE7EE,	"SLADE");
+	MakeByte	(0X1EE7EE);
+	MakeArray	(0X1EE7EE,	0X6);
+	MakeRptCmt	(0X1EE7F4,	"KIWI");
+	MakeByte	(0X1EE7F4);
+	MakeArray	(0X1EE7F4,	0X6);
+	MakeRptCmt	(0X1EE7FA,	"PETER");
+	MakeByte	(0X1EE7FA);
+	MakeArray	(0X1EE7FA,	0X6);
+	MakeRptCmt	(0X1EE800,	"MAY");
+	MakeByte	(0X1EE800);
+	MakeArray	(0X1EE800,	0X6);
+	MakeRptCmt	(0X1EE806,	"GERHALT");
+	MakeByte	(0X1EE806);
+	MakeArray	(0X1EE806,	0X6);
+	MakeRptCmt	(0X1EE80C,	"LUKE");
+	MakeByte	(0X1EE80C);
+	MakeArray	(0X1EE80C,	0X6);
+	MakeRptCmt	(0X1EE812,	"ROHDE");
+	MakeByte	(0X1EE812);
+	MakeArray	(0X1EE812,	0X6);
+	MakeRptCmt	(0X1EE818,	"RICK");
+	MakeByte	(0X1EE818);
+	MakeArray	(0X1EE818,	0X6);
+	MakeRptCmt	(0X1EE81E,	"ELRIC");
+	MakeByte	(0X1EE81E);
+	MakeArray	(0X1EE81E,	0X6);
+	MakeRptCmt	(0X1EE824,	"ERIC");
+	MakeByte	(0X1EE824);
+	MakeArray	(0X1EE824,	0X6);
+	MakeRptCmt	(0X1EE82A,	"KARNA");
+	MakeByte	(0X1EE82A);
+	MakeArray	(0X1EE82A,	0X6);
+	MakeRptCmt	(0X1EE830,	"RANDOLF");
+	MakeByte	(0X1EE830);
+	MakeArray	(0X1EE830,	0X6);
+	MakeRptCmt	(0X1EE836,	"TYRIN");
+	MakeByte	(0X1EE836);
+	MakeArray	(0X1EE836,	0X6);
+	MakeRptCmt	(0X1EE83C,	"JANET");
+	MakeByte	(0X1EE83C);
+	MakeArray	(0X1EE83C,	0X6);
+	MakeRptCmt	(0X1EE842,	"HIGINS");
+	MakeByte	(0X1EE842);
+	MakeArray	(0X1EE842,	0X6);
+	MakeRptCmt	(0X1EE848,	"SKREECH");
+	MakeByte	(0X1EE848);
+	MakeArray	(0X1EE848,	0X6);
+	MakeRptCmt	(0X1EE84E,	"TAYA");
+	MakeByte	(0X1EE84E);
+	MakeArray	(0X1EE84E,	0X6);
+	MakeRptCmt	(0X1EE854,	"FRAYJA");
+	MakeByte	(0X1EE854);
+	MakeArray	(0X1EE854,	0X6);
+	MakeRptCmt	(0X1EE85A,	"JARO");
+	MakeByte	(0X1EE85A);
+	MakeArray	(0X1EE85A,	0X6);
+	MakeRptCmt	(0X1EE860,	"GYAN");
+	MakeByte	(0X1EE860);
+	MakeArray	(0X1EE860,	0X6);
+	MakeRptCmt	(0X1EE866,	"SHEELA");
+	MakeByte	(0X1EE866);
+	MakeArray	(0X1EE866,	0X6);
+	MakeRptCmt	(0X1EE86C,	"ZYNK");
+	MakeByte	(0X1EE86C);
+	MakeArray	(0X1EE86C,	0X6);
+	MakeRptCmt	(0X1EE872,	"CHAZ");
+	MakeByte	(0X1EE872);
+	MakeArray	(0X1EE872,	0X6);
+	MakeRptCmt	(0X1EE878,	"LEMON");
+	MakeByte	(0X1EE878);
+	MakeArray	(0X1EE878,	0X6);
+	MakeRptCmt	(0X1EE87E,	"CLAUDE");
+	MakeByte	(0X1EE87E);
+	MakeArray	(0X1EE87E,	0X6);
+	MakeByte	(0X1EE884);
+	MakeArray	(0X1EE884,	0X6);
+	MakeByte	(0X1EE88A);
+	MakeArray	(0X1EE88A,	0X6);
+	MakeRptCmt	(0X1EE890,	"SDMN");
 	MakeByte	(0X1EE890);
-	MakeArray	(0X1EE890,	0XA0);
-	MakeName	(0X1EE890,	"ClassData");
+	MakeArray	(0X1EE890,	0X5);
+	MakeName	(0X1EE890,	"ClassDefs");
+	MakeRptCmt	(0X1EE895,	"KNTE");
+	MakeByte	(0X1EE895);
+	MakeArray	(0X1EE895,	0X5);
+	MakeRptCmt	(0X1EE89A,	"WARR");
+	MakeByte	(0X1EE89A);
+	MakeArray	(0X1EE89A,	0X5);
+	MakeRptCmt	(0X1EE89F,	"MAGE");
+	MakeByte	(0X1EE89F);
+	MakeArray	(0X1EE89F,	0X5);
+	MakeRptCmt	(0X1EE8A4,	"PRST");
+	MakeByte	(0X1EE8A4);
+	MakeArray	(0X1EE8A4,	0X5);
+	MakeRptCmt	(0X1EE8A9,	"ACHR");
+	MakeByte	(0X1EE8A9);
+	MakeArray	(0X1EE8A9,	0X5);
+	MakeRptCmt	(0X1EE8AE,	"BDMN");
+	MakeByte	(0X1EE8AE);
+	MakeArray	(0X1EE8AE,	0X5);
+	MakeRptCmt	(0X1EE8B3,	"WFMN");
+	MakeByte	(0X1EE8B3);
+	MakeArray	(0X1EE8B3,	0X5);
+	MakeRptCmt	(0X1EE8B8,	"RNGR");
+	MakeByte	(0X1EE8B8);
+	MakeArray	(0X1EE8B8,	0X5);
+	MakeRptCmt	(0X1EE8BD,	"PHNK");
+	MakeByte	(0X1EE8BD);
+	MakeArray	(0X1EE8BD,	0X5);
+	MakeRptCmt	(0X1EE8C2,	"THIF");
+	MakeByte	(0X1EE8C2);
+	MakeArray	(0X1EE8C2,	0X5);
+	MakeRptCmt	(0X1EE8C7,	"TORT");
+	MakeByte	(0X1EE8C7);
+	MakeArray	(0X1EE8C7,	0X5);
+	MakeRptCmt	(0X1EE8CC,	"HERO");
+	MakeByte	(0X1EE8CC);
+	MakeArray	(0X1EE8CC,	0X5);
+	MakeRptCmt	(0X1EE8D1,	"PLDN");
+	MakeByte	(0X1EE8D1);
+	MakeArray	(0X1EE8D1,	0X5);
+	MakeRptCmt	(0X1EE8D6,	"PGNT");
+	MakeByte	(0X1EE8D6);
+	MakeArray	(0X1EE8D6,	0X5);
+	MakeRptCmt	(0X1EE8DB,	"GLDT");
+	MakeByte	(0X1EE8DB);
+	MakeArray	(0X1EE8DB,	0X5);
+	MakeRptCmt	(0X1EE8E0,	"BRN");
+	MakeByte	(0X1EE8E0);
+	MakeArray	(0X1EE8E0,	0X5);
+	MakeRptCmt	(0X1EE8E5,	"WIZ");
+	MakeByte	(0X1EE8E5);
+	MakeArray	(0X1EE8E5,	0X5);
+	MakeRptCmt	(0X1EE8EA,	"SORC");
+	MakeByte	(0X1EE8EA);
+	MakeArray	(0X1EE8EA,	0X5);
+	MakeRptCmt	(0X1EE8EF,	"VICR");
+	MakeByte	(0X1EE8EF);
+	MakeArray	(0X1EE8EF,	0X5);
+	MakeRptCmt	(0X1EE8F4,	"MMNK");
+	MakeByte	(0X1EE8F4);
+	MakeArray	(0X1EE8F4,	0X5);
+	MakeRptCmt	(0X1EE8F9,	"SNIP");
+	MakeByte	(0X1EE8F9);
+	MakeArray	(0X1EE8F9,	0X5);
+	MakeRptCmt	(0X1EE8FE,	"BRGN");
+	MakeByte	(0X1EE8FE);
+	MakeArray	(0X1EE8FE,	0X5);
+	MakeRptCmt	(0X1EE903,	"BDBT");
+	MakeByte	(0X1EE903);
+	MakeArray	(0X1EE903,	0X5);
+	MakeRptCmt	(0X1EE908,	"WFBR");
+	MakeByte	(0X1EE908);
+	MakeArray	(0X1EE908,	0X5);
+	MakeRptCmt	(0X1EE90D,	"BWNT");
+	MakeByte	(0X1EE90D);
+	MakeArray	(0X1EE90D,	0X5);
+	MakeRptCmt	(0X1EE912,	"PHNX");
+	MakeByte	(0X1EE912);
+	MakeArray	(0X1EE912,	0X5);
+	MakeRptCmt	(0X1EE917,	"NINJ");
+	MakeByte	(0X1EE917);
+	MakeArray	(0X1EE917,	0X5);
+	MakeRptCmt	(0X1EE91C,	"MNST");
+	MakeByte	(0X1EE91C);
+	MakeArray	(0X1EE91C,	0X5);
+	MakeRptCmt	(0X1EE921,	"RBT");
+	MakeByte	(0X1EE921);
+	MakeArray	(0X1EE921,	0X5);
+	MakeRptCmt	(0X1EE926,	"GLM");
+	MakeByte	(0X1EE926);
+	MakeArray	(0X1EE926,	0X5);
+	MakeRptCmt	(0X1EE92B,	"RDBN");
+	MakeByte	(0X1EE92B);
+	MakeArray	(0X1EE92B,	0X5);
 	MakeByte	(0X1EE930);
 	MakeArray	(0X1EE930,	0X7D2);
 	MakeName	(0X1EE930,	"JewelsEndScreenLayout");
@@ -110798,15 +113153,6 @@ static Bytes_27(void) {
 	MakeArray	(0XFF8E04,	0XC0);
 	MakeByte	(0XFF8EC4);
 	MakeArray	(0XFF8EC4,	0X40);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_28(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XFF8F04);
 	MakeArray	(0XFF8F04,	0XFE);
 	MakeWord	(0XFF9002);
@@ -111433,7 +113779,7 @@ static Bytes_28(void) {
 	MakeByte	(0XFFC180);
 	MakeArray	(0XFFC180,	0X38);
 	MakeByte	(0XFFC1B8);
-	MakeArray	(0XFFC1B8,	0XCE);
+	MakeDword	(0XFFC21E);
 	MakeByte	(0XFFC286);
 	MakeArray	(0XFFC286,	0XCA);
 	MakeByte	(0XFFC350);
@@ -111445,10 +113791,10 @@ static Bytes_28(void) {
 	MakeByte	(0XFFC41A);
 	MakeArray	(0XFFC41A,	0X66);
 	MakeByte	(0XFFC480);
-	MakeArray	(0XFFC480,	0X380);
+	MakeDword	(0XFFC5EC);
 	MakeByte	(0XFFC800);
-	MakeArray	(0XFFC800,	0X486);
 	MakeName	(0XFFC800,	"PLANE_A_MAP_AND_WINDOWS_LAYOUT");
+	MakeDword	(0XFFCC36);
 	MakeByte	(0XFFCC86);
 	MakeArray	(0XFFCC86,	0X37A);
 	MakeByte	(0XFFD000);
@@ -111697,7 +114043,7 @@ static Bytes_28(void) {
 	MakeName	(0XFFDFAA,	"FADING_TIMER");
 	MakeRptCmt	(0XFFDFAB,	"palette-related");
 	MakeByte	(0XFFDFAB);
-	MakeDword	(0XFFDFAC);
+	MakeArray	(0XFFDFAB,	0X5);
 	MakeRptCmt	(0XFFDFB0,	"\"random\" value for determining AI/hit chance??");
 	MakeByte	(0XFFDFB0);
 	MakeArray	(0XFFDFB0,	0X50);

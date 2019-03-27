@@ -230,7 +230,10 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine",0x9B92,0xC09A,"Battle actions engine");	
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine",0xC09A,0xDEFC,"Battlefield engine");	
 	produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");	
-	produceAsmSection(file,0xF9C4,0x10000);
+	produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
+	produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
+	produceAsmScript(file,"data\\stats\\enemies\\enemynames",0xFB8A,0xFF87,"Enemy names");
+	produceAsmSection(file,0xFF87,0x10000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -249,7 +252,11 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmScript(file,"code\\common\\menus\\menuengine",0x10000,0x16EA6,"Menu engine");	
-	produceAsmSection(file,0x16EA6,0x18000);
+	produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
+	produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
+	produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3E,"Item names");
+	produceAsmScript(file,"data\\stats\\allies\\classes\\classnames",0x17F3E,0x17FDA,"Class names");
+	produceAsmSection(file,0x17FDA,0x18000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1350,8 +1357,8 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScript(file,"code\\common\\scripting\\endcredits",0x1AC068,0x1AC29C,"Ending credits functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AD104,"Battle init, terrain, AI stuff to split more properly");			
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
-	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");	
-	produceAsmSection(file,0x1B1A66,0x1B30EE);		
+	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");		
+	produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DB0,0x1B6DDA,"Data related to UpgradeUnitIdx function");	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
@@ -1420,7 +1427,8 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 
 	produceAsmSection(file,0x1E0000,0x1EE270);
 	produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");	
-	produceAsmSection(file,0x1EE7D0,0x1EE930);
+	produceAsmScript(file,"data\\stats\\allies\\allystartdata",0x1EE7D0,0x1EE890,"Ally start data");
+	produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics",1);	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics",1);	
 	produceAsmSection(file,0x1EF5A6,0x1F0000);
