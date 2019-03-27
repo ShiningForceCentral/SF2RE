@@ -163,14 +163,17 @@ static fixSingleInstructions(){
 	OpHex(0x27B16,0);
 	OpHex(0x478A6,0);
 	
-	
 	OpHex(0x55FE8,0);
 	OpHex(0x55FD0,0);
 	OpHex(0x55FD8,0);
 	OpHex(0x55FE8,0);
 	OpHex(0x56008,0);
 	OpHex(0x56030,0);
-	MakeNameEx(0xFC,"",0);	
+	MakeNameEx(0xFC,"",0);
+	
+	SetManualInsn(0x1A4,"declareRomEnd");
+	SetManualInsn(0x1F0,"headerRegion");
+	SetManualInsn(0x279D8,"enableSram");	
 
 }
 
