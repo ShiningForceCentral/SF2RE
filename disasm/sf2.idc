@@ -929,6 +929,37 @@ static Enums_0(id) {
 	AddConstEx(id,"MAPSPRITE_NAZCA_SHIP",	0XFD,	-1);
 	AddConstEx(id,"MAPSPRITE_KRAKEN",	0XFE,	-1);
 	AddConstEx(id,"MAPSPRITE_TAROS",	0XFF,	-1);
+	id = AddEnum(-1,"Allies",0x1100000);
+	AddConstEx(id,"ALLY_BOWIE",	0X0,	-1);
+	AddConstEx(id,"ALLY_SARAH",	0X1,	-1);
+	AddConstEx(id,"ALLY_CHESTER",	0X2,	-1);
+	AddConstEx(id,"ALLY_JAHA",	0X3,	-1);
+	AddConstEx(id,"ALLY_KAZIN",	0X4,	-1);
+	AddConstEx(id,"ALLY_SLADE",	0X5,	-1);
+	AddConstEx(id,"ALLY_KIWI",	0X6,	-1);
+	AddConstEx(id,"ALLY_PETER",	0X7,	-1);
+	AddConstEx(id,"ALLY_MAY",	0X8,	-1);
+	AddConstEx(id,"ALLY_GERHALT",	0X9,	-1);
+	AddConstEx(id,"ALLY_LUKE",	0XA,	-1);
+	AddConstEx(id,"ALLY_ROHDE",	0XB,	-1);
+	AddConstEx(id,"ALLY_RICK",	0XC,	-1);
+	AddConstEx(id,"ALLY_ELRIC",	0XD,	-1);
+	AddConstEx(id,"ALLY_ERIC",	0XE,	-1);
+	AddConstEx(id,"ALLY_KARNA",	0XF,	-1);
+	AddConstEx(id,"ALLY_RANDOLF",	0X10,	-1);
+	AddConstEx(id,"ALLY_TYRIN",	0X11,	-1);
+	AddConstEx(id,"ALLY_JANET",	0X12,	-1);
+	AddConstEx(id,"ALLY_HIGINS",	0X13,	-1);
+	AddConstEx(id,"ALLY_SKREECH",	0X14,	-1);
+	AddConstEx(id,"ALLY_TAYA",	0X15,	-1);
+	AddConstEx(id,"ALLY_FRAYJA",	0X16,	-1);
+	AddConstEx(id,"ALLY_JARO",	0X17,	-1);
+	AddConstEx(id,"ALLY_GYAN",	0X18,	-1);
+	AddConstEx(id,"ALLY_SHEELA",	0X19,	-1);
+	AddConstEx(id,"ALLY_ZYNK",	0X1A,	-1);
+	AddConstEx(id,"ALLY_CHAZ",	0X1B,	-1);
+	AddConstEx(id,"ALLY_LEMON",	0X1C,	-1);
+	AddConstEx(id,"ALLY_CLAUDE",	0X1D,	-1);
 	return id;
 }
 

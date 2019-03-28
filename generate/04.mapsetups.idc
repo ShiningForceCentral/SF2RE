@@ -61,7 +61,7 @@ static parseMapSetupSection1(ea,map,flag){
 		x = Byte(ea);
 		y = Byte(ea+1);
 		facing = getDirection(Byte(ea+2));
-		sprite = getMapsprite(Byte(ea+3));
+		sprite = getMapspriteOrAlly(Byte(ea+3));
 		if(Byte(ea+4)==0xFF){
 			walkX = Byte(ea+5);
 			walkY = Byte(ea+6);
@@ -514,6 +514,30 @@ static getDirectionAsMacro(cmd){
 static getMapsprite(cmd){
 	auto id,enumSize,constant,j,constId,output;
 	id = GetEnum("Mapsprites");
+	enumSize = GetEnumSize(id);
+	constant = GetFirstConst(id,-1);	
+	while(constant!=-1){
+			j=0;
+			constId = GetConstEx(id,constant,j,-1);
+			while(constId != -1){
+				if(constant==cmd){
+					return GetConstName(constId);
+				}
+				j++;
+				constId = GetConstEx(id,constant,j,-1);
+			}
+			constant = GetNextConst(id,constant,-1);
+	}
+	return form("%s",ltoa(cmd,10));
+}
+
+static getMapspriteOrAlly(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	if(cmd<0x1E){
+		id = GetEnum("Allies");
+	}else{
+		id = GetEnum("Mapsprites");
+	}
 	enumSize = GetEnumSize(id);
 	constant = GetFirstConst(id,-1);	
 	while(constant!=-1){

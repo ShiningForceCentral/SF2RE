@@ -706,7 +706,7 @@ static parseCS(start,end){
 			cmdLength = 6;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("setSprite $%s,%s",ltoa(Word(ea+2),16),getMapsprite(Word(ea+4))));			
+			SetManualInsn(ea,form("setSprite $%s,%s",ltoa(Word(ea+2),16),getMapspriteOrAlly(Word(ea+4))));			
 		}
 		else if(cmd==	0x001B){
 			cmdName = "001B START ENTITY ANIMATION";
@@ -842,7 +842,7 @@ static parseCS(start,end){
 			cmdLength = 8;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeData(ea,FF_BYTE,cmdLength,1);
-			SetManualInsn(ea,form("newEntity $%s,%s,%s,%s,%s",ltoa(Word(ea+2),16),ltoa(Byte(ea+4),10),ltoa(Byte(ea+5),10),getDirection(Byte(ea+6)),getMapsprite(Byte(ea+7))));
+			SetManualInsn(ea,form("newEntity $%s,%s,%s,%s,%s",ltoa(Word(ea+2),16),ltoa(Byte(ea+4),10),ltoa(Byte(ea+5),10),getDirection(Byte(ea+6)),getMapspriteOrAlly(Byte(ea+7))));
 		}
 		else if(cmd==	0x002C){
 			cmdName = "002C FOLLOW ENTITY";
@@ -1233,9 +1233,13 @@ static getMapsprite(cmd){
 	return form("%s",ltoa(cmd,10));
 }
 
-static getSoundName(cmd){
+static getMapspriteOrAlly(cmd){
 	auto id,enumSize,constant,j,constId,output;
-	id = GetEnum("Music");
+	if(cmd<0x1E){
+		id = GetEnum("Allies");
+	}else{
+		id = GetEnum("Mapsprites");
+	}
 	enumSize = GetEnumSize(id);
 	constant = GetFirstConst(id,-1);	
 	while(constant!=-1){
@@ -1250,7 +1254,16 @@ static getSoundName(cmd){
 			}
 			constant = GetNextConst(id,constant,-1);
 	}
-	id = GetEnum("Sfx");
+	return form("%s",ltoa(cmd,10));
+}
+
+static getSoundName(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	if(cmd<0x40){
+		id = GetEnum("Music");
+	}else{
+		id = GetEnum("Sfx");
+	}	
 	enumSize = GetEnumSize(id);
 	constant = GetFirstConst(id,-1);	
 	while(constant!=-1){
@@ -1328,14 +1341,14 @@ static parseEntityData(addr){
 			OpOff(addr+4,0,0);
 			MakeUnknown(addr,6,DOUNK_SIMPLE);
 			MakeData(addr,FF_BYTE,8,1);
-			SetManualInsn(addr,form("entity %s,%s,%s,%s,%s",ltoa(Byte(addr),10),ltoa(Byte(addr+1),10),getDirection(Byte(addr+2)),getMapsprite(Byte(addr+3)),GetTrueName(Dword(addr+4))));
+			SetManualInsn(addr,form("entity %s,%s,%s,%s,%s",ltoa(Byte(addr),10),ltoa(Byte(addr+1),10),getDirection(Byte(addr+2)),getMapspriteOrAlly(Byte(addr+3)),GetTrueName(Dword(addr+4))));
 		}else{
 			MakeByte(addr+4);
 			MakeByte(addr+5);
 			MakeByte(addr+6);
 			MakeByte(addr+7);
 			MakeData(addr,FF_BYTE,8,1);
-			SetManualInsn(addr,form("entityRandomWalk %s,%s,%s,%s,%s,%s,%s",ltoa(Byte(addr),10),ltoa(Byte(addr+1),10),getDirection(Byte(addr+2)),getMapsprite(Byte(addr+3)),ltoa(Byte(addr+5),10),ltoa(Byte(addr+6),10),ltoa(Byte(addr+7),10)));
+			SetManualInsn(addr,form("entityRandomWalk %s,%s,%s,%s,%s,%s,%s",ltoa(Byte(addr),10),ltoa(Byte(addr+1),10),getDirection(Byte(addr+2)),getMapspriteOrAlly(Byte(addr+3)),ltoa(Byte(addr+5),10),ltoa(Byte(addr+6),10),ltoa(Byte(addr+7),10)));
 		}
 		addr = addr + 8;
 	}
