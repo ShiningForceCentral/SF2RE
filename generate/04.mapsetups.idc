@@ -61,21 +61,21 @@ static parseMapSetupSection1(ea,map,flag){
 		x = Byte(ea);
 		y = Byte(ea+1);
 		facing = getDirection(Byte(ea+2));
-		sprite = Byte(ea+3);
+		sprite = getMapsprite(Byte(ea+3));
 		if(Byte(ea+4)==0xFF){
 			walkX = Byte(ea+5);
 			walkY = Byte(ea+6);
 			walkDist = Byte(ea+7);
-			SetManualInsn   (ea, form("msWalkingEntity %d, %d, %s, %d, %d, %d, %d",x, y, facing, sprite, walkX, walkY, walkDist));
+			SetManualInsn   (ea, form("msWalkingEntity %d, %d, %s, %s, %d, %d, %d",x, y, facing, sprite, walkX, walkY, walkDist));
 		}else if(Byte(ea+4)==0xFE){
 			MakeNameEx(Dword(ea+4)-0xFE000000,form("ems_%s",ltoa(Dword(ea+4)-0xFE000000,16)),0);
 			scriptName = GetTrueName(Dword(ea+4)-0xFE000000);
-			SetManualInsn   (ea, form("msSequencedEntity %d, %d, %s, %d, %s",x, y, facing, sprite, scriptName));
+			SetManualInsn   (ea, form("msSequencedEntity %d, %d, %s, %s, %s",x, y, facing, sprite, scriptName));
 			parseEntityMoveSequence(Dword(ea+4)-0xFE000000);
 		}else{
 			if(GetTrueName(Dword(ea+4))==""){MakeNameEx(Dword(ea+4),"",SN_AUTO);}
 			scriptName = GetTrueName(Dword(ea+4));
-			SetManualInsn   (ea, form("msFixedEntity %d, %d, %s, %d, %s",x, y, facing, sprite, scriptName));
+			SetManualInsn   (ea, form("msFixedEntity %d, %d, %s, %s, %s",x, y, facing, sprite, scriptName));
 		}
 		ea = ea+8;
 	}
@@ -502,6 +502,26 @@ static getDirectionAsMacro(cmd){
 			while(constId != -1){
 				if(constant==cmd){
 					return substr(GetConstName(constId),0,1);
+				}
+				j++;
+				constId = GetConstEx(id,constant,j,-1);
+			}
+			constant = GetNextConst(id,constant,-1);
+	}
+	return form("%s",ltoa(cmd,10));
+}
+
+static getMapsprite(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	id = GetEnum("Mapsprites");
+	enumSize = GetEnumSize(id);
+	constant = GetFirstConst(id,-1);	
+	while(constant!=-1){
+			j=0;
+			constId = GetConstEx(id,constant,j,-1);
+			while(constId != -1){
+				if(constant==cmd){
+					return GetConstName(constId);
 				}
 				j++;
 				constId = GetConstEx(id,constant,j,-1);
