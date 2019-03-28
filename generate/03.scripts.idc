@@ -98,7 +98,8 @@ static parseCutscenes(){
 	
 	parseCS(0x493FA,0x4941E);
 	parseCS(0x4941E,0x49444);
-	parseCS(0x49444,0x4945A);
+	//parseCS(0x49444,0x4945A);
+	
 	parseCS(0x494BC,0x49694);
 	parseCS(0x496DC,0x4980E);		
 	parseCS(0x4980E,0x49816);		
@@ -1725,12 +1726,18 @@ static parseEAS(start,end){
 		}
 		else if(Word(ea)==0x0030){
 			cmdName = "0030 BRANCH";
-			cmdComment = form("%s TO CURRENT ADDR. + $%s",cmdName,ltoa(Word(ea+2),16));
+			cmdComment = "";
 			cmdLength = 4;
 			MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
 			MakeWord(ea);
-			MakeWord(ea+2);				
-			makeRelativeOffsetFromCmd(ea+2);			
+			MakeWord(ea+2);		
+			MakeNameEx(ea,"",0);	
+			//MakeNameEx(ea,form("acb_%s",ltoa(ea,16)),0);		
+			makeRelativeOffsetFromCmd(ea+2);	
+			SetManualInsn(ea,"");	
+			SetManualInsn(ea,form(" ac_branch"));	
+			//MakeUnknown(ea+2,2,DOUNK_SIMPLE);	
+			//MakeData(ea,FF_BYTE,cmdLength,1);
 		}
 		else if(Word(ea)==0x0031){
 			cmdName = "0031 BRANCH IF SET FLAG";
@@ -1837,6 +1844,7 @@ static makeRelativeOffsetFromCmd(addr){
 		else{
 			OpOffEx(addr, -1, REF_OFF32, -1, addr-2, 0);
 		}
+
 
 }
 
