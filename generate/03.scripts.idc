@@ -98,7 +98,14 @@ static parseCutscenes(){
 	
 	parseCS(0x493FA,0x4941E);
 	parseCS(0x4941E,0x49444);
-	//parseCS(0x49444,0x4945A);
+	
+	
+	parseCS(0x49444,0x4945A);
+	// Manual fix for unused cutscene with parsing mistake
+	SetManualInsn(0x4945A,"");
+	MakeRptCmt(0x4945A,"Unused cutscene with parsing mistake here and below, letting it unformatted.");
+	MakeDword(0x4945A);
+	
 	
 	parseCS(0x494BC,0x49694);
 	parseCS(0x496DC,0x4980E);		

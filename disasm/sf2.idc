@@ -41,7 +41,7 @@ static GenInfo(void) {
 	AutoShow(1);
 	Indent(16);
 	CmtIndent(40);
-	TailDepth(0x20);
+	TailDepth(0x14);
 }
 
 //------------------------------------------------------------------------
@@ -9634,7 +9634,6 @@ static Bytes_2(void) {
 	MakeCode	(0X9B92);
 	MakeName	(0X9B92,	"WriteSkirmishScript");
 	MakeCode	(x=0X9B96);
-	OpSign		(x,	1);
 	OpEnumEx		(x,	1,	GetEnum("Battle_Cutscene"),0);
 	MakeCode	(x=0X9B9A);
 	OpOff		(x,	0,	0X0);
@@ -10478,6 +10477,9 @@ static Bytes_2(void) {
 	MakeCode	(x=0XB132);
 	OpEnumEx		(x,	0,	GetEnum("SpellDef"),0);
 	MakeCode	(0XB140);
+	MakeDword	(x=0XB160);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(0XB16A);
 	MakeCode	(0XB194);
 	MakeCode	(x=0XB19E);
@@ -13107,8 +13109,6 @@ static Bytes_2(void) {
 	MakeByte	(0XF798);
 	MakeByte	(0XF799);
 	MakeByte	(0XF79A);
-	MakeByte	(0XF79B);
-	MakeByte	(0XF79C);
 }
 
 //------------------------------------------------------------------------
@@ -13118,6 +13118,8 @@ static Bytes_3(void) {
         auto x;
 #define id x
 
+	MakeByte	(0XF79B);
+	MakeByte	(0XF79C);
 	MakeByte	(0XF79D);
 	MakeByte	(0XF79E);
 	MakeByte	(0XF79F);
@@ -17965,8 +17967,6 @@ static Bytes_3(void) {
 	MakeName	(0X16618,	"TimerWindowLayout");
 	MakeCode	(0X16658);
 	MakeName	(0X16658,	"WitchMainMenu");
-	MakeCode	(x=0X1665C);
-	OpSign		(x,	1);
 }
 
 //------------------------------------------------------------------------
@@ -17976,6 +17976,8 @@ static Bytes_4(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0X1665C);
+	OpSign		(x,	1);
 	MakeCode	(x=0X16696);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -23028,8 +23030,6 @@ static Bytes_4(void) {
 	MakeCode	(x=0X1B3FC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	MakeCode	(0X1B406);
-	MakeName	(0X1B406,	"sa15_");
 }
 
 //------------------------------------------------------------------------
@@ -23039,6 +23039,8 @@ static Bytes_5(void) {
         auto x;
 #define id x
 
+	MakeCode	(0X1B406);
+	MakeName	(0X1B406,	"sa15_");
 	MakeCode	(x=0X1B416);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -27900,9 +27902,6 @@ static Bytes_5(void) {
 	MakeArray	(0X213A8,	0X4);
 	MakeByte	(0X213AC);
 	MakeArray	(0X213AC,	0X4);
-	MakeCode	(x=0X213B0);
-	OpOff		(x,	1,	0X0);
-	OpOff		(x,	129,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -27912,6 +27911,9 @@ static Bytes_6(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0X213B0);
+	OpOff		(x,	1,	0X0);
+	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X213B6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -114361,10 +114363,8 @@ static Bytes_28(void) {
 	MakeByte	(0XFFDF4A);
 	MakeArray	(0XFFDF4A,	0X60);
 	MakeName	(0XFFDF4A,	"PALETTE_2_BACKUP");
-	MakeByte	(0XFFDFAA);
+	MakeWord	(0XFFDFAA);
 	MakeName	(0XFFDFAA,	"FADING_TIMER");
-	MakeRptCmt	(0XFFDFAB,	"palette-related");
-	MakeByte	(0XFFDFAB);
 	MakeRptCmt	(0XFFDFB0,	"\"random\" value for determining AI/hit chance??");
 	MakeByte	(0XFFDFB0);
 	MakeArray	(0XFFDFB0,	0X50);
@@ -114559,8 +114559,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0XBE6,0x0);
 	MakeFunction    (0XBFA,0XC0C);
 	SetFunctionFlags(0XBFA,0x0);
-	MakeFunction    (0XC0C,0XC1C);
-	SetFunctionFlags(0XC0C,0x0);
 	MakeFunction    (0XC1C,0XC26);
 	SetFunctionFlags(0XC1C,0x0);
 	MakeFunction    (0XC26,0XC30);
@@ -118266,12 +118264,12 @@ static Functions_0(void) {
 	SetFunctionFlags(0X50E66,0x0);
 	MakeFunction    (0X50ED2,0X50EEA);
 	SetFunctionFlags(0X50ED2,0x0);
+	MakeFunction    (0X50EF6,0X50F0C);
+	SetFunctionFlags(0X50EF6,0x0);
 }
 
 static Functions_1(void) {
 
-	MakeFunction    (0X50EF6,0X50F0C);
-	SetFunctionFlags(0X50EF6,0x0);
 	MakeFunction    (0X50F54,0X50F98);
 	SetFunctionFlags(0X50F54,0x0);
 	MakeFunction    (0X50F98,0X50FBA);

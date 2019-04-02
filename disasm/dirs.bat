@@ -4,15 +4,8 @@ mkdir disasm\code
 mkdir disasm\code\gameflow
 mkdir disasm\code\gameflow\start
 mkdir disasm\code\gameflow\exploration
-mkdir disasm\code\gameflow\exploration\vints
 mkdir disasm\code\gameflow\battle
-mkdir disasm\code\gameflow\battle
-mkdir disasm\code\gameflow\battle\vints
 mkdir disasm\code\gameflow\battle\battlescenes
-mkdir disasm\code\gameflow\battle\battlescenes\spells
-mkdir disasm\code\gameflow\battle\specialsprites
-mkdir disasm\code\gameflow\battle\ai
-mkdir disasm\code\gameflow\end
 mkdir disasm\code\gameflow\special
 mkdir disasm\code\common
 mkdir disasm\code\common\tech
@@ -23,8 +16,6 @@ mkdir disasm\code\common\tech\graphics
 mkdir disasm\code\common\maps
 mkdir disasm\code\common\stats
 mkdir disasm\code\common\stats\items
-mkdir disasm\code\common\stats\allies
-mkdir disasm\code\common\stats\enemies
 mkdir disasm\code\common\menus\
 mkdir disasm\code\common\menus\main
 mkdir disasm\code\common\menus\shop

@@ -13,6 +13,10 @@
 
 static main(void) {
 
+	Message("FIXING FUNCTION CHUNKS...\n");
+
+	fixFChunks();
+
 	Message("SCANNING TRAPS...\n");
 	
 	parseSoundTrap();
@@ -24,6 +28,64 @@ static main(void) {
 	Batch(0);
 
 }
+
+
+
+/* MANUALLY FIX FUNCTION CHUNKS IMPROPERLY PARSED BECAUSE OF TRAPS */
+
+static fixFChunks(){
+
+	// InitGame
+	RemoveFchunk(0x70D2, 0x71CE);
+	AppendFchunk(0x70D2, 0x71CE, 0x73FE);
+	
+	// YesNoPrompt
+	RemoveFchunk(0x15284, 0x1528E);
+	RemoveFchunk(0x15284, 0x15328);
+	RemoveFchunk(0x15284, 0x1533C);
+	RemoveFchunk(0x15284, 0x153C0);
+	AppendFchunk(0x15284, 0x1528E, 0x15422);
+	
+	// sa09_
+	RemoveFchunk(0x1ABF4, 0x1AC08);
+	AppendFchunk(0x1ABF4, 0x1AC08, 0x1ACC6);
+	
+	// CheckArea
+	RemoveFchunk(0x23862, 0x239C8);
+	RemoveFchunk(0x23862, 0x239EE);
+	AppendFchunk(0x23862, 0x239C8, 0x23A84);
+	
+	// BattleLoop
+	RemoveFchunk(0x23A84, 0x23CBA);
+	AppendFchunk(0x23A84, 0x23CBA, 0x23D98);
+	
+	// sub_24662
+	RemoveFchunk(0x24662, 0x24982);
+	RemoveFchunk(0x24662, 0x249A8);
+	RemoveFchunk(0x24662, 0x24A4A);
+	RemoveFchunk(0x24662, 0x24A72);
+	RemoveFchunk(0x24662, 0x24AC8);
+	RemoveFchunk(0x24662, 0x24B06);
+	RemoveFchunk(0x24662, 0x24B34);
+	AppendFchunk(0x24662, 0x24982, 0x24C4E);
+
+	RemoveFchunk(0x24662, 0x24D64);
+	RemoveFchunk(0x24662, 0x24DCC);
+	RemoveFchunk(0x24662, 0x24E26);
+	RemoveFchunk(0x24662, 0x24F16);
+	RemoveFchunk(0x24662, 0x24FFA);
+	RemoveFchunk(0x24662, 0x25022);
+	RemoveFchunk(0x24662, 0x25072);
+	RemoveFchunk(0x24662, 0x250B0);
+	RemoveFchunk(0x24662, 0x25188);
+	AppendFchunk(0x24662, 0x24D64, 0x2519E);
+	
+}
+
+
+
+
+
 
 static parseSoundTrap(void) {
 

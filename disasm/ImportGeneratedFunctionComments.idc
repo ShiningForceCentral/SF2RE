@@ -176,10 +176,10 @@ a1 : output RAM data", 1);
     SetFunctionCmt(0x3f2c, 
         "display (or don't) map roof depending on player's start location", 1);
 
-    // GetItem
-    SetFunctionCmt(0x4262, 
+    // GetChestItem
+    SetFunctionCmt(0x4232, 
         "IN : \n\
-- d0\d1 : candidate coordinates\n\
+- d0d1 : candidate coordinates\n\
 OUT :\n\
 - d0 : layout block offset\n\
 - d1 : item flag\n\
