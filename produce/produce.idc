@@ -43,7 +43,7 @@ static produceMacros(){
 */
 
 static produceEnums(){
-	auto i,j,enumQty,id,enumName,enumSize,constant,constId,output,file;
+	auto i,j,enumQty,id,enumName,bmask,enumSize,constant,constId,output,file;
 	file = fopen("disasm\\sf2enums.asm","w");
 	Message("\nWriting Enums to sf2enums.asm ...");
 	enumQty = GetEnumQty();
@@ -53,20 +53,30 @@ static produceEnums(){
 		//Message("\n\n; ---------------------------------------------------------------------------\n");
 		writestr(file,"\n\n; ---------------------------------------------------------------------------\n");
 		//Message(form("\n; enum %s",enumName));
-		writestr(file,form("\n; enum %s",enumName));
-		enumSize = GetEnumSize(id);
-		constant = GetFirstConst(id,-1);
-		while(constant!=-1){
-			j=0;
-			constId = GetConstEx(id,constant,j,-1);
-			while(constId != -1){
-				output = form("\n%s: equ $%s",GetConstName(constId),ltoa(constant,16));
-				//Message(output);
-				writestr(file,output);
-				j++;
-				constId = GetConstEx(id,constant,j,-1);
+		bmask = GetFirstBmask(id);
+		if(bmask==-1){writestr(file,form("\n; enum %s",enumName));}
+		else{writestr(file,form("\n; enum %s (bitfield)",enumName));}
+		// Iterate bitmasks
+		while(bmask!=0){
+			enumSize = GetEnumSize(id);
+			constant = GetFirstConst(id,bmask);
+			// Iterate constants
+			while(enumSize>0){
+				j=0;
+				constId = GetConstEx(id,constant,j,bmask);
+				while(constId != -1){
+					output = form("\n%s: equ $%s",GetConstName(constId),ltoa(constant,16));
+					//Message(output);
+					writestr(file,output);
+					j++;
+					constId = GetConstEx(id,constant,j,bmask);
+				}
+				constant = GetNextConst(id,constant,bmask);
+				enumSize--;
 			}
-			constant = GetNextConst(id,constant,-1);
+			// Break out of loop after iterating last bitmask
+			if(bmask==-1){break;}
+			bmask = GetNextBmask(id,bmask);
 		}
 	}
 	fclose(file);
@@ -225,10 +235,21 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmScript(file,"code\\common\\stats\\statsengine",0x8000,0x9A9A,"Character stats engine");	
+	produceAsmScript(file,"code\\common\\stats\\statsengine_1",0x8000,0x853A,"Character stats engine");
+	produceAsmScript(file,"data\\stats\\allies\\classes\\classtypes",0x853A,0x855A,"Class types table");
+	produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x9A9A,"Character stats engine");
 	produceAsmScript(file,"code\\gameflow\\special\\debugmodebattleactions",0x9A9A,0x9B92,"Debug mode battle actions");	
-	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine",0x9B92,0xC09A,"Battle actions engine");	
-	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine",0xC09A,0xDEFC,"Battlefield engine");	
+	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_1",0x9B92,0xACCA,"Battle actions engine");
+	produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
+	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_2",0xACEA,0xBCF0,"Battle actions engine");
+	produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
+	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_3",0xBD24,0xBE52,"Battle actions engine");
+	produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
+	produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
+	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xC024,0xC09A,"Battle actions engine");
+	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
+	produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements");
+	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xDEFC,"Battlefield engine");
 	produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");	
 	produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
 	produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
@@ -277,7 +298,7 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x1F806,"Battlescene engine");
 	produceAsmScript(file,"data\\stats\\allies\\allybattlesprites",0x1F806,0x1F914,"Ally battle sprites table");
 	produceAsmScript(file,"data\\stats\\enemies\\enemybattlesprites",0x1F914,0x1F9E2,"Enemy battle sprites table");
-	produceAsmScript(file,"data\\stats\\items\\weaponsprites",0x1F9E2,0x1FA8A,"Weapon sprites table");
+	produceAsmScript(file,"data\\stats\\items\\weapongraphics",0x1F9E2,0x1FA8A,"Weapon graphics table");
 	produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB8,"Battle custom backgrounds table");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x1FAB8,0x1FAD6,"Battlescene engine");	
 	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
@@ -302,12 +323,21 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmSectionNoPretty(file,0x20000,0x20064);
-	produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20A02,"Shop functions");	
-	produceAsmScript(file,"code\\common\\menus\\church\\churchactions",0x20A02,0x2127E,"Church functions");	
+	produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
+	produceAsmScript(file,"data\\stats\\items\\shopdefs",0x20878,0x20A02,"Shop definitions");
+	produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
+	produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
+	produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
 	produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");	
-	produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21FD2,"Blacksmith functions");	
-	produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions",0x21FD2,0x229CA,"Caravan functions");	
-	produceAsmScript(file,"code\\common\\stats\\items\\itemactions",0x229CA,0x22BC2,"Item functions");	
+	produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21F62,"Blacksmith functions");
+	produceAsmScript(file,"data\\stats\\allies\\classes\\mithrilweaponclasses",0x21F62,0x21F92,"Mithril weapon class lists");
+	produceAsmScript(file,"data\\stats\\items\\mithrilweapons",0x21F92,0x21FD2,"Mithril weapon lists");
+	produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions_1",0x21FD2,0x228A2,"Caravan functions");
+	produceAsmScript(file,"data\\stats\\items\\specialcaravandescriptions",0x228A2,0x228A8,"Special Caravan descriptions");
+	produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions_2",0x228A8,0x229CA,"Caravan functions");
+	produceAsmScript(file,"code\\common\\stats\\items\\itemactions_1",0x229CA,0x229E2,"Item functions");
+	produceAsmScript(file,"data\\stats\\items\\usableoutsidebattleitems",0x229E2,0x229EC,"Usable outside battle items");
+	produceAsmScript(file,"code\\common\\stats\\items\\itemactions_2",0x229EC,0x22BC2,"Item functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_0",0x22BC2,0x2379A,"Battle functions");
 	produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_0",0x2379A,0x239AE,"Exploration functions");
 	produceAsmScript(file,"data\\stats\\items\\chestgoldamounts",0x239AE,0x239C8,"Chest gold amounts");
@@ -388,7 +418,11 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
 	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
-	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x449C6,0x44DE2,"Entity functions");
+	produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function");
+	produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs");
+	produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function");
+	produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite IDs");
+	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
 	produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45634,"Mapscripts and functions for Caravan and Raft");
@@ -1425,9 +1459,11 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x1E0000,0x1EE270);
-	produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");	
-	produceAsmScript(file,"data\\stats\\allies\\allystartdata",0x1EE7D0,0x1EE890,"Ally start data");
+	produceAsmSection(file,0x1E0000,0x1EE02C);
+	produceAsmScript(file,"data\\stats\\allies\\growthcurves",0x1EE02C,0x1EE270,"Stat growth curves");
+	//produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");	
+	produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7D0,30,2,"Ally stats");
+	produceAsmScript(file,"data\\stats\\allies\\allystartdefs",0x1EE7D0,0x1EE890,"Ally start definitions");
 	produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics",1);	
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics",1);	
@@ -1436,6 +1472,42 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 	fclose(file);
 	Message("DONE.\n");	
 }
+
+static produceAsmDataEntries(mainFile,sectionName,entryName,start,end,lastEntryDataEnd,chunkEnd,maxIndex,indexLength,sectionComment){
+	auto fileName, file, addr, i, j, dref, dataEnd, from, index, entryFileName, entryComment;
+	// Produce main file
+	fileName = form("%sentries", sectionName);
+	produceAsmScript(mainFile,fileName,start,end,sectionComment);
+	file = fopen(form("disasm\\%s.asm", fileName),"a");
+	// Produce individual entry files
+	addr = start;
+	i = 0;
+	while(addr<end&&i<maxIndex){
+		dref = Dfirst(addr);
+		dataEnd = 0;
+		j = dref+1;
+		// Finding entry's data end
+		while(dataEnd==0){
+			from = DfirstB(j);
+			while(from!=BADADDR){
+				if(from>=start&&from<lastEntryDataEnd){dataEnd = j;}
+				from = DnextB(addr,from);
+			}
+			j++;
+			if(j==lastEntryDataEnd){dataEnd = lastEntryDataEnd;}
+		}
+		index = ltoa(i,10);
+		while(strlen(index)<indexLength){index = form("0%s", index);}
+		entryFileName = form("%s%s%s", sectionName,entryName,index);
+		entryComment = form("%s %s", sectionComment,index);
+		produceAsmScript(file,entryFileName,dref,dataEnd,entryComment);
+		addr = addr+4;
+		i++;
+	}
+	if(lastEntryDataEnd<chunkEnd){produceAsmSection(file,lastEntryDataEnd,chunkEnd);}
+	fclose(file);
+}
+
 
 static produceSection(mainFile,sectionName,start,end,fs,sectionComment){
 	produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sectionComment,1);
@@ -1617,10 +1689,11 @@ static writeItem(file,ea){
 }
 
 static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
-	auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,i,line,lineA,lineB,type,output;
+	auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,lineA,lineB,disasmLen,manualInsn,output;
 	indent = "                ";
 	commentIndent = "                                        ";
-	name = GetTrueName(ea);
+	//name = GetTrueName(ea);
+	name = GetTrueNameEx(ea,ea);		// Get local label name if it exists
 	if(name==""){
 		name = Name(ea);
 	}
@@ -1676,11 +1749,21 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(strstr(lineA,"\n")!=-1){
 		lineA = form("%s%s",lineA,indent);
 	}
-	if(strlen(disasm)>(strlen(commentIndent))&&comment!=""&&comment!=" "){
+	// Make sure there is at least one space between disasm and comment
+	disasmLen = strlen(indent)+strlen(disasm);
+	if(disasmLen==strlen(commentIndent)&&substr(disasm,strlen(disasm)-1,-1)!=" "){disasmLen = disasmLen+1;}
+	if(disasmLen>strlen(commentIndent)&&comment!=""&&comment!=" "){
+		disasm = form("%s%s", disasm," ");
+	}
+	// Put comment on a new line if disasm reached a certain length
+	if(strlen(disasm)>strlen(commentIndent)+12&&comment!=""&&comment!=" "){
 		disasm = form("%s\n%s%s",disasm,indent,commentIndent);
 	}
+	// Handle manual instructions spanning multiple lines
+	manualInsn = substr(GetManualInsn(ea),strstr(GetManualInsn(ea),"\n"),-1);
+	if(manualInsn!=""){manualInsn = formatManualInsn(substr(manualInsn,1,-1));}
 	//Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));		
-	output = form("%s%s%s%s\n%s",name,lineA,disasm,comment,lineB);
+	output = form("%s%s%s%s\n%s%s",name,lineA,disasm,comment,lineB,manualInsn);
 	writestr(file,output);
 }
 
@@ -1724,6 +1807,23 @@ static formatRptCmt(cmt){
 	else{
 		return cmt;
 	}
+}
+
+static formatManualInsn(manualInsn){
+    auto result, indent, searcher, next;
+	result = "";
+	indent = "                    ";
+	searcher = indent+manualInsn;
+    next = 0;
+	while(next!=-1){
+		next = strstr(searcher,"\n");
+		if(next==-1)
+			break;
+		result = result+substr(searcher,0,next)+"\n"+indent;
+		searcher = substr(searcher,next+1,-1);
+	}
+	result = result+searcher+"\n";
+    return result;
 }
 
 

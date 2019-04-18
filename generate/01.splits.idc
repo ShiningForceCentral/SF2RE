@@ -143,7 +143,7 @@ static splitPTs(file){
 	splitPT(0x1B9A9A, 0x1B9AF6, 0x1BEE38, 0x1BEE38, "pt_WeaponSprites", "WeaponSprite", "data/graphics/battles/weapons/", 0, "weaponsprite", 2, 0, file);					
 	splitPT(0x1BEEE0, 0x1BEF3C, 0x1C46C2, 0x1C46C2, "pt_SpellGraphics", "SpellGraphics", "data/graphics/battles/spells/", 0, "spellgraphics", 2, 0, file);
 	splitPT(0x1C8004, 0x1C80E4, 0x1D7E26, 0x1D8000, "pt_Portraits", "Portrait", "data/graphics/portraits/", 0, "portrait", 2, 15, file);
-	splitPT(0x1EE270, 0x1EE2F0, 0x1EE7D0, 0x1EE7D0, "pt_AllyStats", "AllyStats", "data/stats/allies/stats/", 0, "allystats", 2, 0, file);
+	//splitPT(0x1EE270, 0x1EE2F0, 0x1EE7D0, 0x1EE7D0, "pt_AllyStats", "AllyStats", "data/stats/allies/stats/", 0, "allystats", 2, 0, file);
 
 }
 
@@ -169,15 +169,14 @@ static splitSingleChunks(file) {
 	
 	MakeAlign(0x7FA6, 0x8000-0x7FA6,15);
 	
-	splitSingleChunk(0x853A,0x855A,"ClassTypes","data/stats/allies/classes/classtypes.bin",file);
+	//splitSingleChunk(0x853A,0x855A,"ClassTypes","data/stats/allies/classes/classtypes.bin",file);
 	
-	splitSingleChunk(0xACCA,0xACEA,"CriticalHitSettings","data/stats/allies/classes/criticalhitsettings.bin",file);
+	//splitSingleChunk(0xACCA,0xACEA,"CriticalHitSettings","data/stats/allies/classes/criticalhitsettings.bin",file);
 	
-	splitSingleChunk(0xBCF0,0xBD24,"ItemBreakMessages","data/stats/items/itembreakmessages.bin",file);
+	//splitSingleChunk(0xBCF0,0xBD24,"ItemBreakMessages","data/stats/items/itembreakmessages.bin",file);
 	
-	splitSingleChunk(0xBE52,0xBECC,"EnemyItemDrops","data/battles/global/enemyitemdrops.bin",file);
-	splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/stats/enemies/enemygold.bin",file);
-	
+	//splitSingleChunk(0xBE52,0xBECC,"EnemyItemDrops","data/battles/global/enemyitemdrops.bin",file);
+	//splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/stats/enemies/enemygold.bin",file);
 	//splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
 	
 	splitSingleChunk(0xD824,0xD8F4,"MoveTypeTerrainCosts","data/battles/global/movetypeterraincosts.bin",file);
@@ -235,15 +234,14 @@ static splitSingleChunks(file) {
 	
 	//splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
 	splitSingleChunk(0x20981,0x20A02,"DebugShop","data/stats/items/debugshop.bin",file);
+	//splitSingleChunk(0x21046,0x21072,"Promotions","data/stats/allies/promotions.bin",file);
 	
-	splitSingleChunk(0x21046,0x21072,"Promotions","data/stats/allies/promotions.bin",file);
+	//splitSingleChunk(0x21F62,0x21F92,"MithrilWeaponClassLists","data/stats/allies/classes/mithrilweaponclasses.bin",file);
+	//splitSingleChunk(0x21F92,0x21FD2,"MithrilWeaponLists","data/stats/items/mithrilweapons.bin",file);
 	
-	splitSingleChunk(0x21F62,0x21F92,"MithrilWeaponClassLists","data/stats/allies/classes/mithrilweaponclasses.bin",file);
-	splitSingleChunk(0x21F92,0x21FD2,"MithrilWeaponLists","data/stats/items/mithrilweapons.bin",file);
+	//splitSingleChunk(0x228A2,0x228A8,"SpecialCaravanDescriptions","data/stats/items/specialcaravandescriptions.bin",file);
 	
-	splitSingleChunk(0x228A2,0x228A8,"SpecialCaravanDescriptions","data/stats/items/specialcaravandescriptions.bin",file);
-	
-	splitSingleChunk(0x229E2,0x229EC,"UsableOutsideBattleItems","data/stats/items/usableoutsidebattleitems.bin",file);
+	//splitSingleChunk(0x229E2,0x229EC,"UsableOutsideBattleItems","data/stats/items/usableoutsidebattleitems.bin",file);
 	
 	splitSingleChunk(0x23658,0x23758,"UnitCursorTiles","data/graphics/tech/unitcursortiles.bin",file);
 	
@@ -345,7 +343,7 @@ static splitSingleChunks(file) {
 	splitSingleChunk(0x1EB000,0x1EC000,"","data/sound/yminst.bin",file);
 	splitSingleChunkWithCommentedSplitEntry(0x1EC000,0x1EE000,"SoundDriver","data/sound/sounddriver.bin",file);
 	
-	splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
+	//splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
 	
 	//splitSingleChunk(0x1EE7D0, 0x1EE890, "AllyStartData","data/stats/allies/allystartdata.bin",file);
 	//splitSingleChunk(0x1EE890, 0x1EE930, "ClassData","data/stats/allies/classes/classdata.bin",file);

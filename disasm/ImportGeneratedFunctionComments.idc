@@ -651,6 +651,15 @@ In: D0 = from entity\n\
     D1 = to entity\n\
 Out: D2 = distance", 1);
 
+    // CalculateStatGain
+    SetFunctionCmt(0x96ba, 
+        "In: D1 = current stat value\n\
+    D2 = growth curve ID\n\
+    D3 = starting value\n\
+    D4 = projected value\n\
+    D5 = current level\n\
+Out: D1 = stat gain value", 1);
+
     // InitGameSettings
     SetFunctionCmt(0x9844, 
         "Clear all flags and important game variables.", 1);
@@ -1455,10 +1464,14 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x4465a, 
         "clear entities in memory", 1);
 
-    // GetCombatantSpriteIdx
+    // GetAllyMapSprite
+    SetFunctionCmt(0x449c6, 
+        "Out: D4 = map sprite ID", 1);
+
+    // GetCombatantMapSprite
     SetFunctionCmt(0x44a7c, 
         "In: A6 = battle vars stack ???\n\
-Out: D4 = sprite idx", 1);
+Out: D4 = map sprite ID", 1);
 
     // WaitForEntityToStopMoving
     SetFunctionCmt(0x44da4, 
