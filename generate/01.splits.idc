@@ -296,7 +296,7 @@ static splitSingleChunks(file) {
 	
 	splitSingleChunk(0x4567A,0x45858,"SpriteDialogProperties","data/spritedialogdefs.bin",file);
 	
-	splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","data/battles/global/enemyleaderpresence.bin",file);
+	//splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","data/battles/global/enemyleaderpresence.bin",file);
 	
 	MakeAlign(0x6348C, 0x64000-0x6348C,14);
 	
@@ -319,7 +319,7 @@ static splitSingleChunks(file) {
 	
 	//splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/stats/enemies/enemydata.bin",file);
 	
-	splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","data/battles/global/specialbattles.bin",file);	
+	//splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","data/battles/global/specialbattles.bin",file);	
 	
 	splitSingleChunk(0x1B6DDA,0x1B6DFA,"plt_EndKiss","data/graphics/specialscreens/endingkiss/endingkisspalette.bin",file);
 	splitSingleChunk(0x1B6DFA,0x1B7C9A,"EndKissPicture","data/graphics/specialscreens/endingkiss/endingkisstiles.bin",file);

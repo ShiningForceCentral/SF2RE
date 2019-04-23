@@ -248,7 +248,8 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
 	produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xC024,0xC09A,"Battle actions engine");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
-	produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements");
+	produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
+	writestr(file,"                wordAlignIfExpandedRom\n");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xDEFC,"Battlefield engine");
 	produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");	
 	produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
@@ -275,7 +276,8 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"code\\common\\menus\\menuengine",0x10000,0x16EA6,"Menu engine");	
 	produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
 	produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
-	produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3E,"Item names");
+	produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3D,"Item names");
+	produceAsmSection(file,0x17F3D,0x17F3E);
 	produceAsmScript(file,"data\\stats\\allies\\classes\\classnames",0x17F3E,0x17FDA,"Class names");
 	produceAsmSection(file,0x17FDA,0x18000);
 
@@ -325,8 +327,10 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmSectionNoPretty(file,0x20000,0x20064);
 	produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
 	produceAsmScript(file,"data\\stats\\items\\shopdefs",0x20878,0x20A02,"Shop definitions");
+	writestr(file,"                wordAlignIfExpandedRom\n");
 	produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
 	produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
+	writestr(file,"                wordAlignIfExpandedRom\n");
 	produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
 	produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");	
 	produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21F62,"Blacksmith functions");
@@ -418,10 +422,14 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
 	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
-	produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function");
-	produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs");
-	produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function");
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function",1);
+	produceAsmScriptWithConditionalInclude(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs",1);
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function",1);
+	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getallymapsprite-expanded.asm\"\n");
+	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
+	writestr(file,"                includeIfExpandedRom \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
 	produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite IDs");
+	writestr(file,"                wordAlignIfExpandedRom\n");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
@@ -446,7 +454,9 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"code\\gameflow\\battle\\battlestartcutscenesend",0x47B8C,0x47B92,"Battle start cutscenes function end");
 	produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesstart",0x47B92,0x47BE8,"Battle end cutscenes function start");
 	produceAsmScript(file,"data\\battles\\battleendcutscenes",0x47BE8,0x47C48,"Enemy defeated cutscenes");
-	produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesend",0x47C48,0x47CBC,"Battle end cutscenes function end");
+	produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesend",0x47C48,0x47C8E,"Battle end cutscenes function end");
+	produceAsmScript(file,"data\\battles\\global\\enemyleaderpresence",0x47C8E,0x47CBC,"Enemy leader presence table");
+	writestr(file,"                wordAlignIfExpandedRom\n");
 	produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesstart",0x47CBC,0x47CF4,"After battle cutscenes function start");
 	produceAsmScript(file,"data\\battles\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
 	produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesend",0x47D54,0x47D6A,"After battle cutscenes function end");
@@ -1394,7 +1404,8 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");		
 	produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
 	produceAsmScriptWithConditionalInclude(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
-	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DB0,0x1B6DDA,"Data related to UpgradeUnitIdx function");	
+	produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DBC,"Random battles table");
+	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DBC,0x1B6DDA,"Data related to UpgradeUnitIdx function");
 	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
 	produceAsmSection(file,0x1B7C9A,0x1B8000);
 

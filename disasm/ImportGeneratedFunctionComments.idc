@@ -452,6 +452,11 @@ Out: A0 = address of name\n\
 Out: D1 = high 4 bits\n\
      D2 = low 4 bits", 1);
 
+    // GetSomethingClassType
+    SetFunctionCmt(0x851a, 
+        "In: D0 = combatant ID\n\
+Out: D1 = something class type ??", 1);
+
     // SetKills
     SetFunctionCmt(0x86e6, 
         "actually seems to only be used for monster AI, not kills", 1);
@@ -1466,7 +1471,8 @@ Out: D0 = new X\n\
 
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
-        "Out: D4 = map sprite ID", 1);
+        "In: D0 = combatant ID\n\
+Out: D4 = map sprite ID", 1);
 
     // GetCombatantMapSprite
     SetFunctionCmt(0x44a7c, 
