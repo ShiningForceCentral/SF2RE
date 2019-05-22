@@ -211,13 +211,13 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");	
 	produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");	
 	produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");	
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",1);	
-	produceAsmScriptWithConditionalInclude(file,"data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",1);	
-	produceAsmScriptWithConditionalInclude(file,"data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",1);
 	produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");	
 	produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");	
 	produceAsmScript(file,"code\\gameflow\\start\\regioncheck",0x7EC6,0x7FA4,"Region check function");	
-	produceAsmSectionNoPretty(file,0x7FA4,0x8000);
+	produceAsmSectionNoPretty(file,"",0x7FA4,0x8000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -255,7 +255,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
 	produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
 	produceAsmScript(file,"data\\stats\\enemies\\enemynames",0xFB8A,0xFF87,"Enemy names");
-	produceAsmSection(file,0xFF87,0x10000);
+	produceAsmSection(file,"",0xFF87,0x10000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -277,9 +277,9 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
 	produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
 	produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3D,"Item names");
-	produceAsmSection(file,0x17F3D,0x17F3E);
+	produceAsmSection(file,"",0x17F3D,0x17F3E);
 	produceAsmScript(file,"data\\stats\\allies\\classes\\classnames",0x17F3E,0x17FDA,"Class names");
-	produceAsmSection(file,0x17FDA,0x18000);
+	produceAsmSection(file,"",0x17FDA,0x18000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -306,7 +306,7 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
 	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
 	produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_2",0x1FAEA,0x1FDEA,"Battlescene engine");	
-	produceAsmSection(file,0x1FDEA,0x20000);
+	produceAsmSection(file,"",0x1FDEA,0x20000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -324,7 +324,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSectionNoPretty(file,0x20000,0x20064);
+	produceAsmSectionNoPretty(file,"",0x20000,0x20064);
 	produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
 	produceAsmScript(file,"data\\stats\\items\\shopdefs",0x20878,0x20A02,"Shop definitions");
 	writestr(file,"                wordAlignIfExpandedRom\n");
@@ -351,11 +351,11 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
 	produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
 	produceAsmScript(file,"code\\common\\tech\\graphics\\specialsprites",0x25BFC,0x25DF6,"Special Sprites functions");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\tech\\graphics\\specialspritesentries",0x25DF6,0x02784C,"Special Sprites Entries",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\tech\\graphics\\specialspritesentries",0x25DF6,0x02784C,"Special Sprites Entries",1);
 	produceAsmScript(file,"code\\common\\tech\\graphics\\specialspritesanims",0x02784C,0x2791C,"Special Sprites Animations");
 	produceAsmScript(file,"code\\specialscreens\\suspend\\suspend",0x2791C,0x279D8,"Suspend functions");
 	produceAsmScript(file,"code\\specialscreens\\witchend\\witchend",0x279D8,0x27D8C,"Witch end functions");
-	produceAsmSection(file,0x27D8C,0x28000);
+	produceAsmSection(file,"",0x27D8C,0x28000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -373,27 +373,27 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 			
-	produceAsmSectionNoPretty(file,0x28000,0x2804C);
+	produceAsmSectionNoPretty(file,"",0x28000,0x2804C);
 	produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo",0x2804C,0x29002,"SEGA logo functions");	
-	produceAsmSection(file,0x29002,0x2C576);
+	produceAsmSection(file,"",0x29002,0x2C576);
 	produceAsmScript(file,"code\\specialscreens\\endkiss\\endkissfunctions_0",0x2C576,0x2C73C,"End kiss function");	
 	produceAsmScript(file,"code\\specialscreens\\title\\loadfont",0x2C73C,0x2C7A0,"Title screen font loading function");	
-	produceAsmSection(file,0x2C7A0,0x2E10E);
+	produceAsmSection(file,"",0x2C7A0,0x2E10E);
 	produceAsmScript(file,"code\\common\\scripting\\text\\decoding",0x2E10E,0x2E196,"Text decoding functions");	
-	produceAsmSection(file,0x2E196,0x2EB34);
-	produceAsmScriptWithConditionalInclude(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",1);
+	produceAsmSection(file,"",0x2E196,0x2EB34);
+	produceAsmScriptWithConditionalInclude(file,"","data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",1);
 	writestr(file,"                alignIfExpandedRom $30000\n");
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",2);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",2);	
 	writestr(file,"                alignIfExpandedRom $38000\n");
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2);	
-	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2);	
+	produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
 	writestr(file,"                alignIfExpandedRom $43800\n");	
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",2);	
-	produceAsmScriptWithConditionalInclude(file,"data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",2);	
-	produceAsmScriptWithConditionalInclude(file,"data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",2);
+	produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",2);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",2);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",2);
 	writestr(file,"                alignIfExpandedRom $43C00\n");
-	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
-	produceAsmSection(file,0x425ED,0x44000);	
+	//produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
+	produceAsmSection(file,"",0x425ED,0x44000);	
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -412,19 +412,19 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSectionNoPretty(file,0x44000,0x440CC);
+	produceAsmSectionNoPretty(file,"",0x44000,0x440CC);
 	produceAsmScript(file,"code\\common\\scripting\\map\\mapfunctions",0x440CC,0x4428A,"Map functions");
 	produceAsmScript(file,"data\\maps\\global\\overworldmaps",0x4428A,0x44298,"Overworld maps");
 	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions_1",0x44298,0x44338,"Follower functions, part 1");
 	produceAsmScript(file,"data\\scripting\\entity\\followers",0x44338,0x4438A,"Follower declarations");
 	produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions_2",0x4438A,0x444A2,"Follower functions, part 2");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_1",0x444A2,0x448C4,"Entity functions");
-	//produceAsmScriptWithConditionalInclude(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
+	//produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
 	produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function",1);
-	produceAsmScriptWithConditionalInclude(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs",1);
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function",1);
 	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getallymapsprite-expanded.asm\"\n");
 	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
 	writestr(file,"                includeIfExpandedRom \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
@@ -1265,7 +1265,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map21\\mapsetups\\s6_initfunction_21F",0x63482,0x6348C,"");
 	fclose(mapSetupsFile);
 
-	produceAsmSection(file,0x6348C,0x64000);
+	produceAsmSection(file,"",0x6348C,0x64000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1283,15 +1283,1029 @@ static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x64000,0x6400C);
+	produceAsmSection(file,"",0x64000,0x6400C);
 	produceAsmScript(file,"data\\graphics\\maps\\maptilesets\\entries",0x6400C,0x9494A,"Map Tilesets");	
 	writestr(file,"                alignIfExpandedRom $C7000\n");
 	produceAsmScript(file,"data\\graphics\\maps\\mappalettes\\entries",0x9494A,0x94B8A,"Map palettes");
-	produceAsmScriptWithConditionalInclude(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
-	produceAsmSection(file,0xC7ECC,0xC8000);
+	//produceAsmScriptWithConditionalInclude(file,"","data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
+	produceMapEntries(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
+	produceAsmSection(file,"",0xC7ECC,0xC8000);
 
 	fclose(file);
 	Message("DONE.\n");	
+}
+
+static produceMapEntries(mainFile,sectionName,start,end,sectionComment,conditionalIncludeType){
+	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+	auto output, include, name, indent, comment, commentEx, commentIndent, offsets;
+	fileName = form("%s.asm",sectionName);
+	Message(form("Writing assembly script section %s to %s (%s) ... ",sectionName,fileName,sectionComment));	
+	//form("0x%s..0x%s %s",ltoa(start,16),ltoa(end,16),sectionComment)
+	action = 1;
+	if(conditionalIncludeType==1){
+		include = "includeIfVanillaRom";
+	}else if(conditionalIncludeType==2){
+		include = "includeIfExpandedRom";
+	}else{
+		include = "include";
+	}
+	writestr(mainFile,form("                %s \"%s\"    ; %s\n",include,fileName,sectionComment));
+	file = fopen(form("disasm\\%s",fileName),"w");
+	offsets = form("0x%s..0x%s",ltoa(start,16),ltoa(end,16));
+	writestr(file,form("\n; ASM FILE %s.asm :\n; %s : %s\n",sectionName,offsets,sectionComment));
+	
+	
+	//0x94B8A,0xC7ECC
+	produceAsmSection(file,"",0x94B8A,0x94CC6);
+
+	produceAsmScriptWithExtName(file,"Map00","data\\maps\\entries\\map00\\00-tilesets",0x94CC6,0x94CCC,"");
+	produceAsmSection(file,"",0x94CCC,0x94CF4);
+	produceAsmScriptWithExtName(file,"Map00s2_Areas","data\\maps\\entries\\map00\\2-areas",0x94CF4,0x94D14,"");
+	produceAsmScriptWithExtName(file,"Map00s3_FlagEvents","data\\maps\\entries\\map00\\3-flag-events",0x94D14,0x94D1E,"");
+	produceAsmScriptWithExtName(file,"Map00s4_StepEvents","data\\maps\\entries\\map00\\4-step-events",0x94D1E,0x94D20,"");
+	produceAsmScriptWithExtName(file,"Map00s5_RoofEvents","data\\maps\\entries\\map00\\5-roof-events",0x94D20,0x94D22,"");
+	produceAsmScriptWithExtName(file,"Map00s6_WarpEvents","data\\maps\\entries\\map00\\6-warp-events",0x94D22,0x94D44,"");
+	produceAsmScriptWithExtName(file,"Map00s7_ChestItems","data\\maps\\entries\\map00\\7-chest-items",0x94D44,0x94D4A,"");
+	produceAsmScriptWithExtName(file,"Map00s8_OtherItems","data\\maps\\entries\\map00\\8-other-items",0x94D4A,0x94D4C,"");
+	produceAsmSection(file,"",0x94D4C,0x959B0);
+	produceAsmSection(file,"",0x959B0,0x95E86);
+	produceAsmScriptWithExtName(file,"Map00s9_Animations","data\\maps\\entries\\map00\\9-animations",0x95E86,0x95E9C,"");
+	
+	produceAsmScriptWithExtName(file,"Map01","data\\maps\\entries\\map01\\00-tilesets",0x95E9C,0x95EA2,"");
+	produceAsmSection(file,"",0x95EA2,0x95ECA);
+	produceAsmScriptWithExtName(file,"Map01s2_Areas","data\\maps\\entries\\map01\\2-areas",0x95ECA,0x95F26,"");
+	produceAsmScriptWithExtName(file,"Map01s3_FlagEvents","data\\maps\\entries\\map01\\3-flag-events",0x95F26,0x95F38,"");
+	produceAsmScriptWithExtName(file,"Map01s4_StepEvents","data\\maps\\entries\\map01\\4-step-events",0x95F38,0x95F4A,"");
+	produceAsmScriptWithExtName(file,"Map01s5_RoofEvents","data\\maps\\entries\\map01\\5-roof-events",0x95F4A,0x95F4C,"");
+	produceAsmScriptWithExtName(file,"Map01s6_WarpEvents","data\\maps\\entries\\map01\\6-warp-events",0x95F4C,0x95F7E,"");
+	produceAsmScriptWithExtName(file,"Map01s7_ChestItems","data\\maps\\entries\\map01\\7-chest-items",0x95F7E,0x95F90,"");
+	produceAsmScriptWithExtName(file,"Map01s8_OtherItems","data\\maps\\entries\\map01\\8-other-items",0x95F90,0x95F92,"");
+	produceAsmSection(file,"",0x95F92,0x965E6);
+	produceAsmSection(file,"",0x965E6,0x968C2);
+	produceAsmScriptWithExtName(file,"Map01s9_Animations","data\\maps\\entries\\map01\\9-animations",0x968C2,0x968D8,"");
+	
+	produceAsmScriptWithExtName(file,"Map02","data\\maps\\entries\\map02\\00-tilesets",0x968D8,0x968DE,"");
+	produceAsmSection(file,"",0x968DE,0x96906);
+	produceAsmScriptWithExtName(file,"Map02s2_Areas","data\\maps\\entries\\map02\\2-areas",0x96906,0x96926,"");
+	produceAsmScriptWithExtName(file,"Map02s3_FlagEvents","data\\maps\\entries\\map02\\3-flag-events",0x96926,0x969C8,"");
+	produceAsmScriptWithExtName(file,"Map02s4_StepEvents","data\\maps\\entries\\map02\\4-step-events",0x969C8,0x96A12,"");
+	produceAsmScriptWithExtName(file,"Map02s5_RoofEvents","data\\maps\\entries\\map02\\5-roof-events",0x96A12,0x96A5C,"");
+	produceAsmScriptWithExtName(file,"Map02s6_WarpEvents","data\\maps\\entries\\map02\\6-warp-events",0x96A5C,0x96A7E,"");
+	produceAsmScriptWithExtName(file,"Map02s7_ChestItems","data\\maps\\entries\\map02\\7-chest-items",0x96A7E,0x96A80,"");
+	produceAsmScriptWithExtName(file,"Map02s8_OtherItems","data\\maps\\entries\\map02\\8-other-items",0x96A80,0x96A8A,"");
+	produceAsmSection(file,"",0x96A8A,0x97458);
+	produceAsmSection(file,"",0x97458,0x977D0);
+	
+	produceAsmScriptWithExtName(file,"Map03","data\\maps\\entries\\map03\\00-tilesets",0x977D0,0x977D6,"");
+	produceAsmSection(file,"",0x977D6,0x977FE);
+	produceAsmScriptWithExtName(file,"Map03s2_Areas","data\\maps\\entries\\map03\\2-areas",0x977FE,0x9785A,"");
+	produceAsmScriptWithExtName(file,"Map03s3_FlagEvents","data\\maps\\entries\\map03\\3-flag-events",0x9785A,0x9786C,"");
+	produceAsmScriptWithExtName(file,"Map03s4_StepEvents","data\\maps\\entries\\map03\\4-step-events",0x9786C,0x9789E,"");
+	produceAsmScriptWithExtName(file,"Map03s5_RoofEvents","data\\maps\\entries\\map03\\5-roof-events",0x9789E,0x978F0,"");
+	produceAsmScriptWithExtName(file,"Map03s6_WarpEvents","data\\maps\\entries\\map03\\6-warp-events",0x978F0,0x9793A,"");
+	produceAsmScriptWithExtName(file,"Map03s7_ChestItems","data\\maps\\entries\\map03\\7-chest-items",0x9793A,0x97940,"");
+	produceAsmScriptWithExtName(file,"Map03s8_OtherItems","data\\maps\\entries\\map03\\8-other-items",0x97940,0x97946,"");
+	produceAsmSection(file,"",0x97946,0x984E8);
+	produceAsmSection(file,"",0x984E8,0x9898A);
+	produceAsmScriptWithExtName(file,"Map03s9_Animations","data\\maps\\entries\\map03\\9-animations",0x9898A,0x989A0,"");
+	
+	produceAsmScriptWithExtName(file,"Map04","data\\maps\\entries\\map04\\00-tilesets",0x989A0,0x989A6,"");
+	produceAsmSection(file,"",0x989A6,0x989CE);
+	produceAsmScriptWithExtName(file,"Map04s2_Areas","data\\maps\\entries\\map04\\2-areas",0x989CE,0x989EE,"");
+	produceAsmScriptWithExtName(file,"Map04s3_FlagEvents","data\\maps\\entries\\map04\\3-flag-events",0x989EE,0x98A00,"");
+	produceAsmScriptWithExtName(file,"Map04s4_StepEvents","data\\maps\\entries\\map04\\4-step-events",0x98A00,0x98A02,"");
+	produceAsmScriptWithExtName(file,"Map04s5_RoofEvents","data\\maps\\entries\\map04\\5-roof-events",0x98A02,0x98A24,"");
+	produceAsmScriptWithExtName(file,"Map04s6_WarpEvents","data\\maps\\entries\\map04\\6-warp-events",0x98A24,0x98A3E,"");
+	produceAsmScriptWithExtName(file,"Map04s7_ChestItems","data\\maps\\entries\\map04\\7-chest-items",0x98A3E,0x98A40,"");
+	produceAsmScriptWithExtName(file,"Map04s8_OtherItems","data\\maps\\entries\\map04\\8-other-items",0x98A40,0x98A46,"");
+	produceAsmSection(file,"",0x98A46,0x993E0);
+	produceAsmSection(file,"",0x993E0,0x9965A);
+	//produceAsmScript(file,"data\\maps\\entries\\map04\\9-animations",0x9898A,0x989A0,"");
+	
+	produceAsmScriptWithExtName(file,"Map05","data\\maps\\entries\\map05\\00-tilesets",0x9965A,0x99660,"");
+	produceAsmSection(file,"",0x99660,0x99688);
+	produceAsmScriptWithExtName(file,"Map05s2_Areas","data\\maps\\entries\\map05\\2-areas",0x99688,0x996C6,"");
+	produceAsmScriptWithExtName(file,"Map05s3_FlagEvents","data\\maps\\entries\\map05\\3-flag-events",0x996C6,0x996D0,"");
+	produceAsmScriptWithExtName(file,"Map05s4_StepEvents","data\\maps\\entries\\map05\\4-step-events",0x996D0,0x996F2,"");
+	produceAsmScriptWithExtName(file,"Map05s5_RoofEvents","data\\maps\\entries\\map05\\5-roof-events",0x996F2,0x99714,"");
+	produceAsmScriptWithExtName(file,"Map05s6_WarpEvents","data\\maps\\entries\\map05\\6-warp-events",0x99714,0x99746,"");
+	produceAsmScriptWithExtName(file,"Map05s7_ChestItems","data\\maps\\entries\\map05\\7-chest-items",0x99746,0x99750,"");
+	produceAsmScriptWithExtName(file,"Map05s8_OtherItems","data\\maps\\entries\\map05\\8-other-items",0x99750,0x99758,"");
+	produceAsmSection(file,"",0x99758,0x99F90);
+	produceAsmSection(file,"",0x99F90,0x9A300);
+	
+	produceAsmScriptWithExtName(file,"Map06","data\\maps\\entries\\map06\\00-tilesets",0x9A300,0x9A306,"");
+	produceAsmSection(file,"",0x9A306,0x9A32E);
+	produceAsmScriptWithExtName(file,"Map06s2_Areas","data\\maps\\entries\\map06\\2-areas",0x9A32E,0x9A34E,"");
+	produceAsmScriptWithExtName(file,"Map06s3_FlagEvents","data\\maps\\entries\\map06\\3-flag-events",0x9A34E,0x9A378,"");
+	produceAsmScriptWithExtName(file,"Map06s4_StepEvents","data\\maps\\entries\\map06\\4-step-events",0x9A378,0x9A3B2,"");
+	produceAsmScriptWithExtName(file,"Map06s5_RoofEvents","data\\maps\\entries\\map06\\5-roof-events",0x9A3B2,0x9A3F4,"");
+	produceAsmScriptWithExtName(file,"Map06s6_WarpEvents","data\\maps\\entries\\map06\\6-warp-events",0x9A3F4,0x9A40E,"");
+	produceAsmScriptWithExtName(file,"Map06s7_ChestItems","data\\maps\\entries\\map06\\7-chest-items",0x9A40E,0x9A418,"");
+	produceAsmScriptWithExtName(file,"Map06s8_OtherItems","data\\maps\\entries\\map06\\8-other-items",0x9A418,0x9A422,"");
+	produceAsmSection(file,"",0x9A422,0x9AB8A);
+	produceAsmSection(file,"",0x9AB8A,0x9AF6C);
+	produceAsmScriptWithExtName(file,"Map06s9_Animations","data\\maps\\entries\\map06\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map07","data\\maps\\entries\\map07\\00-tilesets",0x9AF82,0x9AF88,"");
+	produceAsmSection(file,"",0x9AF88,0x9AFB0);
+	produceAsmScriptWithExtName(file,"Map07s2_Areas","data\\maps\\entries\\map07\\2-areas",0x9AFB0,0x9AFD0,"");
+	produceAsmScriptWithExtName(file,"Map07s3_FlagEvents","data\\maps\\entries\\map07\\3-flag-events",0x9AFD0,0x9AFD2,"");
+	produceAsmScriptWithExtName(file,"Map07s4_StepEvents","data\\maps\\entries\\map07\\4-step-events",0x9AFD2,0x9AFDC,"");
+	produceAsmScriptWithExtName(file,"Map07s5_RoofEvents","data\\maps\\entries\\map07\\5-roof-events",0x9AFDC,0x9AFF6,"");
+	produceAsmScriptWithExtName(file,"Map07s6_WarpEvents","data\\maps\\entries\\map07\\6-warp-events",0x9AFF6,0x9B008,"");
+	produceAsmScriptWithExtName(file,"Map07s7_ChestItems","data\\maps\\entries\\map07\\7-chest-items",0x9B008,0x9B00A,"");
+	produceAsmScriptWithExtName(file,"Map07s8_OtherItems","data\\maps\\entries\\map07\\8-other-items",0x9B00A,0x9B014,"");
+	produceAsmSection(file,"",0x9B014,0x9B7F8);
+	produceAsmSection(file,"",0x9B7F8,0x9BAC2);
+	//produceAsmScript(file,"data\\maps\\entries\\map07\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map08","data\\maps\\entries\\map08\\00-tilesets",0x9BAC2,0x9BAC8,"");
+	produceAsmSection(file,"",0x9BAC8,0x9BAF0);
+	produceAsmScriptWithExtName(file,"Map08s2_Areas","data\\maps\\entries\\map08\\2-areas",0x9BAF0,0x9BB2E,"");
+	produceAsmScriptWithExtName(file,"Map08s3_FlagEvents","data\\maps\\entries\\map08\\3-flag-events",0x9BB2E,0x9BB58,"");
+	produceAsmScriptWithExtName(file,"Map08s4_StepEvents","data\\maps\\entries\\map08\\4-step-events",0x9BB58,0x9BB8A,"");
+	produceAsmScriptWithExtName(file,"Map08s5_RoofEvents","data\\maps\\entries\\map08\\5-roof-events",0x9BB8A,0x9BBBC,"");
+	produceAsmScriptWithExtName(file,"Map08s6_WarpEvents","data\\maps\\entries\\map08\\6-warp-events",0x9BBBC,0x9BBDE,"");
+	produceAsmScriptWithExtName(file,"Map08s7_ChestItems","data\\maps\\entries\\map08\\7-chest-items",0x9BBDE,0x9BBE0,"");
+	produceAsmScriptWithExtName(file,"Map08s8_OtherItems","data\\maps\\entries\\map08\\8-other-items",0x9BBE0,0x9BBEA,"");
+	produceAsmSection(file,"",0x9BBEA,0x9C454);
+	produceAsmSection(file,"",0x9C454,0x9C742);
+	
+	produceAsmScriptWithExtName(file,"Map09","data\\maps\\entries\\map09\\00-tilesets",0x9C742,0x9C748,"");
+	produceAsmSection(file,"",0x9C748,0x9C770);
+	produceAsmScriptWithExtName(file,"Map09s2_Areas","data\\maps\\entries\\map09\\2-areas",0x9C770,0x9C7CC,"");
+	produceAsmScriptWithExtName(file,"Map09s3_FlagEvents","data\\maps\\entries\\map09\\3-flag-events",0x9C7CC,0x9C7CE,"");
+	produceAsmScriptWithExtName(file,"Map09s4_StepEvents","data\\maps\\entries\\map09\\4-step-events",0x9C7CE,0x9C7F8,"");
+	produceAsmScriptWithExtName(file,"Map09s5_RoofEvents","data\\maps\\entries\\map09\\5-roof-events",0x9C7F8,0x9C83A,"");
+	produceAsmScriptWithExtName(file,"Map09s6_WarpEvents","data\\maps\\entries\\map09\\6-warp-events",0x9C83A,0x9C864,"");
+	produceAsmScriptWithExtName(file,"Map09s7_ChestItems","data\\maps\\entries\\map09\\7-chest-items",0x9C864,0x9C86A,"");
+	produceAsmScriptWithExtName(file,"Map09s8_OtherItems","data\\maps\\entries\\map09\\8-other-items",0x9C86A,0x9C874,"");
+	produceAsmSection(file,"",0x9C874,0x9D1F0);
+	produceAsmSection(file,"",0x9D1F0,0x9D660);
+	//produceAsmScript(file,"data\\maps\\entries\\map09\\9-animations",0xA2DD0,0xA2DE6,"");
+	
+	produceAsmScriptWithExtName(file,"Map10","data\\maps\\entries\\map10\\00-tilesets",0x9D660,0x9D666,"");
+	produceAsmSection(file,"",0x9D666,0x9D68E);
+	produceAsmScriptWithExtName(file,"Map10s2_Areas","data\\maps\\entries\\map10\\2-areas",0x9D68E,0x9D726,"");
+	produceAsmScriptWithExtName(file,"Map10s3_FlagEvents","data\\maps\\entries\\map10\\3-flag-events",0x9D726,0x9D728,"");
+	produceAsmScriptWithExtName(file,"Map10s4_StepEvents","data\\maps\\entries\\map10\\4-step-events",0x9D728,0x9D72A,"");
+	produceAsmScriptWithExtName(file,"Map10s5_RoofEvents","data\\maps\\entries\\map10\\5-roof-events",0x9D72A,0x9D72C,"");
+	produceAsmScriptWithExtName(file,"Map10s6_WarpEvents","data\\maps\\entries\\map10\\6-warp-events",0x9D72C,0x9D84E,"");
+	produceAsmScriptWithExtName(file,"Map10s7_ChestItems","data\\maps\\entries\\map10\\7-chest-items",0x9D84E,0x9D850,"");
+	produceAsmScriptWithExtName(file,"Map10s8_OtherItems","data\\maps\\entries\\map10\\8-other-items",0x9D850,0x9D858,"");
+	produceAsmSection(file,"",0x9D858,0x9E0B0);
+	produceAsmSection(file,"",0x9E0B0,0x9E45A);
+	//produceAsmScript(file,"data\\maps\\entries\\map10\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map11","data\\maps\\entries\\map11\\00-tilesets",0x9E45A,0x9E460,"");
+	produceAsmSection(file,"",0x9E460,0x9E488);
+	produceAsmScriptWithExtName(file,"Map11s2_Areas","data\\maps\\entries\\map11\\2-areas",0x9E488,0x9E4C6,"");
+	produceAsmScriptWithExtName(file,"Map11s3_FlagEvents","data\\maps\\entries\\map11\\3-flag-events",0x9E4C6,0x9E4C8,"");
+	produceAsmScriptWithExtName(file,"Map11s4_StepEvents","data\\maps\\entries\\map11\\4-step-events",0x9E4C8,0x9E4CA,"");
+	produceAsmScriptWithExtName(file,"Map11s5_RoofEvents","data\\maps\\entries\\map11\\5-roof-events",0x9E4CA,0x9E4CC,"");
+	produceAsmScriptWithExtName(file,"Map11s6_WarpEvents","data\\maps\\entries\\map11\\6-warp-events",0x9E4CC,0x9E4E6,"");
+	produceAsmScriptWithExtName(file,"Map11s7_ChestItems","data\\maps\\entries\\map11\\7-chest-items",0x9E4E6,0x9E4E8,"");
+	produceAsmScriptWithExtName(file,"Map11s8_OtherItems","data\\maps\\entries\\map11\\8-other-items",0x9E4E8,0x9E4EA,"");
+	produceAsmSection(file,"",0x9E4EA,0x9EB9E);
+	produceAsmSection(file,"",0x9EB9E,0x9ED80);
+	
+	produceAsmScriptWithExtName(file,"Map12","data\\maps\\entries\\map12\\00-tilesets",0x9ED80,0x9ED86,"");
+	produceAsmSection(file,"",0x9ED86,0x9EDAE);
+	produceAsmScriptWithExtName(file,"Map12s2_Areas","data\\maps\\entries\\map12\\2-areas",0x9EDAE,0x9EDCE,"");
+	produceAsmScriptWithExtName(file,"Map12s3_FlagEvents","data\\maps\\entries\\map12\\3-flag-events",0x9EDCE,0x9EDD0,"");
+	produceAsmScriptWithExtName(file,"Map12s4_StepEvents","data\\maps\\entries\\map12\\4-step-events",0x9EDD0,0x9EDD2,"");
+	produceAsmScriptWithExtName(file,"Map12s5_RoofEvents","data\\maps\\entries\\map12\\5-roof-events",0x9EDD2,0x9EDD4,"");
+	produceAsmScriptWithExtName(file,"Map12s6_WarpEvents","data\\maps\\entries\\map12\\6-warp-events",0x9EDD4,0x9EDDE,"");
+	produceAsmScriptWithExtName(file,"Map12s7_ChestItems","data\\maps\\entries\\map12\\7-chest-items",0x9EDDE,0x9EDE4,"");
+	produceAsmScriptWithExtName(file,"Map12s8_OtherItems","data\\maps\\entries\\map12\\8-other-items",0x9EDE4,0x9EDE6,"");
+	produceAsmSection(file,"",0x9EDE6,0x9EFF4);
+	produceAsmSection(file,"",0x9EFF4,0x9F1AA);
+	
+	produceAsmScriptWithExtName(file,"Map13","data\\maps\\entries\\map13\\00-tilesets",0x9F1AA,0x9F1B0,"");
+	produceAsmSection(file,"",0x9F1B0,0x9F1D8);
+	produceAsmScriptWithExtName(file,"Map13s2_Areas","data\\maps\\entries\\map13\\2-areas",0x9F1D8,0x9F216,"");
+	produceAsmScriptWithExtName(file,"Map13s3_FlagEvents","data\\maps\\entries\\map13\\3-flag-events",0x9F216,0x9F218,"");
+	produceAsmScriptWithExtName(file,"Map13s4_StepEvents","data\\maps\\entries\\map13\\4-step-events",0x9F218,0x9F23A,"");
+	produceAsmScriptWithExtName(file,"Map13s5_RoofEvents","data\\maps\\entries\\map13\\5-roof-events",0x9F23A,0x9F254,"");
+	produceAsmScriptWithExtName(file,"Map13s6_WarpEvents","data\\maps\\entries\\map13\\6-warp-events",0x9F254,0x9F276,"");
+	produceAsmScriptWithExtName(file,"Map13s7_ChestItems","data\\maps\\entries\\map13\\7-chest-items",0x9F276,0x9F278,"");
+	produceAsmScriptWithExtName(file,"Map13s8_OtherItems","data\\maps\\entries\\map13\\8-other-items",0x9F278,0x9F27E,"");
+	produceAsmSection(file,"",0x9F27E,0x9F882);
+	produceAsmSection(file,"",0x9F882,0x9FB38);
+	
+	produceAsmScriptWithExtName(file,"Map14","data\\maps\\entries\\map14\\00-tilesets",0x9FB38,0x9FB3E,"");
+	produceAsmSection(file,"",0x9FB3E,0x9FB66);
+	produceAsmScriptWithExtName(file,"Map14s2_Areas","data\\maps\\entries\\map14\\2-areas",0x9FB66,0x9FBE0,"");
+	produceAsmScriptWithExtName(file,"Map14s3_FlagEvents","data\\maps\\entries\\map14\\3-flag-events",0x9FBE0,0x9FBE2,"");
+	produceAsmScriptWithExtName(file,"Map14s4_StepEvents","data\\maps\\entries\\map14\\4-step-events",0x9FBE2,0x9FBE4,"");
+	produceAsmScriptWithExtName(file,"Map14s5_RoofEvents","data\\maps\\entries\\map14\\5-roof-events",0x9FBE4,0x9FBE6,"");
+	produceAsmScriptWithExtName(file,"Map14s6_WarpEvents","data\\maps\\entries\\map14\\6-warp-events",0x9FBE6,0x9FC50,"");
+	produceAsmScriptWithExtName(file,"Map14s7_ChestItems","data\\maps\\entries\\map14\\7-chest-items",0x9FC50,0x9FC52,"");
+	produceAsmScriptWithExtName(file,"Map14s8_OtherItems","data\\maps\\entries\\map14\\8-other-items",0x9FC52,0x9FC5C,"");
+	produceAsmSection(file,"",0x9FC5C,0xA02B4);
+	produceAsmSection(file,"",0xA02B4,0xA057E);
+	produceAsmScriptWithExtName(file,"Map14s9_Animations","data\\maps\\entries\\map14\\9-animations",0xA057E,0xA0594,"");
+	
+	produceAsmScriptWithExtName(file,"Map15","data\\maps\\entries\\map15\\00-tilesets",0xA0594,0xA059A,"");
+	produceAsmSection(file,"",0xA059A,0xA05C2);
+	produceAsmScriptWithExtName(file,"Map15s2_Areas","data\\maps\\entries\\map15\\2-areas",0xA05C2,0xA05E2,"");
+	produceAsmScriptWithExtName(file,"Map15s3_FlagEvents","data\\maps\\entries\\map15\\3-flag-events",0xA05E2,0xA05E4,"");
+	produceAsmScriptWithExtName(file,"Map15s4_StepEvents","data\\maps\\entries\\map15\\4-step-events",0xA05E4,0xA0606,"");
+	produceAsmScriptWithExtName(file,"Map15s5_RoofEvents","data\\maps\\entries\\map15\\5-roof-events",0xA0606,0xA0628,"");
+	produceAsmScriptWithExtName(file,"Map15s6_WarpEvents","data\\maps\\entries\\map15\\6-warp-events",0xA0628,0xA0652,"");
+	produceAsmScriptWithExtName(file,"Map15s7_ChestItems","data\\maps\\entries\\map15\\7-chest-items",0xA0652,0xA0654,"");
+	produceAsmScriptWithExtName(file,"Map15s8_OtherItems","data\\maps\\entries\\map15\\8-other-items",0xA0654,0xA0656,"");
+	produceAsmSection(file,"",0xA0656,0xA11DA);
+	produceAsmSection(file,"",0xA11DA,0xA1516);
+	produceAsmScriptWithExtName(file,"Map15s9_Animations","data\\maps\\entries\\map15\\9-animations",0xA1516,0xA152C,"");
+	
+	produceAsmScriptWithExtName(file,"Map16","data\\maps\\entries\\map16\\00-tilesets",0xA152C,0xA1532,"");
+	produceAsmSection(file,"",0xA1532,0xA155A);
+	produceAsmScriptWithExtName(file,"Map16s2_Areas","data\\maps\\entries\\map16\\2-areas",0xA155A,0xA157A,"");
+	produceAsmScriptWithExtName(file,"Map16s3_FlagEvents","data\\maps\\entries\\map16\\3-flag-events",0xA157A,0xA1594,"");
+	produceAsmScriptWithExtName(file,"Map16s4_StepEvents","data\\maps\\entries\\map16\\4-step-events",0xA1594,0xA15CE,"");
+	produceAsmScriptWithExtName(file,"Map16s5_RoofEvents","data\\maps\\entries\\map16\\5-roof-events",0xA15CE,0xA1618,"");
+	produceAsmScriptWithExtName(file,"Map16s6_WarpEvents","data\\maps\\entries\\map16\\6-warp-events",0xA1618,0xA166A,"");
+	produceAsmScriptWithExtName(file,"Map16s7_ChestItems","data\\maps\\entries\\map16\\7-chest-items",0xA166A,0xA167C,"");
+	produceAsmScriptWithExtName(file,"Map16s8_OtherItems","data\\maps\\entries\\map16\\8-other-items",0xA167C,0xA1682,"");
+	produceAsmSection(file,"",0xA1682,0xA280E);
+	produceAsmSection(file,"",0xA280E,0xA2DD0);
+	produceAsmScriptWithExtName(file,"Map16s9_Animations","data\\maps\\entries\\map16\\9-animations",0xA2DD0,0xA2DE6,"");
+	
+	produceAsmScriptWithExtName(file,"Map17","data\\maps\\entries\\map17\\00-tilesets",0xA2DE6,0xA2DEC,"");
+	produceAsmSection(file,"",0xA2DEC,0xA2E14);
+	produceAsmScriptWithExtName(file,"Map17s2_Areas","data\\maps\\entries\\map17\\2-areas",0xA2E14,0xA2EAC,"");
+	produceAsmScriptWithExtName(file,"Map17s3_FlagEvents","data\\maps\\entries\\map17\\3-flag-events",0xA2EAC,0xA2EB6,"");
+	produceAsmScriptWithExtName(file,"Map17s4_StepEvents","data\\maps\\entries\\map17\\4-step-events",0xA2EB6,0xA2EB8,"");
+	produceAsmScriptWithExtName(file,"Map17s5_RoofEvents","data\\maps\\entries\\map17\\5-roof-events",0xA2EB8,0xA2EBA,"");
+	produceAsmScriptWithExtName(file,"Map17s6_WarpEvents","data\\maps\\entries\\map17\\6-warp-events",0xA2EBA,0xA2F2C,"");
+	produceAsmScriptWithExtName(file,"Map17s7_ChestItems","data\\maps\\entries\\map17\\7-chest-items",0xA2F2C,0xA2F2E,"");
+	produceAsmScriptWithExtName(file,"Map17s8_OtherItems","data\\maps\\entries\\map17\\8-other-items",0xA2F2E,0xA2F38,"");
+	produceAsmSection(file,"",0xA2F38,0xA36FC);
+	produceAsmSection(file,"",0xA36FC,0xA3952);
+	
+	produceAsmScriptWithExtName(file,"Map18","data\\maps\\entries\\map18\\00-tilesets",0xA3952,0xA3958,"");
+	produceAsmSection(file,"",0xA3958,0xA3980);
+	produceAsmScriptWithExtName(file,"Map18s2_Areas","data\\maps\\entries\\map18\\2-areas",0xA3980,0xA39DC,"");
+	produceAsmScriptWithExtName(file,"Map18s3_FlagEvents","data\\maps\\entries\\map18\\3-flag-events",0xA39DC,0xA39EE,"");
+	produceAsmScriptWithExtName(file,"Map18s4_StepEvents","data\\maps\\entries\\map18\\4-step-events",0xA39EE,0xA39F0,"");
+	produceAsmScriptWithExtName(file,"Map18s5_RoofEvents","data\\maps\\entries\\map18\\5-roof-events",0xA39F0,0xA3A0A,"");
+	produceAsmScriptWithExtName(file,"Map18s6_WarpEvents","data\\maps\\entries\\map18\\6-warp-events",0xA3A0A,0xA3A2C,"");
+	produceAsmScriptWithExtName(file,"Map18s7_ChestItems","data\\maps\\entries\\map18\\7-chest-items",0xA3A2C,0xA3A2E,"");
+	produceAsmScriptWithExtName(file,"Map18s8_OtherItems","data\\maps\\entries\\map18\\8-other-items",0xA3A2E,0xA3A30,"");
+	produceAsmSection(file,"",0xA3A30,0xA41AA);
+	produceAsmSection(file,"",0xA41AA,0xA45B2);
+	
+	produceAsmScriptWithExtName(file,"Map19","data\\maps\\entries\\map19\\00-tilesets",0xA45B2,0xA45B8,"");
+	produceAsmSection(file,"",0xA45B8,0xA45E0);
+	produceAsmScriptWithExtName(file,"Map19s2_Areas","data\\maps\\entries\\map19\\2-areas",0xA45E0,0xA4600,"");
+	produceAsmScriptWithExtName(file,"Map19s3_FlagEvents","data\\maps\\entries\\map19\\3-flag-events",0xA4600,0xA4602,"");
+	produceAsmScriptWithExtName(file,"Map19s4_StepEvents","data\\maps\\entries\\map19\\4-step-events",0xA4602,0xA4614,"");
+	produceAsmScriptWithExtName(file,"Map19s5_RoofEvents","data\\maps\\entries\\map19\\5-roof-events",0xA4614,0xA464E,"");
+	produceAsmScriptWithExtName(file,"Map19s6_WarpEvents","data\\maps\\entries\\map19\\6-warp-events",0xA464E,0xA4688,"");
+	produceAsmScriptWithExtName(file,"Map19s7_ChestItems","data\\maps\\entries\\map19\\7-chest-items",0xA4688,0xA4696,"");
+	produceAsmScriptWithExtName(file,"Map19s8_OtherItems","data\\maps\\entries\\map19\\8-other-items",0xA4696,0xA4698,"");
+	produceAsmSection(file,"",0xA4698,0xA5076);
+	produceAsmSection(file,"",0xA5076,0xA534A);
+	
+	produceAsmScriptWithExtName(file,"Map20","data\\maps\\entries\\map20\\00-tilesets",0xA534A,0xA5350,"");
+	produceAsmSection(file,"",0xA5350,0xA5378);
+	produceAsmScriptWithExtName(file,"Map20s2_Areas","data\\maps\\entries\\map20\\2-areas",0xA5378,0xA53D4,"");
+	produceAsmScriptWithExtName(file,"Map20s3_FlagEvents","data\\maps\\entries\\map20\\3-flag-events",0xA53D4,0xA53D6,"");
+	produceAsmScriptWithExtName(file,"Map20s4_StepEvents","data\\maps\\entries\\map20\\4-step-events",0xA53D6,0xA53D8,"");
+	produceAsmScriptWithExtName(file,"Map20s5_RoofEvents","data\\maps\\entries\\map20\\5-roof-events",0xA53D8,0xA53DA,"");
+	produceAsmScriptWithExtName(file,"Map20s6_WarpEvents","data\\maps\\entries\\map20\\6-warp-events",0xA53DA,0xA5434,"");
+	produceAsmScriptWithExtName(file,"Map20s7_ChestItems","data\\maps\\entries\\map20\\7-chest-items",0xA5434,0xA5436,"");
+	produceAsmScriptWithExtName(file,"Map20s8_OtherItems","data\\maps\\entries\\map20\\8-other-items",0xA5436,0xA5438,"");
+	produceAsmSection(file,"",0xA5438,0xA5E9C);
+	produceAsmSection(file,"",0xA5E9C,0xA61A4);
+	
+	produceAsmScriptWithExtName(file,"Map21","data\\maps\\entries\\map21\\00-tilesets",0xA61A4,0xA61AA,"");
+	produceAsmSection(file,"",0xA61AA,0xA61D2);
+	produceAsmScriptWithExtName(file,"Map21s2_Areas","data\\maps\\entries\\map21\\2-areas",0xA61D2,0xA61F2,"");
+	produceAsmScriptWithExtName(file,"Map21s3_FlagEvents","data\\maps\\entries\\map21\\3-flag-events",0xA61F2,0xA61F4,"");
+	produceAsmScriptWithExtName(file,"Map21s4_StepEvents","data\\maps\\entries\\map21\\4-step-events",0xA61F4,0xA61F6,"");
+	produceAsmScriptWithExtName(file,"Map21s5_RoofEvents","data\\maps\\entries\\map21\\5-roof-events",0xA61F6,0xA61F8,"");
+	produceAsmScriptWithExtName(file,"Map21s6_WarpEvents","data\\maps\\entries\\map21\\6-warp-events",0xA61F8,0xA620A,"");
+	produceAsmScriptWithExtName(file,"Map21s7_ChestItems","data\\maps\\entries\\map21\\7-chest-items",0xA620A,0xA620C,"");
+	produceAsmScriptWithExtName(file,"Map21s8_OtherItems","data\\maps\\entries\\map21\\8-other-items",0xA620C,0xA620E,"");
+	produceAsmSection(file,"",0xA620E,0xA63C4);
+	produceAsmSection(file,"",0xA63C4,0xA6438);
+	
+	produceAsmScriptWithExtName(file,"Map22","data\\maps\\entries\\map22\\00-tilesets",0xA6438,0xA643E,"");
+	produceAsmSection(file,"",0xA643E,0xA6466);
+	produceAsmScriptWithExtName(file,"Map22s2_Areas","data\\maps\\entries\\map22\\2-areas",0xA6466,0xA6486,"");
+	produceAsmScriptWithExtName(file,"Map22s3_FlagEvents","data\\maps\\entries\\map22\\3-flag-events",0xA6486,0xA6498,"");
+	produceAsmScriptWithExtName(file,"Map22s4_StepEvents","data\\maps\\entries\\map22\\4-step-events",0xA6498,0xA649A,"");
+	produceAsmScriptWithExtName(file,"Map22s5_RoofEvents","data\\maps\\entries\\map22\\5-roof-events",0xA649A,0xA649C,"");
+	produceAsmScriptWithExtName(file,"Map22s6_WarpEvents","data\\maps\\entries\\map22\\6-warp-events",0xA649C,0xA649E,"");
+	produceAsmScriptWithExtName(file,"Map22s7_ChestItems","data\\maps\\entries\\map22\\7-chest-items",0xA649E,0xA64A4,"");
+	produceAsmScriptWithExtName(file,"Map22s8_OtherItems","data\\maps\\entries\\map22\\8-other-items",0xA64A4,0xA64A6,"");
+	produceAsmSection(file,"",0xA64A6,0xA6B92);
+	produceAsmSection(file,"",0xA6B92,0xA6E1A);
+	
+	produceAsmScriptWithExtName(file,"Map23","data\\maps\\entries\\map23\\00-tilesets",0xA6E1A,0xA6E20,"");
+	produceAsmSection(file,"",0xA6E20,0xA6E48);
+	produceAsmScriptWithExtName(file,"Map23s2_Areas","data\\maps\\entries\\map23\\2-areas",0xA6E48,0xA6E86,"");
+	produceAsmScriptWithExtName(file,"Map23s3_FlagEvents","data\\maps\\entries\\map23\\3-flag-events",0xA6E86,0xA6E88,"");
+	produceAsmScriptWithExtName(file,"Map23s4_StepEvents","data\\maps\\entries\\map23\\4-step-events",0xA6E88,0xA6EAA,"");
+	produceAsmScriptWithExtName(file,"Map23s5_RoofEvents","data\\maps\\entries\\map23\\5-roof-events",0xA6EAA,0xA6ECC,"");
+	produceAsmScriptWithExtName(file,"Map23s6_WarpEvents","data\\maps\\entries\\map23\\6-warp-events",0xA6ECC,0xA6EFE,"");
+	produceAsmScriptWithExtName(file,"Map23s7_ChestItems","data\\maps\\entries\\map23\\7-chest-items",0xA6EFE,0xA6F08,"");
+	produceAsmScriptWithExtName(file,"Map23s8_OtherItems","data\\maps\\entries\\map23\\8-other-items",0xA6F08,0xA6F12,"");
+	produceAsmSection(file,"",0xA6F12,0xA7B26);
+	produceAsmSection(file,"",0xA7B26,0xA81D4);
+	//produceAsmScript(file,"data\\maps\\entries\\map23\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map24","data\\maps\\entries\\map24\\00-tilesets",0xA81D4,0xA81DA,"");
+	produceAsmSection(file,"",0xA81DA,0xA8202);
+	produceAsmScriptWithExtName(file,"Map24s2_Areas","data\\maps\\entries\\map24\\2-areas",0xA8202,0xA8222,"");
+	produceAsmScriptWithExtName(file,"Map24s3_FlagEvents","data\\maps\\entries\\map24\\3-flag-events",0xA8222,0xA822C,"");
+	produceAsmScriptWithExtName(file,"Map24s4_StepEvents","data\\maps\\entries\\map24\\4-step-events",0xA822C,0xA822E,"");
+	produceAsmScriptWithExtName(file,"Map24s5_RoofEvents","data\\maps\\entries\\map24\\5-roof-events",0xA822E,0xA8230,"");
+	produceAsmScriptWithExtName(file,"Map24s6_WarpEvents","data\\maps\\entries\\map24\\6-warp-events",0xA8230,0xA823A,"");
+	produceAsmScriptWithExtName(file,"Map24s7_ChestItems","data\\maps\\entries\\map24\\7-chest-items",0xA823A,0xA8244,"");
+	produceAsmScriptWithExtName(file,"Map24s8_OtherItems","data\\maps\\entries\\map24\\8-other-items",0xA8244,0xA8246,"");
+	
+	produceAsmScriptWithExtName(file,"Map25","data\\maps\\entries\\map25\\00-tilesets",0xA8246,0xA824C,"");
+	produceAsmSection(file,"",0xA824C,0xA8274);
+	produceAsmScriptWithExtName(file,"Map25s2_Areas","data\\maps\\entries\\map25\\2-areas",0xA8274,0xA82B2,"");
+	produceAsmScriptWithExtName(file,"Map25s3_FlagEvents","data\\maps\\entries\\map25\\3-flag-events",0xA82B2,0xA82B4,"");
+	produceAsmScriptWithExtName(file,"Map25s4_StepEvents","data\\maps\\entries\\map25\\4-step-events",0xA82B4,0xA82DE,"");
+	produceAsmScriptWithExtName(file,"Map25s5_RoofEvents","data\\maps\\entries\\map25\\5-roof-events",0xA82DE,0xA8308,"");
+	produceAsmScriptWithExtName(file,"Map25s6_WarpEvents","data\\maps\\entries\\map25\\6-warp-events",0xA8308,0xA8312,"");
+	produceAsmScriptWithExtName(file,"Map25s7_ChestItems","data\\maps\\entries\\map25\\7-chest-items",0xA8312,0xA8314,"");
+	produceAsmScriptWithExtName(file,"Map25s8_OtherItems","data\\maps\\entries\\map25\\8-other-items",0xA8314,0xA831E,"");
+	produceAsmSection(file,"",0xA831E,0xA893C);
+	produceAsmSection(file,"",0xA893C,0xA8C58);
+	//produceAsmScript(file,"data\\maps\\entries\\map25\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map26","data\\maps\\entries\\map26\\00-tilesets",0xA8C58,0xA8C5E,"");
+	produceAsmSection(file,"",0xA8C5E,0xA8C86);
+	produceAsmScriptWithExtName(file,"Map26s2_Areas","data\\maps\\entries\\map26\\2-areas",0xA8C86,0xA8CC4,"");
+	produceAsmScriptWithExtName(file,"Map26s3_FlagEvents","data\\maps\\entries\\map26\\3-flag-events",0xA8CC4,0xA8CC6,"");
+	produceAsmScriptWithExtName(file,"Map26s4_StepEvents","data\\maps\\entries\\map26\\4-step-events",0xA8CC6,0xA8CD0,"");
+	produceAsmScriptWithExtName(file,"Map26s5_RoofEvents","data\\maps\\entries\\map26\\5-roof-events",0xA8CD0,0xA8CD2,"");
+	produceAsmScriptWithExtName(file,"Map26s6_WarpEvents","data\\maps\\entries\\map26\\6-warp-events",0xA8CD2,0xA8CEC,"");
+	produceAsmScriptWithExtName(file,"Map26s7_ChestItems","data\\maps\\entries\\map26\\7-chest-items",0xA8CEC,0xA8CEE,"");
+	produceAsmScriptWithExtName(file,"Map26s8_OtherItems","data\\maps\\entries\\map26\\8-other-items",0xA8CEE,0xA8CF0,"");
+	produceAsmSection(file,"",0xA8CF0,0xA915E);
+	produceAsmSection(file,"",0xA915E,0xA9384);
+	
+	produceAsmScriptWithExtName(file,"Map27","data\\maps\\entries\\map27\\00-tilesets",0xA9384,0xA938A,"");
+	produceAsmSection(file,"",0xA938A,0xA93B2);
+	produceAsmScriptWithExtName(file,"Map27s2_Areas","data\\maps\\entries\\map27\\2-areas",0xA93B2,0xA93F0,"");
+	produceAsmScriptWithExtName(file,"Map27s3_FlagEvents","data\\maps\\entries\\map27\\3-flag-events",0xA93F0,0xA93F2,"");
+	produceAsmScriptWithExtName(file,"Map27s4_StepEvents","data\\maps\\entries\\map27\\4-step-events",0xA93F2,0xA93F4,"");
+	produceAsmScriptWithExtName(file,"Map27s5_RoofEvents","data\\maps\\entries\\map27\\5-roof-events",0xA93F4,0xA93F6,"");
+	produceAsmScriptWithExtName(file,"Map27s6_WarpEvents","data\\maps\\entries\\map27\\6-warp-events",0xA93F6,0xA9438,"");
+	produceAsmScriptWithExtName(file,"Map27s7_ChestItems","data\\maps\\entries\\map27\\7-chest-items",0xA9438,0xA943A,"");
+	produceAsmScriptWithExtName(file,"Map27s8_OtherItems","data\\maps\\entries\\map27\\8-other-items",0xA943A,0xA943C,"");
+	produceAsmSection(file,"",0xA943C,0xA995A);
+	produceAsmSection(file,"",0xA995A,0xA9C00);
+	
+	produceAsmScriptWithExtName(file,"Map28","data\\maps\\entries\\map28\\00-tilesets",0xA9C00,0xA9C06,"");
+	produceAsmSection(file,"",0xA9C06,0xA9C2E);
+	produceAsmScriptWithExtName(file,"Map28s2_Areas","data\\maps\\entries\\map28\\2-areas",0xA9C2E,0xA9C4E,"");
+	produceAsmScriptWithExtName(file,"Map28s3_FlagEvents","data\\maps\\entries\\map28\\3-flag-events",0xA9C4E,0xA9C58,"");
+	produceAsmScriptWithExtName(file,"Map28s4_StepEvents","data\\maps\\entries\\map28\\4-step-events",0xA9C58,0xA9C6A,"");
+	produceAsmScriptWithExtName(file,"Map28s5_RoofEvents","data\\maps\\entries\\map28\\5-roof-events",0xA9C6A,0xA9C6C,"");
+	produceAsmScriptWithExtName(file,"Map28s6_WarpEvents","data\\maps\\entries\\map28\\6-warp-events",0xA9C6C,0xA9C7E,"");
+	produceAsmScriptWithExtName(file,"Map28s7_ChestItems","data\\maps\\entries\\map28\\7-chest-items",0xA9C7E,0xA9C80,"");
+	produceAsmScriptWithExtName(file,"Map28s8_OtherItems","data\\maps\\entries\\map28\\8-other-items",0xA9C80,0xA9C82,"");
+	produceAsmSection(file,"",0xA9C82,0xAA3A2);
+	produceAsmSection(file,"",0xAA3A2,0xAA898);
+	produceAsmScriptWithExtName(file,"Map28s9_Animations","data\\maps\\entries\\map28\\9-animations",0xAA898,0xAA8BE,"");
+	
+	produceAsmScriptWithExtName(file,"Map29","data\\maps\\entries\\map29\\00-tilesets",0xAA8BE,0xAA8C4,"");
+	produceAsmSection(file,"",0xAA8C4,0xAA8EC);
+	produceAsmScriptWithExtName(file,"Map29s2_Areas","data\\maps\\entries\\map29\\2-areas",0xAA8EC,0xAA92A,"");
+	produceAsmScriptWithExtName(file,"Map29s3_FlagEvents","data\\maps\\entries\\map29\\3-flag-events",0xAA92A,0xAA92C,"");
+	produceAsmScriptWithExtName(file,"Map29s4_StepEvents","data\\maps\\entries\\map29\\4-step-events",0xAA92C,0xAA92E,"");
+	produceAsmScriptWithExtName(file,"Map29s5_RoofEvents","data\\maps\\entries\\map29\\5-roof-events",0xAA92E,0xAA930,"");
+	produceAsmScriptWithExtName(file,"Map29s6_WarpEvents","data\\maps\\entries\\map29\\6-warp-events",0xAA930,0xAA9C2,"");
+	produceAsmScriptWithExtName(file,"Map29s7_ChestItems","data\\maps\\entries\\map29\\7-chest-items",0xAA9C2,0xAA9CC,"");
+	produceAsmScriptWithExtName(file,"Map29s8_OtherItems","data\\maps\\entries\\map29\\8-other-items",0xAA9CC,0xAA9D2,"");
+	produceAsmSection(file,"",0xAA9D2,0xAAF78);
+	produceAsmSection(file,"",0xAAF78,0xAB332);
+	produceAsmScriptWithExtName(file,"Map29s9_Animations","data\\maps\\entries\\map29\\9-animations",0xAB332,0xAB348,"");
+	
+	produceAsmScriptWithExtName(file,"Map30","data\\maps\\entries\\map30\\00-tilesets",0xAB348,0xAB34E,"");
+	produceAsmSection(file,"",0xAB34E,0xAB376);
+	produceAsmScriptWithExtName(file,"Map30s2_Areas","data\\maps\\entries\\map30\\2-areas",0xAB376,0xAB396,"");
+	produceAsmScriptWithExtName(file,"Map30s3_FlagEvents","data\\maps\\entries\\map30\\3-flag-events",0xAB396,0xAB398,"");
+	produceAsmScriptWithExtName(file,"Map30s4_StepEvents","data\\maps\\entries\\map30\\4-step-events",0xAB398,0xAB39A,"");
+	produceAsmScriptWithExtName(file,"Map30s5_RoofEvents","data\\maps\\entries\\map30\\5-roof-events",0xAB39A,0xAB39C,"");
+	produceAsmScriptWithExtName(file,"Map30s6_WarpEvents","data\\maps\\entries\\map30\\6-warp-events",0xAB39C,0xAB3A6,"");
+	produceAsmScriptWithExtName(file,"Map30s7_ChestItems","data\\maps\\entries\\map30\\7-chest-items",0xAB3A6,0xAB3A8,"");
+	produceAsmScriptWithExtName(file,"Map30s8_OtherItems","data\\maps\\entries\\map30\\8-other-items",0xAB3A8,0xAB3AE,"");
+	produceAsmSection(file,"",0xAB3AE,0xAB564);
+	produceAsmSection(file,"",0xAB564,0xAB610);
+	
+	produceAsmScriptWithExtName(file,"Map31","data\\maps\\entries\\map31\\00-tilesets",0xAB610,0xAB616,"");
+	produceAsmSection(file,"",0xAB616,0xAB63E);
+	produceAsmScriptWithExtName(file,"Map31s2_Areas","data\\maps\\entries\\map31\\2-areas",0xAB63E,0xAB65E,"");
+	produceAsmScriptWithExtName(file,"Map31s3_FlagEvents","data\\maps\\entries\\map31\\3-flag-events",0xAB65E,0xAB670,"");
+	produceAsmScriptWithExtName(file,"Map31s4_StepEvents","data\\maps\\entries\\map31\\4-step-events",0xAB670,0xAB69A,"");
+	produceAsmScriptWithExtName(file,"Map31s5_RoofEvents","data\\maps\\entries\\map31\\5-roof-events",0xAB69A,0xAB6C4,"");
+	produceAsmScriptWithExtName(file,"Map31s6_WarpEvents","data\\maps\\entries\\map31\\6-warp-events",0xAB6C4,0xAB6EE,"");
+	produceAsmScriptWithExtName(file,"Map31s7_ChestItems","data\\maps\\entries\\map31\\7-chest-items",0xAB6EE,0xAB6F0,"");
+	produceAsmScriptWithExtName(file,"Map31s8_OtherItems","data\\maps\\entries\\map31\\8-other-items",0xAB6F0,0xAB6F2,"");
+	produceAsmSection(file,"",0xAB6F2,0xABF98);
+	produceAsmSection(file,"",0xABF98,0xAC32C);
+	
+	produceAsmScriptWithExtName(file,"Map32","data\\maps\\entries\\map32\\00-tilesets",0xAC32C,0xAC332,"");
+	produceAsmSection(file,"",0xAC332,0xAC35A);
+	produceAsmScriptWithExtName(file,"Map32s2_Areas","data\\maps\\entries\\map32\\2-areas",0xAC35A,0xAC37A,"");
+	produceAsmScriptWithExtName(file,"Map32s3_FlagEvents","data\\maps\\entries\\map32\\3-flag-events",0xAC37A,0xAC37C,"");
+	produceAsmScriptWithExtName(file,"Map32s4_StepEvents","data\\maps\\entries\\map32\\4-step-events",0xAC37C,0xAC37E,"");
+	produceAsmScriptWithExtName(file,"Map32s5_RoofEvents","data\\maps\\entries\\map32\\5-roof-events",0xAC37E,0xAC380,"");
+	produceAsmScriptWithExtName(file,"Map32s6_WarpEvents","data\\maps\\entries\\map32\\6-warp-events",0xAC380,0xAC392,"");
+	produceAsmScriptWithExtName(file,"Map32s7_ChestItems","data\\maps\\entries\\map32\\7-chest-items",0xAC392,0xAC3A4,"");
+	produceAsmScriptWithExtName(file,"Map32s8_OtherItems","data\\maps\\entries\\map32\\8-other-items",0xAC3A4,0xAC3A6,"");
+	produceAsmSection(file,"",0xAC3A6,0xAC554);
+	produceAsmSection(file,"",0xAC554,0xAC642);
+	
+	produceAsmScriptWithExtName(file,"Map33","data\\maps\\entries\\map33\\00-tilesets",0xAC642,0xAC648,"");
+	produceAsmSection(file,"",0xAC648,0xAC670);
+	produceAsmScriptWithExtName(file,"Map33s2_Areas","data\\maps\\entries\\map33\\2-areas",0xAC670,0xAC6CC,"");
+	produceAsmScriptWithExtName(file,"Map33s3_FlagEvents","data\\maps\\entries\\map33\\3-flag-events",0xAC6CC,0xAC6D6,"");
+	produceAsmScriptWithExtName(file,"Map33s4_StepEvents","data\\maps\\entries\\map33\\4-step-events",0xAC6D6,0xAC700,"");
+	produceAsmScriptWithExtName(file,"Map33s5_RoofEvents","data\\maps\\entries\\map33\\5-roof-events",0xAC700,0xAC722,"");
+	produceAsmScriptWithExtName(file,"Map33s6_WarpEvents","data\\maps\\entries\\map33\\6-warp-events",0xAC722,0xAC734,"");
+	produceAsmScriptWithExtName(file,"Map33s7_ChestItems","data\\maps\\entries\\map33\\7-chest-items",0xAC734,0xAC73A,"");
+	produceAsmScriptWithExtName(file,"Map33s8_OtherItems","data\\maps\\entries\\map33\\8-other-items",0xAC73A,0xAC748,"");
+	produceAsmSection(file,"",0xAC748,0xAD04C);
+	produceAsmSection(file,"",0xAD04C,0xAD410);
+	produceAsmScriptWithExtName(file,"Map33s9_Animations","data\\maps\\entries\\map33\\9-animations",0xAD410,0xAD426,"");
+	
+	produceAsmScriptWithExtName(file,"Map34","data\\maps\\entries\\map34\\00-tilesets",0xAD426,0xAD42C,"");
+	produceAsmSection(file,"",0xAD42C,0xAD454);
+	produceAsmScriptWithExtName(file,"Map34s2_Areas","data\\maps\\entries\\map34\\2-areas",0xAD454,0xAD492,"");
+	produceAsmScriptWithExtName(file,"Map34s3_FlagEvents","data\\maps\\entries\\map34\\3-flag-events",0xAD492,0xAD494,"");
+	produceAsmScriptWithExtName(file,"Map34s4_StepEvents","data\\maps\\entries\\map34\\4-step-events",0xAD494,0xAD496,"");
+	produceAsmScriptWithExtName(file,"Map34s5_RoofEvents","data\\maps\\entries\\map34\\5-roof-events",0xAD496,0xAD498,"");
+	produceAsmScriptWithExtName(file,"Map34s6_WarpEvents","data\\maps\\entries\\map34\\6-warp-events",0xAD498,0xAD4B2,"");
+	produceAsmScriptWithExtName(file,"Map34s7_ChestItems","data\\maps\\entries\\map34\\7-chest-items",0xAD4B2,0xAD4B4,"");
+	produceAsmScriptWithExtName(file,"Map34s8_OtherItems","data\\maps\\entries\\map34\\8-other-items",0xAD4B4,0xAD4B6,"");
+	produceAsmSection(file,"",0xAD4B6,0xAD8D6);
+	produceAsmSection(file,"",0xAD8D6,0xADA40);
+	produceAsmScriptWithExtName(file,"Map34s9_Animations","data\\maps\\entries\\map34\\9-animations",0xADA40,0xADA66,"");
+	
+	produceAsmScriptWithExtName(file,"Map35","data\\maps\\entries\\map35\\00-tilesets",0xADA66,0xADA6C,"");
+	produceAsmSection(file,"",0xADA6C,0xADA94);
+	produceAsmScriptWithExtName(file,"Map35s2_Areas","data\\maps\\entries\\map35\\2-areas",0xADA94,0xADAB4,"");
+	produceAsmScriptWithExtName(file,"Map35s3_FlagEvents","data\\maps\\entries\\map35\\3-flag-events",0xADAB4,0xADAB6,"");
+	produceAsmScriptWithExtName(file,"Map35s4_StepEvents","data\\maps\\entries\\map35\\4-step-events",0xADAB6,0xADAB8,"");
+	produceAsmScriptWithExtName(file,"Map35s5_RoofEvents","data\\maps\\entries\\map35\\5-roof-events",0xADAB8,0xADABA,"");
+	produceAsmScriptWithExtName(file,"Map35s6_WarpEvents","data\\maps\\entries\\map35\\6-warp-events",0xADABA,0xADB1C,"");
+	produceAsmScriptWithExtName(file,"Map35s7_ChestItems","data\\maps\\entries\\map35\\7-chest-items",0xADB1C,0xADB2A,"");
+	produceAsmScriptWithExtName(file,"Map35s8_OtherItems","data\\maps\\entries\\map35\\8-other-items",0xADB2A,0xADB2C,"");
+	produceAsmSection(file,"",0xADB2C,0xADDC6);
+	produceAsmSection(file,"",0xADDC6,0xADF6E);
+	
+	produceAsmScriptWithExtName(file,"Map36","data\\maps\\entries\\map36\\00-tilesets",0xADF6E,0xADF74,"");
+	produceAsmSection(file,"",0xADF74,0xADF9C);
+	produceAsmScriptWithExtName(file,"Map36s2_Areas","data\\maps\\entries\\map36\\2-areas",0xADF9C,0xADFDA,"");
+	produceAsmScriptWithExtName(file,"Map36s3_FlagEvents","data\\maps\\entries\\map36\\3-flag-events",0xADFDA,0xADFDC,"");
+	produceAsmScriptWithExtName(file,"Map36s4_StepEvents","data\\maps\\entries\\map36\\4-step-events",0xADFDC,0xAE006,"");
+	produceAsmScriptWithExtName(file,"Map36s5_RoofEvents","data\\maps\\entries\\map36\\5-roof-events",0xAE006,0xAE050,"");
+	produceAsmScriptWithExtName(file,"Map36s6_WarpEvents","data\\maps\\entries\\map36\\6-warp-events",0xAE050,0xAE07A,"");
+	produceAsmScriptWithExtName(file,"Map36s7_ChestItems","data\\maps\\entries\\map36\\7-chest-items",0xAE07A,0xAE080,"");
+	produceAsmScriptWithExtName(file,"Map36s8_OtherItems","data\\maps\\entries\\map36\\8-other-items",0xAE080,0xAE08A,"");
+	produceAsmSection(file,"",0xAE08A,0xAEA3E);
+	produceAsmSection(file,"",0xAEA3E,0xAEE9E);
+	
+	produceAsmScriptWithExtName(file,"Map37","data\\maps\\entries\\map37\\00-tilesets",0xAEE9E,0xAEEA4,"");
+	produceAsmSection(file,"",0xAEEA4,0xAEECC);
+	produceAsmScriptWithExtName(file,"Map37s2_Areas","data\\maps\\entries\\map37\\2-areas",0xAEECC,0xAEEEC,"");
+	produceAsmScriptWithExtName(file,"Map37s3_FlagEvents","data\\maps\\entries\\map37\\3-flag-events",0xAEEEC,0xAEEEE,"");
+	produceAsmScriptWithExtName(file,"Map37s4_StepEvents","data\\maps\\entries\\map37\\4-step-events",0xAEEEE,0xAEEF0,"");
+	produceAsmScriptWithExtName(file,"Map37s5_RoofEvents","data\\maps\\entries\\map37\\5-roof-events",0xAEEF0,0xAEEF2,"");
+	produceAsmScriptWithExtName(file,"Map37s6_WarpEvents","data\\maps\\entries\\map37\\6-warp-events",0xAEEF2,0xAEEFC,"");
+	produceAsmScriptWithExtName(file,"Map37s7_ChestItems","data\\maps\\entries\\map37\\7-chest-items",0xAEEFC,0xAEF02,"");
+	produceAsmScriptWithExtName(file,"Map37s8_OtherItems","data\\maps\\entries\\map37\\8-other-items",0xAEF02,0xAEF04,"");
+	produceAsmSection(file,"",0xAEF04,0xAF894);
+	produceAsmSection(file,"",0xAF894,0xAFBE8);
+	
+	produceAsmScriptWithExtName(file,"Map38","data\\maps\\entries\\map38\\00-tilesets",0xAFBE8,0xAFBEE,"");
+	produceAsmSection(file,"",0xAFBEE,0xAFC16);
+	produceAsmScriptWithExtName(file,"Map38s2_Areas","data\\maps\\entries\\map38\\2-areas",0xAFC16,0xAFC90,"");
+	produceAsmScriptWithExtName(file,"Map38s3_FlagEvents","data\\maps\\entries\\map38\\3-flag-events",0xAFC90,0xAFC92,"");
+	produceAsmScriptWithExtName(file,"Map38s4_StepEvents","data\\maps\\entries\\map38\\4-step-events",0xAFC92,0xAFCBC,"");
+	produceAsmScriptWithExtName(file,"Map38s5_RoofEvents","data\\maps\\entries\\map38\\5-roof-events",0xAFCBC,0xAFCD6,"");
+	produceAsmScriptWithExtName(file,"Map38s6_WarpEvents","data\\maps\\entries\\map38\\6-warp-events",0xAFCD6,0xAFD20,"");
+	produceAsmScriptWithExtName(file,"Map38s7_ChestItems","data\\maps\\entries\\map38\\7-chest-items",0xAFD20,0xAFD2A,"");
+	produceAsmScriptWithExtName(file,"Map38s8_OtherItems","data\\maps\\entries\\map38\\8-other-items",0xAFD2A,0xAFD2C,"");
+	produceAsmSection(file,"",0xAFD2C,0xB0446);
+	produceAsmSection(file,"",0xB0446,0xB0736);
+	//produceAsmScript(file,"data\\maps\\entries\\map38\\9-animations",0xA1516,0xA152C,"");
+	
+	produceAsmScriptWithExtName(file,"Map39","data\\maps\\entries\\map39\\00-tilesets",0xB0736,0xB073C,"");
+	produceAsmSection(file,"",0xB073C,0xB0764);
+	produceAsmScriptWithExtName(file,"Map39s2_Areas","data\\maps\\entries\\map39\\2-areas",0xB0764,0xB0784,"");
+	produceAsmScriptWithExtName(file,"Map39s3_FlagEvents","data\\maps\\entries\\map39\\3-flag-events",0xB0784,0xB0786,"");
+	produceAsmScriptWithExtName(file,"Map39s4_StepEvents","data\\maps\\entries\\map39\\4-step-events",0xB0786,0xB0790,"");
+	produceAsmScriptWithExtName(file,"Map39s5_RoofEvents","data\\maps\\entries\\map39\\5-roof-events",0xB0790,0xB0792,"");
+	produceAsmScriptWithExtName(file,"Map39s6_WarpEvents","data\\maps\\entries\\map39\\6-warp-events",0xB0792,0xB07A4,"");
+	produceAsmScriptWithExtName(file,"Map39s7_ChestItems","data\\maps\\entries\\map39\\7-chest-items",0xB07A4,0xB07A6,"");
+	produceAsmScriptWithExtName(file,"Map39s8_OtherItems","data\\maps\\entries\\map39\\8-other-items",0xB07A6,0xB07B0,"");
+	produceAsmSection(file,"",0xB07B0,0xB097C);
+	produceAsmSection(file,"",0xB097C,0xB0A68);
+	//produceAsmScript(file,"data\\maps\\entries\\map39\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map40","data\\maps\\entries\\map40\\00-tilesets",0xB0A68,0xB0A6E,"");
+	produceAsmSection(file,"",0xB0A6E,0xB0A96);
+	produceAsmScriptWithExtName(file,"Map40s2_Areas","data\\maps\\entries\\map40\\2-areas",0xB0A96,0xB0AB6,"");
+	produceAsmScriptWithExtName(file,"Map40s3_FlagEvents","data\\maps\\entries\\map40\\3-flag-events",0xB0AB6,0xB0AB8,"");
+	produceAsmScriptWithExtName(file,"Map40s4_StepEvents","data\\maps\\entries\\map40\\4-step-events",0xB0AB8,0xB0ABA,"");
+	produceAsmScriptWithExtName(file,"Map40s5_RoofEvents","data\\maps\\entries\\map40\\5-roof-events",0xB0ABA,0xB0ABC,"");
+	produceAsmScriptWithExtName(file,"Map40s6_WarpEvents","data\\maps\\entries\\map40\\6-warp-events",0xB0ABC,0xB0ACE,"");
+	produceAsmScriptWithExtName(file,"Map40s7_ChestItems","data\\maps\\entries\\map40\\7-chest-items",0xB0ACE,0xB0AD0,"");
+	produceAsmScriptWithExtName(file,"Map40s8_OtherItems","data\\maps\\entries\\map40\\8-other-items",0xB0AD0,0xB0AD6,"");
+	produceAsmSection(file,"",0xB0AD6,0xB1216);
+	produceAsmSection(file,"",0xB1216,0xB1490);
+	
+	produceAsmScriptWithExtName(file,"Map41","data\\maps\\entries\\map41\\00-tilesets",0xB1490,0xB1496,"");
+	produceAsmSection(file,"",0xB1496,0xB14BE);
+	produceAsmScriptWithExtName(file,"Map41s2_Areas","data\\maps\\entries\\map41\\2-areas",0xB14BE,0xB14FC,"");
+	produceAsmScriptWithExtName(file,"Map41s3_FlagEvents","data\\maps\\entries\\map41\\3-flag-events",0xB14FC,0xB14FE,"");
+	produceAsmScriptWithExtName(file,"Map41s4_StepEvents","data\\maps\\entries\\map41\\4-step-events",0xB14FE,0xB1508,"");
+	produceAsmScriptWithExtName(file,"Map41s5_RoofEvents","data\\maps\\entries\\map41\\5-roof-events",0xB1508,0xB150A,"");
+	produceAsmScriptWithExtName(file,"Map41s6_WarpEvents","data\\maps\\entries\\map41\\6-warp-events",0xB150A,0xB1534,"");
+	produceAsmScriptWithExtName(file,"Map41s7_ChestItems","data\\maps\\entries\\map41\\7-chest-items",0xB1534,0xB1536,"");
+	produceAsmScriptWithExtName(file,"Map41s8_OtherItems","data\\maps\\entries\\map41\\8-other-items",0xB1536,0xB153C,"");
+	produceAsmScriptWithExtName(file,"Map41s9_Animations","data\\maps\\entries\\map41\\9-animations",0xB153C,0xB1552,"");
+	produceAsmSection(file,"",0xB1552,0xB1914);
+	produceAsmSection(file,"",0xB1914,0xB1A62);
+	
+	produceAsmScriptWithExtName(file,"Map42","data\\maps\\entries\\map42\\00-tilesets",0xB1A62,0xB1A68,"");
+	produceAsmSection(file,"",0xB1A68,0xB1A90);
+	produceAsmScriptWithExtName(file,"Map42s2_Areas","data\\maps\\entries\\map42\\2-areas",0xB1A90,0xB1B0A,"");
+	produceAsmScriptWithExtName(file,"Map42s3_FlagEvents","data\\maps\\entries\\map42\\3-flag-events",0xB1B0A,0xB1B24,"");
+	produceAsmScriptWithExtName(file,"Map42s4_StepEvents","data\\maps\\entries\\map42\\4-step-events",0xB1B24,0xB1B26,"");
+	produceAsmScriptWithExtName(file,"Map42s5_RoofEvents","data\\maps\\entries\\map42\\5-roof-events",0xB1B26,0xB1B28,"");
+	produceAsmScriptWithExtName(file,"Map42s6_WarpEvents","data\\maps\\entries\\map42\\6-warp-events",0xB1B28,0xB1B52,"");
+	produceAsmScriptWithExtName(file,"Map42s7_ChestItems","data\\maps\\entries\\map42\\7-chest-items",0xB1B52,0xB1B5C,"");
+	produceAsmScriptWithExtName(file,"Map42s8_OtherItems","data\\maps\\entries\\map42\\8-other-items",0xB1B5C,0xB1B5E,"");
+	produceAsmSection(file,"",0xB1B5E,0xB1DCC);
+	produceAsmSection(file,"",0xB1DCC,0xB1F74);
+	
+	produceAsmScriptWithExtName(file,"Map43","data\\maps\\entries\\map43\\00-tilesets",0xB1F74,0xB1F7A,"");
+	produceAsmSection(file,"",0xB1F7A,0xB1FA2);
+	produceAsmScriptWithExtName(file,"Map43s2_Areas","data\\maps\\entries\\map43\\2-areas",0xB1FA2,0xB1FC2,"");
+	produceAsmScriptWithExtName(file,"Map43s3_FlagEvents","data\\maps\\entries\\map43\\3-flag-events",0xB1FC2,0xB1FC4,"");
+	produceAsmScriptWithExtName(file,"Map43s4_StepEvents","data\\maps\\entries\\map43\\4-step-events",0xB1FC4,0xB1FDE,"");
+	produceAsmScriptWithExtName(file,"Map43s5_RoofEvents","data\\maps\\entries\\map43\\5-roof-events",0xB1FDE,0xB1FF0,"");
+	produceAsmScriptWithExtName(file,"Map43s6_WarpEvents","data\\maps\\entries\\map43\\6-warp-events",0xB1FF0,0xB1FFA,"");
+	produceAsmScriptWithExtName(file,"Map43s7_ChestItems","data\\maps\\entries\\map43\\7-chest-items",0xB1FFA,0xB2004,"");
+	produceAsmScriptWithExtName(file,"Map43s8_OtherItems","data\\maps\\entries\\map43\\8-other-items",0xB2004,0xB2006,"");
+	produceAsmSection(file,"",0xB2006,0xB22BA);
+	produceAsmSection(file,"",0xB22BA,0xB23A0);
+	
+	produceAsmScriptWithExtName(file,"Map44","data\\maps\\entries\\map44\\00-tilesets",0xB23A0,0xB23A6,"");
+	produceAsmSection(file,"",0xB23A6,0xB23CE);
+	produceAsmScriptWithExtName(file,"Map44s2_Areas","data\\maps\\entries\\map44\\2-areas",0xB23CE,0xB240C,"");
+	produceAsmScriptWithExtName(file,"Map44s3_FlagEvents","data\\maps\\entries\\map44\\3-flag-events",0xB240C,0xB240E,"");
+	produceAsmScriptWithExtName(file,"Map44s4_StepEvents","data\\maps\\entries\\map44\\4-step-events",0xB240E,0xB2410,"");
+	produceAsmScriptWithExtName(file,"Map44s5_RoofEvents","data\\maps\\entries\\map44\\5-roof-events",0xB2410,0xB2412,"");
+	produceAsmScriptWithExtName(file,"Map44s6_WarpEvents","data\\maps\\entries\\map44\\6-warp-events",0xB2412,0xB244C,"");
+	produceAsmScriptWithExtName(file,"Map44s7_ChestItems","data\\maps\\entries\\map44\\7-chest-items",0xB244C,0xB244E,"");
+	produceAsmScriptWithExtName(file,"Map44s8_OtherItems","data\\maps\\entries\\map44\\8-other-items",0xB244E,0xB2458,"");
+	produceAsmScriptWithExtName(file,"Map44s9_Animations","data\\maps\\entries\\map44\\9-animations",0xB2458,0xB246E,"");
+	produceAsmSection(file,"",0xB246E,0xB29EA);
+	produceAsmSection(file,"",0xB29EA,0xB2BFE);
+	
+	produceAsmScriptWithExtName(file,"Map45","data\\maps\\entries\\map45\\00-tilesets",0xB2BFE,0xB2C04,"");
+	produceAsmSection(file,"",0xB2C04,0xB2C2C);
+	produceAsmScriptWithExtName(file,"Map45s2_Areas","data\\maps\\entries\\map45\\2-areas",0xB2C2C,0xB2C6A,"");
+	produceAsmScriptWithExtName(file,"Map45s3_FlagEvents","data\\maps\\entries\\map45\\3-flag-events",0xB2C6A,0xB2C6C,"");
+	produceAsmScriptWithExtName(file,"Map45s4_StepEvents","data\\maps\\entries\\map45\\4-step-events",0xB2C6C,0xB2C6E,"");
+	produceAsmScriptWithExtName(file,"Map45s5_RoofEvents","data\\maps\\entries\\map45\\5-roof-events",0xB2C6E,0xB2C90,"");
+	produceAsmScriptWithExtName(file,"Map45s6_WarpEvents","data\\maps\\entries\\map45\\6-warp-events",0xB2C90,0xB2CBA,"");
+	produceAsmScriptWithExtName(file,"Map45s7_ChestItems","data\\maps\\entries\\map45\\7-chest-items",0xB2CBA,0xB2CC0,"");
+	produceAsmScriptWithExtName(file,"Map45s8_OtherItems","data\\maps\\entries\\map45\\8-other-items",0xB2CC0,0xB2CCA,"");
+	produceAsmScriptWithExtName(file,"Map45s9_Animations","data\\maps\\entries\\map45\\9-animations",0xB2CCA,0xB2CE0,"");
+	produceAsmSection(file,"",0xB2CE0,0xB339C);
+	produceAsmSection(file,"",0xB339C,0xB37B2);
+	
+	produceAsmScriptWithExtName(file,"Map46","data\\maps\\entries\\map46\\00-tilesets",0xB37B2,0xB37B8,"");
+	produceAsmSection(file,"",0xB37B8,0xB37E0);
+	produceAsmScriptWithExtName(file,"Map46s2_Areas","data\\maps\\entries\\map46\\2-areas",0xB37E0,0xB3800,"");
+	produceAsmScriptWithExtName(file,"Map46s3_FlagEvents","data\\maps\\entries\\map46\\3-flag-events",0xB3800,0xB380A,"");
+	produceAsmScriptWithExtName(file,"Map46s4_StepEvents","data\\maps\\entries\\map46\\4-step-events",0xB380A,0xB380C,"");
+	produceAsmScriptWithExtName(file,"Map46s5_RoofEvents","data\\maps\\entries\\map46\\5-roof-events",0xB380C,0xB380E,"");
+	produceAsmScriptWithExtName(file,"Map46s6_WarpEvents","data\\maps\\entries\\map46\\6-warp-events",0xB380E,0xB3818,"");
+	produceAsmScriptWithExtName(file,"Map46s7_ChestItems","data\\maps\\entries\\map46\\7-chest-items",0xB3818,0xB381A,"");
+	produceAsmScriptWithExtName(file,"Map46s8_OtherItems","data\\maps\\entries\\map46\\8-other-items",0xB381A,0xB3824,"");
+	
+	produceAsmScriptWithExtName(file,"Map47","data\\maps\\entries\\map47\\00-tilesets",0xB3824,0xB382A,"");
+	produceAsmSection(file,"",0xB382A,0xB3852);
+	produceAsmScriptWithExtName(file,"Map47s2_Areas","data\\maps\\entries\\map47\\2-areas",0xB3852,0xB3872,"");
+	produceAsmScriptWithExtName(file,"Map47s3_FlagEvents","data\\maps\\entries\\map47\\3-flag-events",0xB3872,0xB3874,"");
+	produceAsmScriptWithExtName(file,"Map47s4_StepEvents","data\\maps\\entries\\map47\\4-step-events",0xB3874,0xB3876,"");
+	produceAsmScriptWithExtName(file,"Map47s5_RoofEvents","data\\maps\\entries\\map47\\5-roof-events",0xB3876,0xB3878,"");
+	produceAsmScriptWithExtName(file,"Map47s6_WarpEvents","data\\maps\\entries\\map47\\6-warp-events",0xB3878,0xB388A,"");
+	produceAsmScriptWithExtName(file,"Map47s7_ChestItems","data\\maps\\entries\\map47\\7-chest-items",0xB388A,0xB388C,"");
+	//produceAsmScript(file,"data\\maps\\entries\\map47\\8-other-items",0xB388A,0xB388C,"");
+	produceAsmScriptWithExtName(file,"Map47s9_Animations","data\\maps\\entries\\map47\\9-animations",0xB388C,0xB38B2,"");
+	produceAsmSection(file,"",0xB38B2,0xB47EC);
+	produceAsmSection(file,"",0xB47EC,0xB4AA4);
+	
+	produceAsmScriptWithExtName(file,"Map48","data\\maps\\entries\\map48\\00-tilesets",0xB4AA4,0xB4AAA,"");
+	produceAsmSection(file,"",0xB4AAA,0xB4AD2);
+	produceAsmScriptWithExtName(file,"Map48s2_Areas","data\\maps\\entries\\map48\\2-areas",0xB4AD2,0xB4B10,"");
+	produceAsmScriptWithExtName(file,"Map48s3_FlagEvents","data\\maps\\entries\\map48\\3-flag-events",0xB4B10,0xB4B12,"");
+	produceAsmScriptWithExtName(file,"Map48s4_StepEvents","data\\maps\\entries\\map48\\4-step-events",0xB4B12,0xB4B14,"");
+	produceAsmScriptWithExtName(file,"Map48s5_RoofEvents","data\\maps\\entries\\map48\\5-roof-events",0xB4B14,0xB4B16,"");
+	produceAsmScriptWithExtName(file,"Map48s6_WarpEvents","data\\maps\\entries\\map48\\6-warp-events",0xB4B16,0xB4B38,"");
+	produceAsmScriptWithExtName(file,"Map48s7_ChestItems","data\\maps\\entries\\map48\\7-chest-items",0xB4B38,0xB4B42,"");
+	produceAsmScriptWithExtName(file,"Map48s8_OtherItems","data\\maps\\entries\\map48\\8-other-items",0xB4B42,0xB4B44,"");
+	produceAsmScriptWithExtName(file,"Map48s9_Animations","data\\maps\\entries\\map48\\9-animations",0xB4B44,0xB4B5A,"");
+	produceAsmSection(file,"",0xB4B5A,0xB4F08);
+	produceAsmSection(file,"",0xB4F08,0xB5186);
+	
+	produceAsmScriptWithExtName(file,"Map49","data\\maps\\entries\\map49\\00-tilesets",0xB5186,0xB518C,"");
+	produceAsmSection(file,"",0xB518C,0xB51B4);
+	produceAsmScriptWithExtName(file,"Map49s2_Areas","data\\maps\\entries\\map49\\2-areas",0xB51B4,0xB51D4,"");
+	produceAsmScriptWithExtName(file,"Map49s3_FlagEvents","data\\maps\\entries\\map49\\3-flag-events",0xB51D4,0xB51D6,"");
+	produceAsmScriptWithExtName(file,"Map49s4_StepEvents","data\\maps\\entries\\map49\\4-step-events",0xB51D6,0xB51D8,"");
+	produceAsmScriptWithExtName(file,"Map49s5_RoofEvents","data\\maps\\entries\\map49\\5-roof-events",0xB51D8,0xB51DA,"");
+	produceAsmScriptWithExtName(file,"Map49s6_WarpEvents","data\\maps\\entries\\map49\\6-warp-events",0xB51DA,0xB51DC,"");
+	produceAsmScriptWithExtName(file,"Map49s7_ChestItems","data\\maps\\entries\\map49\\7-chest-items",0xB51DC,0xB51DE,"");
+	produceAsmScriptWithExtName(file,"Map49s8_OtherItems","data\\maps\\entries\\map49\\8-other-items",0xB51DE,0xB51E0,"");
+	produceAsmScriptWithExtName(file,"Map49s9_Animations","data\\maps\\entries\\map49\\9-animations",0xB51E0,0xB5326,"");
+	produceAsmSection(file,"",0xB5326,0xB53EE);
+	produceAsmSection(file,"",0xB53EE,0xB55AE);
+	
+	produceAsmScriptWithExtName(file,"Map50","data\\maps\\entries\\map50\\00-tilesets",0xB55AE,0xB55B4,"");
+	produceAsmSection(file,"",0xB55B4,0xB55DC);
+	produceAsmScriptWithExtName(file,"Map50s2_Areas","data\\maps\\entries\\map50\\2-areas",0xB55DC,0xB561A,"");
+	produceAsmScriptWithExtName(file,"Map50s3_FlagEvents","data\\maps\\entries\\map50\\3-flag-events",0xB561A,0xB5624,"");
+	produceAsmScriptWithExtName(file,"Map50s4_StepEvents","data\\maps\\entries\\map50\\4-step-events",0xB5624,0xB5626,"");
+	produceAsmScriptWithExtName(file,"Map50s5_RoofEvents","data\\maps\\entries\\map50\\5-roof-events",0xB5626,0xB5628,"");
+	produceAsmScriptWithExtName(file,"Map50s6_WarpEvents","data\\maps\\entries\\map50\\6-warp-events",0xB5628,0xB5642,"");
+	produceAsmScriptWithExtName(file,"Map50s7_ChestItems","data\\maps\\entries\\map50\\7-chest-items",0xB5642,0xB5650,"");
+	produceAsmScriptWithExtName(file,"Map50s8_OtherItems","data\\maps\\entries\\map50\\8-other-items",0xB5650,0xB5652,"");
+	produceAsmScriptWithExtName(file,"Map50s9_Animations","data\\maps\\entries\\map50\\9-animations",0xB5652,0xB5668,"");
+	produceAsmSection(file,"",0xB5668,0xB5952);
+	produceAsmSection(file,"",0xB5952,0xB5BEC);
+	
+	produceAsmScriptWithExtName(file,"Map51","data\\maps\\entries\\map51\\00-tilesets",0xB5BEC,0xB5BF2,"");
+	produceAsmSection(file,"",0xB5BF2,0xB5C1A);
+	produceAsmScriptWithExtName(file,"Map51s2_Areas","data\\maps\\entries\\map51\\2-areas",0xB5C1A,0xB5C3A,"");
+	produceAsmScriptWithExtName(file,"Map51s3_FlagEvents","data\\maps\\entries\\map51\\3-flag-events",0xB5C3A,0xB5C3C,"");
+	produceAsmScriptWithExtName(file,"Map51s4_StepEvents","data\\maps\\entries\\map51\\4-step-events",0xB5C3C,0xB5C3E,"");
+	produceAsmScriptWithExtName(file,"Map51s5_RoofEvents","data\\maps\\entries\\map51\\5-roof-events",0xB5C3E,0xB5C40,"");
+	produceAsmScriptWithExtName(file,"Map51s6_WarpEvents","data\\maps\\entries\\map51\\6-warp-events",0xB5C40,0xB5C4A,"");
+	produceAsmScriptWithExtName(file,"Map51s7_ChestItems","data\\maps\\entries\\map51\\7-chest-items",0xB5C4A,0xB5C4C,"");
+	produceAsmScriptWithExtName(file,"Map51s8_OtherItems","data\\maps\\entries\\map51\\8-other-items",0xB5C4C,0xB5C52,"");
+	produceAsmSection(file,"",0xB5C52,0xB5F4A);
+	produceAsmSection(file,"",0xB5F4A,0xB607E);
+	
+	produceAsmScriptWithExtName(file,"Map52","data\\maps\\entries\\map52\\00-tilesets",0xB607E,0xB6084,"");
+	produceAsmSection(file,"",0xB6084,0xB60AC);
+	produceAsmScriptWithExtName(file,"Map52s2_Areas","data\\maps\\entries\\map52\\2-areas",0xB60AC,0xB60CC,"");
+	produceAsmScriptWithExtName(file,"Map52s3_FlagEvents","data\\maps\\entries\\map52\\3-flag-events",0xB60CC,0xB60CE,"");
+	produceAsmScriptWithExtName(file,"Map52s4_StepEvents","data\\maps\\entries\\map52\\4-step-events",0xB60CE,0xB60D0,"");
+	produceAsmScriptWithExtName(file,"Map52s5_RoofEvents","data\\maps\\entries\\map52\\5-roof-events",0xB60D0,0xB60D2,"");
+	produceAsmScriptWithExtName(file,"Map52s6_WarpEvents","data\\maps\\entries\\map52\\6-warp-events",0xB60D2,0xB60E4,"");
+	produceAsmScriptWithExtName(file,"Map52s7_ChestItems","data\\maps\\entries\\map52\\7-chest-items",0xB60E4,0xB60E6,"");
+	produceAsmScriptWithExtName(file,"Map52s8_OtherItems","data\\maps\\entries\\map52\\8-other-items",0xB60E6,0xB60E8,"");
+	produceAsmSection(file,"",0xB60E8,0xB6984);
+	produceAsmSection(file,"",0xB6984,0xB6C2E);
+	
+	produceAsmScriptWithExtName(file,"Map53","data\\maps\\entries\\map53\\00-tilesets",0xB6C2E,0xB6C34,"");
+	produceAsmSection(file,"",0xB6C34,0xB6C5C);
+	produceAsmScriptWithExtName(file,"Map53s2_Areas","data\\maps\\entries\\map53\\2-areas",0xB6C5C,0xB6C7C,"");
+	produceAsmScriptWithExtName(file,"Map53s3_FlagEvents","data\\maps\\entries\\map53\\3-flag-events",0xB6C7C,0xB6C7E,"");
+	produceAsmScriptWithExtName(file,"Map53s4_StepEvents","data\\maps\\entries\\map53\\4-step-events",0xB6C7E,0xB6C80,"");
+	produceAsmScriptWithExtName(file,"Map53s5_RoofEvents","data\\maps\\entries\\map53\\5-roof-events",0xB6C80,0xB6C82,"");
+	produceAsmScriptWithExtName(file,"Map53s6_WarpEvents","data\\maps\\entries\\map53\\6-warp-events",0xB6C82,0xB6C94,"");
+	produceAsmScriptWithExtName(file,"Map53s7_ChestItems","data\\maps\\entries\\map53\\7-chest-items",0xB6C94,0xB6C9A,"");
+	produceAsmScriptWithExtName(file,"Map53s8_OtherItems","data\\maps\\entries\\map53\\8-other-items",0xB6C9A,0xB6C9C,"");
+	produceAsmSection(file,"",0xB6C9C,0xB6F84);
+	produceAsmSection(file,"",0xB6F84,0xB718A);
+	//produceAsmScript(file,"data\\maps\\entries\\map53\\9-animations",0x9AF6C,0x9AF82,"");
+	
+	produceAsmScriptWithExtName(file,"Map54","data\\maps\\entries\\map54\\00-tilesets",0xB718A,0xB7190,"");
+	produceAsmSection(file,"",0xB7190,0xB71B8);
+	produceAsmScriptWithExtName(file,"Map54s2_Areas","data\\maps\\entries\\map54\\2-areas",0xB71B8,0xB71D8,"");
+	produceAsmScriptWithExtName(file,"Map54s3_FlagEvents","data\\maps\\entries\\map54\\3-flag-events",0xB71D8,0xB71EA,"");
+	produceAsmScriptWithExtName(file,"Map54s4_StepEvents","data\\maps\\entries\\map54\\4-step-events",0xB71EA,0xB71EC,"");
+	produceAsmScriptWithExtName(file,"Map54s5_RoofEvents","data\\maps\\entries\\map54\\5-roof-events",0xB71EC,0xB71EE,"");
+	produceAsmScriptWithExtName(file,"Map54s6_WarpEvents","data\\maps\\entries\\map54\\6-warp-events",0xB71EE,0xB7200,"");
+	produceAsmScriptWithExtName(file,"Map54s7_ChestItems","data\\maps\\entries\\map54\\7-chest-items",0xB7200,0xB7202,"");
+	produceAsmScriptWithExtName(file,"Map54s8_OtherItems","data\\maps\\entries\\map54\\8-other-items",0xB7202,0xB7204,"");
+	produceAsmSection(file,"",0xB7204,0xB75BA);
+	produceAsmSection(file,"",0xB75BA,0xB78A2);
+	produceAsmScriptWithExtName(file,"Map54s9_Animations","data\\maps\\entries\\map54\\9-animations",0xB78A2,0xB78B8,"");
+	
+	produceAsmScriptWithExtName(file,"Map55","data\\maps\\entries\\map55\\00-tilesets",0xB78B8,0xB78BE,"");
+	produceAsmSection(file,"",0xB78BE,0xB78E6);
+	produceAsmScriptWithExtName(file,"Map55s2_Areas","data\\maps\\entries\\map55\\2-areas",0xB78E6,0xB7906,"");
+	produceAsmScriptWithExtName(file,"Map55s3_FlagEvents","data\\maps\\entries\\map55\\3-flag-events",0xB7906,0xB7908,"");
+	produceAsmScriptWithExtName(file,"Map55s4_StepEvents","data\\maps\\entries\\map55\\4-step-events",0xB7908,0xB790A,"");
+	produceAsmScriptWithExtName(file,"Map55s5_RoofEvents","data\\maps\\entries\\map55\\5-roof-events",0xB790A,0xB790C,"");
+	produceAsmScriptWithExtName(file,"Map55s6_WarpEvents","data\\maps\\entries\\map55\\6-warp-events",0xB790C,0xB792E,"");
+	produceAsmScriptWithExtName(file,"Map55s7_ChestItems","data\\maps\\entries\\map55\\7-chest-items",0xB792E,0xB7930,"");
+	produceAsmScriptWithExtName(file,"Map55s8_OtherItems","data\\maps\\entries\\map55\\8-other-items",0xB7930,0xB7932,"");
+	produceAsmSection(file,"",0xB7932,0xB7AC0);
+	produceAsmSection(file,"",0xB7AC0,0xB7CA0);
+	
+	produceAsmScriptWithExtName(file,"Map56","data\\maps\\entries\\map56\\00-tilesets",0xB7CA0,0xB7CA6,"");
+	produceAsmSection(file,"",0xB7CA6,0xB7CCE);
+	produceAsmScriptWithExtName(file,"Map56s2_Areas","data\\maps\\entries\\map56\\2-areas",0xB7CCE,0xB7D2A,"");
+	produceAsmScriptWithExtName(file,"Map56s3_FlagEvents","data\\maps\\entries\\map56\\3-flag-events",0xB7D2A,0xB7D2C,"");
+	produceAsmScriptWithExtName(file,"Map56s4_StepEvents","data\\maps\\entries\\map56\\4-step-events",0xB7D2C,0xB7D2E,"");
+	produceAsmScriptWithExtName(file,"Map56s5_RoofEvents","data\\maps\\entries\\map56\\5-roof-events",0xB7D2E,0xB7D30,"");
+	produceAsmScriptWithExtName(file,"Map56s6_WarpEvents","data\\maps\\entries\\map56\\6-warp-events",0xB7D30,0xB7DA2,"");
+	produceAsmScriptWithExtName(file,"Map56s7_ChestItems","data\\maps\\entries\\map56\\7-chest-items",0xB7DA2,0xB7DA4,"");
+	produceAsmScriptWithExtName(file,"Map56s8_OtherItems","data\\maps\\entries\\map56\\8-other-items",0xB7DA4,0xB7DA6,"");
+	produceAsmSection(file,"",0xB7DA6,0xB827C);
+	produceAsmSection(file,"",0xB827C,0xB85B6);
+	
+	produceAsmScriptWithExtName(file,"Map57","data\\maps\\entries\\map57\\00-tilesets",0xB85B6,0xB85BC,"");
+	produceAsmSection(file,"",0xB85BC,0xB85E4);
+	produceAsmScriptWithExtName(file,"Map57s2_Areas","data\\maps\\entries\\map57\\2-areas",0xB85E4,0xB8604,"");
+	produceAsmScriptWithExtName(file,"Map57s3_FlagEvents","data\\maps\\entries\\map57\\3-flag-events",0xB8604,0xB860E,"");
+	produceAsmScriptWithExtName(file,"Map57s4_StepEvents","data\\maps\\entries\\map57\\4-step-events",0xB860E,0xB8610,"");
+	produceAsmScriptWithExtName(file,"Map57s5_RoofEvents","data\\maps\\entries\\map57\\5-roof-events",0xB8610,0xB8612,"");
+	produceAsmScriptWithExtName(file,"Map57s6_WarpEvents","data\\maps\\entries\\map57\\6-warp-events",0xB8612,0xB8624,"");
+	produceAsmScriptWithExtName(file,"Map57s7_ChestItems","data\\maps\\entries\\map57\\7-chest-items",0xB8624,0xB8626,"");
+	produceAsmScriptWithExtName(file,"Map57s8_OtherItems","data\\maps\\entries\\map57\\8-other-items",0xB8626,0xB8628,"");
+	produceAsmSection(file,"",0xB8628,0xB8922);
+	produceAsmSection(file,"",0xB8922,0xB89D2);
+	
+	produceAsmScriptWithExtName(file,"Map58","data\\maps\\entries\\map58\\00-tilesets",0xB89D2,0xB89D8,"");
+	produceAsmSection(file,"",0xB89D8,0xB8A00);
+	produceAsmScriptWithExtName(file,"Map58s2_Areas","data\\maps\\entries\\map58\\2-areas",0xB8A00,0xB8A20,"");
+	produceAsmScriptWithExtName(file,"Map58s3_FlagEvents","data\\maps\\entries\\map58\\3-flag-events",0xB8A20,0xB8A22,"");
+	produceAsmScriptWithExtName(file,"Map58s4_StepEvents","data\\maps\\entries\\map58\\4-step-events",0xB8A22,0xB8A24,"");
+	produceAsmScriptWithExtName(file,"Map58s5_RoofEvents","data\\maps\\entries\\map58\\5-roof-events",0xB8A24,0xB8A26,"");
+	produceAsmScriptWithExtName(file,"Map58s6_WarpEvents","data\\maps\\entries\\map58\\6-warp-events",0xB8A26,0xB8A30,"");
+	produceAsmScriptWithExtName(file,"Map58s7_ChestItems","data\\maps\\entries\\map58\\7-chest-items",0xB8A30,0xB8A32,"");
+	//produceAsmScript(file,"data\\maps\\entries\\map58\\8-other-items",0xB8A30,0xB8A32,"");
+	produceAsmSection(file,"",0xB8A32,0xB9156);
+	produceAsmSection(file,"",0xB9156,0xB9350);
+	
+	produceAsmScriptWithExtName(file,"Map59","data\\maps\\entries\\map59\\00-tilesets",0xB9350,0xB9356,"");
+	produceAsmSection(file,"",0xB9356,0xB937E);
+	produceAsmScriptWithExtName(file,"Map59s2_Areas","data\\maps\\entries\\map59\\2-areas",0xB937E,0xB939E,"");
+	produceAsmScriptWithExtName(file,"Map59s3_FlagEvents","data\\maps\\entries\\map59\\3-flag-events",0xB939E,0xB93A8,"");
+	produceAsmScriptWithExtName(file,"Map59s4_StepEvents","data\\maps\\entries\\map59\\4-step-events",0xB93A8,0xB93AA,"");
+	produceAsmScriptWithExtName(file,"Map59s5_RoofEvents","data\\maps\\entries\\map59\\5-roof-events",0xB93AA,0xB93AC,"");
+	produceAsmScriptWithExtName(file,"Map59s6_WarpEvents","data\\maps\\entries\\map59\\6-warp-events",0xB93AC,0xB93B6,"");
+	produceAsmScriptWithExtName(file,"Map59s7_ChestItems","data\\maps\\entries\\map59\\7-chest-items",0xB93B6,0xB93B8,"");
+	produceAsmScriptWithExtName(file,"Map59s8_OtherItems","data\\maps\\entries\\map59\\8-other-items",0xB93B8,0xB93BA,"");
+	produceAsmSection(file,"",0xB93BA,0xB9B68);
+	produceAsmSection(file,"",0xB9B68,0xB9E38);
+	
+	produceAsmScriptWithExtName(file,"Map60","data\\maps\\entries\\map60\\00-tilesets",0xB9E38,0xB9E3E,"");
+	produceAsmSection(file,"",0xB9E3E,0xB9E66);
+	produceAsmScriptWithExtName(file,"Map60s2_Areas","data\\maps\\entries\\map60\\2-areas",0xB9E66,0xB9F3A,"");
+	produceAsmScriptWithExtName(file,"Map60s3_FlagEvents","data\\maps\\entries\\map60\\3-flag-events",0xB9F3A,0xB9F4C,"");
+	produceAsmScriptWithExtName(file,"Map60s4_StepEvents","data\\maps\\entries\\map60\\4-step-events",0xB9F4C,0xB9F4E,"");
+	produceAsmScriptWithExtName(file,"Map60s5_RoofEvents","data\\maps\\entries\\map60\\5-roof-events",0xB9F4E,0xB9F50,"");
+	produceAsmScriptWithExtName(file,"Map60s6_WarpEvents","data\\maps\\entries\\map60\\6-warp-events",0xB9F50,0xBA00A,"");
+	produceAsmScriptWithExtName(file,"Map60s7_ChestItems","data\\maps\\entries\\map60\\7-chest-items",0xBA00A,0xBA00C,"");
+	produceAsmScriptWithExtName(file,"Map60s8_OtherItems","data\\maps\\entries\\map60\\8-other-items",0xBA00C,0xBA00E,"");
+	produceAsmSection(file,"",0xBA00E,0xBA80E);
+	produceAsmSection(file,"",0xBA80E,0xBABA2);
+	
+	produceAsmScriptWithExtName(file,"Map61","data\\maps\\entries\\map61\\00-tilesets",0xBABA2,0xBABA8,"");
+	produceAsmSection(file,"",0xBABA8,0xBABD0);
+	produceAsmScriptWithExtName(file,"Map61s2_Areas","data\\maps\\entries\\map61\\2-areas",0xBABD0,0xBABF0,"");
+	produceAsmScriptWithExtName(file,"Map61s3_FlagEvents","data\\maps\\entries\\map61\\3-flag-events",0xBABF0,0xBABFA,"");
+	produceAsmScriptWithExtName(file,"Map61s4_StepEvents","data\\maps\\entries\\map61\\4-step-events",0xBABFA,0xBABFC,"");
+	produceAsmScriptWithExtName(file,"Map61s5_RoofEvents","data\\maps\\entries\\map61\\5-roof-events",0xBABFC,0xBABFE,"");
+	produceAsmScriptWithExtName(file,"Map61s6_WarpEvents","data\\maps\\entries\\map61\\6-warp-events",0xBABFE,0xBAC10,"");
+	produceAsmScriptWithExtName(file,"Map61s7_ChestItems","data\\maps\\entries\\map61\\7-chest-items",0xBAC10,0xBAC12,"");
+	produceAsmScriptWithExtName(file,"Map61s8_OtherItems","data\\maps\\entries\\map61\\8-other-items",0xBAC12,0xBAC14,"");
+	produceAsmSection(file,"",0xBAC14,0xBAD4E);
+	produceAsmSection(file,"",0xBAD4E,0xBADAC);
+	
+	produceAsmScriptWithExtName(file,"Map62","data\\maps\\entries\\map62\\00-tilesets",0xBADAC,0xBADB2,"");
+	produceAsmSection(file,"",0xBADB2,0xBADDA);
+	produceAsmScriptWithExtName(file,"Map62s2_Areas","data\\maps\\entries\\map62\\2-areas",0xBADDA,0xBADFA,"");
+	produceAsmScriptWithExtName(file,"Map62s3_FlagEvents","data\\maps\\entries\\map62\\3-flag-events",0xBADFA,0xBADFC,"");
+	produceAsmScriptWithExtName(file,"Map62s4_StepEvents","data\\maps\\entries\\map62\\4-step-events",0xBADFC,0xBADFE,"");
+	produceAsmScriptWithExtName(file,"Map62s5_RoofEvents","data\\maps\\entries\\map62\\5-roof-events",0xBADFE,0xBAE00,"");
+	produceAsmScriptWithExtName(file,"Map62s6_WarpEvents","data\\maps\\entries\\map62\\6-warp-events",0xBAE00,0xBAE0A,"");
+	produceAsmScriptWithExtName(file,"Map62s7_ChestItems","data\\maps\\entries\\map62\\7-chest-items",0xBAE0A,0xBAE10,"");
+	produceAsmScriptWithExtName(file,"Map62s8_OtherItems","data\\maps\\entries\\map62\\8-other-items",0xBAE10,0xBAE12,"");
+	produceAsmSection(file,"",0xBAE12,0xBAF28);
+	produceAsmSection(file,"",0xBAF28,0xBAFB0);
+	
+	produceAsmScriptWithExtName(file,"Map63","data\\maps\\entries\\map63\\00-tilesets",0xBAFB0,0xBAFB6,"");
+	produceAsmSection(file,"",0xBAFB6,0xBAFDE);
+	produceAsmScriptWithExtName(file,"Map63s2_Areas","data\\maps\\entries\\map63\\2-areas",0xBAFDE,0xBB03A,"");
+	produceAsmScriptWithExtName(file,"Map63s3_FlagEvents","data\\maps\\entries\\map63\\3-flag-events",0xBB03A,0xBB03C,"");
+	produceAsmScriptWithExtName(file,"Map63s4_StepEvents","data\\maps\\entries\\map63\\4-step-events",0xBB03C,0xBB03E,"");
+	produceAsmScriptWithExtName(file,"Map63s5_RoofEvents","data\\maps\\entries\\map63\\5-roof-events",0xBB03E,0xBB040,"");
+	produceAsmScriptWithExtName(file,"Map63s6_WarpEvents","data\\maps\\entries\\map63\\6-warp-events",0xBB040,0xBB062,"");
+	produceAsmScriptWithExtName(file,"Map63s7_ChestItems","data\\maps\\entries\\map63\\7-chest-items",0xBB062,0xBB064,"");
+	produceAsmScriptWithExtName(file,"Map63s8_OtherItems","data\\maps\\entries\\map63\\8-other-items",0xBB064,0xBB066,"");
+	produceAsmSection(file,"",0xBB066,0xBB36C);
+	produceAsmSection(file,"",0xBB36C,0xBB6B2);
+	
+	produceAsmScriptWithExtName(file,"Map64","data\\maps\\entries\\map64\\00-tilesets",0xBB6B2,0xBB6B8,"");
+	produceAsmSection(file,"",0xBB6B8,0xBB6E0);
+	produceAsmScriptWithExtName(file,"Map64s2_Areas","data\\maps\\entries\\map64\\2-areas",0xBB6E0,0xBB700,"");
+	produceAsmScriptWithExtName(file,"Map64s3_FlagEvents","data\\maps\\entries\\map64\\3-flag-events",0xBB700,0xBB702,"");
+	produceAsmScriptWithExtName(file,"Map64s4_StepEvents","data\\maps\\entries\\map64\\4-step-events",0xBB702,0xBB704,"");
+	produceAsmScriptWithExtName(file,"Map64s5_RoofEvents","data\\maps\\entries\\map64\\5-roof-events",0xBB704,0xBB706,"");
+	produceAsmScriptWithExtName(file,"Map64s6_WarpEvents","data\\maps\\entries\\map64\\6-warp-events",0xBB706,0xBB708,"");
+	produceAsmScriptWithExtName(file,"Map64s7_ChestItems","data\\maps\\entries\\map64\\7-chest-items",0xBB708,0xBB70A,"");
+	produceAsmScriptWithExtName(file,"Map64s8_OtherItems","data\\maps\\entries\\map64\\8-other-items",0xBB70A,0xBB70E,"");
+	produceAsmSection(file,"",0xBB70E,0xBB79E);
+	produceAsmSection(file,"",0xBB79E,0xBB8D8);
+	
+	produceAsmScriptWithExtName(file,"Map65","data\\maps\\entries\\map65\\00-tilesets",0xBB8D8,0xBB8DE,"");
+	produceAsmSection(file,"",0xBB8DE,0xBB906);
+	produceAsmScriptWithExtName(file,"Map65s2_Areas","data\\maps\\entries\\map65\\2-areas",0xBB906,0xBB926,"");
+	produceAsmScriptWithExtName(file,"Map65s3_FlagEvents","data\\maps\\entries\\map65\\3-flag-events",0xBB926,0xBB928,"");
+	produceAsmScriptWithExtName(file,"Map65s4_StepEvents","data\\maps\\entries\\map65\\4-step-events",0xBB928,0xBB92A,"");
+	produceAsmScriptWithExtName(file,"Map65s5_RoofEvents","data\\maps\\entries\\map65\\5-roof-events",0xBB92A,0xBB92C,"");
+	produceAsmScriptWithExtName(file,"Map65s6_WarpEvents","data\\maps\\entries\\map65\\6-warp-events",0xBB92C,0xBB92E,"");
+	produceAsmScriptWithExtName(file,"Map65s7_ChestItems","data\\maps\\entries\\map65\\7-chest-items",0xBB92E,0xBB930,"");
+	produceAsmScriptWithExtName(file,"Map65s8_OtherItems","data\\maps\\entries\\map65\\8-other-items",0xBB930,0xBB932,"");
+	produceAsmSection(file,"",0xBB932,0xBBC5A);
+	produceAsmSection(file,"",0xBBC5A,0xBBD1A);
+	
+	produceAsmScriptWithExtName(file,"Map66","data\\maps\\entries\\map66\\00-tilesets",0xBBD1A,0xBBD20,"");
+	produceAsmSection(file,"",0xBBD20,0xBBD48);
+	produceAsmScriptWithExtName(file,"Map66s2_Areas","data\\maps\\entries\\map66\\2-areas",0xBBD48,0xBBD68,"");
+	produceAsmScriptWithExtName(file,"Map66s3_FlagEvents","data\\maps\\entries\\map66\\3-flag-events",0xBBD68,0xBBD7A,"");
+	produceAsmScriptWithExtName(file,"Map66s4_StepEvents","data\\maps\\entries\\map66\\4-step-events",0xBBD7A,0xBBD7C,"");
+	produceAsmScriptWithExtName(file,"Map66s5_RoofEvents","data\\maps\\entries\\map66\\5-roof-events",0xBBD7C,0xBBD7E,"");
+	produceAsmScriptWithExtName(file,"Map66s6_WarpEvents","data\\maps\\entries\\map66\\6-warp-events",0xBBD7E,0xBBDD0,"");
+	produceAsmScriptWithExtName(file,"Map66s7_ChestItems","data\\maps\\entries\\map66\\7-chest-items",0xBBDD0,0xBBDD2,"");
+	produceAsmScriptWithExtName(file,"Map66s8_OtherItems","data\\maps\\entries\\map66\\8-other-items",0xBBDD2,0xBBDD8,"");
+	produceAsmSection(file,"",0xBBDD8,0xBCB9A);
+	produceAsmSection(file,"",0xBCB9A,0xBD1F0);
+	produceAsmScriptWithExtName(file,"Map66s9_Animations","data\\maps\\entries\\map66\\9-animations",0xBD1F0,0xBD206,"");
+	
+	produceAsmScriptWithExtName(file,"Map67","data\\maps\\entries\\map67\\00-tilesets",0xBD206,0xBD20C,"");
+	produceAsmSection(file,"",0xBD20C,0xBD234);
+	produceAsmScriptWithExtName(file,"Map67s2_Areas","data\\maps\\entries\\map67\\2-areas",0xBD234,0xBD254,"");
+	produceAsmScriptWithExtName(file,"Map67s3_FlagEvents","data\\maps\\entries\\map67\\3-flag-events",0xBD254,0xBD25E,"");
+	produceAsmScriptWithExtName(file,"Map67s4_StepEvents","data\\maps\\entries\\map67\\4-step-events",0xBD25E,0xBD260,"");
+	produceAsmScriptWithExtName(file,"Map67s5_RoofEvents","data\\maps\\entries\\map67\\5-roof-events",0xBD260,0xBD262,"");
+	produceAsmScriptWithExtName(file,"Map67s6_WarpEvents","data\\maps\\entries\\map67\\6-warp-events",0xBD262,0xBD28C,"");
+	produceAsmScriptWithExtName(file,"Map67s7_ChestItems","data\\maps\\entries\\map67\\7-chest-items",0xBD28C,0xBD28E,"");
+	produceAsmScriptWithExtName(file,"Map67s8_OtherItems","data\\maps\\entries\\map67\\8-other-items",0xBD28E,0xBD294,"");
+	produceAsmSection(file,"",0xBD294,0xBD746);
+	produceAsmSection(file,"",0xBD746,0xBD9F4);
+	produceAsmScriptWithExtName(file,"Map67s9_Animations","data\\maps\\entries\\map67\\9-animations",0xBD9F4,0xBDA0A,"");
+	
+	produceAsmScriptWithExtName(file,"Map68","data\\maps\\entries\\map68\\00-tilesets",0xBDA0A,0xBDA10,"");
+	produceAsmSection(file,"",0xBDA10,0xBDA38);
+	produceAsmScriptWithExtName(file,"Map68s2_Areas","data\\maps\\entries\\map68\\2-areas",0xBDA38,0xBDA58,"");
+	produceAsmScriptWithExtName(file,"Map68s3_FlagEvents","data\\maps\\entries\\map68\\3-flag-events",0xBDA58,0xBDA5A,"");
+	produceAsmScriptWithExtName(file,"Map68s4_StepEvents","data\\maps\\entries\\map68\\4-step-events",0xBDA5A,0xBDA5C,"");
+	produceAsmScriptWithExtName(file,"Map68s5_RoofEvents","data\\maps\\entries\\map68\\5-roof-events",0xBDA5C,0xBDA5E,"");
+	produceAsmScriptWithExtName(file,"Map68s6_WarpEvents","data\\maps\\entries\\map68\\6-warp-events",0xBDA5E,0xBDA90,"");
+	produceAsmScriptWithExtName(file,"Map68s7_ChestItems","data\\maps\\entries\\map68\\7-chest-items",0xBDA90,0xBDA92,"");
+	produceAsmScriptWithExtName(file,"Map68s8_OtherItems","data\\maps\\entries\\map68\\8-other-items",0xBDA92,0xBDA94,"");
+	produceAsmSection(file,"",0xBDA94,0xBE05E);
+	produceAsmSection(file,"",0xBE05E,0xBE60E);
+	produceAsmScriptWithExtName(file,"Map68s9_Animations","data\\maps\\entries\\map68\\9-animations",0xBE60E,0xBE624,"");
+	
+	produceAsmScriptWithExtName(file,"Map69","data\\maps\\entries\\map69\\00-tilesets",0xBE624,0xBE62A,"");
+	produceAsmSection(file,"",0xBE62A,0xBE652);
+	produceAsmScriptWithExtName(file,"Map69s2_Areas","data\\maps\\entries\\map69\\2-areas",0xBE652,0xBE672,"");
+	produceAsmScriptWithExtName(file,"Map69s3_FlagEvents","data\\maps\\entries\\map69\\3-flag-events",0xBE672,0xBE67C,"");
+	produceAsmScriptWithExtName(file,"Map69s4_StepEvents","data\\maps\\entries\\map69\\4-step-events",0xBE67C,0xBE67E,"");
+	produceAsmScriptWithExtName(file,"Map69s5_RoofEvents","data\\maps\\entries\\map69\\5-roof-events",0xBE67E,0xBE680,"");
+	produceAsmScriptWithExtName(file,"Map69s6_WarpEvents","data\\maps\\entries\\map69\\6-warp-events",0xBE680,0xBE6C2,"");
+	produceAsmScriptWithExtName(file,"Map69s7_ChestItems","data\\maps\\entries\\map69\\7-chest-items",0xBE6C2,0xBE6C4,"");
+	produceAsmScriptWithExtName(file,"Map69s8_OtherItems","data\\maps\\entries\\map69\\8-other-items",0xBE6C4,0xBE6C6,"");
+	produceAsmSection(file,"",0xBE6C6,0xBEF8E);
+	produceAsmSection(file,"",0xBEF8E,0xBF75C);
+	produceAsmScriptWithExtName(file,"Map69s9_Animations","data\\maps\\entries\\map69\\9-animations",0xBF75C,0xBF772,"");
+	
+	produceAsmScriptWithExtName(file,"Map70","data\\maps\\entries\\map70\\00-tilesets",0xBF772,0xBF778,"");
+	produceAsmSection(file,"",0xBF778,0xBF7A0);
+	produceAsmScriptWithExtName(file,"Map70s2_Areas","data\\maps\\entries\\map70\\2-areas",0xBF7A0,0xBF7C0,"");
+	produceAsmScriptWithExtName(file,"Map70s3_FlagEvents","data\\maps\\entries\\map70\\3-flag-events",0xBF7C0,0xBF7C2,"");
+	produceAsmScriptWithExtName(file,"Map70s4_StepEvents","data\\maps\\entries\\map70\\4-step-events",0xBF7C2,0xBF7C4,"");
+	produceAsmScriptWithExtName(file,"Map70s5_RoofEvents","data\\maps\\entries\\map70\\5-roof-events",0xBF7C4,0xBF7C6,"");
+	produceAsmScriptWithExtName(file,"Map70s6_WarpEvents","data\\maps\\entries\\map70\\6-warp-events",0xBF7C6,0xBF7E0,"");
+	produceAsmScriptWithExtName(file,"Map70s7_ChestItems","data\\maps\\entries\\map70\\7-chest-items",0xBF7E0,0xBF7E2,"");
+	produceAsmScriptWithExtName(file,"Map70s8_OtherItems","data\\maps\\entries\\map70\\8-other-items",0xBF7E2,0xBF7E8,"");
+	produceAsmSection(file,"",0xBF7E8,0xC004A);
+	produceAsmSection(file,"",0xC004A,0xC062A);
+	produceAsmScriptWithExtName(file,"Map70s9_Animations","data\\maps\\entries\\map70\\9-animations",0xC062A,0xC0640,"");
+	
+	produceAsmScriptWithExtName(file,"Map71","data\\maps\\entries\\map71\\00-tilesets",0xC0640,0xC0646,"");
+	produceAsmSection(file,"",0xC0646,0xC066E);
+	produceAsmScriptWithExtName(file,"Map71s2_Areas","data\\maps\\entries\\map71\\2-areas",0xC066E,0xC068E,"");
+	produceAsmScriptWithExtName(file,"Map71s3_FlagEvents","data\\maps\\entries\\map71\\3-flag-events",0xC068E,0xC0690,"");
+	produceAsmScriptWithExtName(file,"Map71s4_StepEvents","data\\maps\\entries\\map71\\4-step-events",0xC0690,0xC0692,"");
+	produceAsmScriptWithExtName(file,"Map71s5_RoofEvents","data\\maps\\entries\\map71\\5-roof-events",0xC0692,0xC0694,"");
+	produceAsmScriptWithExtName(file,"Map71s6_WarpEvents","data\\maps\\entries\\map71\\6-warp-events",0xC0694,0xC06BE,"");
+	produceAsmScriptWithExtName(file,"Map71s7_ChestItems","data\\maps\\entries\\map71\\7-chest-items",0xC06BE,0xC06C0,"");
+	produceAsmScriptWithExtName(file,"Map71s8_OtherItems","data\\maps\\entries\\map71\\8-other-items",0xC06C0,0xC06C2,"");
+	produceAsmSection(file,"",0xC06C2,0xC1360);
+	produceAsmSection(file,"",0xC1360,0xC1B8C);
+	produceAsmScriptWithExtName(file,"Map71s9_Animations","data\\maps\\entries\\map71\\9-animations",0xC1B8C,0xC1BA2,"");
+	
+	produceAsmScriptWithExtName(file,"Map72","data\\maps\\entries\\map72\\00-tilesets",0xC1BA2,0xC1BA8,"");
+	produceAsmSection(file,"",0xC1BA8,0xC1BD0);
+	produceAsmScriptWithExtName(file,"Map72s2_Areas","data\\maps\\entries\\map72\\2-areas",0xC1BD0,0xC1BF0,"");
+	produceAsmScriptWithExtName(file,"Map72s3_FlagEvents","data\\maps\\entries\\map72\\3-flag-events",0xC1BF0,0xC1BFA,"");
+	produceAsmScriptWithExtName(file,"Map72s4_StepEvents","data\\maps\\entries\\map72\\4-step-events",0xC1BFA,0xC1BFC,"");
+	produceAsmScriptWithExtName(file,"Map72s5_RoofEvents","data\\maps\\entries\\map72\\5-roof-events",0xC1BFC,0xC1BFE,"");
+	produceAsmScriptWithExtName(file,"Map72s6_WarpEvents","data\\maps\\entries\\map72\\6-warp-events",0xC1BFE,0xC1C50,"");
+	produceAsmScriptWithExtName(file,"Map72s7_ChestItems","data\\maps\\entries\\map72\\7-chest-items",0xC1C50,0xC1C52,"");
+	produceAsmScriptWithExtName(file,"Map72s8_OtherItems","data\\maps\\entries\\map72\\8-other-items",0xC1C52,0xC1C54,"");
+	produceAsmSection(file,"",0xC1C54,0xC2730);
+	produceAsmSection(file,"",0xC2730,0xC2EE2);
+	produceAsmScriptWithExtName(file,"Map72s9_Animations","data\\maps\\entries\\map72\\9-animations",0xC2EE2,0xC2EF8,"");
+	
+	produceAsmScriptWithExtName(file,"Map73","data\\maps\\entries\\map73\\00-tilesets",0xC2EF8,0xC2EFE,"");
+	produceAsmSection(file,"",0xC2EFE,0xC2F26);
+	produceAsmScriptWithExtName(file,"Map73s2_Areas","data\\maps\\entries\\map73\\2-areas",0xC2F26,0xC2F64,"");
+	produceAsmScriptWithExtName(file,"Map73s3_FlagEvents","data\\maps\\entries\\map73\\3-flag-events",0xC2F64,0xC2F66,"");
+	produceAsmScriptWithExtName(file,"Map73s4_StepEvents","data\\maps\\entries\\map73\\4-step-events",0xC2F66,0xC2F68,"");
+	produceAsmScriptWithExtName(file,"Map73s5_RoofEvents","data\\maps\\entries\\map73\\5-roof-events",0xC2F68,0xC2F6A,"");
+	produceAsmScriptWithExtName(file,"Map73s6_WarpEvents","data\\maps\\entries\\map73\\6-warp-events",0xC2F6A,0xC2F84,"");
+	produceAsmScriptWithExtName(file,"Map73s7_ChestItems","data\\maps\\entries\\map73\\7-chest-items",0xC2F84,0xC2F86,"");
+	produceAsmScriptWithExtName(file,"Map73s8_OtherItems","data\\maps\\entries\\map73\\8-other-items",0xC2F86,0xC2F88,"");
+	produceAsmSection(file,"",0xC2F88,0xC32F0);
+	produceAsmSection(file,"",0xC32F0,0xC3618);
+	produceAsmScriptWithExtName(file,"Map73s9_Animations","data\\maps\\entries\\map73\\9-animations",0xC3618,0xC362E,"");
+	
+	produceAsmScriptWithExtName(file,"Map74","data\\maps\\entries\\map74\\00-tilesets",0xC362E,0xC3634,"");
+	produceAsmSection(file,"",0xC3634,0xC365C);
+	produceAsmScriptWithExtName(file,"Map74s2_Areas","data\\maps\\entries\\map74\\2-areas",0xC365C,0xC367C,"");
+	produceAsmScriptWithExtName(file,"Map74s3_FlagEvents","data\\maps\\entries\\map74\\3-flag-events",0xC367C,0xC367E,"");
+	produceAsmScriptWithExtName(file,"Map74s4_StepEvents","data\\maps\\entries\\map74\\4-step-events",0xC367E,0xC3680,"");
+	produceAsmScriptWithExtName(file,"Map74s5_RoofEvents","data\\maps\\entries\\map74\\5-roof-events",0xC3680,0xC3682,"");
+	produceAsmScriptWithExtName(file,"Map74s6_WarpEvents","data\\maps\\entries\\map74\\6-warp-events",0xC3682,0xC36C4,"");
+	produceAsmScriptWithExtName(file,"Map74s7_ChestItems","data\\maps\\entries\\map74\\7-chest-items",0xC36C4,0xC36C6,"");
+	produceAsmScriptWithExtName(file,"Map74s8_OtherItems","data\\maps\\entries\\map74\\8-other-items",0xC36C6,0xC36CC,"");
+	produceAsmSection(file,"",0xC36CC,0xC4028);
+	produceAsmSection(file,"",0xC4028,0xC486A);
+	produceAsmScriptWithExtName(file,"Map74s9_Animations","data\\maps\\entries\\map74\\9-animations",0xC486A,0xC4880,"");
+	
+	produceAsmScriptWithExtName(file,"Map75","data\\maps\\entries\\map75\\00-tilesets",0xC4880,0xC4886,"");
+	produceAsmSection(file,"",0xC4886,0xC48AE);
+	produceAsmScriptWithExtName(file,"Map75s2_Areas","data\\maps\\entries\\map75\\2-areas",0xC48AE,0xC48CE,"");
+	produceAsmScriptWithExtName(file,"Map75s3_FlagEvents","data\\maps\\entries\\map75\\3-flag-events",0xC48CE,0xC48E0,"");
+	produceAsmScriptWithExtName(file,"Map75s4_StepEvents","data\\maps\\entries\\map75\\4-step-events",0xC48E0,0xC48E2,"");
+	produceAsmScriptWithExtName(file,"Map75s5_RoofEvents","data\\maps\\entries\\map75\\5-roof-events",0xC48E2,0xC48E4,"");
+	produceAsmScriptWithExtName(file,"Map75s6_WarpEvents","data\\maps\\entries\\map75\\6-warp-events",0xC48E4,0xC491E,"");
+	produceAsmScriptWithExtName(file,"Map75s7_ChestItems","data\\maps\\entries\\map75\\7-chest-items",0xC491E,0xC4920,"");
+	produceAsmScriptWithExtName(file,"Map75s8_OtherItems","data\\maps\\entries\\map75\\8-other-items",0xC4920,0xC4922,"");
+	produceAsmSection(file,"",0xC4922,0xC4D8C);
+	produceAsmSection(file,"",0xC4D8C,0xC4F2E);
+	produceAsmScriptWithExtName(file,"Map75s9_Animations","data\\maps\\entries\\map75\\9-animations",0xC4F2E,0xC4F44,"");
+	
+	produceAsmScriptWithExtName(file,"Map76","data\\maps\\entries\\map76\\00-tilesets",0xC4F44,0xC4F4A,"");
+	produceAsmSection(file,"",0xC4F4A,0xC4F72);
+	produceAsmScriptWithExtName(file,"Map76s2_Areas","data\\maps\\entries\\map76\\2-areas",0xC4F72,0xC4F92,"");
+	produceAsmScriptWithExtName(file,"Map76s3_FlagEvents","data\\maps\\entries\\map76\\3-flag-events",0xC4F92,0xC4F94,"");
+	produceAsmScriptWithExtName(file,"Map76s4_StepEvents","data\\maps\\entries\\map76\\4-step-events",0xC4F94,0xC4F96,"");
+	produceAsmScriptWithExtName(file,"Map76s5_RoofEvents","data\\maps\\entries\\map76\\5-roof-events",0xC4F96,0xC4F98,"");
+	produceAsmScriptWithExtName(file,"Map76s6_WarpEvents","data\\maps\\entries\\map76\\6-warp-events",0xC4F98,0xC4FB2,"");
+	produceAsmScriptWithExtName(file,"Map76s7_ChestItems","data\\maps\\entries\\map76\\7-chest-items",0xC4FB2,0xC4FB4,"");
+	produceAsmScriptWithExtName(file,"Map76s8_OtherItems","data\\maps\\entries\\map76\\8-other-items",0xC4FB4,0xC4FB6,"");
+	produceAsmSection(file,"",0xC4FB6,0xC57E8);
+	produceAsmSection(file,"",0xC57E8,0xC5D06);
+	produceAsmScriptWithExtName(file,"Map76s9_Animations","data\\maps\\entries\\map76\\9-animations",0xC5D06,0xC5D1C,"");
+	
+	produceAsmScriptWithExtName(file,"Map77","data\\maps\\entries\\map77\\00-tilesets",0xC5D1C,0xC5D22,"");
+	produceAsmSection(file,"",0xC5D22,0xC5D4A);
+	produceAsmScriptWithExtName(file,"Map77s2_Areas","data\\maps\\entries\\map77\\2-areas",0xC5D4A,0xC5D6A,"");
+	produceAsmScriptWithExtName(file,"Map77s3_FlagEvents","data\\maps\\entries\\map77\\3-flag-events",0xC5D6A,0xC5D74,"");
+	produceAsmScriptWithExtName(file,"Map77s4_StepEvents","data\\maps\\entries\\map77\\4-step-events",0xC5D74,0xC5D76,"");
+	produceAsmScriptWithExtName(file,"Map77s5_RoofEvents","data\\maps\\entries\\map77\\5-roof-events",0xC5D76,0xC5D78,"");
+	produceAsmScriptWithExtName(file,"Map77s6_WarpEvents","data\\maps\\entries\\map77\\6-warp-events",0xC5D78,0xC5DA2,"");
+	produceAsmScriptWithExtName(file,"Map77s7_ChestItems","data\\maps\\entries\\map77\\7-chest-items",0xC5DA2,0xC5DA4,"");
+	produceAsmScriptWithExtName(file,"Map77s8_OtherItems","data\\maps\\entries\\map77\\8-other-items",0xC5DA4,0xC5DA6,"");
+	produceAsmSection(file,"",0xC5DA6,0xC6460);
+	produceAsmSection(file,"",0xC6460,0xC697A);
+	produceAsmScriptWithExtName(file,"Map77s9_Animations","data\\maps\\entries\\map77\\9-animations",0xC697A,0xC6990,"");
+	
+	produceAsmScriptWithExtName(file,"Map78","data\\maps\\entries\\map78\\00-tilesets",0xC6990,0xC6996,"");
+	produceAsmSection(file,"",0xC6996,0xC69BE);
+	produceAsmScriptWithExtName(file,"Map78s2_Areas","data\\maps\\entries\\map78\\2-areas",0xC69BE,0xC69DE,"");
+	produceAsmScriptWithExtName(file,"Map78s3_FlagEvents","data\\maps\\entries\\map78\\3-flag-events",0xC69DE,0xC69E0,"");
+	produceAsmScriptWithExtName(file,"Map78s4_StepEvents","data\\maps\\entries\\map78\\4-step-events",0xC69E0,0xC69E2,"");
+	produceAsmScriptWithExtName(file,"Map78s5_RoofEvents","data\\maps\\entries\\map78\\5-roof-events",0xC69E2,0xC69E4,"");
+	produceAsmScriptWithExtName(file,"Map78s6_WarpEvents","data\\maps\\entries\\map78\\6-warp-events",0xC69E4,0xC6A0E,"");
+	produceAsmScriptWithExtName(file,"Map78s7_ChestItems","data\\maps\\entries\\map78\\7-chest-items",0xC6A0E,0xC6A10,"");
+	produceAsmScriptWithExtName(file,"Map78s8_OtherItems","data\\maps\\entries\\map78\\8-other-items",0xC6A10,0xC6A12,"");
+	produceAsmSection(file,"",0xC6A12,0xC768C);
+	produceAsmSection(file,"",0xC768C,0xC7EB6);
+	produceAsmScriptWithExtName(file,"Map78s9_Animations","data\\maps\\entries\\map78\\9-animations",0xC7EB6,0xC7ECC,"");
+	
+	fclose(file);
+	Message("DONE.\n");	
+
 }
 
 
@@ -1306,11 +2320,11 @@ static produceSpecificSectionNine(mainFile,sectionName,start,end,fs,sectionComme
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites",1);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",2);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",2);	
 	writestr(file,"                alignIfExpandedRom $E0000\n");			
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);	
-	produceAsmSection(file,0xFFC48,0x100000);
+	produceAsmScriptWithConditionalInclude(file,"","data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);	
+	produceAsmSection(file,"",0xFFC48,0x100000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1328,13 +2342,13 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x100000,0x100008);
+	produceAsmSection(file,"",0x100000,0x100008);
 	produceAsmScript(file,"code\\specialscreens\\title\\title",0x100008,0x1002BE,"Title screen functions");	
-	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics",1);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds",1);	
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",2);	
+	produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",2);	
 	produceAsmScript(file,"data\\graphics\\battles\\spells\\invocations\\entries",0x12A2F8,0x12FADE,"Invocation sprites");	
-	produceAsmSection(file,0x12FADE,0x130000);
+	produceAsmSection(file,"",0x12FADE,0x130000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1352,10 +2366,10 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x130000,0x130004);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
+	produceAsmSection(file,"",0x130000,0x130004);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
 	writestr(file,"                ;includeIfExpandedRom data\\maps\\mapsetupsstorage.asm\n");	
-	produceAsmSection(file,0x17FE4F,0x180000);
+	produceAsmSection(file,"",0x17FE4F,0x180000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1373,13 +2387,13 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x180000,0x18001C);
-	produceAsmScriptWithConditionalInclude(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",2);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites",1);	
-	produceAsmSection(file,0x1AA16E,0x1AAC3A);		
+	produceAsmSection(file,"",0x180000,0x18001C);
+	produceAsmScriptWithConditionalInclude(file,"","data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",2);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites",1);	
+	produceAsmSection(file,"",0x1AA16E,0x1AAC3A);		
 	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\animations\\entries",0x1AAC3A,0x1AB79E,"Ally animations");	
 	produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\animations\\entries",0x1AB79E,0x1ABE52,"Enemy animations");	
-	produceAsmSection(file,0x1ABE52,0x1AC000);
+	produceAsmSection(file,"",0x1ABE52,0x1AC000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1400,14 +2414,14 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_0",0x1AC000,0x1AC068,"Jump interface for section functions");	
 	produceAsmScript(file,"code\\common\\scripting\\endcredits",0x1AC068,0x1AC29C,"Ending credits functions");
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AD104,"Battle init, terrain, AI stuff to split more properly");			
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);	
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");		
 	produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
-	produceAsmScriptWithConditionalInclude(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);	
 	produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DBC,"Random battles table");
 	produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DBC,0x1B6DDA,"Data related to UpgradeUnitIdx function");
-	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
-	produceAsmSection(file,0x1B7C9A,0x1B8000);
+	produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
+	produceAsmSection(file,"",0x1B7C9A,0x1B8000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1425,14 +2439,14 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x1B8000,0x1B8028);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",1);	
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",1);	
-	produceAsmSection(file,0x1BEE38,0x1BEEE0);		
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",1);
+	produceAsmSection(file,"",0x1B8000,0x1B8028);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",1);	
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",1);	
+	produceAsmSection(file,"",0x1BEE38,0x1BEEE0);		
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",1);
 	produceAsmScript(file,"code\\specialscreens\\witch\\graphics",0x1C46C2,0x1C67C4,"Witch Screen");
 	produceAsmScript(file,"code\\specialscreens\\witchend\\graphics",0x1C67C4,0x1C7F7C,"Witch End Screen");	
-	produceAsmSection(file,0x1C7F7C,0x1C8000);
+	produceAsmSection(file,"",0x1C7F7C,0x1C8000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1450,9 +2464,9 @@ static produceSpecificSectionFifteen(mainFile,sectionName,start,end,fs,sectionCo
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x1C8000,0x1C8004);
-	produceAsmScriptWithConditionalInclude(file,"data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",1);	
-	produceAsmSection(file,0x1D7E26,0x1D8000);
+	produceAsmSection(file,"",0x1C8000,0x1C8004);
+	produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",1);	
+	produceAsmSection(file,"",0x1D7E26,0x1D8000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1470,15 +2484,15 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmSection(file,0x1E0000,0x1EE02C);
+	produceAsmSection(file,"",0x1E0000,0x1EE02C);
 	produceAsmScript(file,"data\\stats\\allies\\growthcurves",0x1EE02C,0x1EE270,"Stat growth curves");
 	//produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");	
 	produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7D0,30,2,"Ally stats");
 	produceAsmScript(file,"data\\stats\\allies\\allystartdefs",0x1EE7D0,0x1EE890,"Ally start definitions");
 	produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
-	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics",1);	
-	produceAsmScriptWithConditionalInclude(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics",1);	
-	produceAsmSection(file,0x1EF5A6,0x1F0000);
+	produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics",1);	
+	produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics",1);	
+	produceAsmSection(file,"",0x1EF5A6,0x1F0000);
 
 	fclose(file);
 	Message("DONE.\n");	
@@ -1515,7 +2529,7 @@ static produceAsmDataEntries(mainFile,sectionName,entryName,start,end,lastEntryD
 		addr = addr+4;
 		i++;
 	}
-	if(lastEntryDataEnd<chunkEnd){produceAsmSection(file,lastEntryDataEnd,chunkEnd);}
+	if(lastEntryDataEnd<chunkEnd){produceAsmSection(file,"",lastEntryDataEnd,chunkEnd);}
 	fclose(file);
 }
 
@@ -1545,7 +2559,7 @@ static produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sect
 		else if(GetFchunkAttr(ea,FUNCATTR_START)==ea){	
 			writeFChunkHeader(file,ea,prettyPrint);
 		}		
-		writeItem(file,ea);
+		writeItem(file,"",ea);
 		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFunctionFooter(file,ea,prettyPrint);
 		}		
@@ -1559,14 +2573,17 @@ static produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sect
 
 }
 
-static produceAsmScript(mainFile,sectionName,start,end,sectionComment){
-	
-	produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sectionComment,0);
 
+static produceAsmScriptWithExtName(mainFile,extName,sectionName,start,end,sectionComment){
+	produceAsmScriptWithConditionalInclude(mainFile,extName,sectionName,start,end,sectionComment,0);
+}
+
+static produceAsmScript(mainFile,sectionName,start,end,sectionComment){
+	produceAsmScriptWithConditionalInclude(mainFile,"",sectionName,start,end,sectionComment,0);
 }
 
 
-static produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sectionComment,conditionalIncludeType){
+static produceAsmScriptWithConditionalInclude(mainFile,extName,sectionName,start,end,sectionComment,conditionalIncludeType){
 	auto ea,itemSize,action,currentLine,previousLine,fileName,file;
 	auto output, include, name, indent, comment, commentEx, commentIndent, offsets;
 	fileName = form("%s.asm",sectionName);
@@ -1580,25 +2597,34 @@ static produceAsmScriptWithConditionalInclude(mainFile,sectionName,start,end,sec
 	}else{
 		include = "include";
 	}
-	writestr(mainFile,form("                %s \"%s\"    ; %s\n",include,fileName,sectionComment));
+	indent = "                ";
+	if(extName!=""){
+		name = form("%s:",extName);
+		while(strlen(name)<(strlen(indent))){
+			name = form("%s ",name);
+		}		
+	}else{
+		name = indent;
+	}
+	writestr(mainFile,form("%s%s \"%s\"    ; %s\n",name,include,fileName,sectionComment));
 	file = fopen(form("disasm\\%s",fileName),"w");
 	offsets = form("0x%s..0x%s",ltoa(start,16),ltoa(end,16));
 	writestr(file,form("\n; ASM FILE %s.asm :\n; %s : %s\n",sectionName,offsets,sectionComment));
-	produceAsmSection(file,start,end);
+	produceAsmSection(file,extName,start,end);
 	fclose(file);
 	Message("DONE.\n");	
 
 }
 
-static produceAsmSection(file,start,end){
-	produceAsmSectionWithPrettyParam(file,start,end,1);
+static produceAsmSection(file,extName,start,end){
+	produceAsmSectionWithPrettyParam(file,extName,start,end,1);
 }
 
-static produceAsmSectionNoPretty(file,start,end){
-	produceAsmSectionWithPrettyParam(file,start,end,0);
+static produceAsmSectionNoPretty(file,extName,start,end){
+	produceAsmSectionWithPrettyParam(file,extName,start,end,0);
 }
 
-static produceAsmSectionWithPrettyParam(file,start,end,prettyWriteFunctions){
+static produceAsmSectionWithPrettyParam(file,extName,start,end,prettyWriteFunctions){
 	auto ea,itemSize;
 	ea = start;
 	while(ea<end){
@@ -1609,7 +2635,7 @@ static produceAsmSectionWithPrettyParam(file,start,end,prettyWriteFunctions){
 		else if(GetFchunkAttr(ea,FUNCATTR_START)==ea){	
 			writeFChunkHeader(file,ea,prettyWriteFunctions);
 		}		
-		writeItemWithPrettyPrintParam(file,ea,prettyWriteFunctions);
+		writeItemWithPrettyPrintParam(file,extName,ea,prettyWriteFunctions);
 		if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
 			writeFunctionFooter(file,ea,prettyWriteFunctions);
 		}		
@@ -1695,11 +2721,11 @@ static writeFunctionFooter(file, ea,prettyWriteFunctions){
 	}
 }
 
-static writeItem(file,ea){
-	writeItemWithPrettyPrintParam(file,ea,1);
+static writeItem(file,extName,ea){
+	writeItemWithPrettyPrintParam(file,extName,ea,1);
 }
 
-static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
+static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
 	auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,lineA,lineB,disasmLen,manualInsn,output;
 	indent = "                ";
 	commentIndent = "                                        ";
@@ -1708,7 +2734,7 @@ static writeItemWithPrettyPrintParam(file,ea,prettyPrint){
 	if(name==""){
 		name = Name(ea);
 	}
-	if(name!=""){
+	if(name!=""&&name!=extName){
 		name=form("%s:",name);
 		if(GetFunctionAttr(ea,FUNCATTR_START)!=-1){
 			if(prettyPrint!=0){

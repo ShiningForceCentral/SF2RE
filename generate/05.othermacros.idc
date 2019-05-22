@@ -41,6 +41,7 @@ static main(void){
 	parseAllyStats();
 	parseAllyStartDefs();
 	parseClassDefs();
+	parseMapData();
 	Message("END OF PARSING.\n");	
 }
 
@@ -988,6 +989,387 @@ static parseClassDefs(){
 }
 
 
+static parseMapData(){
+	auto i,j,x,s,index,path;
+	auto start,end,lastEntryDataEnd,chunkEnd,addr,dataEnd,from,dref,section,action,sc,flag,flagDescription,parameter,flagmapFile,lineNumber,currentLine,entry;
+	i = 0;
+	start = 0x94B8A;
+	end = 0x94CC6;
+	addr = start;
+	lastEntryDataEnd = 0xC7ECC;
+	chunkEnd = 0xC8000;
+	i = 0;
+	action = 1;
+	addr = start;
+	while(addr!=end&&action==1){
+		dref = Dfirst(addr);	
+		index = ltoa(i,10);
+		if(strlen(index)==1)index=form("0%s",index);
+		
+		/* tileset data */
+		MakeByte(dref);
+		SetManualInsn(dref, form("mapPalette  %d", Byte(dref)));
+		MakeByte(dref+1);
+		SetManualInsn(dref+1, form("mapTileset1 %d", Byte(dref+1)));
+		MakeByte(dref+2);
+		SetManualInsn(dref+2, form("mapTileset2 %d", Byte(dref+2)));
+		MakeByte(dref+3);
+		SetManualInsn(dref+3, form("mapTileset3 %d", Byte(dref+3)));
+		MakeByte(dref+4);
+		SetManualInsn(dref+4, form("mapTileset4 %d", Byte(dref+4)));
+		MakeByte(dref+5);
+		SetManualInsn(dref+5, form("mapTileset5 %d", Byte(dref+5)));
+
+		/* Areas */
+		section = Dfirst(dref+6+4*2);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+30;j++){undefineByte(j);}
+				MakeWord(sc);
+				MakeWord(sc+2);
+				SetManualInsn(sc, form("; Area %d",entry));
+				SetManualInsn(sc+2, form("    mainLayerStart      %d, %d", Word(sc), Word(sc+2)));
+				MakeDword(sc+4);
+				SetManualInsn(sc+4, form("    mainLayerEnd        %d, %d", Word(sc+4), Word(sc+6)));
+				MakeDword(sc+8);
+				SetManualInsn(sc+8, form("    scndLayerFgndStart  %d, %d", Word(sc+8), Word(sc+10)));
+				MakeDword(sc+12);
+				SetManualInsn(sc+12, form("    scndLayerBgndStart  %d, %d", Word(sc+12), Word(sc+14)));
+				MakeDword(sc+16);
+				SetManualInsn(sc+16, form("    mainLayerParallax   %d, %d", Word(sc+16), Word(sc+18)));
+				MakeDword(sc+20);
+				SetManualInsn(sc+20, form("    scndLayerParallax   %d, %d", Word(sc+20), Word(sc+22)));
+				MakeWord(sc+24);
+				SetManualInsn(sc+24, form("    mainLayerAutoscroll %d, %d", Byte(sc+24), Byte(sc+25)));
+				MakeWord(sc+26);
+				SetManualInsn(sc+26, form("    scndLayerAutoscroll %d, %d", Byte(sc+26), Byte(sc+27)));
+				MakeByte(sc+28);
+				SetManualInsn(sc+28, form("    mainLayerType    %d", Byte(sc+28)));
+				MakeByte(sc+29);
+				SetManualInsn(sc+29, form("    areaDefaultMusic %d", Byte(sc+29)));
+				sc = sc+30;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+		
+		/* Flag block copies */
+		section = Dfirst(dref+6+4*3);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+8;j++){undefineByte(j);}
+				MakeWord(sc);
+				flagDescription = "";
+				flag = Word(sc);
+				parameter = ltoa(flag,16);
+				while(strlen(parameter)<4){
+					parameter=form("0%s",parameter);
+				}
+				flagmapFile = fopen("flagmap.txt","r");
+				while(flagDescription==""){
+				lineNumber = lineNumber + 1;
+					currentLine = readstr(flagmapFile);
+					if(currentLine==-1){
+						break;
+					}
+					if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+						flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
+					}
+				}
+				fclose(flagmapFile);	
+				MakeRptCmt(sc,flagDescription);
+				SetManualInsn(sc, form("fbcFlag $%s", ltoa(Word(sc),16)));
+				MakeWord(sc+2);
+				SetManualInsn(sc+2, form("  fbcSource %d, %d", Byte(sc+2), Byte(sc+3)));
+				MakeWord(sc+4);
+				SetManualInsn(sc+4, form("  fbcSize   %d, %d", Byte(sc+4), Byte(sc+5)));
+				MakeWord(sc+6);
+				SetManualInsn(sc+6, form("  fbcDest   %d, %d", Byte(sc+6), Byte(sc+7)));
+				sc = sc+8;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Step block copies */
+		section = Dfirst(dref+6+4*4);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+8;j++){undefineByte(j);}
+				MakeWord(sc);
+				SetManualInsn(sc, form("sbc %d, %d", Byte(sc), Byte(sc+1)));
+				MakeWord(sc+2);
+				SetManualInsn(sc+2, form("  sbcSource %d, %d", Byte(sc+2), Byte(sc+3)));
+				MakeWord(sc+4);
+				SetManualInsn(sc+4, form("  sbcSize   %d, %d", Byte(sc+4), Byte(sc+5)));
+				MakeWord(sc+6);
+				SetManualInsn(sc+6, form("  sbcDest   %d, %d", Byte(sc+6), Byte(sc+7)));
+				sc = sc+8;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Layer 2 block copies */
+		section = Dfirst(dref+6+4*5);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+8;j++){undefineByte(j);}
+				MakeWord(sc);
+				SetManualInsn(sc, form("slbc %d, %d", Byte(sc), Byte(sc+1)));
+				MakeWord(sc+2);
+				SetManualInsn(sc+2, form("  slbcSource %d, %d", Byte(sc+2), Byte(sc+3)));
+				MakeWord(sc+4);
+				SetManualInsn(sc+4, form("  slbcSize   %d, %d", Byte(sc+4), Byte(sc+5)));
+				MakeWord(sc+6);
+				SetManualInsn(sc+6, form("  slbcDest   %d, %d", Byte(sc+6), Byte(sc+7)));
+				sc = sc+8;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Warps */
+		section = Dfirst(dref+6+4*6);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+8;j++){undefineByte(j);}
+				MakeWord(sc);
+				SetManualInsn(sc, form("mWarp %d, %d", Byte(sc), Byte(sc+1)));
+				MakeWord(sc+2);
+				SetManualInsn(sc+2, form("  warpMap    %d", Word(sc+2)));
+				MakeWord(sc+4);
+				SetManualInsn(sc+4, form("  warpDest   %d, %d", Byte(sc+4), Byte(sc+5)));
+				MakeWord(sc+6);
+				SetManualInsn(sc+6, form("  warpFacing %d", Byte(sc+6)));
+				sc = sc+8;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Chest Items */
+		section = Dfirst(dref+6+4*7);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+4;j++){undefineByte(j);}
+				MakeDword(sc);				
+				flagDescription = "";
+				flag = Word(sc);
+				parameter = ltoa(flag,16);
+				while(strlen(parameter)<4){
+					parameter=form("0%s",parameter);
+				}
+				flagmapFile = fopen("flagmap.txt","r");
+				while(flagDescription==""){
+				lineNumber = lineNumber + 1;
+					currentLine = readstr(flagmapFile);
+					if(currentLine==-1){
+						break;
+					}
+					if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+						flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
+					}
+				}
+				fclose(flagmapFile);	
+				MakeRptCmt(sc,flagDescription);
+				SetManualInsn(sc, form("mapItem %d, %d, $%s, %d", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),16),Byte(sc+3)));
+				sc = sc+4;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Non-Chest Items */
+		section = Dfirst(dref+6+4*8);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+4;j++){undefineByte(j);}
+				MakeDword(sc);				
+				flagDescription = "";
+				flag = Word(sc);
+				parameter = ltoa(flag,16);
+				while(strlen(parameter)<4){
+					parameter=form("0%s",parameter);
+				}
+				flagmapFile = fopen("flagmap.txt","r");
+				while(flagDescription==""){
+				lineNumber = lineNumber + 1;
+					currentLine = readstr(flagmapFile);
+					if(currentLine==-1){
+						break;
+					}
+					if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
+						flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
+					}
+				}
+				fclose(flagmapFile);	
+				MakeRptCmt(sc,flagDescription);
+				SetManualInsn(sc, form("mapItem %d, %d, $%s, %d", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),16),Byte(sc+3)));
+				sc = sc+4;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+
+		/* Animations */
+		section = Dfirst(dref+6+4*9);
+		if(section!=BADADDR){
+			dataEnd = 0;
+			j = section+1;
+			while(dataEnd==0){
+				from = DfirstB(j);
+				while(from!=BADADDR){
+					if(from>=start&&from<chunkEnd){
+						dataEnd = j;
+					}
+		      from=DnextB(addr,from);      
+				}
+				j++;
+				if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
+			}
+			sc = section;
+			entry = 0;
+			if(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+4;j++){undefineByte(j);}
+				MakeDword(sc);
+				SetManualInsn(sc, form("mapAnimation %d, %d", Word(sc), Word(sc+2)));
+				sc = sc+4;
+			}
+			while(Word(sc)!=0xFFFF){
+				for(j=sc;j<sc+8;j++){undefineByte(j);}
+				MakeData(sc,FF_BYTE,8,1);
+				SetManualInsn(sc, form("  mapAnimEntry %d, %d, $%s, %d", Word(sc), Word(sc+2), ltoa(Word(sc+4),16), Word(sc+6)));
+				sc = sc+8;
+				entry++;
+			}
+			for(j=sc;j<sc+1;j++){undefineByte(j);}
+			MakeWord(sc);
+			SetManualInsn(sc, "endWord");
+		}
+		
+		addr=addr+4;
+		i++;
+	}
+	
+}
 
 
 

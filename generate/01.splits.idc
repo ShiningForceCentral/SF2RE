@@ -588,10 +588,11 @@ static splitMaps(file) {
 		MakeNameEx(dref,form("Map%s",index),0);
 		//writestr(file,form("#dir\tdata/maps/entries/map%s\n",index));
 				MakeData(dref,FF_BYTE,0x6,0);
-				if(strstr(GetDisasm(dref),"incbin")==-1){	
+				/*if(strstr(GetDisasm(dref),"incbin")==-1){	
 					SetManualInsn(dref, form("incbin \"data/maps/entries/map%s/00-tilesets.bin\"",index));
 					writestr(file,form("#split\t0x%s,0x%s,data/maps/entries/map%s/00-tilesets.bin\n",ltoa(dref,16),ltoa(dref+6,16),index));
-				}		
+				}	*/	
+				//Message(form("\nproduceAsmScript(file,\"data\\\\maps\\\\entries\\\\map%s\\\\00-tilesets.asm\",0x%s,0x%s,\"\");",index,ltoa(dref,16),ltoa(dref+6,16)));
 		for(s=0;s!=10;s++){
 			from = dref+6+4*s;
 			MakeDword(from);
@@ -608,6 +609,10 @@ static splitMaps(file) {
 	while(addr!=end&&action==1){
 		dref = Dfirst(addr);		
 		//Jump(dref); 
+		index = ltoa(i,10);
+		if(strlen(index)==1)index=form("0%s",index);
+		//Message(form("\nproduceAsmScript(file,\"data\\\\maps\\\\entries\\\\map%s\\\\00-tilesets.asm\",0x%s,0x%s,\"\");",index,ltoa(dref,16),ltoa(dref+6,16)));
+		//Message(form("\nproduceAsmSection(file,0x%s,0x%s);",ltoa(dref+6,16),ltoa(dref+6+10*4,16)));
 		for(s=0;s!=10;s++){
 			section = Dfirst(dref+6+4*s);
 			if(section!=BADADDR){
@@ -624,17 +629,22 @@ static splitMaps(file) {
 					j++;
 					if(j==lastEntryDataEnd) dataEnd = lastEntryDataEnd;
 				}
-				index = ltoa(i,10);
-				if(strlen(index)==1)index=form("0%s",index);
 				currentSectionName = substr(sectionNamesForFiles,strstr(sectionNamesForFiles,form("%d",s))+2,strstr(sectionNamesForFiles,form("%d",s+1))-1);
 				//Message(form("Processing Map%s section%d at %s, dataEnd %s\n",index,s,ltoa(section,16),ltoa(dataEnd,16)));
 				MakeData(section,FF_BYTE,dataEnd-section,1);
 				if(strstr(GetDisasm(section),"incbin")==-1){	
-					SetManualInsn(section, form("incbin \"data/maps/entries/map%s/%s-%s.bin\"",index,ltoa(s,10),currentSectionName));
-					writestr(file,form("#split\t0x%s,0x%s,data/maps/entries/map%s/%s-%s.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,ltoa(s,10),currentSectionName));
+					if(s<2){
+						SetManualInsn(section, form("incbin \"data/maps/entries/map%s/%s-%s.bin\"",index,ltoa(s,10),currentSectionName));
+						writestr(file,form("#split\t0x%s,0x%s,data/maps/entries/map%s/%s-%s.bin\n",ltoa(section,16),ltoa(dataEnd,16),index,ltoa(s,10),currentSectionName));
+						//Message(form("\nproduceAsmSection(file,0x%s,0x%s);",ltoa(section,16),ltoa(dataEnd,16)));
+					}else{
+						SetManualInsn(section, "");
+						//Message(form("\nproduceAsmScript(file,\"data\\\\maps\\\\entries\\\\map%s\\\\%s-%s.asm\",0x%s,0x%s,\"\");",index,ltoa(s,10),currentSectionName,ltoa(section,16),ltoa(dataEnd,16)));
+					}
 				}
 			}
 		}
+		//Message("\n");
 		addr=addr+4;
 		i++;
 		//action = AskYN(1,"Ok ?");
