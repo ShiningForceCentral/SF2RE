@@ -171,6 +171,12 @@ static fixSingleInstructions(){
 	OpHex(0x56030,0);
 	MakeNameEx(0xFC,"",0);
 	
+	/* Change sign of operands */
+	OpSign(0x11BC,0);
+	
+	/* Convert operands to symbolic constants */
+	OpEnum(0x9B96,1,GetEnum("Battle_Cutscene"));
+	
 	SetManualInsn(0x1A4,"declareRomEnd");
 	SetManualInsn(0x1F0,"headerRegion");
 	SetManualInsn(0x279D8,"enableSram");	
@@ -178,6 +184,7 @@ static fixSingleInstructions(){
 }
 
 static insertRomExpandTweaks(){
+	auto ea;
 
 	/* Align directives being not permissive enough 
 	to remove data chunks for ROM expansion */
@@ -217,6 +224,9 @@ static insertRomExpandTweaks(){
 	SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoordinates,a0");
 	SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoordinates-4,a0");
 	
+	/* Tweaks related to force members expansion */
+	ea = 0x11BA8; SetManualInsn(ea,form("bsrIfVanillaRom.w %s", GetOpnd(ea,0)));
+	ea = 0x11C9E; SetManualInsn(ea,form("bsrIfVanillaRom.w %s", GetOpnd(ea,0)));
 	
 
 

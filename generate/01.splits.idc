@@ -294,7 +294,7 @@ static splitSingleChunks(file) {
 	//splitSingleChunk(0x44A5E,0x44A7C,"AllySprites","data/stats/allies/allyspriteids.bin",file);
 	//splitSingleChunk(0x44AA4,0x44B4A,"EnemySprites","data/stats/enemies/enemyspriteids.bin",file);
 	
-	splitSingleChunk(0x4567A,0x45858,"SpriteDialogProperties","data/spritedialogdefs.bin",file);
+	//splitSingleChunk(0x4567A,0x45858,"SpriteDialogProperties","data/spritedialogdefs.bin",file);
 	
 	//splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","data/battles/global/enemyleaderpresence.bin",file);
 	

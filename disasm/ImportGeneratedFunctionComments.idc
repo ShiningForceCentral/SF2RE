@@ -1046,11 +1046,9 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x11eea, 
         "In: A1 = address of VDP tile order in RAM", 1);
 
-    // GetPortraitIdx
+    // GetCombatantPortrait
     SetFunctionCmt(0x1263a, 
-        "    Get index of portrait based on char index for any character.\n\
-    In: D0 = char idx\n\
-    Out: D0 = adjusted portrait idx", 1);
+        "Get portrait index for combatant D0 -> D0", 1);
 
     // LoadCharPortrait
     SetFunctionCmt(0x13394, 
@@ -1105,11 +1103,10 @@ In: D0 = character idx", 1);
     SetFunctionCmt(0x1562a, 
         "    In: D0 = portrait idx", 1);
 
-    // GetCharPortraitIdx
+    // GetAllyPortrait
     SetFunctionCmt(0x15736, 
-        "    Get index of portrait based on char index for force members.\n\
-    In: D0 = char idx\n\
-    Out: D0 = adjusted portrait idx", 1);
+        "In: D0 = ally or portrait index (depending on caller function)\n\
+Out: D0 = adjusted portrait index", 1);
 
     // sub_1586E
     SetFunctionCmt(0x1586e, 
@@ -1515,11 +1512,11 @@ Out: D4 = map sprite ID", 1);
     SetFunctionCmt(0x453c6, 
         "Control Raft", 1);
 
-    // GetEntityPortraitAndSpeechSfx
+    // GetEntityPortaitAndSpeechSound
     SetFunctionCmt(0x45638, 
-        "In: D0 = entity idx\n\
-Out: D1 = portrait idx\n\
-     D2 = speech sound idx", 1);
+        "In: D0 = character index\n\
+Out: D1 = portrait index\n\
+     D2 = speech sound index", 1);
 
     // csc35_setBlocksVar
     SetFunctionCmt(0x46582, 
@@ -1577,7 +1574,7 @@ Out: D1 = portrait idx\n\
     SetFunctionCmt(0x46ea8, 
         "specific entity behaviour for skreech join cutscene", 1);
 
-    // GetEntityAddressFromPlayableCharacterIdx
+    // GetEntityAddressFromCharacter
     SetFunctionCmt(0x4704a, 
         "    Get address of entity information. Could be a force member or an opponent\n\
     In: D0 = playable character from FFB140\n\

@@ -65,7 +65,8 @@ static produceEnums(){
 				j=0;
 				constId = GetConstEx(id,constant,j,bmask);
 				while(constId != -1){
-					output = form("\n%s: equ $%s",GetConstName(constId),ltoa(constant,16));
+					//output = form("\n%s: equ $%s",GetConstName(constId),ltoa(constant,16));
+                    output = conditionalEnumOutput(enumName,constant,constId);
 					//Message(output);
 					writestr(file,output);
 					j++;
@@ -83,6 +84,24 @@ static produceEnums(){
 	Message("DONE.");
 }
 
+static conditionalEnumOutput(enumName,constant,constId){
+	auto constName,output;
+	constName = GetConstName(constId);
+	if(enumName=="Combatant"&&constName=="COM_ALLIES_COUNTER"||constName=="COM_ALLY_END"){
+		output = form("\n%s: equ COM_ALLIES_NUM-1", constName);
+	}else if(enumName=="Combatant"&&constName=="COM_ALLIES_NUM"){
+		output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $20", constName, ltoa(constant,16), constName);
+	}else if(enumName=="Combatant"&&constName=="COM_ALL_COUNTER"){
+		output = form("\n%s: equ COM_ALLIES_NUM+COM_ENEMIES_NUM-1", constName);
+	}else if(enumName=="Followers"&&constName=="FOLLOWER_A"){
+		output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $9C", constName, ltoa(constant,16), constName);
+	}else if(enumName=="Followers"&&constName=="FOLLOWER_B"){
+		output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $9D", constName, ltoa(constant,16), constName);
+	}else{
+		output = form("\n%s: equ $%s", constName, ltoa(constant,16));
+	}
+	return output;
+}
 
 static produceConst(void) {
 	auto seg,end,ea,segName,name,file;
@@ -207,7 +226,8 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\gameflow\\mainloop",0x75C4,0x75EC,"Main loop");	
 	produceAsmScript(file,"code\\common\\maps\\egressinit",0x75EC,0x764E,"Egress map init function");	
 	produceAsmScript(file,"code\\gameflow\\start\\basetiles",0x764E,0x769C,"Base tiles loading");	
-	produceAsmScript(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions");	
+	produceAsmScriptWithConditionalInclude(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions",1);
+	writestr(file,"                includeIfExpandedRom \"code\\gameflow\\special\\battletest-expanded.asm\"\n");
 	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");	
 	produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");	
 	produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");	
@@ -273,7 +293,13 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
-	produceAsmScript(file,"code\\common\\menus\\menuengine",0x10000,0x16EA6,"Menu engine");	
+	produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function",1);
+	writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
+	produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1264E,0x15736,"Menu engine");
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function",1);
+	writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getallyportrait-expanded.asm\"\n");
+	produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x16EA6,"Menu engine");
 	produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
 	produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
 	produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3D,"Item names");
@@ -434,7 +460,11 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
 	produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45634,"Mapscripts and functions for Caravan and Raft");
-	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45634,0x45E44,"Entity functions");
+	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function",1);
+	produceAsmScriptWithConditionalInclude(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties",1);
+	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
+	writestr(file,"                includeIfExpandedRom \"data\\spritedialogproperties-expanded.asm\"\n");
+	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
 	produceAsmScript(file,"data\\scripting\\entity\\eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
 	produceAsmScript(file,"code\\common\\scripting\\map\\mapscriptengine_1",0x46506,0x47102,"Mapscript engine, part 1");
 	produceAsmScript(file,"code\\common\\scripting\\map\\debugmapscripts",0x47102,0x4712A,"Debug mapscript function");
@@ -2727,6 +2757,7 @@ static writeItem(file,extName,ea){
 
 static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
 	auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,lineA,lineB,disasmLen,manualInsn,output;
+    auto i,next;
 	indent = "                ";
 	commentIndent = "                                        ";
 	//name = GetTrueName(ea);
@@ -2764,10 +2795,26 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
 			comment = formatRptCmt(commentEx);
 		}
 	}
-	lineA = LineA(ea,0);
+	//lineA = LineA(ea,0);
+    i = 0;
+    lineA = "";
+    while(LineA(ea,i)!=""){
+		next = LineA(ea,i);
+		if(lineA==""){lineA = next;}
+		else{lineA = form("%s\n%s%s", lineA, indent, next);}
+		i++;
+    }
 	disasm = GetDisasm(ea);
 	cmtIdx = strstr(disasm,";");
-	lineB = LineB(ea,0);
+	//lineB = LineB(ea,0);
+    i = 0;
+    lineB = "";
+    while(LineB(ea,i)!=""){
+		next = LineB(ea,i);
+		if(lineB==""){lineB = next;}
+		else{lineB = form("%s\n%s%s", lineB, indent, next);}
+		i++;
+    }
 	if(lineA!="" && lineA!=" "){
 		lineA = form("%s\n",lineA);
 	}

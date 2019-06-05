@@ -32,8 +32,10 @@ static main(void){
 	parseMithrilWeaponLists();
 	parseSpecialCaravanDescriptions();
 	parseUsableOutsideBattleItems();
+    parseFollowers();
 	parseAllyMapSprites();
 	parseEnemyMapSprites();
+    parseSpriteDialogProperties();
 	//parseEnemyLeaderPresence();
 	parseEnemyDefs();
 	parseRandomBattles();
@@ -650,16 +652,40 @@ static parseUsableOutsideBattleItems(){
 	while(addr<0x229EB){
 		undefineByte(addr);
 		MakeByte(addr);
-		//item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),0);
 		item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),strlen("ITEM_"),0);
 		SetManualInsn(addr, form("usableOutsideBattleItem %s", item));
-		//SetManualInsn(addr, "");
 		addr++;
 	}
 	// Terminator byte at address 0x229EB
 	undefineByte(addr);
 	MakeByte(addr);
 	SetManualInsn(addr, "\ntableEnd.b");
+}
+
+static parseFollowers(){
+    auto addr, i, j, flag, entity, sprite;
+    addr = 0x44338;
+    while(addr<0x44388){
+		for(j=addr;j<addr+4;j++){undefineByte(j);}
+		MakeData(addr,FF_BYTE,4,1);
+        flag = form("$%s", ltoa(Byte(addr),16));
+        if(Byte(addr+1)<0x1E){
+            entity = GetConstName(GetConst(GetEnum("Allies"),Byte(addr+1),-1));
+        }else{
+            entity = GetConstName(GetConst(GetEnum("Followers"),Byte(addr+1),-1));
+        }
+        if(Byte(addr+2)!=0xFF){
+            sprite = GetConstName(GetConst(GetEnum("Mapsprites"),Byte(addr+2),-1));
+        }else{
+            sprite = form("$%s", ltoa(Byte(addr+2),16));
+        }
+        SetManualInsn(addr, form("follower %s, %s, %s, %s", flag, entity, sprite, ltoa(Byte(addr+3),10)));
+        addr = addr+4;
+    }
+	// Terminator word at address 0x44388
+	for(j=addr;j<addr+2;j++){undefineByte(j);}
+	MakeWord(addr);
+	SetManualInsn(addr, "\ntableEnd");
 }
 
 static parseAllyMapSprites(){
@@ -694,6 +720,31 @@ static parseEnemyMapSprites(){
 		i++;
 		addr++;
 	}
+}
+
+static parseSpriteDialogProperties(){
+    auto addr, j, sprite, portrait, sfx;
+    addr = 0x4567A;
+    while(addr<0x45856){
+        for(j=addr;j<addr+4;j++){undefineByte(j);}
+        // Map sprite
+        MakeByte(addr);
+        sprite = substr(GetConstName(GetConst(GetEnum("Mapsprites"),Byte(addr),-1)),strlen("MAPSPRITE_"),-1);
+        SetManualInsn(addr, form("mapSprite %s", sprite));
+        // Portrait
+        MakeByte(addr+1);
+        portrait = substr(GetConstName(GetConst(GetEnum("Portraits"),Byte(addr+1),-1)),strlen("PORTRAIT_"),-1);
+        SetManualInsn(addr+1, form("portrait %s", portrait));
+        // Speech sound
+        MakeData(addr+2,FF_BYTE,2,1);
+        sfx = substr(GetConstName(GetConst(GetEnum("Sfx"),Byte(addr+2),-1)),strlen("SFX_"),-1);
+        SetManualInsn(addr+2, form("speechSound %s\n", sfx));
+        addr = addr+4;
+    }
+	// Terminator word at address 0x45856
+	for(j=addr;j<addr+2;j++){undefineByte(j);}
+	MakeWord(addr);
+	SetManualInsn(addr, "tableEnd");
 }
 
 /*
