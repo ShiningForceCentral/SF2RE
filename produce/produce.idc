@@ -226,7 +226,7 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
 	produceAsmScript(file,"code\\gameflow\\mainloop",0x75C4,0x75EC,"Main loop");	
 	produceAsmScript(file,"code\\common\\maps\\egressinit",0x75EC,0x764E,"Egress map init function");	
 	produceAsmScript(file,"code\\gameflow\\start\\basetiles",0x764E,0x769C,"Base tiles loading");	
-	produceAsmScriptWithConditionalInclude(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions",1);
 	writestr(file,"                includeIfExpandedRom \"code\\gameflow\\special\\battletest-expanded.asm\"\n");
 	produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");	
 	produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");	
@@ -294,10 +294,10 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
 	writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));	
 
 	produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function",1);
 	writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
 	produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1264E,0x15736,"Menu engine");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function",1);
 	writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getallyportrait-expanded.asm\"\n");
 	produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x16EA6,"Menu engine");
 	produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
@@ -460,8 +460,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 	produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
 	produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45634,"Mapscripts and functions for Caravan and Raft");
-	produceAsmScriptWithConditionalInclude(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function",1);
-	produceAsmScriptWithConditionalInclude(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties",1);
+	produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function",1);
+	produceAsmScriptWithConditionalInclude(file,"","data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties",1);
 	writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
 	writestr(file,"                includeIfExpandedRom \"data\\spritedialogproperties-expanded.asm\"\n");
 	produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
