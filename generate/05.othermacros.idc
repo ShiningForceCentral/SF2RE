@@ -1268,8 +1268,14 @@ static parseMapData(){
 				for(j=sc;j<sc+8;j++){undefineByte(j);}
 				MakeWord(sc);
 				SetManualInsn(sc, form("mWarp %d, %d", Byte(sc), Byte(sc+1)));
-				MakeWord(sc+2);
-				SetManualInsn(sc+2, form("  warpMap    %d", Word(sc+2)));
+				MakeByte(sc+2);
+				if(Byte(sc+2)!=0){
+					SetManualInsn(sc+2, form("  warpScroll %s", getDirection(Byte(sc+2)&0xF)));
+				}else{
+					SetManualInsn(sc+2, "  warpNoScroll");
+				}
+				MakeByte(sc+3);
+				SetManualInsn(sc+3, form("  warpMap    %d", Byte(sc+3)));
 				MakeWord(sc+4);
 				SetManualInsn(sc+4, form("  warpDest   %d, %d", Byte(sc+4), Byte(sc+5)));
 				MakeWord(sc+6);
@@ -1482,6 +1488,25 @@ static StrWithoutSpecialChar(addr,len,param){
 	return str;
 }
 
+static getDirection(cmd){
+	auto id,enumSize,constant,j,constId,output;
+	id = GetEnum("Direction");
+	enumSize = GetEnumSize(id);
+	constant = GetFirstConst(id,-1);	
+	while(constant!=-1){
+			j=0;
+			constId = GetConstEx(id,constant,j,-1);
+			while(constId != -1){
+				if(constant==cmd){
+					return GetConstName(constId);
+				}
+				j++;
+				constId = GetConstEx(id,constant,j,-1);
+			}
+			constant = GetNextConst(id,constant,-1);
+	}
+	return form("%s",ltoa(cmd,10));
+}
 
 /* 
  *	Makes sure byte at addr is
