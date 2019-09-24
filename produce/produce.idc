@@ -380,8 +380,8 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 	produceAsmScriptWithConditionalInclude(file,"","code\\common\\tech\\graphics\\specialspritesentries",0x25DF6,0x02784C,"Special Sprites Entries",1);
 	produceAsmScript(file,"code\\common\\tech\\graphics\\specialspritesanims",0x02784C,0x2791C,"Special Sprites Animations");
 	produceAsmScript(file,"code\\specialscreens\\suspend\\suspend",0x2791C,0x279D8,"Suspend functions");
-	produceAsmScript(file,"code\\specialscreens\\witchend\\witchend",0x279D8,0x27D8C,"Witch end functions");
-	produceAsmSection(file,"",0x27D8C,0x28000);
+	produceAsmScript(file,"code\\specialscreens\\witchend\\witchend",0x279D8,0x27D8E,"Witch end functions");
+	produceAsmSection(file,"",0x27D8E,0x28000);
 
 	fclose(file);
 	Message("DONE.\n");	
