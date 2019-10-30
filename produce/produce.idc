@@ -2681,6 +2681,7 @@ static writeHeader(file){
 	writestr(file,"   include \"sf2macros.asm\"\n");	
 	writestr(file,"   include \"sf2enums.asm\"\n");
 	writestr(file,"   include \"sf2const.asm\"\n");
+    writestr(file,"   include \"sf2patches.asm\"\n");
 	writestr(file,"\n");
 	writestr(file,"   include \"layout\\sf2-00-romlayout.asm\"\n");
 }
@@ -2800,8 +2801,21 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
     lineA = "";
     while(LineA(ea,i)!=""){
 		next = LineA(ea,i);
-		if(lineA==""){lineA = next;}
-		else{lineA = form("%s\n%s%s", lineA, indent, next);}
+		if(lineA==""){
+            if(next==indent){
+                name = "";
+                lineA = next;
+            }
+            else if(strstr(next,";")!=-1){
+                lineA = next;
+            }
+            else{
+                lineA = substr(next,strlen(indent),-1);
+            }
+        }
+        else{
+            lineA = form("%s\n%s", lineA, next);
+        }
 		i++;
     }
 	disasm = GetDisasm(ea);
@@ -2812,7 +2826,8 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
     while(LineB(ea,i)!=""){
 		next = LineB(ea,i);
 		if(lineB==""){lineB = next;}
-		else{lineB = form("%s\n%s%s", lineB, indent, next);}
+		//else{lineB = form("%s\n%s%s", lineB, indent, next);}
+        else{lineB = form("%s\n%s", lineB, next);}
 		i++;
     }
 	if(lineA!="" && lineA!=" "){
@@ -2833,6 +2848,7 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
 	if(strstr(lineA,"\n")!=-1){
 		lineA = form("%s%s",lineA,indent);
 	}
+    
 	// Make sure there is at least one space between disasm and comment
 	disasmLen = strlen(indent)+strlen(disasm);
 	if(disasmLen==strlen(commentIndent)&&substr(disasm,strlen(disasm)-1,-1)!=" "){disasmLen = disasmLen+1;}
