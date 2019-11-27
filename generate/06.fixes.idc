@@ -176,6 +176,7 @@ static fixSingleInstructions(){
     
     /* Convert operands to symbolic constants */
     OpEnum(0x9B96,1,GetEnum("Battle_Cutscene"));
+    OpEnum(0x16286,1,GetEnum("Windowing"));
     
     SetManualInsn(0x1A4,"declareRomEnd");
     SetManualInsn(0x1F0,"headerRegion");

@@ -203,13 +203,14 @@ static splitSingleChunks(file) {
     
     splitSingleChunk(0x15A5A,0x15BB0,"BattleConfigWindowLayout","data/graphics/tech/windowlayouts/battleconfigwindowlayout.bin",file);
     
-    splitSingleChunk(0x1607C,0x160B5,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
-    splitSingleChunk(0x160B5,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
-    splitSingleChunk(0x16204,0x1623A,"AlphabetEndWindowLayout","data/graphics/tech/windowlayouts/alphabetendwindowlayout.bin",file);
+    splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
+    splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
+    //splitSingleChunk(0x16204,0x1623A,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
+    splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlighttiles.bin",file);
     
     splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
     
-    splitSingleChunk(0x16A62,0x16EA6,"MemberStatsWindowLayout","data/graphics/tech/windowlayouts/memberstatswindowslayout.bin",file);
+    //splitSingleChunk(0x16A62,0x16EA6,"MemberStatsWindowLayout","data/graphics/tech/windowlayouts/memberstatswindowslayout.bin",file);
     //splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","data/stats/items/itemdefs.bin",file);
     //splitSingleChunk(0x176A6,0x1796E,"SpellDefs","data/stats/spells/spelldefs.bin",file);
     //splitSingleChunk(0x1796E,0x17F3E,"ItemNames","data/stats/items/itemnames.bin",file);
