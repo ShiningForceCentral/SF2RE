@@ -156,7 +156,10 @@ static fixSingleInstructions(){
 
     /* Operators being interpreted as offsets wrongly */
     OpHex(0x128C0,1);
+    OpHex(0x18A08,0);
+    OpHex(0x18AF2,0);
     OpHex(0x19C58,0);    
+    OpHex(0x19C7C,0);
     OpHex(0x1B3A0,0);
     OpHex(0x27982,1);
     OpHex(0x27A36,1);
@@ -172,7 +175,7 @@ static fixSingleInstructions(){
     MakeNameEx(0xFC,"",0);
     
     /* Change sign of operands */
-    OpSign(0x11BC,0);
+    //OpSign(0x11BC,0);
     
     /* Convert operands to symbolic constants */
     OpEnum(0x9B96,1,GetEnum("Battle_Cutscene"));
