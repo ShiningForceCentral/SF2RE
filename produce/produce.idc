@@ -693,7 +693,8 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     writestr(file,"                alignIfExpandedRom $30000\n");
     produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",2);    
     writestr(file,"                alignIfExpandedRom $38000\n");
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2);    
+    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2); 
+    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes",2);    
     produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
     writestr(file,"                alignIfExpandedRom $43800\n");    
     produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",2);    
