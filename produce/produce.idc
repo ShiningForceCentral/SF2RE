@@ -2733,7 +2733,7 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmSection(file,"",0x1B8000,0x1B8028);
     produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",1);    
     produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",1);    
-    produceAsmSection(file,"",0x1BEE38,0x1BEEE0);        
+    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes",1);       
     produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",1);
     produceAsmScript(file,"code\\specialscreens\\witch\\graphics",0x1C46C2,0x1C67C4,"Witch Screen");
     produceAsmScript(file,"code\\specialscreens\\witchend\\graphics",0x1C67C4,0x1C7F7C,"Witch End Screen");    

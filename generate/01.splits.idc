@@ -37,6 +37,8 @@ static splitAll(){
     splitGrounds(file);
     Message(" DONE.\nTextBanks...");    
     splitTextbanks(file);
+    Message(" DONE.\nWeaponPalettes...");    
+    splitWeaponPalettes(file);
     Message(" DONE.\n");    
     
     writestr(file,"\nsplit    0x0,0x0,\\0x0 - .bin\n");
@@ -60,6 +62,7 @@ writestr(file,"#dir    data/graphics/battles/battlesprites/allies/animations/\n"
 writestr(file,"#dir    data/graphics/battles/battlesprites/enemies\n");
 writestr(file,"#dir    data/graphics/battles/battlesprites/enemies/animations/\n");
 writestr(file,"#dir    data/graphics/battles/weapons\n");
+writestr(file,"#dir    data/graphics/battles/weapons/palettes\n");
 writestr(file,"#dir    data/graphics/battles/spells\n");
 writestr(file,"#dir    data/graphics/battles/spells/invocations/\n");
 writestr(file,"#dir    data/graphics/battles/spells/animations/\n");
@@ -326,7 +329,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x1B6DFA,0x1B7C9A,"EndKissPicture","data/graphics/specialscreens/endingkiss/endingkisstiles.bin",file);
     MakeAlign(0x1B7C9A, 0x1B8000-0x1B7C9A,14);
 
-    splitSingleChunk(0x1BEE38,0x1BEEE0,"plt_WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
+    //splitSingleChunk(0x1BEE38,0x1BEEE0,"plt_WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
 
     splitSingleChunk(0x1C46C2,0x1C4702,"plt_Witch","data/graphics/specialscreens/witchscreen/witchpalette.bin",file);
     splitSingleChunk(0x1C4702,0x1C4E88,"WitchLayout","data/graphics/specialscreens/witchscreen/witchlayout.bin",file);
@@ -785,6 +788,30 @@ static splitTextbanks(file) {
     MakeAlign(0x41FD9, 0x41FDA-0x41FD9,1);
 }
 
+
+//splitSingleChunk(0x1BEE38,0x1BEEE0,"plt_WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
+
+static splitWeaponPalettes(file) {
+
+    auto i,j,x,s,index;
+    auto start,end,addr,base;
+    i = 0;
+    start = 0x1BEE38;
+    end = 0x1BEEE0;
+    addr = start;  
+    for(j=start;j<end;j++){undefineByte(j);}
+    while(addr<end){
+        MakeData(addr,FF_BYTE,4,1);
+        index = ltoa(i,10);
+        while(strlen(index)<2){index=form("0%s",index);}
+        MakeNameEx(addr,form("WeaponPalette%s",index),0);
+        SetManualInsn(addr, form("incbin \"data/graphics/battles/weapons/palettes/weaponpalette%s.bin\"",index));
+        writestr(file,form("#split\t0x%s,0x%s,data/graphics/battles/weapons/palettes/weaponpalette%s.bin\n",ltoa(addr,16),ltoa(addr+4,16),index));
+        addr=addr+4;
+        i++;
+    }
+
+}
 
 
 static MakeNameExC(addr,name,flags){

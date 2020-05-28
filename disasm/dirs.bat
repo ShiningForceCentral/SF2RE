@@ -74,6 +74,7 @@ mkdir disasm\data\graphics\battles
 mkdir disasm\data\graphics\battles\grounds
 mkdir disasm\data\graphics\battles\backgrounds
 mkdir disasm\data\graphics\battles\weapons
+mkdir disasm\data\graphics\battles\weapons\palettes
 mkdir disasm\data\graphics\battles\battlesprites
 mkdir disasm\data\graphics\battles\battlesprites\allies
 mkdir disasm\data\graphics\battles\battlesprites\allies\animations
