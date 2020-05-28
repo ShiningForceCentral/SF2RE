@@ -91,13 +91,25 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
     if(enumName=="Combatant"&&constName=="COM_ALLIES_COUNTER"||constName=="COM_ALLY_END"){
         output = form("\n%s: equ COM_ALLIES_NUM-1", constName);
     }else if(enumName=="Combatant"&&constName=="COM_ALLIES_NUM"){
-        output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $20", constName, ltoa(constant,16), constName);
+        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
+        output = form("%s\n%s: equ $20", output, constName);
+        output = form("%s\n                else", output);
+        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
+        output = form("%s\n                endif", output);
     }else if(enumName=="Combatant"&&constName=="COM_ALL_COUNTER"){
         output = form("\n%s: equ COM_ALLIES_NUM+COM_ENEMIES_NUM-1", constName);
     }else if(enumName=="Followers"&&constName=="FOLLOWER_A"){
-        output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $9C", constName, ltoa(constant,16), constName);
+        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
+        output = form("%s\n%s: equ $9C", output, constName);
+        output = form("%s\n                else", output);
+        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
+        output = form("%s\n                endif", output);
     }else if(enumName=="Followers"&&constName=="FOLLOWER_B"){
-        output = form("\n                equIfVanillaRom %s, $%s\n                equIfExpandedRom %s, $9D", constName, ltoa(constant,16), constName);
+        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
+        output = form("%s\n%s: equ $9D", output, constName);
+        output = form("%s\n                else", output);
+        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
+        output = form("%s\n                endif", output);
         
     // ---------------------------------------------------------------------------
     
@@ -484,8 +496,11 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\mainloop",0x75C4,0x75EC,"Main loop");    
     produceAsmScript(file,"code\\common\\maps\\egressinit",0x75EC,0x764E,"Egress map init function");    
     produceAsmScript(file,"code\\gameflow\\start\\basetiles",0x764E,0x769C,"Base tiles loading");    
-    produceAsmScriptWithConditionalInclude(file,"","code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions",1);
-    writestr(file,"                includeIfExpandedRom \"code\\gameflow\\special\\battletest-expanded.asm\"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
+    writestr(file,"                include \"code\\gameflow\\special\\battletest-expanded.asm\"\n");
+    writestr(file,"                else\n");
+    produceAsmScript(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions");
+    writestr(file,"                endif\n");
     produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");    
     produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");    
     produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");    
@@ -552,11 +567,17 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function",1);
-    writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
+    writestr(file,"                include \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
+    writestr(file,"                else\n");
+    produceAsmScript(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function");
+    writestr(file,"                endif\n");
     produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1264E,0x15736,"Menu engine");
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function",1);
-    writestr(file,"                includeIfExpandedRom \"code\\common\\menus\\getallyportrait-expanded.asm\"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
+    writestr(file,"                include \"code\\common\\menus\\getallyportrait-expanded.asm\"\n");
+    writestr(file,"                else\n");
+    produceAsmScript(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function");
+    writestr(file,"                endif\n");
     produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x16204,"Menu engine");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\namecharacterentrywindowlayout",0x16204,0x1623A,"Name character entry window layout");
     produceAsmScript(file,"code\\common\\menus\\menuengine_4",0x1623A,0x16A62,"Menu engine");
@@ -709,22 +730,28 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     //produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
     produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
     produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function",1);
-    produceAsmScriptWithConditionalInclude(file,"","data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs",1);
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function",1);
-    writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getallymapsprite-expanded.asm\"\n");
-    writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
-    writestr(file,"                includeIfExpandedRom \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
+    writestr(file,"                include \"code\\common\\scripting\\entity\\getallymapsprite-expanded.asm\"\n");
+    writestr(file,"                include \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
+    writestr(file,"                include \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
+    writestr(file,"                else\n");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function");
+    produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function");
+    writestr(file,"                endif\n");
     produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite IDs");
     writestr(file,"                wordAlignIfExpandedRom\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
     produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45634,"Mapscripts and functions for Caravan and Raft");
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function",1);
-    produceAsmScriptWithConditionalInclude(file,"","data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties",1);
-    writestr(file,"                includeIfExpandedRom \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
-    writestr(file,"                includeIfExpandedRom \"data\\spritedialogproperties-expanded.asm\"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
+    writestr(file,"                include \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
+    writestr(file,"                include \"data\\spritedialogproperties-expanded.asm\"\n");
+    writestr(file,"                else\n");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function");
+    produceAsmScript(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties");
+    writestr(file,"                endif\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
     produceAsmScript(file,"code\\common\\scripting\\map\\mapscriptengine_1",0x46506,0x47102,"Mapscript engine, part 1");
