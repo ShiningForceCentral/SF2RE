@@ -116,11 +116,9 @@ static parseCutscenes(){
     parseCS(0x49B48,0x49BCA);
     parseCS(0x49BCA,0x49CE2);
     parseCS(0x49CE2,0x49F7E);
-    parseCS(0x49F7E,0x4A952);
-    parseCS(0x4A952,0x4A994);    
-    parseCS(0x4A994,0x4AA74);    
-    parseCS(0x4AA74,0x4AAB6);    
-    parseCS(0x4AAB6,0x4ABFE);        
+    parseCS(0x49F7E,0x4A952);    
+    parseCS(0x4A952,0x4AA74);    
+    parseCS(0x4AA74,0x4ABFE);        
     parseCS(0x4ABFE,0x4ACC8);    
     parseCS(0x4ACC8,0x4ACEC);
     parseCS(0x4ACEC,0x4ACF8);
@@ -261,9 +259,8 @@ static parseCutscenes(){
     parseCS(0x58856,-1);
     parseCS(0x58AE2,-1);
     parseCS(0x58B7A,-1);
-    parseCS(0x58E5C,-1);
     parseCS(0x58F5C,-1);
-    parseCS(0x58F7E,-1);
+    parseCSWithTextIndex(0x58F7E,-1, 0xC84);
     parseCS(0x58FA4,-1);
     parseCS(0x59656,-1);
     parseCS(0x5994E,-1);
@@ -402,8 +399,15 @@ static parseCutscenes(){
 
 static parseCS(start,end){
 
+    parseCSWithTextIndex(start,end, 0);
+
+}
+
+
+static parseCSWithTextIndex(start,end, textIndex){
+
     auto ea,cmd,cmdLength,cmdName,cmdComment,i,action;
-    auto textIndex,flag;
+    auto flag;
     
     cmdLength = 2;
     ea = start;
