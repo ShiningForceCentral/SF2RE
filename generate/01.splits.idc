@@ -198,16 +198,21 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     
     splitSingleChunk(0x1264E,0x126EE,"WindowBorderTiles","data/graphics/tech/windowbordertiles.bin",file);
-    splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
-    splitSingleChunk(0x1278E,0x1284E,"AllyKillDefeatWindowLayout","data/graphics/tech/windowlayouts/allykilldefeatwindowlayout.bin",file);
-    splitSingleChunk(0x1284E,0x1288E,"CharacterStatsWindowLayout","data/graphics/tech/windowlayouts/characterstatsdefeatwindowlayout.bin",file);
+    //splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
+    //splitSingleChunk(0x1278E,0x1284E,"AllyKillDefeatWindowLayout","data/graphics/tech/windowlayouts/allykilldefeatwindowlayout.bin",file);
+    //splitSingleChunk(0x1284E,0x1288E,"CharacterStatsWindowLayout","data/graphics/tech/windowlayouts/characterstatsdefeatwindowlayout.bin",file);
     
     splitSingleChunk(0x13D9E,0x13EDE,"TextHighlightTiles","data/graphics/tech/texthighlighttiles.bin",file);
     
+    splitSingleChunk(0x14EFC,0x14F7C,"ShopPriceTagTiles_Blank","data/graphics/tech/shoppricetagtiles-blank.bin",file);
+    splitSingleChunk(0x14F7C,0x1505C,"ShopPriceTagTiles_Numbers","data/graphics/tech/shoppricetagtiles-numbers.bin",file);
+    
+    splitSingleChunk(0x151D6,0x15268,"ShopInventoryItemHighlightTiles","data/graphics/tech/shopinventoryitemhighlighttiles.bin",file);
+    
     splitSingleChunk(0x15A5A,0x15BB0,"BattleConfigWindowLayout","data/graphics/tech/windowlayouts/battleconfigwindowlayout.bin",file);
     
-    splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
-    splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
+    //splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
+    //splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
     //splitSingleChunk(0x16204,0x1623A,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
     splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlighttiles.bin",file);
     
@@ -339,7 +344,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x1C6F2C,0x1C7F7C,"WitchEndTiles","data/graphics/specialscreens/witchscreen/endingwitchtiles.bin",file);
     MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);    
 
-    splitSingleChunk(0x1D8004,0x1DFA46,"Icons","data/graphics/icons/icons.bin",file);
+    splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
     MakeAlign(0x1DFA46, 0x1E0000-0x1DFA46,15);    
 
     splitSingleChunk(0x1E0000,0x1E8000,"","data/sound/pcmbank0.bin",file);

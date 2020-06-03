@@ -198,19 +198,19 @@ static parseEnemyItemDrops(){
         // Battle
         MakeByte(addr);
         battle = substr(GetConstName(GetConst(GetEnum("Battles"),Byte(addr),-1)),strlen("BATTLE_"),-1);
-        SetManualInsn(addr, form("battle %s", battle));
+        SetManualInsn(addr, form("battle      %s", battle));
         // Enemy entity
         MakeByte(addr+1);
-        enemyEntity = Byte(addr+1);
+        enemyEntity = Byte(addr+1)-128;
         SetManualInsn(addr+1, form("enemyEntity %d", enemyEntity));
         // Item drop
         MakeByte(addr+2);
         itemDrop = GetBitfieldConstNames(GetEnum("Items"),Byte(addr+2),strlen("ITEM_"),0);
-        SetManualInsn(addr+2, form("itemDrop %s", itemDrop));
+        SetManualInsn(addr+2, form("itemDrop    %s", itemDrop));
         // Drop flag
         MakeByte(addr+3);
         dropFlag = Byte(addr+3);
-        SetManualInsn(addr+3, form("dropFlag %d\n", dropFlag));
+        SetManualInsn(addr+3, form("dropFlag    %d\n", dropFlag));
         addr = addr+4;
     }
     // Terminator word at address 0xBECA
@@ -323,12 +323,11 @@ static parseItemDefs(){
         MakeByte(addr+8);
         if(Byte(addr+8)!=0){
             itemType = GetBitfieldConstNames(GetEnum("ItemType"),Byte(addr+8),strlen("ITEMTYPE_"),0);
-            SetManualInsn(addr+8, form("itemType &\n%s", itemType));
         }
         else{
             itemType = substr(GetConstName(GetConst(GetEnum("ItemType_None"),Byte(addr+8),-1)),strlen("ITEMTYPE_"),-1);
-            SetManualInsn(addr+8, form("itemType %s", itemType));
         }
+        SetManualInsn(addr+8, form("itemType %s", itemType));
         // Use spell
         MakeByte(addr+9);
         useSpell = GetBitfieldConstNames(GetEnum("Spells"),Byte(addr+9),strlen("SPELL_"),0);
@@ -365,12 +364,12 @@ static parseSpellDefs(){
         SetManualInsn(addr+1, form("mpCost %d", mpCost));
         // Animation ID
         MakeByte(addr+2);
-        animation = GetBitfieldConstNames(GetEnum("SpellAnims"),Byte(addr+2),strlen("SPELLANIMIDX_"),0);
+        animation = GetBitfieldConstNames(GetEnum("SpellAnimations"),Byte(addr+2),strlen("SPELLANIMATION_"),0);
         SetManualInsn(addr+2, form("animation %s", animation));
         // Spell properties
         MakeByte(addr+3);
         properties = GetBitfieldConstNames(GetEnum("SpellProps"),Byte(addr+3),strlen("SPELLPROPS_"),0);
-        SetManualInsn(addr+3, form("properties &\n%s", properties));
+        SetManualInsn(addr+3, form("properties %s", properties));
         // Range
         MakeData(addr+4,FF_BYTE,2,1);
         maxRange = Byte(addr+4);

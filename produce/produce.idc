@@ -88,213 +88,229 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
     auto i,j,constName,constStr,enumMember,output;
     constName = GetConstName(constId);
     //constStr = ltoa(constant,16);
-    if(enumName=="Combatant"&&constName=="COM_ALLIES_COUNTER"||constName=="COM_ALLY_END"){
-        output = form("\n%s: equ COM_ALLIES_NUM-1", constName);
-    }else if(enumName=="Combatant"&&constName=="COM_ALLIES_NUM"){
-        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
-        output = form("%s\n%s: equ $20", output, constName);
-        output = form("%s\n                else", output);
-        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
-        output = form("%s\n                endif", output);
-    }else if(enumName=="Combatant"&&constName=="COM_ALL_COUNTER"){
-        output = form("\n%s: equ COM_ALLIES_NUM+COM_ENEMIES_NUM-1", constName);
-    }else if(enumName=="Followers"&&constName=="FOLLOWER_A"){
-        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
-        output = form("%s\n%s: equ $9C", output, constName);
-        output = form("%s\n                else", output);
-        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
-        output = form("%s\n                endif", output);
-    }else if(enumName=="Followers"&&constName=="FOLLOWER_B"){
-        output = "\n                if (FORCE_MEMBERS_EXPANSION=1)";
-        output = form("%s\n%s: equ $9D", output, constName);
-        output = form("%s\n                else", output);
-        output = form("%s\n%s: equ $%s", output, constName, ltoa(constant,16));
-        output = form("%s\n                endif", output);
-        
-    // ---------------------------------------------------------------------------
     
-    // patch Three_Digits_Stats
-    
-    // enum Window_BattleEquip_Stats
-    }else if(enumName=="Window_BattleEquip_Stats"){
-        if (constant==0x701){
-            enumMember = formEnumMember(constName,"$601");      // constant WINDOW_BATTLEEQUIP_STATS_TILE_COORDS
+    /* enum AllyName */
+    if(enumName=="AllyName"){
+        if(constant==7){                                // ALLYNAME_MAX_DISPLAYED_LENGTH
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"8",constant);
+        }else if(constant==9){                          // ALLYNAME_CHARACTERS_COUNTER
+            output = form("\n%s: equ ALLYNAME_MAX_LENGTH-1", constName);
         }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
         }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // enum Window_FighterMiniStatus
-    }else if(enumName=="Window_FighterMiniStatus_Patch_ThreeDigitsStats"){
+    /* enum AllyStats */
+    }else if(enumName=="AllyStats"&&constant==0xF){     // ALLYSTATS_OFFSET_SPELL_LIST_MINUS_ONE
+        constStr = GetConstName(GetConst(id,0x10,-1));
+        output = form("\n%s: equ %s-1", constName, constStr);
+        
+    /* enum BattleMapCoordinates_Properties */
+    }else if(enumName=="BattleMapCoordinates_Properties"){
+        if(constant==5){                                // BATTLEMAPCOORDS_ENTRY_SIZE
+            output = formSinglePatchOutput("(BUGFIX_SEARCH_IN_BATTLE=1)",constName,"7",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum Caravan */
+    }else if(enumName=="Caravan"&&constant==0x3F){      // CARAVAN_MAX_ITEMS_NUMBER_MINUS_ONE
+        constStr = GetConstName(GetConst(id,0x40,-1));
+        output = form("\n%s: equ %s-1", constName, constStr);
+        
+    /* enum Combatant */
+    }else if(enumName=="Combatant"){
+        if(constant==0x1D){                                         // COMBATANT_ALLIES_COUNTER, COMBATANT_ALLIES_END
+            constStr = GetConstName(GetConst(id,0x1E,-1));
+            output = form("\n%s: equ %s-1", constName, constStr);
+        }else if(constant==0x1E){                                   // COMBATANT_ALLIES_NUMBER
+            output = formSinglePatchOutput("(FORCE_MEMBERS_EXPANSION=1)",constName,"32",constant);
+        }else if(constant==0x1F&&strstr(constName,"ALLIES")!=-1){   // COMBATANT_ALLIES_SPACEEND_MINUS_ONE
+            // allies space end - 1
+            constStr = "";
+            for(i=0;i<255;i++){
+                constStr = GetConstName(GetConstEx(id,0x20,i,-1));
+                if(strstr(constStr,"ALLIES")!=-1){
+                    break;
+                }
+            }
+            if(constStr==""){constStr = ltoa(constant,16);}
+            output = form("\n%s: equ %s-1", constName, constStr);
+        }else if(constant==0x1F&&strstr(constName,"ENEMIES")!=-1){  // COMBATANT_ENEMIES_COUNTER
+            // enemies counter = number of enemies - 1
+            constStr = "";
+            for(i=0;i<255;i++){
+                constStr = GetConstName(GetConstEx(id,0x20,i,-1));
+                if(strstr(constStr,"ENEMIES")!=-1){
+                    break;
+                }
+            }
+            if(constStr==""){constStr = ltoa(constant,16);}
+            output = form("\n%s: equ %s-1", constName, constStr);
+        }else if(constant==0x3D){                                   // COMBATANTS_ALL_COUNTER
+            // all combatants counter = number of allies + number of enemies - 1
+            constStr = form("%s+%s", GetConstName(GetConst(id,0x1E,-1)), GetConstName(GetConst(id,0x20,-1)));
+            output = form("\n%s: equ %s-1", constName, constStr);
+        }else if(constant==0x60){                                   // COMBATANT_ALLIES_SPACEEND_AND_ENEMIES_START_DIFFERENCE
+            // allies space end and enemies start difference
+            constStr = "";
+            for(i=0;i<255;i++){
+                constStr = GetConstName(GetConstEx(id,0x20,i,-1));
+                if(strstr(constStr,"ALLIES")!=-1){
+                    constStr = form("%s-%s", GetConstName(GetConst(id,0x80,-1)), constStr);
+                    break;
+                }
+            }
+            if(constStr==""){constStr = ltoa(constant,16);}
+            output = form("\n%s: equ %s", constName, constStr);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum Followers */
+    }else if(enumName=="Followers"){
+        if(constant==0x1E){                                     // FOLLOWER_A
+            output = formSinglePatchOutputWithHex("(FORCE_MEMBERS_EXPANSION=1)",constName,"$9C",constant);
+        }else if(constant==0x1F){                               // FOLLOWER_B
+            output = formSinglePatchOutputWithHex("(FORCE_MEMBERS_EXPANSION=1)",constName,"$9D",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum SpriteDefs_TextHighlight_ItemList */
+    }else if(enumName=="SpriteDefs_TextHighlight_ItemList"){
+        if(constant==5){                                        // SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_2_SIZE
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"1",constant);
+        }else if(constant==0xB){                                // SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_1_LINK
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"12",constant);
+        }else if(constant==0xC){                                // SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_2_LINK
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"13",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum SpriteDefs_TextHighlight_MemberList */
+    }else if(enumName=="SpriteDefs_TextHighlight_MemberList"){
+        if(constant==0xA){                                      // SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_2_LINK
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"11",constant);
+        }else if(constant==0xB){                                // SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_3_LINK
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"12",constant);
+        }else if(constant==0xBC){                               // SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_2_INIT_X
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"196",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum Stats */
+    }else if(enumName=="Stats"){
+        if(constant==2&&constName=="STATS_DIGITS_NUMBER"){      // STATS_DIGITS_NUM
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"3",constant);
+        }else if(constant==0x64){                               // STATS_UNKNOWN_VALUE_THRESHOLD
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"400",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum Window_BattleEquip_Stats */
+    }else if(enumName=="Window_BattleEquip_Stats"){     // WINDOW_BATTLEEQUIP_STATS_TILE_COORDS
+        if(constant==0x701){
+            output = formSinglePatchOutputWithHex("(THREE_DIGITS_STATS=1)",constName,"$601",constant);
+        }else{
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
+        }
+        
+    /* enum Window_FighterMiniStatus */
+    }else if(enumName=="Window_FighterMiniStatus"){
         if(constant==6){
-            enumMember = formEnumMember(constName,"8");         // constant WINDOW_FIGHTERMINISTATUS_MAX_HP_OFFSET
+            enumMember = formEnumMember(constName,"8");         // WINDOW_FIGHTERMINISTATUS_MAX_HP_OFFSET
         }else if(constant==9){
-            enumMember = formEnumMember(constName,"$A");        // constant WINDOW_FIGHTERMINISTATUS_WIDTH_COUNTER
+            enumMember = formEnumMember(constName,"$A");        // WINDOW_FIGHTERMINISTATUS_WIDTH_COUNTER
         }else if(constant==0xA){
-            enumMember = formEnumMember(constName,"$C");        // constant WINDOW_FIGHTERMINISTATUS_MIN_WIDTH
+            enumMember = formEnumMember(constName,"$C");        // WINDOW_FIGHTERMINISTATUS_MIN_WIDTH
         }else if(constant==0xC){
-            enumMember = formEnumMember(constName,"$10");       // constant WINDOW_FIGHTERMINISTATUS_STAT_VALUES_OFFSET
+            enumMember = formEnumMember(constName,"$10");       // WINDOW_FIGHTERMINISTATUS_STAT_VALUES_OFFSET
         }else if(constant==0x16){
-            enumMember = formEnumMember(constName,"$18");       // constant WINDOW_FIGHTERMINISTATUS_MAX_WIDTH
+            enumMember = formEnumMember(constName,"$18");       // WINDOW_FIGHTERMINISTATUS_MAX_WIDTH
         }else if(constant==0x2C){
-            enumMember = formEnumMember(constName,"$30");       // constant WINDOW_FIGHTERMINISTATUS_NEXT_LINE_OFFSET
+            enumMember = formEnumMember(constName,"$30");       // WINDOW_FIGHTERMINISTATUS_NEXT_LINE_OFFSET
         }else if(constant==0x36){
-            enumMember = formEnumMember(constName,"$3B");       // constant WINDOW_FIGHTERMINISTATUS_COUNTER
+            enumMember = formEnumMember(constName,"$3B");       // WINDOW_FIGHTERMINISTATUS_COUNTER
         }else if(constant==0x58){
             enumMember = formEnumMember(constName,"WINDOW_FIGHTERMINISTATUS_NEXT_LINE_OFFSET*2");       // constant WINDOW_FIGHTERMINISTATUS_TWO_LINES_OFFSET
         }else if(constant==0x1605){
-            enumMember = formEnumMember(constName,"$1805");     // constant WINDOW_BATTLEEQUIP_STATS_TILE_COORDS
+            enumMember = formEnumMember(constName,"$1805");     // WINDOW_BATTLEEQUIP_STATS_TILE_COORDS
         }else{
             enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
         }
         output = formPatchOutputWithHex(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // enum Window_LandEffect
+    /* enum Window_LandEffect */
     }else if(enumName=="Window_LandEffect"){
         if(constant==0xF){
-            enumMember = formEnumMember(constName,"2");         // constant WINDOW_LANDEFFECT_TEXT_HEADER_LENGTH
+            enumMember = formEnumMember(constName,"2");         // WINDOW_LANDEFFECT_TEXT_HEADER_LENGTH
         }else if(constant==0x12){
-            enumMember = formEnumMember(constName,"$E");        // constant WINDOW_LANDEFFECT_TEXT_HEADER_OFFSET
+            enumMember = formEnumMember(constName,"$E");        // WINDOW_LANDEFFECT_TEXT_HEADER_OFFSET
         }else if(constant==0x38){
-            enumMember = formEnumMember(constName,"$28");       // constant WINDOW_LANDEFFECT_TEXT_VALUE_OFFSET
+            enumMember = formEnumMember(constName,"$28");       // WINDOW_LANDEFFECT_TEXT_VALUE_OFFSET
         }else if(constant==0x805){
-            enumMember = formEnumMember(constName,"$605");      // constant WINDOW_LANDEFFECT_SIZE
+            enumMember = formEnumMember(constName,"$605");      // WINDOW_LANDEFFECT_SIZE
         }else if(constant==0xF801){
-            enumMember = formEnumMember(constName,"$FA01");     // constant WINDOW_LANDEFFECT_DEST
+            enumMember = formEnumMember(constName,"$FA01");     // WINDOW_LANDEFFECT_DEST
         }else{
             enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
         }
         output = formPatchOutputWithHex(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // enum Window_Member_Stats
-    }else if(enumName=="Window_Member_Stats_Patch_ThreeDigitsStats"){
-        if(constant==0x8C){
-            enumMember = formEnumMember(constName,"$8E");       // constant WINDOW_MEMBER_STATS_ENEMY_LEVEL_OFFSET
-        }else if(constant==0x8E){
-            enumMember = formEnumMember(constName,"$90");       // constant WINDOW_MEMBER_STATS_LEVEL_OFFSET
-        }else if(constant==0xDC){
-            enumMember = formEnumMember(constName,"$DA");       // constant WINDOW_MEMBER_STATS_CURRENT_HP_OFFSET
-        }else if(constant==0x130){
-            enumMember = formEnumMember(constName,"$12E");      // constant WINDOW_MEMBER_STATS_CURRENT_MP_OFFSET
-        }else if(constant==0x188){
-            enumMember = formEnumMember(constName,"$18A");      // constant WINDOW_MEMBER_STATS_ENEMY_EXP_OFFSET
-        }else if(constant==0x18A){
-            enumMember = formEnumMember(constName,"$18C");      // constant WINDOW_MEMBER_STATS_EXP_OFFSET
-        }else if(constant==0x19C){
-            enumMember = formEnumMember(constName,"$19E");      // constant WINDOW_MEMBER_STATS_MOV_OFFSET
+    /* enum Window_Member_Stats */
+    }else if(enumName=="Window_Member_Stats"){
+        if(constant==0x8C){                     // WINDOW_MEMBER_STATS_ENEMY_LEVEL_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"142",constant);
+        }else if(constant==0x8E){               // WINDOW_MEMBER_STATS_LEVEL_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"144",constant);
+        }else if(constant==0xDC){               // WINDOW_MEMBER_STATS_CURRENT_HP_OFFSET   
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"218",constant);
+        }else if(constant==0x130){              // WINDOW_MEMBER_STATS_CURRENT_MP_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"302",constant);
+        }else if(constant==0x188){              // WINDOW_MEMBER_STATS_ENEMY_EXP_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"394",constant);
+        }else if(constant==0x18A){              // WINDOW_MEMBER_STATS_EXP_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"396",constant);
+        }else if(constant==0x19C){              // WINDOW_MEMBER_STATS_MOV_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"412",constant);
         }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
         }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // enum Window_MemberList
-    }else if(enumName=="Window_MemberList_Patch_ThreeDigitsStats"){
-        if(constant==8){
-            enumMember = formEnumMember(constName,"4");         // constant WINDOW_MEMBERLIST_ENTRY_NEWDEFENSE_OFFSET
+    /* enum Window_MemberList */
+    }else if(enumName=="Window_MemberList"){
+        if(constant==1&&constName=="WINDOW_MEMBERLIST_HIGHLIGHT_SPRITES_COUNTER"){      // WINDOW_MEMBERLIST_HIGHLIGHT_SPRITES_COUNTER
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"2",constant);
+        }else if(constant==1&&constName=="WINDOW_MEMBERLIST_PAGE_HPMPATDFAGMV"){        // WINDOW_MEMBERLIST_PAGE_HPMPATDFAGMV
+            output = formSinglePatchOutput("(FULL_CLASS_NAMES=1)",constName,"2",constant);
+        }else if(constant==2){                                                          // WINDOW_MEMBERLIST_PAGE_NEWATKANDDEF
+            output = formSinglePatchOutput("(FULL_CLASS_NAMES=1)",constName,"3",constant);
+        }else if(constant==8){                                                          // WINDOW_MEMBERLIST_ENTRY_NEWDEFENSE_OFFSET
+            output = formSinglePatchOutput("(THREE_DIGITS_STATS=1)",constName,"4",constant);
+        }else if(constant==0x10&&constName=="WINDOW_MEMBERLIST_ENTRY_INIT_OFFSET"){     // WINDOW_MEMBERLIST_ENTRY_INIT_OFFSET
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"18",constant);
+        }else if(constant==0x16){                                                       // WINDOW_MEMBERLIST_ENTRY_LEVEL_OFFSET
+            output = formSinglePatchOutput("(FULL_CLASS_NAMES=1)",constName,"30",constant);
+        }else if(constant==0x1E){                                                       // WINDOW_MEMBERLIST_HEADER_LENGTH
+            output = formSinglePatchOutput("(FULL_CLASS_NAMES=1)",constName,"17",constant);
         }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
         }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // enum Stats
-    }else if(enumName=="Stats_Patch_ThreeDigitsStats"){
-        if(constant==2){
-            enumMember = formEnumMember(constName,"3");         // constant STATS_DIGITS_NUM
-        }else if(constant==0x64){
-            enumMember = formEnumMember(constName,"400");       // constant STATS_UNKNOWN_VALUE_THRESHOLD
+    /* enum Window_NameCharacter */
+    }else if(enumName=="Window_NameCharacter"){
+        if(constant==0x14){                         // WINDOW_NAMECHARACTER_ENTRY_NAME_OFFSET
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"22",constant);
+        }else if(constant==0x903){                  // WINDOW_NAMECHARACTER_ENTRY_SIZE
+            output = formSinglePatchOutput("(EIGHT_CHARACTERS_MEMBER_NAMES=1)",constName,"$A03",constant);
         }else{
-            enumMember = formEnumMember(constName,ltoa(constant,10));
+            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
         }
-        output = formPatchOutput(id,enumCount,enumMember,"THREE_DIGITS_STATS");
         
-    // End of patch Three_Digits_Stats
-    
-    
     // ---------------------------------------------------------------------------
-    
-    // patch Eight_Characters_Member_Names
-    
-    // enum Window_MemberList
-    }else if(enumName=="Window_MemberList_Patch_EightCharactersMemberNames"){
-        if(constant==1){
-            enumMember = formEnumMember(constName,"2");         // constant WINDOW_MEMBERLIST_HIGHLIGHT_SPRITES_COUNTER
-        }else if(constant==0x10){
-            enumMember = formEnumMember(constName,"$12");       // constant WINDOW_MEMBERLIST_ENTRY_INIT_OFFSET
-        }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
-        }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"EIGHT_CHARACTERS_MEMBER_NAMES");
-    
-    // enum Window_NameCharacter
-    }else if(enumName=="Window_NameCharacter_Patch_EightCharactersMemberNames"){
-        if(constant==0x14){
-            enumMember = formEnumMember(constName,"$16");       // constant WINDOW_NAMECHARACTER_ENTRY_NAME_OFFSET
-        }else if(constant==0x903){
-            enumMember = formEnumMember(constName,"$A03");      // constant WINDOW_NAMECHARACTER_ENTRY_SIZE
-        }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
-        }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"EIGHT_CHARACTERS_MEMBER_NAMES");
-    
-    // enum Member_Name
-    }else if(enumName=="Member_Name_Patch_EightCharactersMemberNames"){
-        if(constant==7){
-            enumMember = formEnumMember(constName,"8");         // constant MEMBER_NAME_DISPLAYED_CHARS_NUM
-        }else{
-            enumMember = formEnumMember(constName,ltoa(constant,10));
-        }
-        output = formPatchOutput(id,enumCount,enumMember,"EIGHT_CHARACTERS_MEMBER_NAMES");
-    
-    // enum SpriteDefs_TextHighlight_MemberList
-    }else if(enumName=="SpriteDefs_TextHighlight_MemberList_Patch_EightCharactersMemberNames"){
-        if(constant==0xA){
-            enumMember = formEnumMember(constName,"$B");        // constant SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_2_LINK
-        }else if(constant==0xB){
-            enumMember = formEnumMember(constName,"$C");        // constant SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_3_LINK
-        }else if(constant==0xBC){
-            enumMember = formEnumMember(constName,"$C4");       // constant SPRITEDEF_TEXTHIGHLIGHT_MEMBERLIST_2_INIT_X
-        }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
-        }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"EIGHT_CHARACTERS_MEMBER_NAMES");
-    
-    // enum SpriteDefs_TextHighlight_ItemList
-    }else if(enumName=="SpriteDefs_TextHighlight_ItemList_Patch_EightCharactersMemberNames"){
-        if(constant==5){
-            enumMember = formEnumMember(constName,"1");         // constant SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_2_SIZE
-        }else if(constant==0xB){
-            enumMember = formEnumMember(constName,"$C");        // constant SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_1_LINK
-        }else if(constant==0xC){
-            enumMember = formEnumMember(constName,"$D");        // constant SPRITEDEF_TEXTHIGHLIGHT_ITEMLIST_2_LINK
-        }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
-        }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"EIGHT_CHARACTERS_MEMBER_NAMES");
-    
-    // End of patch Eight_Characters_Member_Names
-    
-    
-    // ---------------------------------------------------------------------------
-    
-    // patch Full_Class_Names
-    
-    // enum Window_MemberList
-    }else if(enumName=="Window_MemberList_Patch_FullClassNames"){
-        if(constant==1){
-            enumMember = formEnumMember(constName,"2");         // constant WINDOW_MEMBERLIST_PAGE_HPMPATDFAGMV
-        }else if(constant==2){
-            enumMember = formEnumMember(constName,"3");         // constant WINDOW_MEMBERLIST_PAGE_NEWATKANDDEF
-        }else if(constant==0x16){
-            enumMember = formEnumMember(constName,"$1E");       // constant WINDOW_MEMBERLIST_ENTRY_LEVEL_OFFSET
-        }else if(constant==0x1E){
-            enumMember = formEnumMember(constName,"$11");       // constant WINDOW_MEMBERLIST_HEADER_LENGTH
-        }else{
-            enumMember = formEnumMemberWithHex(constName,ltoa(constant,16));
-        }
-        output = formPatchOutputWithHex(id,enumCount,enumMember,"FULL_CLASS_NAMES");
-    
-    // End of patch Full_Class_Names
-    
     
     }else{
         output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
@@ -302,6 +318,32 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
     
     return output;
     
+}
+
+static formSinglePatchOutput(patchName,constName,patch,constant){
+    auto output;
+    output = formSinglePatchOutputEx(patchName,constName,patch,constant,0);
+    return output;
+}
+
+static formSinglePatchOutputWithHex(patchName,constName,patch,constant){
+    auto output;
+    output = formSinglePatchOutputEx(patchName,constName,patch,constant,1);
+    return output;
+}
+
+static formSinglePatchOutputEx(patchName,constName,patch,constant,hex){
+    auto output;
+    output = form("\n\n%s%s", "                if ",patchName);
+    output = form("%s\n%s", output, formEnumMember(constName,patch));
+    output = form("%s\n%s", output, "                else");
+    if(hex==1){
+        output = form("%s\n%s", output, formEnumMemberWithHex(constName,ltoa(constant,16)));
+    }else{
+        output = form("%s\n%s", output, formEnumMember(constName,ltoa(constant,10)));
+    }
+    output = form("%s\n%s\n", output, "                endif");
+    return output;
 }
 
 static formEnumMember(constName,constant) {
@@ -496,11 +538,7 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\mainloop",0x75C4,0x75EC,"Main loop");    
     produceAsmScript(file,"code\\common\\maps\\egressinit",0x75EC,0x764E,"Egress map init function");    
     produceAsmScript(file,"code\\gameflow\\start\\basetiles",0x764E,0x769C,"Base tiles loading");    
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\gameflow\\special\\battletest-expanded.asm\"\n");
-    writestr(file,"                else\n");
     produceAsmScript(file,"code\\gameflow\\special\\battletest",0x769C,0x7956,"Battle test functions");
-    writestr(file,"                endif\n");
     produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");    
     produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");    
     produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");    
@@ -542,12 +580,22 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xC024,0xC09A,"Battle actions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
     produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
-    writestr(file,"                wordAlignIfExpandedRom\n");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xDEFC,"Battlefield engine");
     produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");    
     produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
+    
+    /* patch Capitalized_Character_Names */
+    writestr(file,"\n");
+    writestr(file,"                if (CAPITALIZED_CHARACTER_NAMES=1)\n");
+    writestr(file,"                include \"data\\stats\\allies\\allynames-capitalized.asm\"\n");
+    writestr(file,"                include \"data\\stats\\enemies\\enemynames-capitalized.asm\"\n");
+    writestr(file,"                else\n");
     produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
     produceAsmScript(file,"data\\stats\\enemies\\enemynames",0xFB8A,0xFF87,"Enemy names");
+    writestr(file,"                endif\n");
+    writestr(file,"\n");
+    
     produceAsmSection(file,"",0xFF87,0x10000);
 
     fclose(file);
@@ -567,18 +615,31 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
+    
+    /* patch Force_Members_Expansion */
+    writestr(file,"\n");
     writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
     writestr(file,"                include \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
     writestr(file,"                else\n");
     produceAsmScript(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function");
     writestr(file,"                endif\n");
-    produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1264E,0x15736,"Menu engine");
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\common\\menus\\getallyportrait-expanded.asm\"\n");
-    writestr(file,"                else\n");
+    writestr(file,"\n");
+    
+    produceAsmSection(file,"",0x1264E,0x126EE);
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\portraitwindowlayout",0x126EE,0x1278E,"Member screen portrait window layout");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\allykilldefeatwindowlayout",0x1278E,0x1284E,"Member screen kills and defeat window layout");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\goldwindowlayout",0x1284E,0x1288E,"Member screen gold window layout");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1288E,0x15736,"Menu engine");
+    
+    /* patch Force_Members_Expansion */
+    writestr(file,"\n");
+    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=0)\n");
     produceAsmScript(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function");
     writestr(file,"                endif\n");
-    produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x16204,"Menu engine");
+    writestr(file,"\n");
+    
+    produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x1607C,"Menu engine");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\alphabetwindowlayout",0x1607C,0x16204,"Alphabet window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\namecharacterentrywindowlayout",0x16204,0x1623A,"Name character entry window layout");
     produceAsmScript(file,"code\\common\\menus\\menuengine_4",0x1623A,0x16A62,"Menu engine");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\memberstatswindowlayout",0x16A62,0x16EA6,"Member stats window layout");
@@ -635,10 +696,10 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmSectionNoPretty(file,"",0x20000,0x20064);
     produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
     produceAsmScript(file,"data\\stats\\items\\shopdefs",0x20878,0x20A02,"Shop definitions");
-    writestr(file,"                wordAlignIfExpandedRom\n");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
     produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
-    writestr(file,"                wordAlignIfExpandedRom\n");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
     produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");    
     produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21F62,"Blacksmith functions");
@@ -731,28 +792,37 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     //produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
     produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
     produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
+    
+    /* patch Force_Members_Expansion */
+    writestr(file,"\n");
     writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\common\\scripting\\entity\\getallymapsprite-expanded.asm\"\n");
     writestr(file,"                include \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
     writestr(file,"                include \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
     writestr(file,"                else\n");
-    produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite ID function");
-    produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite IDs");
-    produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite ID function");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite index function");
+    produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite indexes table");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite index function");
     writestr(file,"                endif\n");
-    produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite IDs");
-    writestr(file,"                wordAlignIfExpandedRom\n");
+    writestr(file,"\n");
+    
+    produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite indexes table");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
-    produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45634,"Mapscripts and functions for Caravan and Raft");
+    produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45638,"Mapscripts and functions for Caravan and Raft");
+    
+    /* patch Force_Members_Expansion */
+    writestr(file,"\n");
     writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
     writestr(file,"                include \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
     writestr(file,"                include \"data\\spritedialogproperties-expanded.asm\"\n");
     writestr(file,"                else\n");
-    produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45634,0x4567A,"Get entity portrait and speech sound IDs function");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45638,0x4567A,"Get entity portrait and speech sfx indexes function");
     produceAsmScript(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties");
     writestr(file,"                endif\n");
+    writestr(file,"\n");
+    
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
     produceAsmScript(file,"code\\common\\scripting\\map\\mapscriptengine_1",0x46506,0x47102,"Mapscript engine, part 1");
@@ -775,7 +845,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\battles\\battleendcutscenes",0x47BE8,0x47C48,"Enemy defeated cutscenes");
     produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesend",0x47C48,0x47C8E,"Battle end cutscenes function end");
     produceAsmScript(file,"data\\battles\\global\\enemyleaderpresence",0x47C8E,0x47CBC,"Enemy leader presence table");
-    writestr(file,"                wordAlignIfExpandedRom\n");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesstart",0x47CBC,0x47CF4,"After battle cutscenes function start");
     produceAsmScript(file,"data\\battles\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
     produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesend",0x47D54,0x47D6A,"After battle cutscenes function end");
@@ -2883,12 +2953,14 @@ static produceSectionWithPrettyPrintParam(mainFile,sectionName,start,end,fs,sect
             writeFChunkHeader(file,ea,prettyPrint);
         }        
         writeItem(file,"",ea);
+        /*
         if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
             writeFunctionFooter(file,ea,prettyPrint);
         }        
         else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
             writeFChunkFooter(file,ea,prettyPrint);
         }                
+        */
         ea = ea + itemSize;
     }
     fclose(file);
@@ -2959,12 +3031,14 @@ static produceAsmSectionWithPrettyParam(file,extName,start,end,prettyWriteFuncti
             writeFChunkHeader(file,ea,prettyWriteFunctions);
         }        
         writeItemWithPrettyPrintParam(file,extName,ea,prettyWriteFunctions);
+        /*
         if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
             writeFunctionFooter(file,ea,prettyWriteFunctions);
         }        
         else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
             writeFChunkFooter(file,ea,prettyWriteFunctions);
         }                
+        */
         ea = ea + itemSize;
     }
 }
@@ -3051,11 +3125,10 @@ static writeItem(file,extName,ea){
 
 static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
     auto name,ln,indent,disasm,cmtIdx,commentIndent,comment,commentEx,lineA,lineB,disasmLen,manualInsn,output;
-    auto i,next;
+    auto i,itemSize;
     indent = "                ";
     commentIndent = "                                        ";
-    //name = GetTrueName(ea);
-    name = GetTrueNameEx(ea,ea);        // Get local label name if it exists
+    name = GetTrueNameEx(ea,ea);
     if(name==""){
         name = Name(ea);
     }
@@ -3102,32 +3175,44 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
     if(strlen(name)>(strlen(indent))){
         name = form("%s\n%s",name,indent);
     }
+    /*
     if(strstr(lineA,"\n")!=-1){
         lineA = form("%s%s",lineA,indent);
     }
+    */
     
-    // Make sure there is at least one space between disasm and comment
+    /* Make sure there is at least one space between disasm and comment */
     disasmLen = strlen(indent)+strlen(disasm);
-    if(disasmLen==strlen(commentIndent)&&substr(disasm,strlen(disasm)-1,-1)!=" "){disasmLen = disasmLen+1;}
+    if(disasmLen==strlen(commentIndent)&&substr(disasm,strlen(disasm)-1,-1)!=" "){
+        disasmLen = disasmLen+1;
+    }
     if(disasmLen>strlen(commentIndent)&&comment!=""&&comment!=" "){
         disasm = form("%s%s", disasm," ");
     }
-    // Put comment on a new line if disasm reached a certain length
+    
+    /* Put comment on a new line if disasm reached a certain length */
     if(strlen(disasm)>strlen(commentIndent)+12&&comment!=""&&comment!=" "){
         disasm = form("%s\n%s%s",disasm,indent,commentIndent);
     }
-    // Handle manual instructions spanning multiple lines
+    
+    /* Handle manual instructions spanning multiple lines */
     manualInsn = substr(GetManualInsn(ea),strstr(GetManualInsn(ea),"\n"),-1);
-    if(manualInsn!=""){manualInsn = formatManualInsn(substr(manualInsn,1,-1));}
-    //Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));
+    if(manualInsn!=""){
+        manualInsn = formatManualInsn(substr(manualInsn,1,-1));
+    }
     
-    //output = form("%s%s%s%s\n%s%s",name,lineA,disasm,comment,lineB,manualInsn);
-    //writestr(file,output);
+    /*
+    Message(form("\nname=%s,lineA=%s,disasm=%s,comment=%s,lineB=%s",name,lineA,disasm,comment,lineB));
+    output = form("%s%s%s%s\n%s%s",name,lineA,disasm,comment,lineB,manualInsn);
+    writestr(file,output);
+    */
     
+    /* Write address name */
     writestr(file,name);
-    /* Support producing multiple additional lines */
+    
+    /* Write anterior lines */
     i = 0;
-    lineA = "";
+    //lineA = "";
     while(LineA(ea,i)!="" && LineA(ea,i)!=" "){
         lineA = form("%s\n",LineA(ea,i));
         if(i==0 && strstr(lineA,indent)!=-1){
@@ -3140,16 +3225,31 @@ static writeItemWithPrettyPrintParam(file,extName,ea,prettyPrint){
             break;
         }
     }
+    
+    /* Write disasm and comment */
     writestr(file,form("%s%s\n",disasm,comment));
-    /* Same as above */
+    
+    /* Write footers before posterior lines */
+    itemSize = ItemSize(ea);
+    if(GetFunctionAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+        writeFunctionFooter(file,ea,prettyPrint);
+    }
+    else if(GetFchunkAttr(ea,FUNCATTR_END)==(ea+itemSize)){
+        writeFChunkFooter(file,ea,prettyPrint);
+    }
+    
+    /* Write posterior lines */
     i = 0;
-    lineB = "";
+    //lineB = "";
     while(LineB(ea,i)!="" && LineB(ea,i)!=" "){
         lineB = form("%s\n",LineB(ea,i));
         writestr(file,lineB);
         i++;
     }
+    
+    /* Write manual instruction */
     writestr(file,manualInsn);
+    
 }
 
 static writeFChunkHeader(file,ea,prettyWriteFunctions){

@@ -105,7 +105,7 @@
 0068=Battle region flag 14
 0069=Battle region flag 15
 
-0070=Currently attacking Taros with Achille Sword
+0070=Currently attacking Taros with Achilles Sword
 
 0080=Medical Herb (vase in Granseal school basement)
 0081=Medical Herb (chest in Granseal castle 1st floor)

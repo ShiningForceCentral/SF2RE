@@ -42,7 +42,9 @@ static main(void) {
     fixInstructionRepresentations();
     Message(" DONE.\nSingle Instructions...");        
     fixSingleInstructions();
-    Message(" DONE.\nROM Expand Tweaks...");        
+    Message(" DONE.\nLocal Variable Names...");        
+    fixLocalVariableNames();
+    Message(" DONE.\nROM Expand Tweaks...");  
     insertRomExpandTweaks();
     Message(" DONE.\n");
     
@@ -187,6 +189,131 @@ static fixSingleInstructions(){
 
 }
 
+static fixLocalVariableNames(){
+    auto ea;
+    auto var2,var4,var6,var8,var10,var12;
+    
+    MakeLocal(0x3930, FindFuncEnd(0x3930), "[sp-2]", "@var_2");
+    
+    ea = 0x4FF8;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
+    
+    ea = 0x5668;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
+    
+    ea = 0x57EA;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
+    
+    MakeLocal(0x7D54, FindFuncEnd(0x7D54), "[sp-2]", "@var_2");
+    MakeLocal(0x100C8, FindFuncEnd(0x100C8), "[sp-2]", "@USE_ORANGE_FONT");
+    MakeLocal(0x100E2, FindFuncEnd(0x100E2), "[sp-2]", "@USE_ORANGE_FONT");
+    MakeLocal(0x100EA, FindFuncEnd(0x100EA), "[sp-2]", "@USE_ORANGE_FONT");
+    MakeLocal(0x11442, FindFuncEnd(0x11442), "[sp-4]", "@var_4");
+    
+    ea = 0x118BE;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
+    
+    ea = 0x11FF0;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    
+    ea = 0x1288E;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", "@var_12");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-14]", "@var_14");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-32]", "@var_32");
+    
+    // --------------------------------------------------------------
+    
+    var2 = "@SELECTED_MEMBER";
+    var4 = "@MEMBERLIST_WINDOW";
+    var6 = "@MEMBERPORTRAIT_WINDOW";
+    var8 = "@MEMBERSUMMARY_WINDOW";
+    
+    ea = 0x12FE6;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    
+    ea = 0x13394;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    
+    ea = 0x13478;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    
+    ea = 0x134A8;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    
+    ea = 0x1354C;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    
+    // --------------------------------------------------------------
+    
+    ea = 0x135A6;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-16]", "@var_16");
+    
+    ea = 0x137BC;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    
+    // --------------------------------------------------------------
+    
+    var4 = "@WINDOW_TILES_END";
+    var6 = "@WINDOW_SLOT";
+    var8 = "@NUMBER";
+    var10 = "@MIN_NUMBER";
+    var12 = "@MAX_NUMBER";
+    
+    ea = 0x16282;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    
+    ea = 0x16376;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    
+    ea = 0x16398;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    
+    // --------------------------------------------------------------
+    
+    MakeLocal(0x27CA4, FindFuncEnd(0x27CA4), "[sp-2]", "@var_2");
+    MakeLocal(0x444A2, FindFuncEnd(0x444A2), "[sp-4]", "@var_4");
+    
+}
+
 static insertRomExpandTweaks(){
     auto ea;
 
@@ -228,9 +355,6 @@ static insertRomExpandTweaks(){
     SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoordinates,a0");
     SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoordinates-4,a0");
     
-    /* Tweaks related to force members expansion */
-    ea = 0x11BA8; SetManualInsn(ea,form("bsrIfVanillaRom.w %s", GetOpnd(ea,0)));
-    ea = 0x11C9E; SetManualInsn(ea,form("bsrIfVanillaRom.w %s", GetOpnd(ea,0)));
     
 
 
