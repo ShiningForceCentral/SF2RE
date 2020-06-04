@@ -259,6 +259,7 @@ static parseCutscenes(){
     parseCS(0x58856,-1);
     parseCS(0x58AE2,-1);
     parseCS(0x58B7A,-1);
+    parseCS(0x58E5C,-1);
     parseCS(0x58F5C,-1);
     parseCSWithTextIndex(0x58F7E,-1, 0xC84);
     parseCS(0x58FA4,-1);
