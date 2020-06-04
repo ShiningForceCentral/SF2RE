@@ -44,6 +44,8 @@ static main(void) {
     fixSingleInstructions();
     Message(" DONE.\nLocal Variable Names...");        
     fixLocalVariableNames();
+    Message(" DONE.\Unwanted Names...");        
+    fixUnwantedNames();
     Message(" DONE.\nROM Expand Tweaks...");  
     insertRomExpandTweaks();
     Message(" DONE.\n");
@@ -312,6 +314,24 @@ static fixLocalVariableNames(){
     MakeLocal(0x27CA4, FindFuncEnd(0x27CA4), "[sp-2]", "@var_2");
     MakeLocal(0x444A2, FindFuncEnd(0x444A2), "[sp-4]", "@var_4");
     
+}
+ 
+static fixUnwantedNames(){
+
+    /* Names generating errors about other local names in same function */
+    MakeNameEx(0xA08E,"",0);
+    MakeNameEx(0xA21A,"",0);
+    MakeNameEx(0xA220,"",0);
+    MakeNameEx(0xA652,"",0);
+    MakeNameEx(0xABF2,"",0);
+    MakeNameEx(0xAC00,"",0);
+    MakeNameEx(0xAE70,"",0);
+    MakeNameEx(0xAF8A,"",0);
+    MakeNameEx(0xAFBA,"",0);
+    MakeNameEx(0xB616,"",0);
+    MakeNameEx(0xB6A6,"",0);
+       
+
 }
 
 static insertRomExpandTweaks(){
