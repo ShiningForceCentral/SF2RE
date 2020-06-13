@@ -1274,11 +1274,11 @@ static parseMapData(){
                     SetManualInsn(sc+2, "  warpNoScroll");
                 }
                 MakeByte(sc+3);
-                SetManualInsn(sc+3, form("  warpMap    %d", Byte(sc+3)));
+                SetManualInsn(sc+3, form("  warpMap    %s", getMap(Byte(sc+3))));
                 MakeWord(sc+4);
                 SetManualInsn(sc+4, form("  warpDest   %d, %d", Byte(sc+4), Byte(sc+5)));
                 MakeWord(sc+6);
-                SetManualInsn(sc+6, form("  warpFacing %d", Byte(sc+6)));
+                SetManualInsn(sc+6, form("  warpFacing %s", getDirection(Byte(sc+6))));
                 sc = sc+8;
                 entry++;
             }
