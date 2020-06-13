@@ -80,7 +80,7 @@ static parseFlaggedSwitchedMaps(){
         }
         fclose(flagmapFile);    
         MakeRptCmt(addr,flagDescription);
-        SetManualInsn(addr, form("flagSwitchedMap %d, $%s, %d", map, ltoa(flag,16), newMap));
+        SetManualInsn(addr, form("flagSwitchedMap %s, $%s, %s", getMap(map), ltoa(flag,16), getMap(newMap)));
         addr = addr+6;
     }
     for(j=addr;j<addr+1;j++){undefineByte(j);}
@@ -121,7 +121,7 @@ static parseSavePointMapCoords(){
         x = Byte(addr+1);
         y = Byte(addr+2);
         facing = Byte(addr+3);
-        SetManualInsn(addr, form("savePointMapCoords %d, %d, %d, %d", map, x, y, facing));
+        SetManualInsn(addr, form("savePointMapCoords %s, %d, %d, %s", getMap(map), x, y, getDirection(facing)));
         addr = addr+4;
     }
 }
@@ -138,7 +138,7 @@ static parseRaftResetMapCoords(){
         raftMap = Byte(addr+1);
         x = Byte(addr+2);
         y = Byte(addr+3);
-        SetManualInsn(addr, form("raftResetMapCoords %d, %d, %d, %d", map, raftMap, x, y));
+        SetManualInsn(addr, form("raftResetMapCoords %s, %s, %d, %d", getMap(map), getMap(raftMap), x, y));
         addr = addr+4;
     }
 }
@@ -1490,6 +1490,26 @@ static StrWithoutSpecialChar(addr,len,param){
 static getDirection(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Direction");
+    enumSize = GetEnumSize(id);
+    constant = GetFirstConst(id,-1);    
+    while(constant!=-1){
+            j=0;
+            constId = GetConstEx(id,constant,j,-1);
+            while(constId != -1){
+                if(constant==cmd){
+                    return GetConstName(constId);
+                }
+                j++;
+                constId = GetConstEx(id,constant,j,-1);
+            }
+            constant = GetNextConst(id,constant,-1);
+    }
+    return form("%s",ltoa(cmd,10));
+}
+
+static getMap(cmd){
+    auto id,enumSize,constant,j,constId,output;
+    id = GetEnum("Maps");
     enumSize = GetEnumSize(id);
     constant = GetFirstConst(id,-1);    
     while(constant!=-1){

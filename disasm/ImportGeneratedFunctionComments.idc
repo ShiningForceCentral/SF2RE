@@ -1140,7 +1140,7 @@ Out: carry clear if true", 1);
     SetFunctionCmt(0xdd78, 
         "create enemy move order from movecost lists", 1);
 
-    // sub_DEFC
+    // j_sub_DEFC_0
     SetFunctionCmt(0xdefc, 
         "In: D0 = character index", 1);
 
