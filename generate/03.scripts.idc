@@ -514,7 +514,7 @@ static parseCSWithTextIndex(start,end, textIndex){
             cmdLength = 6;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("warp $%s,$%s,$%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16),ltoa(Byte(ea+4),16),ltoa(Byte(ea+5),16)));
+            SetManualInsn(ea,form("warp %s,%s,%s,%s",getMap(Byte(ea+2)),ltoa(Byte(ea+3),10),ltoa(Byte(ea+4),10),getDirection(Byte(ea+5))));
         }
         else if(cmd==    0x0008){
             cmdName = "0008 JOIN FORCE";
@@ -955,7 +955,7 @@ static parseCSWithTextIndex(start,end, textIndex){
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("loadMapFadeIn %s,%s,%s",ltoa(Word(ea+2),10),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));
+            SetManualInsn(ea,form("loadMapFadeIn %s,%s,%s",getMap(Word(ea+2)),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));
         }
         else if(cmd==    0x0039){
             cmdName = "0039 FADE IN FROM BLACK";
@@ -1098,7 +1098,7 @@ static parseCSWithTextIndex(start,end, textIndex){
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("mapLoad %s,%s,%s",ltoa(Word(ea+2),10),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));
+            SetManualInsn(ea,form("mapLoad %s,%s,%s",getMap(Word(ea+2)),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));
         }        
         else if(cmd==    0x0049){
             cmdName = "0049 LOAD ENTITIES FROM MAP SETUP";
@@ -1232,6 +1232,26 @@ static getCharacter(cmd){
 static getDirection(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Direction");
+    enumSize = GetEnumSize(id);
+    constant = GetFirstConst(id,-1);    
+    while(constant!=-1){
+            j=0;
+            constId = GetConstEx(id,constant,j,-1);
+            while(constId != -1){
+                if(constant==cmd){
+                    return GetConstName(constId);
+                }
+                j++;
+                constId = GetConstEx(id,constant,j,-1);
+            }
+            constant = GetNextConst(id,constant,-1);
+    }
+    return form("%s",ltoa(cmd,10));
+}
+
+static getMap(cmd){
+    auto id,enumSize,constant,j,constId,output;
+    id = GetEnum("Maps");
     enumSize = GetEnumSize(id);
     constant = GetFirstConst(id,-1);    
     while(constant!=-1){
