@@ -1,0 +1,96 @@
+FULL_CLASS_NAMES
+
+1. sf2enums.asm
+; enum Window_MemberList
+
+                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)
+WINDOW_MEMBERLIST_HIGHLIGHT_SPRITES_COUNTER: equ 2
+                else
+WINDOW_MEMBERLIST_HIGHLIGHT_SPRITES_COUNTER: equ 1
+                endif
+
+
+                if (FULL_CLASS_NAMES=1)
+WINDOW_MEMBERLIST_PAGE_HPMPATDFAGMV: equ 2
+                else
+WINDOW_MEMBERLIST_PAGE_HPMPATDFAGMV: equ 1
+                endif
+
+
+                if (FULL_CLASS_NAMES=1)
+WINDOW_MEMBERLIST_PAGE_NEWATTANDDEF: equ 3
+                else
+WINDOW_MEMBERLIST_PAGE_NEWATTANDDEF: equ 2
+                endif
+
+WINDOW_MEMBERLIST_ENTRIES_COUNTER: equ $4
+WINDOW_MEMBERLIST_ENTRY_EXP_OFFSET: equ $4
+WINDOW_MEMBERLIST_ENTRY_UNEQUIPPABLE_OFFSET: equ $4
+
+                if (THREE_DIGITS_STATS=1)
+WINDOW_MEMBERLIST_ENTRY_NEWDEFENSE_OFFSET: equ 4
+                else
+WINDOW_MEMBERLIST_ENTRY_NEWDEFENSE_OFFSET: equ 8
+                endif
+
+WINDOW_MEMBERLIST_ENTRY_UNEQUIPPABLE_LENGTH: equ $10
+
+                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)
+WINDOW_MEMBERLIST_ENTRY_INIT_OFFSET: equ 18
+                else
+WINDOW_MEMBERLIST_ENTRY_INIT_OFFSET: equ 16
+                endif
+
+
+                if (FULL_CLASS_NAMES=1)
+WINDOW_MEMBERLIST_ENTRY_LEVEL_OFFSET: equ 30
+                else
+WINDOW_MEMBERLIST_ENTRY_LEVEL_OFFSET: equ 22
+                endif
+
+
+                if (FULL_CLASS_NAMES=1)
+WINDOW_MEMBERLIST_HEADER_LENGTH: equ 17
+                else
+WINDOW_MEMBERLIST_HEADER_LENGTH: equ 30
+                endif
+
+WINDOW_MEMBERLIST_ENTRY_NEXT_OFFSET: equ $74
+WINDOW_MEMBERLIST_ENTRY_NAME_OFFSET: equ $B2
+WINDOW_MEMBERLIST_DEST: equ $220
+WINDOW_MEMBERLIST_SIZE: equ $1D0D
+
+; ---------------------------------------------------------------------------
+
+
+2. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\common\menus\menuengine_1.asm':
+
+3. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\common\menus\menuengine_2.asm':
+
+4. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\common\scripting\text\textfunctions.asm':
+
+5. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\common\stats\statsengine_2.asm':
+
+6. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\data\graphics\tech\windowlayouts\memberstatswindowlayout.asm':
+
+7. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\data\stats\allies\classes\fullclassnames.asm':
+
+8. Find 'FULL_CLASS_NAMES' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\layout\sf2-17-0x1E0000-0x1F0000.asm':
+
+                if (FULL_CLASS_NAMES=1)
+                include "data\stats\allies\classes\fullclassnames.asm"
+                wordAlign
+                endif
+
+
+
+
+
+
+
+
+
+
+
+
+

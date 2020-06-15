@@ -1,0 +1,29 @@
+PERCENT_POISON_DAMAGE
+
+1. Find 'PERCENT_POISON_DAMAGE' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\gameflow\battle\battlefunctions_1.asm':
+
+@ApplyPoisonDamage:
+                
+                jsr     j_GetStatus
+                andi.w  #STATUSEFFECTS_MASK_POISON,d1
+                beq.s   @UpdateStats
+                move.w  d0,((TEXT_NAME_INDEX_1-$1000000)).w
+                
+                if (PERCENT_POISON_DAMAGE>=1)
+                jsr     GetMaxHP
+                mulu.w  #PERCENT_POISON_DAMAGE,d1
+                divu.w  #100,d1
+                andi.l  #$FFFF,d1
+                else
+                moveq   #POISON_DAMAGE,d1 ; constant poison damage
+                endif
+                
+                move.l  d1,((TEXT_NUMBER-$1000000)).w
+                txt     $133            ; "{CLEAR}{NAME} gets damaged{N}by {#} because of the poison.{D3}"
+                jsr     j_DecreaseCurrentHP
+                tst.w   d1
+                bne.s   @UpdateStats
+                txt     $134            ; "{NAME} is exhausted.{D3}"
+                addq.w  #1,((DEAD_COMBATANTS_LIST_LENGTH-$1000000)).w
+                move.b  d0,((DEAD_COMBATANTS_LIST-$1000000)).w
+@UpdateStats:

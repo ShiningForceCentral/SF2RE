@@ -1,0 +1,62 @@
+EASY_CONFIGURATION_MODE
+
+1. ; ASM FILE code\gameflow\special\configurationmode.asm :
+; 0x7E3A..0x7EC6 : Configuration mode function
+
+; =============== S U B R O U T I N E =======================================
+
+CheatModeConfiguration:
+                
+                if (EASY_CONFIGURATION_MODE=1)
+                bra.s   @CheckInput_Up
+                nop
+                nop
+                else
+                btst    #INPUT_BIT_START,((P1_INPUT-$1000000)).w
+                endif
+                
+2. Find 'EASY_CONFIGURATION_MODE' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\specialscreens\segalogo\segalogo.asm':
+
+2.1 loc_280AA:
+                
+                move.l  (a0),(a1)+
+                move.l  (a0)+,(a2)+
+                dbf     d7,loc_280AA
+                jsr     (ApplyVIntCramDma).w
+                jsr     (EnableDmaQueueProcessing).w
+                jsr     (EnableDisplayAndInterrupts).w
+                move.l  #InputSequence_ConfigurationMode,((CONFMODE_AND_CREDITS_SEQUENCE_POINTER-$1000000)).w
+                trap    #VINT_FUNCTIONS
+                dc.w VINTS_ADD
+                
+                if (EASY_CONFIGURATION_MODE=1)
+                dc.l VInt_ActivateConfigurationModeCheat
+                else
+                dc.l VInt_CheckConfigurationModeCheat
+                endif
+                
+                move.l  #InputSequence_DebugMode,((ENTITY_WALKING_PARAMS-$1000000)).w
+                trap    #VINT_FUNCTIONS
+                dc.w VINTS_ADD
+                
+2.2 loc_28164:
+                
+                jsr     (WaitForVInt).w
+                btst    #INPUT_BIT_START,((P1_INPUT-$1000000)).w
+                bne.w   loc_2818E
+                subq.w  #1,d0
+                bne.s   loc_28164
+                
+                if (EASY_CONFIGURATION_MODE=1)
+                bra.s   @Done
+                else
+                trap    #VINT_FUNCTIONS
+                endif
+                
+                dc.w VINTS_REMOVE
+                dc.l VInt_CheckConfigurationModeCheat
+@Done:
+                
+                jsr     (FadeOutToBlack).w
+                clr.w   d0
+                rts

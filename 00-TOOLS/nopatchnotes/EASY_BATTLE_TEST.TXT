@@ -1,0 +1,30 @@
+EASY_BATTLE_TEST
+
+1. Find 'EASY_BATTLE_TEST' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\gameflow\start\gameinit.asm':
+
+InitGame:
+                
+                move    #$2300,sr
+                bsr.w   LoadBaseTiles
+                bsr.w   CheckRegion
+                jsr     j_NewGame
+                jsr     j_DisplaySegaLogo
+                bne.w   loc_71EC
+                tst.b   ((DEBUG_MODE_ACTIVATED-$1000000)).w
+                beq.w   GameIntro
+                bsr.w   EnableDisplayAndInterrupts
+                bsr.w   WaitForVInt
+                
+                if (EASY_BATTLE_TEST=1)
+                bra.w   DebugModeBattleTest
+                nop
+                else
+                btst    #INPUT_BIT_START,((P1_INPUT-$1000000)).w
+                endif
+                
+                beq.s   loc_7118
+                jsr     (EnableDisplayAndInterrupts).w
+                bsr.w   InitDisplay
+                jsr     (EnableDisplayAndInterrupts).w
+                jmp     j_nullsub_18010
+loc_7118:

@@ -1,0 +1,13 @@
+BUGFIX_SEARCH_IN_BATTLE
+
+1. sf2enums.asm
+; enum BattleMapCoordinates_Properties
+
+                if (BUGFIX_SEARCH_IN_BATTLE=1)
+BATTLEMAPCOORDS_ENTRY_SIZE: equ 7
+                else
+BATTLEMAPCOORDS_ENTRY_SIZE: equ 5
+                endif
+
+
+; ---------------------------------------------------------------------------

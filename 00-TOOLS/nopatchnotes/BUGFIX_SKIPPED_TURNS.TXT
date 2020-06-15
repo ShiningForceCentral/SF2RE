@@ -1,0 +1,68 @@
+BUGFIX_SKIPPED_TURNS
+
+1. Find 'BUGFIX_SKIPPED_TURNS' in 'C:\SEGADEV\GITHUB\SF2DISASM\disasm\code\gameflow\battle\battlefunctions_1.asm':
+; =============== S U B R O U T I N E =======================================
+
+; In: A0 = turn order in RAM
+;     D0 = combatant index
+
+AddRandomizedAGItoTurnOrder:
+                
+                jsr     j_GetXPos
+                tst.b   d1
+                bmi.w   @Return
+                jsr     j_GetCurrentHP
+                tst.w   d1
+                beq.w   @Return         ; skip if combatant is not alive
+                jsr     j_GetCurrentAGI
+                move.w  d1,d3
+                andi.w  #CHAR_STATCAP_AGI_CURRENT,d1
+                move.w  d1,d6
+                lsr.w   #3,d6
+                jsr     (GenerateRandomNumber).w
+                add.w   d7,d1
+                jsr     (GenerateRandomNumber).w
+                sub.w   d7,d1
+                moveq   #3,d6
+                jsr     (GenerateRandomNumber).w
+                subq.w  #1,d7
+                add.w   d7,d1
+                
+                if (BUGFIX_SKIPPED_TURNS=1)
+                tst.b   d1
+                bpl.s   @AddTurnData
+                moveq   #CHAR_STATCAP_AGI_CURRENT,d1 ; cap randomized AGI
+                endif
+@AddTurnData:
+                
+                move.b  d0,(a0)+
+                move.b  d1,(a0)+
+                cmpi.w  #128,d3
+                blt.s   @Return
+                
+                ; Add a second turn if AGI >= 128
+                move.w  d3,d1
+                andi.w  #CHAR_STATCAP_AGI_CURRENT,d1
+                mulu.w  #5,d1
+                divu.w  #6,d1
+                move.w  d1,d6
+                lsr.w   #3,d6
+                jsr     (GenerateRandomNumber).w
+                add.w   d7,d1
+                jsr     (GenerateRandomNumber).w
+                sub.w   d7,d1
+                
+                if (BUGFIX_SKIPPED_TURNS=1)
+                tst.b   d1
+                bpl.s   @AddSecondTurnData
+                moveq   #CHAR_STATCAP_AGI_CURRENT,d1 ; cap randomized AGI
+                endif
+@AddSecondTurnData:
+                
+                move.b  d0,(a0)+
+                move.b  d1,(a0)+
+@Return:
+                
+                rts
+
+    ; End of function AddRandomizedAGItoTurnOrder
