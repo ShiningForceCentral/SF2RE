@@ -104,14 +104,6 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
         constStr = GetConstName(GetConst(id,0x10,-1));
         output = form("\n%s: equ %s-1", constName, constStr);
         
-    /* enum BattleMapCoordinates_Properties */
-    }else if(enumName=="BattleMapCoordinates_Properties"){
-        if(constant==5){                                // BATTLEMAPCOORDS_ENTRY_SIZE
-            output = formSinglePatchOutput("(BUGFIX_SEARCH_IN_BATTLE=1)",constName,"7",constant);
-        }else{
-            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
-        }
-        
     /* enum Caravan */
     }else if(enumName=="Caravan"&&constant==0x3F){      // CARAVAN_MAX_ITEMS_NUMBER_MINUS_ONE
         constStr = GetConstName(GetConst(id,0x40,-1));
