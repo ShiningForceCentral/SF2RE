@@ -576,18 +576,8 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xDEFC,"Battlefield engine");
     produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");    
     produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
-    
-    /* patch Capitalized_Character_Names */
-    writestr(file,"\n");
-    writestr(file,"                if (CAPITALIZED_CHARACTER_NAMES=1)\n");
-    writestr(file,"                include \"data\\stats\\allies\\allynames-capitalized.asm\"\n");
-    writestr(file,"                include \"data\\stats\\enemies\\enemynames-capitalized.asm\"\n");
-    writestr(file,"                else\n");
     produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
     produceAsmScript(file,"data\\stats\\enemies\\enemynames",0xFB8A,0xFF87,"Enemy names");
-    writestr(file,"                endif\n");
-    writestr(file,"\n");
-    
     produceAsmSection(file,"",0xFF87,0x10000);
 
     fclose(file);
