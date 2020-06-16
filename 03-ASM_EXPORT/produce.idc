@@ -114,8 +114,6 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
         if(constant==0x1D){                                         // COMBATANT_ALLIES_COUNTER, COMBATANT_ALLIES_END
             constStr = GetConstName(GetConst(id,0x1E,-1));
             output = form("\n%s: equ %s-1", constName, constStr);
-        }else if(constant==0x1E){                                   // COMBATANT_ALLIES_NUMBER
-            output = formSinglePatchOutput("(FORCE_MEMBERS_EXPANSION=1)",constName,"32",constant);
         }else if(constant==0x1F&&strstr(constName,"ALLIES")!=-1){   // COMBATANT_ALLIES_SPACEEND_MINUS_ONE
             // allies space end - 1
             constStr = "";
@@ -160,13 +158,7 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
         
     /* enum Followers */
     }else if(enumName=="Followers"){
-        if(constant==0x1E){                                     // FOLLOWER_A
-            output = formSinglePatchOutputWithHex("(FORCE_MEMBERS_EXPANSION=1)",constName,"$9C",constant);
-        }else if(constant==0x1F){                               // FOLLOWER_B
-            output = formSinglePatchOutputWithHex("(FORCE_MEMBERS_EXPANSION=1)",constName,"$9D",constant);
-        }else{
-            output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
-        }
+        output = form("\n%s", formEnumMemberWithHex(constName,ltoa(constant,16)));
         
     /* enum SpriteDefs_TextHighlight_ItemList */
     }else if(enumName=="SpriteDefs_TextHighlight_ItemList"){
@@ -597,29 +589,13 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
-    
-    /* patch Force_Members_Expansion */
-    writestr(file,"\n");
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\common\\menus\\getcombatantportrait-expanded.asm\"\n");
-    writestr(file,"                else\n");
     produceAsmScript(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function");
-    writestr(file,"                endif\n");
-    writestr(file,"\n");
-    
     produceAsmSection(file,"",0x1264E,0x126EE);
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\portraitwindowlayout",0x126EE,0x1278E,"Member screen portrait window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\allykilldefeatwindowlayout",0x1278E,0x1284E,"Member screen kills and defeat window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\goldwindowlayout",0x1284E,0x1288E,"Member screen gold window layout");
     produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1288E,0x15736,"Menu engine");
-    
-    /* patch Force_Members_Expansion */
-    writestr(file,"\n");
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=0)\n");
     produceAsmScript(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function");
-    writestr(file,"                endif\n");
-    writestr(file,"\n");
-    
     produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x1607C,"Menu engine");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\alphabetwindowlayout",0x1607C,0x16204,"Alphabet window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\namecharacterentrywindowlayout",0x16204,0x1623A,"Name character entry window layout");
@@ -774,37 +750,17 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     //produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
     produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
     produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
-    
-    /* patch Force_Members_Expansion */
-    writestr(file,"\n");
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\common\\scripting\\entity\\getcombatantmapsprite-expanded.asm\"\n");
-    writestr(file,"                include \"data\\stats\\allies\\allymapsprites-expanded.asm\"\n");
-    writestr(file,"                else\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite index function");
     produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite indexes table");
     produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite index function");
-    writestr(file,"                endif\n");
-    writestr(file,"\n");
-    
     produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite indexes table");
     writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
     produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45638,"Mapscripts and functions for Caravan and Raft");
-    
-    /* patch Force_Members_Expansion */
-    writestr(file,"\n");
-    writestr(file,"                if (FORCE_MEMBERS_EXPANSION=1)\n");
-    writestr(file,"                include \"code\\common\\scripting\\entity\\getentityportaitandspeechsound-expanded.asm\"\n");
-    writestr(file,"                include \"data\\spritedialogproperties-expanded.asm\"\n");
-    writestr(file,"                else\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45638,0x4567A,"Get entity portrait and speech sfx indexes function");
     produceAsmScript(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties");
-    writestr(file,"                endif\n");
-    writestr(file,"\n");
-    
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
     produceAsmScript(file,"code\\common\\scripting\\map\\mapscriptengine_1",0x46506,0x47102,"Mapscript engine, part 1");
