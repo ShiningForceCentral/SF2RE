@@ -8021,13 +8021,6 @@ static Bytes_1(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X657E);
 	MakeName	(0X657E,	"class");
-	ExtLinA		(0X6582,	0,	"                ");
-	ExtLinA		(0X6582,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X6582,	2,	"                bsr.w   GetFullClassName");
-	ExtLinA		(0X6582,	3,	"                nop");
-	ExtLinA		(0X6582,	4,	"                else");
-	ExtLinB		(0X6582,	0,	"                endif");
-	ExtLinB		(0X6582,	1,	"                ");
 	MakeCode	(x=0X6590);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -10640,15 +10633,6 @@ static Bytes_1(void) {
 	OpEnumEx		(x,	0,	GetEnum("EnemyCombatant_AI_Settings"),0);
 	MakeCode	(0X84CC);
 	MakeName	(0X84CC,	"GetCharacterWord34");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X84D0);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Offsets"),0);
 	MakeCode	(x=0X84DC);
@@ -10663,6 +10647,15 @@ static Bytes_2(void) {
 	OpEnumEx		(x,	0,	GetEnum("EnemyCombatant_Offsets"),0);
 	MakeCode	(0X84FA);
 	MakeName	(0X84FA,	"GetKills");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X84FE);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Offsets"),0);
 	MakeCode	(0X850A);
@@ -10999,35 +10992,6 @@ static Bytes_2(void) {
 	OpEnumEx		(x,	0,	GetEnum("CharDef"),5);
 	MakeCode	(x=0X8964);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Offsets"),0);
-	ExtLinB		(0X896E,	0,	"                ");
-	ExtLinB		(0X896E,	1,	"; =============== S U B R O U T I N E =======================================");
-	ExtLinB		(0X896E,	2,	"                ");
-	ExtLinB		(0X896E,	3,	"; Wrapper for function GetFullClassName : required by patch Full_Class_Names");
-	ExtLinB		(0X896E,	4,	"                ");
-	ExtLinB		(0X896E,	5,	";       In: D0 = ally index");
-	ExtLinB		(0X896E,	6,	"                ");
-	ExtLinB		(0X896E,	7,	"GetFullClassName_Wrapper:");
-	ExtLinB		(0X896E,	8,	"                ");
-	ExtLinB		(0X896E,	9,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X896E,	10,	"                bsr.w   GetClass");
-	ExtLinB		(0X896E,	11,	"                endif");
-	ExtLinB		(0X896E,	12,	"                ");
-	ExtLinB		(0X896E,	13,	"    ; End of function GetFullClassName_Wrapper");
-	ExtLinB		(0X896E,	14,	"                ");
-	ExtLinB		(0X896E,	15,	"                ");
-	ExtLinB		(0X896E,	16,	"; =============== S U B R O U T I N E =======================================");
-	ExtLinB		(0X896E,	17,	"                ");
-	ExtLinB		(0X896E,	18,	"; Wrapper for function FindName : required by patch Full_Class_Names");
-	ExtLinB		(0X896E,	19,	"                ");
-	ExtLinB		(0X896E,	20,	"GetFullClassName:");
-	ExtLinB		(0X896E,	21,	"                ");
-	ExtLinB		(0X896E,	22,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X896E,	23,	"                lea     FullClassNames, a0");
-	ExtLinB		(0X896E,	24,	"                bra.s   FindName");
-	ExtLinB		(0X896E,	25,	"                endif");
-	ExtLinB		(0X896E,	26,	"                ");
-	ExtLinB		(0X896E,	27,	"    ; End of function GetFullClassName");
-	ExtLinB		(0X896E,	28,	"                ");
 	MakeCode	(x=0X8970);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -13581,15 +13545,6 @@ static Bytes_2(void) {
 	MakeWord	(x=0XB110);
 	OpOff		(x,	0,	0XB0BC);
 	OpOff		(x,	128,	0XB0BC);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0XB112,	"ODDEYE");
 	MakeWord	(x=0XB112);
 	OpOff		(x,	0,	0XB0BC);
@@ -13666,6 +13621,15 @@ static Bytes_3(void) {
 	MakeRptCmt	(0XB312,	"3/8 base chance to inflict slow");
 	MakeCode	(x=0XB312);
 	OpEnumEx		(x,	0,	GetEnum("BattleActionEngine_SpellEffects"),3);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0XB320);
 	OpEnumEx		(x,	0,	GetEnum("StatusEffects_Masks"),0);
 	MakeCode	(x=0XB32A);
@@ -17879,40 +17843,6 @@ static Bytes_3(void) {
 	MakeRptCmt	(0X100CC,	"set to use the orange font");
 	MakeCode	(x=0X100CC);
 	OpStkvar	(x,	1);
-	ExtLinB		(0X100D2,	0,	"                ");
-	ExtLinB		(0X100D2,	1,	"; =============== S U B R O U T I N E =======================================");
-	ExtLinB		(0X100D2,	2,	"                ");
-	ExtLinB		(0X100D2,	3,	"; Wrapper for function WriteTilesFromNumber : required by patches Full_Class_Names and Three_Digits_Stats");
-	ExtLinB		(0X100D2,	4,	";");
-	ExtLinB		(0X100D2,	5,	";       In: D1 = number");
-	ExtLinB		(0X100D2,	6,	"                ");
-	ExtLinB		(0X100D2,	7,	"WriteTilesFromNumber_Wrapper:");
-	ExtLinB		(0X100D2,	8,	"                ");
-	ExtLinB		(0X100D2,	9,	"@LV_EXP_MOV_DIGITS_NUMBER: equ 2");
-	ExtLinB		(0X100D2,	10,	"                ");
-	ExtLinB		(0X100D2,	11,	"@_:             macro");
-	ExtLinB		(0X100D2,	12,	"                moveq   #@LV_EXP_MOV_DIGITS_NUMBER,d7");
-	ExtLinB		(0X100D2,	13,	"                move.w  d1,d0");
-	ExtLinB		(0X100D2,	14,	"                ext.l   d0");
-	ExtLinB		(0X100D2,	15,	"                endm");
-	ExtLinB		(0X100D2,	16,	"                ");
-	ExtLinB		(0X100D2,	17,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X100D2,	18,	"                @_");
-	ExtLinB		(0X100D2,	19,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinB		(0X100D2,	20,	"                @_");
-	ExtLinB		(0X100D2,	21,	"                endif");
-	ExtLinB		(0X100D2,	22,	"                ");
-	ExtLinB		(0X100D2,	23,	"    ; End of function WriteTilesFromNumber_Wrapper");
-	ExtLinB		(0X100D2,	24,	"                ");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X100D4);
 	MakeName	(0X100D4,	"WriteTilesFromNumber");
 	MakeCode	(x=0X100D8);
@@ -18042,6 +17972,15 @@ static Bytes_4(void) {
 	MakeCode	(x=0X102F8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X10300);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
@@ -19442,15 +19381,9 @@ static Bytes_4(void) {
 	MakeCode	(x=0X11990);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X1199E,	0,	"                ");
-	ExtLinA		(0X1199E,	1,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1199E,	2,	"                bsr.w   CopyFighterMinistatusWindowTileColumn");
-	ExtLinA		(0X1199E,	3,	"                else");
 	MakeCode	(x=0X1199E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinB		(0X119A2,	0,	"                endif");
-	ExtLinB		(0X119A2,	1,	"                ");
 	MakeCode	(x=0X119BC);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X119C6);
@@ -19507,47 +19440,14 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X11AA4);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X11AAC,	0,	"                ");
-	ExtLinB		(0X11AAC,	1,	"; =============== S U B R O U T I N E =======================================");
-	ExtLinB		(0X11AAC,	2,	"                ");
-	ExtLinB		(0X11AAC,	3,	"; Wrapper for function WriteStatValue : required by patches Full_Class_Names and Three_Digits_Stats");
-	ExtLinB		(0X11AAC,	4,	";");
-	ExtLinB		(0X11AAC,	5,	";       In: D1 = stat value");
-	ExtLinB		(0X11AAC,	6,	"                ");
-	ExtLinB		(0X11AAC,	7,	"WriteStatValue_Wrapper:");
-	ExtLinB		(0X11AAC,	8,	"                ");
-	ExtLinB		(0X11AAC,	9,	"@_:             macro");
-	ExtLinB		(0X11AAC,	10,	"                moveq   #STATS_DIGITS_NUMBER,d7");
-	ExtLinB		(0X11AAC,	11,	"                move.w  d1,d0");
-	ExtLinB		(0X11AAC,	12,	"                endm");
-	ExtLinB		(0X11AAC,	13,	"                ");
-	ExtLinB		(0X11AAC,	14,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X11AAC,	15,	"                @_");
-	ExtLinB		(0X11AAC,	16,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinB		(0X11AAC,	17,	"                @_");
-	ExtLinB		(0X11AAC,	18,	"                endif");
-	ExtLinB		(0X11AAC,	19,	"                ");
-	ExtLinB		(0X11AAC,	20,	"    ; End of function WriteStatValue_Wrapper");
-	ExtLinB		(0X11AAC,	21,	"                ");
 	MakeCode	(x=0X11AAE);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeName	(0X11AAE,	"WriteStatValue");
 	MakeRptCmt	(0X11ABA,	"bad instruction");
-	ExtLinA		(0X11ABA,	0,	"                ");
-	ExtLinA		(0X11ABA,	1,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X11ABA,	0,	"                endif");
-	ExtLinB		(0X11ABA,	1,	"                ");
 	MakeCode	(0X11ABA);
 	MakeCode	(x=0X11ABC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X11AC4,	0,	"                ");
-	ExtLinA		(0X11AC4,	1,	"                ; display \"???\" if value is greater than or equal to threshold (default is 400)");
-	ExtLinA		(0X11AC4,	2,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X11AC4,	3,	"                dc.b '???',0");
-	ExtLinA		(0X11AC4,	4,	"                else");
-	ExtLinB		(0X11AC4,	0,	"                endif");
-	ExtLinB		(0X11AC4,	1,	"                ");
 	MakeStr		(0X11AC4,	0X11AC6);
 	MakeName	(0X11AC4,	"UnknownValue");
 	MakeCode	(0X11AC6);
@@ -19596,15 +19496,6 @@ static Bytes_4(void) {
 	MakeWord	(0X11B2C);
 	MakeWord	(0X11B2E);
 	MakeWord	(0X11B30);
-	ExtLinA		(0X11B32,	0,	"                ");
-	ExtLinA		(0X11B32,	1,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X11B32,	2,	"                dc.w $C061");
-	ExtLinA		(0X11B32,	3,	"                dc.w $C020");
-	ExtLinA		(0X11B32,	4,	"                dc.w $C020");
-	ExtLinA		(0X11B32,	5,	"                dc.w $C020");
-	ExtLinA		(0X11B32,	6,	"                dc.w $D061");
-	ExtLinA		(0X11B32,	7,	"                endif");
-	ExtLinA		(0X11B32,	8,	"                ");
 	MakeWord	(0X11B32);
 	MakeWord	(0X11B34);
 	MakeWord	(0X11B36);
@@ -19861,21 +19752,6 @@ static Bytes_4(void) {
 	MakeName	(0X11EEA,	"AddStatusEffectTileIndexesToVdpTileOrder");
 	MakeCode	(x=0X11EEE);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X11EF4,	0,	"                ");
-	ExtLinA		(0X11EF4,	1,	"@NEXT_LINE_OFFSET: equ 42");
-	ExtLinA		(0X11EF4,	2,	"                ");
-	ExtLinA		(0X11EF4,	3,	"@_:             macro");
-	ExtLinA		(0X11EF4,	4,	"                addi.w  #@NEXT_LINE_OFFSET,d3");
-	ExtLinA		(0X11EF4,	5,	"                movea.l d3,a1");
-	ExtLinA		(0X11EF4,	6,	"                endm");
-	ExtLinA		(0X11EF4,	7,	"                ");
-	ExtLinA		(0X11EF4,	8,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X11EF4,	9,	"                @_");
-	ExtLinA		(0X11EF4,	10,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X11EF4,	11,	"                @_");
-	ExtLinA		(0X11EF4,	12,	"                else");
-	ExtLinB		(0X11EF8,	0,	"                endif");
-	ExtLinB		(0X11EF8,	1,	"                ");
 	MakeCode	(0X11EFE);
 	MakeName	(0X11EFE,	"LoadTileDataForMemberScreen");
 	MakeCode	(x=0X11F14);
@@ -19915,8 +19791,6 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeStr		(0X11FEC,	0X11FF0);
 	MakeName	(0X11FEC,	"aNA");
-	ExtLinA		(0X11FF0,	0,	"                module");
-	ExtLinA		(0X11FF0,	1,	"                ");
 	MakeCode	(x=0X11FF0);
 	OpSign		(x,	1);
 	MakeName	(0X11FF0,	"BuildMemberStatsWindow");
@@ -19932,47 +19806,17 @@ static Bytes_4(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X12012);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
-	ExtLinA		(0X12016,	0,	"                ");
-	ExtLinA		(0X12016,	1,	"@FULL_CLASS_NAME_OFFSET: equ 86");
-	ExtLinA		(0X12016,	2,	"                ");
-	ExtLinA		(0X12016,	3,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12016,	4,	"                jsr     GetCharName");
-	ExtLinA		(0X12016,	5,	"                moveq   #$FFFFFFD6,d1");
-	ExtLinA		(0X12016,	6,	"                bsr.w   WriteTilesFromAsciiWithRegularFont");
-	ExtLinA		(0X12016,	7,	"                move.w  -2(a6),d0");
-	ExtLinA		(0X12016,	8,	"                tst.b   d0");
-	ExtLinA		(0X12016,	9,	"                blt.s   @AddStatusEffectTiles");
-	ExtLinA		(0X12016,	10,	"                movea.l -6(a6),a1");
-	ExtLinA		(0X12016,	11,	"                adda.w  #@FULL_CLASS_NAME_OFFSET,a1");
-	ExtLinA		(0X12016,	12,	"                jsr     GetFullClassName_Wrapper");
-	ExtLinA		(0X12016,	13,	"                moveq   #$FFFFFFD6,d1");
-	ExtLinA		(0X12016,	14,	"                bsr.w   WriteTilesFromAsciiWithRegularFont");
-	ExtLinA		(0X12016,	15,	"                else");
 	MakeCode	(x=0X12026);
 	OpHex		(x,	0);
 	MakeCode	(x=0X1202E);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X12038);
 	OpHex		(x,	0);
-	ExtLinB		(0X1203A,	0,	"                endif");
-	ExtLinB		(0X1203A,	1,	"                ");
 	MakeCode	(x=0X1203E);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X12042);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeRptCmt	(0X12046,	"unused (?)");
-	ExtLinA		(0X12046,	0,	"                ");
-	ExtLinA		(0X12046,	1,	"@_:             macro");
-	ExtLinA		(0X12046,	2,	"                move.l  d3,-(sp)");
-	ExtLinA		(0X12046,	3,	"                move.l  a1,d3");
-	ExtLinA		(0X12046,	4,	"                endm");
-	ExtLinA		(0X12046,	5,	"                ");
-	ExtLinA		(0X12046,	6,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12046,	7,	"                @_");
-	ExtLinA		(0X12046,	8,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X12046,	9,	"                @_");
-	ExtLinA		(0X12046,	10,	"                endif");
-	ExtLinA		(0X12046,	11,	"                ");
 	MakeCode	(x=0X12046);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -20014,35 +19858,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("StatusEffects_Masks"),0);
 	MakeCode	(x=0X120EC);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles_StatusEffects"),0);
-	ExtLinA		(0X120F6,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X120F6,	1,	"                ");
-	ExtLinA		(0X120F6,	2,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X120F6,	3,	"                move.l  (sp)+,d3");
-	ExtLinA		(0X120F6,	4,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X120F6,	5,	"                move.l  (sp)+,d3");
-	ExtLinA		(0X120F6,	6,	"                endif");
-	ExtLinA		(0X120F6,	7,	"                ");
 	MakeCode	(x=0X120F6);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X120FA,	0,	"                ");
-	ExtLinA		(0X120FA,	1,	"@NEXT_LINE_OFFSET: equ 42");
-	ExtLinA		(0X120FA,	2,	"                ");
-	ExtLinA		(0X120FA,	3,	"@writeStatValue:    macro");
-	ExtLinA		(0X120FA,	4,	"                jsr     \\1");
-	ExtLinA		(0X120FA,	5,	"                movea.l -6(a6),a1");
-	ExtLinA		(0X120FA,	6,	"                    if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X120FA,	7,	"                    adda.w  #\\2+@NEXT_LINE_OFFSET,a1");
-	ExtLinA		(0X120FA,	8,	"                    else");
-	ExtLinA		(0X120FA,	9,	"                    adda.w  #\\2,a1");
-	ExtLinA		(0X120FA,	10,	"                    endif");
-	ExtLinA		(0X120FA,	11,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X120FA,	12,	"                endm");
-	ExtLinA		(0X120FA,	13,	"                ");
-	ExtLinA		(0X120FA,	14,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X120FA,	15,	"                @writeStatValue GetCurrentHP, WINDOW_MEMBER_STATS_CURRENT_HP_OFFSET");
-	ExtLinA		(0X120FA,	16,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X120FA,	17,	"                @writeStatValue GetCurrentHP, WINDOW_MEMBER_STATS_CURRENT_HP_OFFSET");
-	ExtLinA		(0X120FA,	18,	"                else");
 	MakeCode	(x=0X12100);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X12106);
@@ -20051,16 +19868,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X1210E);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X12114,	0,	"                endif");
-	ExtLinB		(0X12114,	1,	"                ");
 	MakeCode	(x=0X12118);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1211C,	0,	"                ");
-	ExtLinA		(0X1211C,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1211C,	2,	"                @writeStatValue GetMaxHP, WINDOW_MEMBER_STATS_MAX_HP_OFFSET");
-	ExtLinA		(0X1211C,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1211C,	4,	"                @writeStatValue GetMaxHP, WINDOW_MEMBER_STATS_MAX_HP_OFFSET");
-	ExtLinA		(0X1211C,	5,	"                else");
 	MakeCode	(x=0X12122);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X12128);
@@ -20069,16 +19878,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12130);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X12136,	0,	"                endif");
-	ExtLinB		(0X12136,	1,	"                ");
 	MakeCode	(x=0X1213A);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1213E,	0,	"                ");
-	ExtLinA		(0X1213E,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1213E,	2,	"                @writeStatValue GetCurrentMP, WINDOW_MEMBER_STATS_CURRENT_MP_OFFSET");
-	ExtLinA		(0X1213E,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1213E,	4,	"                @writeStatValue GetCurrentMP, WINDOW_MEMBER_STATS_CURRENT_MP_OFFSET");
-	ExtLinA		(0X1213E,	5,	"                else");
 	MakeCode	(x=0X12144);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X1214A);
@@ -20087,16 +19888,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12152);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X12158,	0,	"                endif");
-	ExtLinB		(0X12158,	1,	"                ");
 	MakeCode	(x=0X1215C);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X12160,	0,	"                ");
-	ExtLinA		(0X12160,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12160,	2,	"                @writeStatValue GetMaxMP, WINDOW_MEMBER_STATS_MAX_MP_OFFSET");
-	ExtLinA		(0X12160,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X12160,	4,	"                @writeStatValue GetMaxMP, WINDOW_MEMBER_STATS_MAX_MP_OFFSET");
-	ExtLinA		(0X12160,	5,	"                else");
 	MakeCode	(x=0X12166);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X1216C);
@@ -20105,62 +19898,27 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12174);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X1217A,	0,	"                endif");
-	ExtLinB		(0X1217A,	1,	"                ");
 	MakeCode	(x=0X1217E);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X12186,	0,	"                ");
-	ExtLinA		(0X12186,	1,	"@writeNumber:   macro");
-	ExtLinA		(0X12186,	2,	"                jsr     \\1");
-	ExtLinA		(0X12186,	3,	"                movea.l -6(a6),a1");
-	ExtLinA		(0X12186,	4,	"                    if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12186,	5,	"                    adda.w  #\\2+@NEXT_LINE_OFFSET,a1");
-	ExtLinA		(0X12186,	6,	"                    else");
-	ExtLinA		(0X12186,	7,	"                    adda.w  #\\2,a1");
-	ExtLinA		(0X12186,	8,	"                    endif");
-	ExtLinA		(0X12186,	9,	"                bsr.w   WriteTilesFromNumber_Wrapper");
-	ExtLinA		(0X12186,	10,	"                endm");
-	ExtLinA		(0X12186,	11,	"                ");
-	ExtLinA		(0X12186,	12,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12186,	13,	"                @writeNumber GetCurrentLevel, WINDOW_MEMBER_STATS_LEVEL_OFFSET");
-	ExtLinA		(0X12186,	14,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X12186,	15,	"                @writeNumber GetCurrentLevel, WINDOW_MEMBER_STATS_LEVEL_OFFSET");
-	ExtLinA		(0X12186,	16,	"                else");
 	MakeCode	(x=0X1218C);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X12190);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12194);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
-	ExtLinB		(0X1219A,	0,	"                endif");
-	ExtLinB		(0X1219A,	1,	"                ");
 	MakeCode	(x=0X1219E);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X121A2,	0,	"                ");
-	ExtLinA		(0X121A2,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X121A2,	2,	"                @writeNumber GetCurrentEXP, WINDOW_MEMBER_STATS_EXP_OFFSET");
-	ExtLinA		(0X121A2,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X121A2,	4,	"                @writeNumber GetCurrentEXP, WINDOW_MEMBER_STATS_EXP_OFFSET");
-	ExtLinA		(0X121A2,	5,	"                else");
 	MakeCode	(x=0X121A8);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X121AC);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X121B0);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),1);
-	ExtLinB		(0X121B6,	0,	"                endif");
-	ExtLinB		(0X121B6,	1,	"                ");
 	MakeCode	(x=0X121BC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X121C0);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X121C4,	0,	"                ");
-	ExtLinA		(0X121C4,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X121C4,	2,	"                adda.w  #WINDOW_MEMBER_STATS_ENEMY_LEVEL_OFFSET+@NEXT_LINE_OFFSET,a1");
-	ExtLinA		(0X121C4,	3,	"                else");
-	ExtLinB		(0X121C4,	0,	"                endif");
-	ExtLinB		(0X121C4,	1,	"                ");
 	MakeCode	(x=0X121C4);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X121C8);
@@ -20170,24 +19928,12 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X121D2);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X121D6,	0,	"                ");
-	ExtLinA		(0X121D6,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X121D6,	2,	"                adda.w  #WINDOW_MEMBER_STATS_ENEMY_EXP_OFFSET+@NEXT_LINE_OFFSET,a1");
-	ExtLinA		(0X121D6,	3,	"                else");
-	ExtLinB		(0X121D6,	0,	"                endif");
-	ExtLinB		(0X121D6,	1,	"                ");
 	MakeCode	(x=0X121D6);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X121DA);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X121E0);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X121E4,	0,	"                ");
-	ExtLinA		(0X121E4,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X121E4,	2,	"                @writeStatValue GetCurrentATT, WINDOW_MEMBER_STATS_ATT_OFFSET");
-	ExtLinA		(0X121E4,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X121E4,	4,	"                @writeStatValue GetCurrentATT, WINDOW_MEMBER_STATS_ATT_OFFSET");
-	ExtLinA		(0X121E4,	5,	"                else");
 	MakeCode	(x=0X121EA);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X121F0);
@@ -20196,16 +19942,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X121F8);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X121FE,	0,	"                endif");
-	ExtLinB		(0X121FE,	1,	"                ");
 	MakeCode	(x=0X12202);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X12206,	0,	"                ");
-	ExtLinA		(0X12206,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12206,	2,	"                @writeStatValue GetCurrentDEF, WINDOW_MEMBER_STATS_DEF_OFFSET");
-	ExtLinA		(0X12206,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X12206,	4,	"                @writeStatValue GetCurrentDEF, WINDOW_MEMBER_STATS_DEF_OFFSET");
-	ExtLinA		(0X12206,	5,	"                else");
 	MakeCode	(x=0X1220C);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X12212);
@@ -20214,28 +19952,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X1221A);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X12220,	0,	"                endif");
-	ExtLinB		(0X12220,	1,	"                ");
 	MakeCode	(x=0X12224);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X12228,	0,	"                ");
-	ExtLinA		(0X12228,	1,	"@writeStatValue_CurrentAGI: macro");
-	ExtLinA		(0X12228,	2,	"                jsr     GetCurrentAGI");
-	ExtLinA		(0X12228,	3,	"                andi.w  #DISPLAYED_AGI_VALUE_MASK,d1");
-	ExtLinA		(0X12228,	4,	"                movea.l -6(a6),a1");
-	ExtLinA		(0X12228,	5,	"                    if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12228,	6,	"                    adda.w  #WINDOW_MEMBER_STATS_AGI_OFFSET+@NEXT_LINE_OFFSET,a1");
-	ExtLinA		(0X12228,	7,	"                    else");
-	ExtLinA		(0X12228,	8,	"                    adda.w  #WINDOW_MEMBER_STATS_AGI_OFFSET,a1");
-	ExtLinA		(0X12228,	9,	"                    endif");
-	ExtLinA		(0X12228,	10,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X12228,	11,	"                endm");
-	ExtLinA		(0X12228,	12,	"                ");
-	ExtLinA		(0X12228,	13,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X12228,	14,	"                @writeStatValue_CurrentAGI");
-	ExtLinA		(0X12228,	15,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X12228,	16,	"                @writeStatValue_CurrentAGI");
-	ExtLinA		(0X12228,	17,	"                else");
 	MakeCode	(x=0X1222E);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X12232);
@@ -20246,16 +19964,8 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12240);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X12246,	0,	"                endif");
-	ExtLinB		(0X12246,	1,	"                ");
 	MakeCode	(x=0X1224A);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1224E,	0,	"                ");
-	ExtLinA		(0X1224E,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1224E,	2,	"                @writeNumber GetCurrentMOV, WINDOW_MEMBER_STATS_MOV_OFFSET");
-	ExtLinA		(0X1224E,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1224E,	4,	"                @writeNumber GetCurrentMOV, WINDOW_MEMBER_STATS_MOV_OFFSET");
-	ExtLinA		(0X1224E,	5,	"                else");
 	MakeCode	(x=0X12254);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X1225A);
@@ -20264,8 +19974,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_Member_Stats"),0);
 	MakeCode	(x=0X12262);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),2);
-	ExtLinB		(0X12268,	0,	"                endif");
-	ExtLinB		(0X12268,	1,	"                ");
 	MakeCode	(x=0X12270);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X1227C);
@@ -20378,8 +20086,6 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X125C8);
 	OpHex		(x,	0);
-	ExtLinB		(0X125DE,	0,	"                modend");
-	ExtLinB		(0X125DE,	1,	"                ");
 	MakeRptCmt	(0X125E0,	"useless padding bytes");
 	MakeWord	(0X125E0);
 	MakeCode	(0X125E2);
@@ -21397,15 +21103,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),0);
 	MakeWord	(x=0X13458);
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),0);
-	ExtLinA		(0X1345A,	0,	"                ");
-	ExtLinA		(0X1345A,	1,	"                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X1345A,	2,	"                dc.w $104");
-	ExtLinA		(0X1345A,	3,	"                dc.b 1");
-	ExtLinA		(0X1345A,	4,	"                dc.b $A");
-	ExtLinA		(0X1345A,	5,	"                dc.w $C5C2");
-	ExtLinA		(0X1345A,	6,	"                dc.w $BC");
-	ExtLinA		(0X1345A,	7,	"                endif");
-	ExtLinA		(0X1345A,	8,	"                ");
 	MakeWord	(x=0X1345A);
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),1);
 	MakeByte	(x=0X1345C);
@@ -21466,38 +21163,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X135BA);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X135BE,	0,	"                ");
-	ExtLinA		(0X135BE,	1,	"@HEADER_NAME_OFFSET: equ 62");
-	ExtLinA		(0X135BE,	2,	"@HEADER_NAME_LENGTH: equ 4");
-	ExtLinA		(0X135BE,	3,	"                ");
-	ExtLinA		(0X135BE,	4,	"@writeHeader_Name:  macro");
-	ExtLinA		(0X135BE,	5,	"                adda.w  #@HEADER_NAME_OFFSET,a1");
-	ExtLinA		(0X135BE,	6,	"                moveq   #@HEADER_NAME_LENGTH,d7");
-	ExtLinA		(0X135BE,	7,	"                lea     aName(pc), a0");
-	ExtLinA		(0X135BE,	8,	"                bsr.w   WriteTilesFromAsciiWithRegularFont");
-	ExtLinA		(0X135BE,	9,	"                    if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X135BE,	10,	"                    adda.w  #10,a1");
-	ExtLinA		(0X135BE,	11,	"                    else");
-	ExtLinA		(0X135BE,	12,	"                    addq.w  #8,a1");
-	ExtLinA		(0X135BE,	13,	"                    endif");
-	ExtLinA		(0X135BE,	14,	"                endm");
-	ExtLinA		(0X135BE,	15,	"                ");
-	ExtLinA		(0X135BE,	16,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X135BE,	17,	"                @writeHeader_Name");
-	ExtLinA		(0X135BE,	18,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X135BE,	19,	"                @writeHeader_Name");
-	ExtLinA		(0X135BE,	20,	"                else");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
-	ExtLinB		(0X135C4,	0,	"                endif");
-	ExtLinB		(0X135C4,	1,	"                ");
 	MakeCode	(x=0X135C6);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X135C8);
@@ -21506,23 +21171,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X135CE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X135D4,	0,	"                ");
-	ExtLinA		(0X135D4,	1,	"@PAGE_HPMAXMPMAX: equ 1");
-	ExtLinA		(0X135D4,	2,	"                ");
-	ExtLinA		(0X135D4,	3,	"@determineHeader_HpMaxMpMax:    macro");
-	ExtLinA		(0X135D4,	4,	"                cmpi.b  #@PAGE_HPMAXMPMAX,d0");
-	ExtLinA		(0X135D4,	5,	"                bne.s   @DetermineHeader_AttDefAgiMvEx");
-	ExtLinA		(0X135D4,	6,	"                lea     aHpMaxMpMax(pc), a0");
-	ExtLinA		(0X135D4,	7,	"                bra.s   @WriteHeader");
-	ExtLinA		(0X135D4,	8,	"@DetermineHeader_AttDefAgiMvEx:");
-	ExtLinA		(0X135D4,	9,	"                endm");
-	ExtLinA		(0X135D4,	10,	"                ");
-	ExtLinA		(0X135D4,	11,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X135D4,	12,	"                @determineHeader_HpMaxMpMax");
-	ExtLinA		(0X135D4,	13,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X135D4,	14,	"                @determineHeader_HpMaxMpMax");
-	ExtLinA		(0X135D4,	15,	"                endif");
-	ExtLinA		(0X135D4,	16,	"                ");
 	MakeCode	(x=0X135D4);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),1);
 	MakeCode	(x=0X135DA);
@@ -21562,29 +21210,12 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1364A);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1364E,	0,	"                ");
-	ExtLinA		(0X1364E,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1364E,	2,	"                jsr     GetFullClassName_Wrapper");
-	ExtLinA		(0X1364E,	3,	"                else");
-	ExtLinB		(0X13654,	0,	"                endif");
-	ExtLinB		(0X13654,	1,	"                ");
 	MakeCode	(x=0X1365A);
 	OpHex		(x,	0);
 	MakeCode	(x=0X13662);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X13666);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1366A,	0,	"                ");
-	ExtLinA		(0X1366A,	1,	"@writeNumber:   macro");
-	ExtLinA		(0X1366A,	2,	"                jsr     \\1");
-	ExtLinA		(0X1366A,	3,	"                bsr.w   WriteTilesFromNumber_Wrapper");
-	ExtLinA		(0X1366A,	4,	"                endm");
-	ExtLinA		(0X1366A,	5,	"                ");
-	ExtLinA		(0X1366A,	6,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1366A,	7,	"                @writeNumber GetCurrentLevel");
-	ExtLinA		(0X1366A,	8,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1366A,	9,	"                @writeNumber GetCurrentLevel");
-	ExtLinA		(0X1366A,	10,	"                else");
 	MakeCode	(x=0X13670);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),0);
 	MakeCode	(x=0X1367A);
@@ -21593,55 +21224,10 @@ static Bytes_5(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X13686);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),1);
-	ExtLinB		(0X1368C,	0,	"                endif");
-	ExtLinB		(0X1368C,	1,	"                ");
-	ExtLinA		(0X13690,	0,	"                ");
-	ExtLinA		(0X13690,	1,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13690,	2,	"@CURRENT_MP_OFFSET: equ 4");
-	ExtLinA		(0X13690,	3,	"                else");
-	ExtLinA		(0X13690,	4,	"@CURRENT_MP_OFFSET: equ 8");
-	ExtLinA		(0X13690,	5,	"                endif");
-	ExtLinA		(0X13690,	6,	"                ");
-	ExtLinA		(0X13690,	7,	"@writeEntry_HpMaxMpMax: macro");
-	ExtLinA		(0X13690,	8,	"                cmpi.b  #@PAGE_HPMAXMPMAX,((CURRENT_MEMBERLIST_PAGE-$1000000)).w");
-	ExtLinA		(0X13690,	9,	"                bne.s   @WriteEntry_AttDefAgiMvEx");
-	ExtLinA		(0X13690,	10,	"                    if (THREE_DIGITS_STATS=0)");
-	ExtLinA		(0X13690,	11,	"                    addq.w  #2,a1");
-	ExtLinA		(0X13690,	12,	"                    endif");
-	ExtLinA		(0X13690,	13,	"                move.w  -$10(a6),d0");
-	ExtLinA		(0X13690,	14,	"                jsr     GetCurrentHP");
-	ExtLinA		(0X13690,	15,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13690,	16,	"                move.w  #VDPTILE_ASCII_SLASH|VDPTILE_PALETTE3|VDPTILE_PRIORITY,(a1)+");
-	ExtLinA		(0X13690,	17,	"                move.w  -$10(a6),d0");
-	ExtLinA		(0X13690,	18,	"                jsr     GetMaxHP");
-	ExtLinA		(0X13690,	19,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13690,	20,	"                addq.w  #@CURRENT_MP_OFFSET,a1");
-	ExtLinA		(0X13690,	21,	"                move.w  -$10(a6),d0");
-	ExtLinA		(0X13690,	22,	"                jsr     GetCurrentMP");
-	ExtLinA		(0X13690,	23,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13690,	24,	"                move.w  #VDPTILE_ASCII_SLASH|VDPTILE_PALETTE3|VDPTILE_PRIORITY,(a1)+");
-	ExtLinA		(0X13690,	25,	"                move.w  -$10(a6),d0");
-	ExtLinA		(0X13690,	26,	"                jsr     GetMaxMP");
-	ExtLinA		(0X13690,	27,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13690,	28,	"@WriteEntry_AttDefAgiMvEx:");
-	ExtLinA		(0X13690,	29,	"                endm");
-	ExtLinA		(0X13690,	30,	"                ");
-	ExtLinA		(0X13690,	31,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X13690,	32,	"                @writeEntry_HpMaxMpMax");
-	ExtLinA		(0X13690,	33,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13690,	34,	"                @writeEntry_HpMaxMpMax");
-	ExtLinA		(0X13690,	35,	"                endif");
-	ExtLinA		(0X13690,	36,	"                ");
 	MakeCode	(x=0X13690);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),1);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	ExtLinA		(0X1369A,	0,	"                ");
-	ExtLinA		(0X1369A,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1369A,	2,	"                    if (THREE_DIGITS_STATS=0)");
-	ExtLinA		(0X1369A,	3,	"                    addq.w  #2,a1");
-	ExtLinA		(0X1369A,	4,	"                    endif");
-	ExtLinA		(0X1369A,	5,	"                else");
 	MakeCode	(x=0X1369A);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X136A4);
@@ -21652,86 +21238,30 @@ static Bytes_5(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X136BA);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X136C4,	0,	"                endif");
-	ExtLinB		(0X136C4,	1,	"                ");
 	MakeCode	(x=0X136C4);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X136C6);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X136CA,	0,	"                ");
-	ExtLinA		(0X136CA,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X136CA,	2,	"                ");
-	ExtLinA		(0X136CA,	3,	"@writeStatValue:    macro");
-	ExtLinA		(0X136CA,	4,	"                jsr     \\1");
-	ExtLinA		(0X136CA,	5,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X136CA,	6,	"                addq.w  #2,a1");
-	ExtLinA		(0X136CA,	7,	"                endm");
-	ExtLinA		(0X136CA,	8,	"                ");
-	ExtLinA		(0X136CA,	9,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X136CA,	10,	"                @writeStatValue GetCurrentATT");
-	ExtLinA		(0X136CA,	11,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X136CA,	12,	"                @writeStatValue GetCurrentATT");
-	ExtLinA		(0X136CA,	13,	"                else");
 	MakeCode	(x=0X136D0);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X136DA,	0,	"                endif");
-	ExtLinB		(0X136DA,	1,	"                ");
 	MakeCode	(x=0X136DA);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X136DC);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X136E0,	0,	"                ");
-	ExtLinA		(0X136E0,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X136E0,	2,	"                @writeStatValue GetCurrentDEF");
-	ExtLinA		(0X136E0,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X136E0,	4,	"                @writeStatValue GetCurrentDEF");
-	ExtLinA		(0X136E0,	5,	"                else");
 	MakeCode	(x=0X136E6);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X136F0,	0,	"                endif");
-	ExtLinB		(0X136F0,	1,	"                ");
 	MakeCode	(x=0X136F0);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X136F2);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X136F6,	0,	"                ");
-	ExtLinA		(0X136F6,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X136F6,	2,	"                @writeStatValue GetCurrentAGI");
-	ExtLinA		(0X136F6,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X136F6,	4,	"                @writeStatValue GetCurrentAGI");
-	ExtLinA		(0X136F6,	5,	"                else");
 	MakeCode	(x=0X136FC);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X13706,	0,	"                endif");
-	ExtLinB		(0X13706,	1,	"                ");
 	MakeCode	(x=0X13706);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X13708);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1370C,	0,	"                ");
-	ExtLinA		(0X1370C,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X1370C,	2,	"                ");
-	ExtLinA		(0X1370C,	3,	"@writeNumber_CurrentMOVandEXP:  macro");
-	ExtLinA		(0X1370C,	4,	"                jsr     GetCurrentMOV");
-	ExtLinA		(0X1370C,	5,	"                bsr.w   WriteTilesFromNumber_Wrapper");
-	ExtLinA		(0X1370C,	6,	"                    if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1370C,	7,	"                    addq.w  #2,a1");
-	ExtLinA		(0X1370C,	8,	"                    else");
-	ExtLinA		(0X1370C,	9,	"                    addq.w  #6,a1");
-	ExtLinA		(0X1370C,	10,	"                    endif");
-	ExtLinA		(0X1370C,	11,	"                move.w  -$10(a6),d0");
-	ExtLinA		(0X1370C,	12,	"                @writeNumber GetCurrentEXP");
-	ExtLinA		(0X1370C,	13,	"                endm");
-	ExtLinA		(0X1370C,	14,	"                ");
-	ExtLinA		(0X1370C,	15,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1370C,	16,	"                @writeNumber_CurrentMOVandEXP");
-	ExtLinA		(0X1370C,	17,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1370C,	18,	"                @writeNumber_CurrentMOVandEXP");
-	ExtLinA		(0X1370C,	19,	"                else");
 	MakeCode	(x=0X13712);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),2);
-	ExtLinB		(0X1371C,	0,	"                endif");
-	ExtLinB		(0X1371C,	1,	"                ");
 	MakeCode	(x=0X1371C);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X1371E);
@@ -21753,67 +21283,26 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13740);
 	OpHex		(x,	0);
 	MakeCode	(0X13748);
-	ExtLinA		(0X1374E,	0,	"                ");
-	ExtLinA		(0X1374E,	1,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X1374E,	0,	"                endif");
-	ExtLinB		(0X1374E,	1,	"                ");
 	MakeCode	(x=0X1374E);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),1);
 	MakeCode	(x=0X13750);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X13754,	0,	"                ");
-	ExtLinA		(0X13754,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X13754,	2,	"                ");
-	ExtLinA		(0X13754,	3,	"@writeNewATT:   macro");
-	ExtLinA		(0X13754,	4,	"                jsr     GetCurrentATT");
-	ExtLinA		(0X13754,	5,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13754,	6,	"                move.w  #VDPTILE_HORIZONTAL_ARROW|VDPTILE_PALETTE3|VDPTILE_PRIORITY,(a1)+");
-	ExtLinA		(0X13754,	7,	"                moveq   #STATS_DIGITS_NUMBER,d7");
-	ExtLinA		(0X13754,	8,	"                move.w  d2,d0");
-	ExtLinA		(0X13754,	9,	"                bsr.w   WriteStatValue");
-	ExtLinA		(0X13754,	10,	"                addq.w  #WINDOW_MEMBERLIST_ENTRY_NEWDEFENSE_OFFSET,a1");
-	ExtLinA		(0X13754,	11,	"                endm");
-	ExtLinA		(0X13754,	12,	"                ");
-	ExtLinA		(0X13754,	13,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X13754,	14,	"                @writeNewATT");
-	ExtLinA		(0X13754,	15,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13754,	16,	"                @writeNewATT");
-	ExtLinA		(0X13754,	17,	"                else");
 	MakeCode	(x=0X1375A);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X13764);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeCode	(x=0X1376C);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X13772,	0,	"                endif");
-	ExtLinB		(0X13772,	1,	"                ");
 	MakeCode	(x=0X13772);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X13774);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X13778,	0,	"                ");
-	ExtLinA		(0X13778,	1,	"@writeNewDEF:   macro");
-	ExtLinA		(0X13778,	2,	"                jsr     GetCurrentDEF");
-	ExtLinA		(0X13778,	3,	"                bsr.w   WriteStatValue_Wrapper");
-	ExtLinA		(0X13778,	4,	"                move.w  #VDPTILE_HORIZONTAL_ARROW|VDPTILE_PALETTE3|VDPTILE_PRIORITY,(a1)+");
-	ExtLinA		(0X13778,	5,	"                moveq   #STATS_DIGITS_NUMBER,d7");
-	ExtLinA		(0X13778,	6,	"                move.w  d3,d0");
-	ExtLinA		(0X13778,	7,	"                bsr.w   WriteStatValue");
-	ExtLinA		(0X13778,	8,	"                endm");
-	ExtLinA		(0X13778,	9,	"                ");
-	ExtLinA		(0X13778,	10,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X13778,	11,	"                @writeNewDEF");
-	ExtLinA		(0X13778,	12,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13778,	13,	"                @writeNewDEF");
-	ExtLinA		(0X13778,	14,	"                else");
 	MakeCode	(x=0X1377E);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X13788);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeCode	(x=0X13790);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
-	ExtLinB		(0X13796,	0,	"                endif");
-	ExtLinB		(0X13796,	1,	"                ");
 	MakeCode	(x=0X1379A);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X137A0);
@@ -21840,26 +21329,8 @@ static Bytes_5(void) {
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X13822);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X1382A,	0,	"                ");
-	ExtLinA		(0X1382A,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X1382A,	2,	"                move.l  d3,-(sp)");
-	ExtLinA		(0X1382A,	3,	"                move.l  a1,d3");
-	ExtLinA		(0X1382A,	4,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X1382A,	5,	"                move.l  d3,-(sp)");
-	ExtLinA		(0X1382A,	6,	"                move.l  a1,d3");
-	ExtLinA		(0X1382A,	7,	"                endif");
-	ExtLinA		(0X1382A,	8,	"                ");
 	MakeCode	(x=0X1382A);
 	OpStkvar	(x,	0);
-	ExtLinA		(0X138D6,	0,	"                ");
-	ExtLinA		(0X138D6,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X138D6,	2,	"                ");
-	ExtLinA		(0X138D6,	3,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X138D6,	4,	"                move.l  (sp)+,d3");
-	ExtLinA		(0X138D6,	5,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X138D6,	6,	"                move.l  (sp)+,d3");
-	ExtLinA		(0X138D6,	7,	"                endif");
-	ExtLinA		(0X138D6,	8,	"                ");
 	MakeCode	(x=0X138D6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -21986,75 +21457,14 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13C9C);
 	OpChr		(x,	0);
 	MakeName	(0X13C9C,	"CopyWindowTilesToRam");
-	ExtLinB		(0X13CEE,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinB		(0X13CEE,	1,	"                ");
-	ExtLinB		(0X13CEE,	2,	"aName:          ");
-	ExtLinB		(0X13CEE,	3,	"                ");
-	ExtLinB		(0X13CEE,	4,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X13CEE,	5,	"                dc.b 'NAME'");
-	ExtLinB		(0X13CEE,	6,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinB		(0X13CEE,	7,	"                dc.b 'NAME'");
-	ExtLinB		(0X13CEE,	8,	"                endif");
-	ExtLinB		(0X13CEE,	9,	"                ");
-	ExtLinA		(0X13CF0,	0,	"                ");
-	ExtLinA		(0X13CF0,	1,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X13CF0,	2,	"                dc.b 'CLASS          LV'");
-	ExtLinA		(0X13CF0,	3,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13CF0,	4,	"                dc.b 'CLASS          LV'");
-	ExtLinA		(0X13CF0,	5,	"                else");
-	ExtLinB		(0X13CF0,	0,	"                    if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinB		(0X13CF0,	1,	"                    dc.b ' '");
-	ExtLinB		(0X13CF0,	2,	"                    endif");
 	MakeStr		(0X13CF0,	0X13CF8);
 	MakeName	(0X13CF0,	"aNameClassLevExp");
-	ExtLinB		(0X13CF8,	0,	"                endif");
-	ExtLinB		(0X13CF8,	1,	"                ");
-	ExtLinB		(0X13CF8,	2,	"; ---------------------------------------------------------------------------");
-	ExtLinB		(0X13CF8,	3,	"                ");
-	ExtLinB		(0X13CF8,	4,	"aHpMaxMpMax:");
-	ExtLinB		(0X13CF8,	5,	"                ");
-	ExtLinB		(0X13CF8,	6,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X13CF8,	7,	"                dc.b ' HP/MAX   MP/MAX',0");
-	ExtLinB		(0X13CF8,	8,	"                elseif (THREE_DIGITS_STATS=1)");
-	ExtLinB		(0X13CF8,	9,	"                dc.b ' HP/MAX   MP/MAX',0");
-	ExtLinB		(0X13CF8,	10,	"                endif");
-	ExtLinB		(0X13CF8,	11,	"                ");
 	MakeStr		(0X13CF8,	0X13D0A);
 	MakeName	(0X13CF8,	"aClassLevExp");
-	ExtLinA		(0X13D0A,	0,	"                ");
-	ExtLinA		(0X13D0A,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X13D0A,	2,	"                ");
-	ExtLinA		(0X13D0A,	3,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X13D0A,	4,	"                    if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13D0A,	5,	"                    dc.b 'ATT DEF AGI MV EX'");
-	ExtLinA		(0X13D0A,	6,	"                    else");
-	ExtLinA		(0X13D0A,	7,	"                    dc.b ' AT DF AG MV  EXP'");
-	ExtLinA		(0X13D0A,	8,	"                    endif");
-	ExtLinA		(0X13D0A,	9,	"                else");
-	ExtLinB		(0X13D0A,	0,	"                    if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinB		(0X13D0A,	1,	"                    dc.b ' '");
-	ExtLinB		(0X13D0A,	2,	"                    endif");
 	MakeStr		(0X13D0A,	0X13D12);
 	MakeName	(0X13D0A,	"aNameHpMpAtDfAgMv");
-	ExtLinA		(0X13D12,	0,	"                ");
-	ExtLinA		(0X13D12,	1,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X13D12,	2,	"                dc.b 'ATT DEF AGI MV EX',0");
-	ExtLinA		(0X13D12,	3,	"                else");
-	ExtLinB		(0X13D12,	0,	"                endif");
-	ExtLinB		(0X13D12,	1,	"                ");
-	ExtLinB		(0X13D12,	2,	"                endif");
-	ExtLinB		(0X13D12,	3,	"                ");
 	MakeStr		(0X13D12,	0X13D24);
 	MakeName	(0X13D12,	"aHpMpAtDfAgMv");
-	ExtLinA		(0X13D24,	0,	"                ");
-	ExtLinA		(0X13D24,	1,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X13D24,	2,	"                ");
-	ExtLinA		(0X13D24,	3,	"                if (FULL_CLASS_NAMES=0)");
-	ExtLinB		(0X13D24,	0,	"                    if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinB		(0X13D24,	1,	"                    dc.b ' '");
-	ExtLinB		(0X13D24,	2,	"                    endif");
-	ExtLinB		(0X13D24,	3,	"                endif");
-	ExtLinB		(0X13D24,	4,	"                ");
 	MakeStr		(0X13D24,	0X13D2C);
 	MakeName	(0X13D24,	"aNameAttackDefense");
 	MakeStr		(0X13D2C,	0X13D3D);
@@ -22576,15 +21986,6 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),0);
 	MakeWord	(x=0X1472A);
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),0);
-	ExtLinA		(0X1472C,	0,	"                ");
-	ExtLinA		(0X1472C,	1,	"                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X1472C,	2,	"                dc.w $104");
-	ExtLinA		(0X1472C,	3,	"                dc.b 1");
-	ExtLinA		(0X1472C,	4,	"                dc.b $A");
-	ExtLinA		(0X1472C,	5,	"                dc.w $C5C2");
-	ExtLinA		(0X1472C,	6,	"                dc.w $BC");
-	ExtLinA		(0X1472C,	7,	"                endif");
-	ExtLinA		(0X1472C,	8,	"                ");
 	MakeWord	(x=0X1472C);
 	OpEnumEx		(x,	0,	GetEnum("SpriteDefs_TextHighlight_MemberList"),1);
 	MakeByte	(x=0X1472E);
@@ -22759,6 +22160,15 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0X0);
 	MakeByte	(0X14986);
 	MakeArray	(0X14986,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1498A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -23770,10 +23180,6 @@ static Bytes_5(void) {
 	MakeCode	(x=0X15856);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X15862,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X15862,	1,	"                dc.b 'LE'");
-	ExtLinA		(0X15862,	2,	"                else");
-	ExtLinB		(0X15862,	0,	"                endif");
 	MakeStr		(0X15862,	0X1586E);
 	MakeName	(0X15862,	"aLandEffect");
 	MakeCode	(x=0X1586E);
@@ -24561,11 +23967,6 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16212);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16214,	0,	"                ");
-	ExtLinA		(0X16214,	1,	"                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X16214,	2,	"                dc.w VDPTILE_WINDOW_HORIZONTAL_BORDER|VDPTILE_PALETTE3|VDPTILE_PRIORITY_BIT");
-	ExtLinA		(0X16214,	3,	"                endif");
-	ExtLinA		(0X16214,	4,	"                ");
 	MakeWord	(x=0X16214);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	ExtLinA		(0X16216,	0,	"                ");
@@ -24586,11 +23987,6 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16224);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16226,	0,	"                ");
-	ExtLinA		(0X16226,	1,	"                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X16226,	2,	"                dc.w VDPTILE_ASCII_UNDERSCORE|VDPTILE_PALETTE3|VDPTILE_PRIORITY_BIT");
-	ExtLinA		(0X16226,	3,	"                endif");
-	ExtLinA		(0X16226,	4,	"                ");
 	MakeWord	(x=0X16226);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	ExtLinA		(0X16228,	0,	"                ");
@@ -24611,11 +24007,6 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16236);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16238,	0,	"                ");
-	ExtLinA		(0X16238,	1,	"                if (EIGHT_CHARACTERS_MEMBER_NAMES=1)");
-	ExtLinA		(0X16238,	2,	"                dc.w VDPTILE_WINDOW_HORIZONTAL_BORDER|VDPTILE_FLIPPED_BIT|VDPTILE_PALETTE3|VDPTILE_PRIORITY_BIT");
-	ExtLinA		(0X16238,	3,	"                endif");
-	ExtLinA		(0X16238,	4,	"                ");
 	MakeWord	(x=0X16238);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeByte	(0X1623A);
@@ -24771,15 +24162,6 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X16552);
 	MakeName	(0X16552,	"RemoveTimerWindow");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X16556);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -25022,12 +24404,10 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16A8A);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16A8C,	0,	"                ");
+	ExtLinA		(0X16A8C,	0,	"");
 	ExtLinA		(0X16A8C,	1,	"; ---------------------------------------------------------------------------");
 	ExtLinA		(0X16A8C,	2,	"                ");
 	ExtLinA		(0X16A8C,	3,	"                ; 2nd line");
-	ExtLinA		(0X16A8C,	4,	"                ");
-	ExtLinA		(0X16A8C,	5,	"@blankLine:     macro");
 	MakeWord	(x=0X16A8C);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16A8E);
@@ -25068,15 +24448,12 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AB2);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16AB4,	0,	"                endm");
-	ExtLinB		(0X16AB4,	1,	"                ");
-	ExtLinB		(0X16AB4,	2,	"                @blankLine");
-	ExtLinB		(0X16AB4,	3,	"                ");
 	MakeWord	(x=0X16AB4);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16AB6,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16AB6,	1,	"                ");
-	ExtLinA		(0X16AB6,	2,	"                ; 3rd line");
+	ExtLinA		(0X16AB6,	0,	"");
+	ExtLinA		(0X16AB6,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16AB6,	2,	"                ");
+	ExtLinA		(0X16AB6,	3,	"                ; 3rd line");
 	MakeWord	(x=0X16AB6);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AB8);
@@ -25124,11 +24501,8 @@ static Bytes_6(void) {
 	ExtLinA		(0X16AE0,	2,	"                ");
 	ExtLinA		(0X16AE0,	3,	"                ; 4th line");
 	ExtLinA		(0X16AE0,	4,	"                ");
-	ExtLinA		(0X16AE0,	5,	"@firstStatsLine:    macro");
 	MakeWord	(x=0X16AE0);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16AE2,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16AE2,	0,	"                endif");
 	MakeWord	(x=0X16AE2);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AE4);
@@ -25145,10 +24519,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AF0);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16AF2,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16AF2,	1,	"                dc.w VDPTILE_ASCII_SPACE|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; LV");
-	ExtLinA		(0X16AF2,	2,	"                dc.w VDPTILE_ASCII_SPACE|VDPTILE_PALETTE3|VDPTILE_PRIORITY");
-	ExtLinA		(0X16AF2,	3,	"                endif");
 	MakeWord	(x=0X16AF2);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AF4);
@@ -25161,8 +24531,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16AFC);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16AFE,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16AFE,	0,	"                endif");
 	MakeWord	(x=0X16AFE);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B00);
@@ -25171,29 +24539,14 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B04);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B06,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B06,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; ATT");
-	ExtLinA		(0X16B06,	2,	"                else");
-	ExtLinB		(0X16B06,	0,	"                endif");
 	MakeWord	(x=0X16B06);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16B08,	0,	"                endm");
-	ExtLinB		(0X16B08,	1,	"                ");
-	ExtLinB		(0X16B08,	2,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X16B08,	3,	"                @blankLine");
-	ExtLinB		(0X16B08,	4,	"                else");
-	ExtLinB		(0X16B08,	5,	"                @firstStatsLine");
-	ExtLinB		(0X16B08,	6,	"                endif");
-	ExtLinB		(0X16B08,	7,	"                ");
 	MakeWord	(x=0X16B08);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	ExtLinA		(0X16B0A,	0,	"; ---------------------------------------------------------------------------");
 	ExtLinA		(0X16B0A,	1,	"                ");
 	ExtLinA		(0X16B0A,	2,	"                ; 5th line");
-	ExtLinA		(0X16B0A,	3,	"                ");
-	ExtLinA		(0X16B0A,	4,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X16B0A,	5,	"                @firstStatsLine");
-	ExtLinA		(0X16B0A,	6,	"                else");
+	ExtLinA		(0X16B0A,	3,	"");
 	MakeWord	(x=0X16B0A);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B0C);
@@ -25234,19 +24587,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B30);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16B32,	0,	"                endif");
-	ExtLinB		(0X16B32,	1,	"                ");
 	MakeWord	(x=0X16B32);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B34,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16B34,	1,	"                ");
-	ExtLinA		(0X16B34,	2,	"                ; 6th line");
-	ExtLinA		(0X16B34,	3,	"                ");
-	ExtLinA		(0X16B34,	4,	"@secondStatsLine:   macro");
+	ExtLinA		(0X16B34,	0,	"");
+	ExtLinA		(0X16B34,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16B34,	2,	"                ");
+	ExtLinA		(0X16B34,	3,	"                ; 6th line");
+	ExtLinA		(0X16B34,	4,	"");
 	MakeWord	(x=0X16B34);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B36,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16B36,	0,	"                endif");
 	MakeWord	(x=0X16B36);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B38);
@@ -25259,18 +24608,12 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B40);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B42,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B42,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; current HP");
-	ExtLinA		(0X16B42,	2,	"                endif");
 	MakeWord	(x=0X16B42);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B44);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B46);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B48,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B48,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; max HP");
-	ExtLinA		(0X16B48,	2,	"                endif");
 	MakeWord	(x=0X16B48);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B4A);
@@ -25281,8 +24624,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B50);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B52,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16B52,	0,	"                endif");
 	MakeWord	(x=0X16B52);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B54);
@@ -25291,29 +24632,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B58);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B5A,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B5A,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; DEF");
-	ExtLinA		(0X16B5A,	2,	"                else");
-	ExtLinB		(0X16B5A,	0,	"                endif");
 	MakeWord	(x=0X16B5A);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16B5C,	0,	"                endm");
-	ExtLinB		(0X16B5C,	1,	"                ");
-	ExtLinB		(0X16B5C,	2,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X16B5C,	3,	"                @blankLine");
-	ExtLinB		(0X16B5C,	4,	"                else");
-	ExtLinB		(0X16B5C,	5,	"                @secondStatsLine");
-	ExtLinB		(0X16B5C,	6,	"                endif");
-	ExtLinB		(0X16B5C,	7,	"                ");
 	MakeWord	(x=0X16B5C);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B5E,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16B5E,	1,	"                ");
-	ExtLinA		(0X16B5E,	2,	"                ; 7th line");
-	ExtLinA		(0X16B5E,	3,	"                ");
-	ExtLinA		(0X16B5E,	4,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X16B5E,	5,	"                @secondStatsLine");
-	ExtLinA		(0X16B5E,	6,	"                else");
+	ExtLinA		(0X16B5E,	0,	"");
+	ExtLinA		(0X16B5E,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16B5E,	2,	"                ");
+	ExtLinA		(0X16B5E,	3,	"                ; 7th line");
+	ExtLinA		(0X16B5E,	4,	"                ");
 	MakeWord	(x=0X16B5E);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B60);
@@ -25354,19 +24681,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B84);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16B86,	0,	"                endif");
-	ExtLinB		(0X16B86,	1,	"                ");
 	MakeWord	(x=0X16B86);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B88,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16B88,	1,	"                ");
-	ExtLinA		(0X16B88,	2,	"                ; 8th line");
-	ExtLinA		(0X16B88,	3,	"                ");
-	ExtLinA		(0X16B88,	4,	"@thirdStatsLine:    macro");
+	ExtLinA		(0X16B88,	0,	"");
+	ExtLinA		(0X16B88,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16B88,	2,	"                ");
+	ExtLinA		(0X16B88,	3,	"                ; 8th line");
+	ExtLinA		(0X16B88,	4,	"                ");
 	MakeWord	(x=0X16B88);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B8A,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16B8A,	0,	"                endif");
 	MakeWord	(x=0X16B8A);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B8C);
@@ -25379,18 +24702,12 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B94);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B96,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B96,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; current MP");
-	ExtLinA		(0X16B96,	2,	"                endif");
 	MakeWord	(x=0X16B96);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B98);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B9A);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16B9C,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16B9C,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; max MP");
-	ExtLinA		(0X16B9C,	2,	"                endif");
 	MakeWord	(x=0X16B9C);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16B9E);
@@ -25401,8 +24718,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BA4);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BA6,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16BA6,	0,	"                endif");
 	MakeWord	(x=0X16BA6);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BA8);
@@ -25411,29 +24726,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BAC);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BAE,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16BAE,	1,	"                dc.w VDPTILE_ASCII_QUESTION_MARK|VDPTILE_PALETTE3|VDPTILE_PRIORITY ; AGI");
-	ExtLinA		(0X16BAE,	2,	"                else");
-	ExtLinB		(0X16BAE,	0,	"                endif");
 	MakeWord	(x=0X16BAE);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16BB0,	0,	"                endm");
-	ExtLinB		(0X16BB0,	1,	"                ");
-	ExtLinB		(0X16BB0,	2,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X16BB0,	3,	"                @blankLine");
-	ExtLinB		(0X16BB0,	4,	"                else");
-	ExtLinB		(0X16BB0,	5,	"                @thirdStatsLine");
-	ExtLinB		(0X16BB0,	6,	"                endif");
-	ExtLinB		(0X16BB0,	7,	"                ");
 	MakeWord	(x=0X16BB0);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BB2,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16BB2,	1,	"                ");
-	ExtLinA		(0X16BB2,	2,	"                ; 9th line");
-	ExtLinA		(0X16BB2,	3,	"                ");
-	ExtLinA		(0X16BB2,	4,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X16BB2,	5,	"                @thirdStatsLine");
-	ExtLinA		(0X16BB2,	6,	"                else");
+	ExtLinA		(0X16BB2,	0,	"");
+	ExtLinA		(0X16BB2,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16BB2,	2,	"                ");
+	ExtLinA		(0X16BB2,	3,	"                ; 9th line");
+	ExtLinA		(0X16BB2,	4,	"");
 	MakeWord	(x=0X16BB2);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BB4);
@@ -25474,19 +24775,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BD8);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16BDA,	0,	"                endif");
-	ExtLinB		(0X16BDA,	1,	"                ");
 	MakeWord	(x=0X16BDA);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BDC,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16BDC,	1,	"                ");
-	ExtLinA		(0X16BDC,	2,	"                ; 10th line");
-	ExtLinA		(0X16BDC,	3,	"                ");
-	ExtLinA		(0X16BDC,	4,	"@fourthStatsLine:   macro");
+	ExtLinA		(0X16BDC,	0,	"");
+	ExtLinA		(0X16BDC,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16BDC,	2,	"                ");
+	ExtLinA		(0X16BDC,	3,	"                ; 10th line                ");
+	ExtLinA		(0X16BDC,	4,	"");
 	MakeWord	(x=0X16BDC);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BDE,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16BDE,	0,	"                endif");
 	MakeWord	(x=0X16BDE);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BE0);
@@ -25503,10 +24800,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BEC);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16BEE,	0,	"                if (THREE_DIGITS_STATS=1)");
-	ExtLinA		(0X16BEE,	1,	"                dc.w VDPTILE_ASCII_SPACE|VDPTILE_PALETTE3|VDPTILE_PRIORITY      ; EXP");
-	ExtLinA		(0X16BEE,	2,	"                dc.w VDPTILE_ASCII_SPACE|VDPTILE_PALETTE3|VDPTILE_PRIORITY");
-	ExtLinA		(0X16BEE,	3,	"                endif");
 	MakeWord	(x=0X16BEE);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16BF0);
@@ -25527,27 +24820,15 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16C00);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16C02,	0,	"                if (THREE_DIGITS_STATS=0)");
-	ExtLinB		(0X16C02,	0,	"                endif");
 	MakeWord	(x=0X16C02);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16C04,	0,	"                endm");
-	ExtLinB		(0X16C04,	1,	"                ");
-	ExtLinB		(0X16C04,	2,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinB		(0X16C04,	3,	"                @blankLine");
-	ExtLinB		(0X16C04,	4,	"                else");
-	ExtLinB		(0X16C04,	5,	"                @fourthStatsLine");
-	ExtLinB		(0X16C04,	6,	"                endif");
-	ExtLinB		(0X16C04,	7,	"                ");
 	MakeWord	(x=0X16C04);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16C06,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16C06,	1,	"                ");
-	ExtLinA		(0X16C06,	2,	"                ; 11th line");
-	ExtLinA		(0X16C06,	3,	"                ");
-	ExtLinA		(0X16C06,	4,	"                if (FULL_CLASS_NAMES=1)");
-	ExtLinA		(0X16C06,	5,	"                @fourthStatsLine");
-	ExtLinA		(0X16C06,	6,	"                else");
+	ExtLinA		(0X16C06,	0,	"");
+	ExtLinA		(0X16C06,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16C06,	2,	"                ");
+	ExtLinA		(0X16C06,	3,	"                ; 11th line");
+	ExtLinA		(0X16C06,	4,	"");
 	MakeWord	(x=0X16C06);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16C08);
@@ -25588,13 +24869,12 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16C2C);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinB		(0X16C2E,	0,	"                endif");
-	ExtLinB		(0X16C2E,	1,	"                ");
 	MakeWord	(x=0X16C2E);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	ExtLinA		(0X16C30,	0,	"; ---------------------------------------------------------------------------");
-	ExtLinA		(0X16C30,	1,	"                ");
-	ExtLinA		(0X16C30,	2,	"                ; 12th line");
+	ExtLinA		(0X16C30,	0,	"");
+	ExtLinA		(0X16C30,	1,	"; ---------------------------------------------------------------------------");
+	ExtLinA		(0X16C30,	2,	"                ");
+	ExtLinA		(0X16C30,	3,	"                ; 12th line");
 	MakeWord	(x=0X16C30);
 	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeWord	(x=0X16C32);
@@ -26330,6 +25610,15 @@ static Bytes_6(void) {
 	MakeDword	(0X16EE6);
 	MakeByte	(0X16EEA);
 	MakeArray	(0X16EEA,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X16EEC);
 	MakeByte	(0X16EEE);
 	MakeByte	(0X16EEF);
@@ -28420,15 +27709,6 @@ static Bytes_6(void) {
 	MakeArray	(0X17CBE,	0XB);
 	MakeByte	(0X17CC9);
 	MakeArray	(0X17CC9,	0XD);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X17CD6);
 	MakeArray	(0X17CD6,	0XC);
 	MakeByte	(0X17CE2);
@@ -31310,6 +30590,15 @@ static Bytes_7(void) {
 	MakeByte	(0X1A649);
 	MakeByte	(0X1A64A);
 	MakeByte	(0X1A64B);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1A64C);
 	MakeByte	(0X1A64D);
 	MakeByte	(0X1A64E);
@@ -33799,15 +33088,6 @@ static Bytes_7(void) {
 	MakeCode	(x=0X1C6E4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1C788);
 	OpSign		(x,	0);
 	MakeCode	(0X1C7A4);
@@ -37038,6 +36318,15 @@ static Bytes_8(void) {
 	MakeRptCmt	(0X1F93A,	"LIZARDMAN");
 	MakeByte	(0X1F93A);
 	MakeArray	(0X1F93A,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X1F93C,	"WORM");
 	MakeByte	(0X1F93C);
 	MakeArray	(0X1F93C,	0X2);
@@ -38690,15 +37979,6 @@ static Bytes_8(void) {
 	MakeCode	(x=0X2108E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X210D0);
 	MakeCode	(0X2110C);
 	MakeName	(0X2110C,	"FindPromotionSection");
@@ -41018,6 +40298,15 @@ static Bytes_9(void) {
 	ExtLinA		(0X237FA,	0,	"");
 	ExtLinA		(0X237FA,	1,	"; iterate over entities to find out which one is activated");
 	ExtLinA		(0X237FA,	2,	"");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X237FE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -42719,15 +42008,6 @@ static Bytes_9(void) {
 	MakeCode	(x=0X253DC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X253E8);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Offsets"),0);
 	MakeCode	(x=0X253F2);
@@ -45387,6 +44667,15 @@ static Bytes_10(void) {
 	MakeByte	(0X2EB34);
 	MakeArray	(0X2EB34,	0X1003);
 	MakeName	(0X2EB34,	"TextBank00");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X2FB37);
 	MakeArray	(0X2FB37,	0XF1D);
 	MakeName	(0X2FB37,	"TextBank01");
@@ -47235,15 +46524,6 @@ static Bytes_10(void) {
 	MakeArray	(0X4513A,	0X4);
 	MakeByte	(0X4513E);
 	MakeArray	(0X4513E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X45142);
 	MakeArray	(0X45142,	0X6);
 	MakeByte	(0X45148);
@@ -49839,6 +49119,15 @@ static Bytes_11(void) {
 	MakeCode	(0X46B3A);
 	MakeCode	(0X46B42);
 	MakeName	(0X46B42,	"csc22_animateEntityFadeInOrOut");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X46B48);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -51876,15 +51165,6 @@ static Bytes_11(void) {
 	MakeRptCmt	(0X47C98,	"Battle 10");
 	MakeByte	(x=0X47C98);
 	OpDecimal	(x,	0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X47C99,	"Battle 11");
 	MakeByte	(x=0X47C99);
 	OpDecimal	(x,	0);
@@ -54410,6 +53690,15 @@ static Bytes_12(void) {
 	MakeArray	(0X48DA2,	0X6);
 	MakeByte	(0X48DA8);
 	MakeArray	(0X48DA8,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X48DAE);
 	MakeArray	(0X48DAE,	0X2);
 	MakeComm	(0X48DB0,	"\"I guess it was nothing.{N}I have to get a hold of{N}myself.{D2}\"");
@@ -56211,15 +55500,6 @@ static Bytes_12(void) {
 	MakeArray	(0X49BB6,	0X4);
 	MakeByte	(0X49BBA);
 	MakeArray	(0X49BBA,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X49BC2);
 	MakeArray	(0X49BC2,	0X6);
 	MakeWord	(0X49BC8);
@@ -58477,6 +57757,15 @@ static Bytes_13(void) {
 	MakeComm	(0X4ACD4,	"\"How can you...defeat...{N}devils?{W1}\"");
 	MakeByte	(0X4ACD4);
 	MakeArray	(0X4ACD4,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4ACD8);
 	MakeArray	(0X4ACD8,	0X4);
 	MakeComm	(0X4ACDC,	"\"Ah!  You have the Jewel of{N}Evil around your neck.{W2}\"");
@@ -60185,15 +59474,6 @@ static Bytes_13(void) {
 	MakeComm	(0X4BAAC,	"\"In that case, you can try{N}and take me.{W1}\"");
 	MakeByte	(0X4BAAC);
 	MakeArray	(0X4BAAC,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X4BAB0,	"\"I can no longer put up with{N}these insults!{W1}\"");
 	MakeByte	(0X4BAB0);
 	MakeArray	(0X4BAB0,	0X4);
@@ -62294,6 +61574,15 @@ static Bytes_14(void) {
 	MakeRptCmt	(0X4CACC,	"  ");
 	MakeByte	(0X4CACC);
 	MakeArray	(0X4CACC,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X4CAD0,	"  ");
 	MakeByte	(0X4CAD0);
 	MakeArray	(0X4CAD0,	0X6);
@@ -63925,15 +63214,6 @@ static Bytes_14(void) {
 	MakeComm	(0X4D90A,	"\"Darn you, Granseal swine!{W2}\"");
 	MakeByte	(0X4D90A);
 	MakeArray	(0X4D90A,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X4D90E,	"\"But, don't worry.  I just{N}finished my preparations.{N}Yes...everything's ready.{W2}\"");
 	MakeByte	(0X4D90E);
 	MakeArray	(0X4D90E,	0X4);
@@ -66190,6 +65470,15 @@ static Bytes_15(void) {
 	MakeArray	(0X4EC08,	0X2);
 	MakeByte	(0X4EC0A);
 	MakeArray	(0X4EC0A,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4EC10);
 	MakeArray	(0X4EC10,	0X4);
 	MakeByte	(0X4EC14);
@@ -67841,15 +67130,6 @@ static Bytes_15(void) {
 	MakeCode	(x=0X4FABA);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X4FABA,	"Map66_ZoneEvent2");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X4FABC,	"Battle 38 completed");
 	MakeWord	(0X4FABC);
 	MakeCode	(0X4FABE);
@@ -70055,6 +69335,15 @@ static Bytes_16(void) {
 	MakeByte	(0X50BCA);
 	MakeArray	(0X50BCA,	0X8);
 	MakeName	(0X50BCA,	"ms_map3_flag261_Entities");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X50BD2);
 	MakeArray	(0X50BD2,	0X8);
 	MakeByte	(0X50BDA);
@@ -71325,15 +70614,6 @@ static Bytes_16(void) {
 	MakeByte	(0X5149A);
 	MakeArray	(0X5149A,	0X4);
 	MakeName	(0X5149A,	"cs_5149A");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5149E);
 	MakeArray	(0X5149E,	0X2);
 	MakeByte	(0X514A0);
@@ -73247,6 +72527,15 @@ static Bytes_17(void) {
 	MakeArray	(0X52238,	0X4);
 	MakeByte	(0X5223C);
 	MakeArray	(0X5223C,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X52240);
 	MakeArray	(0X52240,	0X6);
 	MakeComm	(0X52246,	"\"How did you escape?{W1}\"");
@@ -74774,15 +74063,6 @@ static Bytes_17(void) {
 	MakeArray	(0X52D68,	0X8);
 	MakeByte	(0X52D70);
 	MakeArray	(0X52D70,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X52D78);
 	MakeArray	(0X52D78,	0X8);
 	MakeByte	(0X52D80);
@@ -76564,6 +75844,15 @@ static Bytes_18(void) {
 	MakeByte	(0X53928);
 	MakeArray	(0X53928,	0X4);
 	MakeName	(0X53928,	"ms_map20_flag1FA_EntityEvents");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5392C,	"\"A book...{N}BODY BUILDING{W1}\"");
 	MakeCode	(x=0X5392C);
 	OpOff		(x,	1,	0X53928);
@@ -78144,15 +77433,6 @@ static Bytes_18(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeName	(0X54390,	"ms_map44_flag1FB");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X54394);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -79971,6 +79251,15 @@ static Bytes_19(void) {
 	MakeArray	(0X55112,	0X4);
 	MakeByte	(0X55116);
 	MakeArray	(0X55116,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X55118);
 	MakeArray	(0X55118,	0X4);
 	MakeByte	(0X5511C);
@@ -81350,15 +80639,6 @@ static Bytes_19(void) {
 	MakeComm	(0X55AAE,	"\"We're going to Mt. Volcano{N}with {NAME;7}.{N}It's in the far east!{W1}\"");
 	MakeByte	(0X55AAE);
 	MakeArray	(0X55AAE,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X55AB2,	"\"Sir Astral!{W1}\"");
 	MakeByte	(0X55AB2);
 	MakeArray	(0X55AB2,	0X4);
@@ -83269,6 +82549,15 @@ static Bytes_20(void) {
 	MakeComm	(0X56984,	"\"Our ancestors came to{N}Parmecia to chase after{N}a soldier called Max.{W2}\"");
 	MakeByte	(0X56984);
 	MakeArray	(0X56984,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X56988,	"\"They lost his trail at the{N}shore and then split into{N}two groups.{W2}\"");
 	MakeByte	(0X56988);
 	MakeArray	(0X56988,	0X4);
@@ -84731,15 +84020,6 @@ static Bytes_20(void) {
 	MakeArray	(0X57478,	0X2);
 	MakeByte	(0X5747A);
 	MakeArray	(0X5747A,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X5747C);
 	MakeByte	(0X5747E);
 	MakeArray	(0X5747E,	0X4);
@@ -86742,6 +86022,15 @@ static Bytes_21(void) {
 	MakeName	(0X58294,	"Map13_ZoneEvent2");
 	MakeRptCmt	(0X58296,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeWord	(0X58296);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X58298);
 	MakeRptCmt	(0X5829A,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeByte	(0X5829A);
@@ -88417,15 +87706,6 @@ static Bytes_21(void) {
 	MakeArray	(0X58E7A,	0X8);
 	MakeByte	(0X58E82);
 	MakeArray	(0X58E82,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X58E8A);
 	MakeArray	(0X58E8A,	0X8);
 	MakeByte	(0X58E92);
@@ -90523,6 +89803,15 @@ static Bytes_22(void) {
 	MakeArray	(0X59D6E,	0X4);
 	MakeByte	(0X59D72);
 	MakeArray	(0X59D72,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X59D76);
 	MakeArray	(0X59D76,	0X4);
 	MakeByte	(0X59D7A);
@@ -92098,15 +91387,6 @@ static Bytes_22(void) {
 	MakeCode	(x=0X5A8A8);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X5A8A8,	"Map33_EntityEvent6");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X5A8AA,	"Frayja joined");
 	MakeWord	(0X5A8AA);
 	MakeCode	(0X5A8AC);
@@ -94125,6 +93405,15 @@ static Bytes_23(void) {
 	MakeArray	(0X5B750,	0X2);
 	MakeByte	(0X5B752);
 	MakeArray	(0X5B752,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5B758);
 	MakeArray	(0X5B758,	0X2);
 	MakeByte	(0X5B75A);
@@ -95815,15 +95104,6 @@ static Bytes_23(void) {
 	OpOff		(x,	1,	0X5C4A8);
 	OpOff		(x,	129,	0X5C4A8);
 	MakeName	(0X5C4CC,	"ms_map52_AreaDescriptions");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5C4CE);
 	MakeArray	(0X5C4CE,	0X6);
 	MakeName	(0X5C4CE,	"ms_map52_Section5");
@@ -97842,6 +97122,15 @@ static Bytes_24(void) {
 	MakeRptCmt	(0X5D37A,	"\"{NAME} investigated{N}the sign.{W2}{CLEAR}\"\n\"It reads...{N}Don't work!{W1}\"");
 	MakeByte	(0X5D37A);
 	MakeArray	(0X5D37A,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5D380,	"\"{NAME} investigated{N}the sign.{W2}{CLEAR}\"\n\"It reads...{N}Mitula ignores you!{W1}\"");
 	MakeByte	(0X5D380);
 	MakeArray	(0X5D380,	0X6);
@@ -99159,15 +98448,6 @@ static Bytes_24(void) {
 	MakeRptCmt	(0X5DC92,	"\"Please defeat the devils for{N}him!{W1}\"");
 	MakeByte	(0X5DC92);
 	MakeArray	(0X5DC92,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X5DC96,	"TEMP FLAG #01");
 	MakeByte	(0X5DC96);
 	MakeArray	(0X5DC96,	0X4);
@@ -101108,6 +100388,15 @@ static Bytes_25(void) {
 	MakeCode	(x=0X5EA1A);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X5EA1A,	"Map2_212_EntityEvent5");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5EA1C,	"\"I see Geshp frequently.{N}He always stares at the{N}castle.{W1}\"");
 	MakeWord	(0X5EA1C);
 	MakeCode	(0X5EA1E);
@@ -102748,15 +102037,6 @@ static Bytes_25(void) {
 	MakeArray	(0X5F77A,	0X8);
 	MakeByte	(0X5F782);
 	MakeArray	(0X5F782,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5F78A);
 	MakeArray	(0X5F78A,	0X8);
 	MakeByte	(0X5F792);
@@ -104881,6 +104161,15 @@ static Bytes_26(void) {
 	MakeRptCmt	(0X6089A,	"  ");
 	MakeByte	(0X6089A);
 	MakeArray	(0X6089A,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X608A0);
 	MakeByte	(0X608A2);
 	MakeArray	(0X608A2,	0X8);
@@ -106352,15 +105641,6 @@ static Bytes_26(void) {
 	MakeComm	(0X61302,	"\"Yes...oh, no!  I mean, they{N}were strong enough.{W2}\"");
 	MakeByte	(0X61302);
 	MakeArray	(0X61302,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X61306,	"\"But {LEADER} and his force{N}were smarter.{W1}\"");
 	MakeByte	(0X61306);
 	MakeArray	(0X61306,	0X4);
@@ -108640,6 +107920,15 @@ static Bytes_27(void) {
 	MakeComm	(0X6236E,	"\"Yes.  He helped you many{N}times.{W1}\"");
 	MakeByte	(0X6236E);
 	MakeArray	(0X6236E,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X62372);
 	MakeArray	(0X62372,	0X8);
 	MakeByte	(0X6237A);
@@ -110012,15 +109301,6 @@ static Bytes_27(void) {
 	MakeArray	(0X62D16,	0X6);
 	MakeByte	(0X62D1C);
 	MakeArray	(0X62D1C,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_28(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X62D22);
 	MakeArray	(0X62D22,	0X6);
 	MakeByte	(0X62D28);
@@ -112402,6 +111682,15 @@ static Bytes_28(void) {
 	MakeName	(0X968D8,	"Map02");
 	MakeByte	(0X968D9);
 	MakeByte	(0X968DA);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_28(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X968DB);
 	MakeByte	(0X968DC);
 	MakeByte	(0X968DD);
@@ -114595,15 +113884,6 @@ static Bytes_28(void) {
 	MakeWord	(0XA0610);
 	MakeWord	(0XA0612);
 	MakeWord	(0XA0614);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_29(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0XA0616);
 	MakeWord	(0XA0618);
 	MakeWord	(0XA061A);
@@ -117536,6 +116816,15 @@ static Bytes_29(void) {
 	MakeByte	(0XAFD11);
 	MakeWord	(0XAFD12);
 	MakeWord	(0XAFD14);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_29(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0XAFD16);
 	MakeByte	(0XAFD18);
 	MakeByte	(0XAFD19);
@@ -119627,15 +118916,6 @@ static Bytes_29(void) {
 	MakeName	(0XB93A8,	"Map59s4_StepEvents");
 	MakeWord	(0XB93AA);
 	MakeName	(0XB93AA,	"Map59s5_RoofEvents");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_30(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0XB93AC);
 	MakeName	(0XB93AC,	"Map59s6_WarpEvents");
 	MakeByte	(0XB93AE);
@@ -122563,6 +121843,15 @@ static Bytes_30(void) {
 	MakeDword	(x=0XC8454);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_30(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XC8458);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -124579,15 +123868,6 @@ static Bytes_30(void) {
 	MakeByte	(0XDC8FE);
 	MakeArray	(0XDC8FE,	0X146);
 	MakeName	(0XDC8FE,	"MapSprite076_1");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_31(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XDCA44);
 	MakeArray	(0XDCA44,	0X1E4);
 	MakeName	(0XDCA44,	"MapSprite076_2");
@@ -126743,6 +126023,15 @@ static Bytes_31(void) {
 	MakeByte	(0X1857E8);
 	MakeArray	(0X1857E8,	0X12CC);
 	MakeName	(0X1857E8,	"AllyBattleSprite05");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_31(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X186AB4);
 	MakeArray	(0X186AB4,	0X104C);
 	MakeName	(0X186AB4,	"AllyBattleSprite06");
@@ -128583,15 +127872,6 @@ static Bytes_31(void) {
 	MakeCode	(0X1ACD08);
 	MakeCode	(0X1ACD1C);
 	MakeCode	(0X1ACD30);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_32(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X1ACD3C);
 	MakeCode	(0X1ACD4A);
 	MakeCode	(0X1ACD5A);
@@ -131057,6 +130337,15 @@ static Bytes_32(void) {
 	MakeArray	(0X1B2792,	0X2);
 	MakeByte	(0X1B2796);
 	MakeArray	(0X1B2796,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_32(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1B2798);
 	MakeArray	(0X1B2798,	0X2);
 	MakeByte	(0X1B279A);
@@ -133023,15 +132312,6 @@ static Bytes_32(void) {
 	MakeByte	(0X1B8170);
 	MakeArray	(0X1B8170,	0X6);
 	MakeName	(0X1B8170,	"Ground28");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_33(void) {
-        auto x;
-#define id x
-
 	MakeWord	(x=0X1B8176);
 	OpOff		(x,	0,	0X1B8176);
 	OpOff		(x,	128,	0X1B8176);
@@ -135477,6 +134757,15 @@ static Bytes_33(void) {
 	MakeByte	(0X1EE8F3);
 	MakeRptCmt	(0X1EE8F4,	"MMNK");
 	MakeByte	(0X1EE8F4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_33(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X1EE8F5);
 	MakeByte	(0X1EE8F7);
 	MakeByte	(0X1EE8F8);
@@ -136678,15 +135967,6 @@ static Bytes_33(void) {
 	MakeRptCmt	(0XFFDEEB,	"if set, check if music's being played");
 	MakeByte	(0XFFDEEB);
 	MakeName	(0XFFDEEB,	"WAIT_FOR_MUSIC_END");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_34(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XFFDEEC);
 	MakeName	(0XFFDEEC,	"LAST_PLAYER_INPUT");
 	MakeRptCmt	(0XFFDEED,	"Applys a delay before using input again when hold.");
@@ -139209,8 +138489,8 @@ static Functions_0(void) {
 	MakeNameEx(0X1232E, "@WriteItemNames", SN_LOCAL);
 	MakeNameEx(0X1234A, "@ItemNames_Loop", SN_LOCAL);
 	MakeNameEx(0X123AC, "@Next", SN_LOCAL);
-	MakeNameEx(0X123DA, "@Write_Nothing", SN_LOCAL);
-	MakeNameEx(0X123F2, "@CopyJewelIcons", SN_LOCAL);
+	MakeNameEx(0X123DA, "Write_Nothing", SN_LOCAL);
+	MakeNameEx(0X123F2, "CopyJewelIcons", SN_LOCAL);
 	MakeNameEx(0X12446, "@DrawSpellIcons", SN_LOCAL);
 	MakeNameEx(0X1244E, "@SpellIcons_Loop", SN_LOCAL);
 	MakeNameEx(0X124B8, "@SpellIcons_Skip", SN_LOCAL);
@@ -143353,7 +142633,6 @@ static Bytes(void) {
 	Bytes_31();
 	Bytes_32();
 	Bytes_33();
-	Bytes_34();
 }
 
 // End of file.
