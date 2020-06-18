@@ -185,9 +185,10 @@ static fixSingleInstructions(){
     OpEnum(0x9B96,1,GetEnum("Battle_Cutscene"));
     OpEnum(0x16286,1,GetEnum("Windowing"));
     
-    SetManualInsn(0x1A4,"declareRomEnd");
-    SetManualInsn(0x1F0,"headerRegion");
-    SetManualInsn(0x279D8,"enableSram");    
+    //SetManualInsn(0x1A4,"declareRomEnd");
+    //SetManualInsn(0x1F0,"headerRegion");
+    //SetManualInsn(0x279D8,"enableSram"); 
+    SetManualInsn(0x7626,"lea RaftResetMapCoordinates-4(pc),a0");   
 
 }
 
@@ -355,25 +356,25 @@ static insertRomExpandTweaks(){
     SetManualInsn(0x1EFE33,"align $1F0000");
     
     /* Conditional manual instructions when implied by moved data */
-    SetManualInsn(0x1B1640,"conditionalPc lea,pt_BattleSpriteSets,a0");
-    SetManualInsn(0x25CBA,"conditionalPc lea,(SpecialSprites_EvilSpirit+$20),a0");
-    SetManualInsn(0x25CC8,"conditionalPc lea,SpecialSprites_EvilSpiritAlt,a0");
-    SetManualInsn(0x25CCE,"conditionalPc lea,(SpecialSprites_Zeon+$20),a0");
-    SetManualInsn(0x10003C,"conditionalPc lea,TitleScreenTiles,a0");
-    SetManualInsn(0x10005E,"conditionalPc lea,TitleScreenLayoutA,a0");
-    SetManualInsn(0x100070,"conditionalPc lea,TitleScreenLayoutA,a0");
-    SetManualInsn(0x1000AC,"conditionalPc lea,TitleScreenLayoutB,a0");
-    SetManualInsn(0x10010E,"conditionalPc lea,plt_TitleScreen,a0");
-    SetManualInsn(0x100248,"conditionalPc lea,TitleScreenLayoutA,a0");
-    //SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
-    SetManualInsn(0x1AD0E0,"conditionalPc lea,pt_BattleTerrainData,a0");
-    //SetManualInsn(0x477A8,"conditionalPc lea,MapSetups,a1");
-    //SetManualInsn(0x54CAA,"conditionalBsr sub_4F48A");
-    SetManualInsn(0x427C,"conditionalWordAddr lea,BattleMapCoordinates,a0");
-    SetManualInsn(0x783A,"conditionalPc lea,BattleMapCoordinates,a0");
-    SetManualInsn(0x79B2,"conditionalPc lea,BattleMapCoordinates,a0");
-    SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoordinates,a0");
-    SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoordinates-4,a0");
+    //SetManualInsn(0x1B1640,"conditionalPc lea,pt_BattleSpriteSets,a0");
+    //SetManualInsn(0x25CBA,"conditionalPc lea,(SpecialSprites_EvilSpirit+$20),a0");
+    //SetManualInsn(0x25CC8,"conditionalPc lea,SpecialSprites_EvilSpiritAlt,a0");
+    //SetManualInsn(0x25CCE,"conditionalPc lea,(SpecialSprites_Zeon+$20),a0");
+    //SetManualInsn(0x10003C,"conditionalPc lea,TitleScreenTiles,a0");
+    //SetManualInsn(0x10005E,"conditionalPc lea,TitleScreenLayoutA,a0");
+    //SetManualInsn(0x100070,"conditionalPc lea,TitleScreenLayoutA,a0");
+    //SetManualInsn(0x1000AC,"conditionalPc lea,TitleScreenLayoutB,a0");
+    //SetManualInsn(0x10010E,"conditionalPc lea,plt_TitleScreen,a0");
+    //SetManualInsn(0x100248,"conditionalPc lea,TitleScreenLayoutA,a0");
+    ////SetManualInsn(0x4481A,"conditionalPc lea,BattleNeutralEntities,a0");
+    //SetManualInsn(0x1AD0E0,"conditionalPc lea,pt_BattleTerrainData,a0");
+    ////SetManualInsn(0x477A8,"conditionalPc lea,MapSetups,a1");
+    ////SetManualInsn(0x54CAA,"conditionalBsr sub_4F48A");
+    //SetManualInsn(0x427C,"conditionalWordAddr lea,BattleMapCoordinates,a0");
+    //SetManualInsn(0x783A,"conditionalPc lea,BattleMapCoordinates,a0");
+    //SetManualInsn(0x79B2,"conditionalPc lea,BattleMapCoordinates,a0");
+    //SetManualInsn(0x7604,"conditionalPc lea,SavepointMapCoordinates,a0");
+    //SetManualInsn(0x7626,"conditionalPc lea,RaftResetMapCoordinates-4,a0");
     
     
 

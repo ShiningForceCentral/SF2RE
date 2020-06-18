@@ -25,7 +25,7 @@ static produceMacros(){
     Message("\nWriting Macros to sf2macros.asm ...");    
     file = fopen("disasm\\sf2macros.asm","w");
     writestr(file,"; ---------------------------------------------------------------------------\n");
-    writestr(file,"; Align and pad\n");
+    writestr(file,";  and pad\n");
     writestr(file,"; input: length to align to, value to use as padding (default is $FF)\n");
     writestr(file,"; ---------------------------------------------------------------------------\n");
     writestr(file,"\n");
@@ -259,7 +259,6 @@ static produceLayoutFile(){
     produceSection(file,            "16",    0x1D8000,    0x1E0000,    126,    "0x1D8000..0x1E0000 : Icons");
     produceSpecificSectionSeventeen(file,    "17",    0x1E0000,    0x1F0000,    462,    "0x1E0000..0x1F0000 : PCM Banks, YM Instruments, sound driver, char stats, witch screens");
     produceSection(file,            "18",    0x1F0000,    0x200000,    1038,    "0x1F0000..0x200000 : Music banks 1 and 0");
-    writestr(file,"                conditionalRomExpand    ; if EXPANDED_ROM = 1, then include next layout file to fill the ROM up to 0x3FFFFF");
 
     fclose(file);
 
@@ -317,9 +316,9 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\common\\maps\\mapinit_0",0x7956,0x7988,"Map init functions");    
     produceAsmScript(file,"data\\maps\\global\\flagswitchedmaps",0x7988,0x799C,"Flag-switched maps");    
     produceAsmScript(file,"code\\common\\maps\\getbattle",0x799C,0x7A36,"GetNextBattleOnMap function");    
-    produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",1);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",1);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",1);
+    produceAsmScript(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords");    
+    produceAsmScript(file,"data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords");    
+    produceAsmScript(file,"data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords");
     produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");    
     produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");    
     produceAsmScript(file,"code\\gameflow\\start\\regioncheck",0x7EC6,0x7FA4,"Region check function");    
@@ -469,7 +468,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
     produceAsmScript(file,"code\\common\\tech\\graphics\\specialsprites",0x25BFC,0x25DF6,"Special Sprites functions");
-    produceAsmScriptWithConditionalInclude(file,"","code\\common\\tech\\graphics\\specialspritesentries",0x25DF6,0x02784C,"Special Sprites Entries",1);
+    produceAsmScript(file,"code\\common\\tech\\graphics\\specialspritesentries",0x25DF6,0x02784C,"Special Sprites Entries");
     produceAsmScript(file,"code\\common\\tech\\graphics\\specialspritesanims",0x02784C,0x2791C,"Special Sprites Animations");
     produceAsmScript(file,"code\\specialscreens\\suspend\\suspend",0x2791C,0x279D8,"Suspend functions");
     produceAsmScript(file,"code\\specialscreens\\witchend\\witchend",0x279D8,0x27D8E,"Witch end functions");
@@ -499,19 +498,8 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmSection(file,"",0x2C7A0,0x2E10E);
     produceAsmScript(file,"code\\common\\scripting\\text\\decoding",0x2E10E,0x2E196,"Text decoding functions");    
     produceAsmSection(file,"",0x2E196,0x2EB34);
-    produceAsmScriptWithConditionalInclude(file,"","data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",1);
-    writestr(file,"                alignIfExpandedRom $30000\n");
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",2);    
-    writestr(file,"                alignIfExpandedRom $38000\n");
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",2); 
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes",2);    
-    produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff",1);
-    writestr(file,"                alignIfExpandedRom $43800\n");    
-    produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords",2);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords",2);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords",2);
-    writestr(file,"                alignIfExpandedRom $43C00\n");
-    //produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",2);
+    produceAsmScript(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries");   
+    produceAsmScript(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff");
     produceAsmSection(file,"",0x425ED,0x44000);    
 
     fclose(file);
@@ -538,7 +526,6 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\scripting\\entity\\followers",0x44338,0x4438A,"Follower declarations");
     produceAsmScript(file,"code\\common\\scripting\\map\\followersfunctions_2",0x4438A,0x444A2,"Follower functions, part 2");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_1",0x444A2,0x448C4,"Entity functions");
-    //produceAsmScriptWithConditionalInclude(file,"","data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies",1);
     produceAsmScript(file,"data\\battles\\global\\battleneutralentities",0x448C4,0x4497A,"Battle entities which are not force members or enemies");
     produceAsmScript(file,"data\\scripting\\entity\\eas_battleneutralentities",0x4497A,0x449C6,"Entity actscripts for battle entities which are not force members or enemies");
     produceAsmScript(file,"code\\common\\scripting\\entity\\getallymapsprite",0x449C6,0x44A5E,"Get ally map sprite index function");
@@ -561,8 +548,6 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"code\\common\\scripting\\map\\mapsetupsfunctions_1",0x474FC,0x478C6,"Map setups functions");
     produceAsmScript(file,"code\\common\\scripting\\map\\resetalliesstats",0x478C6,0x4790E,"CSC 55 function");
     produceAsmScript(file,"code\\common\\scripting\\map\\headquartersfunctions",0x4790E,0x47A4E,"Headquarters functions");
-    //produceAsmScript(file,"data\\maps\\entries\\map37\\mapsetups\\s6_initfunction_47948",0x47948,0x47992,"Map 37 init function");
-    //produceAsmScript(file,"data\\maps\\entries\\map46\\mapsetups\\s6_initfunction_47992",0x47992,0x47A4E,"Map 46 init function");
     produceAsmScript(file,"code\\common\\scripting\\map\\ms_empty",0x47A4E,0x47A50,"Empty mapscript");
     produceAsmScript(file,"code\\gameflow\\battle\\beforebattlecutscenesstart",0x47A50,0x47A88,"Before battle cutscenes function start");
     produceAsmScript(file,"data\\battles\\beforebattlecutscenes",0x47A88,0x47AE8,"Before battle cutscenes");
@@ -658,7 +643,6 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
     produceAsmScript(file,"data\\maps\\mapsetups",0x4F6E2,0x4FA70,"Map setups table");
 
-    writestr(file,"                ;includeIfVanillaRom data\\maps\\mapsetupsstorage.asm\n");
     writestr(file,"                include data\\maps\\mapsetupsstorage.asm\n");
     mapSetupsFile = fopen("disasm\\data\\maps\\mapsetupsstorage.asm","w");
     produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\pointertable",0x4FA70,0x4FA88,"");
@@ -1403,30 +1387,22 @@ static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComm
 
     produceAsmSection(file,"",0x64000,0x6400C);
     produceAsmScript(file,"data\\graphics\\maps\\maptilesets\\entries",0x6400C,0x9494A,"Map Tilesets");    
-    writestr(file,"                alignIfExpandedRom $C7000\n");
     produceAsmScript(file,"data\\graphics\\maps\\mappalettes\\entries",0x9494A,0x94B8A,"Map palettes");
-    //produceAsmScriptWithConditionalInclude(file,"","data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
-    produceMapEntries(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries",1);
+    produceMapEntries(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries");
     produceAsmSection(file,"",0xC7ECC,0xC8000);
 
     fclose(file);
     Message("DONE.\n");    
 }
 
-static produceMapEntries(mainFile,sectionName,start,end,sectionComment,conditionalIncludeType){
+static produceMapEntries(mainFile,sectionName,start,end,sectionComment){
     auto ea,itemSize,action,currentLine,previousLine,fileName,file;
     auto output, include, name, indent, comment, commentEx, commentIndent, offsets;
     fileName = form("%s.asm",sectionName);
     Message(form("Writing assembly script section %s to %s (%s) ... ",sectionName,fileName,sectionComment));    
     //form("0x%s..0x%s %s",ltoa(start,16),ltoa(end,16),sectionComment)
     action = 1;
-    if(conditionalIncludeType==1){
-        include = "includeIfVanillaRom";
-    }else if(conditionalIncludeType==2){
-        include = "includeIfExpandedRom";
-    }else{
-        include = "include";
-    }
+    include = "include";
     writestr(mainFile,form("                %s \"%s\"    ; %s\n",include,fileName,sectionComment));
     file = fopen(form("disasm\\%s",fileName),"w");
     offsets = form("0x%s..0x%s",ltoa(start,16),ltoa(end,16));
@@ -2438,10 +2414,7 @@ static produceSpecificSectionNine(mainFile,sectionName,start,end,fs,sectionComme
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites",1);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",2);    
-    writestr(file,"                alignIfExpandedRom $E0000\n");            
-    produceAsmScriptWithConditionalInclude(file,"","data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",2);    
+    produceAsmScript(file,"data\\graphics\\mapsprites\\entries",0xC8000,0xFFC48,"Map sprites");   
     produceAsmSection(file,"",0xFFC48,0x100000);
 
     fclose(file);
@@ -2462,9 +2435,8 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
 
     produceAsmSection(file,"",0x100000,0x100008);
     produceAsmScript(file,"code\\specialscreens\\title\\title",0x100008,0x1002BE,"Title screen functions");    
-    produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics",1);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds",1);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",2);    
+    produceAsmScript(file,"code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics");
+    produceAsmScript(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds");   
     produceAsmScript(file,"data\\graphics\\battles\\spells\\invocations\\entries",0x12A2F8,0x12FADE,"Invocation sprites");    
     produceAsmSection(file,"",0x12FADE,0x130000);
 
@@ -2485,8 +2457,7 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmSection(file,"",0x130000,0x130004);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites",1);
-    writestr(file,"                ;includeIfExpandedRom data\\maps\\mapsetupsstorage.asm\n");    
+    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites");  
     produceAsmSection(file,"",0x17FE4F,0x180000);
 
     fclose(file);
@@ -2506,8 +2477,7 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmSection(file,"",0x180000,0x18001C);
-    produceAsmScriptWithConditionalInclude(file,"","data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries",2);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites",1);    
+    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites");    
     produceAsmSection(file,"",0x1AA16E,0x1AAC3A);        
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\animations\\entries",0x1AAC3A,0x1AB79E,"Ally animations");    
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\animations\\entries",0x1AB79E,0x1ABE52,"Enemy animations");    
@@ -2532,13 +2502,13 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_0",0x1AC000,0x1AC068,"Jump interface for section functions");    
     produceAsmScript(file,"code\\common\\scripting\\endcredits",0x1AC068,0x1AC29C,"Ending credits functions");
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AD104,"Battle init, terrain, AI stuff to split more properly");            
-    produceAsmScriptWithConditionalInclude(file,"","data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data",1);    
+    produceAsmScript(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data");    
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
     produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
-    produceAsmScriptWithConditionalInclude(file,"","data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets",1);    
+    produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets");    
     produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DBC,"Random battles table");
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DBC,0x1B6DDA,"Data related to UpgradeUnitIdx function");
-    produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics",1);
+    produceAsmScript(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics");
     produceAsmSection(file,"",0x1B7C9A,0x1B8000);
 
     fclose(file);
@@ -2558,10 +2528,10 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmSection(file,"",0x1B8000,0x1B8028);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds",1);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons",1);    
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes",1);       
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics",1);
+    produceAsmScript(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds");    
+    produceAsmScript(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons");    
+    produceAsmScript(file,"data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes");       
+    produceAsmScript(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics");
     produceAsmScript(file,"code\\specialscreens\\witch\\graphics",0x1C46C2,0x1C67C4,"Witch Screen");
     produceAsmScript(file,"code\\specialscreens\\witchend\\graphics",0x1C67C4,0x1C7F7C,"Witch End Screen");    
     produceAsmSection(file,"",0x1C7F7C,0x1C8000);
@@ -2583,7 +2553,7 @@ static produceSpecificSectionFifteen(mainFile,sectionName,start,end,fs,sectionCo
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmSection(file,"",0x1C8000,0x1C8004);
-    produceAsmScriptWithConditionalInclude(file,"","data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits",1);    
+    produceAsmScript(file,"data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits");    
     produceAsmSection(file,"",0x1D7E26,0x1D8000);
 
     fclose(file);
@@ -2608,8 +2578,8 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
     produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7D0,30,2,"Ally stats");
     produceAsmScript(file,"data\\stats\\allies\\allystartdefs",0x1EE7D0,0x1EE890,"Ally start definitions");
     produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
-    produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics",1);    
-    produceAsmScriptWithConditionalInclude(file,"","code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics",1);    
+    produceAsmScript(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics");    
+    produceAsmScript(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics");    
     produceAsmSection(file,"",0x1EF5A6,0x1F0000);
 
     fclose(file);
