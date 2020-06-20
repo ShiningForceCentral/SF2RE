@@ -80,7 +80,7 @@ static parseFlaggedSwitchedMaps(){
         }
         fclose(flagmapFile);    
         MakeRptCmt(addr,flagDescription);
-        SetManualInsn(addr, form("flagSwitchedMap %s, $%s, %s", getMap(map), ltoa(flag,16), getMap(newMap)));
+        SetManualInsn(addr, form("flagSwitchedMap %s, %s, %s", getMap(map), ltoa(flag,10), getMap(newMap)));
         addr = addr+6;
     }
     for(j=addr;j<addr+1;j++){undefineByte(j);}
@@ -667,7 +667,7 @@ static parseFollowers(){
     while(addr<0x44388){
         for(j=addr;j<addr+4;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,4,1);
-        flag = form("$%s", ltoa(Byte(addr),16));
+        flag = form("%s", ltoa(Byte(addr),10));
         if(Byte(addr+1)<0x1E){
             entity = GetConstName(GetConst(GetEnum("Allies"),Byte(addr+1),-1));
         }else{
@@ -1159,7 +1159,7 @@ static parseMapData(){
                 }
                 fclose(flagmapFile);    
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("fbcFlag $%s", ltoa(Word(sc),16)));
+                SetManualInsn(sc, form("fbcFlag %s", ltoa(Word(sc),10)));
                 MakeWord(sc+2);
                 SetManualInsn(sc+2, form("  fbcSource %d, %d", Byte(sc+2), Byte(sc+3)));
                 MakeWord(sc+4);
@@ -1327,7 +1327,7 @@ static parseMapData(){
                 }
                 fclose(flagmapFile);    
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, $%s, %d", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),16),Byte(sc+3)));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItem(Byte(sc+3))));
                 sc = sc+4;
                 entry++;
             }
@@ -1376,7 +1376,7 @@ static parseMapData(){
                 }
                 fclose(flagmapFile);    
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, $%s, %d", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),16),Byte(sc+3)));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItem(Byte(sc+3))));
                 sc = sc+4;
                 entry++;
             }
@@ -1510,6 +1510,26 @@ static getDirection(cmd){
 static getMap(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Maps");
+    enumSize = GetEnumSize(id);
+    constant = GetFirstConst(id,-1);    
+    while(constant!=-1){
+            j=0;
+            constId = GetConstEx(id,constant,j,-1);
+            while(constId != -1){
+                if(constant==cmd){
+                    return GetConstName(constId);
+                }
+                j++;
+                constId = GetConstEx(id,constant,j,-1);
+            }
+            constant = GetNextConst(id,constant,-1);
+    }
+    return form("%s",ltoa(cmd,10));
+}
+
+static getItem(cmd){
+    auto id,enumSize,constant,j,constId,output;
+    id = GetEnum("Items");
     enumSize = GetEnumSize(id);
     constant = GetFirstConst(id,-1);    
     while(constant!=-1){

@@ -9322,7 +9322,6 @@ static Bytes_1(void) {
 	MakeDword	(x=0X72DE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X72E2,	0,	"                enableSram");
 	MakeCode	(0X72E2);
 	MakeCode	(x=0X731C);
 	OpOff		(x,	1,	0X0);
@@ -9457,7 +9456,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0X74BE);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	ExtLinB		(0X74C4,	0,	"                disableSram");
 	MakeByte	(0X74C8);
 	MakeArray	(0X74C8,	0X4);
 	MakeRptCmt	(0X74CC,	"HARDCODED new game starting map");
@@ -9478,7 +9476,6 @@ static Bytes_1(void) {
 	MakeCode	(x=0X750E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-	ExtLinB		(0X7512,	0,	"                disableSram");
 	MakeRptCmt	(0X7516,	"\"{NAME;0}, yes!  I knew it!{W2}\"");
 	MakeByte	(0X7516);
 	MakeArray	(0X7516,	0X4);
@@ -10056,7 +10053,6 @@ static Bytes_1(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeName	(0X7E44,	"@CheckInput_Up");
-	ExtLinA		(0X7E4C,	0,	"                enableSram");
 	MakeCode	(x=0X7E58);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -10647,15 +10643,6 @@ static Bytes_1(void) {
 	OpEnumEx		(x,	0,	GetEnum("EnemyCombatant_Offsets"),0);
 	MakeCode	(0X84FA);
 	MakeName	(0X84FA,	"GetKills");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_2(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X84FE);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Offsets"),0);
 	MakeCode	(0X850A);
@@ -10666,6 +10653,15 @@ static Bytes_2(void) {
 	MakeCode	(x=0X851A);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Bitmap"),0);
 	MakeName	(0X851A,	"GetSomethingClassType");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_2(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X8526,	"0,1,2 = base class, promoted class, special promoted class");
 	MakeCode	(x=0X852A);
 	OpEnumEx		(x,	0,	GetEnum("Combatant"),0);
@@ -13621,15 +13617,6 @@ static Bytes_2(void) {
 	MakeRptCmt	(0XB312,	"3/8 base chance to inflict slow");
 	MakeCode	(x=0XB312);
 	OpEnumEx		(x,	0,	GetEnum("BattleActionEngine_SpellEffects"),3);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_3(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0XB320);
 	OpEnumEx		(x,	0,	GetEnum("StatusEffects_Masks"),0);
 	MakeCode	(x=0XB32A);
@@ -13639,6 +13626,15 @@ static Bytes_3(void) {
 	MakeRptCmt	(0XB33C,	"write ally reaction command");
 	MakeCode	(0XB350);
 	MakeName	(0XB366,	"WriteSkirmishScript_SlowMessage");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_3(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0XB376);
 	OpEnumEx		(x,	0,	GetEnum("Messages"),0);
 	MakeCode	(x=0XB396);
@@ -17972,15 +17968,6 @@ static Bytes_3(void) {
 	MakeCode	(x=0X102F8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_4(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X10300);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
@@ -17993,6 +17980,15 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_4(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X1031C,	"A pressed, so confirm menu");
 	MakeCode	(x=0X10320);
 	OpOff		(x,	0,	0X0);
@@ -19791,6 +19787,7 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeStr		(0X11FEC,	0X11FF0);
 	MakeName	(0X11FEC,	"aNA");
+	ExtLinB		(0X11FF0,	0,	"                link    a6,#-6");
 	MakeCode	(x=0X11FF0);
 	OpSign		(x,	1);
 	MakeName	(0X11FF0,	"BuildMemberStatsWindow");
@@ -20086,6 +20083,7 @@ static Bytes_4(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X125C8);
 	OpHex		(x,	0);
+	ExtLinB		(0X125DE,	0,	"                modend");
 	MakeRptCmt	(0X125E0,	"useless padding bytes");
 	MakeWord	(0X125E0);
 	MakeCode	(0X125E2);
@@ -22160,15 +22158,6 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeByte	(0X14986);
 	MakeArray	(0X14986,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1498A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22181,6 +22170,15 @@ static Bytes_5(void) {
 	MakeCode	(x=0X149A8);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X149B6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -25610,15 +25608,6 @@ static Bytes_5(void) {
 	MakeDword	(0X16EE6);
 	MakeByte	(0X16EEA);
 	MakeArray	(0X16EEA,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X16EEC);
 	MakeByte	(0X16EEE);
 	MakeByte	(0X16EEF);
@@ -25629,6 +25618,15 @@ static Bytes_6(void) {
 	MakeByte	(0X16EFA);
 	MakeArray	(0X16EFA,	0X2);
 	MakeWord	(0X16EFC);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X16EFE);
 	MakeByte	(0X16EFF);
 	MakeByte	(0X16F00);
@@ -30590,15 +30588,6 @@ static Bytes_6(void) {
 	MakeByte	(0X1A649);
 	MakeByte	(0X1A64A);
 	MakeByte	(0X1A64B);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X1A64C);
 	MakeByte	(0X1A64D);
 	MakeByte	(0X1A64E);
@@ -30611,6 +30600,15 @@ static Bytes_7(void) {
 	MakeName	(0X1A654,	"sa02_Freeze");
 	MakeByte	(0X1A65A);
 	MakeArray	(0X1A65A,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X1A65E);
 	MakeRptCmt	(0X1A672,	"need to fix that ugly offset reference with the true data begin label");
 	MakeCode	(x=0X1A672);
@@ -36318,15 +36316,6 @@ static Bytes_7(void) {
 	MakeRptCmt	(0X1F93A,	"LIZARDMAN");
 	MakeByte	(0X1F93A);
 	MakeArray	(0X1F93A,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X1F93C,	"WORM");
 	MakeByte	(0X1F93C);
 	MakeArray	(0X1F93C,	0X2);
@@ -36336,6 +36325,15 @@ static Bytes_8(void) {
 	MakeRptCmt	(0X1F940,	"ORC LORD");
 	MakeByte	(0X1F940);
 	MakeArray	(0X1F940,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X1F942,	"DEVIL SOLDIER");
 	MakeByte	(0X1F942);
 	MakeArray	(0X1F942,	0X2);
@@ -37918,8 +37916,6 @@ static Bytes_8(void) {
 	MakeRptCmt	(0X20FF0,	"Set after first battle's cutscene OR first save? Checked at witch screens");
 	MakeByte	(0X20FF0);
 	MakeArray	(0X20FF0,	0X4);
-	ExtLinA		(0X20FF4,	0,	"                enableSram");
-	ExtLinB		(0X20FF4,	0,	"                disableSram");
 	MakeCode	(0X20FF4);
 	MakeByte	(0X20FF8);
 	MakeArray	(0X20FF8,	0X4);
@@ -40298,6 +40294,13 @@ static Bytes_8(void) {
 	ExtLinA		(0X237FA,	0,	"");
 	ExtLinA		(0X237FA,	1,	"; iterate over entities to find out which one is activated");
 	ExtLinA		(0X237FA,	2,	"");
+	MakeCode	(x=0X237FE);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X23802,	"skip this entity because it's the player!");
+	MakeRptCmt	(0X2380A,	"skip this entity because it's a follower!");
+	ExtLinA		(0X2380E,	0,	"; get distance from activated block");
+	ExtLinA		(0X2380E,	1,	"");
 }
 
 //------------------------------------------------------------------------
@@ -40307,13 +40310,6 @@ static Bytes_9(void) {
         auto x;
 #define id x
 
-	MakeCode	(x=0X237FE);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
-	MakeRptCmt	(0X23802,	"skip this entity because it's the player!");
-	MakeRptCmt	(0X2380A,	"skip this entity because it's a follower!");
-	ExtLinA		(0X2380E,	0,	"; get distance from activated block");
-	ExtLinA		(0X2380E,	1,	"");
 	MakeRptCmt	(0X23826,	"distance is less than 1 block");
 	MakeCode	(x=0X23834);
 	OpHex		(x,	0);
@@ -41958,8 +41954,6 @@ static Bytes_9(void) {
 	MakeCode	(x=0X252CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	ExtLinA		(0X252CE,	0,	"                enableSram");
-	ExtLinB		(0X252CE,	0,	"                disableSram");
 	MakeCode	(x=0X252D4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -42969,10 +42963,8 @@ static Bytes_9(void) {
 	OpHex		(x,	1);
 	MakeCode	(x=0X279C2);
 	OpHex		(x,	0);
-	ExtLinB		(0X279D8,	0,	"                bset    #7,(SAVE_FLAGS).l");
 	MakeCode	(0X279D8);
 	MakeName	(0X279D8,	"EndGame");
-	ExtLinA		(0X279E0,	0,	"                disableSram");
 	MakeCode	(x=0X279EA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -44667,15 +44659,6 @@ static Bytes_9(void) {
 	MakeByte	(0X2EB34);
 	MakeArray	(0X2EB34,	0X1003);
 	MakeName	(0X2EB34,	"TextBank00");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X2FB37);
 	MakeArray	(0X2FB37,	0XF1D);
 	MakeName	(0X2FB37,	"TextBank01");
@@ -44700,6 +44683,15 @@ static Bytes_10(void) {
 	MakeByte	(0X3850B);
 	MakeArray	(0X3850B,	0X1246);
 	MakeName	(0X3850B,	"TextBank08");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X39751);
 	MakeArray	(0X39751,	0X111E);
 	MakeName	(0X39751,	"TextBank09");
@@ -49119,15 +49111,6 @@ static Bytes_10(void) {
 	MakeCode	(0X46B3A);
 	MakeCode	(0X46B42);
 	MakeName	(0X46B42,	"csc22_animateEntityFadeInOrOut");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X46B48);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -49166,6 +49149,15 @@ static Bytes_11(void) {
 	MakeByte	(0X46BCD);
 	MakeByte	(0X46BCE);
 	MakeByte	(0X46BCF);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X46BD0);
 	MakeByte	(0X46BD1);
 	MakeByte	(0X46BD2);
@@ -53690,15 +53682,6 @@ static Bytes_11(void) {
 	MakeArray	(0X48DA2,	0X6);
 	MakeByte	(0X48DA8);
 	MakeArray	(0X48DA8,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X48DAE);
 	MakeArray	(0X48DAE,	0X2);
 	MakeComm	(0X48DB0,	"\"I guess it was nothing.{N}I have to get a hold of{N}myself.{D2}\"");
@@ -53724,6 +53707,15 @@ static Bytes_12(void) {
 	MakeArray	(0X48DD0,	0X4);
 	MakeByte	(0X48DD4);
 	MakeArray	(0X48DD4,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X48DDA);
 	MakeArray	(0X48DDA,	0X6);
 	MakeByte	(0X48DE0);
@@ -57757,15 +57749,6 @@ static Bytes_12(void) {
 	MakeComm	(0X4ACD4,	"\"How can you...defeat...{N}devils?{W1}\"");
 	MakeByte	(0X4ACD4);
 	MakeArray	(0X4ACD4,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4ACD8);
 	MakeArray	(0X4ACD8,	0X4);
 	MakeComm	(0X4ACDC,	"\"Ah!  You have the Jewel of{N}Evil around your neck.{W2}\"");
@@ -57781,6 +57764,15 @@ static Bytes_13(void) {
 	MakeByte	(0X4ACEC);
 	MakeArray	(0X4ACEC,	0X4);
 	MakeName	(0X4ACEC,	"abcs_battle12");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4ACF0);
 	MakeArray	(0X4ACF0,	0X6);
 	MakeWord	(0X4ACF6);
@@ -61574,15 +61566,6 @@ static Bytes_13(void) {
 	MakeRptCmt	(0X4CACC,	"  ");
 	MakeByte	(0X4CACC);
 	MakeArray	(0X4CACC,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X4CAD0,	"  ");
 	MakeByte	(0X4CAD0);
 	MakeArray	(0X4CAD0,	0X6);
@@ -61609,6 +61592,15 @@ static Bytes_14(void) {
 	MakeComm	(0X4CB04,	"\"You want the key?{N}You get it!{N}You can use my army.{W2}\"");
 	MakeByte	(0X4CB04);
 	MakeArray	(0X4CB04,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4CB08,	"\"See you later.{W1}\"");
 	MakeByte	(0X4CB08);
 	MakeArray	(0X4CB08,	0X4);
@@ -65470,15 +65462,6 @@ static Bytes_14(void) {
 	MakeArray	(0X4EC08,	0X2);
 	MakeByte	(0X4EC0A);
 	MakeArray	(0X4EC0A,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4EC10);
 	MakeArray	(0X4EC10,	0X4);
 	MakeByte	(0X4EC14);
@@ -65514,6 +65497,15 @@ static Bytes_15(void) {
 	MakeArray	(0X4EC44,	0X2);
 	MakeByte	(0X4EC46);
 	MakeArray	(0X4EC46,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4EC4A);
 	MakeArray	(0X4EC4A,	0X6);
 	MakeByte	(0X4EC50);
@@ -69335,15 +69327,6 @@ static Bytes_15(void) {
 	MakeByte	(0X50BCA);
 	MakeArray	(0X50BCA,	0X8);
 	MakeName	(0X50BCA,	"ms_map3_flag261_Entities");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X50BD2);
 	MakeArray	(0X50BD2,	0X8);
 	MakeByte	(0X50BDA);
@@ -69376,6 +69359,15 @@ static Bytes_16(void) {
 	MakeArray	(0X50C42,	0X8);
 	MakeByte	(0X50C4A);
 	MakeArray	(0X50C4A,	0X8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X50C52);
 	MakeArray	(0X50C52,	0X8);
 	MakeByte	(0X50C5A);
@@ -72527,15 +72519,6 @@ static Bytes_16(void) {
 	MakeArray	(0X52238,	0X4);
 	MakeByte	(0X5223C);
 	MakeArray	(0X5223C,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X52240);
 	MakeArray	(0X52240,	0X6);
 	MakeComm	(0X52246,	"\"How did you escape?{W1}\"");
@@ -72563,6 +72546,15 @@ static Bytes_17(void) {
 	MakeComm	(0X52278,	"Battle 5 unlocked");
 	MakeByte	(0X52278);
 	MakeArray	(0X52278,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X5227C);
 	MakeArray	(0X5227C,	0X6);
 	MakeName	(0X5227C,	"cs_5227C");
@@ -75844,15 +75836,6 @@ static Bytes_17(void) {
 	MakeByte	(0X53928);
 	MakeArray	(0X53928,	0X4);
 	MakeName	(0X53928,	"ms_map20_flag1FA_EntityEvents");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X5392C,	"\"A book...{N}BODY BUILDING{W1}\"");
 	MakeCode	(x=0X5392C);
 	OpOff		(x,	1,	0X53928);
@@ -75870,6 +75853,15 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X53948,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}CASTLE ROMANCE{W1}\"");
 	MakeByte	(0X53948);
 	MakeArray	(0X53948,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5394E,	"\"{NAME} investigated{N}the closet.{W2}{CLEAR}\"\n\"A small piece of silk.{N}{LEADER} is flustered.{W1}\"");
 	MakeByte	(0X5394E);
 	MakeArray	(0X5394E,	0X6);
@@ -79251,15 +79243,6 @@ static Bytes_18(void) {
 	MakeArray	(0X55112,	0X4);
 	MakeByte	(0X55116);
 	MakeArray	(0X55116,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X55118);
 	MakeArray	(0X55118,	0X4);
 	MakeByte	(0X5511C);
@@ -79298,6 +79281,15 @@ static Bytes_19(void) {
 	MakeWord	(0X5514C);
 	MakeByte	(0X5514E);
 	MakeArray	(0X5514E,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X55152);
 	MakeArray	(0X55152,	0X2);
 	MakeByte	(0X55154);
@@ -82549,15 +82541,6 @@ static Bytes_19(void) {
 	MakeComm	(0X56984,	"\"Our ancestors came to{N}Parmecia to chase after{N}a soldier called Max.{W2}\"");
 	MakeByte	(0X56984);
 	MakeArray	(0X56984,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X56988,	"\"They lost his trail at the{N}shore and then split into{N}two groups.{W2}\"");
 	MakeByte	(0X56988);
 	MakeArray	(0X56988,	0X4);
@@ -82577,6 +82560,15 @@ static Bytes_20(void) {
 	MakeComm	(0X5699C,	"\"I think I'll take a nap{N}now.  Bye.{W1}\"");
 	MakeByte	(0X5699C);
 	MakeArray	(0X5699C,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X569A0);
 	MakeArray	(0X569A0,	0X2);
 	MakeByte	(0X569A2);
@@ -86022,15 +86014,6 @@ static Bytes_20(void) {
 	MakeName	(0X58294,	"Map13_ZoneEvent2");
 	MakeRptCmt	(0X58296,	"Set after your raft-giving conversation with the mayor in Polca");
 	MakeWord	(0X58296);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X58298);
 	MakeRptCmt	(0X5829A,	"Set after Oddler runs after you as you leave Polca, and tags along");
 	MakeByte	(0X5829A);
@@ -86052,6 +86035,15 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X582BC,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}VIVA, FRIENDSHIP!{W1}\"");
 	MakeByte	(0X582BC);
 	MakeArray	(0X582BC,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X582C2,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}VOLCANON{W1}\"");
 	MakeByte	(0X582C2);
 	MakeArray	(0X582C2,	0X6);
@@ -89803,15 +89795,6 @@ static Bytes_21(void) {
 	MakeArray	(0X59D6E,	0X4);
 	MakeByte	(0X59D72);
 	MakeArray	(0X59D72,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X59D76);
 	MakeArray	(0X59D76,	0X4);
 	MakeByte	(0X59D7A);
@@ -89839,6 +89822,15 @@ static Bytes_22(void) {
 	MakeRptCmt	(0X59D94,	"\"They're too ferocious!{N}I'm gonna stay in Floor{N}World.{W1}\"");
 	MakeByte	(0X59D94);
 	MakeArray	(0X59D94,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X59D98);
 	MakeCode	(x=0X59D9A);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -93405,15 +93397,6 @@ static Bytes_22(void) {
 	MakeArray	(0X5B750,	0X2);
 	MakeByte	(0X5B752);
 	MakeArray	(0X5B752,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5B758);
 	MakeArray	(0X5B758,	0X2);
 	MakeByte	(0X5B75A);
@@ -93461,6 +93444,15 @@ static Bytes_23(void) {
 	MakeComm	(0X5B7C4,	"\"Creed, what do you want?{W1}\"");
 	MakeByte	(0X5B7C4);
 	MakeArray	(0X5B7C4,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5B7C8,	"\"Zeon.{W1}\"");
 	MakeByte	(0X5B7C8);
 	MakeArray	(0X5B7C8,	0X4);
@@ -97122,15 +97114,6 @@ static Bytes_23(void) {
 	MakeRptCmt	(0X5D37A,	"\"{NAME} investigated{N}the sign.{W2}{CLEAR}\"\n\"It reads...{N}Don't work!{W1}\"");
 	MakeByte	(0X5D37A);
 	MakeArray	(0X5D37A,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X5D380,	"\"{NAME} investigated{N}the sign.{W2}{CLEAR}\"\n\"It reads...{N}Mitula ignores you!{W1}\"");
 	MakeByte	(0X5D380);
 	MakeArray	(0X5D380,	0X6);
@@ -97150,6 +97133,15 @@ static Bytes_24(void) {
 	MakeCode	(x=0X5D39C);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X5D39C,	"ms_map25_InitFunction");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5D39E,	"Set after the merchant in Ketto runs to his store");
 	MakeWord	(0X5D39E);
 	MakeCode	(0X5D3A0);
@@ -100388,15 +100380,6 @@ static Bytes_24(void) {
 	MakeCode	(x=0X5EA1A);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X5EA1A,	"Map2_212_EntityEvent5");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X5EA1C,	"\"I see Geshp frequently.{N}He always stares at the{N}castle.{W1}\"");
 	MakeWord	(0X5EA1C);
 	MakeCode	(0X5EA1E);
@@ -100421,6 +100404,15 @@ static Bytes_25(void) {
 	MakeRptCmt	(0X5EA3C,	"\"{NAME} investigated{N}the sign.{W2}{CLEAR}\"\n\"Various tools!{N}-inquire within{W1}\"");
 	MakeByte	(0X5EA3C);
 	MakeArray	(0X5EA3C,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5EA42,	"\"{NAME} investigated{N}the statue.{W2}{CLEAR}\"\n\"A statue of a fine soldier.{W1}\"");
 	MakeByte	(0X5EA42);
 	MakeArray	(0X5EA42,	0X6);
@@ -104161,15 +104153,6 @@ static Bytes_25(void) {
 	MakeRptCmt	(0X6089A,	"  ");
 	MakeByte	(0X6089A);
 	MakeArray	(0X6089A,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X608A0);
 	MakeByte	(0X608A2);
 	MakeArray	(0X608A2,	0X8);
@@ -104215,6 +104198,15 @@ static Bytes_26(void) {
 	MakeWord	(0X608FA);
 	MakeByte	(0X608FC);
 	MakeArray	(0X608FC,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X60900);
 	MakeArray	(0X60900,	0X4);
 	MakeComm	(0X60904,	"\"No, {NAME;28} cannot die{N}by jumping off a cliff.{W2}\"");
@@ -107920,15 +107912,6 @@ static Bytes_26(void) {
 	MakeComm	(0X6236E,	"\"Yes.  He helped you many{N}times.{W1}\"");
 	MakeByte	(0X6236E);
 	MakeArray	(0X6236E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X62372);
 	MakeArray	(0X62372,	0X8);
 	MakeByte	(0X6237A);
@@ -107960,6 +107943,15 @@ static Bytes_27(void) {
 	MakeComm	(0X623AC,	"\"Really?  But he said, he{N}would forsake the people{N}of the earth.{W1}\"");
 	MakeByte	(0X623AC);
 	MakeArray	(0X623AC,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X623B0,	"\"He said that to deceive the{N}devils.{W2}\"");
 	MakeByte	(0X623B0);
 	MakeArray	(0X623B0,	0X4);
@@ -111682,15 +111674,6 @@ static Bytes_27(void) {
 	MakeName	(0X968D8,	"Map02");
 	MakeByte	(0X968D9);
 	MakeByte	(0X968DA);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_28(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X968DB);
 	MakeByte	(0X968DC);
 	MakeByte	(0X968DD);
@@ -111741,6 +111724,15 @@ static Bytes_28(void) {
 	MakeWord	(0X96928);
 	MakeWord	(0X9692A);
 	MakeWord	(0X9692C);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_28(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X9692E,	"Battle 30 completed");
 	MakeWord	(0X9692E);
 	MakeWord	(0X96930);
@@ -116816,15 +116808,6 @@ static Bytes_28(void) {
 	MakeByte	(0XAFD11);
 	MakeWord	(0XAFD12);
 	MakeWord	(0XAFD14);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_29(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0XAFD16);
 	MakeByte	(0XAFD18);
 	MakeByte	(0XAFD19);
@@ -116872,6 +116855,15 @@ static Bytes_29(void) {
 	MakeDword	(x=0XB0754);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_29(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XB0758);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -121843,15 +121835,6 @@ static Bytes_29(void) {
 	MakeDword	(x=0XC8454);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_30(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XC8458);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -121909,6 +121892,15 @@ static Bytes_30(void) {
 	MakeDword	(x=0XC84A0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_30(void) {
+        auto x;
+#define id x
+
 	MakeDword	(x=0XC84A4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -126023,15 +126015,6 @@ static Bytes_30(void) {
 	MakeByte	(0X1857E8);
 	MakeArray	(0X1857E8,	0X12CC);
 	MakeName	(0X1857E8,	"AllyBattleSprite05");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_31(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X186AB4);
 	MakeArray	(0X186AB4,	0X104C);
 	MakeName	(0X186AB4,	"AllyBattleSprite06");
@@ -126062,6 +126045,15 @@ static Bytes_31(void) {
 	MakeByte	(0X19347A);
 	MakeArray	(0X19347A,	0X12AC);
 	MakeName	(0X19347A,	"AllyBattleSprite15");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_31(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X194726);
 	MakeArray	(0X194726,	0XEAC);
 	MakeName	(0X194726,	"AllyBattleSprite16");
@@ -130337,15 +130329,6 @@ static Bytes_31(void) {
 	MakeArray	(0X1B2792,	0X2);
 	MakeByte	(0X1B2796);
 	MakeArray	(0X1B2796,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_32(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X1B2798);
 	MakeArray	(0X1B2798,	0X2);
 	MakeByte	(0X1B279A);
@@ -130390,6 +130373,15 @@ static Bytes_32(void) {
 	MakeArray	(0X1B27DC,	0X2);
 	MakeWord	(0X1B27DE);
 	MakeArray	(0X1B27DE,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_32(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1B27E6);
 	MakeArray	(0X1B27E6,	0X4);
 	MakeByte	(0X1B27EA);
@@ -134757,15 +134749,6 @@ static Bytes_32(void) {
 	MakeByte	(0X1EE8F3);
 	MakeRptCmt	(0X1EE8F4,	"MMNK");
 	MakeByte	(0X1EE8F4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_33(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X1EE8F5);
 	MakeByte	(0X1EE8F7);
 	MakeByte	(0X1EE8F8);
@@ -134816,6 +134799,15 @@ static Bytes_33(void) {
 	MakeByte	(0X1EE925);
 	MakeRptCmt	(0X1EE926,	"GLM");
 	MakeByte	(0X1EE926);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_33(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X1EE927);
 	MakeByte	(0X1EE929);
 	MakeByte	(0X1EE92A);
@@ -138489,8 +138481,8 @@ static Functions_0(void) {
 	MakeNameEx(0X1232E, "@WriteItemNames", SN_LOCAL);
 	MakeNameEx(0X1234A, "@ItemNames_Loop", SN_LOCAL);
 	MakeNameEx(0X123AC, "@Next", SN_LOCAL);
-	MakeNameEx(0X123DA, "Write_Nothing", SN_LOCAL);
-	MakeNameEx(0X123F2, "CopyJewelIcons", SN_LOCAL);
+	MakeNameEx(0X123DA, "@Write_Nothing", SN_LOCAL);
+	MakeNameEx(0X123F2, "@CopyJewelIcons", SN_LOCAL);
 	MakeNameEx(0X12446, "@DrawSpellIcons", SN_LOCAL);
 	MakeNameEx(0X1244E, "@SpellIcons_Loop", SN_LOCAL);
 	MakeNameEx(0X124B8, "@SpellIcons_Skip", SN_LOCAL);
