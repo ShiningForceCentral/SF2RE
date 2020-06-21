@@ -11,11 +11,11 @@ static main(void){
 
 static parseAll(){
 
-	Message("\nPARSING...\n");
-	Message("Battle Scene Commands...");
-	parseBattleSceneCommands();
-	Message(" DONE.\n");		
-	Message("END OF PARSING.\n");	
+    Message("\nPARSING...\n");
+    Message("Battle Scene Commands...");
+    parseBattleSceneCommands();
+    Message(" DONE.\n");        
+    Message("END OF PARSING.\n");    
 
 }
 
@@ -207,25 +207,25 @@ static parseBattleSceneCommands(){
 
 static parseBSC(start,end){
 
-	auto ea,cmdName,cmdComment,cmdLength,tab,action,flag;
+    auto ea,cmdName,cmdComment,cmdLength,tab,action,flag;
     auto paramOne,paramTwo,paramThree,paramFour;
-	
-	ea = start;
-    cmdLength = end-start;
-	action = 1;
     
-	MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
-	MakeCode(ea);
+    ea = start;
+    cmdLength = end-start;
+    action = 1;
+    
+    MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
+    MakeCode(ea);
     SetManualInsn(ea,"");
     MakeRptCmt(ea,"");
     
-	//Message(form("\n%a : START OF BSC PARSING",ea));
+    //Message(form("\n%a : START OF BSC PARSING",ea));
 
-	while(ea<end && action==1){
-		
-		if(Word(ea+2)==0x0000){
-			cmdName = "0000 ANIMATE ENEMY ACTION";
-			cmdComment = "Animation Type, Spell/Item/Projectile";
+    while(ea<end && action==1){
+        
+        if(Word(ea+2)==0x0000){
+            cmdName = "0000 ANIMATE ENEMY ACTION";
+            cmdComment = "Animation Type, Spell/Item/Projectile";
             
             // Animation type
             ea = ItemEnd(ea);
@@ -236,14 +236,14 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramTwo = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("animateEnemyAction %s,%s",paramOne,paramTwo));
-		}
-		else if(Word(ea+2)==0x0001){
-			cmdName = "0001 ANIMATE ALLY ACTION";
-			cmdComment = "Animation Type, Spell/Item/Projectile";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("animateEnemyAction %s,%s",paramOne,paramTwo));
+        }
+        else if(Word(ea+2)==0x0001){
+            cmdName = "0001 ANIMATE ALLY ACTION";
+            cmdComment = "Animation Type, Spell/Item/Projectile";
+            
             // Animation type
             ea = ItemEnd(ea);
             MakeCode(ea);
@@ -253,56 +253,56 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramTwo = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("animateAllyAction %s,%s",paramOne,paramTwo));
-		}
-		else if(Word(ea+2)==0x0002){
-			cmdName = "0002 MOVE ENEMY BATTLESPRITE";
-			cmdComment = "";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("animateAllyAction %s,%s",paramOne,paramTwo));
+        }
+        else if(Word(ea+2)==0x0002){
+            cmdName = "0002 MOVE ENEMY BATTLESPRITE";
+            cmdComment = "";
+            
             // 
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("moveEnemyBattleSprite %s",paramOne));
-		}
-		else if(Word(ea+2)==0x0003){
-			cmdName = "0003 MOVE ALLY BATTLESPRITE";
-			cmdComment = "";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("moveEnemyBattleSprite %s",paramOne));
+        }
+        else if(Word(ea+2)==0x0003){
+            cmdName = "0003 MOVE ALLY BATTLESPRITE";
+            cmdComment = "";
+            
             // 
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("moveAllyBattleSprite %s",paramOne));
-		}
-		else if(Word(ea+2)==0x0004){
-			cmdName = "0004 MAKE ENEMY IDLE";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("makeEnemyIdle"));
-		}
-		else if(Word(ea+2)==0x0005){
-			cmdName = "0005 MAKE ALLY IDLE";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("makeAllyIdle"));
-		}
-		else if(Word(ea+2)==0x0006){
-			cmdName = "0006 SWITCH ENEMIES";
-			cmdComment = "Combatant, Direction (0 = Right, 1 = Left)";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("moveAllyBattleSprite %s",paramOne));
+        }
+        else if(Word(ea+2)==0x0004){
+            cmdName = "0004 MAKE ENEMY IDLE";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("makeEnemyIdle"));
+        }
+        else if(Word(ea+2)==0x0005){
+            cmdName = "0005 MAKE ALLY IDLE";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("makeAllyIdle"));
+        }
+        else if(Word(ea+2)==0x0006){
+            cmdName = "0006 SWITCH ENEMIES";
+            cmdComment = "Combatant, Direction (0 = Right, 1 = Left)";
+            
             // Combatant index
             ea = ItemEnd(ea);
             MakeCode(ea);
@@ -312,14 +312,14 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramTwo = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1); 
-			SetManualInsn(start,form("switchEnemies %s,%s",paramOne,paramTwo));		
-		}
-		else if(Word(ea+2)==0x0007){
-			cmdName = "0007 SWITCH ALLIES";
-			cmdComment = "Combatant, Direction (0 = Right, 1 = Left)";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1); 
+            SetManualInsn(start,form("switchEnemies %s,%s",paramOne,paramTwo));        
+        }
+        else if(Word(ea+2)==0x0007){
+            cmdName = "0007 SWITCH ALLIES";
+            cmdComment = "Combatant, Direction (0 = Right, 1 = Left)";
+            
             // Combatant index
             ea = ItemEnd(ea);
             MakeCode(ea);
@@ -329,39 +329,39 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramTwo = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("switchAllies %s,%s",paramOne,paramTwo));
-		}
-		else if(Word(ea+2)==0x0008){
-			cmdName = "0008 SWITCH TO ENEMY ALONE";
-			cmdComment = "Combatant";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("switchAllies %s,%s",paramOne,paramTwo));
+        }
+        else if(Word(ea+2)==0x0008){
+            cmdName = "0008 SWITCH TO ENEMY ALONE";
+            cmdComment = "Combatant";
+            
             // Combatant index
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("switchToEnemyAlone %s",paramOne));
-		}
-		else if(Word(ea+2)==0x0009){
-			cmdName = "0009 SWITCH TO ALLY ALONE";
-			cmdComment = "Combatant";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("switchToEnemyAlone %s",paramOne));
+        }
+        else if(Word(ea+2)==0x0009){
+            cmdName = "0009 SWITCH TO ALLY ALONE";
+            cmdComment = "Combatant";
+            
             // Combatant index
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("switchToAllyAlone %s",paramOne));
-		}
-		else if(Word(ea+2)==0x000A){
-			cmdName = "000A EXECUTE ENEMY REACTION";
-			cmdComment = "HP change (signed), MP change (signed), Status Effects, Flags";
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("switchToAllyAlone %s",paramOne));
+        }
+        else if(Word(ea+2)==0x000A){
+            cmdName = "000A EXECUTE ENEMY REACTION";
+            cmdComment = "HP change (signed), MP change (signed), Status Effects, Flags";
             
             // HP change
             ea = ItemEnd(ea);
@@ -380,13 +380,13 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramFour = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("executeEnemyReaction %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
-		}
-		else if(Word(ea+2)==0x000B){
-			cmdName = "000B EXECUTE ALLY REACTION";
-			cmdComment = "HP change (signed), MP change (signed), Status Effects, Flags";
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("executeEnemyReaction %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
+        }
+        else if(Word(ea+2)==0x000B){
+            cmdName = "000B EXECUTE ALLY REACTION";
+            cmdComment = "HP change (signed), MP change (signed), Status Effects, Flags";
             
             // HP change
             ea = ItemEnd(ea);
@@ -405,55 +405,55 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramFour = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("executeAllyReaction %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
-		}
-		else if(Word(ea+2)==0x000C){
-			cmdName = "000C MAKE ACTOR IDLE AND END ANIMATION";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("makeActorIdleAndEndAnimation"));
-		}
-		else if(Word(ea+2)==0x000D){
-			cmdName = "000D END ANIMATION";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("endAnimation"));			
-		}
-		else if(Word(ea+2)==0x000E){
-			cmdName = "000E WAIT";
-			cmdComment = "Duration (in frames)";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("executeAllyReaction %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
+        }
+        else if(Word(ea+2)==0x000C){
+            cmdName = "000C MAKE ACTOR IDLE AND END ANIMATION";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("makeActorIdleAndEndAnimation"));
+        }
+        else if(Word(ea+2)==0x000D){
+            cmdName = "000D END ANIMATION";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("endAnimation"));            
+        }
+        else if(Word(ea+2)==0x000E){
+            cmdName = "000E WAIT";
+            cmdComment = "Duration (in frames)";
+            
             // Duration
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("bscWait %s",paramOne));
-		}
-		else if(Word(ea+2)==0x000F){
-			cmdName = "000F GIVE EXP";
-			cmdComment = "";
-			
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("bscWait %s",paramOne));
+        }
+        else if(Word(ea+2)==0x000F){
+            cmdName = "000F GIVE EXP";
+            cmdComment = "";
+            
             // EXP amount
             ea = ItemEnd(ea);
             MakeCode(ea);
             paramOne = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("giveEXP %s",paramOne));
-		}
-		else if(Word(ea+2)==0x0010){
-			cmdName = "0010 DISPLAY BATTLE MESSAGE";
-			cmdComment = "Message, Combatant, Item or Spell, Number";
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("giveEXP %s",paramOne));
+        }
+        else if(Word(ea+2)==0x0010){
+            cmdName = "0010 DISPLAY BATTLE MESSAGE";
+            cmdComment = "Message, Combatant, Item or Spell, Number";
             
             // Message index
             ea = ItemEnd(ea);
@@ -482,13 +482,13 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramFour = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("displayMessage %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
-		}
-		else if(Word(ea+2)==0x0011){
-			cmdName = "0011 DISPLAY BATTLE MESSAGE WITH NO WAIT";
-			cmdComment = "Message, Combatant, Item or Spell, Number";
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("displayMessage %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
+        }
+        else if(Word(ea+2)==0x0011){
+            cmdName = "0011 DISPLAY BATTLE MESSAGE WITH NO WAIT";
+            cmdComment = "Message, Combatant, Item or Spell, Number";
             
             // Message index
             ea = ItemEnd(ea);
@@ -517,65 +517,65 @@ static parseBSC(start,end){
             MakeCode(ea);
             paramFour = GetOpnd(ea,0);
             
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("displayMessageWithNoWait %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
-		}
-		else if(Word(ea+2)==0x0012){
-			cmdName = "0012 HIDE TEXT BOX";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("bscHideTextBox"));				
-		}
-		else if(Word(ea+2)==0x0013){
-			cmdName = "0013 WAIT FOR PLAYER INPUT";
-			cmdComment = "";
-			cmdLength = 4;
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("bscWaitForPlayerInput"));			
-		}
-		else if(Word(ea+2)==0x0014){
-			cmdName = "0014 NULL COMMAND";
-			cmdComment = "";
-			cmdLength = 4;
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("bscNullCommand"));
-		}
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("displayMessageWithNoWait %s,%s,%s,%s",paramOne,paramTwo,paramThree,paramFour));
+        }
+        else if(Word(ea+2)==0x0012){
+            cmdName = "0012 HIDE TEXT BOX";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("bscHideTextBox"));                
+        }
+        else if(Word(ea+2)==0x0013){
+            cmdName = "0013 WAIT FOR PLAYER INPUT";
+            cmdComment = "";
+            cmdLength = 4;
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("bscWaitForPlayerInput"));            
+        }
+        else if(Word(ea+2)==0x0014){
+            cmdName = "0014 NULL COMMAND";
+            cmdComment = "";
+            cmdLength = 4;
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("bscNullCommand"));
+        }
         else if(Word(ea+2)==0xFFFF){
-			cmdName = "FFFF BATTLESCENE END";
-			cmdComment = "";
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeData(start,FF_BYTE,cmdLength,1);
-			SetManualInsn(start,form("bscEnd"));
-		}
-		else{
-			cmdComment = form("Unkown command : %s",ltoa(Word(ea),16));
-			Message(form("\n%s%s",tab,cmdComment));
-			MakeRptCmt(start,cmdComment);
-			
-			MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
-			MakeWord(start);
-		}
-		
+            cmdName = "FFFF BATTLESCENE END";
+            cmdComment = "";
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeData(start,FF_BYTE,cmdLength,1);
+            SetManualInsn(start,form("bscEnd"));
+        }
+        else{
+            cmdComment = form("Unkown command : %s",ltoa(Word(ea),16));
+            Message(form("\n%s%s",tab,cmdComment));
+            MakeRptCmt(start,cmdComment);
+            
+            MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
+            MakeWord(start);
+        }
+        
         MakeRptCmt(start,form("%s%s",tab,cmdComment));
-		//Message(form("\n%a : %s",ea,cmdComment));
-		ea = start+cmdLength;
+        //Message(form("\n%a : %s",ea,cmdComment));
+        ea = start+cmdLength;
 
-		
-		//action = AskYN(1,"Continue ?");
-	
-	
-		
-	}
-	
-	//Message(form("\n%a : END OF BSC PARSING",ea));
-	
-	return ea;
+        
+        //action = AskYN(1,"Continue ?");
+    
+    
+        
+    }
+    
+    //Message(form("\n%a : END OF BSC PARSING",ea));
+    
+    return ea;
 
 }
 

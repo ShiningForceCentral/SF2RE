@@ -21,8 +21,9 @@ Usage workflow :
         3. 02.traps.idc
         4. 03.scripts.idc
         5. 04.mapsetups.idc
-        6. 05.othermacros.idc\
-        7. 06.fixes.idc\
+        6. 05.battlescenecommands.idc
+        6. 06.othermacros.idc\
+        7. 07.fixes.idc\
         At this point, the IDB represents the current state of disassembly, with the ability to further format and document content.
 2. Export the disassembly :
     1. In IDB folder, copy and execute ./30-ASM_EXPORT/dirs.bat, which will create ./disasm/ folder
