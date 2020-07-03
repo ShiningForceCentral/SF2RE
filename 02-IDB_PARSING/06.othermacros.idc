@@ -1327,7 +1327,7 @@ static parseMapData(){
                 }
                 fclose(flagmapFile);    
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItem(Byte(sc+3))));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
                 sc = sc+4;
                 entry++;
             }
@@ -1376,7 +1376,7 @@ static parseMapData(){
                 }
                 fclose(flagmapFile);    
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItem(Byte(sc+3))));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
                 sc = sc+4;
                 entry++;
             }
@@ -1510,26 +1510,6 @@ static getDirection(cmd){
 static getMap(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Maps");
-    enumSize = GetEnumSize(id);
-    constant = GetFirstConst(id,-1);    
-    while(constant!=-1){
-            j=0;
-            constId = GetConstEx(id,constant,j,-1);
-            while(constId != -1){
-                if(constant==cmd){
-                    return GetConstName(constId);
-                }
-                j++;
-                constId = GetConstEx(id,constant,j,-1);
-            }
-            constant = GetNextConst(id,constant,-1);
-    }
-    return form("%s",ltoa(cmd,10));
-}
-
-static getItem(cmd){
-    auto id,enumSize,constant,j,constId,output;
-    id = GetEnum("Items");
     enumSize = GetEnumSize(id);
     constant = GetFirstConst(id,-1);    
     while(constant!=-1){
