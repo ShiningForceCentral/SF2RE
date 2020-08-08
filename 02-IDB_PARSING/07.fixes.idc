@@ -196,142 +196,227 @@ static fixLocalVariableNames(){
     auto ea;
     auto var2,var4,var6,var8,var10,var12;
     
-    MakeLocal(0x3930, FindFuncEnd(0x3930), "[sp-2]", "@var_2");
-    
+    ea = 0x3930;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "var_2");
     ea = 0x4FF8;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
-    
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "var_10");
     ea = 0x5668;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
-    
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "var_10");
     ea = 0x57EA;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "@var_4");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "@var_10");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", "var_4");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", "var_10");
     
-    MakeLocal(0x7D54, FindFuncEnd(0x7D54), "[sp-2]", "@var_2");
-    MakeLocal(0x100C8, FindFuncEnd(0x100C8), "[sp-2]", "@USE_ORANGE_FONT");
-    MakeLocal(0x100E2, FindFuncEnd(0x100E2), "[sp-2]", "@USE_ORANGE_FONT");
-    MakeLocal(0x100EA, FindFuncEnd(0x100EA), "[sp-2]", "@USE_ORANGE_FONT");
-    MakeLocal(0x11442, FindFuncEnd(0x11442), "[sp-4]", "@var_4");
+    MakeLocal(0x7D54, FindFuncEnd(0x7D54), "[sp-2]", "var_2");
     
+    /* LevelUp */
+    var2 = "character_index";
+    ea = 0x9484;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    
+    MakeLocal(0x100C8, FindFuncEnd(0x100C8), "[sp-2]", "use_orange_font");
+    MakeLocal(0x100E2, FindFuncEnd(0x100E2), "[sp-2]", "use_orange_font");
+    MakeLocal(0x100EA, FindFuncEnd(0x100EA), "[sp-2]", "use_orange_font");
+    MakeLocal(0x11442, FindFuncEnd(0x11442), "[sp-4]", "var_4");
     ea = 0x118BE;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "@var_8");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "combatant_index");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", "window_tiles_address");
     
+    /* BuildMemberStatsScreen */
+    var2 = "character_index";
+    var4 = "stats_window_slot";
+    var6 = "portrait_window_slot";
+    var8 = "kd_window_slot";
+    var10 = "gold_window_slot";
+    var12 = "portrait_index";
+    ea = 0x11C2A;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    ea = 0x11EFE;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    
+    /* BuildMemberStatsWindow */
+    var2 = "character_index";
+    var6 = "window_tile_address";
+    ea = 0x11EEA;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     ea = 0x11FF0;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    
-    ea = 0x1288E;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", "@var_12");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-14]", "@var_14");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-32]", "@var_32");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     
     // --------------------------------------------------------------
     
-    var2 = "@SELECTED_MEMBER";
-    var4 = "@MEMBERLIST_WINDOW";
-    var6 = "@MEMBERPORTRAIT_WINDOW";
-    var8 = "@MEMBERSUMMARY_WINDOW";
+    ea = 0x1288E;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "var_2");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", "var_12");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-14]", "var_14");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-32]", "var_32");
     
+    // --------------------------------------------------------------
+    
+    var2 = "selected_member";
+    var4 = "memberlist_window";
+    var6 = "memberportrait_window";
+    var8 = "membersummary_window";
     ea = 0x12FE6;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
-    
     ea = 0x13394;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
-    
     ea = 0x13478;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
-    
     ea = 0x134A8;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
-    
     ea = 0x1354C;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
     
-    // --------------------------------------------------------------
-    
+    /* WriteMemberListText */
     ea = 0x135A6;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-16]", "@var_16");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "selected_member");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "window_tiles_address");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-16]", "current_character_index");
     
+    /* BuildMiniStatusWindow */
+    var2 = "character_index";
+    var6 = "window_tiles_address";
     ea = 0x137BC;
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", "@var_2");
-    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", "@var_6");
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x13902;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x13930;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x13956;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x1397C;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x13A52;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
+    ea = 0x13AEA;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     
     // --------------------------------------------------------------
     
-    var4 = "@WINDOW_TILES_END";
-    var6 = "@WINDOW_SLOT";
-    var8 = "@NUMBER";
-    var10 = "@MIN_NUMBER";
-    var12 = "@MAX_NUMBER";
-    
+    var4 = "window_tiles_end";
+    var6 = "window_slot";
+    var8 = "number";
+    var10 = "min_number";
+    var12 = "max_number";
     ea = 0x16282;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
-    
     ea = 0x16376;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
-    
     ea = 0x16398;
     MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-6]", var6);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
-    
     // --------------------------------------------------------------
-    
-    MakeLocal(0x27CA4, FindFuncEnd(0x27CA4), "[sp-2]", "@var_2");
-    MakeLocal(0x444A2, FindFuncEnd(0x444A2), "[sp-4]", "@var_4");
+    var2 = "current_combatant_index";
+    var4 = "current_item_or_spell_index";
+    ea = 0x23EB0;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    ea = 0x24662;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    ea = 0x2519E;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    ea = 0x252FA;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-2]", var2);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    // --------------------------------------------------------------
+    MakeLocal(0x27CA4, FindFuncEnd(0x27CA4), "[sp-2]", "var_2");
+    MakeLocal(0x444A2, FindFuncEnd(0x444A2), "[sp-4]", "var_4");
     
 }
  
 static fixUnwantedNames(){
 
     /* Names generating errors about other local names in same function */
-    MakeNameEx(0xA08E,"",0);
+    MakeNameEx(0x651C,"",0);
+    MakeNameEx(0x658C,"",0);
+    MakeNameEx(0x6606,"",0);
+    MakeNameEx(0x6644,"",0);
+    MakeNameEx(0x6EDE,"",0);
+    MakeNameEx(0x6F56,"",0);
+    MakeNameEx(0x6FBA,"",0);
+    MakeNameEx(0x702E,"",0);
+    MakeNameEx(0x7E44,"",0);
+    MakeNameEx(0x843C,"",0);
+    MakeNameEx(0x85DC,"",0);
+    MakeNameEx(0x8D56,"",0);
+    MakeNameEx(0x8DBC,"",0);
+    MakeNameEx(0x91DC,"",0);
+    MakeName(0x94BA,"");
+    MakeName(0x96DC,"");
+    MakeNameEx(0x980C,"",0);
+    MakeName(0xA086,"");
+    //MakeNameEx(0xA08E,"");
     MakeNameEx(0xA21A,"",0);
     MakeNameEx(0xA220,"",0);
     MakeNameEx(0xA652,"",0);
+    MakeNameEx(0xA926,"",0);
     MakeNameEx(0xABF2,"",0);
     MakeNameEx(0xAC00,"",0);
-    MakeNameEx(0xAE70,"",0);
+    MakeName(0xACC8,"");
+    MakeName(0xAE62,"");
+    //MakeNameEx(0xAE70,"",0);
     MakeNameEx(0xAF8A,"",0);
     MakeNameEx(0xAFBA,"",0);
-    MakeNameEx(0xB616,"",0);
-    MakeNameEx(0xB6A6,"",0);
-       
+    MakeNameEx(0xB010,"",0);
+    MakeName(0xB612,"");
+    //MakeNameEx(0xB616,"",0);
+    MakeName(0xB6A2,"");
+    //MakeNameEx(0xB6A6,"",0);
+    MakeNameEx(0xD2E4,"",0);
+    MakeNameEx(0xEBB8,"",0);
+    
+    
 
 }
 

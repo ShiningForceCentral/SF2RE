@@ -182,7 +182,7 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0xBECC,0xC024,"EnemyGold","data/stats/enemies/enemygold.bin",file);
     //splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
     
-    splitSingleChunk(0xD824,0xD8F4,"MoveTypeTerrainCosts","data/battles/global/movetypeterraincosts.bin",file);
+    //splitSingleChunk(0xD824,0xD8F4,"MoveTypeTerrainCosts","data/battles/global/movetypeterraincosts.bin",file);
     
     //splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","data/stats/spells/spellnames.bin",file);
     //splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","data/stats/allies/allynames.bin",file);
@@ -195,7 +195,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x10EF4,0x10FCC,"UnidentifiedLayout01","data/graphics/tech/menus/unidentifiedlayout01.bin",file);
     splitSingleChunk(0x10FCC,0x110A4,"UnidentifiedLayout02","data/graphics/tech/menus/unidentifiedlayout02.bin",file);
     
-    splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
+    //splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     
     splitSingleChunk(0x1264E,0x126EE,"WindowBorderTiles","data/graphics/tech/windowbordertiles.bin",file);
     //splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
@@ -209,14 +209,14 @@ static splitSingleChunks(file) {
     
     splitSingleChunk(0x151D6,0x15268,"ShopInventoryItemHighlightTiles","data/graphics/tech/shopinventoryitemhighlighttiles.bin",file);
     
-    splitSingleChunk(0x15A5A,0x15BB0,"BattleConfigWindowLayout","data/graphics/tech/windowlayouts/battleconfigwindowlayout.bin",file);
+    //splitSingleChunk(0x15A5A,0x15BB0,"BattleConfigWindowLayout","data/graphics/tech/windowlayouts/battleconfigwindowlayout.bin",file);
     
     //splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
     //splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
     //splitSingleChunk(0x16204,0x1623A,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
     splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlighttiles.bin",file);
     
-    splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
+    //splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
     
     //splitSingleChunk(0x16A62,0x16EA6,"MemberStatsWindowLayout","data/graphics/tech/windowlayouts/memberstatswindowslayout.bin",file);
     //splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","data/stats/items/itemdefs.bin",file);
@@ -225,9 +225,9 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
     MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
     
-    splitSingleChunk(0x198A8,0x198C8,"plt_BattleSceneBasePalette","data/graphics/battles/plt_battlescenebasepalette.bin",file);
+    splitSingleChunk(0x198A8,0x198C8,"plt_BattlesceneBasePalette","data/graphics/battles/plt_battlescenebasepalette.bin",file);
     
-    splitSingleChunk(0x19E5E,0x19E6E,"TerrainBackgrounds","data/battles/global/terrainbackgrounds.bin",file);
+    //splitSingleChunk(0x19E5E,0x19E6E,"TerrainBackgrounds","data/battles/global/terrainbackgrounds.bin",file);
     
     //splitSingleChunk(0x1F806,0x1F914,"AllyBattleSprites","data/stats/allies/allybattlesprites.bin",file);
     //splitSingleChunk(0x1F914,0x1F9E2,"EnemyBattleSprites","data/stats/enemies/enemybattlesprites.bin",file);
@@ -269,8 +269,8 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x2822C,0x2824C,"SegaLogoPalette","data/graphics/tech/segalogopalette.bin",file);
     splitSingleChunk(0x2824C,0x28B12,"SegaLogo","data/graphics/tech/segalogo.bin",file);
     
-    splitSingleChunk(0x28FBC,0x28FCC,"InputSequence_ConfigurationMode","data/tech/configurationmodeinputsequence.bin",file);
-    splitSingleChunk(0x28FF0,0x29002,"InputSequence_DebugMode","data/tech/debugmodeinputsequence.bin",file);
+    //splitSingleChunk(0x28FBC,0x28FCC,"InputSequence_ConfigurationMode","data/tech/configurationmodeinputsequence.bin",file);
+    //splitSingleChunk(0x28FF0,0x29002,"InputSequence_DebugMode","data/tech/debugmodeinputsequence.bin",file);
     
     splitSingleChunk(0x29002,0x29A02,"VariableWidthFont","data/graphics/tech/fonts/variablewidthfont.bin",file);
     

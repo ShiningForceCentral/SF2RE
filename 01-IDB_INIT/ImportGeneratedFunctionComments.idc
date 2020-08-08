@@ -24,11 +24,11 @@ static main()
     SetFunctionCmt(0xc80, 
         "VDP CRAM", 1);
 
-    // sub_CC4
+    // SetBasePalette1
     SetFunctionCmt(0xcc4, 
         "Unused palette copy", 1);
 
-    // sub_E7C
+    // ClearCram
     SetFunctionCmt(0xe7c, 
         "unused DMA", 1);
 
@@ -114,9 +114,7 @@ static main()
 
     // GetRandomOrDebugValue
     SetFunctionCmt(0x1674, 
-        "In: D0 = value range\n\
-\n\
-Out: D0 = random value\n\
+        "Get random value in range D0 -> D0\n\
 \n\
 Debug mode allows values 0-3 depending on player direction", 1);
 
@@ -384,11 +382,15 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     SetFunctionCmt(0x6a38, 
         "related to text box", 1);
 
+    // CheckSram
+    SetFunctionCmt(0x6ea6, 
+        "Out: D0, D1 = -1 if slot 1, or slot 2 failed checksum", 1);
+
     // CopyBytesToSram
     SetFunctionCmt(0x7004, 
-        "a0 = source address\n\
-a1 = destination address\n\
-d7 = number of bytes to copy", 1);
+        "In: A0 = source address\n\
+    A1 = destination address\n\
+    D7 = number of bytes to copy", 1);
 
     // CopyBytesFromSram
     SetFunctionCmt(0x701c, 
@@ -453,9 +455,11 @@ Out: A0 = address of name\n\
 
     // GetClass
     SetFunctionCmt(0x8306, 
-        "In: D0 = combatant index\n\
-\n\
-Out: D1 = class index", 1);
+        "Get combatant D0's class index -> D1", 1);
+
+    // GetCurrentLevel
+    SetFunctionCmt(0x8316, 
+        "Get combatant D0's current level -> D1", 1);
 
     // GetUpperMoveType
     SetFunctionCmt(0x846a, 
@@ -504,15 +508,15 @@ Out: A0 = address of entry in names list\n\
     SetFunctionCmt(0x89ce, 
         "Update all current stats", 1);
 
-    // ApplyMagicOnStats
+    // ApplyStatusEffectsOnStats
     SetFunctionCmt(0x8a26, 
-        "In: D0 = char index\n\
-    D3 = status bitfield", 1);
+        "In: D0 = combatant index\n\
+    D3 = status effects bitfield", 1);
 
     // ApplyItemOnStats
     SetFunctionCmt(0x8a90, 
-        "In: A2 = address in RAM of character's prowess\n\
-    D0 = character index\n\
+        "In: A2 = address in RAM of combatant's prowess\n\
+    D0 = combatant index\n\
     D1 = item index", 1);
 
     // FindItemName
@@ -523,8 +527,7 @@ Out: A0 = address of name\n\
 
     // GetItemDefAddress
     SetFunctionCmt(0x8be4, 
-        "In: D1 = item index\n\
-Out: A0 = item definition address in ROM", 1);
+        "Get pointer to item D1's definition in ROM -> A0", 1);
 
     // GetItemAndNumberOfItems
     SetFunctionCmt(0x8bfa, 
@@ -534,11 +537,19 @@ Out: A0 = item definition address in ROM", 1);
 Out: D1 = item index\n\
      D2 = number of items held", 1);
 
-    // GetItemType
+    // GetEquipmentType
     SetFunctionCmt(0x8c28, 
         "In: D1 = item index\n\
 \n\
-Out: D2 = item type (0 = item, 1 = weapon, $FFFF = ring)", 1);
+Out: D2 = equipment type (0 = item, 1 = weapon, $FFFF = ring)", 1);
+
+    // GetEquippedWeapon
+    SetFunctionCmt(0x8c4c, 
+        "Get combatant D0's equipped weapon and slot indexes -> D1 and D2 ($FFFF if nothing equipped)", 1);
+
+    // GetEquippedRing
+    SetFunctionCmt(0x8c56, 
+        "Get combatant D0's equipped ring and slot indexes -> D1 and D2 ($FFFF if nothing equipped)", 1);
 
     // AddItem
     SetFunctionCmt(0x8ca2, 
@@ -561,11 +572,9 @@ Out: D2 = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothin
 
     // IsItemEquippableAndCursed
     SetFunctionCmt(0x8d6a, 
-        "Check if item is equippable by char D0's class, and whether or not it's a cursed item\n\
+        "Is item D1 equippable by character D0's class, and is it cursed ?\n\
 \n\
-      In: D0 = character index\n\
-\n\
-      Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
+Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
 
     // UnequipItemBySlotIfNotCursed
     SetFunctionCmt(0x8d9e, 
@@ -574,11 +583,10 @@ Out: D2 = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothin
 
     // IsItemInSlotEquippedAndCursed
     SetFunctionCmt(0x8db6, 
-        "In: D0 = character index\n\
-    D1 = item slot index\n\
+        "Is character D0's item in slot D1 equipped, and if so, is it cursed ?\n\
 \n\
-Out: A0 = address of character entry item slot index in RAM\n\
-     D2 = 0 if equipped and cursed, 1 if not equipped, 2 if equipped, 3 if nothing", 1);
+Out: A0 = pointer to character's item slot in RAM\n\
+     D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
 
     // UnequipItemBySlot
     SetFunctionCmt(0x8dfe, 
@@ -643,13 +651,9 @@ Out: D2 = item slot ($FFFF if not held)", 1);
 Out: A0 = address of name\n\
      D7 = length of name", 1);
 
-    // GetSpellDefAddress
+    // FindSpellDefAddress
     SetFunctionCmt(0x91da, 
-        "Get address of entry in spell definition table\n\
-\n\
-      In: D1 = spell index\n\
-\n\
-      Out: A0 = address of spell definition", 1);
+        "Find pointer to definition entry for spell D1 -> A0", 1);
 
     // GetSpellAndNumberOfSpells
     SetFunctionCmt(0x91fa, 
@@ -668,17 +672,11 @@ Out: D2 = result (0 = learned new spell, 1 = upgraded spell, 2 = no room)", 1);
 
     // GetSpellCost
     SetFunctionCmt(0x927e, 
-        "Get MP cost of spell\n\
-\n\
-      In: D1 = spell index\n\
-\n\
-      Out: D1 = spell MP cost", 1);
+        "Get spell D1's MP cost -> D1", 1);
 
     // GetCombatantEntryAddress
     SetFunctionCmt(0x928e, 
-        "In: D0 = combatant index\n\
-\n\
-Out: A0 = address of combatant entry in RAM", 1);
+        "Get pointer to combatant D0's entry in RAM -> A0", 1);
 
     // SetCombatantByte
     SetFunctionCmt(0x92e0, 
@@ -803,49 +801,49 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0x9a3c, 
         "In: D1 = item index (only the actual index is used, the status bits are cut out)", 1);
 
-    // WriteSkirmishScript
+    // WriteBattlesceneScript
     SetFunctionCmt(0x9b92, 
-        "In: D0 = attacker index", 1);
+        "In: D0 = actor index", 1);
 
     // DetermineTargetsByAction
     SetFunctionCmt(0x9dd6, 
         "In: A3 = action data", 1);
 
-    // InitSkirmishDisplayedCombatants
+    // InitBattlesceneDisplayedCombatants
     SetFunctionCmt(0x9e60, 
         "In: A2 = battle scene stack\n\
     A3 = pointer to action type in RAM\n\
     A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
-    // InitSkirmishProperties
+    // InitBattlesceneProperties
     SetFunctionCmt(0x9f28, 
         "In: A2 = battle scene stack\n\
     A3 = address in RAM of scene action type\n\
     A4 = address in RAM of attacker index\n\
     A5 = address in RAM of target index", 1);
 
-    // CreateBattleSceneText
+    // CreateBattlesceneMessage
     SetFunctionCmt(0xa05c, 
-        "Load proper battle scene text script depending on attack action\n\
+        "Load proper battlescene message script depending on action\n\
 \n\
-In: A3 = RAM index containing action type\n\
-    A4 = RAM index containing attacker index\n\
+In: A3 = action type index in RAM\n\
+    A4 = actor index in RAM\n\
 \n\
-<HARDCODED> enemy and text indexes", 1);
+<HARDCODED> enemy and message indexes", 1);
 
-    // CreateBattleSceneAnimation
+    // CreateBattlesceneAnimation
     SetFunctionCmt(0xa200, 
         "Load proper battle scene sprite/magic animation properties\n\
 \n\
       In: A3 = pointer to action data in RAM\n\
           A4 = battle scene attacker index in RAM", 1);
 
-    // WriteSkirmishScript_DoAction
+    // WriteBattlesceneScript_DoAction
     SetFunctionCmt(0xa3f4, 
-        "In: A2 = battle scene stack\n\
+        "In: A2 = battlescene stack\n\
     A3 = address in RAM of scene action type\n\
-    A4 = address in RAM of attacker index\n\
+    A4 = address in RAM of actor index\n\
     A5 = address in RAM of target index", 1);
 
     // GetSpellAnimation
@@ -858,12 +856,12 @@ Out: D4 = spell animation index\n\
 \n\
 <HARDCODED> class, enemy and weapon indexes", 1);
 
-    // WriteSkirmishScript_AnimateSprite
+    // WriteBattlesceneScript_AnimateAction
     SetFunctionCmt(0xa6e8, 
-        "Load proper battle scene sprite animation properties\n\
+        "Load proper battlescene sprite and spell animations properties\n\
 \n\
-      In: D4 = projectile\n\
-          D5 = special script index", 1);
+    In: D4 = spell/item/projectile animation index, set $80 to come from enemy\n\
+        D5 = animation type index (0 = attack, 1 = dodge, 2 = spell/item -- others (i.e. MMNK crit, RBT laser, BRGN flashing)", 1);
 
     // GetAmountOfEXPforEncounter
     SetFunctionCmt(0xa968, 
@@ -874,9 +872,9 @@ In: A4 = address of attacker byte in RAM\n\
 \n\
 Out: D5 = amount of EXP", 1);
 
-    // WriteSkirmishScript_DodgeAttack
+    // WriteBattlesceneScript_DodgeAttack
     SetFunctionCmt(0xaafc, 
-        "In: A4 = pointer to attacker index in RAM\n\
+        "In: A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
     // CalculateDamage
@@ -890,13 +888,13 @@ Out: D6 = damage", 1);
     SetFunctionCmt(0xac4e, 
         "In: D6 = damage", 1);
 
-    // WriteSkirmishScript_InflictDamage
+    // WriteBattlesceneScript_InflictDamage
     SetFunctionCmt(0xacea, 
-        "In: A4 = pointer to attacker's index in RAM\n\
-    A5 = pointer to target's index in RAM\n\
+        "In: A4 = pointer to actor index in RAM\n\
+    A5 = pointer to target index in RAM\n\
     D6 = damage", 1);
 
-    // WriteSkirmishScript_InflictCurseDamage
+    // WriteBattlesceneScript_InflictCurseDamage
     SetFunctionCmt(0xaf70, 
         "In: D6 = damage", 1);
 
@@ -905,12 +903,12 @@ Out: D6 = damage", 1);
         "In: A4 = pointer to attacker index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
-    // WriteSkirmishScript_CastSpell
+    // WriteBattlesceneScript_CastSpell
     SetFunctionCmt(0xb0a8, 
-        "In: A2 = battle scene stack\n\
-    A3 = address in RAM of scene action type\n\
-    A4 = address in RAM of attacker index\n\
-    A5 = address in RAM of target index", 1);
+        "In: A2 = battlescene stack\n\
+    A3 = scene action type in RAM\n\
+    A4 = actor index in RAM\n\
+    A5 = target index in RAM", 1);
 
     // CalculateDamage_Spell
     SetFunctionCmt(0xbb02, 
@@ -929,17 +927,17 @@ Out: D6 = damage", 1);
 
     // GetItemBreakMessage
     SetFunctionCmt(0xbc9a, 
-        "In: A2 = skirmish properties stack\n\
+        "In: A2 = battlescene stack\n\
     D0 = whether item is already damaged (0=no, 1=yes)\n\
 \n\
 Out: D3 = message index", 1);
 
-    // WriteSkirmishScript_EnemyDropItem
+    // WriteBattlesceneScript_EnemyDropItem
     SetFunctionCmt(0xbd24, 
-        "In: A2 = battle scene stack\n\
-    A3 = address in RAM of scene action type\n\
-    A4 = address in RAM of attacker index\n\
-    A5 = address in RAM of target index", 1);
+        "In: A2 = battlescene stack\n\
+    A3 = scene action type in RAM\n\
+    A4 = actor index in RAM\n\
+    A5 = target index in RAM", 1);
 
     // ConvertCoordToOffset
     SetFunctionCmt(0xc09a, 
@@ -998,12 +996,7 @@ Out: D1 = land effect setting (0=0%, 1=15%, 2=30%)", 1);
 
     // GetResistanceToSpell
     SetFunctionCmt(0xc22a, 
-        "Get resistance to spell of combatant\n\
-\n\
-      In: D0 = combatant index\n\
-          D1 = spell index\n\
-\n\
-      Out: D2 = resistance bitmask", 1);
+        "Get combatant D0's resistance setting to spell D1 -> D2", 1);
 
     // GetMoveInfo
     SetFunctionCmt(0xc2c8, 
@@ -1053,12 +1046,24 @@ Out: D1 = chosen x pos\n\
     SetFunctionCmt(0xc7fa, 
         "Clear target grid, then add allies", 1);
 
+    // EvaluateDamage
+    SetFunctionCmt(0xcc0c, 
+        "Calculate max potential damage value, adjusted for land effect\n\
+\n\
+      Out: D6 = potential damage", 1);
+
     // GetSpellPowerAdjustedForResistance
     SetFunctionCmt(0xcc54, 
         "In: D0 = target combatant index\n\
     D1 = spell index\n\
 \n\
 Out: D6 = adjusted power", 1);
+
+    // EvaluateTargetRemainingHP
+    SetFunctionCmt(0xcc8a, 
+        "In: D6 = potential damage\n\
+\n\
+Out: D1 = target's remaining HP", 1);
 
     // sub_CD68
     SetFunctionCmt(0xcd68, 
@@ -1140,9 +1145,11 @@ Out: carry clear if true", 1);
     SetFunctionCmt(0xdd78, 
         "create enemy move order from movecost lists", 1);
 
-    // j_sub_DEFC_0
+    // sub_DEFC
     SetFunctionCmt(0xdefc, 
-        "In: D0 = character index", 1);
+        "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)\n\
+\n\
+    In: D0 = character index", 1);
 
     // sub_EBA4
     SetFunctionCmt(0xeba4, 
@@ -1199,18 +1206,34 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x10cb0, 
         "related to menu choice", 1);
 
-    // sub_11862
+    // DrawColoredStatBar
+    SetFunctionCmt(0x1173a, 
+        "Draw colored stat bars into ministatus window layout at A1\n\
+\n\
+In: A0 = loading space address\n\
+    D0 = current HP/MP value\n\
+    D1 = max HP/MP value\n\
+    D2 = VDP tile index", 1);
+
+    // WriteStatBarColumn
     SetFunctionCmt(0x11862, 
-        "write one column of HP/MP bar pixels into A1", 1);
+        "Write one column of HP/MP bar pixels into A0\n\
+\n\
+    In: D4 = stat bar column index\n\
+        D7 = drawn columns count", 1);
 
     // AdjustStringLengthForSpecialCharacters
     SetFunctionCmt(0x11898, 
-        "check ASCII name at A0 for two special characters ???\n\
-", 1);
+        "Check ASCII name at A0 for two special characters", 1);
+
+    // BuildFighterMiniStatusWindow
+    SetFunctionCmt(0x118be, 
+        "In: A1 = window tiles address\n\
+    D0 = combatant index", 1);
 
     // WriteStatValue
     SetFunctionCmt(0x11aae, 
-        "display d0 stat value or \"??\" if above 99", 1);
+        "Write stat value D0 or '??' if above 99", 1);
 
     // CopyFighterMinistatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
@@ -1225,6 +1248,11 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     // AddStatusEffectTileIndexesToVdpTileOrder
     SetFunctionCmt(0x11eea, 
         "In: A1 = address of VDP tile order in RAM", 1);
+
+    // BuildMemberStatsWindow
+    SetFunctionCmt(0x11ff0, 
+        "In: D0 = character index\n\
+    A1 = window tile adress", 1);
 
     // GetCombatantPortrait
     SetFunctionCmt(0x1263a, 
@@ -1337,12 +1365,12 @@ yy      magic/item/projectile animation index, set $0080 to come from enemy", 1)
 
     // bsc07_switchAllies
     SetFunctionCmt(0x186da, 
-        "xx      Character index.\n\
+        "xx      Combatant index\n\
 yy      0000 for right side, 0001 for left side", 1);
 
     // bsc06_switchEnemies
     SetFunctionCmt(0x1893e, 
-        "xx      Character index.\n\
+        "xx      Combatant index\n\
 yy      0000 for right side, 0001 for left side", 1);
 
     // bsc08_switchToEnemyAlone
@@ -1411,11 +1439,11 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 \n\
       Out: D1 = 0 if animates, 1 if not", 1);
 
-    // InitializeBattleScenePalettes
+    // InitializeBattlescenePalettes
     SetFunctionCmt(0x19884, 
         "clears plt 1-2 and 1-2bis, sets plt 3bis", 1);
 
-    // LoadPaletteForBattleScene
+    // LoadPaletteForBattlescene
     SetFunctionCmt(0x199de, 
         "load palette D1 of battle sprite D0", 1);
 
@@ -1456,7 +1484,7 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
     // sub_19E96
     SetFunctionCmt(0x19e96, 
-        "Get a boolean depending on background id", 1);
+        "Get a boolean depending on background index", 1);
 
     // ExecuteSpellAnimation
     SetFunctionCmt(0x19ee6, 
@@ -1482,14 +1510,23 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1b93c, 
         "desoul ?", 1);
 
-    // VInt_UpdateBattleSceneGraphics
+    // VInt_UpdateBattlesceneGraphics
     SetFunctionCmt(0x1ee2c, 
         "and other stuff ?", 1);
+
+    // DetermineDealsItemsNotInCurrentShop
+    SetFunctionCmt(0x207fe, 
+        "Create list of deals items not normally sold in current shop", 1);
 
     // DoesCurrentShopContainItem
     SetFunctionCmt(0x20834, 
         "In: D1 = item index\n\
-Out: Z = 0 = yes, 1 = no", 1);
+\n\
+Out: Zero-bit clear = yes, set = no", 1);
+
+    // GetCurrentShopDefAddress
+    SetFunctionCmt(0x20852, 
+        "Get current shop definition address -> A0", 1);
 
     // FindPromotionSection
     SetFunctionCmt(0x2110c, 
@@ -1516,9 +1553,13 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x2294c, 
         "get whether character D0's item at slot D1 is cursed -> carry", 1);
 
+    // FindUsableOutsideBattleItem
+    SetFunctionCmt(0x229ca, 
+        "Out: D2 = 0 if true, $FFFFFFFF if false", 1);
+
     // UseFieldItem
     SetFunctionCmt(0x229ec, 
-        "check specific item index + code offset to run when used in field", 1);
+        "Find specific item index + code offset to run when used in field", 1);
 
     // sub_22C60
     SetFunctionCmt(0x22c60, 
@@ -1534,11 +1575,9 @@ Out: A0 = address", 1);
      D3 = chosen Y\n\
      D4 = copied P1 input state bitfield", 1);
 
-    // GetEntityNumberOfCombatant
+    // GetEntityIndexForCombatant
     SetFunctionCmt(0x22f30, 
-        "    Convert combatant number to entity number.\n\
-    In: D0 = combatant number\n\
-    Out: D0 = entity number", 1);
+        "Get entity index for combatant D0 -> D0", 1);
 
     // GetEntityEventIndex
     SetFunctionCmt(0x22f4a, 
@@ -1609,6 +1648,21 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x24966, 
         "    createSpellRangeGridMaster???", 1);
 
+    // sub_252FA
+    SetFunctionCmt(0x252fa, 
+        "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)", 1);
+
+    // UpdateAllEnemiesAI
+    SetFunctionCmt(0x2550c, 
+        "<BUG> A Goddess Staff is added to the deals section in shops whenever a DEF-CON switch \n\
+      is activated, and if one of the following items is also present :\n\
+      - Quick Ring\n\
+      - Protect Ring\n\
+      - White Ring\n\
+      - Running Ring\n\
+\n\
+End function with a RTS intruction to fix", 1);
+
     // AddRandomizedAGItoTurnOrder
     SetFunctionCmt(0x255a4, 
         "In: A0 = turn order in RAM\n\
@@ -1639,6 +1693,10 @@ Out: D0 = new X\n\
     // ProcessPlayerAction
     SetFunctionCmt(0x25ad6, 
         "Manage debug actions, entity events, item finds, area descriptions, caravan or main menu", 1);
+
+    // DisplaySegaLogo
+    SetFunctionCmt(0x2804c, 
+        "Out: D0 = $FFFFFFFF if pressing start, 0 if not", 1);
 
     // CalculateRomChecksum
     SetFunctionCmt(0x28f62, 

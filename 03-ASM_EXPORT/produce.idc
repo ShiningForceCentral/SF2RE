@@ -25,7 +25,7 @@ static produceMacros(){
     Message("\nWriting Macros to sf2macros.asm ...");    
     file = fopen("disasm\\sf2macros.asm","w");
     writestr(file,"; ---------------------------------------------------------------------------\n");
-    writestr(file,";  and pad\n");
+    writestr(file,"; Align and pad\n");
     writestr(file,"; input: length to align to, value to use as padding (default is $FF)\n");
     writestr(file,"; ---------------------------------------------------------------------------\n");
     writestr(file,"\n");
@@ -95,32 +95,6 @@ static conditionalEnumOutput(id,enumName,enumCount,constant,constId){
     
 }
 
-static formSinglePatchOutput(patchName,constName,patch,constant){
-    auto output;
-    output = formSinglePatchOutputEx(patchName,constName,patch,constant,0);
-    return output;
-}
-
-static formSinglePatchOutputWithHex(patchName,constName,patch,constant){
-    auto output;
-    output = formSinglePatchOutputEx(patchName,constName,patch,constant,1);
-    return output;
-}
-
-static formSinglePatchOutputEx(patchName,constName,patch,constant,hex){
-    auto output;
-    output = form("\n\n%s%s", "                if ",patchName);
-    output = form("%s\n%s", output, formEnumMember(constName,patch));
-    output = form("%s\n%s", output, "                else");
-    if(hex==1){
-        output = form("%s\n%s", output, formEnumMemberWithHex(constName,ltoa(constant,16)));
-    }else{
-        output = form("%s\n%s", output, formEnumMember(constName,ltoa(constant,10)));
-    }
-    output = form("%s\n%s\n", output, "                endif");
-    return output;
-}
-
 static formEnumMember(constName,constant) {
     auto enumMember;
     enumMember = formEnumMemberEx(constName,constant,0);
@@ -139,54 +113,6 @@ static formEnumMemberEx(constName,constant,hex) {
     else{operand = "";}
     enumMember = form("%s: equ %s%s", constName, operand, constant);
     return enumMember;
-}
-
-static formPatchOutput(id,enumCount,enumMember,patchName) {
-    auto output;
-    output = formPatchOutputEx(id,enumCount,enumMember,patchName,0);
-    return output;
-}
-
-static formPatchOutputWithHex(id,enumCount,enumMember,patchName) {
-    auto output;
-    output = formPatchOutputEx(id,enumCount,enumMember,patchName,1);
-    return output;
-}
-
-static formPatchOutputEx(id,enumCount,enumMember,patchName,hex) {
-    auto j,constant,constId,constName,output;
-    if(enumCount==GetEnumSize(id)){
-        output = form("\n%s%s%s\n%s", "                if (", patchName, "=1)", enumMember);
-    }else{
-        output = "";
-    }
-    if(enumCount==1){
-        if(output==""){
-            output = form("%s\n%s\n%s", output, enumMember, "                else");
-        }else{
-            output = form("%s\n%s", output, "                else");
-        }
-        enumCount = GetEnumSize(id);
-        constant = GetFirstConst(id,-1);
-        // Iterate constants
-        while(enumCount>0){
-            j=0;
-            constId = GetConstEx(id,constant,j,-1);
-            while(constId != -1){
-                constName = GetConstName(constId);
-                if(hex==1){output = form("%s\n%s", output, formEnumMemberWithHex(constName,ltoa(constant,16)));}
-                else{output = form("%s\n%s", output, formEnumMember(constName,ltoa(constant,10)));}
-                j++;
-                constId = GetConstEx(id,constant,j,-1);
-            }
-            constant = GetNextConst(id,constant,-1);
-            enumCount--;
-        }
-        output = form("%s\n%s", output, "                endif");
-    }else if(output==""){
-        output = form("%s\n%s", output, enumMember);
-    }
-    return output;
 }
 
 
@@ -342,21 +268,28 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 
     produceAsmScript(file,"code\\common\\stats\\statsengine_1",0x8000,0x853A,"Character stats engine");
     produceAsmScript(file,"data\\stats\\allies\\classes\\classtypes",0x853A,0x855A,"Class types table");
-    produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x9A9A,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x96BA,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\calculatestatgain",0x96BA,0x9736,"Calculate stat gain function");
+    produceAsmScript(file,"code\\common\\stats\\statsengine_3",0x9736,0x9A9A,"Character stats engine");
     produceAsmScript(file,"code\\gameflow\\special\\debugmodebattleactions",0x9A9A,0x9B92,"Debug mode battle actions");    
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_1",0x9B92,0xACCA,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_1",0x9B92,0xA870,"Battle actions engine");
+    produceAsmScript(file,"data\\battles\\global\\halvedexpearnedbattles",0xA870,0xA872,"Halved EXP earned battles table");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_2",0xA872,0xACCA,"Battle actions engine");
     produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_2",0xACEA,0xBCF0,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_3",0xACEA,0xBCF0,"Battle actions engine");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_3",0xBD24,0xBE52,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xBD24,0xBE52,"Battle actions engine");
     produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
     produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xC024,0xC09A,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_5",0xC024,0xC09A,"Battle actions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
     produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
     writestr(file,"                wordAlign\n");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xDEFC,"Battlefield engine");
-    produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9C4,"AI engine");    
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xD824,"Battlefield engine");
+    produceAsmScript(file,"data\\battles\\global\\landeffectsettingsandmovecosts",0xD824,0xD8F4,"Land effect settings and move costs table");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_3",0xD8F4,0xDEFC,"Battlefield engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9B4,"AI engine");    
+    produceAsmScript(file,"data\\battles\\global\\krakenmovecosts",0xF9B4,0xF9C4,"Kraken move costs table");
     produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
     produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
     produceAsmScript(file,"data\\stats\\enemies\\enemynames",0xFB8A,0xFF87,"Enemy names");
@@ -378,23 +311,35 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmScript(file,"code\\common\\menus\\menuengine_1",0x10000,0x1263A,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_01",0x10000,0x114BE,"Menu engine");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\battleequipwindowlayout",0x114BE,0x11572,"Battle equip window layout");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_02",0x11572,0x118BE,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\buildfighterministatuswindow",0x118BE,0x11AEC,"Build fighter mini status window function");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\fighterministatuswindowlayout",0x11AEC,0x11B46,"Fighter mini status window layout");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_03",0x11B46,0x11FF0,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\buildmemberstatswindow",0x11FF0,0x12606,"Build member stats window function");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_04",0x12606,0x1263A,"Menu engine");
     produceAsmScript(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function");
     produceAsmSection(file,"",0x1264E,0x126EE);
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\portraitwindowlayout",0x126EE,0x1278E,"Member screen portrait window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\allykilldefeatwindowlayout",0x1278E,0x1284E,"Member screen kills and defeat window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\goldwindowlayout",0x1284E,0x1288E,"Member screen gold window layout");
-    produceAsmScript(file,"code\\common\\menus\\menuengine_2",0x1288E,0x15736,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_05",0x1288E,0x135A6,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\writememberlisttext",0x135A6,0x137AC,"Write member list text function");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_06",0x137AC,0x15736,"Menu engine");
     produceAsmScript(file,"code\\common\\menus\\getallyportrait",0x15736,0x15772,"Get ally portrait index function");
-    produceAsmScript(file,"code\\common\\menus\\menuengine_3",0x15772,0x1607C,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_07",0x15772,0x15A5A,"Menu engine");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\battleconfigwindowlayout",0x15A5A,0x15BB0,"Battle config window layout");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_08",0x15BB0,0x1607C,"Menu engine");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\alphabetwindowlayout",0x1607C,0x16204,"Alphabet window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\namecharacterentrywindowlayout",0x16204,0x1623A,"Name character entry window layout");
-    produceAsmScript(file,"code\\common\\menus\\menuengine_4",0x1623A,0x16A62,"Menu engine");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_09",0x1623A,0x16618,"Menu engine");
+    produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\timerwindowlayout",0x16618,0x16658,"Timer window layout");
+    produceAsmScript(file,"code\\common\\menus\\menuengine_10",0x16658,0x16A62,"Menu engine");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\memberstatswindowlayout",0x16A62,0x16EA6,"Member stats window layout");
     produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
     produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
-    produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3D,"Item names");
-    produceAsmSection(file,"",0x17F3D,0x17F3E);
+    produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3E,"Item names");
     produceAsmScript(file,"data\\stats\\allies\\classes\\classnames",0x17F3E,0x17FDA,"Class names");
     produceAsmSection(file,"",0x17FDA,0x18000);
 
@@ -414,16 +359,18 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x1F806,"Battlescene engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x19E5E,"Battlescene engine");
+    produceAsmScript(file,"data\\battles\\global\\terrainbackgrounds",0x19E5E,0x19E6E,"Terrain backgrounds table");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x19E6E,0x1F806,"Battlescene engine");
     produceAsmScript(file,"data\\stats\\allies\\allybattlesprites",0x1F806,0x1F914,"Ally battle sprites table");
     produceAsmScript(file,"data\\stats\\enemies\\enemybattlesprites",0x1F914,0x1F9E2,"Enemy battle sprites table");
     produceAsmScript(file,"data\\stats\\items\\weapongraphics",0x1F9E2,0x1FA8A,"Weapon graphics table");
-    produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB8,"Battle custom backgrounds table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x1FAB8,0x1FAD6,"Battlescene engine");    
+    produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB7,"Battle custom backgrounds table");
+    produceAsmSection(file,"",0x1FAB7,0x1FAB8);
+    produceAsmScript(file,"data\\battles\\global\\backgroundenemyswitch",0x1FAB8,0x1FAD6,"Background enemy switch table");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_2",0x1FAEA,0x1FDEA,"Battlescene engine");    
-    produceAsmSection(file,"",0x1FDEA,0x20000);
+    produceAsmSection(file,"",0x1FAEA,0x20000);
 
     fclose(file);
     Message("DONE.\n");    
@@ -491,8 +438,12 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
             
     produceAsmSectionNoPretty(file,"",0x28000,0x2804C);
-    produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo",0x2804C,0x29002,"SEGA logo functions");    
-    produceAsmSection(file,"",0x29002,0x2C576);
+    produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo_0",0x2804C,0x28FBC,"SEGA logo functions");
+    produceAsmScript(file,"data\\tech\\configurationmodeinputsequence",0x28FBC,0x28FCC,"Configuration mode input sequence");
+    produceAsmSection(file,"",0x28FCB,0x28FCC);
+    produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo_1",0x28FCC,0x28FF0,"SEGA logo functions");
+    produceAsmScript(file,"data\\tech\\debugmodeinputsequence",0x28FF0,0x29002,"Debug mode input sequence");
+    produceAsmSection(file,"",0x29001,0x2C576);
     produceAsmScript(file,"code\\specialscreens\\endkiss\\endkissfunctions_0",0x2C576,0x2C73C,"End kiss function");    
     produceAsmScript(file,"code\\specialscreens\\title\\loadfont",0x2C73C,0x2C7A0,"Title screen font loading function");    
     produceAsmSection(file,"",0x2C7A0,0x2E10E);
@@ -2506,8 +2457,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
     produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
     produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets");    
-    produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DBC,"Random battles table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B6DBC,0x1B6DDA,"Data related to UpgradeUnitIdx function");
+    produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DDA,"Random battles list, and data related to UpgradeEnemyIndex function");
     produceAsmScript(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics");
     produceAsmSection(file,"",0x1B7C9A,0x1B8000);
 
