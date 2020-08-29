@@ -83,6 +83,7 @@ mkdir disasm\data\graphics\battles\battlesprites\enemies\animations
 mkdir disasm\data\graphics\battles\spells
 mkdir disasm\data\graphics\battles\spells\invocations
 mkdir disasm\data\graphics\battles\spells\animations
+mkdir disasm\data\graphics\tech\menus\
 mkdir disasm\data\graphics\tech\windowlayouts\
 mkdir disasm\data\tech
 pause

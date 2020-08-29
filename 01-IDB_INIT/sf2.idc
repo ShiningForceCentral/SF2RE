@@ -1357,6 +1357,16 @@ static Enums_0(id) {
 	AddConstEx(id,"CODE_TERMINATOR_WORD",	0XFFFF,	-1);
 	id = AddEnum(-1,"Special_Offsets",0x1100000);
 	AddConstEx(id,"NRO",	0XFF000000,	-1);
+	id = AddEnum(-1,"Menu_Item",0x1100000);
+	AddConstEx(id,"MENU_ITEM_LAYOUT_BYTESIZE",	0XD8,	-1);
+	AddConstEx(id,"MENU_ITEM_NAME_COORDS",	0X902,	-1);
+	AddConstEx(id,"MENU_ITEM_NOTHING_STRING_COORDS",	0X903,	-1);
+	AddConstEx(id,"MENU_ITEM_EQUIPPED_STRING_COORDS",	0X904,	-1);
+	id = AddEnum(-1,"Menu_Magic",0x1100000);
+	AddConstEx(id,"MENU_MAGIC_LAYOUT_BYTESIZE",	0XD8,	-1);
+	AddConstEx(id,"MENU_MAGIC_SPELL_NAME_COORDS",	0X902,	-1);
+	AddConstEx(id,"MENU_MAGIC_SPELL_LEVEL_TILES_COORDS",	0X903,	-1);
+	AddConstEx(id,"MENU_MAGIC_MP_COST_COORDS",	0XC04,	-1);
 	id = AddEnum(-1,"Messages",0x2200000);
 	AddConstEx(id,"MESSAGE_CHANGEYOURMIND",	0X4,	-1);
 	AddConstEx(id,"MESSAGE_ITEMMENU_ITEM_IS_EXCHANGED_FOR",	0X29,	-1);
@@ -1423,6 +1433,11 @@ static Enums_0(id) {
 	SetConstCmt(GetConstEx(id,0X122,0,-1),"enemy defeated",1);
 	AddConstEx(id,"MESSAGE_BATTLE_IS_EXHAUSTED",	0X123,	-1);
 	SetConstCmt(GetConstEx(id,0X123,0,-1),"ally defeated",1);
+	return id;
+}
+
+static Enums_1(id) {
+
 	AddConstEx(id,"MESSAGE_BATTLE_COUNTER_ATTACK",	0X124,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_SECOND_ATTACK",	0X125,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_CUTOFF",	0X126,	-1);
@@ -1432,11 +1447,6 @@ static Enums_0(id) {
 	AddConstEx(id,"MESSAGE_BATTLE_RECOVERED_MAGIC_POINTS",	0X12C,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_IS_NO_LONGER_POISONED",	0X12D,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_IS_NO_LONGER_STUNNED",	0X12E,	-1);
-	return id;
-}
-
-static Enums_1(id) {
-
 	AddConstEx(id,"MESSAGE_BATTLE_IS_NO_LONGER_CURSED",	0X12F,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_SOUL_WAS_STOLEN_ALLY",	0X130,	-1);
 	AddConstEx(id,"MESSAGE_BATTLE_SOUL_WAS_STOLEN_ENEMY",	0X131,	-1);
@@ -1576,11 +1586,28 @@ static Enums_1(id) {
 	AddConstEx(id,"WINDOW_MINISTATUS_PAGE_MEMBER",	0X0,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_PAGE_ITEMS",	0X1,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_PAGE_MAGIC",	0X2,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_HIGHLIGHTSPRITES_COUNTER",	0X2,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_PAGE_EQUIP",	0X3,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_NEXT_LINE",	0X2A,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_NAME",	0X2C,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_SPELL_LEVEL",	0X2C,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_STATUSEFFECT_TILES",	0X4E,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_NEXT_ITEM",	0X54,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_OFFSET_NEXT_SPELL",	0X54,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_MEMBER_OFFSET_MAGICITEM_STRING",	0X80,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_ITEMS_OFFSET_ITEM_STRING",	0X82,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_MAGIC_OFFSET_MAGIC_STRING",	0X82,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_EQUIP_OFFSET_EQUIPMENT_STRING",	0X82,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_MEMBER_OFFSET_MAGICLIST_START",	0XAC,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_MEMBER_OFFSET_ITEMSLIST_START",	0XC0,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_ITEMS_OFFSET_ITEMSLIST_START",	0XC0,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_MAGIC_OFFSET_MAGICLIST_START",	0XC0,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_EQUIP_OFFSET_ATT_STRING",	0XEA,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_EQUIP_OFFSET_DEF_STRING",	0X13E,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_EQUIP_OFFSET_AGI_STRING",	0X192,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_EQUIP_OFFSET_MOV_STRING",	0X1E6,	-1);
 	AddConstEx(id,"WINDOW_MINISTATUS_SIZE",	0X150D,	-1);
+	AddConstEx(id,"WINDOW_MINISTATUS_DEST",	0X20F3,	-1);
 	id = AddEnum(-1,"Window_NameCharacter",0x1100000);
 	AddConstEx(id,"WINDOW_NAMECHARACTER_ENTRY_NAME_OFFSET",	0X14,	-1);
 	AddConstEx(id,"WINDOW_NAMECHARACTER_PORTRAIT_POSITION",	0X201,	-1);
@@ -15663,6 +15690,8 @@ static Bytes_3(void) {
 	MakeCode	(x=0XC656);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0XC660);
+	OpEnumEx		(x,	0,	GetEnum("Spells"),0);
 	MakeCode	(0XC678);
 	MakeCode	(0XC684);
 	MakeCode	(0XC68E);
@@ -17608,9 +17637,6 @@ static Bytes_3(void) {
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Offsets"),0);
 	MakeCode	(x=0XE948);
 	OpEnumEx		(x,	0,	GetEnum("ItemDef_Offsets"),0);
-	MakeCode	(x=0XE968);
-	OpOff		(x,	0,	0X0);
-	OpOff		(x,	128,	0X0);
 }
 
 //------------------------------------------------------------------------
@@ -17620,6 +17646,9 @@ static Bytes_4(void) {
         auto x;
 #define id x
 
+	MakeCode	(x=0XE968);
+	OpOff		(x,	0,	0X0);
+	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0XE96E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18921,10 +18950,18 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X1058C);
 	OpSign		(x,	1);
+	MakeCode	(x=0X10590);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X10594);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X10598);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X1059C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X105AE);
+	MakeCode	(x=0X105B6);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X105BE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -18940,6 +18977,10 @@ static Bytes_4(void) {
 	MakeCode	(x=0X105DC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X105F6);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X1060A);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X10616);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
@@ -19009,6 +19050,12 @@ static Bytes_4(void) {
 	MakeCode	(x=0X106C4);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X106CC);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X106D6);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X106E2);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X106E8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19019,13 +19066,22 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10708);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X10714);
+	OpStkvar	(x,	0);
 	MakeCode	(0X10722);
+	MakeCode	(x=0X10732);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X10740);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X10748);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeName	(0X10748,	"BuildItemMenu");
+	MakeCode	(x=0X1074C);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10756);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Item"),0);
 	MakeCode	(x=0X10760);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19038,6 +19094,10 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Items"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X1077E);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10782);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Item"),0);
 	MakeCode	(x=0X1078A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19046,17 +19106,26 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10798);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X107A4);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X107A8);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Item"),0);
 	MakeCode	(x=0X107B0);
 	OpHex		(x,	0);
 	MakeCode	(x=0X107BC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X107C0);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X107C4);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Item"),0);
 	MakeCode	(x=0X107CC);
 	OpHex		(x,	0);
 	MakeStr		(0X107D6,	0X107E0);
 	MakeName	(0X107D6,	"aEquipped");
 	MakeStr		(0X107E0,	0X107E9);
 	MakeName	(0X107E0,	"aNothing");
+	ExtLinA		(0X107E9,	0,	"                ");
 	MakeByte	(0X107E9);
 	MakeCode	(0X107EA);
 	MakeCode	(x=0X107F0);
@@ -19136,11 +19205,18 @@ static Bytes_4(void) {
 	MakeName	(0X10958,	"LoadHighlightableItemIcon");
 	MakeCode	(x=0X1095E);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry"),0);
+	MakeCode	(x=0X10962);
+	OpEnumEx		(x,	0,	GetEnum("IconTiles_Properties"),0);
 	MakeName	(0X10962,	"LoadHighlightableIcon");
+	MakeCode	(x=0X10966);
+	OpEnumEx		(x,	0,	GetEnum("IconTiles_Properties"),0);
 	MakeRptCmt	(0X10970,	"icon offset");
 	MakeCode	(x=0X10976);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X1097C);
+	OpEnumEx		(x,	1,	GetEnum("IconTiles_Properties"),0);
+	ExtLinA		(0X10988,	0,	"                ");
 	MakeByte	(0X1098A);
 	MakeArray	(0X1098A,	0XC0);
 	MakeName	(0X1098A,	"IconHighlightTiles");
@@ -19149,10 +19225,18 @@ static Bytes_4(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X10A4E);
 	OpSign		(x,	1);
+	MakeCode	(x=0X10A52);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X10A56);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X10A5A);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X10A5E);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X10A70);
+	MakeCode	(x=0X10A78);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X10A80);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19168,6 +19252,10 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10A9E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X10AB8);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10ACC);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X10AD8);
 	OpEnumEx		(x,	0,	GetEnum("Controller_Input_A_Bitmap"),0);
 	OpOff		(x,	1,	0X0);
@@ -19237,6 +19325,10 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10B86);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X10B8E);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10B9A);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X10BA6);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19247,14 +19339,25 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10BC4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X10BDC);
+	OpStkvar	(x,	0);
 	MakeCode	(0X10BEC);
+	MakeCode	(x=0X10BF0);
+	OpStkvar	(x,	0);
 	MakeCode	(0X10BFE);
+	MakeCode	(x=0X10C0E);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X10C1C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X10C22);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeName	(0X10C22,	"BuildMagicMenu");
+	MakeCode	(x=0X10C26);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10C30);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Magic"),0);
 	MakeCode	(x=0X10C3A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -19264,11 +19367,23 @@ static Bytes_4(void) {
 	MakeCode	(x=0X10C4C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X10C58);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10C5C);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Magic"),0);
 	MakeCode	(x=0X10C64);
 	OpHex		(x,	0);
+	MakeCode	(x=0X10C6A);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10C6E);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Magic"),0);
 	MakeCode	(x=0X10C7A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X10C92);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X10C96);
+	OpEnumEx		(x,	0,	GetEnum("Menu_Magic"),0);
 	MakeCode	(0X10CB0);
 	MakeCode	(x=0X10CB6);
 	OpOff		(x,	0,	0X0);
@@ -19358,15 +19473,365 @@ static Bytes_4(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeRptCmt	(0X10E1C,	"tile layout for diamond menus");
-	MakeByte	(0X10E1C);
-	MakeArray	(0X10E1C,	0XD8);
+	ExtLinA		(0X10E1C,	0,	"                ");
+	ExtLinA		(0X10E1C,	1,	"; Syntax        vdpTile [VDPTILE_]index[|mirror|flip|palette|priority]");
+	ExtLinA		(0X10E1C,	2,	"                ");
+	MakeWord	(0X10E1C);
 	MakeName	(0X10E1C,	"DiamondMenuLayout");
-	MakeByte	(0X10EF4);
-	MakeArray	(0X10EF4,	0XD8);
-	MakeName	(0X10EF4,	"UnidentifiedLayout01");
-	MakeByte	(0X10FCC);
-	MakeArray	(0X10FCC,	0XD8);
-	MakeName	(0X10FCC,	"UnidentifiedLayout02");
+	MakeWord	(0X10E1E);
+	MakeWord	(0X10E20);
+	MakeWord	(0X10E22);
+	MakeWord	(0X10E24);
+	MakeWord	(0X10E26);
+	MakeWord	(0X10E28);
+	MakeWord	(0X10E2A);
+	MakeWord	(0X10E2C);
+	MakeWord	(0X10E2E);
+	MakeWord	(0X10E30);
+	MakeWord	(0X10E32);
+	MakeWord	(0X10E34);
+	MakeWord	(0X10E36);
+	MakeWord	(0X10E38);
+	MakeWord	(0X10E3A);
+	MakeWord	(0X10E3C);
+	MakeWord	(0X10E3E);
+	MakeWord	(0X10E40);
+	MakeWord	(0X10E42);
+	MakeWord	(0X10E44);
+	MakeWord	(0X10E46);
+	MakeWord	(0X10E48);
+	MakeWord	(0X10E4A);
+	MakeWord	(0X10E4C);
+	MakeWord	(0X10E4E);
+	MakeWord	(0X10E50);
+	MakeWord	(0X10E52);
+	MakeWord	(0X10E54);
+	MakeWord	(0X10E56);
+	MakeWord	(0X10E58);
+	MakeWord	(0X10E5A);
+	MakeWord	(0X10E5C);
+	MakeWord	(0X10E5E);
+	MakeWord	(0X10E60);
+	MakeWord	(0X10E62);
+	MakeWord	(0X10E64);
+	MakeWord	(0X10E66);
+	MakeWord	(0X10E68);
+	MakeWord	(0X10E6A);
+	MakeWord	(0X10E6C);
+	MakeWord	(0X10E6E);
+	MakeWord	(0X10E70);
+	MakeWord	(0X10E72);
+	MakeWord	(0X10E74);
+	MakeWord	(0X10E76);
+	MakeWord	(0X10E78);
+	MakeWord	(0X10E7A);
+	MakeWord	(0X10E7C);
+	MakeWord	(0X10E7E);
+	MakeWord	(0X10E80);
+	MakeWord	(0X10E82);
+	MakeWord	(0X10E84);
+	MakeWord	(0X10E86);
+	MakeWord	(0X10E88);
+	MakeWord	(0X10E8A);
+	MakeWord	(0X10E8C);
+	MakeWord	(0X10E8E);
+	MakeWord	(0X10E90);
+	MakeWord	(0X10E92);
+	MakeWord	(0X10E94);
+	MakeWord	(0X10E96);
+	MakeWord	(0X10E98);
+	MakeWord	(0X10E9A);
+	MakeWord	(0X10E9C);
+	MakeWord	(0X10E9E);
+	MakeWord	(0X10EA0);
+	MakeWord	(0X10EA2);
+	MakeWord	(0X10EA4);
+	MakeWord	(0X10EA6);
+	MakeWord	(0X10EA8);
+	MakeWord	(0X10EAA);
+	MakeWord	(0X10EAC);
+	MakeWord	(0X10EAE);
+	MakeWord	(0X10EB0);
+	MakeWord	(0X10EB2);
+	MakeWord	(0X10EB4);
+	MakeWord	(0X10EB6);
+	MakeWord	(0X10EB8);
+	MakeWord	(0X10EBA);
+	MakeWord	(0X10EBC);
+	MakeWord	(0X10EBE);
+	MakeWord	(0X10EC0);
+	MakeWord	(0X10EC2);
+	MakeWord	(0X10EC4);
+	MakeWord	(0X10EC6);
+	MakeWord	(0X10EC8);
+	MakeWord	(0X10ECA);
+	MakeWord	(0X10ECC);
+	MakeWord	(0X10ECE);
+	MakeWord	(0X10ED0);
+	MakeWord	(0X10ED2);
+	MakeWord	(0X10ED4);
+	MakeWord	(0X10ED6);
+	MakeWord	(0X10ED8);
+	MakeWord	(0X10EDA);
+	MakeWord	(0X10EDC);
+	MakeWord	(0X10EDE);
+	MakeWord	(0X10EE0);
+	MakeWord	(0X10EE2);
+	MakeWord	(0X10EE4);
+	MakeWord	(0X10EE6);
+	MakeWord	(0X10EE8);
+	MakeWord	(0X10EEA);
+	MakeWord	(0X10EEC);
+	MakeWord	(0X10EEE);
+	MakeWord	(0X10EF0);
+	MakeWord	(0X10EF2);
+	ExtLinA		(0X10EF4,	0,	"                ");
+	ExtLinA		(0X10EF4,	1,	"; Syntax        vdpTile [VDPTILE_]index[|mirror|flip|palette|priority]");
+	ExtLinA		(0X10EF4,	2,	"                ");
+	ExtLinA		(0X10EF4,	3,	"; 1st line");
+	MakeWord	(0X10EF4);
+	MakeName	(0X10EF4,	"MagicMenuLayout");
+	MakeWord	(0X10EF6);
+	MakeWord	(0X10EF8);
+	MakeWord	(0X10EFA);
+	MakeWord	(0X10EFC);
+	MakeWord	(0X10EFE);
+	MakeWord	(0X10F00);
+	MakeWord	(0X10F02);
+	MakeWord	(0X10F04);
+	MakeWord	(0X10F06);
+	MakeWord	(0X10F08);
+	MakeWord	(0X10F0A);
+	MakeWord	(0X10F0C);
+	MakeWord	(0X10F0E);
+	MakeWord	(0X10F10);
+	MakeWord	(0X10F12);
+	MakeWord	(0X10F14);
+	MakeWord	(0X10F16);
+	ExtLinA		(0X10F18,	0,	"                ");
+	ExtLinA		(0X10F18,	1,	"; 2nd line");
+	MakeWord	(0X10F18);
+	MakeWord	(0X10F1A);
+	MakeWord	(0X10F1C);
+	MakeWord	(0X10F1E);
+	MakeWord	(0X10F20);
+	MakeWord	(0X10F22);
+	MakeWord	(0X10F24);
+	MakeWord	(0X10F26);
+	MakeWord	(0X10F28);
+	MakeWord	(0X10F2A);
+	MakeWord	(0X10F2C);
+	MakeWord	(0X10F2E);
+	MakeWord	(0X10F30);
+	MakeWord	(0X10F32);
+	MakeWord	(0X10F34);
+	MakeWord	(0X10F36);
+	MakeWord	(0X10F38);
+	MakeWord	(0X10F3A);
+	ExtLinA		(0X10F3C,	0,	"                ");
+	ExtLinA		(0X10F3C,	1,	"; 3rd line");
+	MakeWord	(0X10F3C);
+	MakeWord	(0X10F3E);
+	MakeWord	(0X10F40);
+	MakeWord	(0X10F42);
+	MakeWord	(0X10F44);
+	MakeWord	(0X10F46);
+	MakeWord	(0X10F48);
+	MakeWord	(0X10F4A);
+	MakeWord	(0X10F4C);
+	MakeWord	(0X10F4E);
+	MakeWord	(0X10F50);
+	MakeWord	(0X10F52);
+	MakeWord	(0X10F54);
+	MakeWord	(0X10F56);
+	MakeWord	(0X10F58);
+	MakeWord	(0X10F5A);
+	MakeWord	(0X10F5C);
+	MakeWord	(0X10F5E);
+	ExtLinA		(0X10F60,	0,	"                ");
+	ExtLinA		(0X10F60,	1,	"; 4th line");
+	MakeWord	(0X10F60);
+	MakeWord	(0X10F62);
+	MakeWord	(0X10F64);
+	MakeWord	(0X10F66);
+	MakeWord	(0X10F68);
+	MakeWord	(0X10F6A);
+	MakeWord	(0X10F6C);
+	MakeWord	(0X10F6E);
+	MakeWord	(0X10F70);
+	MakeWord	(0X10F72);
+	MakeWord	(0X10F74);
+	MakeWord	(0X10F76);
+	MakeWord	(0X10F78);
+	MakeWord	(0X10F7A);
+	MakeWord	(0X10F7C);
+	MakeWord	(0X10F7E);
+	MakeWord	(0X10F80);
+	MakeWord	(0X10F82);
+	ExtLinA		(0X10F84,	0,	"                ");
+	ExtLinA		(0X10F84,	1,	"; 5th line");
+	MakeWord	(0X10F84);
+	MakeWord	(0X10F86);
+	MakeWord	(0X10F88);
+	MakeWord	(0X10F8A);
+	MakeWord	(0X10F8C);
+	MakeWord	(0X10F8E);
+	MakeWord	(0X10F90);
+	MakeWord	(0X10F92);
+	MakeWord	(0X10F94);
+	MakeWord	(0X10F96);
+	MakeWord	(0X10F98);
+	MakeWord	(0X10F9A);
+	MakeWord	(0X10F9C);
+	MakeWord	(0X10F9E);
+	MakeWord	(0X10FA0);
+	MakeWord	(0X10FA2);
+	MakeWord	(0X10FA4);
+	MakeWord	(0X10FA6);
+	ExtLinA		(0X10FA8,	0,	"                ");
+	ExtLinA		(0X10FA8,	1,	"; 6th line");
+	MakeWord	(0X10FA8);
+	MakeWord	(0X10FAA);
+	MakeWord	(0X10FAC);
+	MakeWord	(0X10FAE);
+	MakeWord	(0X10FB0);
+	MakeWord	(0X10FB2);
+	MakeWord	(0X10FB4);
+	MakeWord	(0X10FB6);
+	MakeWord	(0X10FB8);
+	MakeWord	(0X10FBA);
+	MakeWord	(0X10FBC);
+	MakeWord	(0X10FBE);
+	MakeWord	(0X10FC0);
+	MakeWord	(0X10FC2);
+	MakeWord	(0X10FC4);
+	MakeWord	(0X10FC6);
+	MakeWord	(0X10FC8);
+	MakeWord	(0X10FCA);
+	ExtLinA		(0X10FCC,	0,	"                ");
+	ExtLinA		(0X10FCC,	1,	"; Syntax        vdpTile [VDPTILE_]index[|mirror|flip|palette|priority]");
+	ExtLinA		(0X10FCC,	2,	"                ");
+	ExtLinA		(0X10FCC,	3,	"; 1st line");
+	MakeWord	(0X10FCC);
+	MakeName	(0X10FCC,	"ItemMenuLayout");
+	MakeWord	(0X10FCE);
+	MakeWord	(0X10FD0);
+	MakeWord	(0X10FD2);
+	MakeWord	(0X10FD4);
+	MakeWord	(0X10FD6);
+	MakeWord	(0X10FD8);
+	MakeWord	(0X10FDA);
+	MakeWord	(0X10FDC);
+	MakeWord	(0X10FDE);
+	MakeWord	(0X10FE0);
+	MakeWord	(0X10FE2);
+	MakeWord	(0X10FE4);
+	MakeWord	(0X10FE6);
+	MakeWord	(0X10FE8);
+	MakeWord	(0X10FEA);
+	MakeWord	(0X10FEC);
+	MakeWord	(0X10FEE);
+	ExtLinA		(0X10FF0,	0,	"                ");
+	ExtLinA		(0X10FF0,	1,	"; 2nd line");
+	MakeWord	(0X10FF0);
+	MakeWord	(0X10FF2);
+	MakeWord	(0X10FF4);
+	MakeWord	(0X10FF6);
+	MakeWord	(0X10FF8);
+	MakeWord	(0X10FFA);
+	MakeWord	(0X10FFC);
+	MakeWord	(0X10FFE);
+	MakeWord	(0X11000);
+	MakeWord	(0X11002);
+	MakeWord	(0X11004);
+	MakeWord	(0X11006);
+	MakeWord	(0X11008);
+	MakeWord	(0X1100A);
+	MakeWord	(0X1100C);
+	MakeWord	(0X1100E);
+	MakeWord	(0X11010);
+	MakeWord	(0X11012);
+	ExtLinA		(0X11014,	0,	"                ");
+	ExtLinA		(0X11014,	1,	"; 3rd line");
+	MakeWord	(0X11014);
+	MakeWord	(0X11016);
+	MakeWord	(0X11018);
+	MakeWord	(0X1101A);
+	MakeWord	(0X1101C);
+	MakeWord	(0X1101E);
+	MakeWord	(0X11020);
+	MakeWord	(0X11022);
+	MakeWord	(0X11024);
+	MakeWord	(0X11026);
+	MakeWord	(0X11028);
+	MakeWord	(0X1102A);
+	MakeWord	(0X1102C);
+	MakeWord	(0X1102E);
+	MakeWord	(0X11030);
+	MakeWord	(0X11032);
+	MakeWord	(0X11034);
+	MakeWord	(0X11036);
+	ExtLinA		(0X11038,	0,	"                ");
+	ExtLinA		(0X11038,	1,	"; 4th line");
+	MakeWord	(0X11038);
+	MakeWord	(0X1103A);
+	MakeWord	(0X1103C);
+	MakeWord	(0X1103E);
+	MakeWord	(0X11040);
+	MakeWord	(0X11042);
+	MakeWord	(0X11044);
+	MakeWord	(0X11046);
+	MakeWord	(0X11048);
+	MakeWord	(0X1104A);
+	MakeWord	(0X1104C);
+	MakeWord	(0X1104E);
+	MakeWord	(0X11050);
+	MakeWord	(0X11052);
+	MakeWord	(0X11054);
+	MakeWord	(0X11056);
+	MakeWord	(0X11058);
+	MakeWord	(0X1105A);
+	ExtLinA		(0X1105C,	0,	"                ");
+	ExtLinA		(0X1105C,	1,	"; 5th line");
+	MakeWord	(0X1105C);
+	MakeWord	(0X1105E);
+	MakeWord	(0X11060);
+	MakeWord	(0X11062);
+	MakeWord	(0X11064);
+	MakeWord	(0X11066);
+	MakeWord	(0X11068);
+	MakeWord	(0X1106A);
+	MakeWord	(0X1106C);
+	MakeWord	(0X1106E);
+	MakeWord	(0X11070);
+	MakeWord	(0X11072);
+	MakeWord	(0X11074);
+	MakeWord	(0X11076);
+	MakeWord	(0X11078);
+	MakeWord	(0X1107A);
+	MakeWord	(0X1107C);
+	MakeWord	(0X1107E);
+	ExtLinA		(0X11080,	0,	"                ");
+	ExtLinA		(0X11080,	1,	"; 6th line");
+	MakeWord	(0X11080);
+	MakeWord	(0X11082);
+	MakeWord	(0X11084);
+	MakeWord	(0X11086);
+	MakeWord	(0X11088);
+	MakeWord	(0X1108A);
+	MakeWord	(0X1108C);
+	MakeWord	(0X1108E);
+	MakeWord	(0X11090);
+	MakeWord	(0X11092);
+	MakeWord	(0X11094);
+	MakeWord	(0X11096);
+	MakeWord	(0X11098);
+	MakeWord	(0X1109A);
+	MakeWord	(0X1109C);
+	MakeWord	(0X1109E);
+	MakeWord	(0X110A0);
+	ExtLinB		(0X110A2,	0,	"                ");
+	MakeWord	(0X110A2);
 	MakeDword	(x=0X110A4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -20632,6 +21097,8 @@ static Bytes_4(void) {
 	MakeRptCmt	(0X11C80,	"gold, bottom left");
 	MakeCode	(x=0X11C84);
 	OpStkvar	(x,	1);
+	MakeCode	(x=0X11C88);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X11C90);
 	OpStkvar	(x,	1);
 	MakeCode	(x=0X11C98);
@@ -20645,6 +21112,8 @@ static Bytes_4(void) {
 	MakeCode	(x=0X11CB8);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member"),0);
 	MakeCode	(x=0X11CC0);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X11CC6);
 	OpStkvar	(x,	0);
 	MakeCode	(x=0X11CCA);
 	OpEnumEx		(x,	0,	GetEnum("Window_Member"),0);
@@ -20708,9 +21177,12 @@ static Bytes_4(void) {
 	MakeCode	(x=0X11DA0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X11DA4);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X11DB2);
 	OpHex		(x,	0);
-	MakeCode	(0X11DBC);
+	MakeCode	(x=0X11DBC);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X11DCA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -21377,6 +21849,15 @@ static Bytes_4(void) {
 	ExtLinA		(0X1278E,	3,	"; 1st line");
 	MakeWord	(0X1278E);
 	MakeName	(0X1278E,	"AllyKillDefeatWindowLayout");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_5(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X12790);
 	MakeWord	(0X12792);
 	MakeWord	(0X12794);
@@ -21819,15 +22300,6 @@ static Bytes_4(void) {
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_5(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X13020);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	OpOff		(x,	1,	0X0);
@@ -21856,6 +22328,7 @@ static Bytes_5(void) {
 	MakeCode	(x=0X1304C);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeName	(0X1304C,	"BuildMemberListScreen");
 	MakeCode	(x=0X13050);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -21873,10 +22346,28 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X13066);
 	OpSign		(x,	1);
+	MakeCode	(x=0X1306E);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X13076);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X1307A);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
+	MakeCode	(x=0X13084);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X13096);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X1309A);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
+	MakeCode	(x=0X1309E);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
+	MakeCode	(x=0X130A8);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X130B0);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X130C0);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X130CE);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X130E0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22001,6 +22492,18 @@ static Bytes_5(void) {
 	MakeCode	(0X13250);
 	MakeCode	(x=0X13254);
 	OpHex		(x,	0);
+	MakeCode	(x=0X13260);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13270);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X1327E);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13292);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X1329C);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X132A6);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X132B6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -22120,9 +22623,15 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X13478);
+	MakeCode	(x=0X1347C);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X1348A);
+	OpStkvar	(x,	0);
 	MakeCode	(0X134A0);
 	MakeName	(0X134A0,	"CopyWords");
 	MakeCode	(0X134A8);
+	MakeCode	(x=0X134AA);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X134B8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22136,6 +22645,12 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13500);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X13510);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13526);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13534);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X1354C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22147,6 +22662,18 @@ static Bytes_5(void) {
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X1355C);
 	OpEnumEx		(x,	0,	GetEnum("AllyEntry"),0);
+	MakeCode	(x=0X13560);
+	OpStkvar	(x,	1);
+	MakeCode	(x=0X13564);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13570);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13578);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X13584);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X1358C);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X13590);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22323,7 +22850,10 @@ static Bytes_5(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	ExtLinA		(0X137A8,	0,	"                ");
-	MakeCode	(0X137AC);
+	MakeCode	(x=0X137AC);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X137B8);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X137BC);
 	OpSign		(x,	1);
 	MakeName	(0X137BC,	"BuildMiniStatusWindow");
@@ -22409,6 +22939,8 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13902);
 	OpStkvar	(x,	0);
 	MakeName	(0X13902,	"WriteMemberMiniStatus");
+	MakeCode	(x=0X13906);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X1390A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22416,11 +22948,17 @@ static Bytes_5(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X13916);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X1391A);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X13922);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13926);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X13930);
 	OpStkvar	(x,	0);
 	MakeName	(0X13930,	"WriteItemsMiniStatus");
+	MakeCode	(x=0X13934);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X13938);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22428,9 +22966,13 @@ static Bytes_5(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X13944);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13948);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),1);
 	MakeCode	(x=0X13956);
 	OpStkvar	(x,	0);
 	MakeName	(0X13956,	"WriteMagicMiniStatus");
+	MakeCode	(x=0X1395A);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),1);
 	MakeCode	(x=0X1395E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22438,9 +22980,13 @@ static Bytes_5(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X1396A);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X1396E);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),2);
 	MakeCode	(x=0X1397C);
 	OpStkvar	(x,	0);
 	MakeName	(0X1397C,	"WriteEquipMiniStatus");
+	MakeCode	(x=0X13980);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),2);
 	MakeCode	(x=0X13984);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22455,6 +23001,8 @@ static Bytes_5(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X139AC);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X139B0);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X139B4);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22466,6 +23014,8 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X139D4);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X139D8);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X139DC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22477,6 +23027,8 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X139FC);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13A00);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X13A04);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22488,6 +23040,8 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(x=0X13A24);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13A28);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
 	MakeCode	(x=0X13A2C);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22498,13 +23052,36 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13A46);
 	OpEnumEx		(x,	0,	GetEnum("Stats"),3);
 	MakeCode	(0X13A50);
+	ExtLinA		(0X13A52,	0,	"                module");
 	MakeCode	(x=0X13A52);
 	OpStkvar	(x,	0);
 	MakeName	(0X13A52,	"WriteMemberMagicList");
+	MakeCode	(x=0X13A64);
+	OpEnumEx		(x,	0,	GetEnum("Combatant_Properties"),1);
 	MakeCode	(x=0X13A66);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13A6A);
+	OpEnumEx		(x,	0,	GetEnum("Combatant_Properties"),1);
+	MakeCode	(x=0X13A74);
+	OpEnumEx		(x,	0,	GetEnum("Spells"),0);
 	MakeCode	(x=0X13A8A);
 	OpHex		(x,	0);
+	MakeCode	(x=0X13A9C);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),1);
+	MakeCode	(x=0X13AA0);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13AA4);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13AA8);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13AAC);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13AB0);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13AB4);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13ACE);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),1);
 	MakeCode	(0X13AD8);
 	MakeCode	(x=0X13ADA);
 	OpOff		(x,	0,	0X0);
@@ -22518,18 +23095,26 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Properties"),0);
 	MakeCode	(x=0X13AFE);
 	OpStkvar	(x,	0);
+	MakeCode	(x=0X13B02);
+	OpEnumEx		(x,	0,	GetEnum("Combatant_Properties"),0);
 	MakeCode	(x=0X13B0C);
 	OpEnumEx		(x,	0,	GetEnum("Items"),0);
 	MakeCode	(x=0X13B22);
 	OpHex		(x,	0);
 	MakeCode	(x=0X13B30);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry"),0);
+	MakeCode	(x=0X13B38);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13B3E);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
+	MakeName	(0X13B46,	"@Return");
 	MakeCode	(0X13B48);
 	MakeCode	(x=0X13B4A);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X13B4E);
 	OpHex		(x,	0);
+	ExtLinB		(0X13B58,	0,	"                modend");
 	MakeCode	(x=0X13B5A);
 	OpEnumEx		(x,	0,	GetEnum("ItemEntry"),0);
 	MakeName	(0X13B5A,	"LoadItemIcon");
@@ -22544,12 +23129,14 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	0,	GetEnum("Icons"),0);
 	MakeName	(0X13B82,	"LoadIcon");
 	MakeRptCmt	(0X13B8A,	"icon offset");
-	MakeCode	(0X13BAE);
+	MakeCode	(x=0X13BAE);
+	OpStkvar	(x,	0);
 	MakeName	(0X13BAE,	"DrawMemberItemsIconsCross");
 	MakeCode	(x=0X13BB2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-	MakeCode	(0X13BE6);
+	MakeCode	(x=0X13BE6);
+	OpStkvar	(x,	0);
 	MakeName	(0X13BE6,	"DrawMemberMagicIconsCross");
 	MakeCode	(x=0X13BEA);
 	OpOff		(x,	0,	0X0);
@@ -22557,9 +23144,29 @@ static Bytes_5(void) {
 	MakeCode	(x=0X13C20);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X13C36);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X13C9C);
 	OpChr		(x,	0);
 	MakeName	(0X13C9C,	"CopyWindowTilesToRam");
+	MakeCode	(x=0X13CAA);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CAE);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CB6);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CC2);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CC6);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CCE);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CDA);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CDE);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	MakeCode	(x=0X13CE6);
+	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
 	MakeStr		(0X13CF0,	0X13D0A);
 	MakeName	(0X13CF0,	"aNameClassLevExp");
 	MakeStr		(0X13D0A,	0X13D24);
@@ -22594,60 +23201,36 @@ static Bytes_5(void) {
 	MakeByte	(0X13D9E);
 	MakeArray	(0X13D9E,	0X140);
 	MakeName	(0X13D9E,	"TextHighlightTiles");
-	MakeWord	(x=0X13EDE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EE0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EE2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EE4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EE6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EE8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EEA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EEC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EEE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EF0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EF2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EF4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EF6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EF8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EFA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EFC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13EFE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F00);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F02);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F04);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F06);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F08);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F0A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F0C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F0E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F10);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X13F12);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X13EDE,	0,	"                ");
+	ExtLinA		(0X13EDE,	1,	"; Syntax        vdpBaseTile [VDPTILE_]index[|mirror|flip]");
+	ExtLinA		(0X13EDE,	2,	"                ");
+	MakeWord	(0X13EDE);
+	MakeWord	(0X13EE0);
+	MakeWord	(0X13EE2);
+	MakeWord	(0X13EE4);
+	MakeWord	(0X13EE6);
+	MakeWord	(0X13EE8);
+	MakeWord	(0X13EEA);
+	MakeWord	(0X13EEC);
+	MakeWord	(0X13EEE);
+	MakeWord	(0X13EF0);
+	MakeWord	(0X13EF2);
+	MakeWord	(0X13EF4);
+	MakeWord	(0X13EF6);
+	MakeWord	(0X13EF8);
+	MakeWord	(0X13EFA);
+	MakeWord	(0X13EFC);
+	MakeWord	(0X13EFE);
+	MakeWord	(0X13F00);
+	MakeWord	(0X13F02);
+	MakeWord	(0X13F04);
+	MakeWord	(0X13F06);
+	MakeWord	(0X13F08);
+	MakeWord	(0X13F0A);
+	MakeWord	(0X13F0C);
+	MakeWord	(0X13F0E);
+	MakeWord	(0X13F10);
+	MakeWord	(0X13F12);
 	MakeCode	(0X13F14);
 	MakeByte	(0X13F18);
 	MakeArray	(0X13F18,	0X4);
@@ -22828,6 +23411,8 @@ static Bytes_5(void) {
 	OpOff		(x,	129,	0X0);
 	MakeCode	(x=0X14204);
 	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),0);
+	MakeCode	(x=0X14210);
+	OpStkvar	(x,	1);
 	MakeCode	(x=0X14214);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22911,16 +23496,23 @@ static Bytes_5(void) {
 	MakeCode	(x=0X1430A);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+	MakeCode	(x=0X14310);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X14316);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X14336);
+	MakeCode	(x=0X1434A);
+	OpStkvar	(x,	0);
+	MakeCode	(x=0X14358);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X14368);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(x=0X14376);
 	OpDecimal	(x,	0);
-	MakeCode	(0X1438C);
+	MakeCode	(x=0X1438C);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X14390);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22932,6 +23524,8 @@ static Bytes_5(void) {
 	OpHex		(x,	0);
 	MakeCode	(x=0X143B8);
 	OpEnumEx		(x,	0,	GetEnum("Combatant_Properties"),0);
+	MakeCode	(x=0X143C4);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X143CE);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -22940,6 +23534,8 @@ static Bytes_5(void) {
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
 	MakeCode	(0X143E0);
+	MakeCode	(x=0X143E4);
+	OpStkvar	(x,	0);
 	MakeCode	(x=0X143F6);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -22949,6 +23545,8 @@ static Bytes_5(void) {
 	MakeCode	(x=0X14402);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X1440E);
+	OpStkvar	(x,	0);
 	MakeCode	(0X14422);
 	MakeCode	(0X1443E);
 	MakeCode	(0X1445A);
@@ -22957,6 +23555,7 @@ static Bytes_5(void) {
 	MakeCode	(x=0X14462);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X1446E,	"<BUG?> -- shouldn't we be ANDing $3F instead?");
 	MakeCode	(x=0X1449E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -23093,6 +23692,7 @@ static Bytes_5(void) {
 	MakeCode	(0X1467C);
 	MakeName	(0X1467C,	"CleanIconCorners");
 	MakeCode	(0X146AE);
+	MakeName	(0X146AE,	"LoadMiniStatusTextHighlightSprites");
 	MakeCode	(x=0X146B2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -23105,6 +23705,7 @@ static Bytes_5(void) {
 	MakeCode	(x=0X146C2);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeRptCmt	(0X146CA,	"position sprites off-screen while windows are hidden");
 	MakeCode	(x=0X146CE);
 	OpEnumEx		(x,	0,	GetEnum("Window_MemberList"),0);
 	MakeCode	(x=0X146D6);
@@ -23113,24 +23714,32 @@ static Bytes_5(void) {
 	OpEnumEx		(x,	1,	GetEnum("VdpSprite_Offsets"),0);
 	MakeCode	(x=0X146DE);
 	OpEnumEx		(x,	1,	GetEnum("VdpSprite_Offsets"),0);
+	ExtLinA		(0X146E8,	0,	"                ");
+	ExtLinA		(0X146E8,	1,	"                ; Check blinking frame timer");
+	MakeRptCmt	(0X146EE,	"position sprites off-screen at regular intervals");
 	MakeCode	(0X146F4);
 	MakeCode	(x=0X146F8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+	MakeCode	(x=0X14700);
+	OpEnumEx		(x,	0,	GetEnum("Window_MiniStatus"),1);
 	MakeCode	(x=0X14708);
 	OpEnumEx		(x,	1,	GetEnum("VdpSprite_Offsets"),0);
 	MakeCode	(x=0X1470C);
 	OpEnumEx		(x,	1,	GetEnum("VdpSprite_Offsets"),0);
 	MakeCode	(x=0X14710);
 	OpEnumEx		(x,	1,	GetEnum("VdpSprite_Offsets"),0);
+	ExtLinA		(0X1471A,	0,	"                ");
+	MakeRptCmt	(0X14724,	"member name");
 	ExtLinA		(0X14724,	0,	"                ");
 	ExtLinA		(0X14724,	1,	"; Syntax        vdpSprite Y, [VDPSPRITESIZE_]bitfield, [VDPTILE_]bitfield, X");
 	ExtLinA		(0X14724,	2,	"                ");
 	MakeByte	(0X14724);
 	MakeArray	(0X14724,	0X8);
-	MakeName	(0X14724,	"spr_ItemListTextHighlight");
+	MakeName	(0X14724,	"spr_MiniStatusTextHighlight");
 	MakeByte	(0X1472C);
 	MakeArray	(0X1472C,	0X8);
+	MakeRptCmt	(0X14734,	"item or spell");
 	MakeByte	(0X14734);
 	MakeArray	(0X14734,	0X8);
 	MakeByte	(0X1473C);
@@ -23468,398 +24077,213 @@ static Bytes_5(void) {
 	MakeByte	(0X14F7C);
 	MakeArray	(0X14F7C,	0XE0);
 	MakeName	(0X14F7C,	"ShopPriceTagTiles_Numbers");
-	MakeRptCmt	(0X1505C,	"shop inventory window layout ?");
 	ExtLinA		(0X1505C,	0,	"                ");
-	ExtLinA		(0X1505C,	1,	"                ; 1st line");
-	MakeWord	(x=0X1505C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1505E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15060);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15062);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15064);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15066);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15068);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1506A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1506C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1506E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15070);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15072);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15074);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15076);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15078);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1507A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1507C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1507E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15080);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15082);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15084);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15086);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15088);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1508A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1508C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1508E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15090);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X1505C,	1,	"; Syntax        vdpBaseTile [VDPTILE_]index[|mirror|flip]");
+	ExtLinA		(0X1505C,	2,	"                ");
+	ExtLinA		(0X1505C,	3,	"; 1st line");
+	MakeWord	(0X1505C);
+	MakeName	(0X1505C,	"ShopInventoryWindowLayout");
+	MakeWord	(0X1505E);
+	MakeWord	(0X15060);
+	MakeWord	(0X15062);
+	MakeWord	(0X15064);
+	MakeWord	(0X15066);
+	MakeWord	(0X15068);
+	MakeWord	(0X1506A);
+	MakeWord	(0X1506C);
+	MakeWord	(0X1506E);
+	MakeWord	(0X15070);
+	MakeWord	(0X15072);
+	MakeWord	(0X15074);
+	MakeWord	(0X15076);
+	MakeWord	(0X15078);
+	MakeWord	(0X1507A);
+	MakeWord	(0X1507C);
+	MakeWord	(0X1507E);
+	MakeWord	(0X15080);
+	MakeWord	(0X15082);
+	MakeWord	(0X15084);
+	MakeWord	(0X15086);
+	MakeWord	(0X15088);
+	MakeWord	(0X1508A);
+	MakeWord	(0X1508C);
+	MakeWord	(0X1508E);
+	MakeWord	(0X15090);
 	ExtLinA		(0X15092,	0,	"                ");
-	ExtLinA		(0X15092,	1,	"                ; 2nd line");
-	MakeWord	(x=0X15092);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15094);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15096);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15098);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1509A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1509C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1509E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150A0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150A2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150A4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150A6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150A8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150AA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150AC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150AE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150B0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150B2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150B4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150B6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150B8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150BA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150BC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150BE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150C0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150C2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150C4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150C6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X15092,	1,	"; 2nd line");
+	MakeWord	(0X15092);
+	MakeWord	(0X15094);
+	MakeWord	(0X15096);
+	MakeWord	(0X15098);
+	MakeWord	(0X1509A);
+	MakeWord	(0X1509C);
+	MakeWord	(0X1509E);
+	MakeWord	(0X150A0);
+	MakeWord	(0X150A2);
+	MakeWord	(0X150A4);
+	MakeWord	(0X150A6);
+	MakeWord	(0X150A8);
+	MakeWord	(0X150AA);
+	MakeWord	(0X150AC);
+	MakeWord	(0X150AE);
+	MakeWord	(0X150B0);
+	MakeWord	(0X150B2);
+	MakeWord	(0X150B4);
+	MakeWord	(0X150B6);
+	MakeWord	(0X150B8);
+	MakeWord	(0X150BA);
+	MakeWord	(0X150BC);
+	MakeWord	(0X150BE);
+	MakeWord	(0X150C0);
+	MakeWord	(0X150C2);
+	MakeWord	(0X150C4);
+	MakeWord	(0X150C6);
 	ExtLinA		(0X150C8,	0,	"                ");
-	ExtLinA		(0X150C8,	1,	"                ; 3rd line");
-	MakeWord	(x=0X150C8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150CA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150CC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150CE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150D0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150D2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150D4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150D6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150D8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150DA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150DC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150DE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150E0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150E2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150E4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150E6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150E8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150EA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150EC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150EE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150F0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150F2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150F4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150F6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150F8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150FA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X150FC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X150C8,	1,	"; 3rd line");
+	MakeWord	(0X150C8);
+	MakeWord	(0X150CA);
+	MakeWord	(0X150CC);
+	MakeWord	(0X150CE);
+	MakeWord	(0X150D0);
+	MakeWord	(0X150D2);
+	MakeWord	(0X150D4);
+	MakeWord	(0X150D6);
+	MakeWord	(0X150D8);
+	MakeWord	(0X150DA);
+	MakeWord	(0X150DC);
+	MakeWord	(0X150DE);
+	MakeWord	(0X150E0);
+	MakeWord	(0X150E2);
+	MakeWord	(0X150E4);
+	MakeWord	(0X150E6);
+	MakeWord	(0X150E8);
+	MakeWord	(0X150EA);
+	MakeWord	(0X150EC);
+	MakeWord	(0X150EE);
+	MakeWord	(0X150F0);
+	MakeWord	(0X150F2);
+	MakeWord	(0X150F4);
+	MakeWord	(0X150F6);
+	MakeWord	(0X150F8);
+	MakeWord	(0X150FA);
+	MakeWord	(0X150FC);
 	ExtLinA		(0X150FE,	0,	"                ");
-	ExtLinA		(0X150FE,	1,	"                ; 4th line");
-	MakeWord	(x=0X150FE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15100);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15102);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15104);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15106);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15108);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1510A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1510C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1510E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15110);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15112);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15114);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15116);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15118);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1511A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1511C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1511E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15120);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15122);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15124);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15126);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15128);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1512A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1512C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1512E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15130);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15132);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X150FE,	1,	"; 4th line");
+	MakeWord	(0X150FE);
+	MakeWord	(0X15100);
+	MakeWord	(0X15102);
+	MakeWord	(0X15104);
+	MakeWord	(0X15106);
+	MakeWord	(0X15108);
+	MakeWord	(0X1510A);
+	MakeWord	(0X1510C);
+	MakeWord	(0X1510E);
+	MakeWord	(0X15110);
+	MakeWord	(0X15112);
+	MakeWord	(0X15114);
+	MakeWord	(0X15116);
+	MakeWord	(0X15118);
+	MakeWord	(0X1511A);
+	MakeWord	(0X1511C);
+	MakeWord	(0X1511E);
+	MakeWord	(0X15120);
+	MakeWord	(0X15122);
+	MakeWord	(0X15124);
+	MakeWord	(0X15126);
+	MakeWord	(0X15128);
+	MakeWord	(0X1512A);
+	MakeWord	(0X1512C);
+	MakeWord	(0X1512E);
+	MakeWord	(0X15130);
+	MakeWord	(0X15132);
 	ExtLinA		(0X15134,	0,	"                ");
-	ExtLinA		(0X15134,	1,	"                ; 5th line");
-	MakeWord	(x=0X15134);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15136);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15138);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1513A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1513C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1513E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15140);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15142);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15144);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15146);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15148);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1514A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1514C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1514E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15150);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15152);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15154);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15156);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15158);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1515A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1515C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1515E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15160);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15162);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15164);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15166);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15168);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X15134,	1,	"; 5th line");
+	MakeWord	(0X15134);
+	MakeWord	(0X15136);
+	MakeWord	(0X15138);
+	MakeWord	(0X1513A);
+	MakeWord	(0X1513C);
+	MakeWord	(0X1513E);
+	MakeWord	(0X15140);
+	MakeWord	(0X15142);
+	MakeWord	(0X15144);
+	MakeWord	(0X15146);
+	MakeWord	(0X15148);
+	MakeWord	(0X1514A);
+	MakeWord	(0X1514C);
+	MakeWord	(0X1514E);
+	MakeWord	(0X15150);
+	MakeWord	(0X15152);
+	MakeWord	(0X15154);
+	MakeWord	(0X15156);
+	MakeWord	(0X15158);
+	MakeWord	(0X1515A);
+	MakeWord	(0X1515C);
+	MakeWord	(0X1515E);
+	MakeWord	(0X15160);
+	MakeWord	(0X15162);
+	MakeWord	(0X15164);
+	MakeWord	(0X15166);
+	MakeWord	(0X15168);
 	ExtLinA		(0X1516A,	0,	"                ");
-	ExtLinA		(0X1516A,	1,	"                ; 6th line");
-	MakeWord	(x=0X1516A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1516C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1516E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15170);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15172);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15174);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15176);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15178);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1517A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1517C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1517E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15180);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15182);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15184);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15186);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15188);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1518A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1518C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1518E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15190);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15192);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15194);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15196);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X15198);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1519A);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1519C);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X1519E);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X1516A,	1,	"; 6th line");
+	MakeWord	(0X1516A);
+	MakeWord	(0X1516C);
+	MakeWord	(0X1516E);
+	MakeWord	(0X15170);
+	MakeWord	(0X15172);
+	MakeWord	(0X15174);
+	MakeWord	(0X15176);
+	MakeWord	(0X15178);
+	MakeWord	(0X1517A);
+	MakeWord	(0X1517C);
+	MakeWord	(0X1517E);
+	MakeWord	(0X15180);
+	MakeWord	(0X15182);
+	MakeWord	(0X15184);
+	MakeWord	(0X15186);
+	MakeWord	(0X15188);
+	MakeWord	(0X1518A);
+	MakeWord	(0X1518C);
+	MakeWord	(0X1518E);
+	MakeWord	(0X15190);
+	MakeWord	(0X15192);
+	MakeWord	(0X15194);
+	MakeWord	(0X15196);
+	MakeWord	(0X15198);
+	MakeWord	(0X1519A);
+	MakeWord	(0X1519C);
+	MakeWord	(0X1519E);
 	MakeRptCmt	(0X151A0,	"unknown tile layout");
-	MakeWord	(x=0X151A0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151A2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151A4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151A6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151A8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151AA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151AC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151AE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151B0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151B2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151B4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151B6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151B8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151BA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151BC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151BE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151C0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151C2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151C4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151C6);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151C8);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151CA);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151CC);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151CE);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151D0);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151D2);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
-	MakeWord	(x=0X151D4);
-	OpEnumEx		(x,	0,	GetEnum("VdpTiles"),0);
+	ExtLinA		(0X151A0,	0,	"                ");
+	MakeWord	(0X151A0);
+	MakeWord	(0X151A2);
+	MakeWord	(0X151A4);
+	MakeWord	(0X151A6);
+	MakeWord	(0X151A8);
+	MakeWord	(0X151AA);
+	MakeWord	(0X151AC);
+	MakeWord	(0X151AE);
+	MakeWord	(0X151B0);
+	MakeWord	(0X151B2);
+	MakeWord	(0X151B4);
+	MakeWord	(0X151B6);
+	MakeWord	(0X151B8);
+	MakeWord	(0X151BA);
+	MakeWord	(0X151BC);
+	MakeWord	(0X151BE);
+	MakeWord	(0X151C0);
+	MakeWord	(0X151C2);
+	MakeWord	(0X151C4);
+	MakeWord	(0X151C6);
+	MakeWord	(0X151C8);
+	MakeWord	(0X151CA);
+	MakeWord	(0X151CC);
+	MakeWord	(0X151CE);
+	MakeWord	(0X151D0);
+	MakeWord	(0X151D2);
+	ExtLinB		(0X151D4,	0,	"                ");
+	MakeWord	(0X151D4);
 	MakeByte	(0X151D6);
 	MakeArray	(0X151D6,	0X92);
 	MakeName	(0X151D6,	"ShopInventoryItemHighlightTiles");
@@ -25819,6 +26243,15 @@ static Bytes_5(void) {
 	ExtLinA		(0X16CAE,	0,	"                ");
 	ExtLinA		(0X16CAE,	1,	"; 15th line");
 	MakeWord	(0X16CAE);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_6(void) {
+        auto x;
+#define id x
+
 	MakeWord	(0X16CB0);
 	MakeWord	(0X16CB2);
 	MakeWord	(0X16CB4);
@@ -26061,15 +26494,6 @@ static Bytes_5(void) {
 	MakeWord	(0X16E66);
 	MakeWord	(0X16E68);
 	MakeWord	(0X16E6A);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_6(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X16E6C);
 	MakeWord	(0X16E6E);
 	MakeWord	(0X16E70);
@@ -30640,6 +31064,15 @@ static Bytes_6(void) {
 	OpOff		(x,	128,	0X1A048);
 	OpOff		(x,	1,	0X1A048);
 	OpOff		(x,	129,	0X1A048);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_7(void) {
+        auto x;
+#define id x
+
 	MakeWord	(x=0X1A06C);
 	OpOff		(x,	0,	0X1A048);
 	OpOff		(x,	128,	0X1A048);
@@ -30902,15 +31335,6 @@ static Bytes_6(void) {
 	OpEnumEx		(x,	0,	GetEnum("Fading"),1);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_7(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X1A43E);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -36057,6 +36481,15 @@ static Bytes_7(void) {
 	MakeCode	(x=0X1EFE8);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_8(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X1EFEC);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -36330,15 +36763,6 @@ static Bytes_7(void) {
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
 	MakeCode	(0X1F3C8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_8(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X1F3CC);
 	MakeByte	(0X1F3CD);
 	MakeByte	(0X1F3CE);
@@ -39902,6 +40326,15 @@ static Bytes_8(void) {
 	MakeCode	(x=0X22388);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_9(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X22390,	"\"Choose which item?{W2}\"");
 	MakeCode	(x=0X22390);
 	OpEnumEx		(x,	0,	GetEnum("Messages"),0);
@@ -40095,15 +40528,6 @@ static Bytes_8(void) {
 	MakeRptCmt	(0X2275A,	"\"Did you change your mind?{W2}\"");
 	MakeByte	(0X2275A);
 	MakeArray	(0X2275A,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_9(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X2275E);
 	MakeRptCmt	(0X22760,	"\"Did you change your mind?{W2}\"");
 	MakeByte	(0X22760);
@@ -43958,6 +44382,15 @@ static Bytes_9(void) {
 	MakeCode	(x=0X27BA4);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_10(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X27BE4);
 	OpEnumEx		(x,	0,	GetEnum("Fading"),0);
 	OpOff		(x,	1,	0X0);
@@ -44170,15 +44603,6 @@ static Bytes_9(void) {
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeWord	(x=0X280C8);
 	OpEnumEx		(x,	0,	GetEnum("VIntActions"),0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_10(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0X280CA);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -48528,6 +48952,15 @@ static Bytes_10(void) {
 	MakeByte	(0X45847);
 	MakeByte	(0X45848);
 	MakeArray	(0X45848,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_11(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4584A);
 	MakeByte	(0X4584B);
 	MakeByte	(0X4584C);
@@ -48761,15 +49194,6 @@ static Bytes_10(void) {
 	MakeByte	(0X45F9C);
 	MakeArray	(0X45F9C,	0X4);
 	MakeName	(0X45F9C,	"eas_45F9C");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_11(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X45FA0);
 	MakeArray	(0X45FA0,	0X2);
 	MakeByte	(0X45FA2);
@@ -53121,6 +53545,15 @@ static Bytes_11(void) {
 	MakeWord	(0X482F8);
 	MakeByte	(0X482FA);
 	MakeArray	(0X482FA,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_12(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X482FC);
 	MakeArray	(0X482FC,	0X8);
 	MakeByte	(0X48304);
@@ -53314,15 +53747,6 @@ static Bytes_11(void) {
 	MakeComm	(0X4846E,	"\"I have a bad feeling...{N}Oh, well.{D2}\"");
 	MakeByte	(0X4846E);
 	MakeArray	(0X4846E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_12(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X48472);
 	MakeArray	(0X48472,	0X2);
 	MakeByte	(0X48474);
@@ -57283,6 +57707,15 @@ static Bytes_12(void) {
 	MakeArray	(0X4A288,	0X2);
 	MakeByte	(0X4A28A);
 	MakeArray	(0X4A28A,	0X8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_13(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4A292);
 	MakeArray	(0X4A292,	0X2);
 	MakeByte	(0X4A294);
@@ -57475,15 +57908,6 @@ static Bytes_12(void) {
 	MakeComm	(0X4A3F4,	"\"Minister, help me!{W1}\"");
 	MakeByte	(0X4A3F4);
 	MakeArray	(0X4A3F4,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_13(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4A3F8);
 	MakeArray	(0X4A3F8,	0X4);
 	MakeComm	(0X4A3FC,	"\"Y...yes...but how?{W1}\"");
@@ -61249,6 +61673,15 @@ static Bytes_13(void) {
 	MakeComm	(0X4C184,	"\"{LEADER}...{NAME;7}...{W1}\"");
 	MakeByte	(0X4C184);
 	MakeArray	(0X4C184,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_14(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X4C188);
 	MakeArray	(0X4C188,	0X4);
 	MakeByte	(0X4C18C);
@@ -61406,15 +61839,6 @@ static Bytes_13(void) {
 	MakeWord	(0X4C2A6);
 	MakeByte	(0X4C2A8);
 	MakeArray	(0X4C2A8,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_14(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4C2AC);
 	MakeArray	(0X4C2AC,	0X2);
 	MakeWord	(0X4C2AE);
@@ -64972,6 +65396,15 @@ static Bytes_14(void) {
 	MakeArray	(0X4E046,	0X8);
 	MakeByte	(0X4E04E);
 	MakeArray	(0X4E04E,	0X8);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_15(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X4E056,	"\"Nooooooo!{W1}\"");
 	MakeByte	(0X4E056);
 	MakeArray	(0X4E056,	0X4);
@@ -65171,15 +65604,6 @@ static Bytes_14(void) {
 	MakeArray	(0X4E1B4,	0X4);
 	MakeByte	(0X4E1B8);
 	MakeArray	(0X4E1B8,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_15(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X4E1BA);
 	MakeArray	(0X4E1BA,	0X4);
 	MakeByte	(0X4E1BE);
@@ -68902,6 +69326,15 @@ static Bytes_15(void) {
 	MakeArray	(0X50156,	0X8);
 	MakeByte	(0X5015E);
 	MakeArray	(0X5015E,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_16(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X50164);
 	MakeArray	(0X50164,	0X2);
 	MakeByte	(0X50166);
@@ -69094,15 +69527,6 @@ static Bytes_15(void) {
 	MakeArray	(0X502F4,	0X4);
 	MakeByte	(0X502F8);
 	MakeArray	(0X502F8,	0X8);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_16(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X50300);
 	MakeArray	(0X50300,	0X8);
 	MakeByte	(0X50308);
@@ -72371,6 +72795,15 @@ static Bytes_16(void) {
 	MakeRptCmt	(0X51B04,	"\"Sir Hawel lives just outside{N}of this village.{W1}\"");
 	MakeByte	(0X51B04);
 	MakeArray	(0X51B04,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_17(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X51B08);
 	MakeArray	(0X51B08,	0X6);
 	MakeRptCmt	(0X51B0E,	"Kazin is a follower");
@@ -72488,15 +72921,6 @@ static Bytes_16(void) {
 	MakeName	(0X51B8E,	"Map5_EntityEvent13");
 	MakeRptCmt	(0X51B90,	"Kazin is a follower");
 	MakeWord	(0X51B90);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_17(void) {
-        auto x;
-#define id x
-
 	MakeCode	(0X51B92);
 	MakeRptCmt	(0X51B94,	"\"Want to see Hawel?{W2}\"");
 	MakeByte	(0X51B94);
@@ -75569,6 +75993,15 @@ static Bytes_17(void) {
 	MakeRptCmt	(0X530D4,	"\"{NAME} investigated{N}the book shelves.{W2}{CLEAR}\"\n\"A book...{N}TREASURES{W1}\"");
 	MakeByte	(0X530D4);
 	MakeArray	(0X530D4,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_18(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X530DA,	"\"{NAME} looked into{N}the well.{W2}{CLEAR}\"\n\"A deep, dark well.{N}...very cool!{W1}\"");
 	MakeByte	(0X530DA);
 	MakeArray	(0X530DA,	0X6);
@@ -75736,15 +76169,6 @@ static Bytes_17(void) {
 	MakeArray	(0X5328A,	0X4);
 	MakeByte	(0X5328E);
 	MakeArray	(0X5328E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_18(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X53292);
 	MakeArray	(0X53292,	0X4);
 	MakeByte	(0X53296);
@@ -79160,6 +79584,15 @@ static Bytes_18(void) {
 	MakeName	(0X54A34,	"Map6_EntityEvent2");
 	MakeRptCmt	(0X54A36,	"Set after the event in the basement of Creed's Mansion");
 	MakeWord	(0X54A36);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_19(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X54A38);
 	MakeRptCmt	(0X54A3A,	"Set after the scene with Peter at the Castle (ends with you leaving the Castle)");
 	MakeByte	(0X54A3A);
@@ -79273,15 +79706,6 @@ static Bytes_18(void) {
 	MakeRptCmt	(0X54AE4,	"\"You know, I never leave{N}my shop.{W2}\"");
 	MakeByte	(0X54AE4);
 	MakeArray	(0X54AE4,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_19(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X54AE8,	"\"I didn't know birds like{N}this existed!{W1}\"");
 	MakeByte	(0X54AE8);
 	MakeArray	(0X54AE8,	0X4);
@@ -82363,6 +82787,15 @@ static Bytes_19(void) {
 	MakeRptCmt	(0X560DC,	"\"Wow, the ancient door!{N}I knew it was there!  I did!{W1}\"");
 	MakeByte	(0X560DC);
 	MakeArray	(0X560DC,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_20(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X560E0);
 	MakeCode	(x=0X560E2);
 	OpOff		(x,	1,	0X0);
@@ -82487,15 +82920,6 @@ static Bytes_19(void) {
 	MakeByte	(0X561AE);
 	MakeArray	(0X561AE,	0X4);
 	MakeName	(0X561AE,	"ms_map8_ZoneEvents");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_20(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X561B2);
 	MakeArray	(0X561B2,	0X4);
 	MakeByte	(0X561B6);
@@ -85788,6 +86212,15 @@ static Bytes_20(void) {
 	MakeRptCmt	(0X57A7E,	"Set after speaking with Volcanon");
 	MakeByte	(0X57A7E);
 	MakeArray	(0X57A7E,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_21(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X57A82,	"Set after you dislodge the turtle/fairy in Polca, also set after you speak to Volcanon");
 	MakeByte	(0X57A82);
 	MakeArray	(0X57A82,	0X4);
@@ -85953,15 +86386,6 @@ static Bytes_20(void) {
 	MakeArray	(0X57BA2,	0X2);
 	MakeByte	(0X57BA4);
 	MakeArray	(0X57BA4,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_21(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X57BA8,	"\"Volcanon?{W1}\"");
 	MakeByte	(0X57BA8);
 	MakeArray	(0X57BA8,	0X4);
@@ -89476,6 +89900,15 @@ static Bytes_21(void) {
 	MakeRptCmt	(0X5950E,	"\"I was looking for the{N}legendary sword.{N}I hate it here!{W1}\"");
 	MakeByte	(0X5950E);
 	MakeArray	(0X5950E,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_22(void) {
+        auto x;
+#define id x
+
 	MakeCode	(0X59512);
 	MakeCode	(x=0X59514);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
@@ -89595,15 +90028,6 @@ static Bytes_21(void) {
 	MakeCode	(x=0X595B4);
 	OpEnumEx		(x,	0,	GetEnum("Traps"),0);
 	MakeName	(0X595B4,	"Map22_EntityEvent17");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_22(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X595B6,	"\"Mr. Creed gave me this solid,{N}armored body!{W1}\"");
 	MakeWord	(0X595B6);
 	MakeCode	(0X595B8);
@@ -92964,6 +93388,15 @@ static Bytes_22(void) {
 	MakeComm	(0X5AD8A,	"\"Oddler, you're getting bold.{W2}\"");
 	MakeByte	(0X5AD8A);
 	MakeArray	(0X5AD8A,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_23(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5AD8E,	"\"But, it is a good idea.{W1}\"");
 	MakeByte	(0X5AD8E);
 	MakeArray	(0X5AD8E,	0X4);
@@ -93163,15 +93596,6 @@ static Bytes_22(void) {
 	MakeComm	(0X5AF10,	"\"OK, OK.  We give up.{W2}\"");
 	MakeByte	(0X5AF10);
 	MakeArray	(0X5AF10,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_23(void) {
-        auto x;
-#define id x
-
 	MakeComm	(0X5AF14,	"\"We'll see Mr. Creed later.{N}Let's get out of here.{W1}\"");
 	MakeByte	(0X5AF14);
 	MakeArray	(0X5AF14,	0X4);
@@ -96798,6 +97222,15 @@ static Bytes_23(void) {
 	MakeCode	(0X5C9FA);
 	MakeByte	(0X5C9FC);
 	MakeArray	(0X5C9FC,	0X6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_24(void) {
+        auto x;
+#define id x
+
 	MakeRptCmt	(0X5CA02,	"TEMP FLAG #00");
 	MakeByte	(0X5CA02);
 	MakeArray	(0X5CA02,	0X4);
@@ -97004,15 +97437,6 @@ static Bytes_23(void) {
 	MakeArray	(0X5CBD6,	0X4);
 	MakeByte	(0X5CBDA);
 	MakeArray	(0X5CBDA,	0X2);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_24(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5CBDC);
 	MakeArray	(0X5CBDC,	0X4);
 	MakeByte	(0X5CBE0);
@@ -100107,6 +100531,15 @@ static Bytes_24(void) {
 	MakeArray	(0X5E1DA,	0X4);
 	MakeByte	(0X5E1DE);
 	MakeArray	(0X5E1DE,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_25(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5E1E2,	"\"Let me go with you!{W1}\"");
 	MakeByte	(0X5E1E2);
 	MakeArray	(0X5E1E2,	0X4);
@@ -100301,15 +100734,6 @@ static Bytes_24(void) {
 	MakeByte	(0X5E320);
 	MakeArray	(0X5E320,	0X8);
 	MakeName	(0X5E320,	"cs_5E320");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_25(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X5E328);
 	MakeArray	(0X5E328,	0X6);
 	MakeByte	(0X5E32E);
@@ -103793,6 +104217,15 @@ static Bytes_25(void) {
 	MakeArray	(0X5FEFA,	0X4);
 	MakeByte	(0X5FEFE);
 	MakeArray	(0X5FEFE,	0X2);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_26(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X5FF00,	"\"Oh, an opening!{N}The light is leading us!{W1}\"");
 	MakeByte	(0X5FF00);
 	MakeArray	(0X5FF00,	0X4);
@@ -103978,15 +104411,6 @@ static Bytes_25(void) {
 	MakeName	(0X60060,	"ms_map45_ZoneEvents");
 	MakeByte	(0X60064);
 	MakeArray	(0X60064,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_26(void) {
-        auto x;
-#define id x
-
 	MakeCode	(x=0X60068);
 	OpOff		(x,	0,	0X60060);
 	OpOff		(x,	128,	0X60060);
@@ -107368,6 +107792,15 @@ static Bytes_26(void) {
 	MakeComm	(0X61930,	"\"Quickly!  My time is short,{N}but I can still choke her!{W2}\"");
 	MakeByte	(0X61930);
 	MakeArray	(0X61930,	0X4);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_27(void) {
+        auto x;
+#define id x
+
 	MakeComm	(0X61934,	"\"Get over here, NOW!{W1}\"");
 	MakeByte	(0X61934);
 	MakeArray	(0X61934,	0X4);
@@ -107553,15 +107986,6 @@ static Bytes_26(void) {
 	MakeComm	(0X61A5E,	"\"Excellent!{N}Finally, I have it back!{W1}\"");
 	MakeByte	(0X61A5E);
 	MakeArray	(0X61A5E,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_27(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X61A62);
 	MakeArray	(0X61A62,	0X8);
 	MakeByte	(0X61A6A);
@@ -111057,6 +111481,15 @@ static Bytes_27(void) {
 	OpOff		(x,	128,	0X0);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_28(void) {
+        auto x;
+#define id x
+
 	MakeCode	(x=0X63316);
 	OpOff		(x,	1,	0X0);
 	OpOff		(x,	129,	0X0);
@@ -111215,15 +111648,6 @@ static Bytes_27(void) {
 	MakeArray	(0X63432,	0X2);
 	MakeByte	(0X63434);
 	MakeArray	(0X63434,	0X6);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_28(void) {
-        auto x;
-#define id x
-
 	MakeWord	(0X6343A);
 	MakeDword	(x=0X6343C);
 	OpOff		(x,	0,	0X0);
@@ -115944,6 +116368,15 @@ static Bytes_28(void) {
 	MakeName	(0XA81D4,	"Map24");
 	MakeByte	(0XA81D5);
 	MakeByte	(0XA81D6);
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_29(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XA81D7);
 	MakeByte	(0XA81D8);
 	MakeByte	(0XA81D9);
@@ -116189,15 +116622,6 @@ static Bytes_28(void) {
 	MakeWord	(0XA8CA6);
 	MakeDword	(0XA8CA8);
 	MakeDword	(0XA8CAC);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_29(void) {
-        auto x;
-#define id x
-
 	MakeDword	(0XA8CB0);
 	MakeDword	(0XA8CB4);
 	MakeDword	(0XA8CB8);
@@ -120939,6 +121363,15 @@ static Bytes_29(void) {
 	MakeByte	(0XBE6C6);
 	MakeArray	(0XBE6C6,	0X8C8);
 	MakeName	(0XBE6C6,	"Map69s0_Blocks");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_30(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XBEF8E);
 	MakeArray	(0XBEF8E,	0X7CE);
 	MakeName	(0XBEF8E,	"Map69s1_Layout");
@@ -121165,15 +121598,6 @@ static Bytes_29(void) {
 	MakeDword	(x=0XC1BBC);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_30(void) {
-        auto x;
-#define id x
-
 	MakeDword	(x=0XC1BC0);
 	OpOff		(x,	0,	0X0);
 	OpOff		(x,	128,	0X0);
@@ -125552,6 +125976,15 @@ static Bytes_30(void) {
 	MakeByte	(0XF352C);
 	MakeArray	(0XF352C,	0XDA);
 	MakeName	(0XF352C,	"MapSprite176_0");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_31(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0XF3606);
 	MakeArray	(0XF3606,	0XC8);
 	MakeName	(0XF3606,	"MapSprite176_1");
@@ -125711,15 +126144,6 @@ static Bytes_30(void) {
 	MakeByte	(0XF6784);
 	MakeArray	(0XF6784,	0X15C);
 	MakeName	(0XF6784,	"MapSprite195_2");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_31(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0XF68E0);
 	MakeArray	(0XF68E0,	0X138);
 	MakeName	(0XF68E0,	"MapSprite196_0");
@@ -129473,6 +129897,15 @@ static Bytes_31(void) {
 	MakeByte	(0X1B1A66);
 	MakeArray	(0X1B1A66,	0XA);
 	MakeName	(0X1B1A66,	"tbl_EnemyDefs");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_32(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1B1A70);
 	MakeByte	(0X1B1A71);
 	MakeWord	(0X1B1A72);
@@ -129673,15 +130106,6 @@ static Bytes_31(void) {
 	MakeArray	(0X1B1BD4,	0X2);
 	MakeWord	(0X1B1BD6);
 	MakeArray	(0X1B1BD6,	0X4);
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_32(void) {
-        auto x;
-#define id x
-
 	MakeByte	(0X1B1BDE);
 	MakeArray	(0X1B1BDE,	0X4);
 	MakeByte	(0X1B1BE2);
@@ -133960,6 +134384,15 @@ static Bytes_32(void) {
 	MakeByte	(0X1CDEA8);
 	MakeArray	(0X1CDEA8,	0X502);
 	MakeName	(0X1CDEA8,	"Portrait19");
+}
+
+//------------------------------------------------------------------------
+// Information about bytes
+
+static Bytes_33(void) {
+        auto x;
+#define id x
+
 	MakeByte	(0X1CE3AA);
 	MakeArray	(0X1CE3AA,	0X4CE);
 	MakeName	(0X1CE3AA,	"Portrait20");
@@ -134127,15 +134560,6 @@ static Bytes_32(void) {
 	MakeWord	(0X1EE02C);
 	MakeArray	(0X1EE02C,	0X2);
 	MakeName	(0X1EE02C,	"tbl_StatGrowthCurves");
-}
-
-//------------------------------------------------------------------------
-// Information about bytes
-
-static Bytes_33(void) {
-        auto x;
-#define id x
-
 	MakeRptCmt	(0X1EE030,	" level 3");
 	MakeWord	(0X1EE030);
 	MakeArray	(0X1EE030,	0X2);
@@ -136436,9 +136860,10 @@ static Bytes_33(void) {
 	MakeName	(0XFFB188,	"BATTLESCENE_MUSIC_INDEX");
 	MakeWord	(0XFFB18A);
 	MakeName	(0XFFB18A,	"MOVING_BATTLE_ENTITY_INDEX");
+	MakeRptCmt	(0XFFB18C,	"uses :\n    - currently highlighted icon\n    - ?");
 	MakeWord	(0XFFB18C);
-	MakeByte	(0XFFB18E);
-	MakeArray	(0XFFB18E,	0X6);
+	MakeWord	(0XFFB18E);
+	MakeArray	(0XFFB18E,	0X3);
 	MakeWord	(0XFFB194);
 	MakeName	(0XFFB194,	"VIEW_SCROLLING_SPEED");
 	MakeWord	(0XFFB196);
@@ -138580,6 +139005,7 @@ static Functions_0(void) {
 	MakeFunction    (0X9484,0X95C6);
 	SetFunctionFlags(0X9484,0x10);
 	MakeFrame(0X9484, 0X10, 0, 0X0);
+	MakeLocal(0X9484, 0X95C6, "[bp-0X2]", "character_index");
 	MakeNameEx(0X94A4, "@IsPromoted", SN_LOCAL);
 	MakeNameEx(0X94B0, "@EvaluateClass", SN_LOCAL);
 	MakeNameEx(0X94BA, "@FindEndOfSpellList_Loop", SN_LOCAL);
@@ -139378,11 +139804,13 @@ static Functions_0(void) {
 	MakeFunction    (0X100C8,0X100D4);
 	SetFunctionFlags(0X100C8,0x10);
 	MakeFrame(0X100C8, 0X2, 0, 0X0);
+	MakeLocal(0X100C8, 0X100D4, "[bp-0X2]", "use_orange_font");
 	MakeFunction    (0X100D4,0X100E2);
 	SetFunctionFlags(0X100D4,0x0);
 	MakeFunction    (0X100E2,0X100EA);
 	SetFunctionFlags(0X100E2,0x10);
 	MakeFrame(0X100E2, 0X2, 0, 0X0);
+	MakeLocal(0X100E2, 0X100EA, "[bp-0X2]", "use_orange_font");
 	MakeFunction    (0X1018E,0X101E6);
 	SetFunctionFlags(0X1018E,0x0);
 	MakeFunction    (0X101E6,0X101F6);
@@ -139409,10 +139837,15 @@ static Functions_0(void) {
 	MakeFunction    (0X10568,0X10586);
 	SetFunctionFlags(0X10568,0x0);
 	MakeFunction    (0X10586,0X10748);
-	SetFunctionFlags(0X10586,0x0);
-	MakeFrame(0X10586, 0XFFFFFFFF, 0, 0X0);
+	SetFunctionFlags(0X10586,0x10);
+	MakeFrame(0X10586, 0XC, 0, 0X0);
+	MakeLocal(0X10586, 0X10748, "[bp-0XC]", "window_slot");
 	MakeFunction    (0X10748,0X107D6);
-	SetFunctionFlags(0X10748,0x0);
+	SetFunctionFlags(0X10748,0x10);
+	MakeFrame(0X10748, 0XC, 0, 0X0);
+	MakeLocal(0X10748, 0X107D6, "[bp-0XC]", "window_slot");
+	MakeNameEx(0X10798, "@WriteItemName", SN_LOCAL);
+	MakeNameEx(0X107D4, "@Return", SN_LOCAL);
 	MakeFunction    (0X107EA,0X107F8);
 	SetFunctionFlags(0X107EA,0x0);
 	MakeFunction    (0X10800,0X10820);
@@ -139429,15 +139862,21 @@ static Functions_0(void) {
 	SetFunctionFlags(0X10920,0x0);
 	MakeFunction    (0X10940,0X10958);
 	SetFunctionFlags(0X10940,0x0);
+	MakeNameEx(0X10950, "@GetSpellIcon", SN_LOCAL);
+	MakeNameEx(0X10954, "@Continue", SN_LOCAL);
 	MakeFunction    (0X10958,0X10962);
 	SetFunctionFlags(0X10958,0x0);
 	MakeFunction    (0X10962,0X1098A);
 	SetFunctionFlags(0X10962,0x0);
+	MakeNameEx(0X1097A, "@Loop", SN_LOCAL);
 	MakeFunction    (0X10A4A,0X10C22);
-	SetFunctionFlags(0X10A4A,0x0);
-	MakeFrame(0X10A4A, 0XFFFFFFFF, 0, 0X0);
+	SetFunctionFlags(0X10A4A,0x10);
+	MakeFrame(0X10A4A, 0XC, 0, 0X0);
+	MakeLocal(0X10A4A, 0X10C22, "[bp-0XC]", "window_slot");
 	MakeFunction    (0X10C22,0X10CB0);
-	SetFunctionFlags(0X10C22,0x0);
+	SetFunctionFlags(0X10C22,0x10);
+	MakeFrame(0X10C22, 0X12, 0, 0X0);
+	MakeLocal(0X10C22, 0X10CB0, "[bp-0XC]", "window_slot");
 	MakeFunction    (0X10CB0,0X10CBE);
 	SetFunctionFlags(0X10CB0,0x0);
 	MakeFunction    (0X10CC6,0X10D56);
@@ -139504,6 +139943,8 @@ static Functions_0(void) {
 	MakeFunction    (0X118BE,0X11AAE);
 	SetFunctionFlags(0X118BE,0x10);
 	MakeFrame(0X118BE, 0X8, 0, 0X0);
+	MakeLocal(0X118BE, 0X11AAE, "[bp-0X8]", "window_tiles_address");
+	MakeLocal(0X118BE, 0X11AAE, "[bp-0X2]", "combatant_index");
 	MakeNameEx(0X118CE, "@Clear_Loop", SN_LOCAL);
 	MakeNameEx(0X1190E, "@CapStatBarLength", SN_LOCAL);
 	MakeNameEx(0X11916, "@CalculateStatBarLinesWidth", SN_LOCAL);
@@ -139527,13 +139968,27 @@ static Functions_0(void) {
 	MakeFunction    (0X11C2A,0X11EEA);
 	SetFunctionFlags(0X11C2A,0x10);
 	MakeFrame(0X11C2A, 0X10, 0, 0X0);
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0XC]", "portrait_index");
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0XA]", "gold_window_slot");
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0X8]", "kd_window_slot");
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0X6]", "portrait_window_slot");
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0X4]", "stats_window_slot");
+	MakeLocal(0X11C2A, 0X11EEA, "[bp-0X2]", "character_index");
 	MakeFunction    (0X11EEA,0X11EFE);
 	SetFunctionFlags(0X11EEA,0x10);
 	MakeFrame(0X11EEA, 0X10, 0, 0X0);
+	MakeLocal(0X11EEA, 0X11EFE, "[bp-0X6]", "window_tile_address");
+	MakeLocal(0X11EEA, 0X11EFE, "[bp-0X2]", "character_index");
 	MakeNameEx(0X11EFC, "@Return", SN_LOCAL);
 	MakeFunction    (0X11EFE,0X11FEC);
 	SetFunctionFlags(0X11EFE,0x10);
 	MakeFrame(0X11EFE, 0X10, 0, 0X0);
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0XC]", "portrait_index");
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0XA]", "gold_window_slot");
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0X8]", "kd_window_slot");
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0X6]", "portrait_window_slot");
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0X4]", "stats_window_slot");
+	MakeLocal(0X11EFE, 0X11FEC, "[bp-0X2]", "character_index");
 	MakeNameEx(0X11F5A, "@CheckDebugMode", SN_LOCAL);
 	MakeNameEx(0X11F86, "@Continue1", SN_LOCAL);
 	MakeNameEx(0X11F8A, "@WriteIndexFirstDigit", SN_LOCAL);
@@ -139544,6 +139999,8 @@ static Functions_0(void) {
 	MakeFunction    (0X11FF0,0X125E0);
 	SetFunctionFlags(0X11FF0,0x10);
 	MakeFrame(0X11FF0, 0X6, 0, 0X0);
+	MakeLocal(0X11FF0, 0X125E0, "[bp-0X6]", "window_tile_address");
+	MakeLocal(0X11FF0, 0X125E0, "[bp-0X2]", "character_index");
 	MakeNameEx(0X1202E, "@WriteMemberName", SN_LOCAL);
 	MakeNameEx(0X1203E, "@AddStatusEffectTiles", SN_LOCAL);
 	MakeNameEx(0X12066, "@Poison", SN_LOCAL);
@@ -139611,9 +140068,21 @@ static Functions_0(void) {
 	SetFunctionFlags(0X12F5E,0x0);
 	MakeFunction    (0X12F9A,0X12FE6);
 	SetFunctionFlags(0X12F9A,0x0);
-	MakeFunction    (0X12FE6,0X132BC);
-	SetFunctionFlags(0X12FE6,0x10);
-	MakeFrame(0X12FE6, 0X10, 0, 0X0);
+	MakeFunction    (0X12FE6,0X13004);
+	SetFunctionFlags(0X12FE6,0x0);
+	MakeFrame(0X12FE6, 0X0, 0, 0X0);
+	MakeFunction    (0X13004,0X13030);
+	SetFunctionFlags(0X13004,0x0);
+	MakeFunction    (0X13030,0X1304C);
+	SetFunctionFlags(0X13030,0x0);
+	MakeFunction    (0X1304C,0X132BC);
+	SetFunctionFlags(0X1304C,0x10);
+	MakeFrame(0X1304C, 0X10, 0, 0X0);
+	MakeLocal(0X1304C, 0X132BC, "[bp-0XA]", "status_effects");
+	MakeLocal(0X1304C, 0X132BC, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X1304C, 0X132BC, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X1304C, 0X132BC, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X1304C, 0X132BC, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X132BC,0X13328);
 	SetFunctionFlags(0X132BC,0x0);
 	MakeFunction    (0X13328,0X13394);
@@ -139621,6 +140090,11 @@ static Functions_0(void) {
 	MakeFunction    (0X13394,0X133A0);
 	SetFunctionFlags(0X13394,0x10);
 	MakeFrame(0X13394, 0X10, 0, 0X0);
+	MakeLocal(0X13394, 0X133A0, "[bp-0XA]", "status_effects");
+	MakeLocal(0X13394, 0X133A0, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X13394, 0X133A0, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X13394, 0X133A0, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X13394, 0X133A0, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X133A0,0X13452);
 	SetFunctionFlags(0X133A0,0x0);
 	MakeFunction    (0X13462,0X13478);
@@ -139628,17 +140102,35 @@ static Functions_0(void) {
 	MakeFunction    (0X13478,0X134A0);
 	SetFunctionFlags(0X13478,0x10);
 	MakeFrame(0X13478, 0X10, 0, 0X0);
+	MakeLocal(0X13478, 0X134A0, "[bp-0XA]", "status_effects");
+	MakeLocal(0X13478, 0X134A0, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X13478, 0X134A0, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X13478, 0X134A0, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X13478, 0X134A0, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X134A0,0X134A8);
 	SetFunctionFlags(0X134A0,0x0);
 	MakeFunction    (0X134A8,0X1354C);
 	SetFunctionFlags(0X134A8,0x10);
 	MakeFrame(0X134A8, 0X10, 0, 0X0);
+	MakeLocal(0X134A8, 0X1354C, "[bp-0XA]", "status_effects");
+	MakeLocal(0X134A8, 0X1354C, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X134A8, 0X1354C, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X134A8, 0X1354C, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X134A8, 0X1354C, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X1354C,0X135A6);
 	SetFunctionFlags(0X1354C,0x10);
 	MakeFrame(0X1354C, 0X10, 0, 0X0);
+	MakeLocal(0X1354C, 0X135A6, "[bp-0XA]", "status_effects");
+	MakeLocal(0X1354C, 0X135A6, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X1354C, 0X135A6, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X1354C, 0X135A6, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X1354C, 0X135A6, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X135A6,0X137AC);
 	SetFunctionFlags(0X135A6,0x10);
 	MakeFrame(0X135A6, 0X10, 0, 0X0);
+	MakeLocal(0X135A6, 0X137AC, "[bp-0X10]", "current_character_index");
+	MakeLocal(0X135A6, 0X137AC, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X135A6, 0X137AC, "[bp-0X2]", "selected_member");
 	MakeNameEx(0X135D4, "@Stats", SN_LOCAL);
 	MakeNameEx(0X135E0, "@Default", SN_LOCAL);
 	MakeNameEx(0X135E4, "@WriteHeaderString", SN_LOCAL);
@@ -139651,10 +140143,18 @@ static Functions_0(void) {
 	MakeNameEx(0X13748, "@WriteEntry_NewATTandDEF", SN_LOCAL);
 	MakeNameEx(0X13798, "@NextEntry", SN_LOCAL);
 	MakeFunction    (0X137AC,0X137BC);
-	SetFunctionFlags(0X137AC,0x0);
+	SetFunctionFlags(0X137AC,0x10);
+	MakeFrame(0X137AC, 0X10, 0, 0X0);
+	MakeLocal(0X137AC, 0X137BC, "[bp-0XA]", "status_effects");
+	MakeLocal(0X137AC, 0X137BC, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X137AC, 0X137BC, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X137AC, 0X137BC, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X137AC, 0X137BC, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X137BC,0X13902);
 	SetFunctionFlags(0X137BC,0x10);
 	MakeFrame(0X137BC, 0X6, 0, 0X0);
+	MakeLocal(0X137BC, 0X13902, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X137BC, 0X13902, "[bp-0X2]", "character_index");
 	MakeNameEx(0X1381E, "@Continue", SN_LOCAL);
 	MakeNameEx(0X13846, "@Poison", SN_LOCAL);
 	MakeNameEx(0X13858, "@Muddle", SN_LOCAL);
@@ -139672,29 +140172,52 @@ static Functions_0(void) {
 	MakeFunction    (0X13902,0X13930);
 	SetFunctionFlags(0X13902,0x10);
 	MakeFrame(0X13902, 0X10, 0, 0X0);
+	MakeLocal(0X13902, 0X13930, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13902, 0X13930, "[bp-0X2]", "character_index");
 	MakeFunction    (0X13930,0X13956);
 	SetFunctionFlags(0X13930,0x10);
 	MakeFrame(0X13930, 0X10, 0, 0X0);
+	MakeLocal(0X13930, 0X13956, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13930, 0X13956, "[bp-0X2]", "character_index");
 	MakeFunction    (0X13956,0X1397C);
 	SetFunctionFlags(0X13956,0x10);
 	MakeFrame(0X13956, 0X10, 0, 0X0);
+	MakeLocal(0X13956, 0X1397C, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13956, 0X1397C, "[bp-0X2]", "character_index");
 	MakeFunction    (0X1397C,0X13A52);
 	SetFunctionFlags(0X1397C,0x10);
 	MakeFrame(0X1397C, 0X10, 0, 0X0);
+	MakeLocal(0X1397C, 0X13A52, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X1397C, 0X13A52, "[bp-0X2]", "character_index");
 	MakeFunction    (0X13A52,0X13AEA);
 	SetFunctionFlags(0X13A52,0x10);
 	MakeFrame(0X13A52, 0X10, 0, 0X0);
+	MakeLocal(0X13A52, 0X13AEA, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13A52, 0X13AEA, "[bp-0X2]", "character_index");
+	MakeNameEx(0X13A66, "@Magic_Loop", SN_LOCAL);
+	MakeNameEx(0X13AD8, "@NoMagic", SN_LOCAL);
 	MakeFunction    (0X13AEA,0X13B5A);
 	SetFunctionFlags(0X13AEA,0x10);
 	MakeFrame(0X13AEA, 0X10, 0, 0X0);
+	MakeLocal(0X13AEA, 0X13B5A, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13AEA, 0X13B5A, "[bp-0X2]", "character_index");
+	MakeNameEx(0X13AFE, "@Items_Loop", SN_LOCAL);
+	MakeNameEx(0X13B3E, "@Continue", SN_LOCAL);
+	MakeNameEx(0X13B48, "@NoItems", SN_LOCAL);
 	MakeFunction    (0X13B5A,0X13B68);
 	SetFunctionFlags(0X13B5A,0x0);
 	MakeFunction    (0X13B68,0X13B82);
 	SetFunctionFlags(0X13B68,0x0);
 	MakeFunction    (0X13BAE,0X13BE6);
-	SetFunctionFlags(0X13BAE,0x0);
+	SetFunctionFlags(0X13BAE,0x10);
+	MakeFrame(0X13BAE, 0X10, 0, 0X0);
+	MakeLocal(0X13BAE, 0X13BE6, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13BAE, 0X13BE6, "[bp-0X2]", "character_index");
 	MakeFunction    (0X13BE6,0X13C9C);
-	SetFunctionFlags(0X13BE6,0x0);
+	SetFunctionFlags(0X13BE6,0x10);
+	MakeFrame(0X13BE6, 0X10, 0, 0X0);
+	MakeLocal(0X13BE6, 0X13C9C, "[bp-0X6]", "window_tiles_address");
+	MakeLocal(0X13BE6, 0X13C9C, "[bp-0X2]", "character_index");
 	MakeFunction    (0X13C9C,0X13CF0);
 	SetFunctionFlags(0X13C9C,0x0);
 	MakeFunction    (0X13F14,0X14074);
@@ -139712,9 +140235,21 @@ static Functions_0(void) {
 	MakeFunction    (0X14108,0X141CE);
 	SetFunctionFlags(0X14108,0x0);
 	MakeFunction    (0X141CE,0X143E0);
-	SetFunctionFlags(0X141CE,0x0);
+	SetFunctionFlags(0X141CE,0x10);
+	MakeFrame(0X141CE, 0X10, 0, 0X0);
+	MakeLocal(0X141CE, 0X143E0, "[bp-0XA]", "status_effects");
+	MakeLocal(0X141CE, 0X143E0, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X141CE, 0X143E0, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X141CE, 0X143E0, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X141CE, 0X143E0, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X143E0,0X14422);
-	SetFunctionFlags(0X143E0,0x0);
+	SetFunctionFlags(0X143E0,0x10);
+	MakeFrame(0X143E0, 0X10, 0, 0X0);
+	MakeLocal(0X143E0, 0X14422, "[bp-0XA]", "status_effects");
+	MakeLocal(0X143E0, 0X14422, "[bp-0X8]", "ministatus_window");
+	MakeLocal(0X143E0, 0X14422, "[bp-0X6]", "portrait_window");
+	MakeLocal(0X143E0, 0X14422, "[bp-0X4]", "memberlist_window");
+	MakeLocal(0X143E0, 0X14422, "[bp-0X2]", "selected_member");
 	MakeFunction    (0X14422,0X1443E);
 	SetFunctionFlags(0X14422,0x0);
 	MakeFunction    (0X1443E,0X1445A);
@@ -139725,6 +140260,11 @@ static Functions_0(void) {
 	SetFunctionFlags(0X1467C,0x0);
 	MakeFunction    (0X146AE,0X14724);
 	SetFunctionFlags(0X146AE,0x0);
+	MakeNameEx(0X146CE, "@Continue1", SN_LOCAL);
+	MakeNameEx(0X146D0, "@LoadMemberListSprites_Loop", SN_LOCAL);
+	MakeNameEx(0X146F4, "@Continue2", SN_LOCAL);
+	MakeNameEx(0X146F6, "@OffsetY", SN_LOCAL);
+	MakeNameEx(0X14702, "@LoadMiniStatusSprites_Loop", SN_LOCAL);
 	MakeFunction    (0X1474C,0X1477E);
 	SetFunctionFlags(0X1474C,0x0);
 	MakeFunction    (0X1477E,0X147E8);
@@ -139840,6 +140380,11 @@ static Functions_0(void) {
 	MakeFunction    (0X16282,0X16376);
 	SetFunctionFlags(0X16282,0x10);
 	MakeFrame(0X16282, 0X10, 0, 0X0);
+	MakeLocal(0X16282, 0X16376, "[bp-0XC]", "max_number");
+	MakeLocal(0X16282, 0X16376, "[bp-0XA]", "min_number");
+	MakeLocal(0X16282, 0X16376, "[bp-0X8]", "number");
+	MakeLocal(0X16282, 0X16376, "[bp-0X6]", "window_slot");
+	MakeLocal(0X16282, 0X16376, "[bp-0X4]", "window_tiles_end");
 	MakeNameEx(0X162C6, "@Loop", SN_LOCAL);
 	MakeNameEx(0X162E6, "@CheckInput_Left", SN_LOCAL);
 	MakeNameEx(0X162F4, "@CheckInput_Down", SN_LOCAL);
@@ -139850,9 +140395,19 @@ static Functions_0(void) {
 	MakeFunction    (0X16376,0X16398);
 	SetFunctionFlags(0X16376,0x10);
 	MakeFrame(0X16376, 0X10, 0, 0X0);
+	MakeLocal(0X16376, 0X16398, "[bp-0XC]", "max_number");
+	MakeLocal(0X16376, 0X16398, "[bp-0XA]", "min_number");
+	MakeLocal(0X16376, 0X16398, "[bp-0X8]", "number");
+	MakeLocal(0X16376, 0X16398, "[bp-0X6]", "window_slot");
+	MakeLocal(0X16376, 0X16398, "[bp-0X4]", "window_tiles_end");
 	MakeFunction    (0X16398,0X163BC);
 	SetFunctionFlags(0X16398,0x10);
 	MakeFrame(0X16398, 0X10, 0, 0X0);
+	MakeLocal(0X16398, 0X163BC, "[bp-0XC]", "max_number");
+	MakeLocal(0X16398, 0X163BC, "[bp-0XA]", "min_number");
+	MakeLocal(0X16398, 0X163BC, "[bp-0X8]", "number");
+	MakeLocal(0X16398, 0X163BC, "[bp-0X6]", "window_slot");
+	MakeLocal(0X16398, 0X163BC, "[bp-0X4]", "window_tiles_end");
 	MakeNameEx(0X163A8, "@MaxNumber_Skip", SN_LOCAL);
 	MakeNameEx(0X163B2, "@MinNumber_Skip", SN_LOCAL);
 	MakeFunction    (0X163BC,0X164AC);
@@ -140057,6 +140612,10 @@ static Functions_0(void) {
 	SetFunctionFlags(0X19A2A,0x0);
 	MakeFunction    (0X19A4C,0X19A5C);
 	SetFunctionFlags(0X19A4C,0x0);
+}
+
+static Functions_1(void) {
+
 	MakeFunction    (0X19A5C,0X19A84);
 	SetFunctionFlags(0X19A5C,0x0);
 	MakeFunction    (0X19A84,0X19AB0);
@@ -140385,10 +140944,6 @@ static Functions_0(void) {
 	SetFunctionFlags(0X2000C,0x80);
 	MakeFunction    (0X20010,0X20014);
 	SetFunctionFlags(0X20010,0x80);
-}
-
-static Functions_1(void) {
-
 	MakeFunction    (0X20014,0X20018);
 	SetFunctionFlags(0X20014,0x80);
 	MakeFunction    (0X20018,0X2001C);
@@ -140672,6 +141227,8 @@ static Functions_1(void) {
 	MakeFunction    (0X23EB0,0X24242);
 	SetFunctionFlags(0X23EB0,0x10);
 	MakeFrame(0X23EB0, 0X10, 0, 0X0);
+	MakeLocal(0X23EB0, 0X24242, "[bp-0X4]", "current_item_or_spell_index");
+	MakeLocal(0X23EB0, 0X24242, "[bp-0X2]", "current_combatant_index");
 	MakeNameEx(0X23EC4, "@Start", SN_LOCAL);
 	MakeNameEx(0X23EDA, "@Continue1", SN_LOCAL);
 	MakeNameEx(0X23F4C, "@Ally1", SN_LOCAL);
@@ -140742,6 +141299,8 @@ static Functions_1(void) {
 	MakeFunction    (0X24662,0X24966);
 	SetFunctionFlags(0X24662,0x10);
 	MakeFrame(0X24662, 0X10, 0, 0X0);
+	MakeLocal(0X24662, 0X24966, "[bp-0X4]", "current_item_or_spell_index");
+	MakeLocal(0X24662, 0X24966, "[bp-0X2]", "current_combatant_index");
 	MakeFunction    (0X24966,0X24982);
 	SetFunctionFlags(0X24966,0x0);
 	MakeFunction    (0X24C4E,0X24D64);
@@ -140749,9 +141308,13 @@ static Functions_1(void) {
 	MakeFunction    (0X2519E,0X252FA);
 	SetFunctionFlags(0X2519E,0x10);
 	MakeFrame(0X2519E, 0X10, 0, 0X0);
+	MakeLocal(0X2519E, 0X252FA, "[bp-0X4]", "current_item_or_spell_index");
+	MakeLocal(0X2519E, 0X252FA, "[bp-0X2]", "current_combatant_index");
 	MakeFunction    (0X252FA,0X2548E);
 	SetFunctionFlags(0X252FA,0x10);
 	MakeFrame(0X252FA, 0X10, 0, 0X0);
+	MakeLocal(0X252FA, 0X2548E, "[bp-0X4]", "current_item_or_spell_index");
+	MakeLocal(0X252FA, 0X2548E, "[bp-0X2]", "current_combatant_index");
 	MakeFunction    (0X2548E,0X2550C);
 	SetFunctionFlags(0X2548E,0x0);
 	MakeFunction    (0X2550C,0X25520);
@@ -143730,6 +144293,10 @@ static Functions_1(void) {
 	MakeFunction    (0X1B12F2,0X1B130C);
 	SetFunctionFlags(0X1B12F2,0x0);
 	MakeNameEx(0X1B12FC, "@InitPositions_Loop", SN_LOCAL);
+}
+
+static Functions_2(void) {
+
 	MakeFunction    (0X1B130C,0X1B13A0);
 	SetFunctionFlags(0X1B130C,0x0);
 	MakeFunction    (0X1B13A0,0X1B140A);
@@ -143812,6 +144379,7 @@ static Functions(void) {
 
 	Functions_0();
 	Functions_1();
+	Functions_2();
 }
 
 //------------------------------------------------------------------------

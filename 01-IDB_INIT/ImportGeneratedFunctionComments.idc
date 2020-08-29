@@ -1189,6 +1189,13 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
     SetFunctionCmt(0x103b8, 
         "In: -$C(A6) = window slot index", 1);
 
+    // sub_10586
+    SetFunctionCmt(0x10586, 
+        "In: D0 = current diamenu choice\n\
+    D1 = \n\
+    D2 = \n\
+    A0 = ", 1);
+
     // sub_107EA
     SetFunctionCmt(0x107ea, 
         "related to menu choice", 1);
@@ -1201,6 +1208,12 @@ In: A0 = special subroutine address to handle menu, default handling if not supp
           D0 = spell index\n\
 \n\
       Out: A1 = end of affected section after copy", 1);
+
+    // sub_10A4A
+    SetFunctionCmt(0x10a4a, 
+        "In: D1 = \n\
+    D2 = \n\
+    A0 = ", 1);
 
     // sub_10CB0
     SetFunctionCmt(0x10cb0, 
@@ -1270,6 +1283,14 @@ In: A0 = loading space address\n\
     // sub_14074
     SetFunctionCmt(0x14074, 
         "related to menu choice", 1);
+
+    // sub_1445A
+    SetFunctionCmt(0x1445a, 
+        "Handle out of battle MAGIC menu", 1);
+
+    // LoadMiniStatusTextHighlightSprites
+    SetFunctionCmt(0x146ae, 
+        "In: D1 = blinking frame timer", 1);
 
     // sub_1477E
     SetFunctionCmt(0x1477e, 

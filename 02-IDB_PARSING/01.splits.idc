@@ -191,9 +191,9 @@ static splitSingleChunks(file) {
     
     splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","data/graphics/tech/iconhighlighttiles.bin",file);    
     
-    splitSingleChunk(0x10E1C,0x10EF4,"DiamondMenuLayout","data/graphics/tech/menus/diamondmenulayout.bin",file);
-    splitSingleChunk(0x10EF4,0x10FCC,"UnidentifiedLayout01","data/graphics/tech/menus/unidentifiedlayout01.bin",file);
-    splitSingleChunk(0x10FCC,0x110A4,"UnidentifiedLayout02","data/graphics/tech/menus/unidentifiedlayout02.bin",file);
+    //splitSingleChunk(0x10E1C,0x10EF4,"DiamondMenuLayout","data/graphics/tech/menus/diamondmenulayout.bin",file);
+    //splitSingleChunk(0x10EF4,0x10FCC,"UnidentifiedLayout01","data/graphics/tech/menus/unidentifiedlayout01.bin",file);
+    //splitSingleChunk(0x10FCC,0x110A4,"UnidentifiedLayout02","data/graphics/tech/menus/unidentifiedlayout02.bin",file);
     
     //splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     

@@ -21,13 +21,18 @@ static main(void){
     parseSpellNames();
     parseAllyNames();
     parseEnemyNames();
+    parseDiamondMenuLayout();
+    parseMagicMenuLayout();
+    parseItemMenuLayout();
     parseSpellLevelTilesLayouts();
     parseBattleEquipWindowLayout();
     parsePortraitWindowLayout();
     parseAllyKillDefeatWindowLayout();
     parseGoldWindowLayout();
     parseMemberListTextHighlightSpriteDefs();
+    parseUnknownWindowLayout_13EDE();
     parseItemListTextHighlightSpriteDefs();
+    parseShopInventoryWindowLayout();
     parseBattleConfigSpriteDefs();
     parseBattleConfigWindowLayout();
     parseFighterMiniStatusWindowLayout();
@@ -350,6 +355,51 @@ static parseEnemyNames(){
     MakeRptCmt(0xFF5E,"here is the cause of the infamous JAR bug, an innocent typo :)");
 }
 
+static parseDiamondMenuLayout(){
+    auto addr, j, tile, props;
+    addr = 0x10E1C;
+    while(addr<0x10EF4){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
+        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
+        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
+        if(props!=""){props = form("|%s", props);}
+        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        addr = addr+2;
+    }
+}
+
+static parseMagicMenuLayout(){
+    auto addr, j, tile, props;
+    addr = 0x10EF4;
+    while(addr<0x10FCC){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
+        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
+        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
+        if(props!=""){props = form("|%s", props);}
+        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        addr = addr+2;
+    }
+}
+
+static parseItemMenuLayout(){
+    auto addr, j, tile, props;
+    addr = 0x10FCC;
+    while(addr<0x110A4){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
+        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
+        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
+        if(props!=""){props = form("|%s", props);}
+        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        addr = addr+2;
+    }
+}
+
 static parseSpellLevelTilesLayouts(){
     auto addr, j, vdpTile;
     addr = 0x110E4;
@@ -440,6 +490,18 @@ static parseMemberListTextHighlightSpriteDefs(){
     }
 }
 
+static parseUnknownWindowLayout_13EDE(){
+    auto addr, j, vdpTile;
+    addr = 0x13EDE;
+    while(addr<0x13F14){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
+        addr = addr+2;
+    }
+}
+
 static parseItemListTextHighlightSpriteDefs(){
     auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
     addr = 0x14724;
@@ -454,6 +516,21 @@ static parseItemListTextHighlightSpriteDefs(){
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
         addr = addr+8;
+    }
+}
+
+static parseShopInventoryWindowLayout(){
+    auto addr, j, tile, props;
+    addr = 0x1505C;
+    while(addr<0x151D6){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
+        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
+        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1800,strlen("VDPTILE_"),0);
+        if(props!=""){props = form("|%s", props);}
+        SetManualInsn(addr, form("vdpBaseTile %s%s", tile, props));
+        addr = addr+2;
     }
 }
 
