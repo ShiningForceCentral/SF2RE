@@ -21,6 +21,7 @@ static main(void){
     parseSpellNames();
     parseAllyNames();
     parseEnemyNames();
+    parseSpellLevelHighlightSpriteDefs();
     parseDiamondMenuLayout();
     parseMagicMenuLayout();
     parseItemMenuLayout();
@@ -353,6 +354,23 @@ static parseEnemyNames(){
     // Manual fix for Jaro's bugged entry
     SetManualInsn(0xFF5E, form("enemyName \"JAR\", 0"));
     MakeRptCmt(0xFF5E,"here is the cause of the infamous JAR bug, an innocent typo :)");
+}
+
+static parseSpellLevelHighlightSpriteDefs(){
+    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
+    addr = 0x10DD2;
+    while(addr<0x10DE2){
+        for(j=addr;j<addr+8;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,8,1);
+        ypos = ltoa(Word(addr),10);
+        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
+        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
+        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
+        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
+        xpos = ltoa(Word(addr+6),10);
+        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
+        addr = addr+8;
+    }
 }
 
 static parseDiamondMenuLayout(){

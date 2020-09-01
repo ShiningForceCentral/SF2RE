@@ -253,6 +253,12 @@ static fixLocalVariableNames(){
     MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
     MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    ea = 0x10D56;
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-4]", var4);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-8]", var8);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-10]", var10);
+    MakeLocal(ea, FindFuncEnd(ea), "[sp-12]", var12);
+    
     
     MakeLocal(0x11442, FindFuncEnd(0x11442), "[sp-4]", "var_4");
     
