@@ -28,10 +28,6 @@ static main()
     SetFunctionCmt(0xcc4, 
         "Unused palette copy", 1);
 
-    // ClearCram
-    SetFunctionCmt(0xe7c, 
-        "unused DMA", 1);
-
     // Sleep
     SetFunctionCmt(0xf04, 
         "Wait for D0 VInts/Frames", 1);
@@ -168,8 +164,7 @@ Out: D1 = block flag word", 1);
 
     // LoadMapBlocks
     SetFunctionCmt(0x2372, 
-        "decompress map blocks ?\n\
-a0 : input ROM block data\n\
+        "a0 : input ROM block data\n\
 a1 : output RAM data", 1);
 
     // LoadMapTilesets
@@ -378,10 +373,6 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     D2 = VDP tile index for right border of line\n\
     D3 = amount to add to D1 each time a tile is copied (0 for top and bottom border lines, 1 for inner box)", 1);
 
-    // HideTextBox
-    SetFunctionCmt(0x6a38, 
-        "related to text box", 1);
-
     // CheckSram
     SetFunctionCmt(0x6ea6, 
         "Out: D0, D1 = -1 if slot 1, or slot 2 failed checksum", 1);
@@ -395,10 +386,6 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
     // CopyBytesFromSram
     SetFunctionCmt(0x701c, 
         "and calculate checksum", 1);
-
-    // WitchSuspend
-    SetFunctionCmt(0x7034, 
-        "witch suspend screen", 1);
 
     // MainLoop
     SetFunctionCmt(0x75c4, 
@@ -1139,7 +1126,7 @@ Out: carry clear if true", 1);
 
     // AddAllToStack
     SetFunctionCmt(0xdd60, 
-        "unused, pointless", 1);
+        "unused", 1);
 
     // MakeEnemyMoveOrder
     SetFunctionCmt(0xdd78, 
@@ -1178,9 +1165,7 @@ Out: carry clear if true", 1);
 
     // ExecuteMenu
     SetFunctionCmt(0x101f6, 
-        "related to menus\n\
-\n\
-In: A0 = special subroutine address to handle menu, default handling if not supplied (unused functionality)\n\
+        "In: A0 = special subroutine address to handle menu, default handling if not supplied (unused functionality)\n\
     D0 = initial choice (00=up, 01=left, 02=right, 03=down)\n\
     D1 = animate-in direction (00=from bottom, other=from right)\n\
     D2 = menu index to use (just affects icons and text)", 1);
@@ -1519,10 +1504,6 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1a2d4, 
         "    Clears a portion at RAM:b406 and RAM:b532 for spell properties.", 1);
 
-    // LoadInvocationSpell
-    SetFunctionCmt(0x1a32c, 
-        "code for invocations", 1);
-
     // sa1F_OddeyeBeam
     SetFunctionCmt(0x1b716, 
         "and maybe Zynk's beam too ?", 1);
@@ -1530,10 +1511,6 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     // sub_1B93C
     SetFunctionCmt(0x1b93c, 
         "desoul ?", 1);
-
-    // VInt_UpdateBattlesceneGraphics
-    SetFunctionCmt(0x1ee2c, 
-        "and other stuff ?", 1);
 
     // DetermineDealsItemsNotInCurrentShop
     SetFunctionCmt(0x207fe, 
@@ -1582,13 +1559,9 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x229ec, 
         "Find specific item index + code offset to run when used in field", 1);
 
-    // sub_22C60
+    // GetCurrentPosition
     SetFunctionCmt(0x22c60, 
         "get first entity's X, Y and facing", 1);
-
-    // CreateMoveableRangeForUnit
-    SetFunctionCmt(0x22c84, 
-        "    Update some map stuff ???", 1);
 
     // ControlBattleUnit
     SetFunctionCmt(0x22e1a, 
@@ -1651,7 +1624,7 @@ Out: Z = entity is NOT follower", 1);
 
     // GetEgressPositionForBattle
     SetFunctionCmt(0x23e50, 
-        "HARDCODED battle->map relationship ?", 1);
+        "HARDCODED special cases", 1);
 
     // sub_23EB0
     SetFunctionCmt(0x23eb0, 
@@ -1667,7 +1640,7 @@ Out: Z = entity is NOT follower", 1);
 
     // sub_24966
     SetFunctionCmt(0x24966, 
-        "    createSpellRangeGridMaster???", 1);
+        "    createSpellRangeGridMaster ?", 1);
 
     // sub_252FA
     SetFunctionCmt(0x252fa, 
@@ -1719,10 +1692,6 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x2804c, 
         "Out: D0 = $FFFFFFFF if pressing start, 0 if not", 1);
 
-    // CalculateRomChecksum
-    SetFunctionCmt(0x28f62, 
-        "Checksum", 1);
-
     // InitDecoder
     SetFunctionCmt(0x2e10e, 
         "Initialise Huffman decoder\n\
@@ -1736,14 +1705,6 @@ Out: D0 = new X\n\
     // j_MapEventType2
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
-
-    // DeclareNewEntity
-    SetFunctionCmt(0x445ca, 
-        "declare new entity ?", 1);
-
-    // ClearEntities
-    SetFunctionCmt(0x4465a, 
-        "clear entities in memory", 1);
 
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
@@ -1824,14 +1785,6 @@ Out: D1 = portrait index\n\
     SetFunctionCmt(0x46a12, 
         "use xxxxxxxx if alive or yyyyyyyy if dead", 1);
 
-    // csc1B_startEntityAnim
-    SetFunctionCmt(0x46a6c, 
-        "if character dead, then get new character index from next word ? This doesn't make sense.", 1);
-
-    // csc1C_stopEntityAnim
-    SetFunctionCmt(0x46a82, 
-        "if character xxxx dead, then do it to entity yyyy ?!", 1);
-
     // csc20_updateDefeatedAllies
     SetFunctionCmt(0x46af0, 
         "if X Pos == -1, then dead", 1);
@@ -1840,17 +1793,9 @@ Out: D1 = portrait index\n\
     SetFunctionCmt(0x46b42, 
         "0/1 = scan down/up, 2/3 = wipe out/in, 4/5 = slide out/in, 6/7 = mosaic out/in", 1);
 
-    // csc23_setEntityFacing
-    SetFunctionCmt(0x46c20, 
-        "set entity yyyy facing zzzz according to character's xxxx alive status ?!", 1);
-
     // csc24_setCameraTargetEntity
     SetFunctionCmt(0x46c38, 
         "set playable entity 00xx or something like that", 1);
-
-    // csc25_cloneEntity
-    SetFunctionCmt(0x46c5a, 
-        "wtf, copy entity number of entity 00xx into entity number of entity 00yy ?!", 1);
 
     // csc2F_fly
     SetFunctionCmt(0x46ea8, 
@@ -1874,21 +1819,9 @@ Out: D1 = portrait index\n\
     SetFunctionCmt(0x4712c, 
         "In: A0 = script address", 1);
 
-    // csc04_setTextIndex
-    SetFunctionCmt(0x47372, 
-        "set cutscene dialogue index", 1);
-
-    // csc05_playSound
-    SetFunctionCmt(0x47378, 
-        "play sound of index 00xx", 1);
-
     // csc08_joinForce
     SetFunctionCmt(0x47398, 
         "make 00xx character join force with bit F set for sad join music", 1);
-
-    // csc09_hideTextBoxAndPortrait
-    SetFunctionCmt(0x473fe, 
-        "related to portrait window", 1);
 
     // csc0C_jumpIfFlagSet
     SetFunctionCmt(0x47418, 
@@ -1897,10 +1830,6 @@ Out: D1 = portrait index\n\
     // csc0D_jumpIfFlagClear
     SetFunctionCmt(0x4742c, 
         "xxxx yyyyyyyy", 1);
-
-    // csc0E_jumpIfForceMemberInList
-    SetFunctionCmt(0x47440, 
-        "branch if something", 1);
 
     // csc0F_jumpIfCharacterAlive
     SetFunctionCmt(0x47464, 
@@ -1978,7 +1907,7 @@ only seems to happen in first \"above Pacalon\" battle", 1);
 
     // WaitForPlayer1InputStart
     SetFunctionCmt(0x100204, 
-        "wait during d0 frames", 1);
+        "wait for max d0 frames", 1);
 
     // sub_1AC024
     SetFunctionCmt(0x1ac024, 
@@ -2006,7 +1935,7 @@ only seems to happen in first \"above Pacalon\" battle", 1);
 
     // LoadEndCreditsFont
     SetFunctionCmt(0x1ac29c, 
-        "Load base tiles and ...  generate font from basetile font !\n\
+        "Generates font from basetile font.\n\
 Stretches characters from 1 tile to 2 tiles vertically.\n\
 Also creates a shadow effect using palette index 2.", 1);
 
@@ -2069,17 +1998,9 @@ Also creates a shadow effect using palette index 2.", 1);
 \n\
 Out: D0 = 0000 if activated and dead, $FFFF if not", 1);
 
-    // LoadBattleTerrainData
-    SetFunctionCmt(0x1ad0dc, 
-        "loads terrain data for current battle", 1);
-
     // BattleDebugFunction1B120A
     SetFunctionCmt(0x1b120a, 
         "Never called, probably what remains of some debugging code ?", 1);
-
-    // InitEnemyBattlePosition
-    SetFunctionCmt(0x1b130c, 
-        "(also checks for Jaro)", 1);
 
     // UpdateEnemyStatsForRespawn
     SetFunctionCmt(0x1b13a0, 
@@ -2091,10 +2012,6 @@ Out: carry = 0 if respawn, 1 if not", 1);
     // InitEnemyStats
     SetFunctionCmt(0x1b140a, 
         "In: A0 = address of current combatant from battle def", 1);
-
-    // InitEnemyItems
-    SetFunctionCmt(0x1b1504, 
-        "Handle custom item index of enemy list entry starting at A0 -> ???", 1);
 
     // GetEnemyOriginalPosOccupied
     SetFunctionCmt(0x1b1554, 

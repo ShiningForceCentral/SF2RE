@@ -48,6 +48,8 @@ static main(void) {
     fixUnwantedNames();
     Message(" DONE.\nROM Expand Tweaks...");  
     insertRomExpandTweaks();
+    Message(" DONE.\nFunction Local Names...");  
+    fixFunctionLocalNames();
     Message(" DONE.\n");
     
     Message("END OF FIXES.\n");
@@ -189,6 +191,27 @@ static fixSingleInstructions(){
     //SetManualInsn(0x1F0,"headerRegion");
     //SetManualInsn(0x279D8,"enableSram"); 
     SetManualInsn(0x7626,"lea RaftResetMapCoordinates-4(pc),a0");   
+    
+    /* Lost align directives */
+    SetManualInsn(0x107E9,"wordAlign"); 
+    
+
+}
+ 
+static fixFunctionLocalNames(){
+    
+    /* Local names which are lost when re-creating IDB */
+    MakeNameEx(0x897E,"@Loop",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x8986,"@Done",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x8C6A,"@Loop",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x8C88,"@Next",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x8C96,"@Break",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x8C9C,"@Done",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x94BA,"@FindEndOfSpellList_Loop",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x96DC,"@Continue",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0xA086,"@Message_Attack",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0xB612,"@EnemyTarget",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x25542,"@Return",SN_LOCAL|SN_NON_AUTO);
 
 }
 

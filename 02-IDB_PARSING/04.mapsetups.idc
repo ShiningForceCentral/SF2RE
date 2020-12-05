@@ -6,12 +6,20 @@
 
 static main(void){
 
-    Message("\nPARSING MAP SETUP Sections ...\n");
-    parseAllMapSetupsSections();    
+    Message("\nINITIALIZING ARRAYS...\n");
+    initializeArrays();
+
+    Message("PARSING MAP SETUP Sections ...\n");
+    parseAllMapSetupsSections();  
+
+    Message("DELETING ARRAYS...\n");
+    deleteArrays();
+      
     Message("END OF PARSING.\n");    
 
-
 }
+
+
 
 static parseAllMapSetupsSections(){
     auto addr,j,firstMs, map, flag;
@@ -120,7 +128,7 @@ static parseMapSetupSection2(ea,map,flag){
     }
     else{
         if(flag!=0){
-            flagName = form("_%s",ltoa(flag,16));
+            flagName = form("_%s",ltoa(flag,10));
         }else{
             flagName = "";
         }
@@ -184,7 +192,7 @@ static parseMapSetupSection3(ea,map,flag){
     base = ea;
     index = 0;
     if(flag!=0){
-        flagName = form("_%s",ltoa(flag,16));
+        flagName = form("_%s",ltoa(flag,10));
     }else{
         flagName = "";
     }
@@ -247,7 +255,7 @@ static parseMapSetupSection4(ea,map,flag){
     auto base, j, x, y, parameter, textbanksFile, dialogLine, lineNumber, currentLine, baseInvestigationLineIndex, baseDescriptionLineIndex, investigationLineIndex, descriptionLineIndex, investigationLine, descriptionLine, offset, target, functionName, index, flagName, functionRef;
     index = 0;
     if(flag!=0){
-        flagName = form("_%s",ltoa(flag,16));
+        flagName = form("_%s",ltoa(flag,10));
     }else{
         flagName = "";
     }
@@ -255,23 +263,7 @@ static parseMapSetupSection4(ea,map,flag){
     if(Word(ea)!=0x4E75){    
         // parse text start index
         baseDescriptionLineIndex = Word(ea+2);
-        parameter = ltoa(baseDescriptionLineIndex,16);
-        while(strlen(parameter)<4){
-            parameter=form("0%s",parameter);
-        }
-        textbanksFile = fopen("textbanks.txt","r");
-        while(dialogLine==""){
-            lineNumber = lineNumber + 1;
-            currentLine = readstr(textbanksFile);
-            if(currentLine==-1){
-                Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
-                break;
-            }
-            if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                dialogLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
-            }
-        }
-        fclose(textbanksFile);
+        dialogLine = getTextLine(baseDescriptionLineIndex);
         //Message(form("\n%s",dialogLine));
         MakeRptCmt(ea,"");
         SetFunctionCmt(ea,"",1);
@@ -289,41 +281,9 @@ static parseMapSetupSection4(ea,map,flag){
             y = Byte(ea+1);
             if(Word(ea+2)==0){
                 investigationLineIndex = Byte(ea+4);
-                parameter = ltoa(baseInvestigationLineIndex+investigationLineIndex,16);
-                while(strlen(parameter)<4){
-                    parameter=form("0%s",parameter);
-                }
-                textbanksFile = fopen("textbanks.txt","r");
-                while(investigationLine==""){
-                    lineNumber = lineNumber + 1;
-                    currentLine = readstr(textbanksFile);
-                    if(currentLine==-1){
-                        Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        investigationLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
-                    }
-                }
-                fclose(textbanksFile);
+                investigationLine = getTextLine(baseInvestigationLineIndex+investigationLineIndex);
                 descriptionLineIndex = Byte(ea+5);
-                parameter = ltoa(baseDescriptionLineIndex+descriptionLineIndex,16);
-                while(strlen(parameter)<4){
-                    parameter=form("0%s",parameter);
-                }
-                textbanksFile = fopen("textbanks.txt","r");
-                while(descriptionLine==""){
-                    lineNumber = lineNumber + 1;
-                    currentLine = readstr(textbanksFile);
-                    if(currentLine==-1){
-                        Message(form("\n%s: Could not find dialog line for current parameter 0x%s",ea,parameter));
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        descriptionLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
-                    }
-                }
-                fclose(textbanksFile);
+                descriptionLine = getTextLine(baseDescriptionLineIndex+descriptionLineIndex);
                 SetManualInsn   (ea, form("msDesc %d, %d, %d, %d", x, y, investigationLineIndex, descriptionLineIndex));
                 MakeRptCmt(ea, form("%s\n%s",investigationLine,descriptionLine));
                 investigationLine = "";
@@ -369,7 +329,7 @@ static parseMapSetupSection5(ea,map,flag){
     base = ea;
     index = 0;
     if(flag!=0){
-        flagName = form("_%s",ltoa(flag,16));
+        flagName = form("_%s",ltoa(flag,10));
     }else{
         flagName = "";
     }
@@ -471,26 +431,6 @@ static getDirection(cmd){
     return form("%s",ltoa(cmd,10));
 }
 
-static getDirection(cmd){
-    auto id,enumSize,constant,j,constId,output;
-    id = GetEnum("Direction");
-    enumSize = GetEnumSize(id);
-    constant = GetFirstConst(id,-1);    
-    while(constant!=-1){
-            j=0;
-            constId = GetConstEx(id,constant,j,-1);
-            while(constId != -1){
-                if(constant==cmd){
-                    return GetConstName(constId);
-                }
-                j++;
-                constId = GetConstEx(id,constant,j,-1);
-            }
-            constant = GetNextConst(id,constant,-1);
-    }
-    return form("%s",ltoa(cmd,10));
-}
-
 static getDirectionAsMacro(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Direction");
@@ -553,4 +493,73 @@ static getMapspriteOrAlly(cmd){
             constant = GetNextConst(id,constant,-1);
     }
     return form("%s",ltoa(cmd,10));
+}
+
+
+
+
+/* INITIALIZE ARRAYS OF STRINGS TO OPTIMIZE EXTERNAL FILE ACCESS */
+
+static initializeArrays(){
+    
+    loadArray("flags.txt","Flags");
+    loadArray("text.txt","Text");    
+    
+}
+
+static loadArray(fileName, arrayName){
+
+    auto file, arrayId, idx, str;
+    
+    file = fopen(fileName,"r");
+    arrayId = CreateArray(arrayName);
+    idx = 0;
+    while(str!=-1){
+        str = readstr(file);
+        if(str!=-1){
+            str = form("%s",substr(str,5,strlen(str)-1));
+            SetArrayString(arrayId, idx, str);
+        }
+        idx++;
+    }
+    fclose(file);
+    
+}
+
+/* DELETE ARRAYS FROM IDB AFTER USAGE */
+
+static deleteArrays(){
+
+    DeleteArray(GetArrayId("Flags")); 
+    DeleteArray(GetArrayId("Text")); 
+    
+}
+
+static getTextLine(index){
+
+    auto dialogLine;
+    
+    dialogLine = GetArrayElement(AR_STR, GetArrayId("Text"), index);
+    if(dialogLine==-1){
+        dialogLine="";
+    }else{
+        dialogLine = form("\"%s\"",dialogLine);
+    }
+    
+    return dialogLine;
+
+}
+
+
+static getFlagDesc(flag){
+
+    auto flagDesc;     
+            
+    flagDesc = GetArrayElement(AR_STR, GetArrayId("Flags"), flag);
+    if(flagDesc==-1){
+        flagDesc="";
+    }
+    
+    return flagDesc;
+
 }

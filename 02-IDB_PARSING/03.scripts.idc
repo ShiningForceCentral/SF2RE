@@ -5,6 +5,9 @@
 
 static main(void){
 
+    Message("\nINITIALIZING ARRAYS...\n");
+    initializeArrays();
+
     if(AskYN(1,"Parse cutscene at current cursor position ?")!=1){
         parseAll();
     }
@@ -12,6 +15,8 @@ static main(void){
         parseSingleCS(ScreenEA());
     }
     
+    Message("DELETING ARRAYS...\n");
+    deleteArrays();
 
 
 }
@@ -27,6 +32,48 @@ static parseAll(){
     Message("END OF PARSING.\n");    
 
 }
+
+
+
+/* INITIALIZE ARRAYS OF STRINGS TO OPTIMIZE EXTERNAL FILE ACCESS */
+
+static initializeArrays(){
+    
+    loadArray("flags.txt","Flags");
+    loadArray("text.txt","Text");    
+    
+}
+
+static loadArray(fileName, arrayName){
+
+    auto file, arrayId, idx, str;
+    
+    file = fopen(fileName,"r");
+    arrayId = CreateArray(arrayName);
+    idx = 0;
+    while(str!=-1){
+        str = readstr(file);
+        if(str!=-1){
+            str = form("%s",substr(str,5,strlen(str)-1));
+            SetArrayString(arrayId, idx, str);
+        }
+        idx++;
+    }
+    fclose(file);
+    
+}
+
+/* DELETE ARRAYS FROM IDB AFTER USAGE */
+
+static deleteArrays(){
+
+    DeleteArray(GetArrayId("Flags")); 
+    DeleteArray(GetArrayId("Text")); 
+    
+}
+
+
+
 
 static parseActscripts(){
     // ACTSCRIPTS
@@ -490,7 +537,7 @@ static parseCSWithTextIndex(start,end, textIndex){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("textCursor $%s",ltoa(Word(ea+2),16)));
+            SetManualInsn(ea,form("textCursor %s",ltoa(Word(ea+2),10)));
         }
         else if(cmd==    0x0005){
             cmdName = "0005 PLAY SOUND";
@@ -572,7 +619,7 @@ static parseCSWithTextIndex(start,end, textIndex){
                 MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
             }
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("jumpIfFlagSet $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
+            SetManualInsn(ea,form("jumpIfFlagSet %s,%s",ltoa(Word(ea+2),10),GetTrueName(Dword(ea+4))));
         }
         else if(cmd==    0x000D){
             cmdName = "000D JUMP IF CLEAR FLAG";
@@ -584,7 +631,7 @@ static parseCSWithTextIndex(start,end, textIndex){
                 MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
             }
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("jumpIfFlagClear $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
+            SetManualInsn(ea,form("jumpIfFlagClear %s,%s",ltoa(Word(ea+2),10),GetTrueName(Dword(ea+4))));
         }
         else if(cmd==    0x000E){
             cmdName = "000E JUMP IF CHARACTER DEAD";
@@ -616,9 +663,9 @@ static parseCSWithTextIndex(start,end, textIndex){
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
             if(Word(ea+4)==0){
-                SetManualInsn(ea,form("clearF $%s",ltoa(Word(ea+2),16)));
+                SetManualInsn(ea,form("clearF %s",ltoa(Word(ea+2),10)));
             }else{
-                SetManualInsn(ea,form("setF $%s",ltoa(Word(ea+2),16)));
+                SetManualInsn(ea,form("setF %s",ltoa(Word(ea+2),10)));
             }
             
         }
@@ -640,12 +687,12 @@ static parseCSWithTextIndex(start,end, textIndex){
         }
         else if(cmd==    0x0013){
             cmdName = "0013 SET STORY FLAG";
-            flag = Word(ea+2) + 0x190;
+            flag = Word(ea+2) + 400;
             cmdComment = form("%s",getFlagDesc(flag));
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("setStoryFlag $%s",ltoa(Word(ea+2),16)));
+            SetManualInsn(ea,form("setStoryFlag %s",ltoa(Word(ea+2),10)));
         }
         else if(cmd==    0x0014){
             cmdName = "0014 SET CUSTOM ACTSCRIPT";
@@ -1418,91 +1465,61 @@ static parseEntityData(addr){
  *  clean for new formatting
  */
 static undefineByte(addr){
-        auto from;
-        from = DfirstB(addr);
-        while(from!=BADADDR){
-            //Message(form("Removed DATA XRef at addr %a, from %a\n",addr, from));
+    auto from;
+    from = DfirstB(addr);
+    while(from!=BADADDR){
+      //Message(form("Removed DATA XRef at addr %a, from %a\n",addr, from));
       del_dref(from,addr);
       from=DnextB(addr,from);
-        }        
-        from = RfirstB(addr);
-        while(from!=BADADDR){
-            //Message(form("Removed Code XRref at addr %a, from %a\n",addr, from));
+    }        
+    from = RfirstB(addr);
+    while(from!=BADADDR){
+      //Message(form("Removed Code XRref at addr %a, from %a\n",addr, from));
       DelCodeXref(from,addr,1);
       from=RnextB(addr,from);      
-        }                
-        MakeUnkn(addr,DOUNK_SIMPLE);
-        MakeNameEx(addr,"",0);
-        SetManualInsn(addr,"");
+    }                
+    MakeUnkn(addr,DOUNK_SIMPLE);
+    MakeNameEx(addr,"",0);
+    SetManualInsn(addr,"");
 }
 
 
 static getTextLine(index){
 
-            auto textbanksFile, lineNumber, currentLine, dialogLine;
-            index = ltoa(index,16);
-            while(strlen(index)<4){
-                index=form("0%s",index);
-            }
-            lineNumber = 0;
-            textbanksFile = fopen("textbanks.txt","r");
-            while(dialogLine==""){
-                lineNumber = lineNumber + 1;
-                currentLine = readstr(textbanksFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    Message(form("\nCould not find dialog line for current parameter 0x%s",index));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==index){
-                    dialogLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
-                }
-            }
-            fclose(textbanksFile);
-            
-            return dialogLine;
+    auto dialogLine;
+    
+    dialogLine = GetArrayElement(AR_STR, GetArrayId("Text"), index);
+    if(dialogLine==-1){
+        dialogLine="";
+    }else{
+        dialogLine = form("\"%s\"",dialogLine);
+    }
+    
+    return dialogLine;
 
 }
 
 
 static getFlagDesc(flag){
 
-            auto flagmapFile, lineNumber, currentLine, flagDesc;
-            flag = ltoa(flag,16);
-            while(strlen(flag)<4){
-                flag=form("0%s",flag);
-            }
-            lineNumber = 0;
-            flagmapFile = fopen("flagmap.txt","r");
-            while(flagDesc==""){
-                lineNumber = lineNumber + 1;
-                currentLine = readstr(flagmapFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    Message(form("\nCould not find dialog line for current parameter 0x%s",flag));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==flag){
-                    flagDesc = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                }
-            }
-            fclose(flagmapFile);
+    auto flagDesc;     
             
-            return flagDesc;
+    flagDesc = GetArrayElement(AR_STR, GetArrayId("Flags"), flag);
+    if(flagDesc==-1){
+        flagDesc="";
+    }
+    
+    return flagDesc;
 
 }
 
 
 /**********************************************
- *                                                                                        *
- *                                                                                        *
- *                  ENTITY ACTSCRIPTS                                *
- *                                                                                        *
- *                                                                                        *
+ *                                            *
+ *                                            *
+ *                  ENTITY ACTSCRIPTS         *
+ *                                            *
+ *                                            *
  **********************************************/
 
 
@@ -1831,7 +1848,7 @@ static parseEAS(start,end){
         else if(Word(ea)==0x0031){
             cmdName = "0031 BRANCH IF SET FLAG";
             flag = Word(ea+2);
-            cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
+            cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),10),ltoa(Word(ea+4),16),getFlagDesc(flag));
             cmdLength = 6;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeWord(ea);            
@@ -1842,7 +1859,7 @@ static parseEAS(start,end){
         else if(Word(ea)==0x0032){
             cmdName = "0032 BRANCH IF CLEARED FLAG";
             flag = Word(ea+2);
-            cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),getFlagDesc(flag));
+            cmdComment = form("%s %s TO CURRENT ADDR. + $%s : %s",cmdName,ltoa(Word(ea+2),10),ltoa(Word(ea+4),16),getFlagDesc(flag));
             cmdLength = 6;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeWord(ea);

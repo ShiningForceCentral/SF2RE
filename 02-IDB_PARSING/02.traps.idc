@@ -13,20 +13,66 @@
 
 static main(void) {
 
-    Message("FIXING FUNCTION CHUNKS...\n");
+    Message("\nINITIALIZING ARRAYS...\n");
+    initializeArrays();
 
+    Message("FIXING FUNCTION CHUNKS...\n");
     fixFChunks();
 
     Message("SCANNING TRAPS...\n");
-    
     parseSoundTrap();
     parseFlagTraps();
     parseTextTrap();
     parseScriptTrap();
+
+    Message("DELETING ARRAYS...\n");
+    deleteArrays();
     
     Message("END OF TRAPS SCAN.\n");
     Batch(0);
 
+}
+
+
+
+
+
+
+/* INITIALIZE ARRAYS OF STRINGS TO OPTIMIZE EXTERNAL FILE ACCESS */
+
+static initializeArrays(){
+    
+    loadArray("flags.txt","Flags");
+    loadArray("text.txt","Text");    
+    
+}
+
+static loadArray(fileName, arrayName){
+
+    auto file, arrayId, idx, str;
+    
+    file = fopen(fileName,"r");
+    arrayId = CreateArray(arrayName);
+    idx = 0;
+    while(str!=-1){
+        str = readstr(file);
+        if(str!=-1){
+            str = form("%s",substr(str,5,strlen(str)-1));
+            SetArrayString(arrayId, idx, str);
+        }
+        idx++;
+    }
+    fclose(file);
+    
+}
+
+/* DELETE ARRAYS FROM IDB AFTER USAGE */
+
+static deleteArrays(){
+
+    DeleteArray(GetArrayId("Flags")); 
+    DeleteArray(GetArrayId("Text")); 
+    
 }
 
 
@@ -226,29 +272,11 @@ static scanTrap1(){
         
             OpEnumEx(addr,0,GetEnum("Traps"),0);
             MakeWord(addr+2);
-        
-            parameter = ltoa(Word(addr+2),16);
-            while(strlen(parameter)<4){
-                parameter=form("0%s",parameter);
-            }
-            //Message(form("\nBinary value \"%s\" with parameter value 0x%s at address 0x%s in code : searching for flag description.",trapHexString, ltoa(Word(addr+2),16),ltoa(addr,16)));
             
-            flagmapFile = fopen("flagmap.txt","r");
-            while(flagDescription==""){
-            lineNumber = lineNumber + 1;
-                currentLine = readstr(flagmapFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    //Message(form("\nCould not find flag description for current parameter 0x%s",parameter));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                    flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                }
+            flagDescription = GetArrayElement(AR_STR, GetArrayId("Flags"), Word(addr+2));
+            if(flagDescription==-1){
+                flagDescription="";
             }
-            fclose(flagmapFile);
             
             /* Macro formatting */
             if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
@@ -257,32 +285,14 @@ static scanTrap1(){
                 MakeUnkn(addr+2,DOUNK_DELNAMES);
                 MakeUnkn(addr+3,DOUNK_DELNAMES);
                 MakeData(addr,FF_BYTE,4,1);
-                SetManualInsn(addr, form("chkFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr, form("chkFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,flagDescription);
             }else{
                 SetManualInsn(addr, " ");
-                SetManualInsn(addr+2, form("chkFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr+2, form("chkFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,"");
                 MakeRptCmt(addr+2,flagDescription);
-            }
-            
-            /*
-            if (flagDescription!=""){
-                newComment = form(flagDescription);
-                action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
-                if (action==-1) return;
-                if (action==1){
-                    Message(form("\n0x%s : %s changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));  
-                    MakeComm(addr+2,""); 
-                    MakeRptCmt(addr+2,newComment);
-                }
-                else{
-                    Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
-                }
-            }
-            */
-            //cont = AskYN(1,"Continue ?");
-            //if (cont==-1 || cont==0) return;    
+            }  
         }
         else{
             Message(form("\n0x%s: Binary value \"%s\" with parameter value 0x%s not in code",ltoa(addr,16),trapHexString,ltoa(Word(addr+2),16)));
@@ -321,29 +331,11 @@ static scanTrap2(){
         
             OpEnumEx(addr,0,GetEnum("Traps"),0);
             MakeWord(addr+2);
-        
-            parameter = ltoa(Word(addr+2),16);
-            while(strlen(parameter)<4){
-                parameter=form("0%s",parameter);
-            }
-            //Message(form("\nBinary value \"%s\" with parameter value 0x%s at address 0x%s in code : searching for flag description.",trapHexString, ltoa(Word(addr+2),16),ltoa(addr,16)));
             
-            flagmapFile = fopen("flagmap.txt","r");
-            while(flagDescription==""){
-            lineNumber = lineNumber + 1;
-                currentLine = readstr(flagmapFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    //Message(form("\nCould not find flag description for current parameter 0x%s",parameter));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                    flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                }
+            flagDescription = GetArrayElement(AR_STR, GetArrayId("Flags"), Word(addr+2));
+            if(flagDescription==-1){
+                flagDescription="";
             }
-            fclose(flagmapFile);
             
             /* Macro formatting */
             if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
@@ -352,32 +344,15 @@ static scanTrap2(){
                 MakeUnkn(addr+2,DOUNK_DELNAMES);
                 MakeUnkn(addr+3,DOUNK_DELNAMES);
                 MakeData(addr,FF_BYTE,4,1);
-                SetManualInsn(addr, form("setFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr, form("setFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,flagDescription);
             }else{
                 SetManualInsn(addr, " ");
-                SetManualInsn(addr+2, form("setFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr+2, form("setFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,"");
                 MakeRptCmt(addr+2,flagDescription);
             }
             
-            /*
-            if (flagDescription!=""){
-                newComment = form(flagDescription);
-                action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
-                if (action==-1) return;
-                if (action==1){
-                    Message(form("\n0x%s : %s changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));  
-                    MakeComm(addr+2,""); 
-                    MakeRptCmt(addr+2,newComment);
-                }
-                else{
-                    Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
-                }
-            }
-            */
-            //cont = AskYN(1,"Continue ?");
-            //if (cont==-1 || cont==0) return;    
         }
         else{
             Message(form("\n0x%s: Binary value \"%s\" with parameter value 0x%s not in code",ltoa(addr,16),trapHexString,ltoa(Word(addr+2),16)));
@@ -415,30 +390,12 @@ static scanTrap3(){
         if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
         
             OpEnumEx(addr,0,GetEnum("Traps"),0);
-            MakeWord(addr+2);
-        
-            parameter = ltoa(Word(addr+2),16);
-            while(strlen(parameter)<4){
-                parameter=form("0%s",parameter);
-            }
-            //Message(form("\nBinary value \"%s\" with parameter value 0x%s at address 0x%s in code : searching for flag description.",trapHexString, ltoa(Word(addr+2),16),ltoa(addr,16)));
+            MakeWord(addr+2);            
             
-            flagmapFile = fopen("flagmap.txt","r");
-            while(flagDescription==""){
-            lineNumber = lineNumber + 1;
-                currentLine = readstr(flagmapFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    //Message(form("\nCould not find flag description for current parameter 0x%s",parameter));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                    flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                }
+            flagDescription = GetArrayElement(AR_STR, GetArrayId("Flags"), Word(addr+2));
+            if(flagDescription==-1){
+                flagDescription="";
             }
-            fclose(flagmapFile);
             
             /* Macro formatting */
             if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
@@ -447,32 +404,15 @@ static scanTrap3(){
                 MakeUnkn(addr+2,DOUNK_DELNAMES);
                 MakeUnkn(addr+3,DOUNK_DELNAMES);
                 MakeData(addr,FF_BYTE,4,1);
-                SetManualInsn(addr, form("clrFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr, form("clrFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,flagDescription);
             }else{
                 SetManualInsn(addr, " ");
-                SetManualInsn(addr+2, form("clrFlg  $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr+2, form("clrFlg  %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,"");
                 MakeRptCmt(addr+2,flagDescription);
             }
-            
-            /*
-            if (flagDescription!=""){
-                newComment = form(flagDescription);
-                action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
-                if (action==-1) return;
-                if (action==1){
-                    Message(form("\n0x%s : %s changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));  
-                    MakeComm(addr+2,""); 
-                    MakeRptCmt(addr+2,newComment);
-                }
-                else{
-                    Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
-                }
-            }
-            */
-            //cont = AskYN(1,"Continue ?");
-            //if (cont==-1 || cont==0) return;    
+              
         }
         else{
             Message(form("\n0x%s: Binary value \"%s\" with parameter value 0x%s not in code",ltoa(addr,16),trapHexString,ltoa(Word(addr+2),16)));
@@ -510,30 +450,12 @@ static scanTrap4(){
         if(GetFunctionAttr(addr, FUNCATTR_START)!=-1 && addr%2==0){
         
             OpEnumEx(addr,0,GetEnum("Traps"),0);
-            MakeWord(addr+2);
-        
-            parameter = ltoa(Word(addr+2),16);
-            while(strlen(parameter)<4){
-                parameter=form("0%s",parameter);
-            }
-            //Message(form("\nBinary value \"%s\" with parameter value 0x%s at address 0x%s in code : searching for flag description.",trapHexString, ltoa(Word(addr+2),16),ltoa(addr,16)));
+            MakeWord(addr+2);            
             
-            flagmapFile = fopen("flagmap.txt","r");
-            while(flagDescription==""){
-            lineNumber = lineNumber + 1;
-                currentLine = readstr(flagmapFile);
-                /* if(lineNumber % 100 == 0) {
-                 Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                } */
-                if(currentLine==-1){
-                    //Message(form("\nCould not find flag description for current parameter 0x%s",parameter));
-                    break;
-                }
-                if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                    flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                }
+            flagDescription = GetArrayElement(AR_STR, GetArrayId("Flags"), Word(addr+2));
+            if(flagDescription==-1){
+                flagDescription="";
             }
-            fclose(flagmapFile);
             
             /* Macro formatting */
             if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
@@ -542,32 +464,15 @@ static scanTrap4(){
                 MakeUnkn(addr+2,DOUNK_DELNAMES);
                 MakeUnkn(addr+3,DOUNK_DELNAMES);
                 MakeData(addr,FF_BYTE,4,1);
-                SetManualInsn(addr, form("checkFlg $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr, form("checkFlg %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,flagDescription);
             }else{
                 SetManualInsn(addr, " ");
-                SetManualInsn(addr+2, form("checkFlg $%s", ltoa(Word(addr+2),16)));
+                SetManualInsn(addr+2, form("checkFlg %s", ltoa(Word(addr+2),10)));
                 MakeRptCmt(addr,"");
                 MakeRptCmt(addr+2,flagDescription);
             }
-            
-            /*
-            if (flagDescription!=""){
-                newComment = form(flagDescription);
-                action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
-                if (action==-1) return;
-                if (action==1){
-                    Message(form("\n0x%s : %s changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));  
-                    MakeComm(addr+2,""); 
-                    MakeRptCmt(addr+2,newComment);
-                }
-                else{
-                    Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
-                }
-            }
-            */
-            //cont = AskYN(1,"Continue ?");
-            //if (cont==-1 || cont==0) return;    
+               
         }
         else{
             Message(form("\n0x%s: Binary value \"%s\" with parameter value 0x%s not in code",ltoa(addr,16),trapHexString,ltoa(Word(addr+2),16)));
@@ -625,40 +530,27 @@ static scanTrap5(){
             //MakeUnkn(addr+2,DOUNK_DELNAMES);
             //MakeUnkn(addr+3,DOUNK_DELNAMES);
             //MakeData(addr,FF_BYTE,4,1);
-            parameter = ltoa(Word(addr+2),16);
-            while(strlen(parameter)<4){
-                parameter=form("0%s",parameter);
-            }
-            //Message(form("\nBinary value 0x4E45 with parameter value 0x%s at address 0x%s in code : searching for dialog line.",ltoa(Word(addr+2),16),ltoa(addr,16)));
             
-            if(Word(addr+2)!=0xFFFF){
-                textbanksFile = fopen("textbanks.txt","r");
-                while(dialogLine==""){
-                    lineNumber = lineNumber + 1;
-                    currentLine = readstr(textbanksFile);
-                    /* if(lineNumber % 100 == 0) {
-                     Message(form("\nReading line %d with index %s : %s",lineNumber, substr(currentLine,0,4), currentLine));
-                    } */
-                    if(currentLine==-1){
-                        Message(form("\n%s: Could not find dialog line for current parameter 0x%s",addr,parameter));
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        dialogLine = form("\"%s\"",substr(currentLine,6,strlen(currentLine)-1));
-                    }
+            if(Word(addr+2)!=0xFFFF){       
+            
+                dialogLine = GetArrayElement(AR_STR, GetArrayId("Text"), Word(addr+2));
+                if(dialogLine==-1){
+                    dialogLine="";
+                }else{
+                    dialogLine = form("\"%s\"",dialogLine);
                 }
-                fclose(textbanksFile);
+                
                 if(addr!=GetFunctionAttr(addr,FUNCATTR_START)){
                     MakeUnkn(addr,DOUNK_DELNAMES);
                     MakeUnkn(addr+1,DOUNK_DELNAMES);
                     MakeUnkn(addr+2,DOUNK_DELNAMES);
                     MakeUnkn(addr+3,DOUNK_DELNAMES);
                     MakeData(addr,FF_BYTE,4,1);
-                    SetManualInsn(addr, form("txt     $%s", ltoa(Word(addr+2),16)));
+                    SetManualInsn(addr, form("txt     %s", ltoa(Word(addr+2),10)));
                     MakeRptCmt(addr,dialogLine);
                 }else{
                     SetManualInsn(addr, " ");
-                    SetManualInsn(addr+2, form("txt     $%s", ltoa(Word(addr+2),16)));
+                    SetManualInsn(addr+2, form("txt     %s", ltoa(Word(addr+2),10)));
                     MakeRptCmt(addr,"");
                     MakeRptCmt(addr+2,dialogLine);
                 }                
@@ -675,25 +567,7 @@ static scanTrap5(){
                     SetManualInsn(addr+2, "clsTxt");
                 }
             }
-            
-            /*
-            if (dialogLine!=""){
-                //newComment = form(dialogLine);
-                newComment = "";
-                //action = AskYN(1,form("Update comment ? \nFrom %s\nTo : %s",CommentEx(addr+2,1), newComment));
-                if (action==-1) return;
-                if (action==1){
-                    //Message(form("\n0x%s : %s changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));  
-                    MakeComm(addr+2,""); 
-                    MakeRptCmt(addr+2,newComment);
-                }
-                else{
-                    Message(form("\n0x%s : %s NOT changed to %s",ltoa(addr+2,16),CommentEx(addr+2,1), newComment));
-                }
-            }
-            */
-            //cont = AskYN(1,"Continue ?");
-            if (cont==-1 || cont==0) return;    
+               
         }
         else{
             Message(form("\n0x%s: Binary value 0x4E45 with parameter 0x%s not in code",ltoa(addr,16),ltoa(Word(addr+2),16)));

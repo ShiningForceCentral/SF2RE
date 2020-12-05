@@ -5,7 +5,11 @@
 
 
 static main(void){
-    Message("\nPARSING DATA STRUCTURES INTO MACROS ...\n");
+
+    Message("\nINITIALIZING ARRAYS...\n");
+    initializeArrays();
+    
+    Message("PARSING DATA STRUCTURES INTO MACROS ...\n");
     parseFlaggedSwitchedMaps();
     parseBattleMapCoords();    
     parseSavePointMapCoords();
@@ -74,6 +78,10 @@ static main(void){
     parseAllyStartDefs();
     parseClassDefs();
     parseMapData();
+
+    Message("DELETING ARRAYS...\n");
+    deleteArrays();
+      
     Message("END OF PARSING.\n");    
 }
 
@@ -91,22 +99,7 @@ static parseFlaggedSwitchedMaps(){
         map = Word(addr);
         flag = Word(addr+2);
         newMap = Word(addr+4);
-        parameter = ltoa(flag,16);
-        while(strlen(parameter)<4){
-            parameter=form("0%s",parameter);
-        }
-        flagmapFile = fopen("flagmap.txt","r");
-        while(flagDescription==""){
-        lineNumber = lineNumber + 1;
-            currentLine = readstr(flagmapFile);
-            if(currentLine==-1){
-                break;
-            }
-            if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-            }
-        }
-        fclose(flagmapFile);    
+        flagDescription = getFlagDesc(flag);   
         MakeRptCmt(addr,flagDescription);
         SetManualInsn(addr, form("flagSwitchedMap %s, %s, %s", getMap(map), ltoa(flag,10), getMap(newMap)));
         addr = addr+6;
@@ -1606,23 +1599,8 @@ static parseMapData(){
                 for(j=sc;j<sc+8;j++){undefineByte(j);}
                 MakeWord(sc);
                 flagDescription = "";
-                flag = Word(sc);
-                parameter = ltoa(flag,16);
-                while(strlen(parameter)<4){
-                    parameter=form("0%s",parameter);
-                }
-                flagmapFile = fopen("flagmap.txt","r");
-                while(flagDescription==""){
-                lineNumber = lineNumber + 1;
-                    currentLine = readstr(flagmapFile);
-                    if(currentLine==-1){
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                    }
-                }
-                fclose(flagmapFile);    
+                flag = Word(sc);  
+                flagDescription = getFlagDesc(flag);  
                 MakeRptCmt(sc,flagDescription);
                 SetManualInsn(sc, form("fbcFlag %s", ltoa(Word(sc),10)));
                 MakeWord(sc+2);
@@ -1775,22 +1753,7 @@ static parseMapData(){
                 MakeDword(sc);                
                 flagDescription = "";
                 flag = Word(sc);
-                parameter = ltoa(flag,16);
-                while(strlen(parameter)<4){
-                    parameter=form("0%s",parameter);
-                }
-                flagmapFile = fopen("flagmap.txt","r");
-                while(flagDescription==""){
-                lineNumber = lineNumber + 1;
-                    currentLine = readstr(flagmapFile);
-                    if(currentLine==-1){
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                    }
-                }
-                fclose(flagmapFile);    
+                flagDescription = getFlagDesc(flag);   
                 MakeRptCmt(sc,flagDescription);
                 SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
                 sc = sc+4;
@@ -1823,23 +1786,8 @@ static parseMapData(){
                 for(j=sc;j<sc+4;j++){undefineByte(j);}
                 MakeDword(sc);                
                 flagDescription = "";
-                flag = Word(sc);
-                parameter = ltoa(flag,16);
-                while(strlen(parameter)<4){
-                    parameter=form("0%s",parameter);
-                }
-                flagmapFile = fopen("flagmap.txt","r");
-                while(flagDescription==""){
-                lineNumber = lineNumber + 1;
-                    currentLine = readstr(flagmapFile);
-                    if(currentLine==-1){
-                        break;
-                    }
-                    if(strlen(currentLine)>=4 && substr(currentLine,0,4)==parameter){
-                        flagDescription = form("%s",substr(currentLine,5,strlen(currentLine)-1));
-                    }
-                }
-                fclose(flagmapFile);    
+                flag = Word(sc);  
+                flagDescription = getFlagDesc(flag);  
                 MakeRptCmt(sc,flagDescription);
                 SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
                 sc = sc+4;
@@ -2015,4 +1963,72 @@ static undefineByte(addr){
         MakeUnkn(addr,DOUNK_DELNAMES);
         //MakeNameEx(addr,"",0);
         SetManualInsn(addr,"");
+}
+
+
+
+/* INITIALIZE ARRAYS OF STRINGS TO OPTIMIZE EXTERNAL FILE ACCESS */
+
+static initializeArrays(){
+    
+    loadArray("flags.txt","Flags");
+    loadArray("text.txt","Text");    
+    
+}
+
+static loadArray(fileName, arrayName){
+
+    auto file, arrayId, idx, str;
+    
+    file = fopen(fileName,"r");
+    arrayId = CreateArray(arrayName);
+    idx = 0;
+    while(str!=-1){
+        str = readstr(file);
+        if(str!=-1){
+            str = form("%s",substr(str,5,strlen(str)-1));
+            SetArrayString(arrayId, idx, str);
+        }
+        idx++;
+    }
+    fclose(file);
+    
+}
+
+/* DELETE ARRAYS FROM IDB AFTER USAGE */
+
+static deleteArrays(){
+
+    DeleteArray(GetArrayId("Flags")); 
+    DeleteArray(GetArrayId("Text")); 
+    
+}
+
+static getTextLine(index){
+
+    auto dialogLine;
+    
+    dialogLine = GetArrayElement(AR_STR, GetArrayId("Text"), index);
+    if(dialogLine==-1){
+        dialogLine="";
+    }else{
+        dialogLine = form("\"%s\"",dialogLine);
+    }
+    
+    return dialogLine;
+
+}
+
+
+static getFlagDesc(flag){
+
+    auto flagDesc;     
+            
+    flagDesc = GetArrayElement(AR_STR, GetArrayId("Flags"), flag);
+    if(flagDesc==-1){
+        flagDesc="";
+    }
+    
+    return flagDesc;
+
 }
