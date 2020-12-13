@@ -147,11 +147,11 @@ static parseCutscenes(){
     parseCS(0x4941E,0x49444);
     
     
-    parseCS(0x49444,0x4945A);
+    //parseCS(0x49444,0x4945A);
     // Manual fix for unused cutscene with parsing mistake
-    SetManualInsn(0x4945A,"");
-    MakeRptCmt(0x4945A,"Unused cutscene with parsing mistake here and below, letting it unformatted.");
-    MakeDword(0x4945A);
+    //SetManualInsn(0x4945A,"");
+    //MakeRptCmt(0x4945A,"Unused cutscene with parsing mistake here and below, letting it unformatted.");
+    //MakeDword(0x4945A);
     
     
     parseCS(0x494BC,0x49694);
@@ -1525,7 +1525,7 @@ static getFlagDesc(flag){
 
 static parseEAS(start,end){
 
-    auto ea,cmdLength,cmdName,cmdComment,tab,action,flag;
+    auto ea,cmdLength,cmdName,cmdComment,tab,action,flag, x, y;
     
     cmdLength = 2;
     ea = start;
@@ -1564,7 +1564,7 @@ static parseEAS(start,end){
             cmdLength = 2;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_02"));
+            SetManualInsn(ea,form(" ac_controlCharacter"));
         }
         else if(Word(ea)==0x0003){
             cmdName = "0003 ";
@@ -1572,7 +1572,11 @@ static parseEAS(start,end){
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_03 $%s,$%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16)));
+            x = Word(ea+4);
+            if(x>0x8000){x=form("-%s",ltoa(0x10000-x,10));}else{x=ltoa(x,10);}
+            y = Word(ea+6);
+            if(y>0x8000){y=form("-%s",ltoa(0x10000-y,10));}else{y=ltoa(y,10);}
+            SetManualInsn(ea,form(" ac_follow %s,%s,%s",ltoa(Word(ea+2),10),x,y));
         }
         else if(Word(ea)==0x0004){
             cmdName = "0004 MOVE TO RELATIVE DEST";
@@ -1580,7 +1584,11 @@ static parseEAS(start,end){
             cmdLength = 6;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_moveRel %s,%s",ltoa(Word(ea+2),10),ltoa(Word(ea+4),10)));        
+            x = Word(ea+2);
+            if(x>0x8000){x=form("-%s",ltoa(0x10000-x,10));}else{x=ltoa(x,10);}
+            y = Word(ea+4);
+            if(y>0x8000){y=form("-%s",ltoa(0x10000-y,10));}else{y=ltoa(y,10);}
+            SetManualInsn(ea,form(" ac_moveRel %s,%s",x,y));        
         }
         else if(Word(ea)==0x0005){
             cmdName = "0005 MOVE TO ABSOLUTE DEST";
@@ -1596,7 +1604,7 @@ static parseEAS(start,end){
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1); 
-            SetManualInsn(ea,form(" ac_06 $%s,$%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16)));            
+            SetManualInsn(ea,form(" ac_randomWalk %s,%s,%s",ltoa(Word(ea+2),10),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));            
         }
         else if(Word(ea)==0x0007){
             cmdName = "0007 CONTROLLING RAFT";
@@ -1615,12 +1623,12 @@ static parseEAS(start,end){
             SetManualInsn(ea,form(" ac_controlCaravan"));    
         }
         else if(Word(ea)==0x0009){
-            cmdName = "0009 ";
+            cmdName = "0009 MOVE TO FACING RELATIVE POSITION";
             cmdComment = "";
             cmdLength = 6;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_09 $%s,$%s", ltoa(Word(ea+2),16), ltoa(Word(ea+4),16)));        
+            SetManualInsn(ea,form(" ac_moveFacRelPos %s,%s", ltoa(Word(ea+2),10), ltoa(Word(ea+4),10)));        
         }        
         else if(Word(ea)==0x000A){
             cmdName = "000A UPDATE SPRITE";
@@ -1655,12 +1663,12 @@ static parseEAS(start,end){
             SetManualInsn(ea,form(" ac_clonePos $%s",ltoa(Word(ea+2),16)));            
         }
         else if(Word(ea)==0x000E){
-            cmdName = "000E ";
+            cmdName = "000E MOVE TO ENTITY FACING RELATIVE POSITION";
             cmdComment = "";
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_0E $%s,$%s,$%s",ltoa(Word(ea+2),16),ltoa(Word(ea+4),16),ltoa(Word(ea+6),16)));            
+            SetManualInsn(ea,form(" ac_moveEntFacRelPos %s,%s,%s",ltoa(Word(ea+2),10),ltoa(Word(ea+4),10),ltoa(Word(ea+6),10)));            
         }
         else if(Word(ea)==0x000F){
             cmdName = "000F WAIT UNTIL DES REACHED BY ENTITY";
@@ -1692,7 +1700,7 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_12 $%s",ltoa(Word(ea+2),16)));            
+            SetManualInsn(ea,form(" ac_12 $%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16)));            
         }
         else if(Word(ea)==0x0013){
             cmdName = "0013 ";
@@ -1700,15 +1708,19 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_13 $%s",ltoa(Word(ea+2),16)));                
+            SetManualInsn(ea,form(" ac_13 $%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16)));               
         }
         else if(Word(ea)==0x0014){
             cmdName = "0014 SET ANIM COUNTER";
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
-            MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_setAnimCounter $%s",ltoa(Word(ea+2),16)));            
+            MakeData(ea,FF_BYTE,cmdLength,1);    
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_motion OFF"); 
+            }else{
+                SetManualInsn(ea," ac_motion ON"); 
+            }              
         }
         else if(Word(ea)==0x0015){
             cmdName = "0015 SET ABILITY TO CHANGE FACING";
@@ -1716,7 +1728,11 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_autoFacing $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_autoFacing OFF"); 
+            }else{
+                SetManualInsn(ea," ac_autoFacing ON"); 
+            }       
         }
         else if(Word(ea)==0x0016){
             cmdName = "0016 SET ENTITY NUMBER";
@@ -1740,23 +1756,35 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_set1Cb7 $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_entityObstructable OFF"); 
+            }else{
+                SetManualInsn(ea," ac_entityObstructable ON"); 
+            }                                           
         }
         else if(Word(ea)==0x0019){
-            cmdName = "0019 SET 1C BIT 6";
+            cmdName = "0019 SET MAP COLLIDABLE";
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_set1Cb6 $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_mapUncollidable OFF"); 
+            }else{
+                SetManualInsn(ea," ac_mapUncollidable ON"); 
+            }                                    
         }
         else if(Word(ea)==0x001A){
-            cmdName = "001A SET 1C BIT 5";
+            cmdName = "001A SET ENTITY COLLIDABLE";
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_set1Cb5 $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_entityUncollidable OFF"); 
+            }else{
+                SetManualInsn(ea," ac_entityUncollidable ON"); 
+            }                                    
         }
         else if(Word(ea)==0x001B){
             cmdName = "001B SET FLIPPING";
@@ -1764,7 +1792,15 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_setFlip $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_orientUp");
+            }else if(Word(ea+2)==1){
+                SetManualInsn(ea," ac_orientLeft");
+            }else if(Word(ea+2)==2){
+                SetManualInsn(ea," ac_orientDown");
+            }else{
+                SetManualInsn(ea," ac_orientRight");
+            }            
         }
         else if(Word(ea)==0x001C){
             cmdName = "001C SET TRANSPARENCY";
@@ -1772,7 +1808,11 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_setTransparency $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_transparency OFF"); 
+            }else{
+                SetManualInsn(ea," ac_transparency ON"); 
+            }                         
         }
         else if(Word(ea)==0x001D){
             cmdName = "001D SET GHOST";
@@ -1787,8 +1827,12 @@ static parseEAS(start,end){
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
-            MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_setAnimSpeedX2 $%s",ltoa(Word(ea+2),16)));            
+            MakeData(ea,FF_BYTE,cmdLength,1); 
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_animSpeedX2 OFF"); 
+            }else{
+                SetManualInsn(ea," ac_animSpeedX2 ON"); 
+            }                        
         }
         else if(Word(ea)==0x001F){
             cmdName = "001F SET 1D BIT 3";
@@ -1796,7 +1840,11 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_set1Db3 $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_resizable OFF"); 
+            }else{
+                SetManualInsn(ea," ac_resizable ON"); 
+            }                        
         }
         else if(Word(ea)==0x0020){
             cmdName = "0020 SET ENTITY IN WATER";
@@ -1804,7 +1852,11 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_inWater $%s",ltoa(Word(ea+2),16)));            
+            if(Word(ea+2)==0){
+                SetManualInsn(ea," ac_immersed OFF"); 
+            }else{
+                SetManualInsn(ea," ac_immersed ON"); 
+            }                       
         }
         else if(Word(ea)==0x0021){
             cmdName = "0021 SET 1C BIT 4";
@@ -1894,7 +1946,7 @@ static parseEAS(start,end){
             cmdLength = 2;            
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_40"));            
+            SetManualInsn(ea,form(" ac_checkMapBlockCopy"));            
         }
         else if(Word(ea)==0x0041){
             cmdName = "0041 PASS";

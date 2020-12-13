@@ -246,7 +246,7 @@ returns a1 = window tiles end, d0 = window slot", 1);
     SetFunctionCmt(0x4fd4, 
         "wait until entity has reached its destination", 1);
 
-    // esc02_
+    // esc02_controlCharacter
     SetFunctionCmt(0x4ff8, 
         "update next entity", 1);
 
@@ -259,29 +259,13 @@ returns a1 = window tiles end, d0 = window slot", 1);
         "check if another entity has the same destination as current entity\n\
 Z=1 if that's the case", 1);
 
-    // esc07_
+    // esc07_controlRaft
     SetFunctionCmt(0x5668, 
         "related to controlling raft", 1);
 
-    // esc08_
+    // esc08_controlCaravan
     SetFunctionCmt(0x57ea, 
         "related to controlling caravan", 1);
-
-    // esc09_
-    SetFunctionCmt(0x596c, 
-        "related to facing", 1);
-
-    // esc0E_
-    SetFunctionCmt(0x59cc, 
-        "same facing as other entity ?", 1);
-
-    // esc0A_updateEntitySprite
-    SetFunctionCmt(0x5a18, 
-        "force entity sprite update ?", 1);
-
-    // esc0B_setSpriteSize
-    SetFunctionCmt(0x5a30, 
-        "update FFAF44", 1);
 
     // esc0C_setPosition
     SetFunctionCmt(0x5a3c, 
@@ -307,35 +291,23 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5b0e, 
         "set or clear entity value 1C bits 2-3 according to xxxx", 1);
 
-    // esc18_set1Cbit7
+    // esc18_setEntityObstructable
     SetFunctionCmt(0x5b88, 
         "set or clear entity value 1C bit 7 according to xxxx", 1);
 
-    // esc19_set1Cbit6
-    SetFunctionCmt(0x5ba2, 
-        "set or clear entity value 1C bit 6 according to xxxx", 1);
-
-    // esc1A_set1Cbit5
-    SetFunctionCmt(0x5bbc, 
-        "set or clear entity value 1C bit 5 according to xxxx", 1);
-
-    // esc1F_set1Dbit3
+    // esc1F_setResizable
     SetFunctionCmt(0x5c3c, 
         "set entity bit 3 of byte $1D", 1);
 
-    // esc20_setEntityInWater
-    SetFunctionCmt(0x5c56, 
-        "set entity bit 5 of byte $1D", 1);
-
     // esc21_set1Cbit4
     SetFunctionCmt(0x5c70, 
-        "set entity bit 4 of byte $1C", 1);
+        "unused command", 1);
 
     // esc30_branch
     SetFunctionCmt(0x5ca6, 
         "parse from current offset + xxxx", 1);
 
-    // esc41_Pass
+    // esc41_pass
     SetFunctionCmt(0x5d48, 
         "directly go to next command 4 bytes forward", 1);
 
