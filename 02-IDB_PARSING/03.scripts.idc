@@ -1687,20 +1687,28 @@ static parseEAS(start,end){
             SetManualInsn(ea,form(" ac_setSpeed %s,%s",ltoa(Byte(ea+2),10),ltoa(Byte(ea+3),10)));
         }
         else if(Word(ea)==0x0011){
-            cmdName = "0011 ";
+            cmdName = "0011 ACCEL FACTORS";
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_11 $%s",ltoa(Word(ea+2),16)));            
+            SetManualInsn(ea,form(" ac_accelFactors %s,%s",ltoa(Byte(ea+2),10),ltoa(Byte(ea+3),10)));            
         }
         else if(Word(ea)==0x0012){
-            cmdName = "0012 ";
+            cmdName = "0012 ACTIVATE ACCELERATION";
             cmdComment = "";
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
-            MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_12 $%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16)));            
+            MakeData(ea,FF_BYTE,cmdLength,1);  
+            x = Byte(ea+2);
+            if(x==0){x="OFF";}
+            else if(x==0xFF){x="ON";}
+            else{x=form("-%s",ltoa(0x100-x,10));}
+            y = Byte(ea+3);
+            if(y==0){y="OFF";}
+            else if(y==0xFF){y="ON";}
+            else{y=form("-%s",ltoa(0x100-y,10));}
+            SetManualInsn(ea,form(" ac_acceleration %s,%s",x,y));            
         }
         else if(Word(ea)==0x0013){
             cmdName = "0013 ";
@@ -1708,7 +1716,15 @@ static parseEAS(start,end){
             cmdLength = 4;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form(" ac_13 $%s,$%s",ltoa(Byte(ea+2),16),ltoa(Byte(ea+3),16)));               
+            x = Byte(ea+2);
+            if(x==0){x="OFF";}
+            else if(x==0xFF){x="ON";}
+            else{x=form("-%s",ltoa(0x100-x,10));}
+            y = Byte(ea+3);
+            if(y==0){y="OFF";}
+            else if(y==0xFF){y="ON";}
+            else{y=form("-%s",ltoa(0x100-y,10));}
+            SetManualInsn(ea,form(" ac_deceleration %s,%s",x,y));               
         }
         else if(Word(ea)==0x0014){
             cmdName = "0014 SET ANIM COUNTER";
