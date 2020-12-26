@@ -18,7 +18,7 @@ Usage workflow :
     3. Execute parsing scripts from ./20-IDB_PARSING/ folder :
         1. 00.ram-migration.idc
         2. 01.splits.idc
-        3. 02.traps.idc
+        3. 02.traps.idc : copy flags.txt and text.txt files in IDB folder first
         4. 03.scripts.idc
         5. 04.mapsetups.idc
         6. 05.battlescenecommands.idc
