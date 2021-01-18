@@ -307,6 +307,8 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x47C8E,0x47CBC,"EnemyLeaderPresence","data/battles/global/enemyleaderpresence.bin",file);
     
+    splitSingleChunk(0x49444,0x494BC,"DebuggingScript","data/scripting/map/debuggingscript.bin",file);
+    
     MakeAlign(0x6348C, 0x64000-0x6348C,14);
     
     splitSingleChunk(0x1002BE,0x10033E,"plt_TitleScreen","data/graphics/specialscreens/titlescreen/titlepalettes.bin",file);

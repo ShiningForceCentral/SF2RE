@@ -529,7 +529,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\scripting\\map\\cs_intro3",0x48540,0x48A78,"Intro cutscene 3");
     produceAsmScript(file,"data\\scripting\\map\\cs_intro4",0x48A78,0x48FE2,"Intro cutscene 4");
     produceAsmScript(file,"data\\scripting\\map\\cs_intro_stormeffect",0x48FE2,0x49058,"Storm Effect");
-    produceAsmScript(file,"data\\scripting\\map\\cs_end",0x49058,0x494BC,"End cutscene");
+    produceAsmScript(file,"data\\scripting\\map\\cs_end",0x49058,0x4931C,"End cutscene");
+    produceAsmScript(file,"data\\scripting\\map\\debugscripts",0x4931C,0x494BC,"Debugging scripts");
 
     writestr(file,"                include data\\battles\\entries\\battlecutscenesstorage.asm\n");
     battleCutscenesFile = fopen("disasm\\data\\battles\\entries\\battlecutscenesstorage.asm","w");

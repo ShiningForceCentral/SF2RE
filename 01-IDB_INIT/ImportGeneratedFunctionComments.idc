@@ -279,18 +279,6 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5ac8, 
         "set entity 1A-1B values with xxxx", 1);
 
-    // esc11_
-    SetFunctionCmt(0x5ad4, 
-        "set entity 18-19 values with xxxx", 1);
-
-    // esc12_
-    SetFunctionCmt(0x5ae0, 
-        "set or clear entity value 1C bits 0-1 according to xxxx", 1);
-
-    // esc13_
-    SetFunctionCmt(0x5b0e, 
-        "set or clear entity value 1C bits 2-3 according to xxxx", 1);
-
     // esc18_setEntityObstructable
     SetFunctionCmt(0x5b88, 
         "set or clear entity value 1C bit 7 according to xxxx", 1);

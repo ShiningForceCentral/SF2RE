@@ -520,6 +520,7 @@ static insertRomExpandTweaks(){
 
     /* Align directives being not permissive enough 
     to remove data chunks for ROM expansion */
+    SetManualInsn(0xFF87,"align $8000");
     SetManualInsn(0x17FDA,"align $18000");
     SetManualInsn(0x27D8E,"align $28000");
     SetManualInsn(0x425ED,"align $44000");
