@@ -132,7 +132,7 @@ Debug mode allows values 0-3 depending on player direction", 1);
 
     // sub_1942
     SetFunctionCmt(0x1942, 
-        "something with clearing/resetting sprite info when transitioning to battle scene?", 1);
+        "something with clearing/resetting sprite info when transitioning to battlescene?", 1);
 
     // sub_19C8
     SetFunctionCmt(0x19c8, 
@@ -278,6 +278,18 @@ Z=1 if that's the case", 1);
     // esc10_setSpeed
     SetFunctionCmt(0x5ac8, 
         "set entity 1A-1B values with xxxx", 1);
+
+    // esc11_
+    SetFunctionCmt(0x5ad4, 
+        "set entity 18-19 values with xxxx", 1);
+
+    // esc12_
+    SetFunctionCmt(0x5ae0, 
+        "set or clear entity value 1C bits 0-1 according to xxxx", 1);
+
+    // esc13_
+    SetFunctionCmt(0x5b0e, 
+        "set or clear entity value 1C bits 2-3 according to xxxx", 1);
 
     // esc18_setEntityObstructable
     SetFunctionCmt(0x5b88, 
@@ -431,7 +443,7 @@ Out: D1 = enemy index ($FFFF if not an enemy)", 1);
 \n\
 Out: D1 = something class type ??", 1);
 
-    // CopyCharacterNameToRam
+    // LoadAllyName
     SetFunctionCmt(0x855a, 
         "In: A0 = temporary space used when naming characters", 1);
 
@@ -476,7 +488,7 @@ Out: A0 = address of name\n\
     SetFunctionCmt(0x8be4, 
         "Get pointer to item D1's definition in ROM -> A0", 1);
 
-    // GetItemAndNumberOfItems
+    // GetItemAndNumberHeld
     SetFunctionCmt(0x8bfa, 
         "In: D0 = combatant index\n\
     D1 = item slot\n\
@@ -500,49 +512,59 @@ Out: D2 = equipment type (0 = item, 1 = weapon, $FFFF = ring)", 1);
 
     // AddItem
     SetFunctionCmt(0x8ca2, 
-        "In: D0 = character index\n\
+        "In: D0 = combatant index\n\
     D1 = item index\n\
 \n\
 Out: D2 = 0 if item successfully added, 1 if no empty slot available", 1);
 
     // BreakItem
     SetFunctionCmt(0x8cd4, 
-        "In: D0 = character index\n\
+        "In: D0 = combatant index\n\
     D1 = item slot", 1);
 
     // EquipItemBySlot
     SetFunctionCmt(0x8d34, 
-        "In: D0 = character index\n\
-    D1 = item slot index\n\
+        "In: D0 = combatant index\n\
+    D1 = item slot\n\
 \n\
 Out: D2 = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothing", 1);
 
     // IsItemEquippableAndCursed
     SetFunctionCmt(0x8d6a, 
-        "Is item D1 equippable by character D0's class, and is it cursed ?\n\
+        "Is item equippable, and is it cursed ?\n\
 \n\
-Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
+      In: D0 = ally index\n\
+          D1 = item index\n\
+\n\
+      Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
 
     // UnequipItemBySlotIfNotCursed
     SetFunctionCmt(0x8d9e, 
-        "In: D0 = character index\n\
-    D1 = item slot index", 1);
-
-    // IsItemInSlotEquippedAndCursed
-    SetFunctionCmt(0x8db6, 
-        "Is character D0's item in slot D1 equipped, and if so, is it cursed ?\n\
+        "In: D0 = combatant index\n\
+    D1 = item slot\n\
 \n\
-Out: A0 = pointer to character's item slot in RAM\n\
-     D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
+Out: D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
+
+    // IsItemInSlotEquippedOrCursed
+    SetFunctionCmt(0x8db6, 
+        "Is item in slot equipped, and if so, is it cursed ?\n\
+\n\
+      In: D0 = ally index\n\
+          D1 = item slot\n\
+\n\
+      Out: A0 = pointer to item entry\n\
+           D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if neither", 1);
 
     // UnequipItemBySlot
     SetFunctionCmt(0x8dfe, 
-        "In: D0 = character index\n\
-    D1 = item slot index", 1);
+        "In: D0 = combatant index\n\
+    D1 = item slot\n\
+\n\
+Out: D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
 
     // DropItemBySlot
     SetFunctionCmt(0x8e12, 
-        "In: D0 = character index\n\
+        "In: D0 = combatant index\n\
     D1 = item slot\n\
 \n\
 Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
@@ -554,8 +576,18 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
 
     // RemoveItemBySlot
     SetFunctionCmt(0x8e76, 
-        "In: D0 = character index\n\
+        "In: D0 = combatant index\n\
     D1 = item slot", 1);
+
+    // GetEquippableWeapons
+    SetFunctionCmt(0x8eee, 
+        "Out: A0 = pointer to equippable items list\n\
+     D1 = equippable weapons count", 1);
+
+    // GetEquippableRings
+    SetFunctionCmt(0x8ef8, 
+        "Out: A0 = pointer to equippable items list\n\
+     D1 = equippable rings count", 1);
 
     // IsItemEquippable
     SetFunctionCmt(0x8f60, 
@@ -563,14 +595,18 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
     D2 = item type bitmask (for ANDing the item type bitfield)\n\
     D3 = class equip bitmask (for ANDing the item equip bitfield)", 1);
 
-    // GetCurrentATTandDEFwithSpecificItem
+    // GetNewATTandDEFwithItem
     SetFunctionCmt(0x8fee, 
-        "In: A0 = character entry address\n\
+        "In: A0 = combatant entry address\n\
     D1 = item index\n\
     D2 = item type (weapon or ring)\n\
 \n\
 Out: D2 = current ATT with item equipped\n\
      D3 = current DEF with item equipped", 1);
+
+    // IsItemCursed
+    SetFunctionCmt(0x90b2, 
+        "Is item D1 cursed ? CCR carry-bit set if true", 1);
 
     // IsItemUsableInBattle
     SetFunctionCmt(0x90cc, 
@@ -582,7 +618,7 @@ Out: D2 = current ATT with item equipped\n\
 
     // UnequipAllItemsIfNotCursed
     SetFunctionCmt(0x9106, 
-        "In: D0 = character index", 1);
+        "In: D0 = combatant index", 1);
 
     // GetItemSlotContainingIndex
     SetFunctionCmt(0x9194, 
@@ -612,7 +648,7 @@ Out: D1 = spell index\n\
 
     // LearnSpell
     SetFunctionCmt(0x9226, 
-        "In: D0 = character index\n\
+        "In: D0 = ally index\n\
     D1 = spell index\n\
 \n\
 Out: D2 = result (0 = learned new spell, 1 = upgraded spell, 2 = no room)", 1);
@@ -659,14 +695,20 @@ Out: D1 = word", 1);
     SetFunctionCmt(0x936c, 
         "clamp byte D7 of entity D0's information - D1 between D5 and D6", 1);
 
-    // GetDistanceBetweenEntities
+    // GetDistanceBetweenCombatants
     SetFunctionCmt(0x941e, 
-        "Gets distance between two entities (simple X and Y calculation, no obstructions)\n\
-In: D0 = from entity\n\
-    D1 = to entity\n\
-Out: D2 = distance", 1);
+        "Get distance between two combatants (simple X and Y calculation, no obstructions)\n\
+\n\
+      In: D0 = from combatant\n\
+          D1 = to combatant\n\
+\n\
+      Out: D2 = distance", 1);
 
-    // InitCharacterStats
+    // LevelUp
+    SetFunctionCmt(0x9484, 
+        "In: D0 = ally index", 1);
+
+    // InitAllyStats
     SetFunctionCmt(0x95c6, 
         "In: D0 = ally index\n\
     D1 = starting level", 1);
@@ -681,11 +723,11 @@ Out: D2 = distance", 1);
 \n\
 Out: D1 = stat gain value", 1);
 
-    // InitCharacterCombatantEntry
+    // InitAllyCombatantEntry
     SetFunctionCmt(0x975e, 
         "In: D0 = ally index", 1);
 
-    // SetCharacterClassData
+    // LoadAllyClassData
     SetFunctionCmt(0x97f8, 
         "In: D0 = ally index\n\
     D1 = class index", 1);
@@ -748,6 +790,10 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0x9a3c, 
         "In: D1 = item index (only the actual index is used, the status bits are cut out)", 1);
 
+    // DebugModeSelectHits
+    SetFunctionCmt(0x9b58, 
+        "In: A2 = battlescene script stack frame", 1);
+
     // WriteBattlesceneScript
     SetFunctionCmt(0x9b92, 
         "In: D0 = actor index", 1);
@@ -758,16 +804,20 @@ Out: A0 = RAM address of deals slot\n\
 
     // InitBattlesceneDisplayedCombatants
     SetFunctionCmt(0x9e60, 
-        "In: A2 = battle scene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     A3 = pointer to action type in RAM\n\
     A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
+    // DetermineIneffectiveAttack
+    SetFunctionCmt(0x9ec4, 
+        "In: A2 = battlescene script stack frame", 1);
+
     // InitBattlesceneProperties
     SetFunctionCmt(0x9f28, 
-        "In: A2 = battle scene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     A3 = address in RAM of scene action type\n\
-    A4 = address in RAM of attacker index\n\
+    A4 = address in RAM of actor index\n\
     A5 = address in RAM of target index", 1);
 
     // CreateBattlesceneMessage
@@ -781,23 +831,38 @@ In: A3 = action type index in RAM\n\
 
     // CreateBattlesceneAnimation
     SetFunctionCmt(0xa200, 
-        "Load proper battle scene sprite/magic animation properties\n\
+        "Load proper battlescene sprite/magic animation properties\n\
 \n\
-      In: A3 = pointer to action data in RAM\n\
-          A4 = battle scene attacker index in RAM", 1);
+      In: A2 = battlescene script stack frame\n\
+          A3 = pointer to action data in RAM\n\
+          A4 = battlescene actor index in RAM", 1);
+
+    // WriteBattlesceneScript_End
+    SetFunctionCmt(0xa34e, 
+        "In: A2 = battlescene script stack frame", 1);
 
     // WriteBattlesceneScript_DoAction
     SetFunctionCmt(0xa3f4, 
-        "In: A2 = battlescene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     A3 = address in RAM of scene action type\n\
     A4 = address in RAM of actor index\n\
     A5 = address in RAM of target index", 1);
 
+    // FinalDoubleAttackCheck
+    SetFunctionCmt(0xa45e, 
+        "In: A2 = battlescene script stack frame", 1);
+
+    // IsAbleToCounterAttack
+    SetFunctionCmt(0xa49c, 
+        "In: A2 = battlescene script stack frame\n\
+\n\
+Out: -12(A2) = 0 if false, otherwise true", 1);
+
     // GetSpellAnimation
     SetFunctionCmt(0xa54e, 
-        "In: A2 = cutscene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     A3 = battle action in RAM\n\
-    A4 = battle scene attacker index in RAM\n\
+    A4 = battlescene actor index in RAM\n\
 \n\
 Out: D4 = spell animation index\n\
 \n\
@@ -810,18 +875,31 @@ Out: D4 = spell animation index\n\
     In: D4 = spell/item/projectile animation index, set $80 to come from enemy\n\
         D5 = animation type index (0 = attack, 1 = dodge, 2 = spell/item -- others (i.e. MMNK crit, RBT laser, BRGN flashing)", 1);
 
+    // WriteBattlesceneScript_SwitchTargets
+    SetFunctionCmt(0xa702, 
+        "In: A2 = battlescene script stack frame", 1);
+
+    // WriteBattlesceneScript_EXPandGold
+    SetFunctionCmt(0xa7f8, 
+        "In: A2 = battlescene script stack frame", 1);
+
     // GetAmountOfEXPforEncounter
     SetFunctionCmt(0xa968, 
-        "Get amount of EXP gained from encounter based on attacker level and target level\n\
+        "Get amount of EXP gained from encounter based on level difference between actor and target\n\
 \n\
-In: A4 = address of attacker byte in RAM\n\
-    A5 = address of target byte in RAM\n\
+      In: A4 = pointer to actor index in RAM\n\
+          A5 = pointer to target index in RAM\n\
 \n\
-Out: D5 = amount of EXP", 1);
+      Out: D5 = amount of EXP", 1);
+
+    // WriteBattlesceneScript_Attack
+    SetFunctionCmt(0xaab6, 
+        "In: A2 = battlescene script stack frame", 1);
 
     // WriteBattlesceneScript_DodgeAttack
     SetFunctionCmt(0xaafc, 
-        "In: A4 = pointer to actor index in RAM\n\
+        "In: A2 = battlescene script stack frame\n\
+    A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
     // CalculateDamage
@@ -831,23 +909,31 @@ Out: D5 = amount of EXP", 1);
 \n\
 Out: D6 = damage", 1);
 
-    // CalculateCriticalHit
+    // DetermineCriticalHit
     SetFunctionCmt(0xac4e, 
-        "In: D6 = damage", 1);
+        "In: A2 = battlescene script stack frame\n\
+    D6 = damage", 1);
 
     // WriteBattlesceneScript_InflictDamage
     SetFunctionCmt(0xacea, 
-        "In: A4 = pointer to actor index in RAM\n\
+        "In: A2 = battlescene script stack frame\n\
+    A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM\n\
     D6 = damage", 1);
 
+    // WriteBattlesceneScript_InflictAilment
+    SetFunctionCmt(0xae32, 
+        "In: A2 = battlescene script stack frame", 1);
+
     // WriteBattlesceneScript_InflictCurseDamage
     SetFunctionCmt(0xaf70, 
-        "In: D6 = damage", 1);
+        "In: A2 = battlescene script stack frame\n\
+    D6 = damage", 1);
 
     // DetermineDoubleAndCounter
     SetFunctionCmt(0xb00e, 
-        "In: A4 = pointer to attacker index in RAM\n\
+        "In: A2 = battlescene script stack frame\n\
+    A4 = pointer to actor index in RAM\n\
     A5 = pointer to target index in RAM", 1);
 
     // WriteBattlesceneScript_CastSpell
@@ -857,9 +943,18 @@ Out: D6 = damage", 1);
     A4 = actor index in RAM\n\
     A5 = target index in RAM", 1);
 
+    // SpellEffect_Desoul
+    SetFunctionCmt(0xb516, 
+        "In: A2 = battlescene script stack frame", 1);
+
+    // ApplyRandomEffectiveness
+    SetFunctionCmt(0xba98, 
+        "In: A2 = battlescene script stack frame", 1);
+
     // CalculateDamage_Spell
     SetFunctionCmt(0xbb02, 
-        "In: D2 = resistance setting (0=none, 1=minor, 2=major, 3=weakness)\n\
+        "In: A2 = battlescene script stack frame\n\
+    D2 = resistance setting (0=none, 1=minor, 2=major, 3=weakness)\n\
     D3 = chance to critical hit", 1);
 
     // AdjustSpellPower
@@ -874,14 +969,14 @@ Out: D6 = damage", 1);
 
     // GetItemBreakMessage
     SetFunctionCmt(0xbc9a, 
-        "In: A2 = battlescene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     D0 = whether item is already damaged (0=no, 1=yes)\n\
 \n\
 Out: D3 = message index", 1);
 
     // WriteBattlesceneScript_EnemyDropItem
     SetFunctionCmt(0xbd24, 
-        "In: A2 = battlescene stack\n\
+        "In: A2 = battlescene script stack frame\n\
     A3 = scene action type in RAM\n\
     A4 = actor index in RAM\n\
     A5 = target index in RAM", 1);
@@ -949,9 +1044,9 @@ Out: D1 = land effect setting (0=0%, 1=15%, 2=30%)", 1);
     SetFunctionCmt(0xc2c8, 
         "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
 
-    // GetWeaponRange
+    // GetAttackRange
     SetFunctionCmt(0xc306, 
-        "get index and max/min range of current character's current weapon (D1,D3,D4)", 1);
+        "Get combatant D0's max/min attack range -> D3, D4", 1);
 
     // CheckMuddled2
     SetFunctionCmt(0xc3b0, 
@@ -1096,7 +1191,7 @@ Out: carry clear if true", 1);
     SetFunctionCmt(0xdefc, 
         "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)\n\
 \n\
-    In: D0 = character index", 1);
+    In: D0 = combatant index", 1);
 
     // sub_EBA4
     SetFunctionCmt(0xeba4, 
@@ -1132,14 +1227,14 @@ Out: carry clear if true", 1);
 
     // LoadDiamenuWindowVdpTileData
     SetFunctionCmt(0x103b8, 
-        "In: -$C(A6) = window slot index", 1);
+        "In: -12(A6) = window slot index", 1);
 
-    // sub_10586
+    // ExecuteItemMenu
     SetFunctionCmt(0x10586, 
-        "In: D0 = current diamenu choice\n\
-    D1 = \n\
-    D2 = \n\
-    A0 = ", 1);
+        "In: A0 = special subroutine address to handle menu, default handling if not supplied\n\
+    D0 = initial choice (00=up, 01=left, 02=right, 03=down)\n\
+    D1 = animate-in direction (00=from bottom, other=from right)\n\
+    D2 = menu index to use (just affects icons and text)", 1);
 
     // sub_107EA
     SetFunctionCmt(0x107ea, 
@@ -1154,11 +1249,12 @@ Out: carry clear if true", 1);
 \n\
       Out: A1 = end of affected section after copy", 1);
 
-    // sub_10A4A
+    // ExecuteMagicMenu
     SetFunctionCmt(0x10a4a, 
-        "In: D1 = \n\
-    D2 = \n\
-    A0 = ", 1);
+        "In: A0 = special subroutine address to handle menu, default handling if not supplied\n\
+    D0 = initial choice (00=up, 01=left, 02=right, 03=down)\n\
+    D1 = animate-in direction (00=from bottom, other=from right)\n\
+    D2 = menu index to use (just affects icons and text)", 1);
 
     // sub_10CB0
     SetFunctionCmt(0x10cb0, 
@@ -1184,7 +1280,7 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x11898, 
         "Check ASCII name at A0 for two special characters", 1);
 
-    // BuildFighterMiniStatusWindow
+    // BuildMiniStatusWindow
     SetFunctionCmt(0x118be, 
         "In: A1 = window tiles address\n\
     D0 = combatant index", 1);
@@ -1193,21 +1289,21 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x11aae, 
         "Write stat value D0 or '??' if above 99", 1);
 
-    // CopyFighterMinistatusWindowTileColumn
+    // CopyMiniStatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
-        "draw tiles from A0 into A1 (one column)", 1);
+        "Draw tiles from A0 into A1 (one column)", 1);
 
-    // BuildMemberStatsScreen
+    // BuildMemberScreen
     SetFunctionCmt(0x11c2a, 
-        "Create and display member stats screen\n\
+        "Create and display member screen\n\
 \n\
-      In: D0 = character index", 1);
+      In: D0 = member index", 1);
 
     // AddStatusEffectTileIndexesToVdpTileOrder
     SetFunctionCmt(0x11eea, 
         "In: A1 = address of VDP tile order in RAM", 1);
 
-    // BuildMemberStatsWindow
+    // BuildMemberStatusWindow
     SetFunctionCmt(0x11ff0, 
         "In: D0 = character index\n\
     A1 = window tile adress", 1);
@@ -1229,6 +1325,16 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x14074, 
         "related to menu choice", 1);
 
+    // sub_14108
+    SetFunctionCmt(0x14108, 
+        "related to equip menu", 1);
+
+    // sub_141CE
+    SetFunctionCmt(0x141ce, 
+        "In: D1 = old equipped item index\n\
+    D2 = old equipped item slot\n\
+    D3 = equippable items count", 1);
+
     // sub_1445A
     SetFunctionCmt(0x1445a, 
         "Handle out of battle MAGIC menu", 1);
@@ -1237,9 +1343,13 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x146ae, 
         "In: D1 = blinking frame timer", 1);
 
-    // sub_1477E
+    // EquipNewItem
     SetFunctionCmt(0x1477e, 
-        "related to item unequip and cursed items", 1);
+        "Try to unequip current item, and equip new one if successful\n\
+\n\
+     In: D1 = old item index\n\
+         D2 = old item slot\n\
+         D4 = new item slot", 1);
 
     // sub_14B28
     SetFunctionCmt(0x14b28, 
@@ -1286,6 +1396,10 @@ Out: D0 = portrait index adjusted for class", 1);
     // sub_1586E
     SetFunctionCmt(0x1586e, 
         "related to battlefield options", 1);
+
+    // NameAlly
+    SetFunctionCmt(0x15bb0, 
+        "In: D0 = ally index", 1);
 
     // NumberPrompt
     SetFunctionCmt(0x16282, 
@@ -1454,7 +1568,39 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
     // ExecuteSpellAnimation
     SetFunctionCmt(0x19ee6, 
-        "spell animation subroutine", 1);
+        "Execute spell animation D0", 1);
+
+    // sub_1A0E2
+    SetFunctionCmt(0x1a0e2, 
+        "restore some colors", 1);
+
+    // sub_1A100
+    SetFunctionCmt(0x1a100, 
+        "Lower brightness of most elements on the screen to 50%", 1);
+
+    // sub_1A122
+    SetFunctionCmt(0x1a122, 
+        "Lower the brightness of most elements on the screen to 75%", 1);
+
+    // sub_1A14A
+    SetFunctionCmt(0x1a14a, 
+        "Apply a greyscale palette to most elements on the screen", 1);
+
+    // sub_1A19E
+    SetFunctionCmt(0x1a19e, 
+        "Tint the screen blue", 1);
+
+    // sub_1A1CA
+    SetFunctionCmt(0x1a1ca, 
+        "Tint the screen green", 1);
+
+    // sub_1A1F6
+    SetFunctionCmt(0x1a1f6, 
+        "Tint the screen red", 1);
+
+    // TintScreen_Apollo
+    SetFunctionCmt(0x1a222, 
+        "Tint parts of the screen red", 1);
 
     // ExecSpellAnimationFlash
     SetFunctionCmt(0x1a2a6, 
@@ -1464,13 +1610,13 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1a2d4, 
         "    Clears a portion at RAM:b406 and RAM:b532 for spell properties.", 1);
 
-    // sa1F_OddeyeBeam
+    // LoadInvocationSpell
+    SetFunctionCmt(0x1a32c, 
+        "code for invocations", 1);
+
+    // sa1F_OddEyeBeam
     SetFunctionCmt(0x1b716, 
         "and maybe Zynk's beam too ?", 1);
-
-    // sub_1B93C
-    SetFunctionCmt(0x1b93c, 
-        "desoul ?", 1);
 
     // DetermineDealsItemsNotInCurrentShop
     SetFunctionCmt(0x207fe, 
@@ -1482,9 +1628,21 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 \n\
 Out: Zero-bit clear = yes, set = no", 1);
 
-    // GetCurrentShopDefAddress
+    // GetShopInventoryAddress
     SetFunctionCmt(0x20852, 
-        "Get current shop definition address -> A0", 1);
+        "Get shop inventory address -> A0", 1);
+
+    // CountPromotableMembers
+    SetFunctionCmt(0x21072, 
+        "Return in -22(A6)", 1);
+
+    // GetPromotionIndex
+    SetFunctionCmt(0x210d0, 
+        "Get promotion index for class D1, given section type D2\n\
+\n\
+      Out: -32(A6) = promotion index\n\
+           -34(A6) = section length\n\
+           -36(A6) = 1 if no matching promotion data found", 1);
 
     // FindPromotionSection
     SetFunctionCmt(0x2110c, 
@@ -1494,6 +1652,10 @@ Out: A0 = address", 1);
     // ReplaceSpellsWithSORCdefaults
     SetFunctionCmt(0x2112c, 
         "In: A6 = church actions stack", 1);
+
+    // Church_GetCurrentForceMemberInfo
+    SetFunctionCmt(0x21156, 
+        "Out: D7 = force members counter", 1);
 
     // sub_219EC
     SetFunctionCmt(0x219ec, 
@@ -1507,9 +1669,9 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x22926, 
         "Copy caravan item indexes to generic list space", 1);
 
-    // sub_2294C
+    // IsItemInSlotEquippedAndCursed
     SetFunctionCmt(0x2294c, 
-        "get whether character D0's item at slot D1 is cursed -> carry", 1);
+        "Is character D0's item in slot D1 equipped and cursed ? CCR carry-bit set if true", 1);
 
     // FindUsableOutsideBattleItem
     SetFunctionCmt(0x229ca, 
@@ -1517,17 +1679,23 @@ Out: A0 = address", 1);
 
     // UseFieldItem
     SetFunctionCmt(0x229ec, 
-        "Find specific item index + code offset to run when used in field", 1);
+        "Find specific item index + code offset to run when used in field\n\
+\n\
+      In: D1 = item entry", 1);
 
     // GetCurrentPosition
     SetFunctionCmt(0x22c60, 
         "get first entity's X, Y and facing", 1);
 
-    // ControlBattleUnit
+    // ControlBattleEntity
     SetFunctionCmt(0x22e1a, 
         "Out: D2 = chosen X\n\
      D3 = chosen Y\n\
      D4 = copied P1 input state bitfield", 1);
+
+    // GetEntityIndexForCombatant_0
+    SetFunctionCmt(0x22f2a, 
+        "Pointless wrapper (should instead directly branch to subroutine below)", 1);
 
     // GetEntityIndexForCombatant
     SetFunctionCmt(0x22f30, 
@@ -1578,21 +1746,19 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x23c58, 
         "Get number of allies living, number of enemies living -> D2, D3", 1);
 
-    // sub_23D98
-    SetFunctionCmt(0x23d98, 
-        "battlefield spell/item use", 1);
-
     // GetEgressPositionForBattle
     SetFunctionCmt(0x23e50, 
         "HARDCODED special cases", 1);
 
-    // sub_23EB0
+    // ExecuteIndividualTurn
     SetFunctionCmt(0x23eb0, 
         "In: D0 = combatant index", 1);
 
     // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
-        "Handle after-turn effects (status effects, HP/MP regen/degen, etc)", 1);
+        "Handle after-turn effects (status effects, HP/MP regen/degen, etc)\n\
+\n\
+      In: D0 = combatant index", 1);
 
     // UpdateTargetListForCombatant
     SetFunctionCmt(0x24642, 
@@ -1601,6 +1767,18 @@ Out: Z = entity is NOT follower", 1);
     // sub_24966
     SetFunctionCmt(0x24966, 
         "    createSpellRangeGridMaster ?", 1);
+
+    // sub_24C4E
+    SetFunctionCmt(0x24c4e, 
+        "In: A0 = pointer to equippable items list\n\
+    D1 = old item index\n\
+    D2 = old item slot\n\
+    D3 = equippable items count", 1);
+
+    // EquipNewItemInBattle
+    SetFunctionCmt(0x24c94, 
+        "In: D2 = old item slot\n\
+    D4 = new item slot", 1);
 
     // sub_252FA
     SetFunctionCmt(0x252fa, 
@@ -1668,9 +1846,7 @@ Out: D0 = new X\n\
 
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
-        "In: D0 = combatant index\n\
-\n\
-Out: D4 = map sprite index", 1);
+        "Get combatant D0's map sprite index -> D4", 1);
 
     // GetCombatantMapSprite
     SetFunctionCmt(0x44a7c, 
@@ -1714,12 +1890,12 @@ Out: D4 = map sprite index", 1);
     SetFunctionCmt(0x453c6, 
         "Control Raft", 1);
 
-    // GetEntityPortaitAndSpeechSound
+    // GetEntityPortaitAndSpeechSfx
     SetFunctionCmt(0x45638, 
         "In: D0 = character index\n\
 \n\
 Out: D1 = portrait index\n\
-     D2 = speech sound index", 1);
+     D2 = speech sfx index", 1);
 
     // csc35_setBlocksVar
     SetFunctionCmt(0x46582, 

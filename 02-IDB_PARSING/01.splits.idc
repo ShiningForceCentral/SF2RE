@@ -39,6 +39,8 @@ static splitAll(){
     splitTextbanks(file);
     Message(" DONE.\nWeaponPalettes...");    
     splitWeaponPalettes(file);
+    Message(" DONE.\nIcons...");    
+    splitIcons(file);
     Message(" DONE.\n");    
     
     writestr(file,"\nsplit    0x0,0x0,\\0x0 - .bin\n");
@@ -346,8 +348,8 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x1C6F2C,0x1C7F7C,"WitchEndTiles","data/graphics/specialscreens/witchscreen/endingwitchtiles.bin",file);
     MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);    
 
-    splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
-    MakeAlign(0x1DFA46, 0x1E0000-0x1DFA46,15);    
+    //splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
+    MakeAlign(0x1DFA44, 0x1E0000-0x1DFA44,15);    
 
     splitSingleChunk(0x1E0000,0x1E8000,"","data/sound/pcmbank0.bin",file);
     splitSingleChunk(0x1E8000,0x1EB000,"","data/sound/pcmbank1.bin",file);
@@ -815,6 +817,31 @@ static splitWeaponPalettes(file) {
         SetManualInsn(addr, form("incbin \"data/graphics/battles/weapons/palettes/weaponpalette%s.bin\"",index));
         writestr(file,form("#split\t0x%s,0x%s,data/graphics/battles/weapons/palettes/weaponpalette%s.bin\n",ltoa(addr,16),ltoa(addr+4,16),index));
         addr=addr+4;
+        i++;
+    }
+
+}
+
+
+//splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
+
+static splitIcons(file) {
+
+    auto i,j,x,s,index;
+    auto start,end,addr,base;
+    i = 0;
+    start = 0x1D8004;
+    end = 0x1DFA44;
+    addr = start;  
+    for(j=start;j<end;j++){undefineByte(j);}
+    while(addr<end){
+        MakeData(addr,FF_BYTE,192,1);
+        index = ltoa(i,10);
+        while(strlen(index)<3){index=form("0%s",index);}
+        MakeNameEx(addr,form("Icon%s",index),0);
+        SetManualInsn(addr, form("incbin \"data/graphics/icons/icon%s.bin\"",index));
+        writestr(file,form("#split\t0x%s,0x%s,data/graphics/icons/icon%s.bin\n",ltoa(addr,16),ltoa(addr+192,16),index));
+        addr=addr+192;
         i++;
     }
 

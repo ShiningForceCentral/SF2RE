@@ -65,6 +65,7 @@ mkdir disasm\data\stats\allies\classes
 mkdir disasm\data\stats\allies\stats
 mkdir disasm\data\stats\enemies
 mkdir disasm\data\graphics
+mkdir disasm\data\graphics\icons
 mkdir disasm\data\graphics\mapsprites
 mkdir disasm\data\graphics\maps
 mkdir disasm\data\graphics\maps\mappalettes

@@ -167,24 +167,24 @@ static produceLayoutFile(){
     writestr(file,"\n; (beware : ROMs over 2MB imply to manage SRAM bankswitching first)");
     writestr(file,"\n\n");
 
-    produceSpecificSectionOne(file,        "01",    0x0,        0x8000,        90,    "0x000000..0x008000 : Technical Layer, Low Level Game Engine, Map/Exploration Engine, Entity Script Commands, Witch Functions");
-    produceSpecificSectionTwo(file,        "02",    0x8000,        0x10000,    121,    "0x008000..0x010000 : Character Stats Engine, Battle engine, Item Effects Engine, Enemy AI Engine");
-    produceSpecificSectionThree(file,    "03",    0x10000,    0x18000,    38,    "0x010000..0x018000 : Menu Engine");
-    produceSpecificSectionFour(file,    "04",    0x18000,    0x20000,    532,    "0x018000..0x020000 : BattleScene Engine");
-    produceSpecificSectionFive(file,    "05",    0x20000,    0x28000,    626,    "0x020000..0x028000 : Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine, Battle Engine, Exploration Engine, Special Sprites");
-    produceSpecificSectionSix(file,        "06",    0x28000,    0x44000,    6681,    "0x028000..0x044000 : Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Text Huffman Trees, Textbanks");
-    produceSpecificSectionSeven(file,    "07",    0x44000,    0x64000,    2931,    "0x044000..0x064000 : Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
-    produceSpecificSectionEight(file,    "08",    0x64000,    0xC8000,    953 ,    "0x064000..0x0C8000 : Map Tiles, Map Palettes, Map Data");
-    produceSpecificSectionNine(file,    "09",    0xC8000,    0x100000,    1315,    "0x0C8000..0x100000 : Entity Sprites");
-    produceSpecificSectionTen(file,        "10",    0x100000,    0x130000,    432,    "0x100000..0x130000 : Backgrounds, invocation sprites, title screen");
-    produceSpecificSectionEleven(file,    "11",    0x130000,    0x180000,    429,    "0x130000..0x180000 : Enemy battle sprites");
-    produceSpecificSectionTwelve(file,    "12",    0x180000,    0x1AC000,    871,    "0x180000..0x1AC000 : Ally battle sprites, status anim tiles, battlescene transition tiles, bolt graphics, ally and enemy animations");
-    produceSpecificSectionThirteen(file,    "13",    0x1AC000,    0x1B8000,    133,    "0x1AC000..0x1B8000 : Battle setup functions, battle terrains, battle entity setups, end kiss graphics");
-    produceSpecificSectionFourteen(file,    "14",    0x1B8000,    0x1C8000,    474,    "0x1B8000..0x1C8000 : Battlescene grounds, weapons, spell graphics, witch screens");
-    produceSpecificSectionFifteen(file,    "15",    0x1C8000,    0x1D8000,    1467,    "0x1C8000..0x1D8000 : Portraits");
-    produceSection(file,            "16",    0x1D8000,    0x1E0000,    126,    "0x1D8000..0x1E0000 : Icons");
-    produceSpecificSectionSeventeen(file,    "17",    0x1E0000,    0x1F0000,    462,    "0x1E0000..0x1F0000 : PCM Banks, YM Instruments, sound driver, char stats, witch screens");
-    produceSection(file,            "18",    0x1F0000,    0x200000,    1038,    "0x1F0000..0x200000 : Music banks 1 and 0");
+    produceSpecificSectionOne(file,       "01", 0x0,      0x8000,   90,   "0x000000..0x008000 : Technical Layer, Low Level Game Engine, Map/Exploration Engine, Entity Script Commands, Witch Functions");
+    produceSpecificSectionTwo(file,       "02", 0x8000,   0x10000,  121,  "0x008000..0x010000 : Character Stats Engine, Battle engine, Item Effects Engine, Enemy AI Engine");
+    produceSpecificSectionThree(file,     "03", 0x10000,  0x18000,  38,   "0x010000..0x018000 : Menu Engine");
+    produceSpecificSectionFour(file,      "04", 0x18000,  0x20000,  532,  "0x018000..0x020000 : BattleScene Engine");
+    produceSpecificSectionFive(file,      "05", 0x20000,  0x28000,  626,  "0x020000..0x028000 : Battle Engine, Special Sprites, Shop/Church/Blacksmith/Caravan engine, Battle Engine, Exploration Engine, Special Sprites");
+    produceSpecificSectionSix(file,       "06", 0x28000,  0x44000,  6681, "0x028000..0x044000 : Fonts, Menu Tiles, Text Decoding Functions, SEGA Logo, Game Staff, Conf/Debug modes, End Kiss Sequence, Text Huffman Trees, Textbanks");
+    produceSpecificSectionSeven(file,     "07", 0x44000,  0x64000,  2931, "0x044000..0x064000 : Entity ActScripts, CutScene Scripts, Battle CutScenes, Intro cutscene, End cutscene, Map Setups");
+    produceSpecificSectionEight(file,     "08", 0x64000,  0xC8000,  953 , "0x064000..0x0C8000 : Map Tiles, Map Palettes, Map Data");
+    produceSpecificSectionNine(file,      "09", 0xC8000,  0x100000, 1315, "0x0C8000..0x100000 : Entity Sprites");
+    produceSpecificSectionTen(file,       "10", 0x100000, 0x130000, 432,  "0x100000..0x130000 : Backgrounds, invocation sprites, title screen");
+    produceSpecificSectionEleven(file,    "11", 0x130000, 0x180000, 429,  "0x130000..0x180000 : Enemy battle sprites");
+    produceSpecificSectionTwelve(file,    "12", 0x180000, 0x1AC000, 871,  "0x180000..0x1AC000 : Ally battle sprites, status anim tiles, battlescene transition tiles, bolt graphics, ally and enemy animations");
+    produceSpecificSectionThirteen(file,  "13", 0x1AC000, 0x1B8000, 133,  "0x1AC000..0x1B8000 : Battle setup functions, battle terrains, battle entity setups, end kiss graphics");
+    produceSpecificSectionFourteen(file,  "14", 0x1B8000, 0x1C8000, 474,  "0x1B8000..0x1C8000 : Battlescene grounds, weapons, spell graphics, witch screens");
+    produceSpecificSectionFifteen(file,   "15", 0x1C8000, 0x1D8000, 1467, "0x1C8000..0x1D8000 : Portraits");
+    produceSpecificSectionSixteen(file,   "16", 0x1D8000, 0x1E0000, 126,  "0x1D8000..0x1E0000 : Icons");
+    produceSpecificSectionSeventeen(file, "17", 0x1E0000, 0x1F0000, 462,  "0x1E0000..0x1F0000 : PCM Banks, YM Instruments, sound driver, char stats, witch screens");
+    produceSection(file,                  "18", 0x1F0000, 0x200000, 1038, "0x1F0000..0x200000 : Music banks 1 and 0");
 
     fclose(file);
 
@@ -268,20 +268,28 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
 
     produceAsmScript(file,"code\\common\\stats\\statsengine_1",0x8000,0x853A,"Character stats engine");
     produceAsmScript(file,"data\\stats\\allies\\classes\\classtypes",0x853A,0x855A,"Class types table");
-    produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x96BA,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x9484,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\levelup",0x9484,0x95C6,"Level up function");
+    produceAsmScript(file,"code\\common\\stats\\initcharacterstats",0x95C6,0x96BA,"Init character stats function");
     produceAsmScript(file,"code\\common\\stats\\calculatestatgain",0x96BA,0x9736,"Calculate stat gain function");
     produceAsmScript(file,"code\\common\\stats\\statsengine_3",0x9736,0x9A9A,"Character stats engine");
     produceAsmScript(file,"code\\gameflow\\special\\debugmodebattleactions",0x9A9A,0x9B92,"Debug mode battle actions");    
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_1",0x9B92,0xA870,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_1",0x9B92,0x9EC4,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\determineineffectiveattack",0x9EC4,0x9F28,"Determine ineffective attack function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_2",0x9F28,0xA200,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\createbattlesceneanimation",0xA200,0xA34E,"Create battlescene animation function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_3",0xA34E,0xA54E,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\getspellanimation",0xA54E,0xA6E8,"Get spell animation function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xA6E8,0xA870,"Battle actions engine");
     produceAsmScript(file,"data\\battles\\global\\halvedexpearnedbattles",0xA870,0xA872,"Halved EXP earned battles table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_2",0xA872,0xACCA,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_5",0xA872,0xACCA,"Battle actions engine");
     produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_3",0xACEA,0xBCF0,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_6",0xACEA,0xBCF0,"Battle actions engine");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_4",0xBD24,0xBE52,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_7",0xBD24,0xBE52,"Battle actions engine");
     produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
     produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_5",0xC024,0xC09A,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_8",0xC024,0xC09A,"Battle actions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
     produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
     writestr(file,"                wordAlign\n");
@@ -394,7 +402,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 
     produceAsmSectionNoPretty(file,"",0x20000,0x20064);
     produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
-    produceAsmScript(file,"data\\stats\\items\\shopdefs",0x20878,0x20A02,"Shop definitions");
+    produceAsmScript(file,"data\\stats\\items\\shopinventories",0x20878,0x20A02,"Shop inventories");
     writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
     produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
@@ -2516,6 +2524,26 @@ static produceSpecificSectionFifteen(mainFile,sectionName,start,end,fs,sectionCo
 }
 
 
+static produceSpecificSectionSixteen(mainFile,sectionName,start,end,fs,sectionComment){
+    auto ea,itemSize,action,currentLine,previousLine,fileName,file;
+    auto output, name, indent, comment, commentEx, commentIndent;
+    fileName = form("layout\\sf2-%s-0x%s-0x%s.asm",sectionName,ltoa(start,16),ltoa(end,16));
+    Message(form("Writing assembly section %s to %s (%s) ... ",sectionName,fileName,sectionComment));    
+    action = 1;
+    writestr(mainFile,form("                include \"%s\"    ; %s\n",fileName,sectionComment));
+    file = fopen(form("disasm\\%s",fileName),"w");
+    writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
+    writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));   
+    
+    produceAsmSection(file,"",0x1D8000,0x1D8004);
+    produceAsmScript(file,"data\\graphics\\icons\\entries",0x1D8004,0x1DFA44,"Icons");
+    produceAsmSection(file,"",0x1DFA44,0x1E0000);
+    
+    fclose(file);
+    Message("DONE.\n");    
+}
+
+
 static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,sectionComment){
     auto ea,itemSize,action,currentLine,previousLine,fileName,file;
     auto output, name, indent, comment, commentEx, commentIndent;
@@ -2729,27 +2757,27 @@ static writeFunctionHeader(file, ea, prettyWriteFunctions){
             }            
         }
     }
-    undefineLocalVars(file,ea);
+    writeLocalVariables(file,ea);
+    if(prettyWriteFunctions!=0){
+        writestr(file,"\n");
+    }
 }
 
-static undefineLocalVars(file,ea){
-    auto id, i, firstM, lastM, mName, mSize, mFlag;
-    id = GetFrame(ea);
-    firstM = GetFirstMember(id);
-    lastM = GetLastMember(id);
-    i=firstM;
-    while(i<=lastM){
-        if(i!=-1&&GetMemberName(id,i)!=""&&GetMemberName(id,i)!=" r"&&GetMemberName(id,i)!=" s"){
-            mName = GetMemberName(id,i); // Get the name
-            mSize = GetMemberSize(id, i); // Get the size (in byte)
-            mFlag = GetMemberFlag(id, i); // Get the flag
-            Message("\n%a : undefined %s %d %x", ea, mName, mSize, mFlag);
-            DelStrucMember(id,i);        
-            i = i+mSize;
+static writeLocalVariables(file,ea){
+    auto frame,member,name,offset;
+    frame = GetFrame(ea);
+    DelStrucMember(frame,GetMemberOffset(frame," r"));
+    DelStrucMember(frame,GetMemberOffset(frame," s"));
+    member = GetFirstMember(frame);
+    while(member<=GetLastMember(frame)){
+        name = GetMemberName(frame,member);
+        if(member!=-1&&name!=""){
+            offset = GetFrameLvarSize(ea)-member;
+            writestr(file,form("%s = -%d\n",name,offset));
+            member = member+GetMemberSize(frame,member);
+        }else{
+            member++;
         }
-        else{
-            i++;
-        }    
     }
 }
 
