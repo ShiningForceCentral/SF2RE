@@ -559,8 +559,8 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,2,"var_2");
-    makeLocalVariables(0x2448A,variables);
+    SetArrayString(variables,2,"combatant");
+    makeLocalVariables(0x24490,variables);
     deleteArrayStrings(variables);
     
     /*  */
