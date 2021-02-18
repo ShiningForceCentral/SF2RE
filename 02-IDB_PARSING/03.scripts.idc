@@ -8,7 +8,7 @@ static main(void){
     Message("\nINITIALIZING ARRAYS...\n");
     initializeArrays();
 
-    if(AskYN(1,"Parse cutscene at current cursor position ?")!=1){
+    if(AskYN(0,"Parse cutscene at current cursor position ?")!=1){
         parseAll();
     }
     else{
@@ -18,7 +18,13 @@ static main(void){
     Message("DELETING ARRAYS...\n");
     deleteArrays();
 
-
+    // Check if script running in batch mode, and exit once done
+    if (Batch(1) == 1) {
+        Exit(0);                              // exit to OS, error code 0 - success		
+    }
+    else {
+        Batch(0);
+    }
 }
 
 static parseAll(){

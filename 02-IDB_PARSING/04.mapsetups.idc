@@ -16,7 +16,14 @@ static main(void){
     deleteArrays();
       
     Message("END OF PARSING.\n");    
-
+    
+    // Check if script running in batch mode, and exit once done
+    if (Batch(1) == 1) {
+        Exit(0);                              // exit to OS, error code 0 - success		
+    }
+    else {
+        Batch(0);
+    }
 }
 
 

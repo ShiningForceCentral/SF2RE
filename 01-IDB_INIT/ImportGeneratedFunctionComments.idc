@@ -2207,4 +2207,11 @@ Out: D1 = upgraded enemy index", 1);
 \n\
       Out: D1 = 0 if false, 1 if true", 1);
 
+    // Check if script running in batch mode, and exit once done
+    if (Batch(1) == 1) {
+        Exit(0);                              // exit to OS, error code 0 - success		
+    }
+    else {
+        Batch(0);
+    }
 }

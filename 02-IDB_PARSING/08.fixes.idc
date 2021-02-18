@@ -53,7 +53,14 @@ static main(void) {
     Message(" DONE.\n");
     
     Message("END OF FIXES.\n");
-    Batch(0);
+    
+    // Check if script running in batch mode, and exit once done
+    if (Batch(1) == 1) {
+        Exit(0);                              // exit to OS, error code 0 - success		
+    }
+    else {
+        Batch(0);
+    }
 
 }
 
@@ -86,7 +93,7 @@ static fixRPTs() {
 
 
 /*
- *  IDC SCRIPT : FIX INSTRUCTION REPRESENSATIONS
+ *  IDC SCRIPT : FIX INSTRUCTION REPRESENTATIONS
  *
  *  It is known that IDA's mc68 module doesn't
  *  properly output certain instructions with 
@@ -123,7 +130,7 @@ static fixInstructionRepresentations(){
     
     auto batch;
     
-    Batch(0);
+    //Batch(0);
     //batch = AskYN(1,"Fix Instruction Represensations : BATCH MODE ?");
     //if (batch==-1) return;
     //Batch(batch);
@@ -568,10 +575,10 @@ static fixSingleMapSetuSection4(ea){
 }
 
 static makeRelativeOffset(ea,base){
-        if(Word(ea) > 0x8000) {
-            OpOffEx(ea, -1, REF_LOW16, base + (Word(ea)+0xFFFF0000), base, 0);
-        }
-        else{
-            OpOffEx(ea, -1, REF_OFF32, -1, base, 0);
-        }
+    if(Word(ea) > 0x8000) {
+        OpOffEx(ea, -1, REF_LOW16, base + (Word(ea)+0xFFFF0000), base, 0);
+    }
+    else{
+        OpOffEx(ea, -1, REF_OFF32, -1, base, 0);
+    }
 }
