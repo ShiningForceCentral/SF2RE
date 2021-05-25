@@ -279,15 +279,15 @@ Z=1 if that's the case", 1);
     SetFunctionCmt(0x5ac8, 
         "set entity 1A-1B values with xxxx", 1);
 
-    // esc11_
+    // esc11_setAccelerationFactors
     SetFunctionCmt(0x5ad4, 
         "set entity 18-19 values with xxxx", 1);
 
-    // esc12_
+    // esc12_activateAcceleration
     SetFunctionCmt(0x5ae0, 
         "set or clear entity value 1C bits 0-1 according to xxxx", 1);
 
-    // esc13_
+    // esc13_activateDeceleration
     SetFunctionCmt(0x5b0e, 
         "set or clear entity value 1C bits 2-3 according to xxxx", 1);
 
@@ -595,7 +595,7 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
     D2 = item type bitmask (for ANDing the item type bitfield)\n\
     D3 = class equip bitmask (for ANDing the item equip bitfield)", 1);
 
-    // GetNewATTandDEFwithItem
+    // GetNewATTandDEFwithItemEquipped
     SetFunctionCmt(0x8fee, 
         "In: A0 = combatant entry address\n\
     D1 = item index\n\
@@ -695,7 +695,7 @@ Out: D1 = word", 1);
     SetFunctionCmt(0x936c, 
         "clamp byte D7 of entity D0's information - D1 between D5 and D6", 1);
 
-    // GetDistanceBetweenCombatants
+    // GetDistanceBetweenEntities
     SetFunctionCmt(0x941e, 
         "Get distance between two combatants (simple X and Y calculation, no obstructions)\n\
 \n\
@@ -1197,7 +1197,7 @@ Out: carry clear if true", 1);
     SetFunctionCmt(0xeba4, 
         "In: D0 = character index", 1);
 
-    // j_EndKiss
+    // j_PlayEndKiss
     SetFunctionCmt(0x100b4, 
         "related to end kiss", 1);
 
@@ -1687,7 +1687,7 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x22c60, 
         "get first entity's X, Y and facing", 1);
 
-    // ControlBattleEntity
+    // ControlBattleUnit
     SetFunctionCmt(0x22e1a, 
         "Out: D2 = chosen X\n\
      D3 = chosen Y\n\
@@ -1756,9 +1756,13 @@ Out: Z = entity is NOT follower", 1);
 
     // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
-        "Handle after-turn effects (status effects, HP/MP regen/degen, etc)\n\
+        "Handle after-turn effects (status effects, HP/MP regen/degen, etc.)\n\
 \n\
       In: D0 = combatant index", 1);
+
+    // SpawnEnemy
+    SetFunctionCmt(0x24490, 
+        "In: D0 = combatant", 1);
 
     // UpdateTargetListForCombatant
     SetFunctionCmt(0x24642, 

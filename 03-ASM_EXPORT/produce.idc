@@ -2758,9 +2758,6 @@ static writeFunctionHeader(file, ea, prettyWriteFunctions){
         }
     }
     writeLocalVariables(file,ea);
-    if(prettyWriteFunctions!=0){
-        writestr(file,"\n");
-    }
 }
 
 static writeLocalVariables(file,ea){
@@ -2769,15 +2766,18 @@ static writeLocalVariables(file,ea){
     DelStrucMember(frame,GetMemberOffset(frame," r"));
     DelStrucMember(frame,GetMemberOffset(frame," s"));
     member = GetFirstMember(frame);
-    while(member<=GetLastMember(frame)){
+    while(member!=-1&&member<=GetLastMember(frame)){
         name = GetMemberName(frame,member);
-        if(member!=-1&&name!=""){
+        if(name!=""){
             offset = GetFrameLvarSize(ea)-member;
             writestr(file,form("%s = -%d\n",name,offset));
             member = member+GetMemberSize(frame,member);
         }else{
             member++;
         }
+    }
+    if(GetFirstMember(frame)!=-1){
+        writestr(file,"\n");
     }
 }
 
@@ -2975,7 +2975,7 @@ static formatRptCmt(cmt){
 static formatManualInsn(manualInsn){
     auto result, indent, searcher, next;
     result = "";
-    indent = "                    ";
+    indent = "                ";
     searcher = indent+manualInsn;
     next = 0;
     while(next!=-1){

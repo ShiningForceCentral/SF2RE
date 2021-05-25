@@ -175,17 +175,18 @@ static parseRaftResetMapCoords(){
 
 
 static parseClassTypes(){
-    auto addr, i, j, classType, className;
+    auto addr, classType, index, className;
     addr = 0x853A;
     while(addr<0x855A){
         undefineByte(addr);
         MakeByte(addr);
-        classType = substr(GetConstName(GetConst(GetEnum("ClassTypes"),Byte(addr),-1)),strlen("CLASSTYPE_"),-1);
+        classType = getClassTypeShorthand(Byte(addr));
         SetManualInsn(addr, form("classType %s", classType));
-        // Provide class name as a comment
-        className = findName(0x17F3E,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), className));
-        i++;
+        
+        /* Provide class name and index as a comment */
+        className = getClassName(index);
+        MakeRptCmt(addr, form("%d: %s", index, className));
+        index++;
         addr++;
     }
 }
@@ -196,11 +197,12 @@ static parseHalvedEXPearnedBattles(){
     while(addr<0xA871){
         undefineByte(addr);
         MakeByte(addr);
-        battle = substr(GetConstName(GetConst(GetEnum("Battles"),Byte(addr),-1)),strlen("BATTLE_"),-1);
+        battle = getBattleShorthand(Byte(addr));
         SetManualInsn(addr, form("battle %s", battle));
         addr++;
     }
-    // Terminator byte at address 0xA871
+    
+    /* Terminator byte at address 0xA871 */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
@@ -225,41 +227,48 @@ static parseItemBreakMessages(){
     while(addr<0xBD22){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,2,1);
-        item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),strlen("ITEM_"),0);
+        item = getItemShorthand(Byte(addr));
         msgOffset = Byte(addr+1);
         SetManualInsn(addr, form("itemBreakMessage %s, %d", item, msgOffset));
         addr = addr+2;
     }
-    // Terminator word at address 0xBD22
+    
+    /* Terminator word at address 0xBD22 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
     SetManualInsn(addr, "tableEnd");
 }
 
 static parseEnemyItemDrops(){
-    auto addr, i, j, battle, enemyEntity, itemDrop, dropFlag;
+    auto addr, j, battle, enemyEntity, itemDrop, dropFlag;
     addr = 0xBE52;
     while(addr<0xBECA){
         for(j=addr;j<addr+4;j++){undefineByte(j);}
-        // Battle
+        
+        /* Battle */
         MakeByte(addr);
-        battle = substr(GetConstName(GetConst(GetEnum("Battles"),Byte(addr),-1)),strlen("BATTLE_"),-1);
+        battle = getBattleShorthand(Byte(addr));
         SetManualInsn(addr, form("battle      %s", battle));
-        // Enemy entity
+        
+        /* Enemy entity */
         MakeByte(addr+1);
         enemyEntity = Byte(addr+1)-128;
         SetManualInsn(addr+1, form("enemyEntity %d", enemyEntity));
-        // Item drop
+        
+        /* Item */
         MakeByte(addr+2);
-        itemDrop = GetBitfieldConstNames(GetEnum("Items"),Byte(addr+2),strlen("ITEM_"),0);
+        itemDrop = getItemShorthand(Byte(addr+2));
         SetManualInsn(addr+2, form("itemIndex   %s", itemDrop));
-        // Drop flag
+        
+        /* Drpped flag */
         MakeByte(addr+3);
         dropFlag = Byte(addr+3);
         SetManualInsn(addr+3, form("droppedFlag %d\n", dropFlag));
+        
         addr = addr+4;
     }
-    // Terminator word at address 0xBECA
+    
+    /* Terminator word at address 0xBECA */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
     SetManualInsn(addr, "tableEnd");
@@ -284,17 +293,18 @@ static parseEnemyGold(){
 */
 
 static parseSpellElements(){
-    auto addr, i, j, spellElement, spellName;
+    auto addr, spellElement, index, spellName;
     addr = 0xC24E;
     while(addr<0xC27A){
         undefineByte(addr);
         MakeByte(addr);
-        spellElement = substr(GetConstName(GetConst(GetEnum("SpellElements"),Byte(addr),-1)),strlen("SPELLELEMENT_"),-1);
+        spellElement = getSpellElementShorthand(Byte(addr));
         SetManualInsn(addr, form("spellElement %s", spellElement));
-        // Provide spell name as a comment
-        spellName = findName(0xF9C4,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), spellName));
-        i++;
+        
+        /* Provide spell name as a comment */
+        spellName = getSpellName(index);
+        MakeRptCmt(addr, form("%d: %s", index, spellName));
+        index++;
         addr++;
     }
 }
@@ -306,10 +316,10 @@ static parseLandEffectSettingsAndMoveCosts(){
         undefineByte(addr);
         MakeByte(addr);
         if(Byte(addr)==0xFF){
-            landEffectSettingAndMoveCost = substr(GetConstName(GetConst(GetEnum("LandEffectSetting_Obstructed"),Byte(addr),-1)),strlen("LANDEFFECTSETTING_"),-1);
+            landEffectSettingAndMoveCost = getLandEffectSettingObstructedShorthand(Byte(addr));
         }else{
-            landEffect = GetBitfieldConstNames(GetEnum("LandEffectSettings"),Byte(addr)&0xF0,strlen("LANDEFFECTSETTING_"),0);
-            landEffectSettingAndMoveCost = form("%s|%s", landEffect, ltoa(Byte(addr)&0xF,10));
+            landEffect = getLandEffectSettingShorthand(Byte(addr)&0xF0);
+            landEffectSettingAndMoveCost = form("%s|%d", landEffect, Byte(addr)&0xF);
         }
         SetManualInsn(addr, form("landEffectAndMoveCost %s", landEffectSettingAndMoveCost));
         addr++;
@@ -317,58 +327,58 @@ static parseLandEffectSettingsAndMoveCosts(){
 }
 
 static parseSpellNames(){
-    auto addr, j, len, name;
+    auto addr, j, size, name;
     addr = 0xF9C4;
     while(addr<0xFAD6){
-        len = Byte(addr)+1;
-        name = Str(addr+1,len-1);
-        for(j=addr;j<addr+len;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,len,1);
+        size = Byte(addr)+1;
+        name = Str(addr,size);
+        for(j=addr;j<addr+size;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,size,1);
         SetManualInsn(addr, form("spellName \"%s\"", name));
-        addr = addr+len;
+        addr = addr+size;
     }
 }
 
 static parseAllyNames(){
-    auto addr, j, len, name;
+    auto addr, j, size, name;
     addr = 0xFAD6;
     while(addr<0xFB8A){
-        len = Byte(addr)+1;
-        name = Str(addr+1,len-1);
-        for(j=addr;j<addr+len;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,len,1);
+        size = Byte(addr)+1;
+        name = Str(addr,size);
+        for(j=addr;j<addr+size;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,size,1);
         SetManualInsn(addr, form("allyName \"%s\"", name));
-        addr = addr+len;
+        addr = addr+size;
     }
 }
 
 static parseEnemyNames(){
-    auto addr, j, len, name;
+    auto addr, j, size, name;
     addr = 0xFB8A;
     while(addr<0xFF87){
-        len = Byte(addr)+1;
-        name = Str(addr+1,len-1);
-        for(j=addr;j<addr+len;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,len,1);
+        size = Byte(addr)+1;
+        name = Str(addr,size);
+        for(j=addr;j<addr+size;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,size,1);
         SetManualInsn(addr, form("enemyName \"%s\"", name));
-        addr = addr+len;
+        addr = addr+size;
     }
-    // Manual fix for Jaro's bugged entry
+    
+    /* Set Jaro's entry manually */
     SetManualInsn(0xFF5E, form("enemyName \"JAR\", 0"));
-    MakeRptCmt(0xFF5E,"here is the cause of the infamous JAR bug, an innocent typo :)");
 }
 
 static parseSpellLevelHighlightSpriteDefs(){
-    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
+    auto addr, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
     addr = 0x10DD2;
     while(addr<0x10DE2){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,8,1);
         ypos = ltoa(Word(addr),10);
-        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
-        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
-        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
+        sizeAndLink = form("%s|%d", size, Word(addr+2)&0xFF);
+        props = getVdpTileShorthand(Word(addr+4)&0xF800);
+        tileAndProps = form("%d|%s", Word(addr+4)&0x7FF, props);
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
         addr = addr+8;
@@ -376,46 +386,37 @@ static parseSpellLevelHighlightSpriteDefs(){
 }
 
 static parseDiamondMenuLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x10E1C;
     while(addr<0x10EF4){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
         addr = addr+2;
     }
 }
 
 static parseMagicMenuLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x10EF4;
     while(addr<0x10FCC){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
         addr = addr+2;
     }
 }
 
 static parseItemMenuLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x10FCC;
     while(addr<0x110A4){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
         addr = addr+2;
     }
 }
@@ -426,7 +427,7 @@ static parseSpellLevelTilesLayouts(){
     while(addr<0x1115C){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -438,7 +439,7 @@ static parseBattleEquipWindowLayout(){
     while(addr<0x11572){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -450,23 +451,20 @@ static parseFighterMiniStatusWindowLayout(){
     while(addr<0x11B46){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
 }
 
 static parsePortraitWindowLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x126EE;
     while(addr<0x1278E){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
         addr = addr+2;
     }
 }
@@ -477,7 +475,7 @@ static parseAllyKillDefeatWindowLayout(){
     while(addr<0x1284E){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -489,7 +487,7 @@ static parseGoldWindowLayout(){
     while(addr<0x1288E){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -502,9 +500,9 @@ static parseMemberListTextHighlightSpriteDefs(){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,8,1);
         ypos = ltoa(Word(addr),10);
-        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
         sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
+        props = getVdpTileShorthand(Word(addr+4)&0xF800);
         tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
@@ -518,7 +516,7 @@ static parseUnknownWindowLayout_13EDE(){
     while(addr<0x13F14){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -531,9 +529,9 @@ static parseItemListTextHighlightSpriteDefs(){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,8,1);
         ypos = ltoa(Word(addr),10);
-        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
         sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
+        props = getVdpTileShorthand(Word(addr+4)&0xF800);
         tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
@@ -542,31 +540,25 @@ static parseItemListTextHighlightSpriteDefs(){
 }
 
 static parseShopInventoryWindowLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x1505C;
     while(addr<0x151D6){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpBaseTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
+        SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
 }
 
 static parseYesNoPromptMenuLayout(){
-    auto addr, j, tile, props;
+    auto addr, j, vdpTile;
     addr = 0x154A2;
     while(addr<0x154F6){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        tile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x7FF,strlen("VDPTILE_"),0);
-        if(tile==""){tile = ltoa(Word(addr)&0x7FF,10);}
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0xF800,strlen("VDPTILE_"),0);
-        if(props!=""){props = form("|%s", props);}
-        SetManualInsn(addr, form("vdpTile %s%s", tile, props));
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
         addr = addr+2;
     }
 }
@@ -578,9 +570,9 @@ static parseBattleConfigSpriteDefs(){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,8,1);
         ypos = ltoa(Word(addr),10);
-        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
         sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
+        props = getVdpTileShorthand(Word(addr+4)&0xF800);
         tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
@@ -594,7 +586,7 @@ static parseBattleConfigWindowLayout(){
     while(addr<0x15BB0){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -606,7 +598,7 @@ static parseAlphabetWindowLayout(){
     while(addr<0x16204){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -618,7 +610,7 @@ static parseNameEntryWindowLayout(){
     while(addr<0x1623A){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -630,7 +622,7 @@ static parseTimerWindowLayout(){
     while(addr<0x16658){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
@@ -642,155 +634,177 @@ static parseMemberStatsWindowLayout(){
     while(addr<0x16EA6){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        vdpTile = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr)&0x1FFF,strlen("VDPTILE_"),0);
+        vdpTile = getVdpTileShorthand(Word(addr)&0x1FFF);
         SetManualInsn(addr, form("vdpBaseTile %s", vdpTile));
         addr = addr+2;
     }
 }
 
 static parseItemDefs(){
-    auto addr, i, j, equipFlags, maxRange, minRange, price, itemType, useSpell, equipEffects, next, itemName;
+    auto addr, j, equipFlags, maxRange, minRange, price, itemType, useSpell, equipEffects, next, index, itemName;
     addr = 0x16EA6;
     while(addr<0x176A6){
         for(j=addr;j<addr+16;j++){undefineByte(j);}
-        // Equip flags
+        
+        /* Equip flags */
         MakeDword(addr);
-        if(Dword(addr)==0||Dword(addr)==-1){
-            equipFlags = substr(GetConstName(GetConst(GetEnum("EquipFlags_Other"),Dword(addr),-1)),strlen("EQUIPFLAG_"),-1);
-            SetManualInsn(addr, form("equipFlags %s", equipFlags));
+        if(Dword(addr)==0){
+            //equipFlags = getEquipFlagsOtherShorthand(Dword(addr));
+            equipFlags = "NONE";
+        }else if(Dword(addr)==-1){
+            equipFlags = "ALL";
         }else{
-            equipFlags = GetBitfieldConstNames(GetEnum("EquipFlags"),Dword(addr),strlen("EQUIPFLAG_"),0);
-            SetManualInsn(addr, form("equipFlags &\n%s", equipFlags));
+            equipFlags = getEquipFlagsShorthand(Dword(addr));
         }
-        // Range
+        SetManualInsn(addr, form("equipFlags %s", equipFlags));
+        
+        /* Range */
         MakeData(addr+4,FF_BYTE,2,1);
         maxRange = Byte(addr+4);
         minRange = Byte(addr+5);
         SetManualInsn(addr+4, form("range      %d, %d", minRange, maxRange));
-        // Price
+        
+        /* Price */
         MakeWord(addr+6);
         price = Word(addr+6);
         SetManualInsn(addr+6, form("price      %d", price));
-        // Item type
+        
+        /* Item type */
         MakeByte(addr+8);
-        if(Byte(addr+8)!=0){
-            itemType = GetBitfieldConstNames(GetEnum("ItemType"),Byte(addr+8),strlen("ITEMTYPE_"),0);
+        if(Byte(addr+8)==0){
+            itemType = getItemTypeNoneShorthand(Byte(addr+8));
         }else{
-            itemType = substr(GetConstName(GetConst(GetEnum("ItemType_None"),Byte(addr+8),-1)),strlen("ITEMTYPE_"),-1);
+            itemType = getItemTypeShorthand(Byte(addr+8));
         }
         SetManualInsn(addr+8, form("itemType   %s", itemType));
-        // Use spell
+        
+        /* Use spell */
         MakeByte(addr+9);
-        useSpell = GetBitfieldConstNames(GetEnum("Spells"),Byte(addr+9),strlen("SPELL_"),0);
+        useSpell = getSpellShorthand(Byte(addr+9));
         SetManualInsn(addr+9, form("useSpell   %s", useSpell));
-        // Equip effects
+        
+        /* Equip effects */
         MakeData(addr+10,FF_BYTE,6,1);
         equipEffects = "";
         for(j=addr+10;j<addr+16;j=j+2){
-            next = substr(GetConstName(GetConst(GetEnum("EquipEffects"),Byte(j),-1)),strlen("EQUIPEFFECT_"),-1);
-            if(equipEffects==""){equipEffects = form("%s, %d", next, Byte(j+1));}
-            else{equipEffects = form("%s, &\n%s, %d", equipEffects, next, Byte(j+1));}
+            next = getEquipEffectShorthand(Byte(j));
+            if(equipEffects==""){
+                equipEffects = form("    %s, %d", next, Byte(j+1));
+            }else{
+                equipEffects = form("%s, &\n    %s, %d", equipEffects, next, Byte(j+1));
+            }
         }
         SetManualInsn(addr+10, form("equipEffects &\n%s\n", equipEffects));
-        // Provide item name as a comment
-        itemName = findNameWithoutSpecialChar(0x1796E,i,1);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), itemName));
-        i++;
+        
+        /* Provide item name as a comment */
+        itemName = getItemName(index);
+        ExtLinA(addr, 0, form("; %d: %s", index, itemName));
+        index++;
         addr = addr+16;
     }
 }
 
 static parseSpellDefs(){
-    auto addr, j, index, mpCost, animation, properties, maxRange, minRange, radius, power, count, spellName;
+    auto addr, j, entry, mpCost, animation, properties, maxRange, minRange, radius, power, index, count, spellName;
     addr = 0x176A6;
     while(addr<0x1796E){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
-        // Spell entry
+        
+        /* Spell entry */
         MakeByte(addr);
-        index = GetBitfieldConstNames(GetEnum("Spells"),Byte(addr),strlen("SPELL_"),0);
-        SetManualInsn(addr, form("entry      %s", index));
-        // MP cost
+        entry = getSpellShorthand(Byte(addr));
+        SetManualInsn(addr, form("entry      %s", entry));
+        
+        /* MP cost */
         MakeByte(addr+1);
         mpCost = Byte(addr+1);
         SetManualInsn(addr+1, form("mpCost     %d", mpCost));
-        // Animation index
+        
+        /* Animation index */
         MakeByte(addr+2);
-        animation = GetBitfieldConstNames(GetEnum("SpellAnimations"),Byte(addr+2),strlen("SPELLANIMATION_"),0);
+        animation = getSpellAnimationShorthand(Byte(addr+2));
         SetManualInsn(addr+2, form("animation  %s", animation));
-        // Spell properties
+        
+        /* Spell properties */
         MakeByte(addr+3);
-        properties = GetBitfieldConstNames(GetEnum("SpellProps"),Byte(addr+3),strlen("SPELLPROPS_"),0);
+        properties = getSpellPropertiesShorthand(Byte(addr+3));
         SetManualInsn(addr+3, form("properties %s", properties));
-        // Range
+        
+        /* Range */
         MakeData(addr+4,FF_BYTE,2,1);
         maxRange = Byte(addr+4);
         minRange = Byte(addr+5);
         SetManualInsn(addr+4, form("range      %d, %d", minRange, maxRange));
-        // Radius
+        
+        /* Radius */
         MakeByte(addr+6);
         radius = Byte(addr+6);
         SetManualInsn(addr+6, form("radius     %d", radius));
-        // Power
+        
+        /* Power */
         MakeByte(addr+7);
         power = Byte(addr+7);
         SetManualInsn(addr+7, form("power      %d\n", power));
-        // Provide spell name as a comment
+        
+        /* Provide spell name as a comment */
         index = Byte(addr);
         count = 1;
         while(index>=64){
             index = index-64;
             count++;
         }
-        spellName = findName(0xF9C4,index);
-        MakeRptCmt(addr, form("%s %s", spellName, ltoa(count,10)));
+        spellName = getSpellName(index);
+        MakeRptCmt(addr, form("%s %d", spellName, count));
         addr = addr+8;
     }
 }
 
 static parseItemNames(){
-    auto addr, j, len, cc, subLen, next, nameOne, nameTwo;
+    auto addr, size, subSize, specialChar, nextChar, j, nameOne, nameTwo;
     addr = 0x1796E;
     while(addr<0x17F3D){
-        len = Byte(addr)+1;
-        // Get name properties
-        cc = 0;
-        subLen = 1;
-        for(j=addr+1;j<addr+len-1;j++){
-            next = Byte(j);
-            if(next==11||next==13){
-                cc = next;
+        size = Byte(addr)+1;
+        
+        /* Get name properties : special character, substring entry size */
+        subSize = 1;
+        specialChar = 0;
+        for(j=addr+1;j<addr+size-1;j++){
+            nextChar = Byte(j);
+            if(nextChar==11||nextChar==13){
+                specialChar = nextChar;
                 break;
             }
-            subLen = subLen+1;
+            subSize++;
         }
-        for(j=addr;j<addr+len;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,len,1);
-        if(cc!=0){
-            nameOne = Str(addr+1,subLen-1);
-            nameTwo = Str(addr+subLen+1,len-subLen-1);
-            SetManualInsn(addr, form("itemName \"%s\", %d, \"%s\"", nameOne, cc, nameTwo));
+        
+        for(j=addr;j<addr+size;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,size,1);
+        if(specialChar!=0){
+            nameOne = Str(addr,subSize);
+            nameTwo = Str(addr+subSize,size-subSize);
+            SetManualInsn(addr, form("itemName \"%s\", %d, \"%s\"", nameOne, specialChar, nameTwo));
         }else{
-            nameOne = Str(addr+1,len-1);
-            SetManualInsn(addr, form("itemName \"%s\"", nameOne));
+            SetManualInsn(addr, form("itemName \"%s\"", Str(addr,size)));
         }
-        addr = addr+len;
+        addr = addr+size;
     }
-    // Word align at address 0x17F3D
+    
+    /* Word align at address 0x17F3D */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, form("wordAlign"));
 }
 
 static parseClassNames(){
-    auto addr, j, len, name;
+    auto addr, j, size, name;
     addr = 0x17F3E;
     while(addr<0x17FDA){
-        len = Byte(addr)+1;
-        name = Str(addr+1,len-1);
-        for(j=addr;j<addr+len;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,len,1);
+        size = Byte(addr)+1;
+        name = Str(addr,size);
+        for(j=addr;j<addr+size;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,size,1);
         SetManualInsn(addr, form("className \"%s\"", name));
-        addr = addr+len;
+        addr = addr+size;
     }
 }
 
@@ -800,7 +814,7 @@ static parseTerrainBackgrounds(){
     while(addr<0x19E6E){
         undefineByte(addr);
         MakeByte(addr);
-        battleBackground = substr(GetConstName(GetConst(GetEnum("BattleBackgrounds"),Byte(addr),-1)),strlen("BATTLEBACKGROUND_"),-1);
+        battleBackground = getBattleBackgroundShorthand(Byte(addr));
         SetManualInsn(addr, form("background %s", battleBackground));
         addr++;
     }
@@ -811,68 +825,65 @@ static parseAllyBattleSprites(){
     addr = 0x1F806;
     while(addr<0x1F914){
         for(j=addr;j<addr+9;j++){undefineByte(j);}
-        // For base class
+        
+        /* For base class */
         MakeData(addr,FF_BYTE,3,1);
-        forClass = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(addr),-1)),strlen("CLASS_"),-1);
-        sprite = substr(GetConstName(GetConst(GetEnum("AllyBattleSprites"),Byte(addr+1),-1)),strlen("ALLYBATTLESPRITE_"),-1);
-        SetManualInsn(addr, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, Byte(addr+2)));
-        // For regular promo
+        forClass = getClassShorthand(Byte(addr));
+        sprite = getAllyBattlespriteShorthand(Byte(addr+1));
+        palette = Byte(addr+2);
+        SetManualInsn(addr, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, palette));
+        
+        /* For regular promo */
         MakeData(addr+3,FF_BYTE,3,1);
-        forClass = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(addr+3),-1)),strlen("CLASS_"),-1);
-        sprite = substr(GetConstName(GetConst(GetEnum("AllyBattleSprites"),Byte(addr+4),-1)),strlen("ALLYBATTLESPRITE_"),-1);
-        SetManualInsn(addr+3, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, Byte(addr+5)));
-        // For special promo
+        forClass = getClassShorthand(Byte(addr+3));
+        sprite = getAllyBattlespriteShorthand(Byte(addr+4));
+        palette = Byte(addr+5);
+        SetManualInsn(addr+3, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, palette));
+        
+        /* For special promo */
         MakeData(addr+6,FF_BYTE,3,1);
-        forClass = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(addr+6),-1)),strlen("CLASS_"),-1);
-        sprite = substr(GetConstName(GetConst(GetEnum("AllyBattleSprites"),Byte(addr+7),-1)),strlen("ALLYBATTLESPRITE_"),-1);
-        SetManualInsn(addr+6, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, Byte(addr+8)));
-        // Provide ally's name as a comment
-        /*
-        allyName = findName(0xFAD6,i);
-        //MakeRptCmt(addr, form("%s: %s", ltoa(i,10), allyName));
-        ExtLinA(addr,3,"                ");
-        ExtLinA(addr,4,form("; %s: %s", ltoa(i,10), findName(0xFAD6,i)));
-        i++;
-        */
+        forClass = getClassShorthand(Byte(addr+6));
+        sprite = getAllyBattlespriteShorthand(Byte(addr+7));
+        palette = Byte(addr+8);
+        SetManualInsn(addr+6, form("allyBattleSprAndPlt %s, %s, %d", forClass, sprite, palette));
+        
         addr = addr+9;
     }
 }
 
 static parseEnemyBattleSprites(){
-    auto addr, i, j, sprite, palette, enemyName;
-    auto parameter;
+    auto addr, j, sprite, palette, index, enemyName;
     addr = 0x1F914;
     while(addr<0x1F9E2){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,2,1);
-        sprite = substr(GetConstName(GetConst(GetEnum("EnemyBattleSprites"),Byte(addr),-1)),strlen("ENEMYBATTLESPRITE_"),-1);
+        sprite = getEnemyBattlespriteShorthand(Byte(addr));
         palette = Byte(addr+1);
         SetManualInsn(addr, form("enemyBattleSprAndPlt %s, %d", sprite, palette));
-        // Provide enemy's name as a comment
-        enemyName = findName(0xFB8A,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), enemyName));
-        i++;
+        
+        /* Provide enemy's name as a comment */
+        enemyName = getEnemyName(index);
+        MakeRptCmt(addr, form("%d: %s", index, enemyName));
+        index++;
         addr = addr+2;
     }
 }
 
 static parseWeaponSprites(){
-    auto addr, i, j, sprite, palette, itemName;
-    auto parameter;
-    i = 26;
+    auto addr, j, sprite, palette, index, itemName;
+    index = 26;
     addr = 0x1F9E2;
     while(addr<0x1FA8A){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeWord(addr);
-        // Weapon sprite
-        sprite = substr(GetConstName(GetConst(GetEnum("WeaponSprites"),Byte(addr),-1)),strlen("WEAPONSPRITE_"),-1);
-        // Weapon palette
-        palette = substr(GetConstName(GetConst(GetEnum("WeaponPalettes"),Byte(addr+1),-1)),strlen("WEAPONPALETTE_"),-1);
+        sprite = getWeaponSpriteShorthand(Byte(addr));
+        palette = getWeaponPaletteShorthand(Byte(addr+1));
         SetManualInsn(addr, form("weaponGraphics %s, %s", sprite, palette));
-        // Provide item name as a comment
-        itemName = findNameWithoutSpecialChar(0x1796E,i,1);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), itemName));
-        i++;
+        
+        /* Provide item name as a comment */
+        itemName = getItemName(index);
+        MakeRptCmt(addr, form("%d: %s", index, itemName));
+        index++;
         addr = addr+2;
     }
 }
@@ -883,11 +894,12 @@ static parseCustomBackgrounds(){
     while(addr<0x1FAB7){
         undefineByte(addr);
         MakeByte(addr);
-        battleBackground = substr(GetConstName(GetConst(GetEnum("BattleBackgrounds"),Byte(addr),-1)),strlen("BATTLEBACKGROUND_"),-1);
+        battleBackground = getBattleBackgroundShorthand(Byte(addr));
         SetManualInsn(addr, form("background %s", battleBackground));
         addr++;
     }
-    // Word align at address 0x1FAB7
+    
+    /* Word align at address 0x1FAB7 */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, form("wordAlign"));
@@ -899,11 +911,12 @@ static parseAllyBattleSpriteIdleAnimate(){
     while(addr<0x1FADC){
         undefineByte(addr);
         MakeByte(addr);
-        allyBattleSprite = substr(GetConstName(GetConst(GetEnum("AllyBattleSprites"),Byte(addr),-1)),strlen("ALLYBATTLESPRITE_"),-1);
+        allyBattleSprite = getAllyBattlespriteShorthand(Byte(addr));
         SetManualInsn(addr, form("allyBattleSprite %s", allyBattleSprite));
         addr++;
     }
-    // Terminator byte at address 0x1FADD
+    
+    /* Terminator byte at address 0x1FADD */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
@@ -915,11 +928,12 @@ static parseEnemyBattleSpriteIdleAnimate(){
     while(addr<0x1FAE9){
         undefineByte(addr);
         MakeByte(addr);
-        enemyBattleSprite = substr(GetConstName(GetConst(GetEnum("EnemyBattleSprites"),Byte(addr),-1)),strlen("ENEMYBATTLESPRITE_"),-1);
+        enemyBattleSprite = getEnemyBattlespriteShorthand(Byte(addr));
         SetManualInsn(addr, form("enemyBattleSprite %s", enemyBattleSprite));
         addr++;
     }
-    // Terminator byte at address 0x1FAEA
+    
+    /* Terminator byte at address 0x1FAEA */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
@@ -935,12 +949,16 @@ static parseShopInventories(){
         MakeData(addr,FF_BYTE,len,1);
         shopInventory = "";
         for(j=addr+1;j<addr+len;j++){
-            next = GetBitfieldConstNames(GetEnum("Items"),Byte(j),strlen("ITEM_"),0);
-            if(shopInventory==""){shopInventory = next;}
-            else{shopInventory = form("%s, &\n%s", shopInventory, next);}
+            next = getItemShorthand(Byte(j));
+            if(shopInventory==""){
+                shopInventory = form("    %s", next);
+            }else{
+                shopInventory = form("%s, &\n    %s", shopInventory, next);
+            }
         }
         SetManualInsn(addr, form("shopInventory &\n%s\n", shopInventory));
-        // Comments
+        
+        /* Comments */
         if(i<=15){
             MakeRptCmt(addr, form("Weapon shop %d", i));
         }else if(i>15&&i<31){
@@ -963,14 +981,21 @@ static parsePromotions(){
         MakeData(addr,FF_BYTE,len,1);
         promotionSection = "";
         for(j=addr+1;j<addr+len;j++){
-            if(i!=4){next = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(j),-1)),strlen("CLASS_"),-1);}
-            else{next = GetBitfieldConstNames(GetEnum("Items"),Byte(j),strlen("ITEM_"),0);}
-            if(promotionSection==""){promotionSection = next;}
-            else{promotionSection = form("%s, %s", promotionSection, next);}
+            if(i!=4){
+                next = getClassShorthand(Byte(j));
+            }else{
+                next = getItemShorthand(Byte(j));
+            }
+            if(promotionSection==""){
+                promotionSection = form("    %s", next);
+            }else{
+                promotionSection = form("%s, %s", promotionSection, next);
+            }
         }
         if(i!=4){SetManualInsn(addr, form("promotionSection &\n%s\n", promotionSection));}
         else{SetManualInsn(addr, form("promotionItems &\n%s", promotionSection));}
-        // Comments
+        
+        /* Comments */
         if(i==0){
             MakeRptCmt(addr, "Regular base classes");
         }else if(i==1){
@@ -996,9 +1021,12 @@ static parseMithrilWeaponClassLists(){
         MakeData(addr,FF_WORD,len,1);
         weaponClass = "";
         for(j=addr+2;j<addr+len;j=j+2){
-            next = substr(GetConstName(GetConst(GetEnum("Classes"),Word(j),-1)),strlen("CLASS_"),-1);
-            if(weaponClass==""){weaponClass = next;}
-            else{weaponClass = form("%s, %s", weaponClass, next);}
+            next = getClassShorthand(Word(j));
+            if(weaponClass==""){
+                weaponClass = next;
+            }else{
+                weaponClass = form("%s, %s", weaponClass, next);
+            }
         }
         SetManualInsn(addr, form("mithrilWeaponClass %s", weaponClass));
         addr = addr+len;
@@ -1013,9 +1041,12 @@ static parseMithrilWeaponLists(){
         MakeData(addr,FF_BYTE,8,1);
         mithrilWeapons = "";
         for(j=addr;j<addr+8;j=j+2){
-            next = form("%d, %s", Byte(j), GetBitfieldConstNames(GetEnum("Items"),Byte(j+1),strlen("ITEM_"),0));
-            if(mithrilWeapons==""){mithrilWeapons = next;}
-            else{mithrilWeapons = form("%s, &\n%s", mithrilWeapons, next);}
+            next = form("%d, %s", Byte(j), getItemShorthand(Byte(j+1)));
+            if(mithrilWeapons==""){
+                mithrilWeapons = form("    %s", next);
+            }else{
+                mithrilWeapons = form("%s, &\n    %s", mithrilWeapons, next);
+            }
         }
         SetManualInsn(addr, form("mithrilWeapons &\n%s\n", mithrilWeapons));
         addr = addr+8;
@@ -1028,15 +1059,14 @@ static parseSpecialCaravanDescriptions(){
     while(addr<0x228A6){
         for(j=addr;j<addr+4;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,4,1);
-        //item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),0);
-        item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),strlen("ITEM_"),0);
+        item = getItemShorthand(Byte(addr));
         linesNum = Byte(addr+1);
-        //message = Word(addr+2);
-        message = substr(GetConstName(GetConst(GetEnum("Messages"),Word(addr+2),-1)),strlen("MESSAGE_CARAVANDESC_"),-1);
+        message = getCaravanDescriptionShorthand(Word(addr+2));
         SetManualInsn(addr, form("specialCaravanDescription %s, %d, %s", item, linesNum, message));
         addr = addr+4;
     }
-    // Terminator word at address 0x228A6
+    
+    /* Terminator word at address 0x228A6 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
     SetManualInsn(addr, "tableEnd");
@@ -1048,11 +1078,12 @@ static parseUsableOutsideBattleItems(){
     while(addr<0x229EB){
         undefineByte(addr);
         MakeByte(addr);
-        item = GetBitfieldConstNames(GetEnum("Items"),Byte(addr),strlen("ITEM_"),0);
+        item = getItemShorthand(Byte(addr));
         SetManualInsn(addr, form("itemIndex %s", item));
         addr++;
     }
-    // Terminator byte at address 0x229EB
+    
+    /* Terminator byte at address 0x229EB */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
@@ -1065,9 +1096,9 @@ static parseUnknownSpriteDefs_2358C(){
         for(j=addr;j<addr+8;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,8,1);
         ypos = ltoa(Word(addr),10);
-        size = GetBitfieldConstNames(GetEnum("VdpSpriteSize"),Word(addr+2)&0xFF00,strlen("VDPSPRITESIZE_"),0);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
         sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = GetBitfieldConstNames(GetEnum("VdpTiles"),Word(addr+4)&0xF800,strlen("VDPTILE_"),0);
+        props = getVdpTileShorthand(Word(addr+4)&0xF800);
         tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
         xpos = ltoa(Word(addr+6),10);
         SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
@@ -1081,16 +1112,17 @@ static parseConfigurationModeInputs(){
     while(addr<0x28FCA){
         undefineByte(addr);
         MakeByte(addr);
-        input = GetBitfieldConstNames(GetEnum("Controller_Input"),Byte(addr),strlen("INPUT_"),0);
-        //input = substr(GetConstName(GetConst(GetEnum("Controller_Input"),Byte(addr),-1)),strlen("INPUT_"),-1);
+        input = getInputShorthand(Byte(addr));
         SetManualInsn(addr, form("input %s", input));
         addr++;
     }
-    // Terminator byte at address 0x28FCA
+    
+    /* Terminator byte at address 0x28FCA */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
-    // Word alignment byte at address 0x28FCB
+    
+    /* Word alignment byte at address 0x28FCB */
     undefineByte(addr+1);
     MakeByte(addr+1);
     SetManualInsn(addr+1, "wordAlign");
@@ -1102,16 +1134,17 @@ static parseDebugModeInputs(){
     while(addr<0x29000){
         undefineByte(addr);
         MakeByte(addr);
-        input = GetBitfieldConstNames(GetEnum("Controller_Input"),Byte(addr),strlen("INPUT_"),0);
-        //input = substr(GetConstName(GetConst(GetEnum("Controller_Input"),Byte(addr),-1)),strlen("INPUT_"),-1);
+        input = getInputShorthand(Byte(addr));
         SetManualInsn(addr, form("input %s", input));
         addr++;
     }
-    // Terminator byte at address 0x29000
+    
+    /* Terminator byte at address 0x29000 */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
-    // Word alignment byte at address 0x29001
+    
+    /* Word alignment byte at address 0x29001 */
     undefineByte(addr+1);
     MakeByte(addr+1);
     SetManualInsn(addr+1, "wordAlign");
@@ -1137,42 +1170,45 @@ static parseFollowers(){
         SetManualInsn(addr, form("follower %s, %s, %s, %s", flag, entity, sprite, ltoa(Byte(addr+3),10)));
         addr = addr+4;
     }
-    // Terminator word at address 0x44388
+    
+    /* Terminator word at address 0x44388 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
     SetManualInsn(addr, "tableEnd");
 }
 
 static parseAllyMapSprites(){
-    auto addr, i, j, sprite, allyName;
+    auto addr, sprite, index, allyName;
     addr = 0x44A5E;
     while(addr<0x44A7C){
         undefineByte(addr);
         MakeByte(addr);
-        sprite = substr(GetConstName(GetConst(GetEnum("Mapsprites"),Byte(addr),-1)),strlen("MAPSPRITE_"),-1);
+        sprite = getMapspriteShorthand(Byte(addr));
         SetManualInsn(addr, form("mapSprite %s", sprite));
-        // Provide ally's name as a comment
-        allyName = findName(0xFAD6,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), allyName));
-        i++;
+        
+        /* Provide ally's name as a comment */
+        allyName = getAllyName(index);
+        MakeRptCmt(addr, form("%d: %s", index, allyName));
+        index++;
         addr++;
     }
 }
 
 static parseEnemyMapSprites(){
-    auto addr, i, j, sprite, enemyName;
+    auto addr, sprite, index, enemyName;
     addr = 0x44AA4;
     while(addr<0x44B4A){
         undefineByte(addr);
         MakeByte(addr);
-        sprite = substr(GetConstName(GetConst(GetEnum("Mapsprites"),Byte(addr),-1)),strlen("MAPSPRITE_"),-1);
+        sprite = getMapspriteShorthand(Byte(addr));
         SetManualInsn(addr, form("mapSprite %s", sprite));
-        // Provide enemy's name as a comment
-        if(i<103){
-            enemyName = findName(0xFB8A,i);
-            MakeRptCmt(addr, form("%s: %s", ltoa(i,10), enemyName));
+        
+        /* Provide enemy's name as a comment */
+        if(index<103){
+            enemyName = getEnemyName(index);
+            MakeRptCmt(addr, form("%d: %s", index, enemyName));
         }
-        i++;
+        index++;
         addr++;
     }
 }
@@ -1182,21 +1218,26 @@ static parseSpriteDialogProperties(){
     addr = 0x4567A;
     while(addr<0x45856){
         for(j=addr;j<addr+4;j++){undefineByte(j);}
-        // Map sprite
+        
+        /* Map sprite */
         MakeByte(addr);
-        sprite = substr(GetConstName(GetConst(GetEnum("Mapsprites"),Byte(addr),-1)),strlen("MAPSPRITE_"),-1);
+        sprite = getMapspriteShorthand(Byte(addr));
         SetManualInsn(addr, form("mapSprite %s", sprite));
-        // Portrait
+        
+        /* Portrait */
         MakeByte(addr+1);
-        portrait = substr(GetConstName(GetConst(GetEnum("Portraits"),Byte(addr+1),-1)),strlen("PORTRAIT_"),-1);
+        portrait = getPortraitShorthand(Byte(addr+1));
         SetManualInsn(addr+1, form("portrait  %s", portrait));
-        // Speech sfx
+        
+        /* Speech sfx */
         MakeData(addr+2,FF_BYTE,2,1);
-        sfx = substr(GetConstName(GetConst(GetEnum("Sfx"),Byte(addr+2),-1)),strlen("SFX_"),-1);
+        sfx = getSfxShorthand(Byte(addr+2));
         SetManualInsn(addr+2, form("speechSfx %s\n", sfx));
+        
         addr = addr+4;
     }
-    // Terminator word at address 0x45856
+    
+    /* Terminator word at address 0x45856 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
     SetManualInsn(addr, "tableEnd");
@@ -1219,97 +1260,120 @@ static parseEnemyLeaderPresence(){
 */
 
 static parseEnemyDefs(){
-    auto addr, i, j, unknownByte, spellPower, level, maxHp, maxMp, baseAtk, baseDef, baseAgi, baseMov;
-    auto baseResistance, baseProwess, items, spells, initialStatus, moveType, unknownWord, next, enemyName;
+    auto addr, j, unknownByte, spellPower, level, maxHp, maxMp, baseAtt, baseDef, baseAgi, baseMov;
+    auto baseResistance, baseProwess, items, spells, initialStatus, moveType, unknownWord, next, index, enemyName;
     addr = 0x1B1A66;
     while(addr<0x1B30EE){
         for(j=addr;j<addr+56;j++){undefineByte(j);}
-        // Unknown byte
+        
+        /* Unknown byte */
         MakeData(addr,FF_BYTE,10,1);
         unknownByte = Byte(addr);
         SetManualInsn(addr, form("unknownByte %d", unknownByte));
-        // Spell power
+        
+        /* Spell power */
         MakeByte(addr+10);
-        spellPower = substr(GetConstName(GetConst(GetEnum("SpellPower"),Byte(addr+10),-1)),strlen("SPELLPOWER_"),-1);
+        spellPower = getSpellPowerShorthand(Byte(addr+10));
         SetManualInsn(addr+10, form("spellPower %s", spellPower));
-        // Level
+        
+        /* Level */
         MakeByte(addr+11);
         level = Byte(addr+11);
         SetManualInsn(addr+11, form("level    %d", level));
-        // Max Hp
+        
+        /* Max HP */
         MakeData(addr+12,FF_WORD,4,1);
         maxHp = Word(addr+12);
         SetManualInsn(addr+12, form("maxHp    %d", maxHp));
-        // Max Mp
+        
+        /* Max MP */
         MakeData(addr+16,FF_BYTE,2,1);
         maxMp = Byte(addr+16);
         SetManualInsn(addr+16, form("maxMp    %d", maxMp));
-        // Base Atk
+        
+        /* Base ATT */
         MakeData(addr+18,FF_BYTE,2,1);
-        baseAtk = Byte(addr+18);
-        SetManualInsn(addr+18, form("baseAtt  %d", baseAtk));
-        // Base Def
+        baseAtt = Byte(addr+18);
+        SetManualInsn(addr+18, form("baseAtt  %d", baseAtt));
+        
+        /* Base DEF */
         MakeData(addr+20,FF_BYTE,2,1);
         baseDef = Byte(addr+20);
         SetManualInsn(addr+20, form("baseDef  %d", baseDef));
-        // Base Agi
+        
+        /* Base AGI */
         MakeData(addr+22,FF_BYTE,2,1);
         baseAgi = Byte(addr+22);
         SetManualInsn(addr+22, form("baseAgi  %d", baseAgi));
-        // Base Mov
+        
+        /* Base MOV */
         MakeData(addr+24,FF_BYTE,2,1);
         baseMov = Byte(addr+24);
         SetManualInsn(addr+24, form("baseMov  %d", baseMov));
-        // Base resistance
+        
+        /* Base resistance */
         MakeData(addr+26,FF_WORD,4,1);
-        if(Word(addr+26)!=0){
-            baseResistance = GetBitfieldConstNames(GetEnum("Resistance"),Word(addr+26),strlen("RESISTANCE_"),0);
+        if(Word(addr+26)==0){
+            baseResistance = getResistanceNoneShorthand(Word(addr+26));
         }else{
-            baseResistance = substr(GetConstName(GetConst(GetEnum("Resistance_None"),Word(addr+26),-1)),strlen("RESISTANCE_"),-1);
+            baseResistance = getResistanceShorthand(Word(addr+26));
         }
         SetManualInsn(addr+26, form("baseResistance %s", baseResistance));
-        // Base prowess
+        
+        /* Base prowess */
         MakeData(addr+30,FF_BYTE,2,1);
-        baseProwess = GetBitfieldConstNames(GetEnum("Prowess"),Byte(addr+30),strlen("PROWESS_"),0);
+        baseProwess = getProwessShorthand(Byte(addr+30));
         SetManualInsn(addr+30, form("baseProwess    %s", baseProwess));
-        // Items
+        
+        /* Items */
         MakeData(addr+32,FF_WORD,8,1);
         items = "";
         for(j=addr+32;j<addr+40;j=j+2){
-            next = GetBitfieldConstNames(GetEnum("Items"),Word(j),strlen("ITEM_"),0);
-            if(items==""){items = next;}
-            else{items = form("%s, &\n%s", items, next);}
+            next = getItemShorthand(Word(j));
+            if(items==""){
+                items = form("    %s", next);
+            }else{
+                items = form("%s, &\n    %s", items, next);
+            }
         }
         SetManualInsn(addr+32, form("items &\n%s", items));
-        // Spells
+        
+        /* Spells */
         MakeData(addr+40,FF_BYTE,4,1);
         spells = "";
         for(j=addr+40;j<addr+44;j++){
-            next = GetBitfieldConstNames(GetEnum("Spells"),Byte(j),strlen("SPELL_"),0);
-            if(spells==""){spells = next;}
-            else{spells = form("%s, &\n%s", spells, next);}
+            next = getSpellShorthand(Byte(j));
+            if(spells==""){
+                spells = form("    %s", next);
+            }else{
+                spells = form("%s, &\n    %s", spells, next);
+            }
         }
         SetManualInsn(addr+40, form("spells &\n%s", spells));
-        // Initial status
+        
+        /* Initial status effects */
         MakeData(addr+44,FF_BYTE,5,1);
-        if(Word(addr+44)!=0){
-            initialStatus = GetBitfieldConstNames(GetEnum("StatusEffects"),Word(addr+44),strlen("STATUSEFFECT_"),0);
+        if(Word(addr+44)==0){
+            initialStatus = getStatusEffectNoneShorthand(Word(addr+44));
         }else{
-            initialStatus = substr(GetConstName(GetConst(GetEnum("StatusEffect_None"),Word(addr+44),-1)),strlen("STATUSEFFECT_"),-1);
+            initialStatus = getStatusEffectsShorthand(Word(addr+44));
         }
         SetManualInsn(addr+44, form("initialStatus %s", initialStatus));
-        // Move type
+        
+        /* Move type */
         MakeByte(addr+49);
-        moveType = GetBitfieldConstNames(GetEnum("MoveType"),Byte(addr+49),strlen("MOVETYPE_UPPER_"),0);
+        moveType = getMoveTypeShorthand(Byte(addr+49));
         SetManualInsn(addr+49, form("moveType      %s", moveType));
-        // Unknown word
+        
+        /* Unknown word */
         MakeData(addr+50,FF_BYTE,6,1);
         unknownWord = Word(addr+52);
         SetManualInsn(addr+50, form("unknownWord   %d\n", unknownWord));
-        // Provide enemy's name as a comment
-        enemyName = findName(0xFB8A,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), enemyName));
-        i++;
+        
+        /* Provide enemy's name as a comment */
+        enemyName = getEnemyName(index);
+        MakeRptCmt(addr, form("%d: %s", index, enemyName));
+        index++;
         addr = addr+56;
     }
 }
@@ -1323,9 +1387,12 @@ static parseRandomBattles(){
         MakeData(addr,FF_BYTE,len,1);
         randomBattles = "";
         for(j=addr+1;j<addr+len;j++){
-            next = substr(GetConstName(GetConst(GetEnum("Battles"),Byte(j),-1)),strlen("BATTLE_"),-1);
-            if(randomBattles==""){randomBattles = next;}
-            else{randomBattles = form("%s, &\n%s", randomBattles, next);}
+            next = getBattleShorthand(Byte(j));
+            if(randomBattles==""){
+                randomBattles = form("    %s", next);
+            }else{
+                randomBattles = form("%s, &\n    %s", randomBattles, next);
+            }
         }
         SetManualInsn(addr, form("randomBattles &\n%s", randomBattles));
         addr = addr+len;
@@ -1338,23 +1405,24 @@ static parseEnemyUpgradeDefs(){
     while(addr<0x1B6DDA){
         for(j=addr;j<addr+3;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,3,1);
-        range = ltoa(Byte(addr),10);
-        firstEnemy = substr(GetConstName(GetConst(GetEnum("Enemies"),Byte(addr+1),-1)),strlen("ENEMY_"),-1);
-        lastEnemy = substr(GetConstName(GetConst(GetEnum("Enemies"),Byte(addr+2),-1)),strlen("ENEMY_"),-1);
-        SetManualInsn(addr, form("upgradeRange    %s, %s, %s", range, firstEnemy, lastEnemy));
-        // Excluded enemies list
+        range = Byte(addr);
+        firstEnemy = getEnemyShorthand(Byte(addr+1));
+        lastEnemy = getEnemyShorthand(Byte(addr+2));
+        SetManualInsn(addr, form("upgradeRange    %d, %s, %s", range, firstEnemy, lastEnemy));
+        
+        /* Excluded enemies list */
         len = Byte(addr+3)+1;
         for(j=addr+3;j<addr+len+3;j++){undefineByte(j);}
         MakeData(addr+3,FF_BYTE,len,1);
         excludedEnemies = "";
         for(j=addr+4;j<addr+len+3;j++){
-            next = substr(GetConstName(GetConst(GetEnum("Enemies"),Byte(j),-1)),strlen("ENEMY_"),-1);
-            if(excludedEnemies==""){excludedEnemies = next;}
-            //else{excludedEnemies = form("%s, &\n%s", excludedEnemies, next);}
-            else{excludedEnemies = form("%s, %s", excludedEnemies, next);}
+            next = getEnemyShorthand(Byte(j));
+            if(excludedEnemies==""){
+                excludedEnemies = form("%s", next);
+            }else{
+                excludedEnemies = form("%s, %s", excludedEnemies, next);
+            }
         }
-        //if(excludedEnemies!=""){excludedEnemies = form(" &\n%s", excludedEnemies);}
-        //SetManualInsn(addr+3, form("excludedEnemies &\n%s", excludedEnemies));
         SetManualInsn(addr+3, form("excludedEnemies %s", excludedEnemies));
         addr = addr+len+3;
     }
@@ -1369,9 +1437,13 @@ static parseStatGrowthCurves(){
         for(j=addr;j<addr+116;j=j+4){
             MakeData(j,FF_WORD,4,1);
             curveParams = form("%d, %d", Word(j), Word(j+2));
-            if(i!=30){SetManualInsn(j, form("dc.w %s", curveParams));}
-            else{SetManualInsn(j, form("dc.w %s\n", curveParams));}
-            // Comments
+            if(i!=30){
+                SetManualInsn(j, form("dc.w %s", curveParams));
+            }else{
+                SetManualInsn(j, form("dc.w %s\n", curveParams));
+            }
+            
+            /* Comments */
             MakeRptCmt(j, form(" level %d", i));
             i++;
         }
@@ -1383,43 +1455,49 @@ static parseAllyStats(){
     auto addr, j, forClass, curve, start, proj, offset, next, count, spellList, allyName;
     addr = 0x1EE2F0;
     while(addr<0x1EE7CF){
-    //while(addr<0x1EE30B){
         for(j=addr;j<addr+16;j++){undefineByte(j);}
-        // For class
+        
+        /* For class */
         MakeByte(addr);
-        forClass = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(addr),-1)),strlen("CLASS_"),-1);
+        forClass = getClassShorthand(Byte(addr));
         SetManualInsn(addr, form("forClass  %s", forClass));
-        // HP growth
+        
+        /* HP growth */
         MakeData(addr+1,FF_BYTE,3,1);
-        curve = substr(GetConstName(GetConst(GetEnum("GrowthCurves"),Byte(addr+1),-1)),strlen("GROWTHCURVE_"),-1);
+        curve = getGrowthCurveShorthand(Byte(addr+1));
         start = Byte(addr+2);
         proj = Byte(addr+3);
         SetManualInsn(addr+1, form("hpGrowth  %d, %d, %s", start, proj, curve));
-        // MP growth
+        
+        /* MP growth */
         MakeData(addr+4,FF_BYTE,3,1);
-        curve = substr(GetConstName(GetConst(GetEnum("GrowthCurves"),Byte(addr+4),-1)),strlen("GROWTHCURVE_"),-1);
+        curve = getGrowthCurveShorthand(Byte(addr+4));
         start = Byte(addr+5);
         proj = Byte(addr+6);
         SetManualInsn(addr+4, form("mpGrowth  %d, %d, %s", start, proj, curve));
-        // ATK growth
+        
+        /* ATT growth */
         MakeData(addr+7,FF_BYTE,3,1);
-        curve = substr(GetConstName(GetConst(GetEnum("GrowthCurves"),Byte(addr+7),-1)),strlen("GROWTHCURVE_"),-1);
+        curve = getGrowthCurveShorthand(Byte(addr+7));
         start = Byte(addr+8);
         proj = Byte(addr+9);
         SetManualInsn(addr+7, form("attGrowth %d, %d, %s", start, proj, curve));
-        // DEF growth
+        
+        /* DEF growth */
         MakeData(addr+10,FF_BYTE,3,1);
-        curve = substr(GetConstName(GetConst(GetEnum("GrowthCurves"),Byte(addr+10),-1)),strlen("GROWTHCURVE_"),-1);
+        curve = getGrowthCurveShorthand(Byte(addr+10));
         start = Byte(addr+11);
         proj = Byte(addr+12);
         SetManualInsn(addr+10, form("defGrowth %d, %d, %s", start, proj, curve));
-        // AGI growth
+        
+        /* AGI growth */
         MakeData(addr+13,FF_BYTE,3,1);
-        curve = substr(GetConstName(GetConst(GetEnum("GrowthCurves"),Byte(addr+13),-1)),strlen("GROWTHCURVE_"),-1);
+        curve = getGrowthCurveShorthand(Byte(addr+13));
         start = Byte(addr+14);
         proj = Byte(addr+15);
         SetManualInsn(addr+13, form("agiGrowth %d, %d, %s", start, proj, curve));
-        // Count spell list bytes
+        
+        /* Count spell list bytes */
         offset = 16;
         next = Byte(addr+offset);
         count = 1;
@@ -1428,7 +1506,8 @@ static parseAllyStats(){
             next = Byte(addr+offset);
             count++;
         }
-        // Spell list
+        
+        /* Spell list */
         offset++;
         if(Byte(addr+16)==254){
             undefineByte(addr+16);
@@ -1440,83 +1519,102 @@ static parseAllyStats(){
             spellList = "";
             for(j=addr+16;j<addr+offset;j=j+2){
                 if(Byte(j)!=254&&Byte(j)!=255){
-                    next = GetBitfieldConstNames(GetEnum("Spells"),Byte(j+1),strlen("SPELL_"),0);
-                    if(spellList==""){spellList = form("%d, %s", Byte(j), next);}
-                    else{spellList = form("%s, &\n%d, %s", spellList, Byte(j), next);}
+                    next = getSpellShorthand(Byte(j+1));
+                    if(spellList==""){
+                        spellList = form("    %d, %s", Byte(j), next);
+                    }else{
+                        spellList = form("%s, &\n    %d, %s", spellList, Byte(j), next);
+                    }
                 }
             }
-            if(spellList!=""){SetManualInsn(addr+16, form("spellList &\n%s\n", spellList));}
-            else{SetManualInsn(addr+16, form("spellList %s\n", spellList));}
+            if(spellList!=""){
+                SetManualInsn(addr+16, form("spellList &\n%s\n", spellList));
+            }else{
+                SetManualInsn(addr+16, form("spellList %s\n", spellList));
+            }
         }
         addr = addr+offset;
     }
-    // Word align at address 0x1EE7CF
+    
+    /* Word align at address 0x1EE7CF */
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "wordAlign");
 }
 
 static parseAllyStartDefs(){
-    auto addr, i, j, startClass, startLevel, startItems, next, allyName;
+    auto addr, j, startClass, startLevel, startItems, next, index, allyName;
     addr = 0x1EE7D0;
     while(addr<0x1EE890){
         for(j=addr;j<addr+6;j++){undefineByte(j);}
-        // Starting class
+        
+        /* Starting class */
         MakeByte(addr);
-        startClass = substr(GetConstName(GetConst(GetEnum("Classes"),Byte(addr),-1)),strlen("CLASS_"),-1);
+        startClass = getClassShorthand(Byte(addr));
         SetManualInsn(addr, form("startClass %s", startClass));
-        // Starting level
+        
+        /* Starting level */
         MakeByte(addr+1);
         startLevel = Byte(addr+1);
         SetManualInsn(addr+1, form("startLevel %d", startLevel));
-        // Starting items
+        
+        /* Starting items */
         MakeData(addr+2,FF_BYTE,4,1);
         startItems = "";
         for(j=addr+2;j<addr+6;j++){
-            next = GetBitfieldConstNames(GetEnum("Items"),Byte(j),strlen("ITEM_"),0);
-            if(startItems==""){startItems = next;}
-            else{startItems = form("%s, &\n%s", startItems, next);}
+            next = getItemShorthand(Byte(j));
+            if(startItems==""){
+                startItems = form("    %s", next);
+            }else{
+                startItems = form("%s, &\n    %s", startItems, next);
+            }
         }
         SetManualInsn(addr+2, form("startItems &\n%s\n", startItems));
-        // Provide ally's name as a comment
-        if(i<30){
-            allyName = findName(0xFAD6,i);
-            MakeRptCmt(addr, form("%s", allyName));
+        
+        /* Provide ally's name as a comment */
+        if(index<30){
+            allyName = getAllyName(index);
+            MakeRptCmt(addr, form("%d: %s", index, allyName));
         }
-        i++;
+        index++;
         addr = addr+6;
     }
 }
 
 static parseClassDefs(){
-    auto addr, i, j, mov, resistance, moveType, prowess, className;
+    auto addr, j, mov, resistance, moveType, prowess, index, className;
     addr = 0x1EE890;
     while(addr<0x1EE930){
         for(j=addr;j<addr+5;j++){undefineByte(j);}
-        // MOV
+        
+        /* MOV */
         MakeByte(addr);
         mov = Byte(addr);
         SetManualInsn(addr, form("mov %d", mov));
-        // Resistance
+        
+        /* Resistance */
         MakeWord(addr+1);
-        if(Word(addr+1)!=0){
-            resistance = GetBitfieldConstNames(GetEnum("Resistance"),Word(addr+1),strlen("RESISTANCE_"),0);
+        if(Word(addr+1)==0){
+            resistance = getResistanceNoneShorthand(Word(addr+1));
         }else{
-            resistance = substr(GetConstName(GetConst(GetEnum("Resistance_None"),Word(addr+1),-1)),strlen("RESISTANCE_"),-1);
+            resistance = getResistanceShorthand(Word(addr+1));
         }
         SetManualInsn(addr+1, form("resistance %s", resistance));
-        // Move type
+        
+        /* Move type */
         MakeByte(addr+3);
-        moveType = GetBitfieldConstNames(GetEnum("MoveType"),Byte(addr+3),strlen("MOVETYPE_UPPER_"),0);
+        moveType = getMoveTypeShorthand(Byte(addr+3));
         SetManualInsn(addr+3, form("moveType   %s", moveType));
-        // Prowess
+        
+        /* Prowess */
         MakeByte(addr+4);
-        prowess = GetBitfieldConstNames(GetEnum("Prowess"),Byte(addr+4),strlen("PROWESS_"),0);
+        prowess = getProwessShorthand(Byte(addr+4));
         SetManualInsn(addr+4, form("prowess    %s\n", prowess));
-        // Provide class name as a comment
-        className = findName(0x17F3E,i);
-        MakeRptCmt(addr, form("%s: %s", ltoa(i,10), className));
-        i++;
+        
+        /* Provide class name as a comment */
+        className = getClassName(index);
+        MakeRptCmt(addr, form("%d: %s", index, className));
+        index++;
         addr = addr+5;
     }
 }
@@ -1780,7 +1878,7 @@ static parseMapData(){
                 flag = Word(sc);
                 flagDescription = getFlagDesc(flag);   
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItemShorthand(Byte(sc+3))));
                 sc = sc+4;
                 entry++;
             }
@@ -1814,7 +1912,7 @@ static parseMapData(){
                 flag = Word(sc);  
                 flagDescription = getFlagDesc(flag);  
                 MakeRptCmt(sc,flagDescription);
-                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),GetBitfieldConstNames(GetEnum("Items"),Byte(sc+3),strlen("ITEM_"),0)));
+                SetManualInsn(sc, form("mapItem %d, %d, %s, %s", Byte(sc), Byte(sc+1), ltoa(Byte(sc+2),10),getItemShorthand(Byte(sc+3))));
                 sc = sc+4;
                 entry++;
             }
@@ -1870,57 +1968,278 @@ static parseMapData(){
 
 
 
-static GetBitfieldConstNames(enumIdx,value,strlen,param){
-    auto bmask, names, mval, next;
-    bmask = GetFirstBmask(enumIdx);
-    names = "";
-    while(bmask!=0){
-        mval = value & bmask;
-        next = substr(GetConstName(GetConst(enumIdx,mval,bmask)),strlen,-1);
-        if(next!=""){
-            if(names==""){names = next;}
-            else if(param!=0){names = form("%s|&\n%s", names, next);}
-            else{names = form("%s|%s", names, next);}
+static getAllyShorthand(cmd){
+    return getShorthand(cmd,"Allies","ALLY_");
+}
+
+static getAllyBattlespriteShorthand(cmd){
+    return getShorthand(cmd,"AllyBattleSprites","ALLYBATTLESPRITE_");
+}
+
+static getBattleBackgroundShorthand(cmd){
+    return getShorthand(cmd,"BattleBackgrounds","BATTLEBACKGROUND_");
+}
+
+static getBattleShorthand(cmd){
+    return getShorthand(cmd,"Battles","BATTLE_");
+}
+
+static getCaravanDescriptionShorthand(cmd){
+    return getShorthand(cmd,"Messages","MESSAGE_CARAVANDESC_");
+}
+
+static getClassShorthand(cmd){
+    return getShorthand(cmd,"Classes","CLASS_");
+}
+
+static getClassTypeShorthand(cmd){
+    return getShorthand(cmd,"ClassTypes","CLASSTYPE_");
+}
+
+static getEnemyBattlespriteShorthand(cmd){
+    return getShorthand(cmd,"EnemyBattleSprites","ENEMYBATTLESPRITE_");
+}
+
+static getEnemyShorthand(cmd){
+    return getShorthand(cmd,"Enemies","ENEMY_");
+}
+
+static getEquipEffectShorthand(cmd){
+    return getShorthand(cmd,"EquipEffects","EQUIPEFFECT_");
+}
+
+static getEquipFlagsShorthand(cmd){
+    return getBitfieldShorthands(cmd,"EquipFlags","EQUIPFLAG_");
+}
+
+static getEquipFlagsOtherShorthand(cmd){
+    return getShorthand(cmd,"EquipFlags_Other","EQUIPFLAG_");
+}
+
+static getFollowerShorthand(cmd){
+    return getShorthand(cmd,"Followers","FOLLOWER_");
+}
+
+static getGrowthCurveShorthand(cmd){
+    return getShorthand(cmd,"GrowthCurves","GROWTHCURVE_");
+}
+
+static getInputShorthand(cmd){
+    return getBitfieldShorthands(cmd,"Controller_Input","INPUT_");
+}
+
+static getItemShorthand(cmd){
+    return getBitfieldShorthands(cmd,"Items","ITEM_");
+}
+
+static getItemTypeShorthand(cmd){
+    return getBitfieldShorthands(cmd,"ItemType","ITEMTYPE_");
+}
+
+static getItemTypeNoneShorthand(cmd){
+    return getShorthand(cmd,"ItemType_None","ITEMTYPE_");
+}
+
+static getLandEffectSettingShorthand(cmd){
+    return getBitfieldShorthands(cmd,"LandEffectSettings","LANDEFFECTSETTING_");
+}
+
+static getLandEffectSettingObstructedShorthand(cmd){
+    return getShorthand(cmd,"LandEffectSetting_Obstructed","LANDEFFECTSETTING_");
+}
+
+static getMapspriteShorthand(cmd){
+    return getShorthand(cmd,"Mapsprites","MAPSPRITE_");
+}
+
+static getMoveTypeShorthand(cmd){
+    return getBitfieldShorthands(cmd,"MoveType","MOVETYPE_UPPER_");
+}
+
+static getPortraitShorthand(cmd){
+    return getShorthand(cmd,"Portraits","PORTRAIT_");
+}
+
+static getProwessShorthand(cmd){
+    return getBitfieldShorthands(cmd,"Prowess","PROWESS_");
+}
+
+static getResistanceShorthand(cmd){
+    return getBitfieldShorthands(cmd,"Resistance","RESISTANCE_");
+}
+
+static getResistanceNoneShorthand(cmd){
+    return getShorthand(cmd,"Resistance","RESISTANCE_");
+}
+
+static getSfxShorthand(cmd){
+    return getShorthand(cmd,"Sfx","SFX_");
+}
+
+static getSpellAnimationShorthand(cmd){
+    return getBitfieldShorthands(cmd,"SpellAnimations","SPELLANIMATION_");
+}
+
+static getSpellElementShorthand(cmd){
+    return getShorthand(cmd,"SpellElements","SPELLELEMENT_");
+}
+
+static getSpellPowerShorthand(cmd){
+    return getShorthand(cmd,"SpellPower","SPELLPOWER_");
+}
+
+static getSpellPropertiesShorthand(cmd){
+    return getBitfieldShorthands(cmd,"SpellProps","SPELLPROPS_");
+}
+
+static getSpellShorthand(cmd){
+    return getBitfieldShorthands(cmd,"Spells","SPELL_");
+}
+
+static getStatusEffectNoneShorthand(cmd){
+    return getShorthand(cmd,"StatusEffect_None","STATUSEFFECT_");
+}
+
+static getStatusEffectsShorthand(cmd){
+    return getBitfieldShorthands(cmd,"StatusEffects","STATUSEFFECT_");
+}
+
+static getVdpSpriteSizeShorthand(cmd){
+    return getBitfieldShorthands(cmd,"VdpSpriteSize","VDPSPRITESIZE_");
+}
+
+static getVdpTileShorthand(cmd){
+    return getBitfieldShorthands(cmd,"VdpTiles","VDPTILE_");
+}
+
+static getWeaponPaletteShorthand(cmd){
+    return getShorthand(cmd,"WeaponPalettes","WEAPONPALETTE_");
+}
+
+static getWeaponSpriteShorthand(cmd){
+    return getShorthand(cmd,"WeaponSprites","WEAPONSPRITE_");
+}
+
+
+
+static getBitfieldShorthands(cmd,enumName,prefix){
+    auto id, bitmask, output, value, next;
+    id = GetEnum(enumName);
+    bitmask = GetFirstBmask(id);
+    output = "";
+    while(bitmask!=-1){
+        value = cmd & bitmask;
+        next = getShorthandEx(value,enumName,prefix,bitmask);
+        if(next!=""&&next!="0"){
+            if(output==""){
+                output = next;
+            }else{
+                output = form("%s|%s",output,next);
+            }
         }
-        // Break out of loop after iterating last bitmask
-        if(bmask==-1){break;}
-        bmask = GetNextBmask(enumIdx,bmask);
+        bitmask = GetNextBmask(id,bitmask);
     }
-    return names;
+    return output;
 }
 
-
-static findName(addr,i){
-    return findNameWithoutSpecialChar(addr,i,0);
+static getShorthand(cmd,enumName,prefix){
+    return getShorthandEx(cmd,enumName,prefix,-1);
 }
 
-static findNameWithoutSpecialChar(addr,i,param){
-    auto len;
-    while(i>0){
-        len = Byte(addr);
-        addr = addr+len+1;
-        i--;
+static getShorthandEx(cmd,enumName,prefix,bitmask){
+    auto id, constant, j, constId;
+    id = GetEnum(enumName);
+    constant = GetFirstConst(id,bitmask);
+    while(constant!=-1){
+        j=0;
+        constId = GetConstEx(id,constant,j,bitmask);
+        while(constId!=-1){
+            if(constant==cmd){
+                return substr(GetConstName(constId),strlen(prefix),-1);
+            }
+            j++;
+            constId = GetConstEx(id,constant,j,bitmask);
+        }
+        constant = GetNextConst(id,constant,bitmask);
     }
-    return StrWithoutSpecialChar(addr+1,Byte(addr),param);
+    return form("%d",cmd);
 }
 
+
+
+static getAllyName(index){
+    return findName(0xFAD6,index);
+}
+
+static getClassName(index){
+    return findName(0x17F3E,index);
+}
+
+static getEnemyName(index){
+    return findName(0xFB8A,index);
+}
+
+static getItemName(index){
+    return findNameWithoutSpecialChar(0x1796E,index);
+}
+
+static getSpellName(index){
+    return findName(0xF9C4,index);
+}
+
+
+
+static findName(ea,index){
+    return findNameEx(ea,index,0);
+}
+
+static findNameWithoutSpecialChar(ea,index){
+    return findNameEx(ea,index,1);
+}
 
 /*
- *  Returns the string prefixed with length byte at addr
- */
-static Str(addr,len){
-    return StrWithoutSpecialChar(addr,len,0);
+ *  Return name from table of strings prefixed with length
+ *      ea            - start of table address
+ *      index         - name index
+ *      noSpecialChar - optionally convert special characters into spaces
+ */ 
+static findNameEx(ea,index,noSpecialChar){
+    auto size;
+    while(index>0){
+        size = Byte(ea)+1;
+        ea = ea+size;
+        index--;
+    }
+    size = Byte(ea)+1;
+    return StrEx(ea,size,noSpecialChar);
 }
 
-static StrWithoutSpecialChar(addr,len,param){
-    auto j, str, next;
+
+
+static Str(ea,size){
+    return StrEx(ea,size,0);
+}
+
+static StrWithoutSpecialChar(ea,size){
+    return StrEx(ea,size,1);
+}
+
+/*
+ *  Return string prefixed with length at the specified address
+ *      ea            - linear address
+ *      noSpecialChar - optionally convert special characters into spaces
+ */
+static StrEx(ea,size,noSpecialChar){
+    auto addr, len, str, j, nextChar;
+    addr = ea+1;
+    len = size-1;
     str = "";
     for(j=addr;j<addr+len;j++){
-        next = Byte(j);
-        if(param!=0){
-            if(next==11||next==13){next = 32;}
+        nextChar = Byte(j);
+        if(noSpecialChar!=0&&(nextChar==11||nextChar==13)){
+            nextChar = 32;
         }
-        str = form("%s%c", str, next);
+        str = form("%s%c",str,nextChar);
     }
     return str;
 }
