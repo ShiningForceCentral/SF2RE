@@ -361,6 +361,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x1E8000,0x1EB000,"","data/sound/pcmbank1.bin",file);
     splitSingleChunk(0x1EB000,0x1EC000,"","data/sound/yminst.bin",file);
     splitSingleChunkWithCommentedSplitEntry(0x1EC000,0x1EE000,"SoundDriver","data/sound/sounddriver.bin",file);
+    writestr(file,form("#split\t0x%s,0x%s,%s\n",ltoa(0x1ED5BD,16),ltoa(0x1EDF2A,16),"data/sound/cubesfx.bin"));
     
     //splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
     
