@@ -252,6 +252,8 @@ static fixSignedOperands(){
     OpAlt(0x24496,1,form("#%d",Word(0x24498)-0x10000));
     OpAlt(0x27CA4,1,form("#%d",Word(0x27CA6)-0x10000));
     OpAlt(0x444A2,1,form("#%d",Word(0x444A4)-0x10000));
+    OpAlt(0x446A6,1,form("#%d",Word(0x446A6)-0x10000));
+    OpAlt(0x4585C,1,form("#%d",Word(0x4585C)-0x10000));
     OpAlt(0x4F574,1,form("#%d",Word(0x4F576)-0x10000));
     OpAlt(0x1AC72C,1,form("#%d",Word(0x1AC72E)-0x10000));
     OpAlt(0x1ACADA,1,form("#%d",Word(0x1ACADC)-0x10000));
@@ -285,6 +287,7 @@ static fixUnwantedNames(){
     /* Names generating errors about other local names in same function */
     MakeNameEx(0x20,"",0);
     MakeNameEx(0xFC,"",0);
+    MakeNameEx(0x91E,"",0);
     MakeNameEx(0x5018,"",0);
     MakeNameEx(0x651C,"",0);
     MakeNameEx(0x658C,"",0);
@@ -294,11 +297,14 @@ static fixUnwantedNames(){
     MakeNameEx(0x6F56,"",0);
     MakeNameEx(0x6FBA,"",0);
     MakeNameEx(0x702E,"",0);
+    MakeNameEx(0x7A4B,"",0);
     MakeNameEx(0x7E44,"",0);
     MakeNameEx(0x843C,"",0);
     MakeNameEx(0x85DC,"",0);
     MakeNameEx(0x8D56,"",0);
     MakeNameEx(0x8DBC,"",0);
+    MakeNameEx(0x90D2,"",0);
+    MakeNameEx(0x90DA,"",0);
     MakeNameEx(0x91DC,"",0);
     MakeName(0x94BA,"");
     MakeName(0x96DC,"");
