@@ -22,6 +22,8 @@ static main(void){
     //parseEnemyGold();
     parseSpellElements();
     parseLandEffectSettingsAndMoveCosts();
+    parseAiCommandsets();
+    parseSwarmBattles();
     parseSpellNames();
     parseAllyNames();
     parseEnemyNames();
@@ -59,6 +61,7 @@ static main(void){
     parseEnemyBattleSpriteIdleAnimate();
     parseShopInventories();
     parsePromotions();
+    parseBlacksmithEligibleClassesList();
     parseMithrilWeaponClassLists();
     parseMithrilWeaponLists();
     parseSpecialCaravanDescriptions();
@@ -324,6 +327,53 @@ static parseLandEffectSettingsAndMoveCosts(){
         SetManualInsn(addr, form("landEffectAndMoveCost %s", landEffectSettingAndMoveCost));
         addr++;
     }
+}
+
+static parseAiCommandsets(){
+    auto addr, j, len, aiCommandset, next;
+    addr = 0xE1EC;
+    while(addr<0xE249){
+        len = Byte(addr)+1;
+        for(j=addr;j<addr+len;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,len,1);
+        aiCommandset = "";
+        for(j=addr+1;j<addr+len;j++){
+            next = getAiCommandShorthand(Byte(j));
+            if(aiCommandset==""){
+                aiCommandset = next;
+            }else{
+                aiCommandset = form("%s, &\n             %s", aiCommandset, next);
+            }
+        }
+        SetManualInsn(addr, form("aiCommandset %s", aiCommandset));
+        addr = addr+len;
+    }
+}
+
+static parseSwarmBattles(){
+    auto addr, j, len, battles, next;
+    addr = 0xE25B;
+    while(addr<0xE25F){
+        len = Byte(addr)+1;
+        for(j=addr;j<addr+len;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,len,1);
+        battles = "";
+        for(j=addr+1;j<addr+len;j++){
+            next = getBattleShorthand(Byte(j));
+            if(battles==""){
+                battles = next;
+            }else{
+                battles = form("%s, %s", battles, next);
+            }
+        }
+        SetManualInsn(addr, form("battles %s", battles));
+        addr = addr+len;
+    }
+    
+    /* Word align at address 0xE25F */
+    undefineByte(addr);
+    MakeByte(addr);
+    SetManualInsn(addr, form("wordAlign"));
 }
 
 static parseSpellNames(){
@@ -656,18 +706,18 @@ static parseItemDefs(){
         }else{
             equipFlags = getEquipFlagsShorthand(Dword(addr));
         }
-        SetManualInsn(addr, form("equipFlags %s", equipFlags));
+        SetManualInsn(addr, form("equipFlags   %s", equipFlags));
         
         /* Range */
         MakeData(addr+4,FF_BYTE,2,1);
         maxRange = Byte(addr+4);
         minRange = Byte(addr+5);
-        SetManualInsn(addr+4, form("range      %d, %d", minRange, maxRange));
+        SetManualInsn(addr+4, form("range        %d, %d", minRange, maxRange));
         
         /* Price */
         MakeWord(addr+6);
         price = Word(addr+6);
-        SetManualInsn(addr+6, form("price      %d", price));
+        SetManualInsn(addr+6, form("price        %d", price));
         
         /* Item type */
         MakeByte(addr+8);
@@ -676,12 +726,12 @@ static parseItemDefs(){
         }else{
             itemType = getItemTypeShorthand(Byte(addr+8));
         }
-        SetManualInsn(addr+8, form("itemType   %s", itemType));
+        SetManualInsn(addr+8, form("itemType     %s", itemType));
         
         /* Use spell */
         MakeByte(addr+9);
         useSpell = getSpellShorthand(Byte(addr+9));
-        SetManualInsn(addr+9, form("useSpell   %s", useSpell));
+        SetManualInsn(addr+9, form("useSpell     %s", useSpell));
         
         /* Equip effects */
         MakeData(addr+10,FF_BYTE,6,1);
@@ -689,16 +739,19 @@ static parseItemDefs(){
         for(j=addr+10;j<addr+16;j=j+2){
             next = getEquipEffectShorthand(Byte(j));
             if(equipEffects==""){
-                equipEffects = form("    %s, %d", next, Byte(j+1));
+                equipEffects = form("%s, %d", next, Byte(j+1));
             }else{
-                equipEffects = form("%s, &\n    %s, %d", equipEffects, next, Byte(j+1));
+                equipEffects = form("%s, &\n             %s, %d", equipEffects, next, Byte(j+1));
             }
         }
-        SetManualInsn(addr+10, form("equipEffects &\n%s\n", equipEffects));
+        SetManualInsn(addr+10, form("equipEffects %s\n", equipEffects));
         
         /* Provide item name as a comment */
-        itemName = getItemName(index);
-        ExtLinA(addr, 0, form("; %d: %s", index, itemName));
+        if(index!=0){
+            itemName = getItemName(index);
+            ExtLinA(addr, 0, form("                ; %d: %s", index, itemName));
+        }
+
         index++;
         addr = addr+16;
     }
@@ -1008,6 +1061,27 @@ static parsePromotions(){
             MakeRptCmt(addr, "Special promotion items");
         }
         i++;
+        addr = addr+len;
+    }
+}
+
+static parseBlacksmithEligibleClassesList(){
+    auto addr, j, len, blacksmithClasses, next;
+    addr = 0x21EB6;
+    while(addr<0x21ED6){
+        len = Word(addr)*2+2;
+        for(j=addr;j<addr+len;j++){undefineByte(j);}
+        MakeData(addr,FF_WORD,len,1);
+        blacksmithClasses = "";
+        for(j=addr+2;j<addr+len;j=j+2){
+            next = getClassShorthand(Word(j));
+            if(blacksmithClasses==""){
+                blacksmithClasses = next;
+            }else{
+                blacksmithClasses = form("%s, &\n    %s", blacksmithClasses, next);
+            }
+        }
+        SetManualInsn(addr, form("blacksmithClasses %s\n", blacksmithClasses));
         addr = addr+len;
     }
 }
@@ -1379,22 +1453,22 @@ static parseEnemyDefs(){
 }
 
 static parseRandomBattles(){
-    auto addr, j, len, randomBattles, next;
+    auto addr, j, len, battles, next;
     addr = 0x1B6DB0;
     while(addr<0x1B6DBC){
         len = Byte(addr)+1;
         for(j=addr;j<addr+len;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,len,1);
-        randomBattles = "";
+        battles = "";
         for(j=addr+1;j<addr+len;j++){
             next = getBattleShorthand(Byte(j));
-            if(randomBattles==""){
-                randomBattles = form("    %s", next);
+            if(battles==""){
+                battles = form("    %s", next);
             }else{
-                randomBattles = form("%s, &\n    %s", randomBattles, next);
+                battles = form("%s, &\n    %s", battles, next);
             }
         }
-        SetManualInsn(addr, form("randomBattles &\n%s", randomBattles));
+        SetManualInsn(addr, form("battles &\n%s", battles));
         addr = addr+len;
     }
 }
@@ -1967,6 +2041,10 @@ static parseMapData(){
 
 
 
+
+static getAiCommandShorthand(cmd){
+    return getShorthand(cmd,"AiCommands","AICOMMAND_");
+}
 
 static getAllyShorthand(cmd){
     return getShorthand(cmd,"Allies","ALLY_");

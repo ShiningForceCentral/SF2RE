@@ -151,8 +151,8 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
+    SetArrayString(variables,1,"currentX");
+    SetArrayString(variables,2,"currentY");
     SetArrayString(variables,3,"var_3");
     SetArrayString(variables,4,"var_4");
     SetArrayString(variables,5,"var_5");
@@ -173,11 +173,11 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,5,"var_5");
+    SetArrayString(variables,1,"spellEntry");
+    SetArrayString(variables,2,"itemEntry");
+    SetArrayString(variables,3,"itemSlot");
+    SetArrayString(variables,4,"caster");
+    SetArrayString(variables,5,"option");
     makeLocalVariables(0xE3EE,variables);
     deleteArrayStrings(variables);
     
@@ -190,14 +190,14 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,48,"var_48");
+    SetArrayString(variables,48,"targetsList");
     SetArrayString(variables,96,"var_96");
-    SetArrayString(variables,144,"var_144");
+    SetArrayString(variables,144,"movementsList");
     SetArrayString(variables,192,"var_192");
-    SetArrayString(variables,193,"var_193");
-    SetArrayString(variables,194,"var_194");
-    SetArrayString(variables,195,"var_195");
-    SetArrayString(variables,196,"var_196");
+    SetArrayString(variables,193,"attacker");
+    SetArrayString(variables,194,"priority");
+    SetArrayString(variables,195,"battleaction");
+    SetArrayString(variables,196,"highPriorityTargetsCount");
     makeLocalVariables(0xEDD6,variables);
     deleteArrayStrings(variables);
     
@@ -392,8 +392,8 @@ static defineLocalVariables(){
     /* Battlefield options window */
     SetArrayString(variables,4,"windowTilesEnd");
     SetArrayString(variables,6,"windowSlot");
-    SetArrayString(variables,8,"messageSpeed");
-    SetArrayString(variables,10,"displayBattleMessage");
+    SetArrayString(variables,8,"displayBattleMessage");
+    SetArrayString(variables,10,"messageSpeed");
     makeLocalVariables(0x1586E,variables);
     makeLocalVariables(0x1597C,variables);
     deleteArrayStrings(variables);
@@ -501,19 +501,23 @@ static defineLocalVariables(){
     
     /* Blacksmith menu actions */
     SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
+    SetArrayString(variables,6,"selectedMember");
     SetArrayString(variables,8,"var_8");
-    SetArrayString(variables,10,"var_10");
-    SetArrayString(variables,12,"var_12");
+    SetArrayString(variables,10,"currentItem");
+    SetArrayString(variables,12,"itemSlot");
     SetArrayString(variables,14,"var_14");
-    SetArrayString(variables,16,"var_16");
+    SetArrayString(variables,16,"currentOrder");
     SetArrayString(variables,18,"var_18");
     SetArrayString(variables,20,"var_20");
-    SetArrayString(variables,22,"var_22");
+    SetArrayString(variables,22,"ordersNumber");
+    SetArrayString(variables,24,"characterClass");
     makeLocalVariables(0x21A3A,variables);
     makeLocalVariables(0x21A92,variables);
     makeLocalVariables(0x21B42,variables);
+    makeLocalVariables(0x21CDA,variables);
     makeLocalVariables(0x21E48,variables);
+    makeLocalVariables(0x21E8E,variables);
+    makeLocalVariables(0x21ED6,variables);
     deleteArrayStrings(variables);
     
     /* Caravan menu actions */
@@ -583,11 +587,11 @@ static defineLocalVariables(){
     makeLocalVariables(0x44A7C,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
-    SetArrayString(variables,10,"var_10");
+    /* Discard item */
+    SetArrayString(variables,2,"character");
+    SetArrayString(variables,4,"itemEntry");
+    SetArrayString(variables,6,"itemSlot");
+    SetArrayString(variables,10,"itemTypeFlags");
     makeLocalVariables(0x4F570,variables);
     deleteArrayStrings(variables);
     

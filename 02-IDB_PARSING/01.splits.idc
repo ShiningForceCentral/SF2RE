@@ -250,7 +250,7 @@ static splitSingleChunks(file) {
     MakeAlign(0x1FDEA, 0x20000-0x1FDEA,17);
     
     //splitSingleChunk(0x20878,0x20A02,"ShopItems","data/stats/items/shopitems.bin",file);
-    splitSingleChunk(0x20981,0x20A02,"DebugShop","data/stats/items/debugshop.bin",file);
+    //splitSingleChunk(0x20981,0x20A02,"DebugShop","data/stats/items/debugshop.bin",file);
     //splitSingleChunk(0x21046,0x21072,"Promotions","data/stats/allies/promotions.bin",file);
     
     //splitSingleChunk(0x21F62,0x21F92,"MithrilWeaponClassLists","data/stats/allies/classes/mithrilweaponclasses.bin",file);
@@ -325,9 +325,9 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x101BE0,0x101EE0,"TitleScreenLayoutB","data/graphics/specialscreens/titlescreen/titlelayoutB.bin",file);
 
     splitSingleChunk(0x12A308,0x12CD26,"InvocationSpriteDao","data/graphics/battles/spells/invocations/dao.bin",file);
-    splitSingleChunk(0x12CD26,0x12D9CA,"InvocationSpriteApollo","data/graphics/battles/spells/invocations/apollo.bin",file);
+    splitSingleChunk(0x12CD26,0x12D9CA,"InvocationSpriteAtlas","data/graphics/battles/spells/invocations/atlas.bin",file);
     splitSingleChunk(0x12D9CA,0x12E988,"InvocationSpriteNeptun","data/graphics/battles/spells/invocations/neptun.bin",file);
-    splitSingleChunk(0x12E988,0x12FADE,"InvocationSpriteAtlas","data/graphics/battles/spells/invocations/atlas.bin",file);
+    splitSingleChunk(0x12E988,0x12FADE,"InvocationSpriteApollo","data/graphics/battles/spells/invocations/apollo.bin",file);
     MakeAlign(0x12FADE, 0x130000-0x12FADE,15);
     
     splitSingleChunk(0x1AA16E,0x1AA316,"StatusAnimationTiles","data/graphics/tech/statusanimationtiles.bin",file);
@@ -890,7 +890,6 @@ static undefineByte(addr){
         MakeNameEx(addr,"",0);
         SetManualInsn(addr,"");
 }
-
 
 
 

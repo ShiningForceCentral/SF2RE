@@ -397,10 +397,6 @@ Out: D7 = battle index to trigger ($FFFF if none)\n\
     SetFunctionCmt(0x7d28, 
         "D1=Width/Height", 1);
 
-    // j_GetCharacterWord34
-    SetFunctionCmt(0x8064, 
-        "related to AI control on 0x0004 ?", 1);
-
     // j_GetMoveInfo
     SetFunctionCmt(0x82bc, 
         "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
@@ -420,16 +416,25 @@ Out: A0 = address of name\n\
     SetFunctionCmt(0x8316, 
         "Get combatant D0's current level -> D1", 1);
 
-    // GetUpperMoveType
+    // GetMoveType
     SetFunctionCmt(0x846a, 
-        "Get combatant D0's upper move type, shifted into lower nibble position -> D1", 1);
+        "Get combatant D0's move type, shifted into lower nibble position -> D1", 1);
 
-    // GetEnemyAISetting36
+    // GetAiCommandset
+    SetFunctionCmt(0x8480, 
+        "Get combatant D0's AI commandset -> D1", 1);
+
+    // GetAiSpecialMoveOrders
+    SetFunctionCmt(0x8494, 
+        "Out: D1 = combatant index to follow\n\
+     D2 = second AI point", 1);
+
+    // GetAiRegion
     SetFunctionCmt(0x84b0, 
         "In: D0 = combatant index\n\
 \n\
-Out: D1 = high 4 bits\n\
-     D2 = low 4 bits", 1);
+Out: D1 = AI region index\n\
+     D2 = unknown", 1);
 
     // GetEnemyIndex
     SetFunctionCmt(0x84dc, 
@@ -446,14 +451,6 @@ Out: D1 = something class type ??", 1);
     // LoadAllyName
     SetFunctionCmt(0x855a, 
         "In: A0 = temporary space used when naming characters", 1);
-
-    // SetKills
-    SetFunctionCmt(0x86e6, 
-        "actually seems to only be used for enemy AI, not kills", 1);
-
-    // SetDefeats
-    SetFunctionCmt(0x86fe, 
-        "actually seems to only be used for enemy AI, not kills", 1);
 
     // FindName
     SetFunctionCmt(0x8976, 
@@ -486,15 +483,12 @@ Out: A0 = address of name\n\
 
     // GetItemDefAddress
     SetFunctionCmt(0x8be4, 
-        "Get pointer to item D1's definition in ROM -> A0", 1);
+        "Out: A0 = pointer to definition for item D1", 1);
 
     // GetItemAndNumberHeld
     SetFunctionCmt(0x8bfa, 
-        "In: D0 = combatant index\n\
-    D1 = item slot\n\
-\n\
-Out: D1 = item index\n\
-     D2 = number of items held", 1);
+        "In: D0 = combatant index, D1 = item slot\n\
+Out: D1 = item entry, D2 = number of items held", 1);
 
     // GetEquipmentType
     SetFunctionCmt(0x8c28, 
@@ -790,6 +784,26 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0x9a3c, 
         "In: D1 = item index (only the actual index is used, the status bits are cut out)", 1);
 
+    // RemoveItemFromCaravan
+    SetFunctionCmt(0x9a62, 
+        "In: D1 = inventory slot", 1);
+
+    // sub_9AD0
+    SetFunctionCmt(0x9ad0, 
+        "attack", 1);
+
+    // sub_9ADA
+    SetFunctionCmt(0x9ada, 
+        "use magic", 1);
+
+    // sub_9B06
+    SetFunctionCmt(0x9b06, 
+        "use item", 1);
+
+    // sub_9B38
+    SetFunctionCmt(0x9b38, 
+        "use prism laser", 1);
+
     // DebugModeSelectHits
     SetFunctionCmt(0x9b58, 
         "In: A2 = battlescene script stack frame", 1);
@@ -1023,6 +1037,10 @@ Out: D3 = message index", 1);
         D2 = Y coord\n\
     Out: D0 = target at offset", 1);
 
+    // MemorizePath
+    SetFunctionCmt(0xc18c, 
+        "Populate move costs list for currently moving entity", 1);
+
     // GetLandEffectSetting
     SetFunctionCmt(0xc1da, 
         "In: D0 = combatant index\n\
@@ -1040,13 +1058,40 @@ Out: D1 = land effect setting (0=0%, 1=15%, 2=30%)", 1);
     SetFunctionCmt(0xc22a, 
         "Get combatant D0's resistance setting to spell D1 -> D2", 1);
 
+    // DetermineMuddleBattleaction
+    SetFunctionCmt(0xc27a, 
+        "Check for muddle 2'd units to control whether or not they take an action,\n\
+ and to prevent them from killing Bowie or bosses.\n\
+\n\
+In:  d0 = character index of attacker\n\
+     d1 = character index of defender\n\
+Out: d3 = 0 or 1\n\
+\n\
+If d3=1 upon return, then no action is taken by the attacker.\n\
+\n\
+Return 1 if...\n\
+        ally attacker and defender is Bowie\n\
+        enemy attacker attacking the first enemy (usually the boss)\n\
+        50/50 odds to return 1 if attacker targets itself\n\
+Return 0 otherwise.", 1);
+
     // GetMoveInfo
     SetFunctionCmt(0xc2c8, 
-        "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
+        "Get entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
 
     // GetAttackRange
     SetFunctionCmt(0xc306, 
         "Get combatant D0's max/min attack range -> D3, D4", 1);
+
+    // GetSpellRange
+    SetFunctionCmt(0xc380, 
+        "In: D1 = spell index\n\
+Out: D3 = max range, D4 = min range", 1);
+
+    // GetItemRange
+    SetFunctionCmt(0xc398, 
+        "In: D1 = item index\n\
+Out: D3 = max range, D4 = min range", 1);
 
     // CheckMuddled2
     SetFunctionCmt(0xc3b0, 
@@ -1074,25 +1119,72 @@ Out: D1 = whether combatant is inflicted with MUDDLE 2 (0=no, 1=yes)", 1);
           D1 = starting X coord\n\
           D2 = starting Y coord", 1);
 
+    // CreateTargetGrid
+    SetFunctionCmt(0xc62e, 
+        "In: D1 = spell entry", 1);
+
     // GetClosestAttackPosition
     SetFunctionCmt(0xc71a, 
-        "something with terrain lists and checking, look into it ???\n\
-In: D1 = x pos\n\
-    D2 = y pos\n\
-    D3 = max range\n\
-    D4 = min range\n\
-Out: D1 = chosen x pos\n\
-     D2 = chosen y pos", 1);
+        "In: D1 = X pos, D2 = Y pos, D3 = max range, D4 = min range\n\
+\n\
+Out: D1 = chosen X pos, return $FF if no attack position is available\n\
+     D2 = chosen Y pos", 1);
 
-    // MakeTargetListAllies
+    // MakeTargetsList_Allies
     SetFunctionCmt(0xc7fa, 
         "Clear target grid, then add allies", 1);
 
-    // EvaluateDamage
-    SetFunctionCmt(0xcc0c, 
-        "Calculate max potential damage value, adjusted for land effect\n\
+    // MakeTargetsList_Everybody
+    SetFunctionCmt(0xc81c, 
+        "Populate a list of all combatants on the battlefield", 1);
+
+    // PrioritizeReachableTargets
+    SetFunctionCmt(0xc958, 
+        "Populate lists of targets reachable by item, spell, and regular attack,\n\
+ then give each target a priority value.\n\
 \n\
-      Out: D6 = potential damage", 1);
+To allow AI to cast more than one spell, this must be adjusted.\n\
+\n\
+      In: D0, D7 = character index\n\
+          D1, D6 = extra AI variable (values of 0-3)", 1);
+
+    // CalculateAttackTargetPriority
+    SetFunctionCmt(0xcaea, 
+        "In: A0 = list of reachable targets\n\
+    A1 = movement to each reachable target\n\
+    A2 = \n\
+    D0 = caster index\n\
+    D1 = spell index\n\
+    D2 = target of the spell\n\
+\n\
+Out: D6 = target priority (higher is better)", 1);
+
+    // AdjustAttackTargetPriorityForDifficulty
+    SetFunctionCmt(0xcb18, 
+        "This first calculates expected max damage from a physical attack\n\
+ and places that value into d6.\n\
+\n\
+This then calls one of the difficulty-based subroutines,\n\
+ which sets d6 = target priority value instead (using the\n\
+ \"remaining HP of target\" as a key part of the target priority).\n\
+\n\
+      In:  D0 = attacker, D1 = defender\n\
+      Out: D6 = target priority (higher number = better target)", 1);
+
+    // AdjustSpellTargetPriorityForDifficulty
+    SetFunctionCmt(0xcba2, 
+        "This first calculates expected spell damage and then calls one of the\n\
+ difficulty-based subroutines to calculate target priority.\n\
+\n\
+It then sums these priority values for each enemy in the AOE and returns the result.\n\
+\n\
+      In:  d0 = attacker, d1 = spell index\n\
+      Out: d6 = sum of target priority of all targets in the AOE", 1);
+
+    // CalculatePotentialDamage
+    SetFunctionCmt(0xcc0c, 
+        "In: D0 = attacker, D1 = defender\n\
+Out: D6 = max potential physical damage value, adjusted for land effect", 1);
 
     // GetSpellPowerAdjustedForResistance
     SetFunctionCmt(0xcc54, 
@@ -1101,16 +1193,76 @@ Out: D1 = chosen x pos\n\
 \n\
 Out: D6 = adjusted power", 1);
 
-    // EvaluateTargetRemainingHP
+    // CalculatePotentialRemainingHP
     SetFunctionCmt(0xcc8a, 
-        "In: D6 = potential damage\n\
-\n\
-Out: D1 = target's remaining HP", 1);
+        "In: D0 = target index, D6 = potential damage\n\
+Out: D1 = target's potential remaining HP", 1);
 
-    // sub_CD68
+    // TargetPriorityScript1
+    SetFunctionCmt(0xcca0, 
+        "+1 base priority\n\
++15 if target is expected to die\n\
++2 if target is the same as last turn's target", 1);
+
+    // TargetPriorityScript2
+    SetFunctionCmt(0xccd4, 
+        "+1 base priority\n\
++15 if target is expected to die\n\
++1 if target loses more than 2/3 of remaining health\n\
++1 if target is brought under 20% health\n\
++2 if target is the same as last turn's target", 1);
+
+    // TargetPriorityScript3
+    SetFunctionCmt(0xcd18, 
+        "+1 base priority\n\
+1/3rd of the time, +15 priority if target is expected to die\n\
+2/3rd of the time, +18 minus 2x +1 the move required to attack target (prioritize closer targets)", 1);
+
+    // TargetPriorityScript4
+    SetFunctionCmt(0xcd4c, 
+        "+1 base priority\n\
++15 if target is expected to die\n\
++1 if target is brought under 20% health", 1);
+
+    // DetermineHealingSpellLevel
     SetFunctionCmt(0xcd68, 
-        "In: D0 = heal target character index\n\
-    D4 = heal spell index", 1);
+        "Decide which level of spell to use based upon the HP missing from target\n\
+ and the MP available to the caster.\n\
+\n\
+      In: D0 = heal target character index\n\
+          D1 = combatant index of the spell caster\n\
+          D4 = spell entry\n\
+\n\
+      Out: D2 = spell level to cast (if $FF, then no spell is cast)", 1);
+
+    // CalculateHealTargetPriority
+    SetFunctionCmt(0xcdea, 
+        "If the target for healing uses AI #14 or #15, then return the maximum\n\
+ priority of 13.\n\
+\n\
+If not, then return a priority based upon the movetype for the enemy,\n\
+ which approximately goes highest to lowest priority of\n\
+ healer, mage, archer, flyer, melee, aquatic.\n\
+\n\
+Specific decending priority for each move type is in tbl_MovetypesHealTargetPriority.\n\
+\n\
+The first byte in that table is $FF to ensure there is never a movetype\n\
+ match and therefore nothing has a priority higher than AI #14 or AI #15.\n\
+\n\
+      In: D0 = target index\n\
+      Out: D6 = target priority", 1);
+
+    // AdjustTargetPriorityForAlly
+    SetFunctionCmt(0xce36, 
+        "Extra adjustments on target priority if the attacker is an ally \n\
+ (does not apply to enemies.)\n\
+\n\
+In: D0 = defender index\n\
+    D1 = defenders remaining HP after taking theoretical max damage from an attack (prior routines)\n\
+    D4 = attacker index (the one attacking or casting the offensive spell)\n\
+    D7 = who the enemy targeted last\n\
+\n\
+Out: D6 = priority of the action (basically the total max damage output of the action plus adjustments)", 1);
 
     // GetHighestUsableSpellLevel
     SetFunctionCmt(0xced2, 
@@ -1139,45 +1291,97 @@ Out: D1 = item index\n\
 
     // GetNextHealingSpell
     SetFunctionCmt(0xd018, 
-        "Get next healing spell known by combatant\n\
+        "Get next healing spell known by the combatant.\n\
 \n\
-      In: D0 = entity index\n\
-          D3 = starting spell slot\n\
-\n\
-      Out: D1 = spell index\n\
-           D2 = spell slot", 1);
+      In: D0 = entity index, D3 = starting spell slot\n\
+      Out: D1 = spell index, D2 = spell slot", 1);
 
     // GetNextUsableAttackItem
     SetFunctionCmt(0xd0ac, 
-        "Get the next item in combatant's inventory that can be used to cast BLAZE/FREEZE/BOLT/BLAST\n\
-<HARDCODED>\n\
+        "Get the next item in combatant's inventory that can be used to cast\n\
+BLAZE/FREEZE/BOLT/BLAST (HARDCODED spell indexes)\n\
 \n\
-      In: D0 = combatant index\n\
-          D3 = starting item slot\n\
-\n\
-      Out: D1 = item index\n\
-           D2 = item slot", 1);
+      In: D0 = combatant index, D3 = starting item slot\n\
+      Out: D1 = item index, D2 = item slot", 1);
 
     // GetNextUsableHealingItem
     SetFunctionCmt(0xd160, 
-        "Get the next item in combatant's inventory that can be used to cast a healing spell\n\
-<HARDCODED>\n\
+        "Get the next item in combatant's inventory that can be used to cast\n\
+a healing spell. <HARDCODED>\n\
 \n\
-      In: D0 = combatant index\n\
-          D3 = starting item slot\n\
+This only looks for Healing Rain as a valid healing item,\n\
+but is easy enough to change to allow the AI to use healing items.\n\
 \n\
-      Out: D1 = item index\n\
-           D2 = item slot", 1);
+      In: D0 = combatant index, D3 = starting item slot\n\
+      Out: D1 = item entry, D2 = item slot", 1);
 
     // IsCombatantAtLessThanHalfHP
     SetFunctionCmt(0xd296, 
         "In: D0 = combatant index\n\
-\n\
 Out: carry clear if true", 1);
+
+    // sub_D2F8
+    SetFunctionCmt(0xd2f8, 
+        "In: D0 = defender index\n\
+    D1 = defenders theoretical remaining HP after attack\n\
+\n\
+Set the carry flag if less than 2/3rds of defenders remaining HP\n\
+ is expected to be taken by the attack.", 1);
+
+    // sub_D310
+    SetFunctionCmt(0xd310, 
+        "unused", 1);
+
+    // sub_D326
+    SetFunctionCmt(0xd326, 
+        "unused", 1);
+
+    // sub_D336
+    SetFunctionCmt(0xd336, 
+        "unused", 1);
+
+    // sub_D34C
+    SetFunctionCmt(0xd34c, 
+        "unused", 1);
+
+    // sub_D362
+    SetFunctionCmt(0xd362, 
+        "In: D0 = defender index\n\
+    D1 = defenders theoretical remaining HP after attack\n\
+\n\
+Set the carry flag if the defender is expected to have more than 20%\n\
+ of max HP remain after attack.", 1);
+
+    // DoesCombatantRequireHealing
+    SetFunctionCmt(0xd38a, 
+        "Is combatant d0 at 2/3 or less of max HP? Return carry clear if true.", 1);
 
     // GetDifficulty
     SetFunctionCmt(0xd408, 
         "Out: D1 = 0 if normal, 1 if hard, 2 if super, 3 if ouch", 1);
+
+    // sub_D460
+    SetFunctionCmt(0xd460, 
+        "AI: cast ATTACK spell", 1);
+
+    // sub_D4E0
+    SetFunctionCmt(0xd4e0, 
+        "AI: cast BOOST 2 spell", 1);
+
+    // sub_D560
+    SetFunctionCmt(0xd560, 
+        "AI: cast DISPEL spell", 1);
+
+    // sub_D62C
+    SetFunctionCmt(0xd62c, 
+        "AI: cast MUDDLE 2 spell", 1);
+
+    // MakeAiMoveString
+    SetFunctionCmt(0xdd10, 
+        "In: A2 = loading space\n\
+    A3 = loading space\n\
+    D0 = destination X\n\
+    D1 = destination Y", 1);
 
     // AddAllToStack
     SetFunctionCmt(0xdd60, 
@@ -1187,15 +1391,59 @@ Out: carry clear if true", 1);
     SetFunctionCmt(0xdd78, 
         "create enemy move order from movecost lists", 1);
 
-    // sub_DEFC
+    // ExecuteAiControl
     SetFunctionCmt(0xdefc, 
         "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)\n\
 \n\
-    In: D0 = combatant index", 1);
+    In: D0 = AI controlled combatant index", 1);
 
-    // sub_EBA4
+    // CountDefeatedEnemies
+    SetFunctionCmt(0xe0b6, 
+        "Return defeated enemies count -> D1", 1);
+
+    // HandleAiCommand
+    SetFunctionCmt(0xe294, 
+        "In: D0 = combatant index\n\
+    D1 = command code (like Heal, Attack, etc.)", 1);
+
+    // ExecuteAiCommand_Heal
+    SetFunctionCmt(0xe3ee, 
+        "In: D0 = caster index\n\
+    D1 = command parameter (values of 0-2), unused\n\
+\n\
+Out: D1 = $FFFF if command failed", 1);
+
+    // ExecuteAiCommand_Attack
+    SetFunctionCmt(0xe78c, 
+        "In: D0 = character index (attacker)\n\
+    D1 = extra AI variable (values of 0-3)", 1);
+
+    // ExecuteAiCommand_SpecialMove
+    SetFunctionCmt(0xe98c, 
+        "Move scripts (move to point, follow ally, follow force member)", 1);
+
+    // ExecuteAiCommand_Debuff
     SetFunctionCmt(0xeba4, 
-        "In: D0 = character index", 1);
+        "Debuff spells AI (Muddle 2, Dispel 1)\n\
+\n\
+      In: D0 = character index", 1);
+
+    // DetermineAiBattleaction
+    SetFunctionCmt(0xedd6, 
+        "AI randomly chooses whether to attack, cast a spell, or use an item.\n\
+\n\
+Then, AI will always target the highest priority option based upon\n\
+ the chosen action, unless there are multiple options with equal priority.\n\
+\n\
+      In: D0 = character index of attacker\n\
+      Out: D0 = target index, D1 = priority (max of 15), D2 = battle action\n\
+\n\
+If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
+
+    // ExecuteAiCommand_Move
+    SetFunctionCmt(0xf1d4, 
+        "In: D0 = character index (mover)\n\
+    D1 = extra AI variable (values of 0-2)", 1);
 
     // j_PlayEndKiss
     SetFunctionCmt(0x100b4, 
@@ -1259,6 +1507,10 @@ Out: carry clear if true", 1);
     // sub_10CB0
     SetFunctionCmt(0x10cb0, 
         "related to menu choice", 1);
+
+    // sub_10CC6
+    SetFunctionCmt(0x10cc6, 
+        "In: D0 = displayed spell icon", 1);
 
     // DrawColoredStatBar
     SetFunctionCmt(0x1173a, 
@@ -1712,6 +1964,10 @@ Out: D0 = entity event index", 1);
 Out: D2 = entity X\n\
      D3 = entity Y", 1);
 
+    // sub_234C8
+    SetFunctionCmt(0x234c8, 
+        "In: A1 = entity data pointer", 1);
+
     // SetEntityPosition
     SetFunctionCmt(0x2376a, 
         "In: D0 = entity index\n\
@@ -1764,7 +2020,7 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x24490, 
         "In: D0 = combatant", 1);
 
-    // UpdateTargetListForCombatant
+    // UpdateTargetsListForCombatant
     SetFunctionCmt(0x24642, 
         "In: D0 = combatant index", 1);
 
@@ -1788,7 +2044,7 @@ Out: Z = entity is NOT follower", 1);
     SetFunctionCmt(0x252fa, 
         "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)", 1);
 
-    // UpdateAllEnemiesAI
+    // UpdateAllEnemiesAi
     SetFunctionCmt(0x2550c, 
         "<BUG> A Goddess Staff is added to the deals section in shops whenever a DEF-CON switch \n\
       is activated, and if one of the following items is also present :\n\
@@ -1953,7 +2209,9 @@ Out: D1 = portrait index\n\
 
     // sub_4709E
     SetFunctionCmt(0x4709e, 
-        "Launches DMA", 1);
+        "Launches DMA\n\
+\n\
+    In: A5 = entity data pointer", 1);
 
     // ExecuteMapScript
     SetFunctionCmt(0x4712c, 
@@ -2007,7 +2265,7 @@ Out: D1 = portrait index\n\
     SetFunctionCmt(0x47832, 
         "reset entity flags and sprite and facing ?", 1);
 
-    // j_ExecuteBattleCutscene_Intro_0
+    // ExecuteBattleCutscene_Intro
     SetFunctionCmt(0x47a50, 
         "cutscene before the battle begins", 1);
 
@@ -2028,6 +2286,11 @@ only seems to happen in first \"above Pacalon\" battle", 1);
     // csub_4CD56
     SetFunctionCmt(0x4cd56, 
         "Jaro joins the Force", 1);
+
+    // DiscardItem
+    SetFunctionCmt(0x4f570, 
+        "In: D1 = item slot\n\
+    D2 = item index", 1);
 
     // Map8_DescFunc6
     SetFunctionCmt(0x562ba, 
@@ -2163,7 +2426,7 @@ Out: carry = if anyone is on D3/D4", 1);
     SetFunctionCmt(0x1b15aa, 
         "Set enemy base ATT according to difficulty", 1);
 
-    // GetEnemyAITargetPosition
+    // GetEnemyAiTargetPosition
     SetFunctionCmt(0x1b15f8, 
         "coords of anchor point used in AI byte D0 -> D1, D2", 1);
 
@@ -2211,11 +2474,4 @@ Out: D1 = upgraded enemy index", 1);
 \n\
       Out: D1 = 0 if false, 1 if true", 1);
 
-    // Check if script running in batch mode, and exit once done
-    if (Batch(1) == 1) {
-        Exit(0);                              // exit to OS, error code 0 - success		
-    }
-    else {
-        Batch(0);
-    }
 }

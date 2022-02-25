@@ -245,6 +245,7 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords");    
     produceAsmScript(file,"data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords");    
     produceAsmScript(file,"data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords");
+    writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");    
     produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");    
     produceAsmScript(file,"code\\gameflow\\start\\regioncheck",0x7EC6,0x7FA4,"Region check function");    
@@ -286,17 +287,29 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_6",0xACEA,0xBCF0,"Battle actions engine");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_7",0xBD24,0xBE52,"Battle actions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\writebattlescenecommanddropenemyitem",0xBD24,0xBE52,"Write Battlescene Command : Drop Enemy Item function");
     produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
     produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_8",0xC024,0xC09A,"Battle actions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
     produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
     writestr(file,"                wordAlign\n");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xD824,"Battlefield engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xCD68,"Battlefield engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\determinehealingspelllevel",0xCD68,0xCDEA,"Determine healing spell level function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_3",0xCDEA,0xD38A,"Battlefield engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\doescombatantrequirehealing",0xD38A,0xD3CA,"Does combatant require healing function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_4",0xD3CA,0xD824,"Battlefield engine");
     produceAsmScript(file,"data\\battles\\global\\landeffectsettingsandmovecosts",0xD824,0xD8F4,"Land effect settings and move costs table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_3",0xD8F4,0xDEFC,"Battlefield engine");
-    produceAsmScript(file,"code\\gameflow\\battle\\aiengine",0xDEFC,0xF9B4,"AI engine");    
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_5",0xD8F4,0xDEFC,"Battlefield engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\aiengine_1",0xDEFC,0xE1AC,"AI engine");
+    produceAsmScript(file,"data\\battles\\aicommandsets",0xE1AC,0xE25B,"AI commands data");
+    produceAsmScript(file,"data\\battles\\swarmbattleslist",0xE25B,0xE25F,"List of battles implementing swarm AI");
+    produceAsmSection(file,"",0xE25F,0xE260);
+    produceAsmScript(file,"data\\battles\\swarmbattlesparams",0xE260,0xE293,"Parameters for battles implementing swarm AI");
+    produceAsmSection(file,"",0xE293,0xE294);
+    produceAsmScript(file,"code\\gameflow\\battle\\aiengine_2",0xE294,0xE3EE,"AI engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\executeaicommandheal",0xE3EE,0xE78C,"Healing AI command");
+    produceAsmScript(file,"code\\gameflow\\battle\\aiengine_3",0xE78C,0xF9B4,"AI engine");
     produceAsmScript(file,"data\\battles\\global\\krakenmovecosts",0xF9B4,0xF9C4,"Kraken move costs table");
     produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
     produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
@@ -351,7 +364,8 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\memberstatswindowlayout",0x16A62,0x16EA6,"Member stats window layout");
     produceAsmScript(file,"data\\stats\\items\\itemdefs",0x16EA6,0x176A6,"Item definitions");
     produceAsmScript(file,"data\\stats\\spells\\spelldefs",0x176A6,0x1796E,"Spell definitions");
-    produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3E,"Item names");
+    produceAsmScript(file,"data\\stats\\items\\itemnames",0x1796E,0x17F3D,"Item names");
+    produceAsmSection(file,"",0x17F3D,0x17F3E);
     produceAsmScript(file,"data\\stats\\allies\\classes\\classnames",0x17F3E,0x17FDA,"Class names");
     produceAsmSection(file,"",0x17FDA,0x18000);
 
@@ -402,7 +416,8 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
 
     produceAsmSectionNoPretty(file,"",0x20000,0x20064);
     produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
-    produceAsmScript(file,"data\\stats\\items\\shopinventories",0x20878,0x20A02,"Shop inventories");
+    produceAsmScript(file,"data\\stats\\items\\shopinventories",0x20878,0x20981,"Shop inventories");
+    produceAsmScript(file,"data\\stats\\items\\debugshop",0x20981,0x20A02,"Debug shop");
     writestr(file,"                wordAlign\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
     produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
@@ -451,10 +466,10 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
             
     produceAsmSectionNoPretty(file,"",0x28000,0x2804C);
     produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo_0",0x2804C,0x28FBC,"SEGA logo functions");
-    produceAsmScript(file,"data\\tech\\configurationmodeinputsequence",0x28FBC,0x28FCC,"Configuration mode input sequence");
+    produceAsmScript(file,"data\\tech\\configurationmodeinputsequence",0x28FBC,0x28FCB,"Configuration mode input sequence");
     produceAsmSection(file,"",0x28FCB,0x28FCC);
     produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo_1",0x28FCC,0x28FF0,"SEGA logo functions");
-    produceAsmScript(file,"data\\tech\\debugmodeinputsequence",0x28FF0,0x29002,"Debug mode input sequence");
+    produceAsmScript(file,"data\\tech\\debugmodeinputsequence",0x28FF0,0x29001,"Debug mode input sequence");
     produceAsmSection(file,"",0x29001,0x2C576);
     produceAsmScript(file,"code\\specialscreens\\endkiss\\endkissfunctions_0",0x2C576,0x2C73C,"End kiss function");    
     produceAsmScript(file,"code\\specialscreens\\title\\loadfont",0x2C73C,0x2C7A0,"Title screen font loading function");    
@@ -463,6 +478,7 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmSection(file,"",0x2E196,0x2EB34);
     produceAsmScript(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries");   
     produceAsmScript(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff");
+    writestr(file,"                wordAlign\n");
     produceAsmSection(file,"",0x425ED,0x44000);    
 
     fclose(file);
@@ -2558,7 +2574,8 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
     produceAsmSection(file,"",0x1E0000,0x1EE02C);
     produceAsmScript(file,"data\\stats\\allies\\growthcurves",0x1EE02C,0x1EE270,"Stat growth curves");
     //produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");    
-    produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7D0,30,2,"Ally stats");
+    produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7CF,30,2,"Ally stats");
+    produceAsmSection(file,"",0x1EE7CF,0x1EE7D0);
     produceAsmScript(file,"data\\stats\\allies\\allystartdefs",0x1EE7D0,0x1EE890,"Ally start definitions");
     produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
     produceAsmScript(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics");    
@@ -2735,19 +2752,21 @@ static writeFooter(file){
     writestr(file,"        END");
 }
 
-static writeFunctionHeader(file, ea, prettyWriteFunctions){
-    auto funcCmt;
+static writeFunctionHeader(file,ea,prettyWriteFunctions){
+    auto funcCmt,frame,member,name,offset;
+    
     if(prettyWriteFunctions!=0){
         writestr(file,"\n; =============== S U B R O U T I N E =======================================\n\n");
     }
+    
+    /* Write function comment */
     funcCmt = GetFunctionCmt(ea,0);
     if(funcCmt!=""){
         writestr(file,form("; %s\n",funcCmt));
         if(prettyWriteFunctions!=0){
             writestr(file,"\n");
         }
-    }
-    else{
+    }else{
         funcCmt = GetFunctionCmt(ea,1);
         if(funcCmt!=""){
             funcCmt = formatFuncRptCmt(funcCmt);
@@ -2757,26 +2776,26 @@ static writeFunctionHeader(file, ea, prettyWriteFunctions){
             }            
         }
     }
-    writeLocalVariables(file,ea);
-}
-
-static writeLocalVariables(file,ea){
-    auto frame,member,name,offset;
+    
+    /* Write local variables */
     frame = GetFrame(ea);
     DelStrucMember(frame,GetMemberOffset(frame," r"));
     DelStrucMember(frame,GetMemberOffset(frame," s"));
     member = GetFirstMember(frame);
-    while(member!=-1&&member<=GetLastMember(frame)){
-        name = GetMemberName(frame,member);
-        if(name!=""){
-            offset = GetFrameLvarSize(ea)-member;
-            writestr(file,form("%s = -%d\n",name,offset));
-            member = member+GetMemberSize(frame,member);
-        }else{
-            member++;
+    if(member!=-1){
+        while(member!=-1 && member<=GetLastMember(frame)){
+            name = GetMemberName(frame,member);
+            if(name!=""){
+                offset = GetFrameLvarSize(ea) - member;
+                writestr(file,form("%s = -%d\n",name,offset));
+                member = member + GetMemberSize(frame,member);
+            }else{
+                member++;
+            }
         }
     }
-    if(GetFirstMember(frame)!=-1){
+    
+    if(prettyWriteFunctions!=0){
         writestr(file,"\n");
     }
 }
