@@ -59,6 +59,7 @@ static main(void){
     parseCustomBackgrounds();
     parseAllyBattleSpriteIdleAnimate();
     parseEnemyBattleSpriteIdleAnimate();
+    parseBackgroundLayout();
     parseShopInventories();
     parsePromotions();
     parseBlacksmithEligibleClassesList();
@@ -992,6 +993,18 @@ static parseEnemyBattleSpriteIdleAnimate(){
     SetManualInsn(addr, "tableEnd.b");
 }
 
+static parseBackgroundLayout(){
+    auto addr, j, vdpTile;
+    addr = 0x1FAEA;
+    while(addr<0x1FDEA){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
+        addr = addr+2;
+    }
+}
+
 static parseShopInventories(){
     auto addr, i, j, len, shopInventory, next;
     i = 1;
@@ -1463,12 +1476,12 @@ static parseRandomBattles(){
         for(j=addr+1;j<addr+len;j++){
             next = getBattleShorthand(Byte(j));
             if(battles==""){
-                battles = form("    %s", next);
+                battles = form("%s", next);
             }else{
-                battles = form("%s, &\n    %s", battles, next);
+                battles = form("%s, &\n        %s", battles, next);
             }
         }
-        SetManualInsn(addr, form("battles &\n%s", battles));
+        SetManualInsn(addr, form("battles %s", battles));
         addr = addr+len;
     }
 }

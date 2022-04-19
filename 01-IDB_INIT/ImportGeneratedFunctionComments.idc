@@ -347,7 +347,7 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
 
     // CheckSram
     SetFunctionCmt(0x6ea6, 
-        "Out: D0, D1 = -1 if slot 1, or slot 2 failed checksum", 1);
+        "Out: d0.w, d1.w = -1 if slot 1 or slot 2 failed checksum, respectively.", 1);
 
     // CopyBytesToSram
     SetFunctionCmt(0x7004, 
@@ -438,19 +438,22 @@ Out: D1 = AI region index\n\
 
     // GetEnemyIndex
     SetFunctionCmt(0x84dc, 
-        "In: D0 = combatant index\n\
-\n\
-Out: D1 = enemy index ($FFFF if not an enemy)", 1);
+        "In: d0.b = combatant index\n\
+Out: d1.w = enemy index, or -1 if not an enemy", 1);
 
-    // GetSomethingClassType
+    // GetCombatantType
     SetFunctionCmt(0x851a, 
-        "In: D0 = combatant index\n\
+        "Get combatant d0.w type -> d1.w\n\
 \n\
-Out: D1 = something class type ??", 1);
+If combatant is an ally, type is equal to combatant index plus allies number\n\
+ times class type (0, 1, or 2 for base, promoted, and special, respectively),\n\
+ and the most significant bit is set. However, this feature is unused.\n\
+\n\
+Otherwise, if an enemy, return the enemy index.", 1);
 
     // LoadAllyName
     SetFunctionCmt(0x855a, 
-        "In: A0 = temporary space used when naming characters", 1);
+        "In: a0 = pointer to temporarily loaded name in RAM", 1);
 
     // FindName
     SetFunctionCmt(0x8976, 
@@ -511,10 +514,12 @@ Out: D2 = equipment type (0 = item, 1 = weapon, $FFFF = ring)", 1);
 \n\
 Out: D2 = 0 if item successfully added, 1 if no empty slot available", 1);
 
-    // BreakItem
+    // BreakItemBySlot
     SetFunctionCmt(0x8cd4, 
         "In: D0 = combatant index\n\
-    D1 = item slot", 1);
+    D1 = item slot\n\
+\n\
+Out: D2 = 3 if item slot is empty", 1);
 
     // EquipItemBySlot
     SetFunctionCmt(0x8d34, 
@@ -637,15 +642,15 @@ Out: A0 = address of name\n\
         "In: D0 = combatant index\n\
     D1 = spell slot\n\
 \n\
-Out: D1 = spell index\n\
+Out: D1 = first spell entry\n\
      D2 = number of spells learned", 1);
 
     // LearnSpell
     SetFunctionCmt(0x9226, 
         "In: D0 = ally index\n\
-    D1 = spell index\n\
+    D1 = spell entry\n\
 \n\
-Out: D2 = result (0 = learned new spell, 1 = upgraded spell, 2 = no room)", 1);
+Out: D2 = result (0 = success, 1 = failure : same or higher level known, 2 = failure : no room)", 1);
 
     // GetSpellCost
     SetFunctionCmt(0x927e, 
@@ -1043,9 +1048,8 @@ Out: D3 = message index", 1);
 
     // GetLandEffectSetting
     SetFunctionCmt(0xc1da, 
-        "In: D0 = combatant index\n\
-\n\
-Out: D1 = land effect setting (0=0%, 1=15%, 2=30%)", 1);
+        "In:  d0.b = combatant index\n\
+Out: d1.b = land effect setting (0 = 0%, 1 = 15%, 2 = 30%)", 1);
 
     // SetMovableAtCoord
     SetFunctionCmt(0xc204, 
@@ -1077,7 +1081,7 @@ Return 0 otherwise.", 1);
 
     // GetMoveInfo
     SetFunctionCmt(0xc2c8, 
-        "Get entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
+        "Get combatant D0's current MOV*2, X, Y -> D0, D3, D4", 1);
 
     // GetAttackRange
     SetFunctionCmt(0xc306, 
@@ -1268,10 +1272,10 @@ Out: D6 = priority of the action (basically the total max damage output of the a
     SetFunctionCmt(0xced2, 
         "Get highest usable level of spell D1, considering current MP and highest known level\n\
 \n\
-      In: D0 = combatant index\n\
-          D1 = spell index\n\
+      In: D0 = caster index\n\
+          D1 = highest known level spell entry\n\
 \n\
-      Out: D1 = spell index", 1);
+      Out: D1 = highest usuable level spell entry", 1);
 
     // GetSlotContainingSpell
     SetFunctionCmt(0xcf0e, 
@@ -1288,6 +1292,13 @@ Out: D1 = spell index\n\
 \n\
 Out: D1 = item index\n\
      D2 = slot", 1);
+
+    // GetNextUsableAttackSpell
+    SetFunctionCmt(0xcf74, 
+        "Get next attack spell usable by the caster.\n\
+\n\
+      In: D0 = caster index, D3 = starting spell slot\n\
+      Out: D1 = spell index, D2 = spell slot", 1);
 
     // GetNextHealingSpell
     SetFunctionCmt(0xd018, 
@@ -1360,21 +1371,41 @@ Set the carry flag if the defender is expected to have more than 20%\n\
     SetFunctionCmt(0xd408, 
         "Out: D1 = 0 if normal, 1 if hard, 2 if super, 3 if ouch", 1);
 
-    // sub_D460
+    // MakeAttackSpellPrioritiesList
     SetFunctionCmt(0xd460, 
         "AI: cast ATTACK spell", 1);
 
-    // sub_D4E0
+    // MakeBoostSpellPrioritiesList
     SetFunctionCmt(0xd4e0, 
         "AI: cast BOOST 2 spell", 1);
 
-    // sub_D560
+    // MakeDispelSpellPrioritiesList
     SetFunctionCmt(0xd560, 
         "AI: cast DISPEL spell", 1);
 
-    // sub_D62C
+    // MakeMuddleSpellPrioritiesList
     SetFunctionCmt(0xd62c, 
         "AI: cast MUDDLE 2 spell", 1);
+
+    // CalculateDispelSpellTargetPriority
+    SetFunctionCmt(0xd6f2, 
+        "Returns priority for the AI to cast DISPEL.\n\
++1 point for each target within the area of effect that knows at least\n\
+ one attack or healing spell.\n\
+\n\
+Out: d1.w = target priority", 1);
+
+    // CalculateBoostSpellTargetPriority
+    SetFunctionCmt(0xd742, 
+        "Returns priority for the AI to cast BOOST.\n\
+\n\
+Out: d1.w = target priority", 1);
+
+    // CalculateAttackSpellTargetPriority
+    SetFunctionCmt(0xd7aa, 
+        "Returns priority for the AI to cast ATTACK.\n\
+\n\
+Out: d1.w = target priority", 1);
 
     // MakeAiMoveString
     SetFunctionCmt(0xdd10, 
@@ -1426,7 +1457,7 @@ Out: D1 = $FFFF if command failed", 1);
     SetFunctionCmt(0xeba4, 
         "Debuff spells AI (Muddle 2, Dispel 1)\n\
 \n\
-      In: D0 = character index", 1);
+      In: D0 = caster index", 1);
 
     // DetermineAiBattleaction
     SetFunctionCmt(0xedd6, 
@@ -2055,10 +2086,10 @@ Out: Z = entity is NOT follower", 1);
 \n\
 End function with a RTS intruction to fix", 1);
 
-    // AddRandomizedAGItoTurnOrder
+    // AddCombatantAndRandomizedAGItoTurnOrder
     SetFunctionCmt(0x255a4, 
-        "In: A0 = turn order in RAM\n\
-    D0 = combatant index", 1);
+        "In: a0 = pointer to turn order entry\n\
+    d0.w = combatant index", 1);
 
     // LoadBattle
     SetFunctionCmt(0x25610, 
@@ -2388,7 +2419,7 @@ Also creates a shadow effect using palette index 2.", 1);
 
     // CheckTriggerRegionFlag
     SetFunctionCmt(0x1ace32, 
-        "In: D1 = region #", 1);
+        "In: d0.b = region index", 1);
 
     // GetListOfSpawningEnemies
     SetFunctionCmt(0x1acf30, 
@@ -2405,6 +2436,10 @@ Out: D0 = 0000 if activated and dead, $FFFF if not", 1);
     SetFunctionCmt(0x1b120a, 
         "Never called, probably what remains of some debugging code ?", 1);
 
+    // InitEnemyBattlePosition
+    SetFunctionCmt(0x1b130c, 
+        "In: d0.b = combatant index", 1);
+
     // UpdateEnemyStatsForRespawn
     SetFunctionCmt(0x1b13a0, 
         "In: D0 = character index\n\
@@ -2414,7 +2449,8 @@ Out: carry = 0 if respawn, 1 if not", 1);
 
     // InitEnemyStats
     SetFunctionCmt(0x1b140a, 
-        "In: A0 = address of current combatant from battle def", 1);
+        "In: a0 = pointer to battle entity definition\n\
+    d0.b = combatant index", 1);
 
     // GetEnemyOriginalPosOccupied
     SetFunctionCmt(0x1b1554, 
@@ -2464,9 +2500,7 @@ Out: carry = if anyone is on D3/D4", 1);
 
     // UpgradeEnemyIndex
     SetFunctionCmt(0x1b184c, 
-        "In: D1 = original enemy index\n\
-\n\
-Out: D1 = upgraded enemy index", 1);
+        "Upgrade enemy index d1.w -> d1.w", 1);
 
     // HasJaroJoinedTheForce
     SetFunctionCmt(0x1b1a28, 

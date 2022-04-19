@@ -338,6 +338,8 @@ static fixUnwantedNames(){
     MakeNameEx(0xCBE0,"",0);
     MakeNameEx(0xCDB2,"",0);
     MakeNameEx(0xD2E4,"",0);
+    MakeNameEx(0xD4B4,"",0);
+    MakeNameEx(0xD6CC,"",0);
     MakeNameEx(0xE3D0,"",0);
     MakeNameEx(0xE5CC,"",0);
     MakeNameEx(0xEBB8,"",0);

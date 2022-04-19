@@ -558,7 +558,7 @@ static parseCS(start,end){
             SetManualInsn(ea,form("jumpIfFlagClear $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
         }
         else if(cmd==    0x000E){
-            cmdName = "000E JUMP IF CHARACTER DEAD";
+            cmdName = "000E JUMP IF CHARACTER DEFEATED BY LAST ATTACK";
             cmdComment = "";
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
@@ -566,10 +566,10 @@ static parseCS(start,end){
                 MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
             }
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("jumpIfDefeated $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
+            SetManualInsn(ea,form("jumpIfDefeatedByLastAttack $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
         }
         else if(cmd==    0x000F){
-            cmdName = "000F JUMP IF CHARACTER ALIVE";
+            cmdName = "000F JUMP IF CHARACTER DEAD";
             cmdComment = "";
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
@@ -577,7 +577,7 @@ static parseCS(start,end){
                 MakeNameEx(Dword(ea+4),form("cs_%s",ltoa(Dword(ea+4),16)),0);
             }
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("jumpIfAlive $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
+            SetManualInsn(ea,form("jumpIfDead $%s,%s",ltoa(Word(ea+2),16),GetTrueName(Dword(ea+4))));
         }
         else if(cmd==    0x0010){
             cmdName = "0010 SET FLAG";

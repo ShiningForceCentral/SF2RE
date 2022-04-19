@@ -396,7 +396,8 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"data\\battles\\global\\backgroundenemyswitch",0x1FAB8,0x1FAD6,"Background enemy switch table");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
-    produceAsmSection(file,"",0x1FAEA,0x20000);
+    produceAsmScript(file,"data\\graphics\\tech\\backgroundlayout",0x1FAEA,0x1FDEA,"Battle Background Layout");
+    produceAsmSection(file,"",0x1FDEA,0x20000);
 
     fclose(file);
     Message("DONE.\n");    
@@ -437,7 +438,9 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_0",0x2379A,0x239AE,"Exploration functions");
     produceAsmScript(file,"data\\stats\\items\\chestgoldamounts",0x239AE,0x239C8,"Chest gold amounts");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_1",0x239C8,0x23A84,"Exploration functions");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_1",0x23A84,0x257C0,"Battle functions");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_1",0x23A84,0x25544,"Battle functions");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleturnorderfunctions",0x25544,0x25610,"Battle turn order functions");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions_2",0x25610,0x257C0,"Battle functions");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_2",0x257C0,0x25A94,"Exploration functions");
     produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
@@ -2458,7 +2461,9 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
 
     produceAsmSection(file,"",0x180000,0x18001C);
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites");    
-    produceAsmSection(file,"",0x1AA16E,0x1AAC3A);        
+    produceAsmSection(file,"",0x1AA16E,0x1AA316);        
+    produceAsmScript(file,"data\\graphics\\tech\\battlescenetransition\\entries",0x1AA316,0x1AA8CA,"Battlescene transition tiles");
+    produceAsmSection(file,"",0x1AA8CA,0x1AAC3A);   
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\animations\\entries",0x1AAC3A,0x1AB79E,"Ally animations");    
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\animations\\entries",0x1AB79E,0x1ABE52,"Enemy animations");    
     produceAsmSection(file,"",0x1ABE52,0x1AC000);
