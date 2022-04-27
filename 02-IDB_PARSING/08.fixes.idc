@@ -279,6 +279,7 @@ static fixFunctionLocalNames(){
     MakeNameEx(0xA086,"@Message_Attack",SN_LOCAL|SN_NON_AUTO);
     MakeNameEx(0xB612,"@EnemyTarget",SN_LOCAL|SN_NON_AUTO);
     MakeNameEx(0x25542,"@Return",SN_LOCAL|SN_NON_AUTO);
+    MakeNameEx(0x25CB0,"@Done",SN_LOCAL|SN_NON_AUTO);
 
 }
 
@@ -288,6 +289,7 @@ static fixUnwantedNames(){
     MakeNameEx(0x20,"",0);
     MakeNameEx(0xFC,"",0);
     MakeNameEx(0x91E,"",0);
+    MakeNameEx(0x2AD4,"",0);
     MakeNameEx(0x5018,"",0);
     MakeNameEx(0x651C,"",0);
     MakeNameEx(0x658C,"",0);
@@ -312,7 +314,6 @@ static fixUnwantedNames(){
     MakeNameEx(0x9CE0,"",0);
     MakeName(0xA086,"");
     MakeNameEx(0xA13C,"",0);
-    //MakeNameEx(0xA08E,"");
     MakeNameEx(0xA21A,"",0);
     MakeNameEx(0xA220,"",0);
     MakeNameEx(0xA476,"",0);
@@ -323,28 +324,39 @@ static fixUnwantedNames(){
     MakeNameEx(0xAC00,"",0);
     MakeName(0xACC8,"");
     MakeName(0xAE62,"");
-    //MakeNameEx(0xAE70,"",0);
     MakeNameEx(0xAF8A,"",0);
     MakeNameEx(0xAFBA,"",0);
     MakeNameEx(0xB010,"",0);
     MakeNameEx(0xB1D6,"",0);
     MakeNameEx(0xB210,"",0);
+    MakeNameEx(0xB372,"",0);
+    MakeNameEx(0xB404,"",0);
     MakeName(0xB612,"");
-    //MakeNameEx(0xB616,"",0);
     MakeName(0xB6A2,"");
-    //MakeNameEx(0xB6A6,"",0);
     MakeNameEx(0xB6BC,"",0);
+    MakeNameEx(0xB6E8,"",0);
+    MakeNameEx(0xB788,"",0);
+    MakeNameEx(0xB888,"",0);
+    MakeNameEx(0xB950,"",0);
     MakeNameEx(0xC992,"",0);
     MakeNameEx(0xCBE0,"",0);
     MakeNameEx(0xCDB2,"",0);
     MakeNameEx(0xD2E4,"",0);
     MakeNameEx(0xD4B4,"",0);
     MakeNameEx(0xD6CC,"",0);
+    MakeNameEx(0xD9A2,"",0);
+    MakeNameEx(0xD9FA,"",0);
     MakeNameEx(0xE3D0,"",0);
     MakeNameEx(0xE5CC,"",0);
     MakeNameEx(0xEBB8,"",0);
     MakeNameEx(0xED8A,"",0);
     MakeNameEx(0xEF02,"",0);
+    MakeNameEx(0xFF87,"",0);
+    MakeNameEx(0x1806E,"",0);
+    MakeNameEx(0x18098,"",0);
+    MakeNameEx(0x182EE,"",0);
+    MakeNameEx(0x182FC,"",0);
+    MakeNameEx(0x18352,"",0);
     MakeNameEx(0x10000C,"",0);
     MakeNameEx(0x100020,"",0);
     MakeNameEx(0x130010,"",0);
@@ -358,7 +370,7 @@ static insertRomExpandTweaks(){
 
     /* Align directives being not permissive enough 
     to remove data chunks for ROM expansion */
-    SetManualInsn(0xFF87,"align $8000");
+    SetManualInsn(0xFF87,"align $10000");
     SetManualInsn(0x17FDA,"align $18000");
     SetManualInsn(0x27D8E,"align $28000");
     SetManualInsn(0x425ED,"align $44000");

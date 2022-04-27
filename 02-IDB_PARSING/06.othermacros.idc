@@ -27,7 +27,7 @@ static main(void){
     parseSpellNames();
     parseAllyNames();
     parseEnemyNames();
-    parseSpellLevelHighlightSpriteDefs();
+    parseSpellLevelHighlightVdpSprites();
     parseDiamondMenuLayout();
     parseMagicMenuLayout();
     parseItemMenuLayout();
@@ -36,12 +36,12 @@ static main(void){
     parsePortraitWindowLayout();
     parseAllyKillDefeatWindowLayout();
     parseGoldWindowLayout();
-    parseMemberListTextHighlightSpriteDefs();
+    parseMemberListTextHighlightVdpSprite();
     parseUnknownWindowLayout_13EDE();
-    parseItemListTextHighlightSpriteDefs();
+    parseItemListTextHighlightVdpSprites();
     parseShopInventoryWindowLayout();
     parseYesNoPromptMenuLayout();
-    parseBattleConfigSpriteDefs();
+    parseBattleConfigVdpSprites();
     parseBattleConfigWindowLayout();
     parseFighterMiniStatusWindowLayout();
     parseAlphabetWindowLayout();
@@ -53,6 +53,10 @@ static main(void){
     parseItemNames();
     parseClassNames();
     parseTerrainBackgrounds();
+    parseUnknownVdpSprites_1F128();
+    parseBattlesceneAllyVdpSprites();
+    parseBattlesceneWeaponVdpSprites();
+    parseBattlesceneGroundVdpSprites();
     parseAllyBattleSprites();
     parseEnemyBattleSprites();
     parseWeaponSprites();
@@ -67,7 +71,7 @@ static main(void){
     parseMithrilWeaponLists();
     parseSpecialCaravanDescriptions();
     parseUsableOutsideBattleItems();
-    parseUnknownSpriteDefs_2358C();   // unknown sprite definitions at 0x2358C
+    parseUnknownVdpSprites_2358C();   // unknown sprite definitions at 0x2358C
     parseConfigurationModeInputs();
     parseDebugModeInputs();
     parseFollowers();
@@ -419,21 +423,8 @@ static parseEnemyNames(){
     SetManualInsn(0xFF5E, form("enemyName \"JAR\", 0"));
 }
 
-static parseSpellLevelHighlightSpriteDefs(){
-    auto addr, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
-    addr = 0x10DD2;
-    while(addr<0x10DE2){
-        for(j=addr;j<addr+8;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,8,1);
-        ypos = ltoa(Word(addr),10);
-        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
-        sizeAndLink = form("%s|%d", size, Word(addr+2)&0xFF);
-        props = getVdpTileShorthand(Word(addr+4)&0xF800);
-        tileAndProps = form("%d|%s", Word(addr+4)&0x7FF, props);
-        xpos = ltoa(Word(addr+6),10);
-        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
-        addr = addr+8;
-    }
+static parseSpellLevelHighlightVdpSprites(){
+    parseVdpSprites(0x10DD2,0x10DE2);
 }
 
 static parseDiamondMenuLayout(){
@@ -544,21 +535,8 @@ static parseGoldWindowLayout(){
     }
 }
 
-static parseMemberListTextHighlightSpriteDefs(){
-    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
-    addr = 0x13452;
-    while(addr<0x13462){
-        for(j=addr;j<addr+8;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,8,1);
-        ypos = ltoa(Word(addr),10);
-        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
-        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = getVdpTileShorthand(Word(addr+4)&0xF800);
-        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
-        xpos = ltoa(Word(addr+6),10);
-        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
-        addr = addr+8;
-    }
+static parseMemberListTextHighlightVdpSprite(){
+    parseVdpSprites(0x13452,0x13462);
 }
 
 static parseUnknownWindowLayout_13EDE(){
@@ -573,21 +551,8 @@ static parseUnknownWindowLayout_13EDE(){
     }
 }
 
-static parseItemListTextHighlightSpriteDefs(){
-    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
-    addr = 0x14724;
-    while(addr<0x1474C){
-        for(j=addr;j<addr+8;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,8,1);
-        ypos = ltoa(Word(addr),10);
-        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
-        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = getVdpTileShorthand(Word(addr+4)&0xF800);
-        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
-        xpos = ltoa(Word(addr+6),10);
-        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
-        addr = addr+8;
-    }
+static parseItemListTextHighlightVdpSprites(){
+    parseVdpSprites(0x14724,0x1474C);
 }
 
 static parseShopInventoryWindowLayout(){
@@ -614,21 +579,8 @@ static parseYesNoPromptMenuLayout(){
     }
 }
 
-static parseBattleConfigSpriteDefs(){
-    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
-    addr = 0x15A00;
-    while(addr<0x15A20){
-        for(j=addr;j<addr+8;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,8,1);
-        ypos = ltoa(Word(addr),10);
-        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
-        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = getVdpTileShorthand(Word(addr+4)&0xF800);
-        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
-        xpos = ltoa(Word(addr+6),10);
-        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
-        addr = addr+8;
-    }
+static parseBattleConfigVdpSprites(){
+    parseVdpSprites(0x15A00,0x15A20);
 }
 
 static parseBattleConfigWindowLayout(){
@@ -872,6 +824,22 @@ static parseTerrainBackgrounds(){
         SetManualInsn(addr, form("background %s", battleBackground));
         addr++;
     }
+}
+
+static parseUnknownVdpSprites_1F128(){
+    parseVdpSprites(0x1F128,0x1F140);
+}
+
+static parseBattlesceneAllyVdpSprites(){
+    parseVdpSprites(0x1F576,0x1F606);
+}
+
+static parseBattlesceneWeaponVdpSprites(){
+    parseVdpSprites(0x1F606,0x1F686);
+}
+
+static parseBattlesceneGroundVdpSprites(){
+    parseVdpSprites(0x1F686,0x1F6B6);
 }
 
 static parseAllyBattleSprites(){
@@ -1176,21 +1144,8 @@ static parseUsableOutsideBattleItems(){
     SetManualInsn(addr, "tableEnd.b");
 }
 
-static parseUnknownSpriteDefs_2358C(){
-    auto addr, i, j, ypos, size, sizeAndLink, props, tileAndProps, xpos;
-    addr = 0x2358C;
-    while(addr<0x2364C){
-        for(j=addr;j<addr+8;j++){undefineByte(j);}
-        MakeData(addr,FF_BYTE,8,1);
-        ypos = ltoa(Word(addr),10);
-        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
-        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
-        props = getVdpTileShorthand(Word(addr+4)&0xF800);
-        tileAndProps = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), props);
-        xpos = ltoa(Word(addr+6),10);
-        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, tileAndProps, xpos));
-        addr = addr+8;
-    }
+static parseUnknownVdpSprites_2358C(){
+    parseVdpSprites(0x2358C,0x2364C);
 }
 
 static parseConfigurationModeInputs(){
@@ -2052,6 +2007,21 @@ static parseMapData(){
 
 
 
+static parseVdpSprites(start,end){
+    auto addr, i, j, ypos, size, sizeAndLink, vdpTile, xpos;
+    addr = start;
+    while(addr<end){
+        for(j=addr;j<addr+8;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,8,1);
+        ypos = ltoa(Word(addr),10);
+        size = getVdpSpriteSizeShorthand(Word(addr+2)&0xFF00);
+        sizeAndLink = form("%s|%s", size, ltoa(Word(addr+2)&0xFF,10));
+        vdpTile = form("%s|%s", ltoa(Word(addr+4)&0x7FF,10), getVdpTileShorthand(Word(addr+4)&0xF800));
+        xpos = ltoa(Word(addr+6),10);
+        SetManualInsn(addr, form("vdpSprite %s, %s, %s, %s", ypos, sizeAndLink, vdpTile, xpos));
+        addr = addr+8;
+    }
+}
 
 
 

@@ -396,7 +396,7 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"data\\battles\\global\\backgroundenemyswitch",0x1FAB8,0x1FAD6,"Background enemy switch table");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
-    produceAsmScript(file,"data\\graphics\\tech\\backgroundlayout",0x1FAEA,0x1FDEA,"Battle Background Layout");
+    produceAsmScript(file,"data\\graphics\\tech\\backgroundlayout",0x1FAEA,0x1FDEA,"Battlescene Background Layout");
     produceAsmSection(file,"",0x1FDEA,0x20000);
 
     fclose(file);
@@ -559,7 +559,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\scripting\\map\\cs_end",0x49058,0x4931C,"End cutscene");
     produceAsmScript(file,"data\\scripting\\map\\debugscripts",0x4931C,0x494BC,"Debugging scripts");
 
-    writestr(file,"                include data\\battles\\entries\\battlecutscenesstorage.asm\n");
+    writestr(file,"                include \"data\\battles\\entries\\battlecutscenesstorage.asm\"\n");
     battleCutscenesFile = fopen("disasm\\data\\battles\\entries\\battlecutscenesstorage.asm","w");
     produceAsmScript(battleCutscenesFile,"data\\battles\\entries\\battle01\\cs_beforebattle",0x494BC,0x496DC,"Cutscene before battle 1");
     produceAsmScript(battleCutscenesFile,"data\\battles\\entries\\battle01\\cs_afterbattle",0x496DC,0x4980E,"Cutscene after battle 1");
@@ -626,7 +626,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
 
     produceAsmScript(file,"data\\maps\\mapsetups",0x4F6E2,0x4FA70,"Map setups table");
 
-    writestr(file,"                include data\\maps\\mapsetupsstorage.asm\n");
+    writestr(file,"                include \"data\\maps\\mapsetupsstorage.asm\"\n");
     mapSetupsFile = fopen("disasm\\data\\maps\\mapsetupsstorage.asm","w");
     produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\pointertable",0x4FA70,0x4FA88,"");
     produceAsmScript(mapSetupsFile,"data\\maps\\entries\\map66\\mapsetups\\s1_entities",0x4FA88,0x4FA8A,"");
@@ -2419,7 +2419,7 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmSection(file,"",0x100000,0x100008);
     produceAsmScript(file,"code\\specialscreens\\title\\title",0x100008,0x1002BE,"Title screen functions");    
     produceAsmScript(file,"code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics");
-    produceAsmScript(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Backgrounds");   
+    produceAsmScript(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Battlescene Backgrounds");   
     produceAsmScript(file,"data\\graphics\\battles\\spells\\invocations\\entries",0x12A2F8,0x12FADE,"Invocation sprites");    
     produceAsmSection(file,"",0x12FADE,0x130000);
 
@@ -2461,9 +2461,9 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
 
     produceAsmSection(file,"",0x180000,0x18001C);
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites");    
-    produceAsmSection(file,"",0x1AA16E,0x1AA316);        
-    produceAsmScript(file,"data\\graphics\\tech\\battlescenetransition\\entries",0x1AA316,0x1AA8CA,"Battlescene transition tiles");
-    produceAsmSection(file,"",0x1AA8CA,0x1AAC3A);   
+    produceAsmScript(file,"data\\graphics\\battles\\tech\\statusanimation\\entries",0x1AA16E,0x1AA316,"Status effect animation tiles");
+    produceAsmScript(file,"data\\graphics\\battles\\tech\\battlescenetransition\\entries",0x1AA316,0x1AA8CA,"Battlescene transition tiles");
+    produceAsmScript(file,"data\\graphics\\battles\\spells\\animations\\boltanimdata",0x1AA8CA,0x1AAC3A,"Bolt spell animation data");    
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\animations\\entries",0x1AAC3A,0x1AB79E,"Ally animations");    
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\animations\\entries",0x1AB79E,0x1ABE52,"Enemy animations");    
     produceAsmSection(file,"",0x1ABE52,0x1AC000);
@@ -2490,7 +2490,7 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmScript(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data");    
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
     produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
-    produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle sprite sets");    
+    produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle spritesets");    
     produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DDA,"Random battles list, and data related to UpgradeEnemyIndex function");
     produceAsmScript(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics");
     produceAsmSection(file,"",0x1B7C9A,0x1B8000);
@@ -2512,9 +2512,9 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
     produceAsmSection(file,"",0x1B8000,0x1B8028);
-    produceAsmScript(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Grounds");    
-    produceAsmScript(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Weapons");    
-    produceAsmScript(file,"data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"WeaponPalettes");       
+    produceAsmScript(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Battlescene Grounds");    
+    produceAsmScript(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Battlescene Weapons");    
+    produceAsmScript(file,"data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"Battlescene Weapon Palettes");       
     produceAsmScript(file,"data\\graphics\\battles\\spells\\entries",0x1BEEE0,0x1C46C2,"Spell Graphics");
     produceAsmScript(file,"code\\specialscreens\\witch\\graphics",0x1C46C2,0x1C67C4,"Witch Screen");
     produceAsmScript(file,"code\\specialscreens\\witchend\\graphics",0x1C67C4,0x1C7F7C,"Witch End Screen");    

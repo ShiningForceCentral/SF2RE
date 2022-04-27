@@ -76,6 +76,9 @@ writestr(file,"#dir    data/graphics/battles/spells/invocations/\n");
 writestr(file,"#dir    data/graphics/battles/spells/animations/\n");
 writestr(file,"#dir    data/graphics/battles/backgrounds\n");
 writestr(file,"#dir    data/graphics/battles/grounds\n");
+writestr(file,"#dir    data/graphics/battles/tech\n");
+writestr(file,"#dir    data/graphics/battles/tech/battlescenetransition\n");
+writestr(file,"#dir    data/graphics/battles/tech/statusanimation\n");
 writestr(file,"#dir    data/graphics/specialscreens\n");
 writestr(file,"#dir    data/graphics/specialscreens/titlescreen\n");
 writestr(file,"#dir    data/graphics/specialscreens/witchscreen\n");
@@ -148,11 +151,11 @@ static splitPTs(file){
     splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "data/graphics/battles/backgrounds/", 0, "background", 2, 0, file);
     splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattleSprites", "EnemyBattleSprite", "data/graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
     splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattleSprites", "AllyBattleSprite", "data/graphics/battles/battlesprites/allies/", 0, "allybattlesprite", 2, 0, file);
-    splitPT(0x1AA316, 0x1AA31E, 0x1AA8CA, 0x1AA8CA, "pt_BattlesceneTransitionTiles", "BattlesceneTransitionTiles", "data/graphics/tech/battlescenetransition/", 0, "battlescenetransitiontiles", 1, 0, file);
-    splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AlliesAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allybattlespriteanimation", 3, 0, file);
+    splitPT(0x1AA316, 0x1AA31E, 0x1AA8CA, 0x1AA8CA, "pt_BattlesceneTransitionTiles", "BattlesceneTransitionTiles", "data/graphics/battles/tech/battlescenetransition/", 0, "battlescenetransitiontiles", 1, 0, file);
+    splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AllyAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allybattlespriteanimation", 3, 0, file);
     splitPT(0x1AB79E, 0x1AB982, 0x1ABE52, 0x1AC000, "pt_EnemyAnimations", "EnemyAnimation", "data/graphics/battles/battlesprites/enemies/animations/", 0, "enemybattlespriteanimation", 3, 14, file);
     splitPT(0x1AD104, 0x1AD1B8, 0x1B120A, 0x1B120A, "pt_BattleTerrainData", "BattleTerrain", "data/battles/entries/battle", 1, "/terrain", 2, 0, file);
-    splitPT(0x1B30EE, 0x1B31A2, 0x1B6DB0, 0x1B6DB0, "pt_BattleSpriteSets", "BattleSpriteSet", "data/battles/entries/battle", 1, "/spriteset", 2, 0, file);
+    splitPT(0x1B30EE, 0x1B31A2, 0x1B6DB0, 0x1B6DB0, "pt_BattleSpritesets", "BattleSpriteset", "data/battles/entries/battle", 1, "/spriteset", 2, 0, file);
     splitPT(0x1B9A9A, 0x1B9AF6, 0x1BEE38, 0x1BEE38, "pt_WeaponSprites", "WeaponSprite", "data/graphics/battles/weapons/", 0, "weaponsprite", 2, 0, file);                    
     splitPT(0x1BEEE0, 0x1BEF3C, 0x1C46C2, 0x1C46C2, "pt_SpellGraphics", "SpellGraphics", "data/graphics/battles/spells/", 0, "spellgraphics", 2, 0, file);
     splitPT(0x1C8004, 0x1C80E4, 0x1D7E26, 0x1D8000, "pt_Portraits", "Portrait", "data/graphics/portraits/", 0, "portrait", 2, 15, file);
@@ -331,9 +334,9 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x12E988,0x12FADE,"InvocationSpriteApollo","data/graphics/battles/spells/invocations/apollo.bin",file);
     MakeAlign(0x12FADE, 0x130000-0x12FADE,15);
     
-    splitSingleChunk(0x1AA16E,0x1AA316,"StatusAnimationTiles","data/graphics/tech/statusanimationtiles.bin",file);
-    splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","data/graphics/battles/spells/animations/boltanimdataa.bin",file);
-    splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","data/graphics/battles/spells/animations/boltanimdatab.bin",file);        
+    splitSingleChunk(0x1AA16E,0x1AA316,"StatusAnimationTiles","data/graphics/battles/tech/statusanimation/statusanimationtiles.bin",file);
+    //splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","data/graphics/battles/spells/animations/boltanimdataa.bin",file);
+    //splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","data/graphics/battles/spells/animations/boltanimdatab.bin",file);        
     
     //splitSingleChunk(0x1B1A66,0x1B30EE,"EnemyData","data/stats/enemies/enemydata.bin",file);
     

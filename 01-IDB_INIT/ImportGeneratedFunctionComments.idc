@@ -169,11 +169,17 @@ a1 : output RAM data", 1);
 
     // LoadMapTilesets
     SetFunctionCmt(0x29e2, 
-        "In: D1 = map index", 1);
+        "In: d1.b = map index", 1);
 
     // LoadMap
     SetFunctionCmt(0x2a8c, 
-        "loads all map properties (map coords, entities, etc.)", 1);
+        "Load all map properties (map coords, entities, etc.)\n\
+\n\
+In: d1.b = map index, or -1 to indicate current map", 1);
+
+    // LoadMapArea
+    SetFunctionCmt(0x2dec, 
+        "In: d0.w, d1.w, d2.w, d3.w = start X, start Y, end X, end Y", 1);
 
     // OpenDoor
     SetFunctionCmt(0x3e40, 
@@ -181,7 +187,7 @@ a1 : output RAM data", 1);
 
     // ToggleRoofOnMapLoad
     SetFunctionCmt(0x3f2c, 
-        "display (or don't) map roof depending on player's start location", 1);
+        "Display (or don't) map roof depending on player's start location.", 1);
 
     // GetChestItem
     SetFunctionCmt(0x4232, 
@@ -317,11 +323,15 @@ Z=1 if that's the case", 1);
 
     // UpdateEntityProperties
     SetFunctionCmt(0x6052, 
-        "In D0=Entity index", 1);
+        "In: d0.b = entity index\n\
+    d1.w = new facing direction\n\
+    d2.b = new B flags (keep current if = $FF)\n\
+    d3.b = new map sprite index (keep current if = $FF)", 1);
 
     // ChangeEntitySprite
     SetFunctionCmt(0x60a8, 
-        "A0=Entity address, D6=Facing", 1);
+        "In: a0 = pointer to entity data\n\
+    d6.b = facing direction", 1);
 
     // GetMapPixelCoordRamOffset
     SetFunctionCmt(0x61fc, 
@@ -1430,7 +1440,7 @@ Out: d1.w = target priority", 1);
 
     // CountDefeatedEnemies
     SetFunctionCmt(0xe0b6, 
-        "Return defeated enemies count -> D1", 1);
+        "Out: d1.w = defeated enemies count", 1);
 
     // HandleAiCommand
     SetFunctionCmt(0xe294, 
@@ -1542,6 +1552,16 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
     // sub_10CC6
     SetFunctionCmt(0x10cc6, 
         "In: D0 = displayed spell icon", 1);
+
+    // ShowAllyBattlesceneWindow
+    SetFunctionCmt(0x11638, 
+        "In: d0.b = ally index\n\
+    d1.w = ?", 1);
+
+    // ShowEnemyBattlesceneWindow
+    SetFunctionCmt(0x116b8, 
+        "In: d0.b = enemy index\n\
+    d1.w = ?", 1);
 
     // DrawColoredStatBar
     SetFunctionCmt(0x1173a, 
@@ -1700,6 +1720,11 @@ Out: D0 = chosen number", 1);
     SetFunctionCmt(0x16398, 
         "In: A6 = number prompt window stack", 1);
 
+    // InitializeBattlescene
+    SetFunctionCmt(0x18012, 
+        "In: d0.w = enemy index\n\
+    d1.w = ally index", 1);
+
     // bsc00_animateEnemyAction
     SetFunctionCmt(0x183f4, 
         "xx      animation type index (0000 for attack, 0001 for dodge, 0002 for magic/item -- others (i.e. MMNK crit, RBT laser, BRGN flashing)\n\
@@ -1770,6 +1795,22 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1922a, 
         "same params as previous command", 1);
 
+    // sub_193B2
+    SetFunctionCmt(0x193b2, 
+        "related to battlescene ally and weapon VDP sprites", 1);
+
+    // sub_193C4
+    SetFunctionCmt(0x193c4, 
+        "related to battlescene ally VDP sprites", 1);
+
+    // sub_19504
+    SetFunctionCmt(0x19504, 
+        "related to battlescene ground VDP sprites", 1);
+
+    // sub_19564
+    SetFunctionCmt(0x19564, 
+        "related to battlescene weapon VDP sprites", 1);
+
     // MakeActorIdle
     SetFunctionCmt(0x195e2, 
         "make actor idle", 1);
@@ -1804,38 +1845,81 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
     // InitializeBattlescenePalettes
     SetFunctionCmt(0x19884, 
-        "clears plt 1-2 and 1-2bis, sets plt 3bis", 1);
+        "Clear palettes 1-2 and 1-2bis, and load battlescene UI and ground palette to 3bis.", 1);
 
-    // LoadPaletteForBattlescene
+    // LoadEnemyBattleSpritePropertiesAndPalette
+    SetFunctionCmt(0x19970, 
+        "In: d0.w = enemy battle sprite index\n\
+    d1.w = palette index", 1);
+
+    // LoadEnemyBattleSpriteFrameToVram
+    SetFunctionCmt(0x1999e, 
+        "In: d0.w = enemy battle sprite index\n\
+    d1.w = frame index", 1);
+
+    // LoadEnemyBattleSpriteFrameAndWaitForDma
+    SetFunctionCmt(0x199bc, 
+        "In: d0.w = enemy battle sprite index\n\
+    d1.w = frame index", 1);
+
+    // LoadAllyBattleSpritePropertiesAndPalette
     SetFunctionCmt(0x199de, 
-        "load palette D1 of battle sprite D0", 1);
+        "In: d0.w = ally battle sprite index\n\
+    d1.w = palette index", 1);
 
-    // LoadAllyBattleSpriteFrame
+    // LoadAllyBattleSpriteFrameToVram
     SetFunctionCmt(0x19a0c, 
-        "In: D0 = battle sprite index\n\
-    D1 = frame index", 1);
+        "In: d0.w = ally battle sprite index\n\
+    d1.w = frame index", 1);
 
-    // VInt_LoadAllyBattleSpriteFrame
+    // LoadAllyBattleSpriteFrameAndWaitForDma
     SetFunctionCmt(0x19a2a, 
-        "In: D0 = battle sprite index\n\
-    D1 = frame index", 1);
+        "In: d0.w = ally battle sprite index\n\
+    d1.w = frame index", 1);
+
+    // LoadWeaponPalette
+    SetFunctionCmt(0x19a4c, 
+        "In: d0.w = weapon palette index", 1);
 
     // LoadWeaponSprite
     SetFunctionCmt(0x19a5c, 
-        "In: D0 = weapon sprite index", 1);
+        "In: d0.w = weapon sprite index", 1);
 
-    // LoadEnemyBattleSprite
+    // LoadAllyBattleSpriteFrame
+    SetFunctionCmt(0x19ab0, 
+        "In: d0.w = ally battle sprite index\n\
+    d1.w = frame index", 1);
+
+    // LoadEnemyBattleSpriteFrame
+    SetFunctionCmt(0x19b24, 
+        "In: d0.w = enemy battle sprite index\n\
+    d1.w = frame index", 1);
+
+    // LoadNewEnemyBattleSprite
     SetFunctionCmt(0x19b44, 
-        "d0 : battle sprite index", 1);
+        "In: d0.w = enemy battle sprite index", 1);
+
+    // LoadBattlesceneBackground
+    SetFunctionCmt(0x19b80, 
+        "In: d0.w = battlescene background index", 1);
+
+    // LoadBattlesceneGround
+    SetFunctionCmt(0x19bcc, 
+        "In: d0.w = battlescene ground index", 1);
+
+    // LoadInvocationSpellTilesToVram
+    SetFunctionCmt(0x19bf2, 
+        "In: d0.w = invocation sprite index", 1);
 
     // LoadSpellGraphics
     SetFunctionCmt(0x19ca4, 
-        "    Loads spell animation tiles.\n\
-    In: D0 = spell animation tileset index", 1);
+        "In: d0.w = spell animation tiles index", 1);
 
-    // sub_19CE8
+    // LoadSpellGraphicsForInvocation
     SetFunctionCmt(0x19ce8, 
-        "loads spell graphics", 1);
+        "Loads spell graphics for Apollo and Neptun invocations.\n\
+\n\
+In: d0.w = spell animation tiles index", 1);
 
     // GetBattleSpriteAndPalette
     SetFunctionCmt(0x19d3e, 
@@ -1845,6 +1929,16 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x19db0, 
         "Get battle sprite and palette indexes for combatant D0's equipped weapon -> D2 (sprite), D3 (palette)", 1);
 
+    // GetBattlesceneBackground
+    SetFunctionCmt(0x19dfe, 
+        "In: d0.w = combatant index\n\
+Out: d1.w = battlescene background index", 1);
+
+    // GetBattlesceneGround
+    SetFunctionCmt(0x19e6e, 
+        "In: d0.w = combatant index\n\
+Out: d1.w = battlescene ground index", 1);
+
     // sub_19E96
     SetFunctionCmt(0x19e96, 
         "Get a boolean depending on background index", 1);
@@ -1852,6 +1946,10 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     // ExecuteSpellAnimation
     SetFunctionCmt(0x19ee6, 
         "Execute spell animation D0", 1);
+
+    // sub_19FAA
+    SetFunctionCmt(0x19faa, 
+        "In: a0 = pointer to spell animation data", 1);
 
     // sub_1A0E2
     SetFunctionCmt(0x1a0e2, 
@@ -1970,11 +2068,11 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x22c60, 
         "get first entity's X, Y and facing", 1);
 
-    // ControlBattleUnit
+    // ControlBattleEntity
     SetFunctionCmt(0x22e1a, 
-        "Out: D2 = chosen X\n\
-     D3 = chosen Y\n\
-     D4 = copied P1 input state bitfield", 1);
+        "Out: d2.b = chosen X\n\
+     d3.b = chosen Y\n\
+     d4.w = copied P1 input state bitfield", 1);
 
     // GetEntityIndexForCombatant_0
     SetFunctionCmt(0x22f2a, 
@@ -1995,9 +2093,10 @@ Out: D0 = entity event index", 1);
 Out: D2 = entity X\n\
      D3 = entity Y", 1);
 
-    // sub_234C8
+    // UpdateBattleEntitySprite
     SetFunctionCmt(0x234c8, 
-        "In: A1 = entity data pointer", 1);
+        "In: a1 = pointer to entity data\n\
+    d6.b = facing direction", 1);
 
     // SetEntityPosition
     SetFunctionCmt(0x2376a, 
@@ -2116,6 +2215,10 @@ Out: D0 = new X\n\
     // ProcessPlayerAction
     SetFunctionCmt(0x25ad6, 
         "Manage debug actions, entity events, item finds, area descriptions, caravan or main menu", 1);
+
+    // LoadSpecialSprite
+    SetFunctionCmt(0x25c24, 
+        "In: d1.w = special map sprite index", 1);
 
     // DisplaySegaLogo
     SetFunctionCmt(0x2804c, 
@@ -2407,7 +2510,10 @@ Also creates a shadow effect using palette index 2.", 1);
 
     // sub_1AC9FC
     SetFunctionCmt(0x1ac9fc, 
-        "AI-related", 1);
+        "AI-related\n\
+\n\
+In: d0.b = \n\
+Out: d1.w = ", 1);
 
     // sub_1ACA72
     SetFunctionCmt(0x1aca72, 
@@ -2466,14 +2572,10 @@ Out: carry = if anyone is on D3/D4", 1);
     SetFunctionCmt(0x1b15f8, 
         "coords of anchor point used in AI byte D0 -> D1, D2", 1);
 
-    // GetBattleSpriteSetSubsection
+    // GetBattleSpritesetSubsection
     SetFunctionCmt(0x1b1630, 
-        "Get address and size of subsection D1 for current battle\n\
-\n\
-      In: D1 = subsection index\n\
-\n\
-      Out: A0 = subsection address\n\
-           D1 = subsection size", 1);
+        "In: d1.w = subsection index\n\
+Out: a0 = subsection address, d1.w = subsection size", 1);
 
     // GetCombatantStartingPositions
     SetFunctionCmt(0x1b169e, 
