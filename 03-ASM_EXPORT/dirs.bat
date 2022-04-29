@@ -13,6 +13,7 @@ mkdir disasm\code\common\tech\interrupts
 mkdir disasm\code\common\tech\sram
 mkdir disasm\code\common\tech\sound
 mkdir disasm\code\common\tech\graphics
+mkdir disasm\code\common\tech\pointers
 mkdir disasm\code\common\maps
 mkdir disasm\code\common\stats
 mkdir disasm\code\common\stats\items
@@ -87,6 +88,9 @@ mkdir disasm\data\graphics\battles\spells\animations
 mkdir disasm\data\graphics\battles\tech\battlescenetransition\
 mkdir disasm\data\graphics\battles\tech\statusanimation\
 mkdir disasm\data\graphics\tech\menus\
+mkdir disasm\data\graphics\tech\windowborder\
 mkdir disasm\data\graphics\tech\windowlayouts\
+mkdir disasm\data\graphics\tech\unusedbasepalettes\
+mkdir disasm\data\graphics\tech\basetiles\
 mkdir disasm\data\tech
 pause

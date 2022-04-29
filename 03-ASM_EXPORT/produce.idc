@@ -177,8 +177,8 @@ static produceLayoutFile(){
     produceSpecificSectionEight(file,     "08", 0x64000,  0xC8000,  953 , "0x064000..0x0C8000 : Map Tiles, Map Palettes, Map Data");
     produceSpecificSectionNine(file,      "09", 0xC8000,  0x100000, 1315, "0x0C8000..0x100000 : Entity Sprites");
     produceSpecificSectionTen(file,       "10", 0x100000, 0x130000, 432,  "0x100000..0x130000 : Backgrounds, invocation sprites, title screen");
-    produceSpecificSectionEleven(file,    "11", 0x130000, 0x180000, 429,  "0x130000..0x180000 : Enemy battle sprites");
-    produceSpecificSectionTwelve(file,    "12", 0x180000, 0x1AC000, 871,  "0x180000..0x1AC000 : Ally battle sprites, status anim tiles, battlescene transition tiles, bolt graphics, ally and enemy animations");
+    produceSpecificSectionEleven(file,    "11", 0x130000, 0x180000, 429,  "0x130000..0x180000 : Enemy battlesprites");
+    produceSpecificSectionTwelve(file,    "12", 0x180000, 0x1AC000, 871,  "0x180000..0x1AC000 : Ally battlesprites, status anim tiles, battlescene transition tiles, bolt graphics, ally and enemy animations");
     produceSpecificSectionThirteen(file,  "13", 0x1AC000, 0x1B8000, 133,  "0x1AC000..0x1B8000 : Battle setup functions, battle terrains, battle entity setups, end kiss graphics");
     produceSpecificSectionFourteen(file,  "14", 0x1B8000, 0x1C8000, 474,  "0x1B8000..0x1C8000 : Battlescene grounds, weapons, spell graphics, witch screens");
     produceSpecificSectionFifteen(file,   "15", 0x1C8000, 0x1D8000, 1467, "0x1C8000..0x1D8000 : Portraits");
@@ -201,7 +201,7 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     file = fopen(form("disasm\\%s",fileName),"w");
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
-    
+
     produceAsmScript(file,"code\\romheader",0x0,0x200,"ROM Header");
     produceAsmScript(file,"code\\gameflow\\start\\systeminit",0x200,0x2DE,"System init functions");
     produceAsmScript(file,"code\\gameflow\\start\\gamestart",0x2DE,0x45A,"Start function");
@@ -245,11 +245,12 @@ static produceSpecificSectionOne(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"data\\battles\\global\\battlemapcoords",0x7A36,0x7B71,"Battle map coords");    
     produceAsmScript(file,"data\\maps\\global\\savepointmapcoords",0x7B71,0x7BCE,"Save point map coords");    
     produceAsmScript(file,"data\\maps\\global\\raftresetmapcoords",0x7BCE,0x7BDE,"Raft reset map coords");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\specialscreens\\witch\\witchfunctions",0x7BDE,0x7E3A,"Witch functions");    
     produceAsmScript(file,"code\\gameflow\\special\\configurationmode",0x7E3A,0x7EC6,"Configuration mode function");    
     produceAsmScript(file,"code\\gameflow\\start\\regioncheck",0x7EC6,0x7FA4,"Region check function");    
-    produceAsmSectionNoPretty(file,"",0x7FA4,0x8000);
+    produceAsmScript(file,"code\\specialscreens\\witch\\soundtest",0x7FA4,0x7FA6,"Sound Test function missing in US version");
+    produceAsmSectionNoPretty(file,"",0x7FA6,0x8000);
 
     fclose(file);
     Message("DONE.\n");    
@@ -293,7 +294,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactionsengine_8",0xC024,0xC09A,"Battle actions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_1",0xC09A,0xC24E,"Battlefield engine");
     produceAsmScript(file,"data\\stats\\spells\\spellelements",0xC24E,0xC27A,"Spell elements table");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_2",0xC27A,0xCD68,"Battlefield engine");
     produceAsmScript(file,"code\\gameflow\\battle\\determinehealingspelllevel",0xCD68,0xCDEA,"Determine healing spell level function");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefieldengine_3",0xCDEA,0xD38A,"Battlefield engine");
@@ -345,7 +346,7 @@ static produceSpecificSectionThree(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"code\\common\\menus\\buildmemberstatswindow",0x11FF0,0x12606,"Build member stats window function");
     produceAsmScript(file,"code\\common\\menus\\menuengine_05",0x12606,0x1263A,"Menu engine");
     produceAsmScript(file,"code\\common\\menus\\getcombatantportrait",0x1263A,0x1264E,"Get combatant portrait index function");
-    produceAsmSection(file,"",0x1264E,0x126EE);
+    produceAsmScript(file,"data\\graphics\\tech\\windowborder\\entries",0x1264E,0x126EE,"Windows border compressed tiles");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\portraitwindowlayout",0x126EE,0x1278E,"Member screen portrait window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\allykilldefeatwindowlayout",0x1278E,0x1284E,"Member screen kills and defeat window layout");
     produceAsmScript(file,"data\\graphics\\tech\\windowlayouts\\goldwindowlayout",0x1284E,0x1288E,"Member screen gold window layout");
@@ -385,17 +386,19 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x19E5E,"Battlescene engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_0",0x18000,0x19DB0,"Battlescene engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\getweaponspriteandpalette",0x19DB0,0x19DFE,"Weapon sprite and palette getter function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x19DFE,0x19E5E,"Battlescene engine");
     produceAsmScript(file,"data\\battles\\global\\terrainbackgrounds",0x19E5E,0x19E6E,"Terrain backgrounds table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_1",0x19E6E,0x1F806,"Battlescene engine");
-    produceAsmScript(file,"data\\stats\\allies\\allybattlesprites",0x1F806,0x1F914,"Ally battle sprites table");
-    produceAsmScript(file,"data\\stats\\enemies\\enemybattlesprites",0x1F914,0x1F9E2,"Enemy battle sprites table");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\battlesceneengine_2",0x19E6E,0x1F806,"Battlescene engine");
+    produceAsmScript(file,"data\\stats\\allies\\allybattlesprites",0x1F806,0x1F914,"Ally battlesprites table");
+    produceAsmScript(file,"data\\stats\\enemies\\enemybattlesprites",0x1F914,0x1F9E2,"Enemy battlesprites table");
     produceAsmScript(file,"data\\stats\\items\\weapongraphics",0x1F9E2,0x1FA8A,"Weapon graphics table");
     produceAsmScript(file,"data\\battles\\global\\custombackgrounds",0x1FA8A,0x1FAB7,"Battle custom backgrounds table");
     produceAsmSection(file,"",0x1FAB7,0x1FAB8);
     produceAsmScript(file,"data\\battles\\global\\backgroundenemyswitch",0x1FAB8,0x1FAD6,"Background enemy switch table");
-    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battle Sprites");
-    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battle Sprites");
+    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allyidlebattlesprites",0x1FAD6,0x1FADD,"Ally Idle Battlesprites");
+    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemyidlebattlesprites",0x1FADD,0x1FAEA,"Enemy Idle Battlesprites");
     produceAsmScript(file,"data\\graphics\\tech\\backgroundlayout",0x1FAEA,0x1FDEA,"Battlescene Background Layout");
     produceAsmSection(file,"",0x1FDEA,0x20000);
 
@@ -419,10 +422,10 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\common\\menus\\shop\\shopactions",0x20064,0x20878,"Shop functions");
     produceAsmScript(file,"data\\stats\\items\\shopinventories",0x20878,0x20981,"Shop inventories");
     produceAsmScript(file,"data\\stats\\items\\debugshop",0x20981,0x20A02,"Debug shop");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
     produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
     produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");    
     produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21F62,"Blacksmith functions");
@@ -466,8 +469,13 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     file = fopen(form("disasm\\%s",fileName),"w");
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
-            
-    produceAsmSectionNoPretty(file,"",0x28000,0x2804C);
+
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s06_textbankspointer",0x28000,0x28004,"Game Section 06 Text Banks Pointer");
+    produceAsmSectionNoPretty(file,"",0x28004,0x2800C);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s06_pointers",0x2800C,0x2803C,"Game Section 06 Pointers");
+    produceAsmSectionNoPretty(file,"",0x2803C,0x28040);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s06_gamestaffpointer",0x28040,0x28044,"Game Section 06 Game Staff Pointer");
+    produceAsmSectionNoPretty(file,"",0x28044,0x2804C);
     produceAsmScript(file,"code\\specialscreens\\segalogo\\segalogo_0",0x2804C,0x28FBC,"SEGA logo functions");
     produceAsmScript(file,"data\\tech\\configurationmodeinputsequence",0x28FBC,0x28FCB,"Configuration mode input sequence");
     produceAsmSection(file,"",0x28FCB,0x28FCC);
@@ -481,7 +489,7 @@ static produceSpecificSectionSix(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmSection(file,"",0x2E196,0x2EB34);
     produceAsmScript(file,"data\\scripting\\text\\entries",0x2EB34,0x4201E,"Textbank entries");   
     produceAsmScript(file,"code\\specialscreens\\credits\\gamestaff",0x4201E,0x425ED,"Game Staff");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmSection(file,"",0x425ED,0x44000);    
 
     fclose(file);
@@ -514,7 +522,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\stats\\allies\\allymapsprites",0x44A5E,0x44A7C,"Ally map sprite indexes table");
     produceAsmScript(file,"code\\common\\scripting\\entity\\getcombatantmapsprite",0x44A7C,0x44AA4,"Get combatant map sprite index function");
     produceAsmScript(file,"data\\stats\\enemies\\enemymapsprites",0x44AA4,0x44B4A,"Enemy map sprite indexes table");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_2",0x44B4A,0x44DE2,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
@@ -541,7 +549,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\battles\\battleendcutscenes",0x47BE8,0x47C48,"Enemy defeated cutscenes");
     produceAsmScript(file,"code\\gameflow\\battle\\battleendcutscenesend",0x47C48,0x47C8E,"Battle end cutscenes function end");
     produceAsmScript(file,"data\\battles\\global\\enemyleaderpresence",0x47C8E,0x47CBC,"Enemy leader presence table");
-    writestr(file,"                wordAlign\n");
+    writestr(file,"                align\n");
     produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesstart",0x47CBC,0x47CF4,"After battle cutscenes function start");
     produceAsmScript(file,"data\\battles\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
     produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesend",0x47D54,0x47D6A,"After battle cutscenes function end");
@@ -1368,7 +1376,7 @@ static produceSpecificSectionEight(mainFile,sectionName,start,end,fs,sectionComm
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x64000,0x6400C);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s08_pointers",0x64000,0x6400C,"Game Section 08 Pointers");
     produceAsmScript(file,"data\\graphics\\maps\\maptilesets\\entries",0x6400C,0x9494A,"Map Tilesets");    
     produceAsmScript(file,"data\\graphics\\maps\\mappalettes\\entries",0x9494A,0x94B8A,"Map palettes");
     produceMapEntries(file,"data\\maps\\entries",0x94B8A,0xC7ECC,"Map entries");
@@ -2416,7 +2424,7 @@ static produceSpecificSectionTen(mainFile,sectionName,start,end,fs,sectionCommen
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x100000,0x100008);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s10_pointers",0x100000,0x100008,"Game Section 10 Pointers");
     produceAsmScript(file,"code\\specialscreens\\title\\title",0x100008,0x1002BE,"Title screen functions");    
     produceAsmScript(file,"code\\specialscreens\\title\\graphics",0x1002BE,0x101EE0,"Title Screen Graphics");
     produceAsmScript(file,"data\\graphics\\battles\\backgrounds\\entries",0x101EE0,0x12A2F8,"Battlescene Backgrounds");   
@@ -2439,8 +2447,8 @@ static produceSpecificSectionEleven(mainFile,sectionName,start,end,fs,sectionCom
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x130000,0x130004);
-    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battle sprites");  
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s11_enemybattlespritespointer",0x130000,0x130004,"Game Section 11 Enemy Battlesprites Pointer");
+    produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\enemies\\entries",0x130004,0x17FE4F,"Enemy battlesprites");  
     produceAsmSection(file,"",0x17FE4F,0x180000);
 
     fclose(file);
@@ -2459,7 +2467,7 @@ static produceSpecificSectionTwelve(mainFile,sectionName,start,end,fs,sectionCom
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x180000,0x18001C);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s12_pointers",0x180000,0x18001C,"Game Section 12 Pointers");
     produceAsmScript(file,"data\\graphics\\battles\\battlesprites\\allies\\entries",0x18001C,0x1AA16E,"Ally battlesprites");    
     produceAsmScript(file,"data\\graphics\\battles\\tech\\statusanimation\\entries",0x1AA16E,0x1AA316,"Status effect animation tiles");
     produceAsmScript(file,"data\\graphics\\battles\\tech\\battlescenetransition\\entries",0x1AA316,0x1AA8CA,"Battlescene transition tiles");
@@ -2511,7 +2519,7 @@ static produceSpecificSectionFourteen(mainFile,sectionName,start,end,fs,sectionC
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x1B8000,0x1B8028);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s14_pointers",0x1B8000,0x1B8028,"Game Section 14 Pointers");
     produceAsmScript(file,"data\\graphics\\battles\\grounds\\entries",0x1B8028,0x1B9A9A,"Battlescene Grounds");    
     produceAsmScript(file,"data\\graphics\\battles\\weapons\\entries",0x1B9A9A,0x1BEE38,"Battlescene Weapons");    
     produceAsmScript(file,"data\\graphics\\battles\\weapons\\palettes\\entries",0x1BEE38,0x1BEEE0,"Battlescene Weapon Palettes");       
@@ -2536,7 +2544,7 @@ static produceSpecificSectionFifteen(mainFile,sectionName,start,end,fs,sectionCo
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x1C8000,0x1C8004);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s15_portraitspointer",0x1C8000,0x1C8004,"Game Section 15 Portraits Pointer");
     produceAsmScript(file,"data\\graphics\\portraits\\entries",0x1C8004,0x1D7E26,"Portraits");    
     produceAsmSection(file,"",0x1D7E26,0x1D8000);
 
@@ -2555,8 +2563,8 @@ static produceSpecificSectionSixteen(mainFile,sectionName,start,end,fs,sectionCo
     file = fopen(form("disasm\\%s",fileName),"w");
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));   
-    
-    produceAsmSection(file,"",0x1D8000,0x1D8004);
+
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s16_iconspointer",0x1D8000,0x1D8004,"Game Section 16 Icons Pointer");
     produceAsmScript(file,"data\\graphics\\icons\\entries",0x1D8004,0x1DFA44,"Icons");
     produceAsmSection(file,"",0x1DFA44,0x1E0000);
     
@@ -2576,7 +2584,8 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
     writestr(file,form("\n; GAME SECTION %s :\n; %s\n",sectionName,sectionComment));
     writestr(file,form("; FREE SPACE : %d bytes.\n\n\n",fs));    
 
-    produceAsmSection(file,"",0x1E0000,0x1EE02C);
+    produceAsmSection(file,"",0x1E0000,0x1EE000);
+    produceAsmScript(file,"code\\common\\tech\\pointers\\s17_pointers",0x1EE000,0x1EE02C,"Game Section 17 Pointers");
     produceAsmScript(file,"data\\stats\\allies\\growthcurves",0x1EE02C,0x1EE270,"Stat growth curves");
     //produceAsmScript(file,"data\\stats\\allies\\stats\\entries",0x1EE270,0x1EE7D0,"Ally stats");    
     produceAsmDataEntries(file,"data\\stats\\allies\\stats\\","allystats",0x1EE270,0x1EE2F0,0x1EE7CF,0x1EE7CF,30,2,"Ally stats");
@@ -2585,7 +2594,9 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
     produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
     produceAsmScript(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics");    
     produceAsmScript(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics");    
-    produceAsmSection(file,"",0x1EF5A6,0x1F0000);
+    produceAsmScript(file,"data\\graphics\\tech\\unusedbasepalettes\\entries",0x1EF5A6,0x1EF5E6,"Unused base palettes");
+    produceAsmScript(file,"data\\graphics\\tech\\basetiles\\entries",0x1EF5E6,0x1EFE33,"Base tiles");
+    produceAsmSection(file,"",0x1EFE33,0x1F0000);
 
     fclose(file);
     Message("DONE.\n");    

@@ -407,6 +407,10 @@ Out: D7 = battle index to trigger ($FFFF if none)\n\
     SetFunctionCmt(0x7d28, 
         "D1=Width/Height", 1);
 
+    // SoundTest
+    SetFunctionCmt(0x7fa4, 
+        "Function is missing in US version.", 1);
+
     // j_GetMoveInfo
     SetFunctionCmt(0x82bc, 
         "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
@@ -1927,7 +1931,10 @@ In: d0.w = spell animation tiles index", 1);
 
     // GetWeaponSpriteAndPalette
     SetFunctionCmt(0x19db0, 
-        "Get battle sprite and palette indexes for combatant D0's equipped weapon -> D2 (sprite), D3 (palette)", 1);
+        "Get battlescene weapon sprite and palette indexes for equipped weapon.\n\
+\n\
+In: d0.w = combatant index\n\
+Out: d2.w = weapon sprite index, d3.w = palette index", 1);
 
     // GetBattlesceneBackground
     SetFunctionCmt(0x19dfe, 

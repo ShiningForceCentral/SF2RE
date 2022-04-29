@@ -374,11 +374,6 @@ static parseSwarmBattles(){
         SetManualInsn(addr, form("battles %s", battles));
         addr = addr+len;
     }
-    
-    /* Word align at address 0xE25F */
-    undefineByte(addr);
-    MakeByte(addr);
-    SetManualInsn(addr, form("wordAlign"));
 }
 
 static parseSpellNames(){
@@ -794,11 +789,6 @@ static parseItemNames(){
         }
         addr = addr+size;
     }
-    
-    /* Word align at address 0x17F3D */
-    undefineByte(addr);
-    MakeByte(addr);
-    SetManualInsn(addr, form("wordAlign"));
 }
 
 static parseClassNames(){
@@ -920,11 +910,6 @@ static parseCustomBackgrounds(){
         SetManualInsn(addr, form("background %s", battleBackground));
         addr++;
     }
-    
-    /* Word align at address 0x1FAB7 */
-    undefineByte(addr);
-    MakeByte(addr);
-    SetManualInsn(addr, form("wordAlign"));
 }
 
 static parseAllyBattleSpriteIdleAnimate(){
@@ -985,21 +970,20 @@ static parseShopInventories(){
         for(j=addr+1;j<addr+len;j++){
             next = getItemShorthand(Byte(j));
             if(shopInventory==""){
-                shopInventory = form("    %s", next);
+                shopInventory = form("%s", next);
             }else{
-                shopInventory = form("%s, &\n    %s", shopInventory, next);
+                shopInventory = form("%s, &\n              %s", shopInventory, next);
             }
         }
-        SetManualInsn(addr, form("shopInventory &\n%s\n", shopInventory));
+        SetManualInsn(addr, form("shopInventory %s\n", shopInventory));
         
         /* Comments */
-        if(i<=15){
-            MakeRptCmt(addr, form("Weapon shop %d", i));
+        if(i>1&&i<=15){
+            ExtLinA(addr, 0, form("                ; Weapon shop %d", i));
         }else if(i>15&&i<31){
-            MakeRptCmt(addr, form("Item shop %d", i-15));
-        }else{
-            MakeRptCmt(addr, "Debug shop");
+            ExtLinA(addr, 0, form("                ; Item shop %d", i-15));
         }
+        
         i++;
         addr = addr+len;
     }
@@ -1163,11 +1147,6 @@ static parseConfigurationModeInputs(){
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
-    
-    /* Word alignment byte at address 0x28FCB */
-    undefineByte(addr+1);
-    MakeByte(addr+1);
-    SetManualInsn(addr+1, "wordAlign");
 }
 
 static parseDebugModeInputs(){
@@ -1185,11 +1164,6 @@ static parseDebugModeInputs(){
     undefineByte(addr);
     MakeByte(addr);
     SetManualInsn(addr, "tableEnd.b");
-    
-    /* Word alignment byte at address 0x29001 */
-    undefineByte(addr+1);
-    MakeByte(addr+1);
-    SetManualInsn(addr+1, "wordAlign");
 }
 
 static parseFollowers(){
@@ -1577,11 +1551,6 @@ static parseAllyStats(){
         }
         addr = addr+offset;
     }
-    
-    /* Word align at address 0x1EE7CF */
-    undefineByte(addr);
-    MakeByte(addr);
-    SetManualInsn(addr, "wordAlign");
 }
 
 static parseAllyStartDefs(){

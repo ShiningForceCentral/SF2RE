@@ -93,7 +93,10 @@ writestr(file,"#dir    data/graphics/tech\n");
 writestr(file,"#dir    data/graphics/tech/battlescenetransition\n");
 writestr(file,"#dir    data/graphics/tech/menus\n");
 writestr(file,"#dir    data/graphics/tech/fonts\n");
+writestr(file,"#dir    data/graphics/tech/windowborder\n");
 writestr(file,"#dir    data/graphics/tech/windowlayouts\n");
+writestr(file,"#dir    data/graphics/tech/unusedbasepalettes\n");
+writestr(file,"#dir    data/graphics/tech/basetiles\n");
 writestr(file,"#dir    data/maps/\n");
 writestr(file,"#dir    data/maps/global/\n");
 writestr(file,"#dir    data/maps/entries/\n");
@@ -196,12 +199,14 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0xC24E,0xC27A,"SpellElements","data/stats/spells/spellelements.bin",file);
     
     //splitSingleChunk(0xD824,0xD8F4,"MoveTypeTerrainCosts","data/battles/global/movetypeterraincosts.bin",file);
-    
+    MakeAlign(0xE25F, 0xE260-0xE25F,1);
+    MakeAlign(0xE293, 0xE294-0xE293,1);
     //splitSingleChunk(0xF9C4,0xFAD6,"SpellNames","data/stats/spells/spellnames.bin",file);
     //splitSingleChunk(0xFAD6,0xFB8A,"AllyNames","data/stats/allies/allynames.bin",file);
     //splitSingleChunk(0xFB8A,0xFF87,"EnemyNames","data/stats/enemies/enemynames.bin",file);
     MakeAlign(0xFF87, 0x10000-0xFF87,15);
     
+    MakeAlign(0x107E9, 0x107EA-0x107E9,1);
     splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","data/graphics/tech/iconhighlighttiles.bin",file);    
     
     //splitSingleChunk(0x10E1C,0x10EF4,"DiamondMenuLayout","data/graphics/tech/menus/diamondmenulayout.bin",file);
@@ -210,7 +215,7 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     
-    splitSingleChunk(0x1264E,0x126EE,"WindowBorderTiles","data/graphics/tech/windowbordertiles.bin",file);
+    splitSingleChunk(0x1264E,0x126EE,"WindowBorderTiles","data/graphics/tech/windowborder/windowbordertiles.bin",file);
     //splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
     //splitSingleChunk(0x1278E,0x1284E,"AllyKillDefeatWindowLayout","data/graphics/tech/windowlayouts/allykilldefeatwindowlayout.bin",file);
     //splitSingleChunk(0x1284E,0x1288E,"CharacterStatsWindowLayout","data/graphics/tech/windowlayouts/characterstatsdefeatwindowlayout.bin",file);
@@ -235,6 +240,7 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0x16EA6,0x176A6,"ItemDefs","data/stats/items/itemdefs.bin",file);
     //splitSingleChunk(0x176A6,0x1796E,"SpellDefs","data/stats/spells/spelldefs.bin",file);
     //splitSingleChunk(0x1796E,0x17F3E,"ItemNames","data/stats/items/itemnames.bin",file);
+    MakeAlign(0x17F3D, 0x17F3E-0x17F3D,1);
     //splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
     MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
     
@@ -246,7 +252,7 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0x1F914,0x1F9E2,"EnemyBattleSprites","data/stats/enemies/enemybattlesprites.bin",file);
     //splitSingleChunk(0x1F9E2,0x1FA8A,"WeaponBattleSprites","data/stats/items/weaponsprites.bin",file);
     //splitSingleChunk(0x1FA8A,0x1FAB8,"CustomBackgrounds","data/battles/global/custombackgrounds.bin",file);
-    
+    MakeAlign(0x1FAB7, 0x1FAB8-0x1FAB7,1);
     //splitSingleChunk(0x1FAD6,0x1FADD,"AllyBSpriteIdleAnimate","data/stats/allies/allyidlesprites.bin",file);
     //splitSingleChunk(0x1FADD,0x1FAEA,"EnemyBSpriteIdleAnimate","data/stats/enemies/enemyidlesprites.bin",file);
     //splitSingleChunk(0x1FAEA,0x1FDEA,"BackgroundLayout","data/graphics/tech/backgroundlayout.bin",file);
@@ -282,7 +288,9 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x2824C,0x28B12,"SegaLogo","data/graphics/tech/segalogo.bin",file);
     
     //splitSingleChunk(0x28FBC,0x28FCC,"InputSequence_ConfigurationMode","data/tech/configurationmodeinputsequence.bin",file);
+    MakeAlign(0x28FCB, 0x28FCC-0x28FCB,1);
     //splitSingleChunk(0x28FF0,0x29002,"InputSequence_DebugMode","data/tech/debugmodeinputsequence.bin",file);
+    MakeAlign(0x29001, 0x29002-0x29001,1);
     
     splitSingleChunk(0x29002,0x29A02,"VariableWidthFont","data/graphics/tech/fonts/variablewidthfont.bin",file);
     
@@ -366,7 +374,7 @@ static splitSingleChunks(file) {
     writestr(file,form("#split\t0x%s,0x%s,%s\n",ltoa(0x1ED5BD,16),ltoa(0x1EDF2A,16),"data/sound/cubesfx.bin"));
     
     //splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
-    
+    MakeAlign(0x1EE7CF, 0x1EE7D0-0x1EE7CF,1);
     //splitSingleChunk(0x1EE7D0, 0x1EE890, "AllyStartData","data/stats/allies/allystartdata.bin",file);
     //splitSingleChunk(0x1EE890, 0x1EE930, "ClassData","data/stats/allies/classes/classdata.bin",file);
     splitSingleChunk(0x1EE930, 0x1EF102, "JewelsEndScreenLayout","data/graphics/specialscreens/endingjewels/endingjewelslayout.bin",file);
@@ -374,8 +382,8 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x1EF142, 0x1EF4BA, "JewelsEndScreenTiles","data/graphics/specialscreens/endingjewels/endingjewelstiles.bin",file);
     splitSingleChunk(0x1EF4BA, 0x1EF4DA, "plt_SuspendString","data/graphics/specialscreens/suspendscreen/suspendstringpalette.bin",file);
     splitSingleChunk(0x1EF4DA, 0x1EF5A6, "SuspendStringTiles","data/graphics/specialscreens/suspendscreen/suspendstringtiles.bin",file);
-    splitSingleChunk(0x1EF5A6, 0x1EF5E6, "unused_BasePalettes","data/graphics/tech/unusedbasepalettes.bin",file);
-    splitSingleChunk(0x1EF5E6, 0x1EFE33, "BaseTiles","data/graphics/tech/basetiles.bin",file);
+    splitSingleChunk(0x1EF5A6, 0x1EF5E6, "unused_BasePalettes","data/graphics/tech/unusedbasepalettes/unusedbasepalettes.bin",file);
+    splitSingleChunk(0x1EF5E6, 0x1EFE33, "BaseTiles","data/graphics/tech/basetiles/basetiles.bin",file);
     MakeAlign(0x1EFE33, 0x1F0000-0x1EFE33,15);
     splitSingleChunk(0x1F0000, 0x1F8000, "","data/sound/musicbank1.bin",file);
     splitSingleChunk(0x1F8000, 0x200000, "","data/sound/musicbank0.bin",file);
