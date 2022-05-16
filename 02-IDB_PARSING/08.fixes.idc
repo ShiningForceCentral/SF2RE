@@ -252,8 +252,10 @@ static fixSignedOperands(){
     OpAlt(0x24496,1,form("#%d",Word(0x24498)-0x10000));
     OpAlt(0x27CA4,1,form("#%d",Word(0x27CA6)-0x10000));
     OpAlt(0x444A2,1,form("#%d",Word(0x444A4)-0x10000));
-    OpAlt(0x446A6,1,form("#%d",Word(0x446A6)-0x10000));
-    OpAlt(0x4585C,1,form("#%d",Word(0x4585C)-0x10000));
+    OpAlt(0x446A6,1,form("#%d",Word(0x446A8)-0x10000));
+    OpAlt(0x4585C,1,form("#%d",Word(0x4585E)-0x10000));
+    OpAlt(0x45978,1,form("#%d",Word(0x4597A)-0x10000));
+    OpAlt(0x45A90,1,form("#%d",Word(0x45A92)-0x10000));
     OpAlt(0x4F574,1,form("#%d",Word(0x4F576)-0x10000));
     OpAlt(0x1AC72C,1,form("#%d",Word(0x1AC72E)-0x10000));
     OpAlt(0x1ACADA,1,form("#%d",Word(0x1ACADC)-0x10000));
@@ -299,6 +301,7 @@ static fixUnwantedNames(){
     MakeNameEx(0x6F56,"",0);
     MakeNameEx(0x6FBA,"",0);
     MakeNameEx(0x702E,"",0);
+    MakeNameEx(0x743E,"",0);
     MakeNameEx(0x7A4B,"",0);
     MakeNameEx(0x7E44,"",0);
     MakeNameEx(0x843C,"",0);
@@ -385,6 +388,19 @@ static insertRomExpandTweaks(){
     SetManualInsn(0x1D7E26,"align $1D8000");
     SetManualInsn(0x1DFA46,"align $1E0000");
     SetManualInsn(0x1EFE33,"align $1F0000");
+    
+    /* Align directives with no operand in order to align the following directive
+    to the next word boundary only when necessary */
+    SetManualInsn(0xE25F,"align");
+    SetManualInsn(0xE293,"align");
+    SetManualInsn(0x17F3D,"align");
+    SetManualInsn(0x1FAB7,"align");
+    SetManualInsn(0x28FCB,"align");
+    SetManualInsn(0x29001,"align");
+    SetManualInsn(0x41FD9,"align");
+    SetManualInsn(0x47CBB,"align");
+    SetManualInsn(0x1EE7CF,"align");
+    
     
     /* Conditional manual instructions when implied by moved data */
     //SetManualInsn(0x1B1640,"conditionalPc lea,pt_BattleSpriteSets,a0");

@@ -447,8 +447,8 @@ Out: A0 = address of name\n\
     SetFunctionCmt(0x84b0, 
         "In: D0 = combatant index\n\
 \n\
-Out: D1 = AI region index\n\
-     D2 = unknown", 1);
+Out: D1 = AI activation region index 1\n\
+     D2 = AI activation region index 2", 1);
 
     // GetEnemyIndex
     SetFunctionCmt(0x84dc, 
@@ -723,18 +723,18 @@ Out: D1 = word", 1);
 
     // InitAllyStats
     SetFunctionCmt(0x95c6, 
-        "In: D0 = ally index\n\
-    D1 = starting level", 1);
+        "In: d0.w = ally index\n\
+    d1.w = starting level", 1);
 
     // CalculateStatGain
     SetFunctionCmt(0x96ba, 
-        "In: D1 = current stat value\n\
-    D2 = growth curve index\n\
-    D3 = starting value\n\
-    D4 = projected value\n\
-    D5 = current level\n\
+        "In: d1.w = current stat value\n\
+    d2.w = growth curve index\n\
+    d3.w = starting value\n\
+    d4.w = projected value\n\
+    d5.w = current level\n\
 \n\
-Out: D1 = stat gain value", 1);
+Out: d1.w = stat gain value", 1);
 
     // InitAllyCombatantEntry
     SetFunctionCmt(0x975e, 
@@ -893,13 +893,13 @@ Out: -12(A2) = 0 if false, otherwise true", 1);
 
     // GetSpellAnimation
     SetFunctionCmt(0xa54e, 
-        "In: A2 = battlescene script stack frame\n\
-    A3 = battle action in RAM\n\
-    A4 = battlescene actor index in RAM\n\
+        "In: a2 = battlescene script stack frame\n\
+    a3 = pointer to battleaction in RAM\n\
+    a4 = pointer to battlescene actor index in RAM\n\
 \n\
-Out: D4 = spell animation index\n\
+Out: d4 = spell animation index\n\
 \n\
-<HARDCODED> class, enemy and weapon indexes", 1);
+  HARDCODED class, enemy and weapon indexes", 1);
 
     // WriteBattlesceneScript_AnimateAction
     SetFunctionCmt(0xa6e8, 
@@ -1467,9 +1467,9 @@ Out: D1 = $FFFF if command failed", 1);
     SetFunctionCmt(0xe98c, 
         "Move scripts (move to point, follow ally, follow force member)", 1);
 
-    // ExecuteAiCommand_Debuff
+    // ExecuteAiCommand_Support
     SetFunctionCmt(0xeba4, 
-        "Debuff spells AI (Muddle 2, Dispel 1)\n\
+        "Supoort spells AI (Muddle 2, Dispel 1)\n\
 \n\
       In: D0 = caster index", 1);
 
@@ -1615,6 +1615,10 @@ In: A0 = loading space address\n\
         "In: D0 = character index\n\
     A1 = window tile adress", 1);
 
+    // sub_12606
+    SetFunctionCmt(0x12606, 
+        "Unused function", 1);
+
     // GetCombatantPortrait
     SetFunctionCmt(0x1263a, 
         "Get portrait index for combatant D0 -> D0", 1);
@@ -1693,6 +1697,18 @@ In: A0 = loading space address\n\
     // LoadPortrait
     SetFunctionCmt(0x1562a, 
         "In: D0 = portrait index", 1);
+
+    // sub_156A8
+    SetFunctionCmt(0x156a8, 
+        "Unused window function", 1);
+
+    // sub_156BC
+    SetFunctionCmt(0x156bc, 
+        "Unused window function", 1);
+
+    // sub_156CE
+    SetFunctionCmt(0x156ce, 
+        "Unused window function", 1);
 
     // GetAllyPortrait
     SetFunctionCmt(0x15736, 
@@ -1821,7 +1837,7 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
     // AddEnemyToDeadList
     SetFunctionCmt(0x197a6, 
-        "add enemy to dead combatant list", 1);
+        "Add enemy to dead combatants list.", 1);
 
     // GetAllyAnimation
     SetFunctionCmt(0x197c8, 
@@ -2245,6 +2261,10 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
 
+    // IsOverworldMap
+    SetFunctionCmt(0x44268, 
+        "Out: ccr zero-bit clear if true", 1);
+
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
         "Get combatant D0's map sprite index -> D4", 1);
@@ -2360,7 +2380,7 @@ Out: D1 = portrait index\n\
 
     // csc08_joinForce
     SetFunctionCmt(0x47398, 
-        "make 00xx character join force with bit F set for sad join music", 1);
+        "make 00xx character join force with bit 15 set for sad join music", 1);
 
     // csc0C_jumpIfFlagSet
     SetFunctionCmt(0x47418, 
@@ -2418,7 +2438,8 @@ only seems to happen in first \"above Pacalon\" battle", 1);
 
     // ApplyPositionsAfterEnemyLeaderDies
     SetFunctionCmt(0x47d9e, 
-        "After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.", 1);
+        "After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies.\n\
+Only used in battle 5.", 1);
 
     // ExecuteBattleRegionCutscene
     SetFunctionCmt(0x47e82, 
@@ -2533,6 +2554,10 @@ Out: d1.w = ", 1);
     // CheckTriggerRegionFlag
     SetFunctionCmt(0x1ace32, 
         "In: d0.b = region index", 1);
+
+    // UpdateTriggeredRegionsAndAi
+    SetFunctionCmt(0x1ace4a, 
+        "In: d0.w = combatant index", 1);
 
     // GetListOfSpawningEnemies
     SetFunctionCmt(0x1acf30, 
