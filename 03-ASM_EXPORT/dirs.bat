@@ -5,6 +5,10 @@ mkdir disasm\code\gameflow
 mkdir disasm\code\gameflow\start
 mkdir disasm\code\gameflow\exploration
 mkdir disasm\code\gameflow\battle
+mkdir disasm\code\gameflow\battle\ai
+mkdir disasm\code\gameflow\battle\battleactions
+mkdir disasm\code\gameflow\battle\battlefield
+mkdir disasm\code\gameflow\battle\battlefunctions
 mkdir disasm\code\gameflow\battle\battlescenes
 mkdir disasm\code\gameflow\special
 mkdir disasm\code\common
@@ -14,6 +18,7 @@ mkdir disasm\code\common\tech\sram
 mkdir disasm\code\common\tech\sound
 mkdir disasm\code\common\tech\graphics
 mkdir disasm\code\common\tech\pointers
+mkdir disasm\code\common\tech\jumpinterfaces
 mkdir disasm\code\common\maps
 mkdir disasm\code\common\stats
 mkdir disasm\code\common\stats\items
@@ -92,5 +97,6 @@ mkdir disasm\data\graphics\tech\windowborder\
 mkdir disasm\data\graphics\tech\windowlayouts\
 mkdir disasm\data\graphics\tech\unusedbasepalettes\
 mkdir disasm\data\graphics\tech\basetiles\
+mkdir disasm\data\graphics\tech\alphabethighlight\
 mkdir disasm\data\tech
 pause

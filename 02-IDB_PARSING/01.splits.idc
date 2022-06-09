@@ -90,6 +90,7 @@ writestr(file,"#dir    data/graphics/maps/maptilesets\n");
 writestr(file,"#dir    data/graphics/maps/mappalettes\n");
 writestr(file,"#dir    data/graphics/icons\n");
 writestr(file,"#dir    data/graphics/tech\n");
+writestr(file,"#dir    data/graphics/tech/alphabethighlight\n");
 writestr(file,"#dir    data/graphics/tech/battlescenetransition\n");
 writestr(file,"#dir    data/graphics/tech/menus\n");
 writestr(file,"#dir    data/graphics/tech/fonts\n");
@@ -232,7 +233,7 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
     //splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
     //splitSingleChunk(0x16204,0x1623A,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
-    splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlighttiles.bin",file);
+    splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlight/alphabethighlighttiles.bin",file);
     
     //splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
     

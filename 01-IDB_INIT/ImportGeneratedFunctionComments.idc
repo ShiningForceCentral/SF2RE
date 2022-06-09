@@ -1014,6 +1014,11 @@ Out: D3 = message index", 1);
     A4 = actor index in RAM\n\
     A5 = target index in RAM", 1);
 
+    // GetEnemyDestination
+    SetFunctionCmt(0xc024, 
+        "In: d0.b = combatant index\n\
+Out: d1.w, d2.w = X,Y coordinates", 1);
+
     // ConvertCoordToOffset
     SetFunctionCmt(0xc09a, 
         "    Convert coordinate to offset and add to address argument.\n\
