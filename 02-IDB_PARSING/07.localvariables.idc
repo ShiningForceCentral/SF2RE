@@ -474,7 +474,7 @@ static defineLocalVariables(){
     SetArrayString(variables,26,"currentClass");
     SetArrayString(variables,28,"newClass");
     SetArrayString(variables,30,"promotionItem");
-    SetArrayString(variables,32,"promotionIndex");
+    SetArrayString(variables,32,"promotionSectionOffset");
     SetArrayString(variables,34,"promotionSectionLength");
     SetArrayString(variables,36,"cannotPromoteFlag");
     makeLocalVariables(0x20A02,variables);
@@ -548,7 +548,7 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,2,"var_2");
+    SetArrayString(variables,2,"battleEntity");
     makeLocalVariables(0x22F86,variables);
     deleteArrayStrings(variables);
     

@@ -260,10 +260,11 @@ returns a1 = window tiles end, d0 = window slot", 1);
     SetFunctionCmt(0x53fe, 
         "related to moving an entity", 1);
 
-    // CheckIfSameDestForOtherEntity
+    // HasSameDestinationAsOtherEntity
     SetFunctionCmt(0x5610, 
-        "check if another entity has the same destination as current entity\n\
-Z=1 if that's the case", 1);
+        "Check if another entity has the same destination as current entity.\n\
+\n\
+Out: CCR zero-bit set if true", 1);
 
     // esc07_controlRaft
     SetFunctionCmt(0x5668, 
@@ -755,7 +756,7 @@ Out: d1.w = stat gain value", 1);
 
     // UpdateForce
     SetFunctionCmt(0x9900, 
-        "determine who is in the force or not based on flags and update RAM lists", 1);
+        "Determine who is in the force or not based on flags and update RAM lists.", 1);
 
     // JoinForce
     SetFunctionCmt(0x9956, 
@@ -806,22 +807,6 @@ Out: A0 = RAM address of deals slot\n\
     // RemoveItemFromCaravan
     SetFunctionCmt(0x9a62, 
         "In: D1 = inventory slot", 1);
-
-    // sub_9AD0
-    SetFunctionCmt(0x9ad0, 
-        "attack", 1);
-
-    // sub_9ADA
-    SetFunctionCmt(0x9ada, 
-        "use magic", 1);
-
-    // sub_9B06
-    SetFunctionCmt(0x9b06, 
-        "use item", 1);
-
-    // sub_9B38
-    SetFunctionCmt(0x9b38, 
-        "use prism laser", 1);
 
     // DebugModeSelectHits
     SetFunctionCmt(0x9b58, 
@@ -1390,19 +1375,19 @@ Set the carry flag if the defender is expected to have more than 20%\n\
     SetFunctionCmt(0xd408, 
         "Out: D1 = 0 if normal, 1 if hard, 2 if super, 3 if ouch", 1);
 
-    // MakeAttackSpellPrioritiesList
+    // MakePrioritiesListForSpell_Attack
     SetFunctionCmt(0xd460, 
         "AI: cast ATTACK spell", 1);
 
-    // MakeBoostSpellPrioritiesList
+    // MakePrioritiesListForSpell_Boost2
     SetFunctionCmt(0xd4e0, 
         "AI: cast BOOST 2 spell", 1);
 
-    // MakeDispelSpellPrioritiesList
+    // MakePrioritiesListForSpell_Dispel
     SetFunctionCmt(0xd560, 
         "AI: cast DISPEL spell", 1);
 
-    // MakeMuddleSpellPrioritiesList
+    // MakePrioritiesListForSpell_Muddle2
     SetFunctionCmt(0xd62c, 
         "AI: cast MUDDLE 2 spell", 1);
 
@@ -1645,7 +1630,7 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x14108, 
         "related to equip menu", 1);
 
-    // sub_141CE
+    // BuildEquippingWindow
     SetFunctionCmt(0x141ce, 
         "In: D1 = old equipped item index\n\
     D2 = old equipped item slot\n\
@@ -2007,7 +1992,7 @@ Out: d1.w = battlescene ground index", 1);
     SetFunctionCmt(0x1a1f6, 
         "Tint the screen red", 1);
 
-    // TintScreen_Apollo
+    // Tint_Apollo
     SetFunctionCmt(0x1a222, 
         "Tint parts of the screen red", 1);
 
@@ -2041,17 +2026,13 @@ Out: Zero-bit clear = yes, set = no", 1);
     SetFunctionCmt(0x20852, 
         "Get shop inventory address -> A0", 1);
 
-    // CountPromotableMembers
-    SetFunctionCmt(0x21072, 
-        "Return in -22(A6)", 1);
-
-    // GetPromotionIndex
+    // GetPromotionData
     SetFunctionCmt(0x210d0, 
-        "Get promotion index for class D1, given section type D2\n\
+        "Get promotion data for class d1.b, given section type d2.w\n\
 \n\
-      Out: -32(A6) = promotion index\n\
-           -34(A6) = section length\n\
-           -36(A6) = 1 if no matching promotion data found", 1);
+      Out: -32(a6) = promotion section offset\n\
+           -34(a6) = promotion section length\n\
+           -36(a6) = cannot promote flag (1 if no matching promotion data found)", 1);
 
     // FindPromotionSection
     SetFunctionCmt(0x2110c, 
@@ -2230,7 +2211,7 @@ Out: D0 = new X\n\
 
     // PrintActivatedDefCon
     SetFunctionCmt(0x25772, 
-        "if flag D1 is set, display def-con textbox", 1);
+        "if flag D1 is set, AI region active, display def-con textbox", 1);
 
     // sub_258A8
     SetFunctionCmt(0x258a8, 
@@ -2280,13 +2261,65 @@ Out: D0 = new X\n\
 \n\
 Out: D4 = map sprite index", 1);
 
+    // SetEntityActscript
+    SetFunctionCmt(0x44b4a, 
+        "In: d0.w = entity index", 1);
+
+    // SetControlledEntityActScript
+    SetFunctionCmt(0x44b5c, 
+        "In: d0.w = entity index", 1);
+
+    // SetUnitCursorSpeedx2
+    SetFunctionCmt(0x44b94, 
+        "In: d0.w = entity index", 1);
+
+    // SetUnitCursorActscript
+    SetFunctionCmt(0x44baa, 
+        "In: d0.w = entity index", 1);
+
+    // sub_44BC0
+    SetFunctionCmt(0x44bc0, 
+        "In: d0.w = entity index", 1);
+
+    // sub_44BD6
+    SetFunctionCmt(0x44bd6, 
+        "In: d0.w = entity index", 1);
+
+    // MakeEntityIdle
+    SetFunctionCmt(0x44bec, 
+        "In: d0.w = entity index", 1);
+
+    // ApplyInitActscript
+    SetFunctionCmt(0x44c02, 
+        "In: d0.w = entity index", 1);
+
+    // SetEntityMovescriptToIdle
+    SetFunctionCmt(0x44c18, 
+        "In: d0.w = entity index", 1);
+
+    // AddFollower
+    SetFunctionCmt(0x44c2e, 
+        "In: d0.w = entity index", 1);
+
+    // HideEntity
+    SetFunctionCmt(0x44c84, 
+        "In: d0.w = entity index", 1);
+
+    // SetWalkingActscript
+    SetFunctionCmt(0x44cd0, 
+        "In: d0.w = entity index", 1);
+
+    // sub_44D0E
+    SetFunctionCmt(0x44d0e, 
+        "In: d0.w = entity index", 1);
+
     // WaitForEntityToStopMoving
     SetFunctionCmt(0x44da4, 
-        "In: D0 = entity index", 1);
+        "In: d0.w = entity index", 1);
 
     // GetEntityEntryAddress
     SetFunctionCmt(0x44dd8, 
-        "Get RAM address of entity D0 -> A0", 1);
+        "Get RAM address of entity d0.w -> a0", 1);
 
     // WaitForFollowersStopped
     SetFunctionCmt(0x45204, 
@@ -2395,7 +2428,7 @@ Out: D1 = portrait index\n\
     SetFunctionCmt(0x4742c, 
         "xxxx yyyyyyyy", 1);
 
-    // csc0F_jumpIfCharacterAlive
+    // csc0F_jumpIfCharacterDead
     SetFunctionCmt(0x47464, 
         "xxxx yyyyyyyy", 1);
 
@@ -2463,14 +2496,6 @@ Only used in battle 5.", 1);
     SetFunctionCmt(0x562ba, 
         "set after you open the tree in Ribble with the wooden plank", 1);
 
-    // sub_5FD7C
-    SetFunctionCmt(0x5fd7c, 
-        "unused", 1);
-
-    // sub_5FD92
-    SetFunctionCmt(0x5fd92, 
-        "unused", 1);
-
     // sub_6051E
     SetFunctionCmt(0x6051e, 
         "unused descriptions which look similar to the default ones for map 5", 1);
@@ -2499,7 +2524,7 @@ Only used in battle 5.", 1);
     SetFunctionCmt(0x1ac054, 
         "Battle-related", 1);
 
-    // sub_1AC05C
+    // j_GetLaserFacing
     SetFunctionCmt(0x1ac05c, 
         "AI-related", 1);
 
@@ -2537,7 +2562,7 @@ Also creates a shadow effect using palette index 2.", 1);
     SetFunctionCmt(0x1ac7fe, 
         "AI-related", 1);
 
-    // sub_1AC8A0
+    // GetLaserFacing
     SetFunctionCmt(0x1ac8a0, 
         "AI-related", 1);
 
@@ -2595,11 +2620,12 @@ Out: carry = 0 if respawn, 1 if not", 1);
         "In: a0 = pointer to battle entity definition\n\
     d0.b = combatant index", 1);
 
-    // GetEnemyOriginalPosOccupied
+    // IsEnemyStartingPositionOccupied
     SetFunctionCmt(0x1b1554, 
-        "In: D3 = enemy starting tile x (from battle def)\n\
-    D4 = enemy starting tile y (from battle def)\n\
-Out: carry = if anyone is on D3/D4", 1);
+        "In: d3.w = enemy starting tile x (from battle def)\n\
+    d4.w = enemy starting tile y (from battle def)\n\
+\n\
+Out: CCR carry-bit set if true", 1);
 
     // SetEnemyBaseATT
     SetFunctionCmt(0x1b15aa, 

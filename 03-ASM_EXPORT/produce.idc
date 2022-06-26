@@ -314,7 +314,8 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battlefield\\doescombatantrequirehealing",0xD38A,0xD3CA,"Does combatant require healing function");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefield\\battlefieldengine_6",0xD3CA,0xD824,"Battlefield engine");
     produceAsmScript(file,"data\\battles\\global\\landeffectsettingsandmovecosts",0xD824,0xD8F4,"Land effect settings and move costs table");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefield\\battlefieldengine_7",0xD8F4,0xDEFC,"Battlefield engine");
+    produceAsmScript(file,"data\\battles\\global\\aipriority",0xD8F4,0xDA82,"AI priority data");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefield\\battlefieldengine_7",0xDA82,0xDEFC,"Battlefield engine");
     writestr(file,"                \n");
     writestr(file,"                ; AI engine\n");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aiengine_1",0xDEFC,0xE1AC,"AI engine");
@@ -326,7 +327,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aicommandspecialmove",0xE98C,0xEBA4,"AI command : Special Move");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aicommandsupport",0xEBA4,0xEDD6,"AI command : Support");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\determineaibattleaction",0xEDD6,0xF1D4,"Determine AI Battleaction function");
-    produceAsmScript(file,"code\\gameflow\\battle\\ai\\aicommandmove.asm",0xF1D4,0xF522,"AI command : Move");
+    produceAsmScript(file,"code\\gameflow\\battle\\ai\\aicommandmove",0xF1D4,0xF522,"AI command : Move");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aiengine_2",0xF522,0xF9B4,"AI engine");
     produceAsmScript(file,"data\\battles\\global\\krakenmovecosts",0xF9B4,0xF9C4,"Kraken move costs table");
     writestr(file,"                \n");
@@ -459,7 +460,9 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
     produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");    
-    produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21F62,"Blacksmith functions");
+    produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21EB6,"Blacksmith functions");
+    produceAsmScript(file,"data\\stats\\allies\\classes\\blacksmitheligibleclasses",0x21EB6,0x21ED6,"Blacksmith eligible classes list");
+    produceAsmScript(file,"code\\common\\menus\\blacksmith\\pickmithrilweapon",0x21ED6,0x21F62,"Pick Mithril Weapon function");
     produceAsmScript(file,"data\\stats\\allies\\classes\\mithrilweaponclasses",0x21F62,0x21F92,"Mithril weapon class lists");
     produceAsmScript(file,"data\\stats\\items\\mithrilweapons",0x21F92,0x21FD2,"Mithril weapon lists");
     produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions_1",0x21FD2,0x228A2,"Caravan functions");
@@ -594,7 +597,8 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\battles\\afterbattlecutscenes",0x47CF4,0x47D54,"After battle cutscenes");
     produceAsmScript(file,"code\\gameflow\\battle\\afterbattlecutscenesend",0x47D54,0x47D6A,"After battle cutscenes function end");
     produceAsmScript(file,"data\\battles\\global\\afterbattlejoins",0x47D6A,0x47D9E,"After battle joins (unused)");
-    produceAsmScript(file,"code\\gameflow\\battle\\afterenemyleaderdeathpositions",0x47D9E,0x47E82,"After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.");
+    produceAsmScript(file,"code\\gameflow\\battle\\afterenemyleaderdeathpositions",0x47D9E,0x47E6C,"After-battlescene listener used to prepare entity positions for end cutscene before the enemy leader dies. Only used in battle 5.");
+    produceAsmScript(file,"data\\battles\\afterbattlepositions",0x47E6C,0x47E82,"After battle positions");
     produceAsmScript(file,"code\\gameflow\\battle\\regionactivatedcutscenes",0x47E82,0x47EC8,"Region-activated cutscenes functions");
     produceAsmScript(file,"data\\battles\\global\\regionactivatedcutscenes",0x47EC8,0x47EEA,"Region-activated cutscenes data");
     produceAsmScript(file,"code\\common\\tech\\graphics\\flashwhite",0x47EEA,0x47EF8,"Flash white function and script");
@@ -2535,9 +2539,11 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmScript(file,"code\\common\\tech\\jumpinterfaces\\s13_jumpinterface",0x1AC000,0x1AC060,"Game Section 13 Jump Interface");
     produceAsmScript(file,"code\\common\\tech\\pointers\\s13_pointers",0x1AC060,0x1AC068,"Game Section 13 Pointers");
     produceAsmScript(file,"code\\common\\scripting\\endcredits",0x1AC068,0x1AC29C,"Ending credits functions");
-    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AD104,"Battle init, terrain, AI stuff to split more properly");            
+    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_1",0x1AC29C,0x1AC9B8,"Battle init, terrain, AI stuff to split more properly");            
+    produceAsmScript(file,"data\\battles\\global\\laserbattles",0x1AC9B8,0x1AC9FC,"Laser battles data");
+    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1AC9FC,0x1AD104,"Battle init, terrain, AI stuff to split more properly");
     produceAsmScript(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data");    
-    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_2",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
+    produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
     produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
     produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle spritesets");    
     produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DDA,"Random battles list, and data related to UpgradeEnemyIndex function");

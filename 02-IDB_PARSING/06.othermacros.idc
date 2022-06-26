@@ -79,6 +79,7 @@ static main(void){
     parseEnemyMapSprites();
     parseSpriteDialogProperties();
     //parseEnemyLeaderPresence();
+    parseBattlesWithLasers();
     parseEnemyDefs();
     parseRandomBattles();
     parseEnemyUpgradeDefs();
@@ -1031,43 +1032,43 @@ static parsePromotions(){
 }
 
 static parseBlacksmithEligibleClassesList(){
-    auto addr, j, len, blacksmithClasses, next;
+    auto addr, j, len, classes, next;
     addr = 0x21EB6;
     while(addr<0x21ED6){
         len = Word(addr)*2+2;
         for(j=addr;j<addr+len;j++){undefineByte(j);}
         MakeData(addr,FF_WORD,len,1);
-        blacksmithClasses = "";
+        classes = "";
         for(j=addr+2;j<addr+len;j=j+2){
             next = getClassShorthand(Word(j));
-            if(blacksmithClasses==""){
-                blacksmithClasses = next;
+            if(classes==""){
+                classes = next;
             }else{
-                blacksmithClasses = form("%s, &\n    %s", blacksmithClasses, next);
+                classes = form("%s, &\n        %s", classes, next);
             }
         }
-        SetManualInsn(addr, form("blacksmithClasses %s\n", blacksmithClasses));
+        SetManualInsn(addr, form("classes %s\n", classes));
         addr = addr+len;
     }
 }
 
 static parseMithrilWeaponClassLists(){
-    auto addr, j, len, weaponClass, next;
+    auto addr, j, len, classes, next;
     addr = 0x21F62;
     while(addr<0x21F92){
         len = Word(addr)*2+2;
         for(j=addr;j<addr+len;j++){undefineByte(j);}
         MakeData(addr,FF_WORD,len,1);
-        weaponClass = "";
+        classes = "";
         for(j=addr+2;j<addr+len;j=j+2){
             next = getClassShorthand(Word(j));
-            if(weaponClass==""){
-                weaponClass = next;
+            if(classes==""){
+                classes = next;
             }else{
-                weaponClass = form("%s, %s", weaponClass, next);
+                classes = form("%s, %s", classes, next);
             }
         }
-        SetManualInsn(addr, form("mithrilWeaponClass %s", weaponClass));
+        SetManualInsn(addr, form("classes %s", classes));
         addr = addr+len;
     }
 }
@@ -1274,6 +1275,27 @@ static parseEnemyLeaderPresence(){
     }
 }
 */
+
+static parseBattlesWithLasers(){
+    auto addr, j, len, battles, next;
+    addr = 0x1AC9B8;
+    while(addr<0x1AC9BC){
+        len = Byte(addr)+1;
+        for(j=addr;j<addr+len;j++){undefineByte(j);}
+        MakeData(addr,FF_BYTE,len,1);
+        battles = "";
+        for(j=addr+1;j<addr+len;j++){
+            next = getBattleShorthand(Byte(j));
+            if(battles==""){
+                battles = next;
+            }else{
+                battles = form("%s, %s", battles, next);
+            }
+        }
+        SetManualInsn(addr, form("battles %s", battles));
+        addr = addr+len;
+    }
+}
 
 static parseEnemyDefs(){
     auto addr, j, unknownByte, spellPower, level, maxHp, maxMp, baseAtt, baseDef, baseAgi, baseMov;
