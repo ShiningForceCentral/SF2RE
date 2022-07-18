@@ -18,7 +18,7 @@ static main()
 
     // GetVdpRegStatus
     SetFunctionCmt(0xbac, 
-        "VDP Reg Status -> D0", 1);
+        "VDP Reg Status -> d0.w", 1);
 
     // ApplyVIntCramDma
     SetFunctionCmt(0xc80, 
@@ -30,7 +30,7 @@ static main()
 
     // Sleep
     SetFunctionCmt(0xf04, 
-        "Wait for D0 VInts/Frames", 1);
+        "Wait for d0.w VInts/Frames.", 1);
 
     // sub_F3A
     SetFunctionCmt(0xf3a, 
@@ -50,11 +50,11 @@ static main()
 
     // ApplyImmediateVramDma
     SetFunctionCmt(0x10dc, 
-        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
+        "In: a0 = Source, a1 = Destination, d0.w = Length, d1.l = Auto-increment", 1);
 
     // ApplyVIntVramDma
     SetFunctionCmt(0x119e, 
-        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
+        "In: a0 = Source, a1 = Destination, d0.w = Length, d1.l = Auto-increment", 1);
 
     // sub_1234
     SetFunctionCmt(0x1234, 
@@ -78,7 +78,7 @@ static main()
 
     // ApplyImmediateVramDmaOnCompressedTiles
     SetFunctionCmt(0x1382, 
-        "A0=Source, A1=Destination, D0=Length, D1=Auto-increment", 1);
+        "In: a0 = Source, a1 = Destination, d0.w = Length, d1.l = Auto-increment", 1);
 
     // sub_13C0
     SetFunctionCmt(0x13c0, 
@@ -94,11 +94,11 @@ static main()
 
     // ApplyVramDmaFill
     SetFunctionCmt(0x140e, 
-        "D0=Destination, D1=Length, D2=Filler value", 1);
+        "d0.w = Destination, d1.w = Length, d2.w = Filler value", 1);
 
     // UpdatePlayerInputs
     SetFunctionCmt(0x150e, 
-        "converts data ports 1/2 information into P1/2 inputs State A/B", 1);
+        "Convert data ports 1/2 information into P1/2 inputs State A/B.", 1);
 
     // sub_15A4
     SetFunctionCmt(0x15a4, 
@@ -106,25 +106,25 @@ static main()
 
     // GenerateRandomNumber
     SetFunctionCmt(0x1600, 
-        "In: D6 = Value range, Out: D7 = Random value", 1);
+        "In: d6.w = Value range, Out: d7.w = Random value", 1);
 
-    // GetRandomOrDebugValue
+    // GenerateRandomOrDebugNumber
     SetFunctionCmt(0x1674, 
-        "Get random value in range D0 -> D0\n\
+        "Debug mode allows values 0-3 depending on player direction.\n\
 \n\
-Debug mode allows values 0-3 depending on player direction", 1);
+  In: d0.w = Value range, Out: d0.w = Random or debug value", 1);
 
     // PlayMusicAfterCurrentOne
     SetFunctionCmt(0x16be, 
-        "d0 : music index, or previous music if value $FB", 1);
+        "In: d0.w = music index, or previous music if value $FB", 1);
 
     // CopyBytes
     SetFunctionCmt(0x16d6, 
-        "A0=Source, A1=Destination, D7=Length", 1);
+        "In: a0 = Source, a1 = Destination, d7.w = Length", 1);
 
     // InitSprites
     SetFunctionCmt(0x1770, 
-        "D0 = Number of sprites to initialize", 1);
+        "In: d0.w = Number of sprites to initialize", 1);
 
     // sub_179C
     SetFunctionCmt(0x179c, 
@@ -136,7 +136,7 @@ Debug mode allows values 0-3 depending on player direction", 1);
 
     // sub_19C8
     SetFunctionCmt(0x19c8, 
-        "Palette copies to figure out", 1);
+        "palette copies to figure out", 1);
 
     // sub_19F8
     SetFunctionCmt(0x19f8, 
@@ -144,23 +144,22 @@ Debug mode allows values 0-3 depending on player direction", 1);
 
     // LoadSpriteData
     SetFunctionCmt(0x1a84, 
-        "Basic tile decompression : A0=Source, A1=Destination", 1);
+        "Basic tile decompression : a0 = Source, a1 = Destination", 1);
 
     // LoadCompressedData
     SetFunctionCmt(0x1e48, 
-        "Stack decompression : A0=Source, A1=Destination", 1);
+        "Stack decompression : a0 = Source, a1 = Destination", 1);
 
     // LoadMapLayoutData
     SetFunctionCmt(0x20e6, 
-        "A0=Source, A1=Destination", 1);
+        "In: a0 = Source, a1 = Destination", 1);
 
     // ReadMapLayoutBarrelForBlockFlags
     SetFunctionCmt(0x2296, 
         "Reads next part of barrel to determine flags for next block\n\
 barrel = 00\n\
 \n\
-In: D0 = barrel\n\
-Out: D1 = block flag word", 1);
+  In: d0.w = Barrel, Out: d1.w = Block flag word", 1);
 
     // LoadMapBlocks
     SetFunctionCmt(0x2372, 
@@ -169,13 +168,13 @@ a1 : output RAM data", 1);
 
     // LoadMapTilesets
     SetFunctionCmt(0x29e2, 
-        "In: d1.b = map index", 1);
+        "In: d1.w = Map index", 1);
 
     // LoadMap
     SetFunctionCmt(0x2a8c, 
         "Load all map properties (map coords, entities, etc.)\n\
 \n\
-In: d1.b = map index, or -1 to indicate current map", 1);
+  In: d1.b = Map index, or -1 to indicate current map", 1);
 
     // LoadMapArea
     SetFunctionCmt(0x2dec, 
@@ -191,21 +190,12 @@ In: d1.b = map index, or -1 to indicate current map", 1);
 
     // GetChestItem
     SetFunctionCmt(0x4232, 
-        "IN : \n\
-- d0d1 : candidate coordinates\n\
-OUT :\n\
-- d0 : layout block offset\n\
-- d1 : item flag\n\
-- d2 : item index\n\
-- a2 : map layout offset", 1);
-
-    // UpdateVdpPlaneA
-    SetFunctionCmt(0x4344, 
-        "Updates plane A", 1);
-
-    // UpdateVdpPlaneB
-    SetFunctionCmt(0x43a4, 
-        "Updates plane B", 1);
+        "In: d0.w, d1.w = Candidate coordinates\n\
+\n\
+Out: a2 = Map layout offset\n\
+     d0.w = Layout block offset\n\
+     d1.w = Item flag\n\
+     d2.w = Item index", 1);
 
     // IsMapScrollingToViewTarget
     SetFunctionCmt(0x4728, 
@@ -213,8 +203,8 @@ OUT :\n\
 
     // CreateWindow
     SetFunctionCmt(0x4802, 
-        "d0 = width height, d1 = X Y pos\n\
-returns a1 = window tiles end, d0 = window slot", 1);
+        "In: d0.w = width/height, d1.w = X/Y position\n\
+Out: a1 = window tiles end, d0.w = window slot (-1 if no free slot available)", 1);
 
     // SetWindowDestination
     SetFunctionCmt(0x4866, 
@@ -802,11 +792,11 @@ Out: A0 = RAM address of deals slot\n\
 
     // AddItemToCaravan
     SetFunctionCmt(0x9a3c, 
-        "In: D1 = item index (only the actual index is used, the status bits are cut out)", 1);
+        "In: d1.w = item index (only the actual index is used, the status bits are cut out)", 1);
 
     // RemoveItemFromCaravan
     SetFunctionCmt(0x9a62, 
-        "In: D1 = inventory slot", 1);
+        "In: d1.w = inventory slot", 1);
 
     // DebugModeSelectHits
     SetFunctionCmt(0x9b58, 
@@ -814,7 +804,7 @@ Out: A0 = RAM address of deals slot\n\
 
     // WriteBattlesceneScript
     SetFunctionCmt(0x9b92, 
-        "In: D0 = actor index", 1);
+        "In: d0.w = actor index", 1);
 
     // DetermineTargetsByAction
     SetFunctionCmt(0x9dd6, 
@@ -840,20 +830,20 @@ Out: A0 = RAM address of deals slot\n\
 
     // CreateBattlesceneMessage
     SetFunctionCmt(0xa05c, 
-        "Load proper battlescene message script depending on action\n\
+        "Load proper battlescene message script depending on action.\n\
 \n\
-In: A3 = action type index in RAM\n\
-    A4 = actor index in RAM\n\
+      In: a3 = action type index in RAM\n\
+          a4 = actor index in RAM\n\
 \n\
 <HARDCODED> enemy and message indexes", 1);
 
     // CreateBattlesceneAnimation
     SetFunctionCmt(0xa200, 
-        "Load proper battlescene sprite/magic animation properties\n\
+        "Load proper battlescene sprite/magic animation properties.\n\
 \n\
-      In: A2 = battlescene script stack frame\n\
-          A3 = pointer to action data in RAM\n\
-          A4 = battlescene actor index in RAM", 1);
+      In: a2 = battlescene script stack frame\n\
+          a3 = pointer to action data in RAM\n\
+          a4 = battlescene actor index in RAM", 1);
 
     // WriteBattlesceneScript_End
     SetFunctionCmt(0xa34e, 
@@ -872,9 +862,8 @@ In: A3 = action type index in RAM\n\
 
     // IsAbleToCounterAttack
     SetFunctionCmt(0xa49c, 
-        "In: A2 = battlescene script stack frame\n\
-\n\
-Out: -12(A2) = 0 if false, otherwise true", 1);
+        "In: a2 = battlescene script stack frame\n\
+Out: -12(a2) = 0 if false, otherwise true", 1);
 
     // GetSpellAnimation
     SetFunctionCmt(0xa54e, 
@@ -1089,7 +1078,7 @@ Return 0 otherwise.", 1);
 
     // GetAttackRange
     SetFunctionCmt(0xc306, 
-        "Get combatant D0's max/min attack range -> D3, D4", 1);
+        "Get max/min attack range for combatant d0.b -> d3.w, d4.w", 1);
 
     // GetSpellRange
     SetFunctionCmt(0xc380, 
@@ -1237,11 +1226,11 @@ Out: D1 = target's potential remaining HP", 1);
         "Decide which level of spell to use based upon the HP missing from target\n\
  and the MP available to the caster.\n\
 \n\
-      In: D0 = heal target character index\n\
-          D1 = combatant index of the spell caster\n\
-          D4 = spell entry\n\
+  In: d0.b = heal target character index\n\
+      d1.b = combatant index of the spell caster\n\
+      d4.b = spell entry\n\
 \n\
-      Out: D2 = spell level to cast (if $FF, then no spell is cast)", 1);
+  Out: d2.w = spell level to cast (if -1, then no spell is cast)", 1);
 
     // CalculateHealTargetPriority
     SetFunctionCmt(0xcdea, 
@@ -1301,34 +1290,41 @@ Out: D1 = item index\n\
     SetFunctionCmt(0xcf74, 
         "Get next attack spell usable by the caster.\n\
 \n\
-      In: D0 = caster index, D3 = starting spell slot\n\
-      Out: D1 = spell index, D2 = spell slot", 1);
+      In: d0.w = caster index, d3.w = starting spell slot\n\
+      Out: d1.w = spell index, d2.w = spell slot", 1);
 
     // GetNextHealingSpell
     SetFunctionCmt(0xd018, 
         "Get next healing spell known by the combatant.\n\
 \n\
-      In: D0 = entity index, D3 = starting spell slot\n\
-      Out: D1 = spell index, D2 = spell slot", 1);
+      In: d0.w = caster index, d3.w = starting spell slot\n\
+      Out: d1.w = spell index, d2.w = spell slot", 1);
+
+    // GetNextSupportSpell
+    SetFunctionCmt(0xd062, 
+        "Get next support spell known by the combatant.\n\
+\n\
+      In: d0.w = caster index, d3.w = starting spell slot\n\
+      Out: d1.w = spell index, d2.w = spell slot", 1);
 
     // GetNextUsableAttackItem
     SetFunctionCmt(0xd0ac, 
         "Get the next item in combatant's inventory that can be used to cast\n\
-BLAZE/FREEZE/BOLT/BLAST (HARDCODED spell indexes)\n\
+ BLAZE/FREEZE/BOLT/BLAST. <HARDCODED>\n\
 \n\
-      In: D0 = combatant index, D3 = starting item slot\n\
-      Out: D1 = item index, D2 = item slot", 1);
+      In: d0.w = caster index, d3.w = starting spell slot\n\
+      Out: d1.w = spell index, d2.w = spell slot", 1);
 
     // GetNextUsableHealingItem
     SetFunctionCmt(0xd160, 
         "Get the next item in combatant's inventory that can be used to cast\n\
-a healing spell. <HARDCODED>\n\
+ a healing spell. <HARDCODED>\n\
 \n\
 This only looks for Healing Rain as a valid healing item,\n\
-but is easy enough to change to allow the AI to use healing items.\n\
+ unless the AI is set to use the item the in battle data.\n\
 \n\
-      In: D0 = combatant index, D3 = starting item slot\n\
-      Out: D1 = item entry, D2 = item slot", 1);
+      In: d0.w = caster index, d3.w = starting spell slot\n\
+      Out: d1.w = spell index, d2.w = spell slot", 1);
 
     // IsCombatantAtLessThanHalfHP
     SetFunctionCmt(0xd296, 
@@ -1438,15 +1434,15 @@ Out: d1.w = target priority", 1);
 
     // HandleAiCommand
     SetFunctionCmt(0xe294, 
-        "In: D0 = combatant index\n\
-    D1 = command code (like Heal, Attack, etc.)", 1);
+        "In: d0.b = combatant index\n\
+    d1.b = command code (like Heal, Attack, etc.)", 1);
 
     // ExecuteAiCommand_Heal
     SetFunctionCmt(0xe3ee, 
-        "In: D0 = caster index\n\
-    D1 = command parameter (values of 0-2), unused\n\
+        "In: d0.b = caster index\n\
+    d1.w = command parameter (values of 0-2), unused\n\
 \n\
-Out: D1 = $FFFF if command failed", 1);
+Out: d1.w = $FFFF if command failed", 1);
 
     // ExecuteAiCommand_Attack
     SetFunctionCmt(0xe78c, 
@@ -1547,6 +1543,10 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
     SetFunctionCmt(0x10cc6, 
         "In: D0 = displayed spell icon", 1);
 
+    // CreateBattlefieldMiniStatusWindow
+    SetFunctionCmt(0x11572, 
+        "In: d0.w = combatant index", 1);
+
     // ShowAllyBattlesceneWindow
     SetFunctionCmt(0x11638, 
         "In: d0.b = ally index\n\
@@ -1579,16 +1579,15 @@ In: A0 = loading space address\n\
 
     // BuildMiniStatusWindow
     SetFunctionCmt(0x118be, 
-        "In: A1 = window tiles address\n\
-    D0 = combatant index", 1);
+        "In: a1 = window tiles address, d0.w = combatant index", 1);
 
     // WriteStatValue
     SetFunctionCmt(0x11aae, 
-        "Write stat value D0 or '??' if above 99", 1);
+        "Write stat value d0.w or '??' if above 99", 1);
 
     // CopyMiniStatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
-        "Draw tiles from A0 into A1 (one column)", 1);
+        "Draw tiles from a0 into a1 (one column)", 1);
 
     // BuildMemberScreen
     SetFunctionCmt(0x11c2a, 
@@ -1602,8 +1601,7 @@ In: A0 = loading space address\n\
 
     // BuildMemberStatusWindow
     SetFunctionCmt(0x11ff0, 
-        "In: D0 = character index\n\
-    A1 = window tile adress", 1);
+        "In: a1 = window tile adress, d0.w = combatant index", 1);
 
     // sub_12606
     SetFunctionCmt(0x12606, 
@@ -1611,7 +1609,7 @@ In: A0 = loading space address\n\
 
     // GetCombatantPortrait
     SetFunctionCmt(0x1263a, 
-        "Get portrait index for combatant D0 -> D0", 1);
+        "Get portrait index for combatant d0.w -> d0.w", 1);
 
     // LoadCombatantPortrait
     SetFunctionCmt(0x13394, 
@@ -1621,6 +1619,10 @@ In: A0 = loading space address\n\
     SetFunctionCmt(0x13462, 
         "    Get index of currently selected force member (in menus).\n\
     Out: D0 = selected index (capped to 255)", 1);
+
+    // WriteMemberListText
+    SetFunctionCmt(0x135a6, 
+        "In: a1 = window tiles address, d0.w = selected member index", 1);
 
     // sub_14074
     SetFunctionCmt(0x14074, 
@@ -2098,9 +2100,11 @@ Out: D0 = entity event index", 1);
 
     // SetUnitCursorDestinationToNextCombatant
     SetFunctionCmt(0x232ac, 
-        "In: D0 = entity index\n\
-Out: D2 = entity X\n\
-     D3 = entity Y", 1);
+        "In: d0.w = combatant index", 1);
+
+    // SetUnitCursorDestinationToNextBattleEntity
+    SetFunctionCmt(0x232bc, 
+        "In: d2.w, d3.w = entity X,Y coordinates", 1);
 
     // UpdateBattleEntitySprite
     SetFunctionCmt(0x234c8, 
@@ -2147,13 +2151,13 @@ Out: Z = entity is NOT follower", 1);
 
     // ExecuteIndividualTurn
     SetFunctionCmt(0x23eb0, 
-        "In: D0 = combatant index", 1);
+        "In: d0.w = combatant index", 1);
 
     // HandleAfterTurnEffects
     SetFunctionCmt(0x24242, 
         "Handle after-turn effects (status effects, HP/MP regen/degen, etc.)\n\
 \n\
-      In: D0 = combatant index", 1);
+      In: d0.w = combatant index", 1);
 
     // SpawnEnemy
     SetFunctionCmt(0x24490, 
@@ -2162,6 +2166,10 @@ Out: Z = entity is NOT follower", 1);
     // UpdateTargetsListForCombatant
     SetFunctionCmt(0x24642, 
         "In: D0 = combatant index", 1);
+
+    // sub_24662
+    SetFunctionCmt(0x24662, 
+        "Handle player input when controlling battle entity.", 1);
 
     // sub_24966
     SetFunctionCmt(0x24966, 
@@ -2253,13 +2261,12 @@ Out: D0 = new X\n\
 
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
-        "Get combatant D0's map sprite index -> D4", 1);
+        "Get mapsprite index for combatant d0.w -> d4.w", 1);
 
     // GetCombatantMapSprite
     SetFunctionCmt(0x44a7c, 
-        "In: A6 = battle vars stack ???\n\
-\n\
-Out: D4 = map sprite index", 1);
+        "In: a6 = battle vars stack\n\
+Out: d4.w = map sprite index", 1);
 
     // SetEntityActscript
     SetFunctionCmt(0x44b4a, 
@@ -2351,10 +2358,7 @@ Out: D4 = map sprite index", 1);
 
     // GetEntityPortaitAndSpeechSfx
     SetFunctionCmt(0x45638, 
-        "In: D0 = character index\n\
-\n\
-Out: D1 = portrait index\n\
-     D2 = speech sfx index", 1);
+        "Get portrait and speech sfx for character d0.w -> d1.w, d2.w", 1);
 
     // csc35_setBlocksVar
     SetFunctionCmt(0x46582, 

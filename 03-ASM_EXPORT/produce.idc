@@ -276,7 +276,8 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"data\\stats\\allies\\classes\\classtypes",0x853A,0x855A,"Class types table");
     produceAsmScript(file,"code\\common\\stats\\statsengine_2",0x855A,0x9484,"Character stats engine");
     produceAsmScript(file,"code\\common\\stats\\levelup",0x9484,0x9736,"Level Up functions");
-    produceAsmScript(file,"code\\common\\stats\\statsengine_3",0x9736,0x9A9A,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\statsengine_3",0x9736,0x9A3C,"Character stats engine");
+    produceAsmScript(file,"code\\common\\stats\\caravaninventoryfunctions",0x9A3C,0x9A9A,"Caravan inventory management functions");
     writestr(file,"                \n");
     writestr(file,"                ; Battleactions engine\n");
     produceAsmScript(file,"code\\gameflow\\special\\debugmodebattleactions",0x9A9A,0x9B92,"Debug mode battle actions");    
@@ -485,7 +486,8 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\battlefunctions_2",0x2448A,0x2550C,"Battle functions");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\updateenemyaifunctions",0x2550C,0x25544,"Update Enemy AI functions");
     produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\turnorderfunctions",0x25544,0x25610,"Battle turn order functions");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\battlefunctions_3",0x25610,0x257C0,"Battle functions");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\battlefunctions_3",0x25610,0x25790,"Battle functions");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlefunctions\\setmovesfx",0x25790,0x257C0,"Set Move Sfx function");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationfunctions_2",0x257C0,0x25A94,"Exploration functions");
     produceAsmScript(file,"code\\gameflow\\battle\\battlevints",0x25A94,0x25AD6,"Battle VInt functions");
     produceAsmScript(file,"code\\gameflow\\exploration\\explorationvints",0x25AD6,0x25BFC,"Exploration VInt functions");
@@ -570,7 +572,7 @@ static produceSpecificSectionSeven(mainFile,sectionName,start,end,fs,sectionComm
     produceAsmScript(file,"data\\scripting\\entity\\eas_main",0x44DE2,0x45204,"Main entity actscripts");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_3",0x45204,0x45268,"Entity functions");
     produceAsmScript(file,"code\\common\\scripting\\map\\vehiclefunctions",0x45268,0x45638,"Mapscripts and functions for Caravan and Raft");
-    produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsound",0x45638,0x4567A,"Get entity portrait and speech sfx indexes function");
+    produceAsmScript(file,"code\\common\\scripting\\entity\\getentityportaitandspeechsfx",0x45638,0x4567A,"Get entity portrait and speech sfx indexes function");
     produceAsmScript(file,"data\\spritedialogproperties",0x4567A,0x45858,"Sprite dialog properties");
     produceAsmScript(file,"code\\common\\scripting\\entity\\entityfunctions_4",0x45858,0x45E44,"Entity functions");
     produceAsmScript(file,"data\\scripting\\entity\\eas_actions",0x45E44,0x46506,"Entity scripts for cutscene actions");
@@ -2641,9 +2643,7 @@ static produceSpecificSectionSeventeen(mainFile,sectionName,start,end,fs,section
     produceAsmScript(file,"data\\stats\\allies\\classes\\classdefs",0x1EE890,0x1EE930,"Class definitions");
     produceAsmScript(file,"code\\specialscreens\\jewelend\\graphics",0x1EE930,0x1EF4BA,"Jewel End Graphics");    
     produceAsmScript(file,"code\\specialscreens\\suspend\\graphics",0x1EF4BA,0x1EF5A6,"Suspend String Graphics");    
-    produceAsmScript(file,"data\\graphics\\tech\\unusedbasepalettes\\entries",0x1EF5A6,0x1EF5E6,"Unused base palettes");
-    produceAsmScript(file,"data\\graphics\\tech\\basetiles\\entries",0x1EF5E6,0x1EFE33,"Base tiles");
-    produceAsmSection(file,"",0x1EFE33,0x1F0000);
+    produceAsmSection(file,"",0x1EF5A6,0x1F0000);
 
     fclose(file);
     Message("DONE.\n");    
