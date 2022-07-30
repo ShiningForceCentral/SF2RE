@@ -289,6 +289,7 @@ static fixUnwantedNames(){
 
     /* Names generating errors about other local names in same function */
     MakeNameEx(0x20,"",0);
+    MakeNameEx(0x3C,"",0);
     MakeNameEx(0xFC,"",0);
     MakeNameEx(0x91E,"",0);
     MakeNameEx(0x2AD4,"",0);

@@ -292,7 +292,10 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_3",0xA6E8,0xA870,"Battleactions engine");
     produceAsmScript(file,"data\\battles\\global\\halvedexpearnedbattles",0xA870,0xA872,"Halved EXP earned battles table");
     writestr(file,"                align\n");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_4",0xA872,0xACCA,"Battleactions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_4",0xA872,0xAAFC,"Battleactions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\determinedodge",0xAAFC,0xABBE,"Determine dodge function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\calculatedamage",0xABBE,0xAC4E,"Calculate attack damage function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\determinecriticalhit",0xAC4E,0xACCA,"Determine critical hit function");
     produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_5",0xACEA,0xBCF0,"Battleactions engine");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");

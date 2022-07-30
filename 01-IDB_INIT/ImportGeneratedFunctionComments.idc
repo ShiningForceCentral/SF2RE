@@ -352,9 +352,8 @@ Out: D2 = RAM offset from start of map VDP tile data", 1);
 
     // CopyBytesToSram
     SetFunctionCmt(0x7004, 
-        "In: A0 = source address\n\
-    A1 = destination address\n\
-    D7 = number of bytes to copy", 1);
+        "In: a0 = source address, a1 = destination address, d7.w = number of bytes to copy\n\
+Out: d0.b = checksum", 1);
 
     // CopyBytesFromSram
     SetFunctionCmt(0x701c, 
@@ -575,8 +574,10 @@ Out: D2 = 2 if not dropped, 3 if dropped or nothing", 1);
 
     // RemoveAndArrangeItems
     SetFunctionCmt(0x8e5c, 
-        "In: A0 = char entry address + offset to items\n\
-    D0 = item slot", 1);
+        "In: a0 = combatant items address\n\
+    d0.w = item slot\n\
+\n\
+Out: d2.w = 0", 1);
 
     // RemoveItemBySlot
     SetFunctionCmt(0x8e76, 
@@ -903,20 +904,20 @@ Out: d4 = spell animation index\n\
     SetFunctionCmt(0xaab6, 
         "In: A2 = battlescene script stack frame", 1);
 
-    // WriteBattlesceneScript_DodgeAttack
+    // WriteBattlesceneScript_DetermineDodge
     SetFunctionCmt(0xaafc, 
-        "In: A2 = battlescene script stack frame\n\
-    A4 = pointer to actor index in RAM\n\
-    A5 = pointer to target index in RAM", 1);
+        "In: a2 = battlescene script stack frame\n\
+    a4 = pointer to actor index in RAM\n\
+    a5 = pointer to target index in RAM", 1);
 
-    // CalculateDamage
+    // WriteBattlesceneScript_CalculateDamage
     SetFunctionCmt(0xabbe, 
         "In: A4 = attacker index in RAM\n\
     A5 = defender index in RAM\n\
 \n\
 Out: D6 = damage", 1);
 
-    // DetermineCriticalHit
+    // WriteBattlesceneScript_DetermineCriticalHit
     SetFunctionCmt(0xac4e, 
         "In: A2 = battlescene script stack frame\n\
     D6 = damage", 1);
@@ -937,7 +938,7 @@ Out: D6 = damage", 1);
         "In: A2 = battlescene script stack frame\n\
     D6 = damage", 1);
 
-    // DetermineDoubleAndCounter
+    // WriteBattlesceneScript_DetermineDoubleAndCounter
     SetFunctionCmt(0xb00e, 
         "In: A2 = battlescene script stack frame\n\
     A4 = pointer to actor index in RAM\n\
