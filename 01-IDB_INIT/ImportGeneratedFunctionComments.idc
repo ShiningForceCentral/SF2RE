@@ -907,15 +907,14 @@ Out: d4 = spell animation index\n\
     // WriteBattlesceneScript_DetermineDodge
     SetFunctionCmt(0xaafc, 
         "In: a2 = battlescene script stack frame\n\
-    a4 = pointer to actor index in RAM\n\
+    a4 = pointer to attacker index in RAM\n\
     a5 = pointer to target index in RAM", 1);
 
     // WriteBattlesceneScript_CalculateDamage
     SetFunctionCmt(0xabbe, 
-        "In: A4 = attacker index in RAM\n\
-    A5 = defender index in RAM\n\
-\n\
-Out: D6 = damage", 1);
+        "In: a4 = pointer to attacker index in RAM\n\
+    a5 = pointer to target index in RAM\n\
+Out: d6.w = damage", 1);
 
     // WriteBattlesceneScript_DetermineCriticalHit
     SetFunctionCmt(0xac4e, 
@@ -946,24 +945,42 @@ Out: D6 = damage", 1);
 
     // WriteBattlesceneScript_CastSpell
     SetFunctionCmt(0xb0a8, 
-        "In: A2 = battlescene stack\n\
-    A3 = scene action type in RAM\n\
-    A4 = actor index in RAM\n\
-    A5 = target index in RAM", 1);
+        "In: a2 = battlescene stack\n\
+    a3 = battleaction data in RAM\n\
+    a4 = actor index in RAM\n\
+    a5 = target index in RAM", 1);
+
+    // SpellEffect_Slow
+    SetFunctionCmt(0xb30e, 
+        "In: d2.w = target's resistance setting", 1);
+
+    // SpellEffect_Dispel
+    SetFunctionCmt(0xb41a, 
+        "In: d2.w = target's resistance setting", 1);
+
+    // SpellEffect_Muddle
+    SetFunctionCmt(0xb488, 
+        "In: d2.w = target's resistance setting", 1);
 
     // SpellEffect_Desoul
     SetFunctionCmt(0xb516, 
-        "In: A2 = battlescene script stack frame", 1);
+        "In: a2 = battlescene script stack frame\n\
+    d2.w = target's resistance setting", 1);
 
-    // ApplyRandomEffectiveness
+    // SpellEffect_Sleep
+    SetFunctionCmt(0xb57e, 
+        "In: d2.w = target's resistance setting", 1);
+
+    // DetermineSpellEffectiveness
     SetFunctionCmt(0xba98, 
-        "In: A2 = battlescene script stack frame", 1);
+        "In: a2 = battlescene script stack frame\n\
+    d2.w = resistance setting (0=none, 1=minor, 2=major, 3=immunity)", 1);
 
-    // CalculateDamage_Spell
+    // CalculateSpellDamage
     SetFunctionCmt(0xbb02, 
-        "In: A2 = battlescene script stack frame\n\
-    D2 = resistance setting (0=none, 1=minor, 2=major, 3=weakness)\n\
-    D3 = chance to critical hit", 1);
+        "In: a2 = battlescene script stack frame\n\
+    d2.w = resistance setting (0=none, 1=minor, 2=major, 3=weakness)\n\
+    d3.l = chance to critical hit", 1);
 
     // AdjustSpellPower
     SetFunctionCmt(0xbb56, 

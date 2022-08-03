@@ -297,7 +297,12 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\calculatedamage",0xABBE,0xAC4E,"Calculate attack damage function");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\determinecriticalhit",0xAC4E,0xACCA,"Determine critical hit function");
     produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_5",0xACEA,0xBCF0,"Battleactions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_5",0xACEA,0xB0A8,"Battleactions engine");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\castspell",0xB0A8,0xBB02,"Write Battlescene Script : Cast Spell");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\calculatespelldamage",0xBB02,0xBBB8,"Calculate Spell Damage function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\useitem",0xBBB8,0xBBE4,"Write Battlescene Script : Use Item");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\nullsub_BBE4",0xBBE4,0xBBE6,"Unused nullsub");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\breakuseditem",0xBBE6,0xBCF0,"Write Battlescene Script : Break Used Item");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\writebattlescenecommanddropenemyitem",0xBD24,0xBE52,"Write Battlescene Command : Drop Enemy Item function");
     produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
