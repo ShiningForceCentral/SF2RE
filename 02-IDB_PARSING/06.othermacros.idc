@@ -267,7 +267,7 @@ static parseEnemyItemDrops(){
         /* Item */
         MakeByte(addr+2);
         itemDrop = getItemShorthand(Byte(addr+2));
-        SetManualInsn(addr+2, form("itemIndex   %s", itemDrop));
+        SetManualInsn(addr+2, form("item        %s", itemDrop));
         
         /* Drpped flag */
         MakeByte(addr+3);
@@ -1044,10 +1044,10 @@ static parseBlacksmithEligibleClassesList(){
             if(classes==""){
                 classes = next;
             }else{
-                classes = form("%s, &\n        %s", classes, next);
+                classes = form("%s, %s", classes, next);
             }
         }
-        SetManualInsn(addr, form("classes %s\n", classes));
+        SetManualInsn(addr, form("classes %s", classes));
         addr = addr+len;
     }
 }
@@ -1083,12 +1083,12 @@ static parseMithrilWeaponLists(){
         for(j=addr;j<addr+8;j=j+2){
             next = form("%d, %s", Byte(j), getItemShorthand(Byte(j+1)));
             if(mithrilWeapons==""){
-                mithrilWeapons = form("    %s", next);
+                mithrilWeapons = form("%s", next);
             }else{
-                mithrilWeapons = form("%s, &\n    %s", mithrilWeapons, next);
+                mithrilWeapons = form("%s, &\n               %s", mithrilWeapons, next);
             }
         }
-        SetManualInsn(addr, form("mithrilWeapons &\n%s\n", mithrilWeapons));
+        SetManualInsn(addr, form("mithrilWeapons %s\n", mithrilWeapons));
         addr = addr+8;
     }
 }
@@ -1119,7 +1119,7 @@ static parseUsableOutsideBattleItems(){
         undefineByte(addr);
         MakeByte(addr);
         item = getItemShorthand(Byte(addr));
-        SetManualInsn(addr, form("itemIndex %s", item));
+        SetManualInsn(addr, form("item %s", item));
         addr++;
     }
     

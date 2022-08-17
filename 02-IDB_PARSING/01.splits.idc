@@ -810,7 +810,7 @@ static splitTextbanks(file) {
         i++;
         //action = AskYN(1,"Ok ?");
     }
-    MakeAlign(0x41FD9, 0x41FDA-0x41FD9,1);
+    //MakeAlign(0x41FD9, 0x41FDA-0x41FD9,1);
 }
 
 

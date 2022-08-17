@@ -472,8 +472,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\common\\menus\\blacksmith\\blacksmithactions",0x21A3A,0x21EB6,"Blacksmith functions");
     produceAsmScript(file,"data\\stats\\allies\\classes\\blacksmitheligibleclasses",0x21EB6,0x21ED6,"Blacksmith eligible classes list");
     produceAsmScript(file,"code\\common\\menus\\blacksmith\\pickmithrilweapon",0x21ED6,0x21F62,"Pick Mithril Weapon function");
-    produceAsmScript(file,"data\\stats\\allies\\classes\\mithrilweaponclasses",0x21F62,0x21F92,"Mithril weapon class lists");
-    produceAsmScript(file,"data\\stats\\items\\mithrilweapons",0x21F92,0x21FD2,"Mithril weapon lists");
+    produceAsmScript(file,"data\\stats\\items\\mithrilweapons",0x21F62,0x21FD2,"Mithril weapons data");
     produceAsmScript(file,"code\\common\\menus\\caravan\\caravanactions_1",0x21FD2,0x228A2,"Caravan functions");
     produceAsmScript(file,"data\\stats\\items\\specialcaravandescriptions",0x228A2,0x228A8,"Special Caravan descriptions");
     produceAsmScript(file,"code\\common\\menus\\caravan\\choosecaravanportrait",0x228A8,0x228D8,"Choose Caravan Portrait function");

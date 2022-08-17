@@ -197,7 +197,7 @@ Out: a2 = Map layout offset\n\
      d1.w = Item flag\n\
      d2.w = Item index", 1);
 
-    // IsMapScrollingToViewTarget
+    // IsMapScrollingToViewTarget?
     SetFunctionCmt(0x4728, 
         "Out: Z = is scrolling", 1);
 
@@ -492,16 +492,14 @@ Out: A0 = address of name\n\
     SetFunctionCmt(0x8be4, 
         "Out: A0 = pointer to definition for item D1", 1);
 
-    // GetItemAndNumberHeld
+    // GetItemBySlotAndHeldItemsNumber
     SetFunctionCmt(0x8bfa, 
-        "In: D0 = combatant index, D1 = item slot\n\
-Out: D1 = item entry, D2 = number of items held", 1);
+        "In: d0.b = combatant index, d1.w = item slot\n\
+Out: d1.w = item entry, d2.l = number of items held", 1);
 
     // GetEquipmentType
     SetFunctionCmt(0x8c28, 
-        "In: D1 = item index\n\
-\n\
-Out: D2 = equipment type (0 = item, 1 = weapon, $FFFF = ring)", 1);
+        "Get equipment type for item d1.w -> d2.w (0 = none, 1 = weapon, -1 = ring)", 1);
 
     // GetEquippedWeapon
     SetFunctionCmt(0x8c4c, 
@@ -513,10 +511,8 @@ Out: D2 = equipment type (0 = item, 1 = weapon, $FFFF = ring)", 1);
 
     // AddItem
     SetFunctionCmt(0x8ca2, 
-        "In: D0 = combatant index\n\
-    D1 = item index\n\
-\n\
-Out: D2 = 0 if item successfully added, 1 if no empty slot available", 1);
+        "In: d0.b = combatant index, d1.w = item entry\n\
+Out: d2.w = 0 if item successfully added, 1 if no empty slot available", 1);
 
     // BreakItemBySlot
     SetFunctionCmt(0x8cd4, 
@@ -527,36 +523,28 @@ Out: D2 = 3 if item slot is empty", 1);
 
     // EquipItemBySlot
     SetFunctionCmt(0x8d34, 
-        "In: D0 = combatant index\n\
-    D1 = item slot\n\
-\n\
-Out: D2 = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothing", 1);
+        "In: d0.b = combatant index, d1.w = item slot\n\
+Out: d2.w = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothing", 1);
 
-    // IsItemEquippableAndCursed
+    // IsItemEquippableAndCursed?
     SetFunctionCmt(0x8d6a, 
-        "Is item equippable, and is it cursed ?\n\
+        "Is item d1.w equippable by ally d0.b and if so, is it cursed?\n\
 \n\
-      In: D0 = ally index\n\
-          D1 = item index\n\
-\n\
-      Out: D2 = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
+  Out: d2.w = 0 if equippable, 1 if not, 2 if equippable and cursed", 1);
 
     // UnequipItemBySlotIfNotCursed
     SetFunctionCmt(0x8d9e, 
-        "In: D0 = combatant index\n\
-    D1 = item slot\n\
-\n\
-Out: D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
+        "In: d0.b = combatant index, d1.w = item slot\n\
+Out: d2.w = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
 
-    // IsItemInSlotEquippedOrCursed
+    // IsItemInSlotEquippedOrCursed?
     SetFunctionCmt(0x8db6, 
-        "Is item in slot equipped, and if so, is it cursed ?\n\
+        "Is item in slot d1.w equipped by combatant d0.b, and if so, is it cursed?\n\
 \n\
-      In: D0 = ally index\n\
-          D1 = item slot\n\
+  In: d0.b = combatant index, d1.w = item slot\n\
 \n\
-      Out: A0 = pointer to item entry\n\
-           D2 = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if neither", 1);
+  Out: a0 = pointer to item entry\n\
+       d2.w = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if neither", 1);
 
     // UnequipItemBySlot
     SetFunctionCmt(0x8dfe, 
@@ -581,8 +569,8 @@ Out: d2.w = 0", 1);
 
     // RemoveItemBySlot
     SetFunctionCmt(0x8e76, 
-        "In: D0 = combatant index\n\
-    D1 = item slot", 1);
+        "In: d0.b = combatant index, d1.w = item slot\n\
+Out: d2.w = 3 if nothing to remove, 0 otherwise", 1);
 
     // GetEquippableWeapons
     SetFunctionCmt(0x8eee, 
@@ -594,11 +582,18 @@ Out: d2.w = 0", 1);
         "Out: A0 = pointer to equippable items list\n\
      D1 = equippable rings count", 1);
 
-    // IsItemEquippable
+    // IsItemEquippable?
     SetFunctionCmt(0x8f60, 
-        "In: D1 = item index\n\
-    D2 = item type bitmask (for ANDing the item type bitfield)\n\
-    D3 = class equip bitmask (for ANDing the item equip bitfield)", 1);
+        "In: d1.w = item index\n\
+    d2.w = item type bitmask (for ANDing the item type bitfield)\n\
+    d3.l = class equip bitmask (for ANDing the item equip bitfield)\n\
+\n\
+Out: CCR carry-bit set if true", 1);
+
+    // IsWeaponOrRingEquippable?
+    SetFunctionCmt(0x8f80, 
+        "Is weapon or ring d1.w equippable by combatant d0.w?\n\
+Return CCR carry-bit set if true.", 1);
 
     // GetNewATTandDEFwithItemEquipped
     SetFunctionCmt(0x8fee, 
@@ -609,17 +604,18 @@ Out: d2.w = 0", 1);
 Out: D2 = current ATT with item equipped\n\
      D3 = current DEF with item equipped", 1);
 
-    // IsItemCursed
+    // IsItemCursed?
     SetFunctionCmt(0x90b2, 
-        "Is item D1 cursed ? CCR carry-bit set if true", 1);
+        "Is item d1.w cursed? Return CCR carry-bit set if true.", 1);
 
-    // IsItemUsableInBattle
+    // IsItemUsableInBattle?
     SetFunctionCmt(0x90cc, 
-        "carry set : YES", 1);
+        "Is item d1.w usable in battle? Return CCR carry-bit set if true.", 1);
 
-    // IsItemUsableWeaponInBattle
+    // IsItemUsableByCombatant?
     SetFunctionCmt(0x90e6, 
-        "carry set : NO", 1);
+        "Is item d1.w allowed to be used in battle by combatant d0.w?\n\
+Return CCR carry-bit set if true.", 1);
 
     // UnequipAllItemsIfNotCursed
     SetFunctionCmt(0x9106, 
@@ -627,10 +623,8 @@ Out: D2 = current ATT with item equipped\n\
 
     // GetItemSlotContainingIndex
     SetFunctionCmt(0x9194, 
-        "In: D0 = entity index\n\
-    D1 = item index\n\
-\n\
-Out: D2 = item slot ($FFFF if not held)", 1);
+        "In: d0.b = combatant index, d1.w = item index\n\
+Out: d2.w = item slot (-1 if not found)", 1);
 
     // FindSpellName
     SetFunctionCmt(0x91c6, 
@@ -757,9 +751,9 @@ Out: d1.w = stat gain value", 1);
     SetFunctionCmt(0x9976, 
         "In: D0 = ally index", 1);
 
-    // IsInBattleParty
+    // IsInBattleParty?
     SetFunctionCmt(0x9994, 
-        "In: D0 = ally index", 1);
+        "Is ally d0.b currently in battle party? Return CCR zero-bit set if true.", 1);
 
     // JoinBattleParty
     SetFunctionCmt(0x99ac, 
@@ -861,7 +855,7 @@ Out: A0 = RAM address of deals slot\n\
     SetFunctionCmt(0xa45e, 
         "In: A2 = battlescene script stack frame", 1);
 
-    // IsAbleToCounterAttack
+    // FinalCounterAttackCheck
     SetFunctionCmt(0xa49c, 
         "In: a2 = battlescene script stack frame\n\
 Out: -12(a2) = 0 if false, otherwise true", 1);
@@ -994,10 +988,10 @@ Out: d6.w = damage", 1);
 
     // GetItemBreakMessage
     SetFunctionCmt(0xbc9a, 
-        "In: A2 = battlescene script stack frame\n\
-    D0 = whether item is already damaged (0=no, 1=yes)\n\
+        "In: a2 = battlescene script stack frame\n\
+    d0.b = whether item is already damaged (0=no, 1=yes)\n\
 \n\
-Out: D3 = message index", 1);
+Out: d3.w = message index", 1);
 
     // WriteBattlesceneScript_EnemyDropItem
     SetFunctionCmt(0xbd24, 
@@ -1344,10 +1338,9 @@ This only looks for Healing Rain as a valid healing item,\n\
       In: d0.w = caster index, d3.w = starting spell slot\n\
       Out: d1.w = spell index, d2.w = spell slot", 1);
 
-    // IsCombatantAtLessThanHalfHP
+    // IsCombatantAtLessThanHalfHP?
     SetFunctionCmt(0xd296, 
-        "In: D0 = combatant index\n\
-Out: carry clear if true", 1);
+        "Is combatant d0.w at less than half HP? Return CCR carry-bit clear if true.", 1);
 
     // sub_D2F8
     SetFunctionCmt(0xd2f8, 
@@ -1381,9 +1374,9 @@ Set the carry flag if less than 2/3rds of defenders remaining HP\n\
 Set the carry flag if the defender is expected to have more than 20%\n\
  of max HP remain after attack.", 1);
 
-    // DoesCombatantRequireHealing
+    // DoesCombatantRequireHealing?
     SetFunctionCmt(0xd38a, 
-        "Is combatant d0 at 2/3 or less of max HP? Return carry clear if true.", 1);
+        "Is combatant d0.w at 2/3 or less of max HP? Return CCR carry-bit clear if true.", 1);
 
     // GetDifficulty
     SetFunctionCmt(0xd408, 
@@ -1694,7 +1687,9 @@ In: A0 = loading space address\n\
 
     // sub_15422
     SetFunctionCmt(0x15422, 
-        "d0 = FFAFE7, related to DMA", 1);
+        "related to DMA\n\
+\n\
+In: d0.b = current diamond menu choice", 1);
 
     // ClosePortraitEyes
     SetFunctionCmt(0x154f6, 
@@ -2067,35 +2062,55 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x21156, 
         "Out: D7 = force members counter", 1);
 
-    // sub_219EC
-    SetFunctionCmt(0x219ec, 
-        "copy available targets list ?", 1);
+    // sub_21A1C
+    SetFunctionCmt(0x21a1c, 
+        "unused", 1);
+
+    // CountPendingAndReadyToFulfillOrders
+    SetFunctionCmt(0x21e48, 
+        "Determine whether blacksmith is ready to fulfill orders,\n\
+ and count existing orders as either \"ready\" or \"pending\" accordingly.", 1);
+
+    // IsClassBlacksmithEligible?
+    SetFunctionCmt(0x21e8e, 
+        "Out: d0.w = 0 if true", 1);
 
     // DisplaySpecialCaravanDescription
     SetFunctionCmt(0x22864, 
-        "only used for chirrup sandals", 1);
+        "Return CCR zero-bit set if special description was found.\n\
+(Only used for Chirrup Sandals.)", 1);
+
+    // DisplayCaravanMessageWithPortrait
+    SetFunctionCmt(0x228a8, 
+        "In: d1.w = message index", 1);
 
     // CopyCaravanItems
     SetFunctionCmt(0x22926, 
         "Copy caravan item indexes to generic list space", 1);
 
-    // IsItemInSlotEquippedAndCursed
+    // IsItemInSlotEquippedAndCursed?
     SetFunctionCmt(0x2294c, 
-        "Is character D0's item in slot D1 equipped and cursed ? CCR carry-bit set if true", 1);
+        "Is item in slot d1.w cursed and equipped by combatant d0.b?\n\
+Return CCR carry-bit set if true.", 1);
 
-    // FindUsableOutsideBattleItem
+    // IsItemUnsellable?
+    SetFunctionCmt(0x2299e, 
+        "Is item d1.w unsellable? Return CCR carry-bit set if true.", 1);
+
+    // IsItemUsableOnField?
     SetFunctionCmt(0x229ca, 
-        "Out: D2 = 0 if true, $FFFFFFFF if false", 1);
+        "In: d1.b = item index\n\
+Out: d2.l = 0 if true, -1 if false", 1);
 
-    // UseFieldItem
+    // UseItemOnField
     SetFunctionCmt(0x229ec, 
-        "Find specific item index + code offset to run when used in field\n\
+        "Find specific item index + code offset to run when used in field.\n\
 \n\
-      In: D1 = item entry", 1);
+      In: d1.w = item entry", 1);
 
-    // GetCurrentPosition
+    // GetPlayerEntityPosition
     SetFunctionCmt(0x22c60, 
-        "get first entity's X, Y and facing", 1);
+        "Get first entity's X, Y and facing -> d1.l, d2.l, d3.w", 1);
 
     // ControlBattleEntity
     SetFunctionCmt(0x22e1a, 
@@ -2141,10 +2156,9 @@ Out: D0 = entity event index", 1);
      D1 = activated entity's facing\n\
      D2 = player entity's facing", 1);
 
-    // CheckIfEntityIsFollower
+    // IsFollowerEntity?
     SetFunctionCmt(0x23846, 
-        "In: D0 = entity index\n\
-Out: Z = entity is NOT follower", 1);
+        "Is entity d0.b a follower? Return CCR zero-bit set if true.", 1);
 
     // CheckArea
     SetFunctionCmt(0x23862, 
@@ -2253,7 +2267,7 @@ Out: D0 = new X\n\
 
     // LoadSpecialSprite
     SetFunctionCmt(0x25c24, 
-        "In: d1.w = special map sprite index", 1);
+        "In: d1.w = special mapsprite index", 1);
 
     // DisplaySegaLogo
     SetFunctionCmt(0x2804c, 
@@ -2265,15 +2279,11 @@ Out: D0 = new X\n\
 - clear Huffman (script) data\n\
 - set starting tree", 1);
 
-    // j_RunMapSetupItemEvent
-    SetFunctionCmt(0x44088, 
-        "triggers a map setup function according to up to 4 criterias in d1-d4", 1);
-
     // j_MapEventType2
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
 
-    // IsOverworldMap
+    // IsOverworldMap?
     SetFunctionCmt(0x44268, 
         "Out: ccr zero-bit clear if true", 1);
 
@@ -2462,6 +2472,13 @@ Out: d4.w = map sprite index", 1);
     SetFunctionCmt(0x474e0, 
         "xxxx", 1);
 
+    // RunMapSetupItemEvent
+    SetFunctionCmt(0x47586, 
+        "Trigger a map setup function according to up to 4 criterias in d1-d4.\n\
+\n\
+ In: d1.w, d2.w, d3.w = first entity's X, Y and facing\n\
+     d4.w, d5.w = item index, item slot", 1);
+
     // RunMapSetupEntityEvent
     SetFunctionCmt(0x4761a, 
         "In: D0 = entity event index", 1);
@@ -2642,12 +2659,10 @@ Out: carry = 0 if respawn, 1 if not", 1);
         "In: a0 = pointer to battle entity definition\n\
     d0.b = combatant index", 1);
 
-    // IsEnemyStartingPositionOccupied
+    // IsEnemyStartingPositionOccupied?
     SetFunctionCmt(0x1b1554, 
-        "In: d3.w = enemy starting tile x (from battle def)\n\
-    d4.w = enemy starting tile y (from battle def)\n\
-\n\
-Out: CCR carry-bit set if true", 1);
+        "Is enemy starting position d3.w,d4.w curently occupied?\n\
+Return CCR carry-bit set if true.", 1);
 
     // SetEnemyBaseATT
     SetFunctionCmt(0x1b15aa, 

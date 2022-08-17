@@ -486,30 +486,30 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Main menu actions */
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
-    SetArrayString(variables,8,"var_8");
-    SetArrayString(variables,10,"var_10");
-    SetArrayString(variables,12,"var_12");
-    SetArrayString(variables,14,"var_14");
-    SetArrayString(variables,20,"var_20");
-    SetArrayString(variables,26,"var_26");
-    SetArrayString(variables,28,"var_28");
-    SetArrayString(variables,32,"var_32");
+    SetArrayString(variables,4,"member");
+    SetArrayString(variables,6,"targetMember");
+    SetArrayString(variables,8,"itemIndex");
+    SetArrayString(variables,10,"exchangedItemEntry");
+    SetArrayString(variables,12,"itemSlot");
+    SetArrayString(variables,14,"targetItemSlot");
+    SetArrayString(variables,20,"itemTypeBitfield");
+    SetArrayString(variables,26,"spellEntry");
+    SetArrayString(variables,28,"spellIndex");
+    SetArrayString(variables,32,"spellLevel");
     makeLocalVariables(0x2127E,variables);
     deleteArrayStrings(variables);
     
     /* Blacksmith menu actions */
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"selectedMember");
-    SetArrayString(variables,8,"var_8");
-    SetArrayString(variables,10,"currentItem");
+    SetArrayString(variables,4,"currentGold");
+    SetArrayString(variables,6,"member");
+    SetArrayString(variables,8,"targetMember");
+    SetArrayString(variables,10,"itemIndex");
     SetArrayString(variables,12,"itemSlot");
-    SetArrayString(variables,14,"var_14");
-    SetArrayString(variables,16,"currentOrder");
-    SetArrayString(variables,18,"var_18");
-    SetArrayString(variables,20,"var_20");
-    SetArrayString(variables,22,"ordersNumber");
+    SetArrayString(variables,14,"pendingOrdersNumber");
+    SetArrayString(variables,16,"fulfilledOrdersNumber");
+    SetArrayString(variables,18,"readyToFulfillOrdersNumber");
+    SetArrayString(variables,20,"fulfillOrdersFlag");
+    SetArrayString(variables,22,"ordersCounter");
     SetArrayString(variables,24,"characterClass");
     makeLocalVariables(0x21A3A,variables);
     makeLocalVariables(0x21A92,variables);
@@ -521,16 +521,12 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Caravan menu actions */
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
-    SetArrayString(variables,8,"var_8");
-    SetArrayString(variables,10,"var_10");
-    SetArrayString(variables,12,"var_12");
-    SetArrayString(variables,14,"var_14");
-    SetArrayString(variables,16,"var_16");
-    SetArrayString(variables,18,"var_18");
-    SetArrayString(variables,20,"var_20");
+    SetArrayString(variables,2,"member");
+    SetArrayString(variables,4,"itemIndex");
+    SetArrayString(variables,6,"itemSlot");
+    SetArrayString(variables,8,"targetMember");
+    SetArrayString(variables,10,"targetItemIndex");
+    SetArrayString(variables,12,"targetItemSlot");
     makeLocalVariables(0x21FD2,variables);
     makeLocalVariables(0x22028,variables);
     makeLocalVariables(0x22188,variables);
@@ -591,7 +587,7 @@ static defineLocalVariables(){
     SetArrayString(variables,2,"character");
     SetArrayString(variables,4,"itemEntry");
     SetArrayString(variables,6,"itemSlot");
-    SetArrayString(variables,10,"itemTypeFlags");
+    SetArrayString(variables,10,"itemTypeBitfield");
     makeLocalVariables(0x4F570,variables);
     deleteArrayStrings(variables);
     
