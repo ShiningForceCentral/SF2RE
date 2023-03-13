@@ -456,7 +456,7 @@ static parseBSC(start,end){
             
             MakeUnknown(start,cmdLength,DOUNK_SIMPLE);
             MakeData(start,FF_BYTE,cmdLength,1);
-            SetManualInsn(start,form("giveEXP %s",paramOne));
+            SetManualInsn(start,form("giveExp %s",paramOne));
         }
         else if(Word(ea+2)==0x0010){
             cmdName = "0010 DISPLAY BATTLE MESSAGE";

@@ -42,6 +42,8 @@ static main(void) {
     fixInstructionRepresentations();
     Message(" DONE.\nSingle Instructions...");        
     fixSingleInstructions();
+    Message(" DONE.\nOffset Operands...");  
+    fixOffsetOperands();
     Message(" DONE.\nSigned Operands...");  
     fixSignedOperands();
     Message(" DONE.\Unwanted Names...");        
@@ -197,6 +199,13 @@ static fixSingleInstructions(){
 
 }
 
+static fixOffsetOperands(){
+    
+    /* Operands that should be interpreted as offsets */
+    OpOff(0x58F44,0,0);
+    
+}
+
 static fixSignedOperands(){
     
     /* Manually specify signed operands */
@@ -322,6 +331,7 @@ static fixUnwantedNames(){
     MakeNameEx(0xA220,"",0);
     MakeNameEx(0xA476,"",0);
     MakeNameEx(0xA652,"",0);
+    MakeNameEx(0xA846,"",0);
     MakeNameEx(0xA926,"",0);
     MakeNameEx(0xAB96,"",0);
     MakeNameEx(0xABF2,"",0);
@@ -343,6 +353,7 @@ static fixUnwantedNames(){
     MakeNameEx(0xB888,"",0);
     MakeNameEx(0xB950,"",0);
     MakeNameEx(0xBCA8,"",0);
+    MakeNameEx(0xC53C,"",0);
     MakeNameEx(0xC992,"",0);
     MakeNameEx(0xCBE0,"",0);
     MakeNameEx(0xCDB2,"",0);

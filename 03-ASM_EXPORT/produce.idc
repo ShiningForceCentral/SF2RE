@@ -304,7 +304,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\nullsub_BBE4",0xBBE4,0xBBE6,"Unused nullsub");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\breakuseditem",0xBBE6,0xBCF0,"Write Battlescene Script : Break Used Item");
     produceAsmScript(file,"data\\stats\\items\\itembreakmessages",0xBCF0,0xBD24,"Item break messages");
-    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\writebattlescenecommanddropenemyitem",0xBD24,0xBE52,"Write Battlescene Command : Drop Enemy Item function");
+    produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\dropenemyitem",0xBD24,0xBE52,"Write Battlescene Command : Drop Enemy Item function");
     produceAsmScript(file,"data\\battles\\global\\enemyitemdrops",0xBE52,0xBECC,"Enemy item drops");
     produceAsmScript(file,"data\\stats\\enemies\\enemygold",0xBECC,0xC024,"Enemy gold amounts");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_6",0xC024,0xC09A,"Battleactions engine");
@@ -465,7 +465,7 @@ static produceSpecificSectionFive(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"data\\stats\\items\\debugshop",0x20981,0x20A02,"Debug shop");
     writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_1",0x20A02,0x21046,"Church functions");
-    produceAsmScript(file,"data\\stats\\allies\\promotions",0x21046,0x21072,"Promotions");
+    produceAsmScript(file,"data\\stats\\allies\\classes\\promotions",0x21046,0x21072,"Promotions");
     writestr(file,"                align\n");
     produceAsmScript(file,"code\\common\\menus\\church\\churchactions_2",0x21072,0x2127E,"Church functions");
     produceAsmScript(file,"code\\common\\menus\\main\\mainactions",0x2127E,0x21A3A,"Main menu functions");    
@@ -2554,7 +2554,8 @@ static produceSpecificSectionThirteen(mainFile,sectionName,start,end,fs,sectionC
     produceAsmScript(file,"data\\battles\\terrainentries",0x1AD104,0x1B120A,"Battle terrain data");    
     produceAsmScript(file,"code\\gameflow\\battle\\battle_s13_3",0x1B120A,0x1B1A66,"Battle init, terrain, AI stuff to split more properly");        
     produceAsmScript(file,"data\\stats\\enemies\\enemydefs",0x1B1A66,0x1B30EE,"Enemy definitions");
-    produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle spritesets");    
+    //produceAsmScript(file,"data\\battles\\spritesetentries",0x1B30EE,0x1B6DB0,"Battle spritesets");    
+    produceAsmDataEntries(file,"data\\battles\\spritesets\\","spriteset",0x1B30EE,0x1B31A2,0x1B6DB0,0x1B6DB0,45,2,"Battle Spritesets");
     produceAsmScript(file,"data\\battles\\global\\randombattles",0x1B6DB0,0x1B6DDA,"Random battles list, and data related to UpgradeEnemyIndex function");
     produceAsmScript(file,"code\\specialscreens\\endkiss\\graphics",0x1B6DDA,0x1B7C9A,"End Kiss Graphics");
     produceAsmSection(file,"",0x1B7C9A,0x1B8000);

@@ -47,6 +47,7 @@ mkdir disasm\data
 mkdir disasm\data\battles
 mkdir disasm\data\battles\global
 mkdir disasm\data\battles\entries
+mkdir disasm\data\battles\spritesets
 FOR /L %%G IN (0,1,9) DO mkdir disasm\data\battles\entries\battle0%%G
 FOR /L %%G IN (10,1,44) DO mkdir disasm\data\battles\entries\battle%%G
 mkdir disasm\data\maps

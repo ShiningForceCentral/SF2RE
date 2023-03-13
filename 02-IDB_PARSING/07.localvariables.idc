@@ -150,12 +150,12 @@ static defineLocalVariables(){
     makeLocalVariables(0xBD24,variables);
     deleteArrayStrings(variables);
     
-    /*  */
+    /* Closest attack position getter */
     SetArrayString(variables,1,"currentX");
     SetArrayString(variables,2,"currentY");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,5,"var_5");
+    SetArrayString(variables,3,"destinationX");
+    SetArrayString(variables,4,"destinationY");
+    SetArrayString(variables,5,"movecost");
     makeLocalVariables(0xC71A,variables);
     deleteArrayStrings(variables);
     
@@ -181,9 +181,9 @@ static defineLocalVariables(){
     makeLocalVariables(0xE3EE,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
+    /* AI Command: Special Move */
+    SetArrayString(variables,1,"movingCombatant");
+    SetArrayString(variables,2,"teammateToFollow");
     SetArrayString(variables,3,"var_3");
     SetArrayString(variables,4,"var_4");
     makeLocalVariables(0xE98C,variables);
@@ -219,10 +219,10 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
+    SetArrayString(variables,1,"movingCombatant");
+    SetArrayString(variables,2,"teammateToFollow");
+    SetArrayString(variables,3,"destinationY");
+    SetArrayString(variables,4,"destinationX");
     makeLocalVariables(0xF7A0,variables);
     deleteArrayStrings(variables);
     

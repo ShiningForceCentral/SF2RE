@@ -28,6 +28,10 @@ static main()
     SetFunctionCmt(0xcc4, 
         "Unused palette copy", 1);
 
+    // ApplyCurrentColorFadingValue
+    SetFunctionCmt(0xd1e, 
+        "In: d1.w = palette bitfield", 1);
+
     // Sleep
     SetFunctionCmt(0xf04, 
         "Wait for d0.w VInts/Frames.", 1);
@@ -122,7 +126,7 @@ static main()
     SetFunctionCmt(0x16d6, 
         "In: a0 = Source, a1 = Destination, d7.w = Length", 1);
 
-    // InitSprites
+    // InitializeSprites
     SetFunctionCmt(0x1770, 
         "In: d0.w = Number of sprites to initialize", 1);
 
@@ -133,6 +137,10 @@ static main()
     // sub_1942
     SetFunctionCmt(0x1942, 
         "something with clearing/resetting sprite info when transitioning to battlescene?", 1);
+
+    // sub_19B0
+    SetFunctionCmt(0x19b0, 
+        "clear table related to sprites", 1);
 
     // sub_19C8
     SetFunctionCmt(0x19c8, 
@@ -197,7 +205,7 @@ Out: a2 = Map layout offset\n\
      d1.w = Item flag\n\
      d2.w = Item index", 1);
 
-    // IsMapScrollingToViewTarget?
+    // IsMapScrollingToViewTarget
     SetFunctionCmt(0x4728, 
         "Out: Z = is scrolling", 1);
 
@@ -222,13 +230,13 @@ Out: a1 = window tiles end, d0.w = window slot (-1 if no free slot available)", 
     D1 = destination\n\
     D2 = animation length", 1);
 
-    // GetWindowInfo
+    // GetWindowEntryAddress
     SetFunctionCmt(0x4c38, 
-        "In D0=Window index, Out A0=Address", 1);
+        "Get entry address for window d0.w -> a0", 1);
 
     // GetWindowTileAddress
     SetFunctionCmt(0x4c44, 
-        "In D0=Windows index, D1=Tile coords, Out A1=Address", 1);
+        "Get address of tile at coordinates d1.w in layout for window d0.w -> a1", 1);
 
     // sub_4EC6
     SetFunctionCmt(0x4ec6, 
@@ -316,19 +324,18 @@ Out: CCR zero-bit set if true", 1);
     SetFunctionCmt(0x6052, 
         "In: d0.b = entity index\n\
     d1.w = new facing direction\n\
-    d2.b = new B flags (keep current if = $FF)\n\
-    d3.b = new map sprite index (keep current if = $FF)", 1);
+    d2.b = new B flags (keep current if = -1)\n\
+    d3.b = new map sprite index (keep current if = -1)", 1);
 
     // ChangeEntitySprite
     SetFunctionCmt(0x60a8, 
         "In: a0 = pointer to entity data\n\
     d6.b = facing direction", 1);
 
-    // GetMapPixelCoordRamOffset
+    // ConvertMapPixelCoordinatesToRamOffset
     SetFunctionCmt(0x61fc, 
-        "In: D0 = x pixel coord\n\
-    D1 = y pixel coord\n\
-Out: D2 = RAM offset from start of map VDP tile data", 1);
+        "In: d0.w, d1.w = X, Y pixel coordinates\n\
+Out: d2.w = RAM offset from start of map VDP tile data", 1);
 
     // DisplayText
     SetFunctionCmt(0x6260, 
@@ -401,10 +408,6 @@ Out: D7 = battle index to trigger ($FFFF if none)\n\
     SetFunctionCmt(0x7fa4, 
         "Function is missing in US version.", 1);
 
-    // j_GetMoveInfo
-    SetFunctionCmt(0x82bc, 
-        "entity D0's current MOV*2, X, Y -> D0, D3, D4", 1);
-
     // GetCombatantName
     SetFunctionCmt(0x82d0, 
         "In: D0 = combatant index\n\
@@ -414,11 +417,11 @@ Out: A0 = address of name\n\
 
     // GetClass
     SetFunctionCmt(0x8306, 
-        "Get combatant D0's class index -> D1", 1);
+        "Get class index for combatant d0.b -> d1.w", 1);
 
     // GetCurrentLevel
     SetFunctionCmt(0x8316, 
-        "Get combatant D0's current level -> D1", 1);
+        "Get current level for combatant d0.b -> d1.w", 1);
 
     // GetMoveType
     SetFunctionCmt(0x846a, 
@@ -430,8 +433,8 @@ Out: A0 = address of name\n\
 
     // GetAiSpecialMoveOrders
     SetFunctionCmt(0x8494, 
-        "Out: D1 = combatant index to follow\n\
-     D2 = second AI point", 1);
+        "Out: d1.w = combatant index to follow, or first AI point if bit 6 is set\n\
+     d2.w = second AI point", 1);
 
     // GetAiRegion
     SetFunctionCmt(0x84b0, 
@@ -440,7 +443,7 @@ Out: A0 = address of name\n\
 Out: D1 = AI activation region index 1\n\
      D2 = AI activation region index 2", 1);
 
-    // GetEnemyIndex
+    // GetEnemy
     SetFunctionCmt(0x84dc, 
         "In: d0.b = combatant index\n\
 Out: d1.w = enemy index, or -1 if not an enemy", 1);
@@ -526,7 +529,7 @@ Out: D2 = 3 if item slot is empty", 1);
         "In: d0.b = combatant index, d1.w = item slot\n\
 Out: d2.w = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is nothing", 1);
 
-    // IsItemEquippableAndCursed?
+    // IsItemEquippableAndCursed
     SetFunctionCmt(0x8d6a, 
         "Is item d1.w equippable by ally d0.b and if so, is it cursed?\n\
 \n\
@@ -537,7 +540,7 @@ Out: d2.w = 0 if equipped, 1 if not, 2 if equipped and cursed, 3 if item is noth
         "In: d0.b = combatant index, d1.w = item slot\n\
 Out: d2.w = 0 if equipped, 1 if not equipped, 2 if equipped and cursed, 3 if nothing", 1);
 
-    // IsItemInSlotEquippedOrCursed?
+    // IsItemInSlotEquippedOrCursed
     SetFunctionCmt(0x8db6, 
         "Is item in slot d1.w equipped by combatant d0.b, and if so, is it cursed?\n\
 \n\
@@ -582,7 +585,7 @@ Out: d2.w = 3 if nothing to remove, 0 otherwise", 1);
         "Out: A0 = pointer to equippable items list\n\
      D1 = equippable rings count", 1);
 
-    // IsItemEquippable?
+    // IsItemEquippable
     SetFunctionCmt(0x8f60, 
         "In: d1.w = item index\n\
     d2.w = item type bitmask (for ANDing the item type bitfield)\n\
@@ -590,12 +593,12 @@ Out: d2.w = 3 if nothing to remove, 0 otherwise", 1);
 \n\
 Out: CCR carry-bit set if true", 1);
 
-    // IsWeaponOrRingEquippable?
+    // IsWeaponOrRingEquippable
     SetFunctionCmt(0x8f80, 
         "Is weapon or ring d1.w equippable by combatant d0.w?\n\
 Return CCR carry-bit set if true.", 1);
 
-    // GetNewATTandDEFwithItemEquipped
+    // GetNewAttAndDefWithItemEquipped
     SetFunctionCmt(0x8fee, 
         "In: A0 = combatant entry address\n\
     D1 = item index\n\
@@ -604,15 +607,15 @@ Return CCR carry-bit set if true.", 1);
 Out: D2 = current ATT with item equipped\n\
      D3 = current DEF with item equipped", 1);
 
-    // IsItemCursed?
+    // IsItemCursed
     SetFunctionCmt(0x90b2, 
         "Is item d1.w cursed? Return CCR carry-bit set if true.", 1);
 
-    // IsItemUsableInBattle?
+    // IsItemUsableInBattle
     SetFunctionCmt(0x90cc, 
         "Is item d1.w usable in battle? Return CCR carry-bit set if true.", 1);
 
-    // IsItemUsableByCombatant?
+    // IsItemUsableByCombatant
     SetFunctionCmt(0x90e6, 
         "Is item d1.w allowed to be used in battle by combatant d0.w?\n\
 Return CCR carry-bit set if true.", 1);
@@ -620,6 +623,11 @@ Return CCR carry-bit set if true.", 1);
     // UnequipAllItemsIfNotCursed
     SetFunctionCmt(0x9106, 
         "In: D0 = combatant index", 1);
+
+    // GetItemInventoryLocation
+    SetFunctionCmt(0x9146, 
+        "In: d1.w = item\n\
+Out: d0.b = character, d1.w = item slot", 1);
 
     // GetItemSlotContainingIndex
     SetFunctionCmt(0x9194, 
@@ -705,9 +713,9 @@ Out: D1 = word", 1);
 
     // LevelUp
     SetFunctionCmt(0x9484, 
-        "In: D0 = ally index", 1);
+        "In: d0.w = ally index", 1);
 
-    // InitAllyStats
+    // InitializeAllyStats
     SetFunctionCmt(0x95c6, 
         "In: d0.w = ally index\n\
     d1.w = starting level", 1);
@@ -722,7 +730,7 @@ Out: D1 = word", 1);
 \n\
 Out: d1.w = stat gain value", 1);
 
-    // InitAllyCombatantEntry
+    // InitializeAllyCombatantEntry
     SetFunctionCmt(0x975e, 
         "In: D0 = ally index", 1);
 
@@ -731,7 +739,7 @@ Out: d1.w = stat gain value", 1);
         "In: D0 = ally index\n\
     D1 = class index", 1);
 
-    // InitGameSettings
+    // InitializeGameSettings
     SetFunctionCmt(0x9844, 
         "Clear all flags and important game variables.", 1);
 
@@ -751,7 +759,7 @@ Out: d1.w = stat gain value", 1);
     SetFunctionCmt(0x9976, 
         "In: D0 = ally index", 1);
 
-    // IsInBattleParty?
+    // IsInBattleParty
     SetFunctionCmt(0x9994, 
         "Is ally d0.b currently in battle party? Return CCR zero-bit set if true.", 1);
 
@@ -803,20 +811,20 @@ Out: A0 = RAM address of deals slot\n\
 
     // DetermineTargetsByAction
     SetFunctionCmt(0x9dd6, 
-        "In: A3 = action data", 1);
+        "In: a3 = pointer to battleaction type", 1);
 
-    // InitBattlesceneDisplayedCombatants
+    // InitializeBattlesceneDisplayedCombatants
     SetFunctionCmt(0x9e60, 
-        "In: A2 = battlescene script stack frame\n\
-    A3 = pointer to action type in RAM\n\
-    A4 = pointer to actor index in RAM\n\
-    A5 = pointer to target index in RAM", 1);
+        "In: a2 = battlescene script stack frame\n\
+    a3 = pointer to action type in RAM\n\
+    a4 = pointer to actor index in RAM\n\
+    a5 = pointer to target index in RAM", 1);
 
     // DetermineIneffectiveAttack
     SetFunctionCmt(0x9ec4, 
         "In: A2 = battlescene script stack frame", 1);
 
-    // InitBattlesceneProperties
+    // InitializeBattlesceneProperties
     SetFunctionCmt(0x9f28, 
         "In: A2 = battlescene script stack frame\n\
     A3 = address in RAM of scene action type\n\
@@ -881,18 +889,16 @@ Out: d4 = spell animation index\n\
     SetFunctionCmt(0xa702, 
         "In: A2 = battlescene script stack frame", 1);
 
-    // WriteBattlesceneScript_EXPandGold
+    // WriteBattlesceneScript_GiveExpAndGold
     SetFunctionCmt(0xa7f8, 
-        "In: A2 = battlescene script stack frame", 1);
+        "In: a2 = battlescene script stack frame", 1);
 
-    // GetAmountOfEXPforEncounter
+    // GetKillExp
     SetFunctionCmt(0xa968, 
-        "Get amount of EXP gained from encounter based on level difference between actor and target\n\
+        "Get EXP gained for a kill based on level difference between actor and target.\n\
 \n\
-      In: A4 = pointer to actor index in RAM\n\
-          A5 = pointer to target index in RAM\n\
-\n\
-      Out: D5 = amount of EXP", 1);
+  In: a4, a5 = pointers to actor and target indexes in RAM\n\
+  Out: d5.l = EXP amount", 1);
 
     // WriteBattlesceneScript_Attack
     SetFunctionCmt(0xaab6, 
@@ -978,13 +984,13 @@ Out: d6.w = damage", 1);
 
     // AdjustSpellPower
     SetFunctionCmt(0xbb56, 
-        "Miscellaneous hacks to alter spell power (125% if promoted, damage divided if SORC spells)\n\
+        "Miscellaneous hacks to alter spell power (125% if promoted, damage divided if SORC spells.)\n\
 \n\
-      In: A3 = pointer to action type index in RAM\n\
-          A4 = pointer to caster's index in RAM\n\
-          D6 = original spell power\n\
+  In: a3 = pointer to action type index in RAM\n\
+      a4 = pointer to caster's index in RAM\n\
+      d6.w = original spell power\n\
 \n\
-      Out: D6 = altered spell power", 1);
+  Out: d6.w = altered spell power", 1);
 
     // GetItemBreakMessage
     SetFunctionCmt(0xbc9a, 
@@ -1005,63 +1011,49 @@ Out: d3.w = message index", 1);
         "In: d0.b = combatant index\n\
 Out: d1.w, d2.w = X,Y coordinates", 1);
 
-    // ConvertCoordToOffset
+    // ConvertCoordinatesToAddress
     SetFunctionCmt(0xc09a, 
-        "    Convert coordinate to offset and add to address argument.\n\
-    In: A0 = start of grid\n\
-        D1 = X coord\n\
-        D2 = Y coord\n\
-    Out: A0 = start of grid + offset", 1);
+        "Convert coordinates to offset and add to address argument.\n\
+\n\
+  In: a0 = start of grid address, d1.w,d2.w = X,Y coordinates\n\
+  Out: a0 = start of grid address + offset", 1);
 
-    // ClearTargetGrid
-    SetFunctionCmt(0xc0a8, 
-        "    Clear valid target index grid at RAM:5600.", 1);
-
-    // ClearMovableGrid
-    SetFunctionCmt(0xc0c4, 
-        "    Clear moveable tile data at RAM:4400 and RAM:4d00.", 1);
-
-    // GetTargetAtCoordOffset
+    // GetCombatantOccupyingSpace
     SetFunctionCmt(0xc0e8, 
-        "    Get value at converted coordinate offset.\n\
-    In: D1 = X coord\n\
-        D2 = Y coord\n\
-    Out: D0 = terrain at offset", 1);
+        "Get index of combatant occupying position d1.w,d2.w -> d0.b", 1);
 
     // GetMoveCostToEntity
     SetFunctionCmt(0xc0fc, 
-        "get distance from current unit to entity D0 -> D0", 1);
+        "Get movecost to reach entity d0.b -> d0.b", 1);
 
-    // GetDestinationMoveCost
+    // GetMoveCostToDestination
     SetFunctionCmt(0xc118, 
-        "get movecost to get to tile D1,D2 -> D0", 1);
+        "Get movecost to reach space at coordinates d1.w,d2.w -> d0.b", 1);
 
     // GetCurrentTerrainType
     SetFunctionCmt(0xc144, 
-        "get terrain type of tile under entity D0 -> D0", 1);
+        "Get terrain type of space occupied by battle entity d0.b -> d0.b", 1);
 
     // GetTerrain
     SetFunctionCmt(0xc160, 
-        "    Get obstruction at converted coordinate offset.\n\
-    In: D1 = X coord\n\
-        D2 = Y coord\n\
-    Out: D0 = target at offset", 1);
+        "Get terrain entry at coordinates d1.w,d2.w -> d0.b", 1);
 
-    // MemorizePath
+    // SetTerrain
+    SetFunctionCmt(0xc176, 
+        "Set terrain entry d0.b at coordinates d1.w,d2.w", 1);
+
+    // PopulateMoveCostsTable
     SetFunctionCmt(0xc18c, 
-        "Populate move costs list for currently moving entity", 1);
+        "Populate move costs table for currently moving battle entity d0.b", 1);
 
     // GetLandEffectSetting
     SetFunctionCmt(0xc1da, 
         "In:  d0.b = combatant index\n\
-Out: d1.b = land effect setting (0 = 0%, 1 = 15%, 2 = 30%)", 1);
+Out: d1.w = land effect setting (0 = 0%, 1 = 15%, 2 = 30%)", 1);
 
-    // SetMovableAtCoord
+    // SetMovableSpace
     SetFunctionCmt(0xc204, 
-        "Set coord to movable in movable grid\n\
-\n\
-      In: D1 = X coord\n\
-          D2 = Y coord", 1);
+        "Set space at position d1.w,d2.w as movable and clear movecost.", 1);
 
     // GetResistanceToSpell
     SetFunctionCmt(0xc22a, 
@@ -1086,11 +1078,16 @@ Return 0 otherwise.", 1);
 
     // GetMoveInfo
     SetFunctionCmt(0xc2c8, 
-        "Get combatant D0's current MOV*2, X, Y -> D0, D3, D4", 1);
+        "Out: a2, a3 = pointers to total movecosts and movable grid arrays\n\
+     a4 = pointer to battle terrain array\n\
+     a5 = pointer to move costs table\n\
+     d0.w = move value (MOV*2)\n\
+     d3.w, d4.w = moving combatant X, Y\n\
+       ", 1);
 
     // GetAttackRange
     SetFunctionCmt(0xc306, 
-        "Get max/min attack range for combatant d0.b -> d3.w, d4.w", 1);
+        "Get max, min attack range for combatant d0.b -> d3.w, d4.w", 1);
 
     // GetSpellRange
     SetFunctionCmt(0xc380, 
@@ -1119,33 +1116,55 @@ Out: D1 = whether combatant is inflicted with MUDDLE 2 (0=no, 1=yes)", 1);
       In: D0 = caster combatant index\n\
           D1 = spell index", 1);
 
-    // ApplyRelativeCoordListToGrids
+    // ApplyRelativeCoordinatesListToGrid
     SetFunctionCmt(0xc510, 
-        "Apply coord list at A0 and add any targets to target list\n\
+        "Apply relative coordinates list to movable grid and add any targets to target list.\n\
 \n\
-      In: A0 = address of relative coord list\n\
-          D0 = current entity index\n\
-          D1 = starting X coord\n\
-          D2 = starting Y coord", 1);
+  In: a0 = address of relative coordinates list\n\
+      d0.b = battle entity index\n\
+      d5.b = ignore obstructed terrain if = 0", 1);
 
-    // CreateTargetGrid
+    // PopulateTargetableGridFromUsedItem
+    SetFunctionCmt(0xc5d6, 
+        "In: d0.w = actor combatant index\n\
+    d1.w = item index", 1);
+
+    // sub_C5FA
+    SetFunctionCmt(0xc5fa, 
+        "unused", 1);
+
+    // PopulateTargetableGridFromSpell
+    SetFunctionCmt(0xc61e, 
+        "In: d0.w = actor combatant index\n\
+    d1.w = spell index", 1);
+
+    // PopulateTargetableGrid
     SetFunctionCmt(0xc62e, 
-        "In: D1 = spell entry", 1);
+        "In: d1.b = spell entry", 1);
 
     // GetClosestAttackPosition
     SetFunctionCmt(0xc71a, 
-        "In: D1 = X pos, D2 = Y pos, D3 = max range, D4 = min range\n\
+        "In: d1.b,d2.b = current X,Y\n\
+    d3.b,d4.b = max,min range\n\
 \n\
-Out: D1 = chosen X pos, return $FF if no attack position is available\n\
-     D2 = chosen Y pos", 1);
+Out: d1.b,d2.b = destination X,Y (-1 if no position is available)", 1);
 
-    // MakeTargetsList_Allies
-    SetFunctionCmt(0xc7fa, 
-        "Clear target grid, then add allies", 1);
+    // PopulateTargetsArrayWithOpponents
+    SetFunctionCmt(0xc7f2, 
+        "Populate array of targets with alignment opposite to d0.w\n\
+(Note: enemy bit is flipped prior to calling this routine.)", 1);
 
-    // MakeTargetsList_Everybody
+    // PopulateTargetsArrayWithAllCombatants
     SetFunctionCmt(0xc81c, 
-        "Populate a list of all combatants on the battlefield", 1);
+        "Populate an array containing all combatants present on the battlefield.", 1);
+
+    // UpdateBattleTerrainOccupiedFlag
+    SetFunctionCmt(0xc898, 
+        "In: d3.w = 0 to clear flag, set otherwise", 1);
+
+    // UpdateMovableGridArray
+    SetFunctionCmt(0xc900, 
+        "In: d3.w = clear bit 7 if = 0, set otherwise", 1);
 
     // PrioritizeReachableTargets
     SetFunctionCmt(0xc958, 
@@ -1202,7 +1221,7 @@ Out: D6 = max potential physical damage value, adjusted for land effect", 1);
 \n\
 Out: D6 = adjusted power", 1);
 
-    // CalculatePotentialRemainingHP
+    // CalculatePotentialRemainingHp
     SetFunctionCmt(0xcc8a, 
         "In: D0 = target index, D6 = potential damage\n\
 Out: D1 = target's potential remaining HP", 1);
@@ -1338,7 +1357,7 @@ This only looks for Healing Rain as a valid healing item,\n\
       In: d0.w = caster index, d3.w = starting spell slot\n\
       Out: d1.w = spell index, d2.w = spell slot", 1);
 
-    // IsCombatantAtLessThanHalfHP?
+    // IsCombatantAtLessThanHalfHp
     SetFunctionCmt(0xd296, 
         "Is combatant d0.w at less than half HP? Return CCR carry-bit clear if true.", 1);
 
@@ -1374,7 +1393,7 @@ Set the carry flag if less than 2/3rds of defenders remaining HP\n\
 Set the carry flag if the defender is expected to have more than 20%\n\
  of max HP remain after attack.", 1);
 
-    // DoesCombatantRequireHealing?
+    // DoesCombatantRequireHealing
     SetFunctionCmt(0xd38a, 
         "Is combatant d0.w at 2/3 or less of max HP? Return CCR carry-bit clear if true.", 1);
 
@@ -1418,32 +1437,60 @@ Out: d1.w = target priority", 1);
 \n\
 Out: d1.w = target priority", 1);
 
-    // MakeAiMoveString
+    // PopulateTotalMovecostsAndMovableGridArrays
+    SetFunctionCmt(0xda82, 
+        "In: a2, a3 = movecost arrays\n\
+    d0.w = move value (MOV*2)\n\
+    d3.b, d4.b = moving combatant X, Y", 1);
+
+    // sub_DB48
+    SetFunctionCmt(0xdb48, 
+        "In: a2, a3 = movecost arrays\n\
+    a4 = pointer to battle terrain array\n\
+    a5 = pointer to move costs table\n\
+    d0.w = move value (MOV*2)\n\
+    d5.w = coordinates offset\n\
+    d6.w = move count", 1);
+
+    // BuildCancelMoveString
+    SetFunctionCmt(0xdb9a, 
+        "In: a2, a3 = pointers to total movecosts and movable grid arrays\n\
+    d0.b, d1.b = X, Y", 1);
+
+    // alt_BuildCancelMoveString
+    SetFunctionCmt(0xdba8, 
+        "Alternate entry point", 1);
+
+    // BuildAiMoveString
     SetFunctionCmt(0xdd10, 
-        "In: A2 = loading space\n\
-    A3 = loading space\n\
-    D0 = destination X\n\
-    D1 = destination Y", 1);
+        "In: a2, a3 = pointers to total movecosts and movable grid arrays\n\
+    d0.b, d1.b = destination X,Y", 1);
 
     // AddAllToStack
     SetFunctionCmt(0xdd60, 
         "unused", 1);
 
-    // MakeEnemyMoveOrder
-    SetFunctionCmt(0xdd78, 
-        "create enemy move order from movecost lists", 1);
+    // BuildMoveString
+    SetFunctionCmt(0xdd6a, 
+        "In: a2, a3 = pointers to total movecosts and movable grid arrays\n\
+    d0.w, d1.w = starting X, Y\n\
+    d3.w = move value (MOV*2)", 1);
 
-    // ExecuteAiControl
+    // alt_BuildMoveString
+    SetFunctionCmt(0xdd78, 
+        "Alternate entry point", 1);
+
+    // StartAiControl
     SetFunctionCmt(0xdefc, 
-        "related to AI controlled unit (enemy, auto-control cheat, MUDDLEd force member)\n\
+        "Starting point for the AI control process.\n\
 \n\
-    In: D0 = AI controlled combatant index", 1);
+  In: d0.w = combatant index", 1);
 
     // CountDefeatedEnemies
     SetFunctionCmt(0xe0b6, 
         "Out: d1.w = defeated enemies count", 1);
 
-    // HandleAiCommand
+    // ExecuteAiCommand
     SetFunctionCmt(0xe294, 
         "In: d0.b = combatant index\n\
     d1.b = command code (like Heal, Attack, etc.)", 1);
@@ -1453,7 +1500,7 @@ Out: d1.w = target priority", 1);
         "In: d0.b = caster index\n\
     d1.w = command parameter (values of 0-2), unused\n\
 \n\
-Out: d1.w = $FFFF if command failed", 1);
+Out: d1.w = -1 if command failed", 1);
 
     // ExecuteAiCommand_Attack
     SetFunctionCmt(0xe78c, 
@@ -1487,9 +1534,10 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
         "In: D0 = character index (mover)\n\
     D1 = extra AI variable (values of 0-2)", 1);
 
-    // j_PlayEndKiss
-    SetFunctionCmt(0x100b4, 
-        "related to end kiss", 1);
+    // sub_F7A0
+    SetFunctionCmt(0xf7a0, 
+        "In: d0.b = moving combatant index\n\
+    d1.b = teammate to follow combatant index", 1);
 
     // WriteTilesFromAsciiWithOrangeFont
     SetFunctionCmt(0x100c8, 
@@ -1519,6 +1567,26 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
     SetFunctionCmt(0x103b8, 
         "In: -12(A6) = window slot index", 1);
 
+    // LoadVdpTileListForDiamenuIcon
+    SetFunctionCmt(0x103fe, 
+        "In: d6.w = frame counter", 1);
+
+    // LoadVdpTileListForDiamenuIcon_Top
+    SetFunctionCmt(0x10410, 
+        "In: d6.w = frame counter", 1);
+
+    // LoadVdpTileListForDiamenuIcon_Left
+    SetFunctionCmt(0x10430, 
+        "In: d6.w = frame counter", 1);
+
+    // LoadVdpTileListForDiamenuIcon_Right
+    SetFunctionCmt(0x1045a, 
+        "In: d6.w = frame counter", 1);
+
+    // LoadVdpTileListForDiamenuIcon_Bottom
+    SetFunctionCmt(0x10548, 
+        "In: d6.w = frame counter", 1);
+
     // ExecuteItemMenu
     SetFunctionCmt(0x10586, 
         "In: A0 = special subroutine address to handle menu, default handling if not supplied\n\
@@ -1528,7 +1596,25 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
 
     // sub_107EA
     SetFunctionCmt(0x107ea, 
-        "related to menu choice", 1);
+        "related to menu choice\n\
+\n\
+In: d6.w = frame counter", 1);
+
+    // sub_10800
+    SetFunctionCmt(0x10800, 
+        "In: d6.w = frame counter", 1);
+
+    // sub_10820
+    SetFunctionCmt(0x10820, 
+        "In: d6.w = frame counter", 1);
+
+    // sub_1084A
+    SetFunctionCmt(0x1084a, 
+        "In: d6.w = frame counter", 1);
+
+    // sub_10920
+    SetFunctionCmt(0x10920, 
+        "In: d6.w = frame counter", 1);
 
     // LoadHighlightableSpellIcon
     SetFunctionCmt(0x10940, 
@@ -1557,6 +1643,10 @@ If no targets in range then D0 = $FFFF, D1 = 0, D2 = 3", 1);
     // CreateBattlefieldMiniStatusWindow
     SetFunctionCmt(0x11572, 
         "In: d0.w = combatant index", 1);
+
+    // RemoveMiniStatusWindow
+    SetFunctionCmt(0x115e0, 
+        "Move window offscreen, then clear it from memory.", 1);
 
     // ShowAllyBattlesceneWindow
     SetFunctionCmt(0x11638, 
@@ -1599,6 +1689,10 @@ In: A0 = loading space address\n\
     // CopyMiniStatusWindowTileColumn
     SetFunctionCmt(0x11ac6, 
         "Draw tiles from a0 into a1 (one column)", 1);
+
+    // RemovePortraitWindow
+    SetFunctionCmt(0x11be2, 
+        "Move window offscreen, then clear it from memory.", 1);
 
     // BuildMemberScreen
     SetFunctionCmt(0x11c2a, 
@@ -1745,6 +1839,10 @@ Out: D0 = chosen number", 1);
     SetFunctionCmt(0x16398, 
         "In: A6 = number prompt window stack", 1);
 
+    // RemoveTacticalBaseAllyNameWindow
+    SetFunctionCmt(0x16a30, 
+        "Move window offscreen, then clear it from memory.", 1);
+
     // InitializeBattlescene
     SetFunctionCmt(0x18012, 
         "In: d0.w = enemy index\n\
@@ -1760,11 +1858,11 @@ yy      magic/item/projectile animation index, set $0080 to come from enemy", 1)
         "xx      animation type index (0000 for attack, 0001 for dodge, 0002 for magic/item -- others (i.e. MMNK crit, RBT laser, BRGN flashing)\n\
 yy      magic/item/projectile animation index, set $0080 to come from enemy", 1);
 
-    // bsc03_moveAllyBattleSprite
+    // bsc03_moveAllyBattlesprite
     SetFunctionCmt(0x185c8, 
         "like previous bsc but for battlescene ally", 1);
 
-    // bsc02_moveEnemyBattleSprite
+    // bsc02_moveEnemyBattlesprite
     SetFunctionCmt(0x185de, 
         "set a long value at FFB3F6, related to battlescene enemy", 1);
 
@@ -1805,7 +1903,7 @@ Byte 02-03      MP change, signed.\n\
 Byte 04-05      Set status bytes.\n\
 Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
-    // bsc0F_giveEXP
+    // bsc0F_giveExp
     SetFunctionCmt(0x190dc, 
         "Byte 00-01      Amount of EXP.", 1);
 
@@ -1846,83 +1944,79 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 
     // GetAllyAnimation
     SetFunctionCmt(0x197c8, 
-        "In: D1 = animation type, Out: A0 = animation pointer", 1);
+        "In: d1.w = animation type, Out: a0 = animation pointer", 1);
 
     // GetEnemyAnimation
     SetFunctionCmt(0x19838, 
         "In: D1 = animation type, Out: A0 = animation pointer", 1);
 
-    // GetAllyBattleSpriteIdleAnimate
+    // GetAllyBattlespriteIdleAnimate
     SetFunctionCmt(0x19860, 
-        "Return whether or not ally battle sprite should animate when idle\n\
+        "Return whether or not ally battlesprite d0.b should animate when idle.\n\
 \n\
-      In: D0 = ally battle sprite index\n\
-\n\
-      Out: D1 = 0 if animates, 1 if not", 1);
+      Out: d1.l = 0 if it animates, 1 if not", 1);
 
-    // GetEnemyBattleSpriteIdleAnimate
+    // GetEnemyBattlespriteIdleAnimate
     SetFunctionCmt(0x1986a, 
-        "Return whether or not enemy battle sprite should animate when idle\n\
+        "Return whether or not enemy battlesprite d0.b should animate when idle.\n\
 \n\
-      In: D0 = enemy battle sprite index\n\
-\n\
-      Out: D1 = 0 if animates, 1 if not", 1);
+      Out: d1.l = 0 if it animates, 1 if not", 1);
 
     // InitializeBattlescenePalettes
     SetFunctionCmt(0x19884, 
         "Clear palettes 1-2 and 1-2bis, and load battlescene UI and ground palette to 3bis.", 1);
 
-    // LoadEnemyBattleSpritePropertiesAndPalette
+    // LoadEnemyBattlespritePropertiesAndPalette
     SetFunctionCmt(0x19970, 
-        "In: d0.w = enemy battle sprite index\n\
+        "In: d0.w = enemy battlesprite index\n\
     d1.w = palette index", 1);
 
-    // LoadEnemyBattleSpriteFrameToVram
+    // LoadEnemyBattlespriteFrameToVram
     SetFunctionCmt(0x1999e, 
-        "In: d0.w = enemy battle sprite index\n\
+        "In: d0.w = enemy battlesprite index\n\
     d1.w = frame index", 1);
 
-    // LoadEnemyBattleSpriteFrameAndWaitForDma
+    // LoadEnemyBattlespriteFrameAndWaitForDma
     SetFunctionCmt(0x199bc, 
-        "In: d0.w = enemy battle sprite index\n\
+        "In: d0.w = enemy battlesprite index\n\
     d1.w = frame index", 1);
 
-    // LoadAllyBattleSpritePropertiesAndPalette
+    // LoadAllyBattlespritePropertiesAndPalette
     SetFunctionCmt(0x199de, 
-        "In: d0.w = ally battle sprite index\n\
+        "In: d0.w = ally battlesprite index\n\
     d1.w = palette index", 1);
 
-    // LoadAllyBattleSpriteFrameToVram
+    // LoadAllyBattlespriteFrameToVram
     SetFunctionCmt(0x19a0c, 
-        "In: d0.w = ally battle sprite index\n\
+        "In: d0.w = ally battlesprite index\n\
     d1.w = frame index", 1);
 
-    // LoadAllyBattleSpriteFrameAndWaitForDma
+    // LoadAllyBattlespriteFrameAndWaitForDma
     SetFunctionCmt(0x19a2a, 
-        "In: d0.w = ally battle sprite index\n\
+        "In: d0.w = ally battlesprite index\n\
     d1.w = frame index", 1);
 
     // LoadWeaponPalette
     SetFunctionCmt(0x19a4c, 
         "In: d0.w = weapon palette index", 1);
 
-    // LoadWeaponSprite
+    // LoadWeaponsprite
     SetFunctionCmt(0x19a5c, 
-        "In: d0.w = weapon sprite index", 1);
+        "In: d0.w = weaponsprite index", 1);
 
-    // LoadAllyBattleSpriteFrame
+    // LoadAllyBattlespriteFrame
     SetFunctionCmt(0x19ab0, 
-        "In: d0.w = ally battle sprite index\n\
+        "In: d0.w = ally battlesprite index\n\
     d1.w = frame index", 1);
 
-    // LoadEnemyBattleSpriteFrame
+    // LoadEnemyBattlespriteFrame
     SetFunctionCmt(0x19b24, 
-        "In: d0.w = enemy battle sprite index\n\
+        "In: d0.w = enemy battlesprite index\n\
     d1.w = frame index", 1);
 
-    // LoadNewEnemyBattleSprite
+    // LoadNewEnemyBattlesprite
     SetFunctionCmt(0x19b44, 
-        "In: d0.w = enemy battle sprite index", 1);
+        "In: d0.w = enemy battlesprite index", 1);
 
     // LoadBattlesceneBackground
     SetFunctionCmt(0x19b80, 
@@ -1932,9 +2026,10 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x19bcc, 
         "In: d0.w = battlescene ground index", 1);
 
-    // LoadInvocationSpellTilesToVram
+    // LoadInvocationSpriteFrameToVram
     SetFunctionCmt(0x19bf2, 
-        "In: d0.w = invocation sprite index", 1);
+        "In: d0.w = invocation sprite index\n\
+    d1.w = frame number", 1);
 
     // LoadSpellGraphics
     SetFunctionCmt(0x19ca4, 
@@ -1946,16 +2041,16 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
 \n\
 In: d0.w = spell animation tiles index", 1);
 
-    // GetBattleSpriteAndPalette
+    // GetBattlespriteAndPalette
     SetFunctionCmt(0x19d3e, 
-        "Get battle sprite and palette indexes for combatant D0 -> D1 (sprite), D2 (palette)", 1);
+        "Get battlesprite and palette indexes for combatant d0.w -> d1.w, d2.w", 1);
 
-    // GetWeaponSpriteAndPalette
+    // GetWeaponspriteAndPalette
     SetFunctionCmt(0x19db0, 
-        "Get battlescene weapon sprite and palette indexes for equipped weapon.\n\
+        "Get battlescene weaponsprite and palette indexes for equipped weapon.\n\
 \n\
 In: d0.w = combatant index\n\
-Out: d2.w = weapon sprite index, d3.w = palette index", 1);
+Out: d2.w = weaponsprite index, d3.w = palette index", 1);
 
     // GetBattlesceneBackground
     SetFunctionCmt(0x19dfe, 
@@ -2011,9 +2106,9 @@ Out: d1.w = battlescene ground index", 1);
     SetFunctionCmt(0x1a222, 
         "Tint parts of the screen red", 1);
 
-    // ExecSpellAnimationFlash
+    // ExecuteSpellAnimationFlash
     SetFunctionCmt(0x1a2a6, 
-        "    In: D0 = color to flash", 1);
+        "In: d0.w = color to flash", 1);
 
     // ClearSpellAnimationProperties
     SetFunctionCmt(0x1a2d4, 
@@ -2071,9 +2166,10 @@ Out: A0 = address", 1);
         "Determine whether blacksmith is ready to fulfill orders,\n\
  and count existing orders as either \"ready\" or \"pending\" accordingly.", 1);
 
-    // IsClassBlacksmithEligible?
+    // IsClassBlacksmithEligible
     SetFunctionCmt(0x21e8e, 
-        "Out: d0.w = 0 if true", 1);
+        "Is character belonging to class d1.w eligible to place a blacksmith order?\n\
+Return d0.w = 0 if true.", 1);
 
     // DisplaySpecialCaravanDescription
     SetFunctionCmt(0x22864, 
@@ -2088,19 +2184,18 @@ Out: A0 = address", 1);
     SetFunctionCmt(0x22926, 
         "Copy caravan item indexes to generic list space", 1);
 
-    // IsItemInSlotEquippedAndCursed?
+    // IsItemInSlotEquippedAndCursed
     SetFunctionCmt(0x2294c, 
         "Is item in slot d1.w cursed and equipped by combatant d0.b?\n\
 Return CCR carry-bit set if true.", 1);
 
-    // IsItemUnsellable?
+    // IsItemUnsellable
     SetFunctionCmt(0x2299e, 
         "Is item d1.w unsellable? Return CCR carry-bit set if true.", 1);
 
-    // IsItemUsableOnField?
+    // IsItemUsableOnField
     SetFunctionCmt(0x229ca, 
-        "In: d1.b = item index\n\
-Out: d2.l = 0 if true, -1 if false", 1);
+        "Is item d1.b usable on field? Return d2.l = 0 if true.", 1);
 
     // UseItemOnField
     SetFunctionCmt(0x229ec, 
@@ -2111,6 +2206,12 @@ Out: d2.l = 0 if true, -1 if false", 1);
     // GetPlayerEntityPosition
     SetFunctionCmt(0x22c60, 
         "Get first entity's X, Y and facing -> d1.l, d2.l, d3.w", 1);
+
+    // GetBattleMapProperties
+    SetFunctionCmt(0x22ce8, 
+        "Out: a0 = pointer to movable grid array\n\
+     a1 = pointer to start of battle map vdptile layout\n\
+     d6.w, d7.w = width, height of battle map", 1);
 
     // ControlBattleEntity
     SetFunctionCmt(0x22e1a, 
@@ -2156,7 +2257,7 @@ Out: D0 = entity event index", 1);
      D1 = activated entity's facing\n\
      D2 = player entity's facing", 1);
 
-    // IsFollowerEntity?
+    // IsFollowerEntity
     SetFunctionCmt(0x23846, 
         "Is entity d0.b a follower? Return CCR zero-bit set if true.", 1);
 
@@ -2191,15 +2292,15 @@ Out: D0 = entity event index", 1);
 \n\
       In: d0.w = combatant index", 1);
 
-    // SpawnEnemy
+    // SpawnEnemyWithCamera
     SetFunctionCmt(0x24490, 
         "In: D0 = combatant", 1);
 
     // UpdateTargetsListForCombatant
     SetFunctionCmt(0x24642, 
-        "In: D0 = combatant index", 1);
+        "In: d0.w = combatant index", 1);
 
-    // sub_24662
+    // HandleBattleEntityControlPlayerInput
     SetFunctionCmt(0x24662, 
         "Handle player input when controlling battle entity.", 1);
 
@@ -2234,7 +2335,7 @@ Out: D0 = entity event index", 1);
 \n\
 End function with a RTS intruction to fix", 1);
 
-    // AddCombatantAndRandomizedAGItoTurnOrder
+    // AddCombatantAndRandomizedAgiToTurnOrder
     SetFunctionCmt(0x255a4, 
         "In: a0 = pointer to turn order entry\n\
     d0.w = combatant index", 1);
@@ -2273,9 +2374,9 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x2804c, 
         "Out: D0 = $FFFFFFFF if pressing start, 0 if not", 1);
 
-    // InitDecoder
+    // InitializeHuffmanDecoder
     SetFunctionCmt(0x2e10e, 
-        "Initialise Huffman decoder\n\
+        "Initialize Huffman decoder.\n\
 - clear Huffman (script) data\n\
 - set starting tree", 1);
 
@@ -2283,9 +2384,28 @@ Out: D0 = new X\n\
     SetFunctionCmt(0x44098, 
         "related to followers maybe", 1);
 
-    // IsOverworldMap?
+    // sub_440D4
+    SetFunctionCmt(0x440d4, 
+        "unused InitializeMapEntities entry point", 1);
+
+    // IsOverworldMap
     SetFunctionCmt(0x44268, 
         "Out: ccr zero-bit clear if true", 1);
+
+    // InitializeFollowerEntities
+    SetFunctionCmt(0x44298, 
+        "In: a1 = pointer to entity event indexes list in RAM\n\
+    a3 = pointer to followers list in RAM\n\
+    d0.l = 1", 1);
+
+    // DeclareNewEntity
+    SetFunctionCmt(0x445ca, 
+        "In: d1.w = initial X\n\
+    d2.w = initial Y\n\
+    d3.b = initial facing\n\
+    d4.b = mapsprite\n\
+    d5.l = actscript address\n\
+    d6.w = entity index (lower byte), layer (upper byte)", 1);
 
     // GetAllyMapSprite
     SetFunctionCmt(0x449c6, 
@@ -2503,6 +2623,10 @@ Out: d4.w = map sprite index", 1);
     SetFunctionCmt(0x47832, 
         "reset entity flags and sprite and facing ?", 1);
 
+    // CheckRandomBattle
+    SetFunctionCmt(0x47856, 
+        "In: d0.w = battle index", 1);
+
     // ExecuteBattleCutscene_Intro
     SetFunctionCmt(0x47a50, 
         "cutscene before the battle begins", 1);
@@ -2525,6 +2649,13 @@ Only used in battle 5.", 1);
     // csub_4CD56
     SetFunctionCmt(0x4cd56, 
         "Jaro joins the Force", 1);
+
+    // ReceiveMandatoryItem
+    SetFunctionCmt(0x4f48a, 
+        "In: d0.w = item index\n\
+    d1.w = whether an item must be discarded if inventory is full (0 if false)\n\
+\n\
+Out: d0.w = 0 if item was received, 1 if there was no room, or 2 if another item was discarded", 1);
 
     // DiscardItem
     SetFunctionCmt(0x4f570, 
@@ -2577,6 +2708,10 @@ Also creates a shadow effect using palette index 2.", 1);
     SetFunctionCmt(0x1ac38e, 
         "AI-related", 1);
 
+    // GetMoveListForEnemyTarget
+    SetFunctionCmt(0x1ac43c, 
+        "used by AI", 1);
+
     // sub_1AC4F0
     SetFunctionCmt(0x1ac4f0, 
         "something with targetting grid or ???", 1);
@@ -2585,9 +2720,9 @@ Also creates a shadow effect using palette index 2.", 1);
     SetFunctionCmt(0x1ac5aa, 
         "AI-related", 1);
 
-    // ClearTerrainListObstructions
+    // ClearBattleTerrainArrayObstructionFlags
     SetFunctionCmt(0x1ac654, 
-        "clear upper two bits from all tiles in terrain list", 1);
+        "Clear upper two bits from all entries in terrain array.", 1);
 
     // sub_1AC69A
     SetFunctionCmt(0x1ac69a, 
@@ -2599,7 +2734,10 @@ Also creates a shadow effect using palette index 2.", 1);
 
     // sub_1AC7FE
     SetFunctionCmt(0x1ac7fe, 
-        "AI-related", 1);
+        "AI-related\n\
+\n\
+  In: a0 = pointer to relative coordinates list\n\
+      d5.w,d6.w = X,Y", 1);
 
     // GetLaserFacing
     SetFunctionCmt(0x1ac8a0, 
@@ -2628,10 +2766,6 @@ Out: d1.w = ", 1);
     SetFunctionCmt(0x1ace4a, 
         "In: d0.w = combatant index", 1);
 
-    // GetListOfSpawningEnemies
-    SetFunctionCmt(0x1acf30, 
-        "adds respawning enemy #s to target list in RAM", 1);
-
     // UpdateEnemyActivationIfDead
     SetFunctionCmt(0x1ad002, 
         "In: D0 = character index\n\
@@ -2643,43 +2777,45 @@ Out: D0 = 0000 if activated and dead, $FFFF if not", 1);
     SetFunctionCmt(0x1b120a, 
         "Never called, probably what remains of some debugging code ?", 1);
 
-    // InitEnemyBattlePosition
+    // InitializeEnemyBattlePosition
     SetFunctionCmt(0x1b130c, 
         "In: d0.b = combatant index", 1);
 
-    // UpdateEnemyStatsForRespawn
+    // ResetEnemyStatsForRespawn
     SetFunctionCmt(0x1b13a0, 
-        "In: D0 = character index\n\
-    D1 = character word 34 (AI stuff)\n\
+        "In: d0.w = combatant index\n\
+    d1.w = AI activation flag\n\
 \n\
-Out: carry = 0 if respawn, 1 if not", 1);
+Out: CCR carry-bit clear if respawn", 1);
 
-    // InitEnemyStats
+    // InitializeEnemyStats
     SetFunctionCmt(0x1b140a, 
         "In: a0 = pointer to battle entity definition\n\
     d0.b = combatant index", 1);
 
-    // IsEnemyStartingPositionOccupied?
+    // IsEnemyStartingPositionOccupied
     SetFunctionCmt(0x1b1554, 
         "Is enemy starting position d3.w,d4.w curently occupied?\n\
 Return CCR carry-bit set if true.", 1);
 
-    // SetEnemyBaseATT
+    // AdjustEnemyBaseAtt
     SetFunctionCmt(0x1b15aa, 
-        "Set enemy base ATT according to difficulty", 1);
+        "Adjust enemy base ATT according to difficulty.\n\
+\n\
+  In: d0.b = combatant index", 1);
 
-    // GetEnemyAiTargetPosition
+    // GetAiSpecialMoveOrderCoordinates
     SetFunctionCmt(0x1b15f8, 
-        "coords of anchor point used in AI byte D0 -> D1, D2", 1);
+        "Get coordinates for AI special move order d0.w -> d1.w, d2.w", 1);
 
     // GetBattleSpritesetSubsection
     SetFunctionCmt(0x1b1630, 
         "In: d1.w = subsection index\n\
 Out: a0 = subsection address, d1.w = subsection size", 1);
 
-    // GetCombatantStartingPositions
+    // GetCombatantStartingPosition
     SetFunctionCmt(0x1b169e, 
-        "Get starting X and Y of combatant D0 -> D1, D2", 1);
+        "Get starting X, Y of combatant d0.b -> d1.w, d2.w", 1);
 
     // sub_1B16FE
     SetFunctionCmt(0x1b16fe, 
@@ -2688,26 +2824,24 @@ Out: a0 = subsection address, d1.w = subsection size", 1);
       In: D1 = \n\
           D2 = ", 1);
 
-    // DoesBattleUpgrade
+    // IsBattleUpgradable
     SetFunctionCmt(0x1b1780, 
-        "Check if current battle can be upgraded (0x0000=no, 0xffff=yes) -> D1", 1);
+        "Is current battle upgradable? Return d1.w = -1 if true.", 1);
 
     // UpgradeBattle
     SetFunctionCmt(0x1b17bc, 
         "Strange use case where \"Battle completed\" flag is set for battle 4 in spite of being alreeady set earlier.", 1);
 
-    // ShouldBattleUpgrade
+    // DetermineBattleUpgrade
     SetFunctionCmt(0x1b17fe, 
-        "check if battle should be upgraded based on index in RAM:f712 and if normal battle was done (0=no, 1=yes) -> D1", 1);
+        "Should random battle enemies be upgraded? Return d1.w = 1 if so.", 1);
 
-    // UpgradeEnemyIndex
+    // UpgradeRandomBattleEnemies
     SetFunctionCmt(0x1b184c, 
         "Upgrade enemy index d1.w -> d1.w", 1);
 
     // HasJaroJoinedTheForce
     SetFunctionCmt(0x1b1a28, 
-        "Check if Jaro has joined the Force\n\
-\n\
-      Out: D1 = 0 if false, 1 if true", 1);
+        "Has Jaro joined the Force? Return d1.w = 1 if true.", 1);
 
 }

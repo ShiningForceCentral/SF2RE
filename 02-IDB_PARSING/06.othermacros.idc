@@ -10,6 +10,7 @@ static main(void){
     initializeArrays();
     
     Message("PARSING DATA STRUCTURES INTO MACROS ...\n");
+    parseMaskVdpSprites();
     parseFlaggedSwitchedMaps();
     parseBattleMapCoords();    
     parseSavePointMapCoords();
@@ -21,7 +22,7 @@ static main(void){
     parseEnemyItemDrops();
     //parseEnemyGold();
     parseSpellElements();
-    parseLandEffectSettingsAndMoveCosts();
+    parseLandEffectAndMoveCosts();
     parseAiCommandsets();
     parseSwarmBattles();
     parseSpellNames();
@@ -37,13 +38,13 @@ static main(void){
     parseAllyKillDefeatWindowLayout();
     parseGoldWindowLayout();
     parseMemberListTextHighlightVdpSprite();
-    parseUnknownWindowLayout_13EDE();
+    parseWindowLayout_13EDE();
     parseItemListTextHighlightVdpSprites();
     parseShopInventoryWindowLayout();
     parseYesNoPromptMenuLayout();
     parseBattleConfigVdpSprites();
     parseBattleConfigWindowLayout();
-    parseFighterMiniStatusWindowLayout();
+    parseMiniStatusWindowLayout();
     parseAlphabetWindowLayout();
     parseNameEntryWindowLayout();
     parseTimerWindowLayout();
@@ -53,7 +54,7 @@ static main(void){
     parseItemNames();
     parseClassNames();
     parseTerrainBackgrounds();
-    parseUnknownVdpSprites_1F128();
+    parseVdpSprites_1F128();
     parseBattlesceneAllyVdpSprites();
     parseBattlesceneWeaponVdpSprites();
     parseBattlesceneGroundVdpSprites();
@@ -71,7 +72,7 @@ static main(void){
     parseMithrilWeaponLists();
     parseSpecialCaravanDescriptions();
     parseUsableOutsideBattleItems();
-    parseUnknownVdpSprites_2358C();   // unknown sprite definitions at 0x2358C
+    parseUnitCursorVdpSprites();
     parseConfigurationModeInputs();
     parseDebugModeInputs();
     parseFollowers();
@@ -80,6 +81,7 @@ static main(void){
     parseSpriteDialogProperties();
     //parseEnemyLeaderPresence();
     parseBattlesWithLasers();
+    parseBattleSpritesets();
     parseEnemyDefs();
     parseRandomBattles();
     parseEnemyUpgradeDefs();
@@ -101,6 +103,10 @@ static main(void){
     else {
         Batch(0);
     }
+}
+
+static parseMaskVdpSprites(){
+    parseVdpSprites(0x2FEA,0x3022);
 }
 
 static parseFlaggedSwitchedMaps(){
@@ -318,19 +324,19 @@ static parseSpellElements(){
     }
 }
 
-static parseLandEffectSettingsAndMoveCosts(){
-    auto addr, landEffect, landEffectSettingAndMoveCost;
+static parseLandEffectAndMoveCosts(){
+    auto addr, landEffect, landEffectAndMoveCost;
     addr = 0xD824;
     while(addr<0xD8F4){
         undefineByte(addr);
         MakeByte(addr);
         if(Byte(addr)==0xFF){
-            landEffectSettingAndMoveCost = getLandEffectSettingObstructedShorthand(Byte(addr));
+            landEffectAndMoveCost = getLandEffectSettingObstructedShorthand(Byte(addr));
         }else{
             landEffect = getLandEffectSettingShorthand(Byte(addr)&0xF0);
-            landEffectSettingAndMoveCost = form("%s|%d", landEffect, Byte(addr)&0xF);
+            landEffectAndMoveCost = form("%s|%d", landEffect, Byte(addr)&0xF);
         }
-        SetManualInsn(addr, form("landEffectAndMoveCost %s", landEffectSettingAndMoveCost));
+        SetManualInsn(addr, form("landEffectAndMoveCost %s", landEffectAndMoveCost));
         addr++;
     }
 }
@@ -483,7 +489,7 @@ static parseBattleEquipWindowLayout(){
     }
 }
 
-static parseFighterMiniStatusWindowLayout(){
+static parseMiniStatusWindowLayout(){
     auto addr, j, vdpTile;
     addr = 0x11AEC;
     while(addr<0x11B46){
@@ -535,7 +541,7 @@ static parseMemberListTextHighlightVdpSprite(){
     parseVdpSprites(0x13452,0x13462);
 }
 
-static parseUnknownWindowLayout_13EDE(){
+static parseWindowLayout_13EDE(){
     auto addr, j, vdpTile;
     addr = 0x13EDE;
     while(addr<0x13F14){
@@ -817,7 +823,7 @@ static parseTerrainBackgrounds(){
     }
 }
 
-static parseUnknownVdpSprites_1F128(){
+static parseVdpSprites_1F128(){
     parseVdpSprites(0x1F128,0x1F140);
 }
 
@@ -1129,7 +1135,7 @@ static parseUsableOutsideBattleItems(){
     SetManualInsn(addr, "tableEnd.b");
 }
 
-static parseUnknownVdpSprites_2358C(){
+static parseUnitCursorVdpSprites(){
     parseVdpSprites(0x2358C,0x2364C);
 }
 
@@ -1294,6 +1300,126 @@ static parseBattlesWithLasers(){
         }
         SetManualInsn(addr, form("battles %s", battles));
         addr = addr+len;
+    }
+}
+
+static parseBattleSpritesets(){
+    auto addr, j, allies, enemies, aiRegions, aiPoints;
+    auto allyCombatant, combatantAiAndItem, aiOrder1, aiOrder2, combatantBehavior, enemyCombatant;
+    addr = 0x1B31A2;
+    while(addr<0x1B6DB0){
+        for(j=addr;j<addr+4;j++){undefineByte(j);}
+        
+        allies = Byte(addr);
+        enemies = Byte(addr+1);
+        aiRegions = Byte(addr+2);
+        aiPoints = Byte(addr+3);
+        
+        MakeData(addr,FF_BYTE,1,1);
+        ExtLinA(addr,0,"; # Allies");
+        SetManualInsn(addr, form("dc.b %d", allies));
+        MakeData(addr+1,FF_BYTE,1,1);
+        ExtLinA(addr+1,0,"; # Enemies");
+        SetManualInsn(addr+1, form("dc.b %d", enemies));
+        MakeData(addr+2,FF_BYTE,1,1);
+        ExtLinA(addr+2,0,"; # AI Regions");
+        SetManualInsn(addr+2, form("dc.b %d", aiRegions));
+        MakeData(addr+3,FF_BYTE,1,1);
+        ExtLinA(addr+3,0,"; # AI Points");
+        SetManualInsn(addr+3, form("dc.b %d", aiPoints));
+        ExtLinB(addr+3,0,"                ");
+        
+        /* Allies */
+        addr = addr+4;
+        for(j=addr;j<addr+(allies*12);j++){undefineByte(j);}
+        ExtLinA(addr,0,"                ; Allies");
+        for(j=addr;j<addr+(allies*12);j=j+12){
+            allyCombatant = form("%d, %d, %d", Byte(j), Byte(j+1), Byte(j+2));
+            combatantAiAndItem = form("%s, %s", getAiCommandsetShorthand(Byte(j+3)), getItemShorthand(Word(j+4)));
+            if(Byte(j+6)==0xFF){
+                aiOrder1 = getAiOrderShorthand(Byte(j+6));
+            }else{
+                aiOrder1 = form("%s|%d", getAiOrderShorthand(Byte(j+6)&0xF0), Byte(j+6)&0xF);
+            }
+            if(Byte(j+8)==0xFF){
+                aiOrder2 = getAiOrderShorthand(Byte(j+8));
+            }else{
+                aiOrder2 = form("%s|%d", getAiOrderShorthand(Byte(j+8)&0xF0), Byte(j+8)&0xF);
+            }
+            combatantBehavior = form("%s, %d, %s, %d, %d, %s", aiOrder1, Byte(j+7), aiOrder2, Byte(j+9), Byte(j+10), getSpawnSettingShorthand(Byte(j+11)));
+            
+            MakeData(j,FF_BYTE,3,1);
+            SetManualInsn(j, form("allyCombatant %s", allyCombatant));
+            MakeData(j+3,FF_BYTE,3,1);
+            SetManualInsn(j+3, form("combatantAiAndItem %s", combatantAiAndItem));
+            MakeData(j+6,FF_BYTE,6,1);
+            SetManualInsn(j+6, form("combatantBehavior %s", combatantBehavior));
+            ExtLinB(j+6,0,"                ");
+        }
+        
+        /* Enemies */
+        addr = addr+(allies*12);
+        for(j=addr;j<addr+(enemies*12);j++){undefineByte(j);}
+        ExtLinA(addr,0,"                ; Enemies");
+        for(j=addr;j<addr+(enemies*12);j=j+12){
+            enemyCombatant = form("%s, %d, %d", getEnemyShorthand(Byte(j)), Byte(j+1), Byte(j+2));
+            combatantAiAndItem = form("%s, %s", getAiCommandsetShorthand(Byte(j+3)), getItemShorthand(Word(j+4)));
+            if(Byte(j+6)==0xFF){
+                aiOrder1 = getAiOrderShorthand(Byte(j+6));
+            }else{
+                aiOrder1 = form("%s|%d", getAiOrderShorthand(Byte(j+6)&0xF0), Byte(j+6)&0xF);
+            }
+            if(Byte(j+8)==0xFF){
+                aiOrder2 = getAiOrderShorthand(Byte(j+8));
+            }else{
+                aiOrder2 = form("%s|%d", getAiOrderShorthand(Byte(j+8)&0xF0), Byte(j+8)&0xF);
+            }
+            combatantBehavior = form("%s, %d, %s, %d, %d, %s", aiOrder1, Byte(j+7), aiOrder2, Byte(j+9), Byte(j+10), getSpawnSettingShorthand(Byte(j+11)));
+            
+            MakeData(j,FF_BYTE,3,1);
+            SetManualInsn(j, form("enemyCombatant %s", enemyCombatant));
+            MakeData(j+3,FF_BYTE,3,1);
+            SetManualInsn(j+3, form("combatantAiAndItem %s", combatantAiAndItem));
+            MakeData(j+6,FF_BYTE,6,1);
+            SetManualInsn(j+6, form("combatantBehavior %s", combatantBehavior));
+            ExtLinB(j+6,0,"                ");
+        }
+        
+        /* AI Regions */
+        addr = addr+(enemies*12);
+        for(j=addr;j<addr+(aiRegions*12);j++){undefineByte(j);}
+        ExtLinA(addr,0,"                ; AI Regions");
+        for(j=addr;j<addr+(aiRegions*12);j=j+12){
+            MakeData(j,FF_BYTE,1,1);
+            SetManualInsn(j, form("dc.b %d", Byte(j)));
+            MakeData(j+1,FF_BYTE,1,1);
+            SetManualInsn(j+1, form("dc.b %d", Byte(j+1)));
+            MakeData(j+2,FF_BYTE,2,1);
+            SetManualInsn(j+2, form("dc.b %d, %d", Byte(j+2), Byte(j+3)));
+            MakeData(j+4,FF_BYTE,2,1);
+            SetManualInsn(j+4, form("dc.b %d, %d", Byte(j+4), Byte(j+5)));
+            MakeData(j+6,FF_BYTE,2,1);
+            SetManualInsn(j+6, form("dc.b %d, %d", Byte(j+6), Byte(j+7)));
+            MakeData(j+8,FF_BYTE,2,1);
+            SetManualInsn(j+8, form("dc.b %d, %d", Byte(j+8), Byte(j+9)));
+            MakeData(j+10,FF_BYTE,1,1);
+            SetManualInsn(j+10, form("dc.b %d", Byte(j+10)));
+            MakeData(j+11,FF_BYTE,1,1);
+            SetManualInsn(j+11, form("dc.b %d", Byte(j+11)));
+            ExtLinB(j+11,0,"                ");
+        }
+        
+        /* AI Points */
+        addr = addr+(aiRegions*12);
+        for(j=addr;j<addr+(aiPoints*2);j++){undefineByte(j);}
+        ExtLinA(addr,0,"                ; AI Points");
+        for(j=addr;j<addr+(aiPoints*2);j=j+2){
+            MakeData(j,FF_BYTE,2,1);
+            SetManualInsn(j, form("dc.b %d, %d", Byte(j), Byte(j+1)));
+        }
+        
+        addr = addr+(aiPoints*2);
+        ExtLinB(addr-2,0,"                ");
     }
 }
 
@@ -2020,6 +2146,14 @@ static getAiCommandShorthand(cmd){
     return getShorthand(cmd,"AiCommands","AICOMMAND_");
 }
 
+static getAiCommandsetShorthand(cmd){
+    return getShorthand(cmd,"AiCommandsets","AICOMMANDSET_");
+}
+
+static getAiOrderShorthand(cmd){
+    return getShorthand(cmd,"AiOrders","AIORDER_");
+}
+
 static getAllyShorthand(cmd){
     return getShorthand(cmd,"Allies","ALLY_");
 }
@@ -2054,6 +2188,10 @@ static getEnemyBattlespriteShorthand(cmd){
 
 static getEnemyShorthand(cmd){
     return getShorthand(cmd,"Enemies","ENEMY_");
+}
+
+static getSpawnSettingShorthand(cmd){
+    return getShorthand(cmd,"SpawnSettings","SPAWN_");
 }
 
 static getEquipEffectShorthand(cmd){
