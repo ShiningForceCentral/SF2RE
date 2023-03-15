@@ -17,7 +17,7 @@ static main(void){
     parseRaftResetMapCoords();
     parseClassTypes();
     parseHalvedEXPearnedBattles();
-    parseCriticalHitSettings();
+    parseCriticalHitDefs();
     parseItemBreakMessages();
     parseEnemyItemDrops();
     //parseEnemyGold();
@@ -223,15 +223,15 @@ static parseHalvedEXPearnedBattles(){
     SetManualInsn(addr, "tableEnd.b");
 }
 
-static parseCriticalHitSettings(){
-    auto addr, j, chance, damage;
+static parseCriticalHitDefs(){
+    auto addr, j, chance, damageFactor;
     addr = 0xACCA;
     while(addr<0xACEA){
         for(j=addr;j<addr+2;j++){undefineByte(j);}
         MakeData(addr,FF_BYTE,2,1);
         chance = Byte(addr);
-        damage = Byte(addr+1);
-        SetManualInsn(addr, form("dc.b %d, %d", chance, damage));
+        damageFactor = getShorthand(Byte(addr+1),"CriticalHitDamageFactors","");
+        SetManualInsn(addr, form("dc.b %d, %s", chance, damageFactor));
         addr = addr+2;
     }
 }

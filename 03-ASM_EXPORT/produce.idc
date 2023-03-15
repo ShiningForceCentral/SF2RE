@@ -296,7 +296,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\determinedodge",0xAAFC,0xABBE,"Determine dodge function");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\calculatedamage",0xABBE,0xAC4E,"Calculate attack damage function");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\determinecriticalhit",0xAC4E,0xACCA,"Determine critical hit function");
-    produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitsettings",0xACCA,0xACEA,"Critical hit settings");
+    produceAsmScript(file,"data\\stats\\allies\\classes\\criticalhitdefs",0xACCA,0xACEA,"Critical hit settings definitions");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\battleactionsengine_5",0xACEA,0xB0A8,"Battleactions engine");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\castspell",0xB0A8,0xBB02,"Write Battlescene Script : Cast Spell");
     produceAsmScript(file,"code\\gameflow\\battle\\battleactions\\calculatespelldamage",0xBB02,0xBBB8,"Calculate Spell Damage function");
