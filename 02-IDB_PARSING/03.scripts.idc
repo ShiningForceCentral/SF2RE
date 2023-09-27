@@ -907,7 +907,7 @@ static parseCSWithTextIndex(start,end, textIndex){
             cmdLength = 8;
             MakeUnknown(ea,cmdLength,DOUNK_SIMPLE);
             MakeData(ea,FF_BYTE,cmdLength,1);
-            SetManualInsn(ea,form("newEntity %s,%s,%s,%s,%s",getCharacter(Word(ea+2)),ltoa(Byte(ea+4),10),ltoa(Byte(ea+5),10),getDirection(Byte(ea+6)),getMapspriteOrAlly(Byte(ea+7))));
+            SetManualInsn(ea,form("newEntity %s,%s,%s,%s,%s",getCharacter(Word(ea+2)),ltoa(Byte(ea+4),10),ltoa(Byte(ea+5),10),getDirection(Byte(ea+6)),getMapspriteOrAllyOrNothingByte(Byte(ea+7))));
         }
         else if(cmd==    0x002C){
             cmdName = "002C FOLLOW ENTITY";
@@ -1346,6 +1346,32 @@ static getMapspriteOrAlly(cmd){
     auto id,enumSize,constant,j,constId,output;
     if(cmd<0x1E){
         id = GetEnum("Allies");
+    }else{
+        id = GetEnum("Mapsprites");
+    }
+    enumSize = GetEnumSize(id);
+    constant = GetFirstConst(id,-1);    
+    while(constant!=-1){
+            j=0;
+            constId = GetConstEx(id,constant,j,-1);
+            while(constId != -1){
+                if(constant==cmd){
+                    return GetConstName(constId);
+                }
+                j++;
+                constId = GetConstEx(id,constant,j,-1);
+            }
+            constant = GetNextConst(id,constant,-1);
+    }
+    return form("%s",ltoa(cmd,10));
+}
+
+static getMapspriteOrAllyOrNothingByte(cmd){
+    auto id,enumSize,constant,j,constId,output;
+    if(cmd<0x1E){
+        id = GetEnum("Allies");
+    }else if(cmd==0xFF){
+        id = GetEnum("Codes");
     }else{
         id = GetEnum("Mapsprites");
     }

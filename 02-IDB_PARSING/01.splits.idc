@@ -149,13 +149,13 @@ static splitPTs(file){
      */
     splitPT(0x6400C, 0x641D8, 0x9494A, 0x9494A, "pt_MapTilesets", "MapTileset", "data/graphics/maps/maptilesets/", 0, "maptileset", 3, 0, file);
     splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "data/graphics/maps/mappalettes/", 0, "mappalette", 2, 0, file);        
-    //splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_MapSprites", "MapSprite", "data/graphics/mapsprites/", 0, "mapsprite", 3, 15, file);    
+    //splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_Mapsprites", "Mapsprite", "data/graphics/mapsprites/", 0, "mapsprite", 3, 15, file);    
     splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "data/graphics/battles/backgrounds/", 0, "background", 2, 0, file);
     splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattlesprites", "EnemyBattlesprite", "data/graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
     splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattlesprites", "AllyBattlesprite", "data/graphics/battles/battlesprites/allies/", 0, "allybattlesprite", 2, 0, file);
     splitPT(0x1AA316, 0x1AA31E, 0x1AA8CA, 0x1AA8CA, "pt_BattlesceneTransitionTiles", "BattlesceneTransitionTiles", "data/graphics/battles/tech/battlescenetransition/", 0, "battlescenetransitiontiles", 1, 0, file);
-    splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AllyAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allybattlespriteanimation", 3, 0, file);
-    splitPT(0x1AB79E, 0x1AB982, 0x1ABE52, 0x1AC000, "pt_EnemyAnimations", "EnemyAnimation", "data/graphics/battles/battlesprites/enemies/animations/", 0, "enemybattlespriteanimation", 3, 14, file);
+    splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AllyAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allyanimation", 3, 0, file);
+    splitPT(0x1AB79E, 0x1AB982, 0x1ABE52, 0x1AC000, "pt_EnemyAnimations", "EnemyAnimation", "data/graphics/battles/battlesprites/enemies/animations/", 0, "enemyanimation", 3, 14, file);
     splitPT(0x1AD104, 0x1AD1B8, 0x1B120A, 0x1B120A, "pt_BattleTerrainData", "BattleTerrain", "data/battles/entries/battle", 1, "/terrain", 2, 0, file);
     splitPT(0x1B30EE, 0x1B31A2, 0x1B6DB0, 0x1B6DB0, "pt_BattleSpritesets", "BattleSpriteset", "data/battles/entries/battle", 1, "/spriteset", 2, 0, file);
     splitPT(0x1B9A9A, 0x1B9AF6, 0x1BEE38, 0x1BEE38, "pt_Weaponsprites", "Weaponsprite", "data/graphics/battles/weapons/", 0, "weaponsprite", 2, 0, file);                    
@@ -171,11 +171,11 @@ static splitSingleChunks(file) {
     
     // Template : splitSingleChunk(0x,0x,"","",file);
     
-    splitSingleChunk(0xB1E,0xB96,"FadingData","data/graphics/tech/fadingdata.bin",file);
+    //splitSingleChunk(0xB1E,0xB96,"FadingData","data/graphics/tech/fadingdata.bin",file);
     
-    splitSingleChunk(0x309E,0x30BE,"plt_Base","data/graphics/tech/basepalette.bin",file);    
+    splitSingleChunk(0x309E,0x30BE,"palette_Base","data/graphics/tech/basepalette.bin",file);    
     
-    splitSingleChunk(0x31CE,0x364E,"MapOffsetHashTable","data/maps/global/mapoffsethashtable.bin",file);
+    splitSingleChunk(0x31CE,0x364E,"table_MapOffsetHash","data/maps/global/mapoffsethashtable.bin",file);
     
     //splitSingleChunk(0x7186,0x71C0,"DebugModeAvailableMaps","data/maps/global/debugmodeavailablemaps.bin",file);
     
@@ -206,7 +206,7 @@ static splitSingleChunks(file) {
     MakeAlign(0xFF87, 0x10000-0xFF87,15);
     
     MakeAlign(0x107E9, 0x107EA-0x107E9,1);
-    splitSingleChunk(0x1098A,0x10A4A,"IconHighlightTiles","data/graphics/tech/iconhighlighttiles.bin",file);    
+    splitSingleChunk(0x1098A,0x10A4A,"tiles_IconHighlight","data/graphics/tech/iconhighlighttiles.bin",file);    
     
     //splitSingleChunk(0x10E1C,0x10EF4,"DiamondMenuLayout","data/graphics/tech/menus/diamondmenulayout.bin",file);
     //splitSingleChunk(0x10EF4,0x10FCC,"UnidentifiedLayout01","data/graphics/tech/menus/unidentifiedlayout01.bin",file);
@@ -214,24 +214,24 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     
-    splitSingleChunk(0x1264E,0x126EE,"WindowBorderTiles","data/graphics/tech/windowborder/windowbordertiles.bin",file);
+    splitSingleChunk(0x1264E,0x126EE,"tiles_WindowBorder","data/graphics/tech/windowborder/windowbordertiles.bin",file);
     //splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
     //splitSingleChunk(0x1278E,0x1284E,"AllyKillDefeatWindowLayout","data/graphics/tech/windowlayouts/allykilldefeatwindowlayout.bin",file);
     //splitSingleChunk(0x1284E,0x1288E,"CharacterStatsWindowLayout","data/graphics/tech/windowlayouts/characterstatsdefeatwindowlayout.bin",file);
     
-    splitSingleChunk(0x13D9E,0x13EDE,"TextHighlightTiles","data/graphics/tech/texthighlighttiles.bin",file);
+    splitSingleChunk(0x13D9E,0x13EDE,"tiles_TextHighlight","data/graphics/tech/texthighlighttiles.bin",file);
     
-    splitSingleChunk(0x14EFC,0x14F7C,"ShopPriceTagTiles_Blank","data/graphics/tech/shoppricetagtiles-blank.bin",file);
-    splitSingleChunk(0x14F7C,0x1505C,"ShopPriceTagTiles_Numbers","data/graphics/tech/shoppricetagtiles-numbers.bin",file);
+    splitSingleChunk(0x14EFC,0x14F7C,"tiles_PriceTagBlank","data/graphics/tech/pricetagblanktiles.bin",file);
+    splitSingleChunk(0x14F7C,0x1505C,"tiles_PriceTagNumbers","data/graphics/tech/pricetagnumberstiles.bin",file);
     
-    splitSingleChunk(0x151D6,0x15268,"ShopInventoryItemHighlightTiles","data/graphics/tech/shopinventoryitemhighlighttiles.bin",file);
+    splitSingleChunk(0x151D6,0x15268,"tiles_ShopInventoryItemHighlight","data/graphics/tech/shopinventoryitemhighlighttiles.bin",file);
     
     //splitSingleChunk(0x15A5A,0x15BB0,"BattleConfigWindowLayout","data/graphics/tech/windowlayouts/battleconfigwindowlayout.bin",file);
     
     //splitSingleChunk(0x1607C,0x160B4,"AlphabetTopBorderWindowLayout","data/graphics/tech/windowlayouts/alphabettopborderwindowlayout.bin",file);
     //splitSingleChunk(0x160B4,0x16204,"AlphabetWindowLayout","data/graphics/tech/windowlayouts/alphabetwindowlayout.bin",file);
     //splitSingleChunk(0x16204,0x1623A,"NameEntryWindowLayout","data/graphics/tech/windowlayouts/nameentrywindowlayout.bin",file);
-    splitSingleChunk(0x1623A,0x16282,"AlphabetHighlightTiles","data/graphics/tech/alphabethighlight/alphabethighlighttiles.bin",file);
+    splitSingleChunk(0x1623A,0x16282,"tiles_AlphabetHighlight","data/graphics/tech/alphabethighlight/alphabethighlighttiles.bin",file);
     
     //splitSingleChunk(0x16618,0x16658,"TimerWindowLayout","data/graphics/tech/windowlayouts/timerwindowwindowlayout.bin",file);
     
@@ -243,7 +243,7 @@ static splitSingleChunks(file) {
     //splitSingleChunk(0x17F3E,0x17FDA,"ClassNames","data/stats/allies/classes/classnames.bin",file);
     MakeAlign(0x17FDA, 0x18000-0x17FDA,15);
     
-    splitSingleChunk(0x198A8,0x198C8,"plt_BattlesceneBasePalette","data/graphics/battles/plt_battlescenebasepalette.bin",file);
+    splitSingleChunk(0x198A8,0x198C8,"palette_BattlesceneBase","data/graphics/battles/battlescenebasepalette.bin",file);
     
     //splitSingleChunk(0x19E5E,0x19E6E,"TerrainBackgrounds","data/battles/global/terrainbackgrounds.bin",file);
     
@@ -269,7 +269,7 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x229E2,0x229EC,"UsableOutsideBattleItems","data/stats/items/usableoutsidebattleitems.bin",file);
     
-    splitSingleChunk(0x23658,0x23758,"UnitCursorTiles","data/graphics/tech/unitcursortiles.bin",file);
+    splitSingleChunk(0x23658,0x23758,"tiles_Cursor","data/graphics/tech/cursortiles.bin",file);
     
     //splitSingleChunk(0x239AE,0x239C8,"ChestGoldAmounts","data/maps/global/chestgoldamounts.bin",file);
     
@@ -283,37 +283,37 @@ static splitSingleChunks(file) {
     MakeAlign(0x27D8E, 0x28000-0x27D8E,15);
     
     splitSingleChunk(0x281AA,0x2822C,"SegaLogoColors","data/graphics/tech/segalogocolors.bin",file);
-    splitSingleChunk(0x2822C,0x2824C,"SegaLogoPalette","data/graphics/tech/segalogopalette.bin",file);
-    splitSingleChunk(0x2824C,0x28B12,"SegaLogo","data/graphics/tech/segalogo.bin",file);
+    splitSingleChunk(0x2822C,0x2824C,"palette_SegaLogo","data/graphics/tech/segalogopalette.bin",file);
+    splitSingleChunk(0x2824C,0x28B12,"tiles_SegaLogo","data/graphics/tech/segalogotiles.bin",file);
     
     //splitSingleChunk(0x28FBC,0x28FCC,"InputSequence_ConfigurationMode","data/tech/configurationmodeinputsequence.bin",file);
     MakeAlign(0x28FCB, 0x28FCC-0x28FCB,1);
     //splitSingleChunk(0x28FF0,0x29002,"InputSequence_DebugMode","data/tech/debugmodeinputsequence.bin",file);
     MakeAlign(0x29001, 0x29002-0x29001,1);
     
-    splitSingleChunk(0x29002,0x29A02,"VariableWidthFont","data/graphics/tech/fonts/variablewidthfont.bin",file);
+    splitSingleChunk(0x29002,0x29A02,"font_VariableWidth","data/graphics/tech/fonts/variablewidthfont.bin",file);
     
-    splitSingleChunk(0x29A02,0x2A9C2,"MenuTiles_Uncompressed","data/graphics/tech/menus/mainmenutiles.bin",file);
-    splitSingleChunk(0x2A9C2,0x2ACF6,"MenuTiles_Item","data/graphics/tech/menus/menutilesitem.bin",file);
-    splitSingleChunk(0x2ACF6,0x2B072,"MenuTiles_BattleField","data/graphics/tech/menus/menutilesbattlefield.bin",file);
-    splitSingleChunk(0x2B072,0x2B418,"MenuTiles_Church","data/graphics/tech/menus/menutileschurch.bin",file);
-    splitSingleChunk(0x2B418,0x2B7C0,"MenuTiles_Shop","data/graphics/tech/menus/menutilesshop.bin",file);
-    splitSingleChunk(0x2B7C0,0x2BAE8,"MenuTiles_Caravan","data/graphics/tech/menus/menutilescaravan.bin",file);
-    splitSingleChunk(0x2BAE8,0x2BE2C,"MenuTiles_Depot","data/graphics/tech/menus/menutilesdepot.bin",file);
-    splitSingleChunk(0x2BE2C,0x2C01E,"MenuTiles_YesNo","data/graphics/tech/menus/menutilesyesno.bin",file);
-    splitSingleChunk(0x2C01E,0x2C03E,"plt_WitchChoice","data/graphics/specialscreens/witchscreen/witchchoicepalette.bin",file);
+    splitSingleChunk(0x29A02,0x2A9C2,"tiles_MainMenu","data/graphics/tech/menus/mainmenutiles.bin",file);
+    splitSingleChunk(0x2A9C2,0x2ACF6,"tiles_ItemMenu","data/graphics/tech/menus/itemmenutiles.bin",file);
+    splitSingleChunk(0x2ACF6,0x2B072,"tiles_BattleFieldMenu","data/graphics/tech/menus/battlefieldmenutiles.bin",file);
+    splitSingleChunk(0x2B072,0x2B418,"tiles_ChurchMenu","data/graphics/tech/menus/churchmenutiles.bin",file);
+    splitSingleChunk(0x2B418,0x2B7C0,"tiles_ShopMenu","data/graphics/tech/menus/shopmenutiles.bin",file);
+    splitSingleChunk(0x2B7C0,0x2BAE8,"tiles_CaravanMenu","data/graphics/tech/menus/caravanmenutiles.bin",file);
+    splitSingleChunk(0x2BAE8,0x2BE2C,"tiles_DepotMenu","data/graphics/tech/menus/depotmenutiles.bin",file);
+    splitSingleChunk(0x2BE2C,0x2C01E,"tiles_YesNoPrompt","data/graphics/tech/menus/yesnoprompttiles.bin",file);
+    splitSingleChunk(0x2C01E,0x2C03E,"palette_WitchChoice","data/graphics/specialscreens/witchscreen/witchchoicepalette.bin",file);
     splitSingleChunk(0x2C03E,0x2C3FE,"WitchBubbleAnimation","data/graphics/specialscreens/witchscreen/witchbubbleanimation.bin",file);
-    splitSingleChunk(0x2C3FE,0x2C576,"SpeechBalloonTiles","data/graphics/specialscreens/witchscreen/speechballoontiles.bin",file);
+    splitSingleChunk(0x2C3FE,0x2C576,"tiles_SpeechBalloon","data/graphics/specialscreens/witchscreen/speechballoontiles.bin",file);
     
-    splitSingleChunk(0x2C7A0,0x2DDDE,"UnusedCloudTiles","data/graphics/tech/unusedcloudtiles.bin",file);
-    splitSingleChunk(0x2DDDE,0x2E08E,"StaticWidthFont","data/graphics/tech/fonts/staticwidthfont.bin",file);
-    splitSingleChunk(0x2E08E,0x2E10E,"TitleScreenPalettes","data/graphics/specialscreens/titlescreen/titlescreenpalettes.bin",file);
+    splitSingleChunk(0x2C7A0,0x2DDDE,"tiles_UnusedCloud","data/graphics/tech/unusedcloudtiles.bin",file);
+    splitSingleChunk(0x2DDDE,0x2E08E,"font_TitleScreen","data/graphics/tech/fonts/titlescreenfont.bin",file);
+    splitSingleChunk(0x2E08E,0x2E10E,"palette_TitleScreenFont","data/graphics/specialscreens/titlescreen/titlescreenfontpalette.bin",file);
     
     splitSingleChunk(0x2E196,0x2E394,"TextBankTreeOffsets","data/scripting/text/huffmantreeoffsets.bin",file);
     splitSingleChunk(0x2E394,0x2EB34,"TextBankTreeData","data/scripting/text/huffmantrees.bin",file);
     
-    splitSingleChunk(0x4201E,0x425ED,"GameStaff","data/scripting/gamestaff.bin",file);
-    MakeAlign(0x425ED, 0x44000-0x425ED,14);
+    //splitSingleChunk(0x4201E,0x425ED,"GameStaff","data/scripting/gamestaff.bin",file);
+    MakeAlign(0x425E8, 0x44000-0x425E8,14);
     
     //splitSingleChunk(0x4428A,0x44298,"OverworldMaps","data/maps/global/overworldmaps.bin",file);
     //splitSingleChunk(0x44338,0x4433C,"OverworldFollowers","data/overworldfollowers.bin",file);
@@ -330,10 +330,10 @@ static splitSingleChunks(file) {
     
     MakeAlign(0x6348C, 0x64000-0x6348C,14);
     
-    splitSingleChunk(0x1002BE,0x10033E,"plt_TitleScreen","data/graphics/specialscreens/titlescreen/titlepalettes.bin",file);
-    splitSingleChunk(0x10033E,0x1014E0,"TitleScreenTiles","data/graphics/specialscreens/titlescreen/titletiles.bin",file);
-    splitSingleChunk(0x1014E0,0x101BE0,"TitleScreenLayoutA","data/graphics/specialscreens/titlescreen/titlelayoutA.bin",file);
-    splitSingleChunk(0x101BE0,0x101EE0,"TitleScreenLayoutB","data/graphics/specialscreens/titlescreen/titlelayoutB.bin",file);
+    splitSingleChunk(0x1002BE,0x10033E,"palette_TitleScreen","data/graphics/specialscreens/titlescreen/titlescreenpalettes.bin",file);
+    splitSingleChunk(0x10033E,0x1014E0,"tiles_TitleScreen","data/graphics/specialscreens/titlescreen/titlescreentiles.bin",file);
+    splitSingleChunk(0x1014E0,0x101BE0,"layout_TitleScreenA","data/graphics/specialscreens/titlescreen/titlescreenlayoutA.bin",file);
+    splitSingleChunk(0x101BE0,0x101EE0,"layout_TitleScreenB","data/graphics/specialscreens/titlescreen/titlescreenlayoutB.bin",file);
 
     splitSingleChunk(0x12A308,0x12CD26,"InvocationSpriteDao","data/graphics/battles/spells/invocations/dao.bin",file);
     splitSingleChunk(0x12CD26,0x12D9CA,"InvocationSpriteAtlas","data/graphics/battles/spells/invocations/atlas.bin",file);
@@ -341,7 +341,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x12E988,0x12FADE,"InvocationSpriteApollo","data/graphics/battles/spells/invocations/apollo.bin",file);
     MakeAlign(0x12FADE, 0x130000-0x12FADE,15);
     
-    splitSingleChunk(0x1AA16E,0x1AA316,"StatusAnimationTiles","data/graphics/battles/tech/statusanimation/statusanimationtiles.bin",file);
+    splitSingleChunk(0x1AA16E,0x1AA316,"tiles_StatusAnimation","data/graphics/battles/tech/statusanimation/statusanimationtiles.bin",file);
     //splitSingleChunk(0x1AA8CA,0x1AAA82,"BoltAnimData_A","data/graphics/battles/spells/animations/boltanimdataa.bin",file);
     //splitSingleChunk(0x1AAA82,0x1AAC3A,"BoltAnimData_B","data/graphics/battles/spells/animations/boltanimdatab.bin",file);        
     
@@ -349,41 +349,41 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x1B6DB0,0x1B6DBC,"SpecialBattles","data/battles/global/specialbattles.bin",file);    
     
-    splitSingleChunk(0x1B6DDA,0x1B6DFA,"plt_EndKiss","data/graphics/specialscreens/endingkiss/endingkisspalette.bin",file);
-    splitSingleChunk(0x1B6DFA,0x1B7C9A,"EndKissPicture","data/graphics/specialscreens/endingkiss/endingkisstiles.bin",file);
+    splitSingleChunk(0x1B6DDA,0x1B6DFA,"palette_EndingKissPicture","data/graphics/specialscreens/endingkiss/endingkisspicturepalette.bin",file);
+    splitSingleChunk(0x1B6DFA,0x1B7C9A,"tiles_EndingKissPicture","data/graphics/specialscreens/endingkiss/endingkisspicturetiles.bin",file);
     MakeAlign(0x1B7C9A, 0x1B8000-0x1B7C9A,14);
 
-    //splitSingleChunk(0x1BEE38,0x1BEEE0,"plt_WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
+    //splitSingleChunk(0x1BEE38,0x1BEEE0,"WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
 
-    splitSingleChunk(0x1C46C2,0x1C4702,"plt_Witch","data/graphics/specialscreens/witchscreen/witchpalette.bin",file);
-    splitSingleChunk(0x1C4702,0x1C4E88,"WitchLayout","data/graphics/specialscreens/witchscreen/witchlayout.bin",file);
-    splitSingleChunk(0x1C4E88,0x1C67C4,"WitchTiles","data/graphics/specialscreens/witchscreen/witchtiles.bin",file);
-    splitSingleChunk(0x1C67C4,0x1C67E4,"plt_WitchEnd","data/graphics/specialscreens/witchscreen/endingwitchpalette.bin",file);
-    splitSingleChunk(0x1C67E4,0x1C6F2C,"WitchEndLayout","data/graphics/specialscreens/witchscreen/endingwitchlayout.bin",file);
-    splitSingleChunk(0x1C6F2C,0x1C7F7C,"WitchEndTiles","data/graphics/specialscreens/witchscreen/endingwitchtiles.bin",file);
+    splitSingleChunk(0x1C46C2,0x1C4702,"palette_Witch","data/graphics/specialscreens/witchscreen/witchpalette.bin",file);
+    splitSingleChunk(0x1C4702,0x1C4E88,"layout_Witch","data/graphics/specialscreens/witchscreen/witchlayout.bin",file);
+    splitSingleChunk(0x1C4E88,0x1C67C4,"tiles_Witch","data/graphics/specialscreens/witchscreen/witchtiles.bin",file);
+    splitSingleChunk(0x1C67C4,0x1C67E4,"palette_EndingWitch","data/graphics/specialscreens/witchscreen/endingwitchpalette.bin",file);
+    splitSingleChunk(0x1C67E4,0x1C6F2C,"layout_EndingWitch","data/graphics/specialscreens/witchscreen/endingwitchlayout.bin",file);
+    splitSingleChunk(0x1C6F2C,0x1C7F7C,"tiles_EndingWitch","data/graphics/specialscreens/witchscreen/endingwitchtiles.bin",file);
     MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);    
 
-    //splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
+    //splitSingleChunk(0x1D8004,0x1DFA46,"Icons","data/graphics/icons/icons.bin",file);
     MakeAlign(0x1DFA44, 0x1E0000-0x1DFA44,15);    
 
     splitSingleChunk(0x1E0000,0x1E8000,"","data/sound/pcmbank0.bin",file);
     splitSingleChunk(0x1E8000,0x1EB000,"","data/sound/pcmbank1.bin",file);
     splitSingleChunk(0x1EB000,0x1EC000,"","data/sound/yminst.bin",file);
     splitSingleChunkWithCommentedSplitEntry(0x1EC000,0x1EE000,"SoundDriver","data/sound/sounddriver.bin",file);
-    writestr(file,form("#split\t0x%s,0x%s,%s\n",ltoa(0x1ED5BD,16),ltoa(0x1EDF2A,16),"data/sound/cubesfx.bin"));
+    //writestr(file,form("#split\t0x%s,0x%s,%s\n",ltoa(0x1ED5BD,16),ltoa(0x1EDF2A,16),"data/sound/cubesfx.bin"));
     
     //splitSingleChunk(0x1EE02C,0x1EE270,"StatGrowthCurves","data/stats/allies/growthcurves.bin",file);
     MakeAlign(0x1EE7CF, 0x1EE7D0-0x1EE7CF,1);
     //splitSingleChunk(0x1EE7D0, 0x1EE890, "AllyStartData","data/stats/allies/allystartdata.bin",file);
     //splitSingleChunk(0x1EE890, 0x1EE930, "ClassData","data/stats/allies/classes/classdata.bin",file);
-    splitSingleChunk(0x1EE930, 0x1EF102, "JewelsEndScreenLayout","data/graphics/specialscreens/endingjewels/endingjewelslayout.bin",file);
-    splitSingleChunk(0x1EF102, 0x1EF142, "plt_JewelsEndScreen","data/graphics/specialscreens/endingjewels/endingjewelspalette.bin",file);
-    splitSingleChunk(0x1EF142, 0x1EF4BA, "JewelsEndScreenTiles","data/graphics/specialscreens/endingjewels/endingjewelstiles.bin",file);
-    splitSingleChunk(0x1EF4BA, 0x1EF4DA, "plt_SuspendString","data/graphics/specialscreens/suspendscreen/suspendstringpalette.bin",file);
-    splitSingleChunk(0x1EF4DA, 0x1EF5A6, "SuspendStringTiles","data/graphics/specialscreens/suspendscreen/suspendstringtiles.bin",file);
-    splitSingleChunk(0x1EF5A6, 0x1EF5E6, "unused_BasePalettes","data/graphics/tech/unusedbasepalettes.bin",file);
-    splitSingleChunk(0x1EF5E6, 0x1EFE33, "BaseTiles","data/graphics/tech/basetiles.bin",file);
-    MakeAlign(0x1EFE33, 0x1F0000-0x1EFE33,15);
+    splitSingleChunk(0x1EE930, 0x1EF102, "layout_EndingJewels","data/graphics/specialscreens/endingjewels/endingjewelslayout.bin",file);
+    splitSingleChunk(0x1EF102, 0x1EF142, "palette_EndingJewels","data/graphics/specialscreens/endingjewels/endingjewelspalette.bin",file);
+    splitSingleChunk(0x1EF142, 0x1EF4BA, "tiles_EndingJewels","data/graphics/specialscreens/endingjewels/endingjewelstiles.bin",file);
+    splitSingleChunk(0x1EF4BA, 0x1EF4DA, "palette_SuspendString","data/graphics/specialscreens/suspendscreen/suspendstringpalette.bin",file);
+    splitSingleChunk(0x1EF4DA, 0x1EF5A6, "tiles_SuspendString","data/graphics/specialscreens/suspendscreen/suspendstringtiles.bin",file);
+    splitSingleChunk(0x1EF5A6, 0x1EF5E6, "palette_UnusedBase","data/graphics/tech/unusedbasepalettes.bin",file);
+    splitSingleChunk(0x1EF5E6, 0x1EFE32, "tiles_Base","data/graphics/tech/basetiles.bin",file);
+    MakeAlign(0x1EFE32, 0x1F0000-0x1EFE32,15);
     splitSingleChunk(0x1F0000, 0x1F8000, "","data/sound/musicbank1.bin",file);
     splitSingleChunk(0x1F8000, 0x200000, "","data/sound/musicbank0.bin",file);
 
@@ -512,8 +512,8 @@ static splitMapsprites(file) {
     addr = start;
     lastEntryDataEnd = 0xFFC48;
     chunkEnd = 0x100000;
-    ptName = "pt_MapSprites";
-    entryName = "MapSprite";
+    ptName = "pt_Mapsprites";
+    entryName = "Mapsprite";
     binDir = "data/graphics/mapsprites/";
     entryDirs = 0;
     binName = "mapsprite";
@@ -814,7 +814,7 @@ static splitTextbanks(file) {
 }
 
 
-//splitSingleChunk(0x1BEE38,0x1BEEE0,"plt_WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
+//splitSingleChunk(0x1BEE38,0x1BEEE0,"WeaponPalettes","data/graphics/battles/weapons/weaponpalettes.bin",file);
 
 static splitWeaponPalettes(file) {
 
@@ -839,7 +839,7 @@ static splitWeaponPalettes(file) {
 }
 
 
-//splitSingleChunk(0x1D8004,0x1DFA46,"IconTiles","data/graphics/icons/icons.bin",file);
+//splitSingleChunk(0x1D8004,0x1DFA46,"Icons","data/graphics/icons/icons.bin",file);
 
 static splitIcons(file) {
 

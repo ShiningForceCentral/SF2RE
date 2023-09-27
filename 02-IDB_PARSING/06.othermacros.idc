@@ -12,15 +12,14 @@ static main(void){
     Message("PARSING DATA STRUCTURES INTO MACROS ...\n");
     parseMaskVdpSprites();
     parseFlaggedSwitchedMaps();
-    parseBattleMapCoords();    
-    parseSavePointMapCoords();
-    parseRaftResetMapCoords();
+    parseBattleMapCoordinates();    
+    parseSavePointMapCoordinates();
+    parseRaftResetMapCoordinates();
     parseClassTypes();
-    parseHalvedEXPearnedBattles();
-    parseCriticalHitDefs();
+    parseHalvedExpEarnedBattles();
+    parseCriticalHitDefinitions();
     parseItemBreakMessages();
     parseEnemyItemDrops();
-    //parseEnemyGold();
     parseSpellElements();
     parseLandEffectAndMoveCosts();
     parseAiCommandsets();
@@ -49,8 +48,8 @@ static main(void){
     parseNameEntryWindowLayout();
     parseTimerWindowLayout();
     parseMemberStatsWindowLayout();
-    parseItemDefs();
-    parseSpellDefs();
+    parseItemDefinitions();
+    parseSpellDefinitions();
     parseItemNames();
     parseClassNames();
     parseTerrainBackgrounds();
@@ -76,20 +75,22 @@ static main(void){
     parseConfigurationModeInputs();
     parseDebugModeInputs();
     parseFollowers();
-    parseAllyMapSprites();
-    parseEnemyMapSprites();
-    parseSpriteDialogProperties();
-    //parseEnemyLeaderPresence();
+    parseNeutralBattleEntities();
+    parseAllyMapsprites();
+    parseEnemyMapsprites();
+    parseMapspriteDialogueProperties();
     parseBattlesWithLasers();
     parseBattleSpritesets();
-    parseEnemyDefs();
+    parseEnemyDefinitions();
     parseRandomBattles();
-    parseEnemyUpgradeDefs();
+    parseEnemyUpgradeDefinitions();
     parseStatGrowthCurves();
     parseAllyStats();
-    parseAllyStartDefs();
-    parseClassDefs();
+    parseAllyStartDefinitions();
+    parseClassDefinitions();
     parseMapData();
+    parseTitleScreenLayoutA();
+    parseTitleScreenLayoutB();
 
     Message("DELETING ARRAYS...\n");
     deleteArrays();
@@ -135,7 +136,7 @@ static parseFlaggedSwitchedMaps(){
 
 
 
-static parseBattleMapCoords(){
+static parseBattleMapCoordinates(){
     auto addr, j, map, x, y, width, height, triggerX, triggerY;
     auto parameter;
     addr = 0x7A36;
@@ -149,13 +150,13 @@ static parseBattleMapCoords(){
         height = Byte(addr+4);
         triggerX = Byte(addr+5);
         triggerY = Byte(addr+6);
-        SetManualInsn(addr, form("battleMapCoords %d, %d, %d, %d, %d, %d, %d", map, x, y, width, height, triggerX, triggerY));
+        SetManualInsn(addr, form("battleMapCoordinates %d, %d, %d, %d, %d, %d, %d", map, x, y, width, height, triggerX, triggerY));
         addr = addr+7;
     }
 }
 
 
-static parseSavePointMapCoords(){
+static parseSavePointMapCoordinates(){
     auto addr, j, map, x, y, facing;
     auto parameter;
     addr = 0x7B71;
@@ -166,13 +167,13 @@ static parseSavePointMapCoords(){
         x = Byte(addr+1);
         y = Byte(addr+2);
         facing = Byte(addr+3);
-        SetManualInsn(addr, form("savePointMapCoords %s, %d, %d, %s", getMap(map), x, y, getDirection(facing)));
+        SetManualInsn(addr, form("savePointMapCoordinates %s, %d, %d, %s", getMap(map), x, y, getDirection(facing)));
         addr = addr+4;
     }
 }
 
 
-static parseRaftResetMapCoords(){
+static parseRaftResetMapCoordinates(){
     auto addr, j, map, raftMap, x, y;
     auto parameter;
     addr = 0x7BCE;
@@ -183,7 +184,7 @@ static parseRaftResetMapCoords(){
         raftMap = Byte(addr+1);
         x = Byte(addr+2);
         y = Byte(addr+3);
-        SetManualInsn(addr, form("raftResetMapCoords %s, %s, %d, %d", getMap(map), getMap(raftMap), x, y));
+        SetManualInsn(addr, form("raftResetMapCoordinates %s, %s, %d, %d", getMap(map), getMap(raftMap), x, y));
         addr = addr+4;
     }
 }
@@ -206,7 +207,7 @@ static parseClassTypes(){
     }
 }
 
-static parseHalvedEXPearnedBattles(){
+static parseHalvedExpEarnedBattles(){
     auto addr, battle;
     addr = 0xA870;
     while(addr<0xA871){
@@ -223,7 +224,7 @@ static parseHalvedEXPearnedBattles(){
     SetManualInsn(addr, "tableEnd.b");
 }
 
-static parseCriticalHitDefs(){
+static parseCriticalHitDefinitions(){
     auto addr, j, chance, damageFactor;
     addr = 0xACCA;
     while(addr<0xACEA){
@@ -251,7 +252,7 @@ static parseItemBreakMessages(){
     /* Terminator word at address 0xBD22 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
-    SetManualInsn(addr, "tableEnd");
+    SetManualInsn(addr, "tableEnd.w");
 }
 
 static parseEnemyItemDrops(){
@@ -286,26 +287,8 @@ static parseEnemyItemDrops(){
     /* Terminator word at address 0xBECA */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
-    SetManualInsn(addr, "tableEnd");
+    SetManualInsn(addr, "tableEnd.w");
 }
-
-/*
-static parseEnemyGold(){
-    auto addr, i, j, gold;
-    addr = 0xBECC;
-    while(addr<0xC024){
-        for(j=addr;j<addr+2;j++){undefineByte(j);}
-        MakeWord(addr);
-        gold = Word(addr);
-        //SetManualInsn(addr, form("enemyGold %d", gold));
-        SetManualInsn(addr, "");
-        // Provide enemy's name as a comment
-        if(i<103){MakeRptCmt(addr, form("%s", findName(0xFB8A,i)));}
-        i++;
-        addr = addr+2;
-    }
-}
-*/
 
 static parseSpellElements(){
     auto addr, spellElement, index, spellName;
@@ -645,7 +628,7 @@ static parseMemberStatsWindowLayout(){
     }
 }
 
-static parseItemDefs(){
+static parseItemDefinitions(){
     auto addr, j, equipFlags, maxRange, minRange, price, itemType, useSpell, equipEffects, next, index, itemName;
     addr = 0x16EA6;
     while(addr<0x176A6){
@@ -712,7 +695,7 @@ static parseItemDefs(){
     }
 }
 
-static parseSpellDefs(){
+static parseSpellDefinitions(){
     auto addr, j, entry, mpCost, animation, properties, maxRange, minRange, radius, power, index, count, spellName;
     addr = 0x176A6;
     while(addr<0x1796E){
@@ -1115,7 +1098,7 @@ static parseSpecialCaravanDescriptions(){
     /* Terminator word at address 0x228A6 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
-    SetManualInsn(addr, "tableEnd");
+    SetManualInsn(addr, "tableEnd.w");
 }
 
 static parseUsableOutsideBattleItems(){
@@ -1197,17 +1180,68 @@ static parseFollowers(){
     /* Terminator word at address 0x44388 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
-    SetManualInsn(addr, "tableEnd");
+    SetManualInsn(addr, "tableEnd.w");
 }
 
-static parseAllyMapSprites(){
+static parseNeutralBattleEntities(){
+    auto addr, i, j, battle, offset, position, facing, mapsprite;
+    addr = 0x448C4;
+    while(addr<0x4497A){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        if(Word(addr)==0xFFFF){
+            MakeWord(addr);
+            SetManualInsn(addr, "tableEnd.w");
+            addr = addr+2;
+        }else{
+            /* Battle */
+            MakeWord(addr);
+            battle = getBattleShorthand(Word(addr));
+            SetManualInsn(addr, form("battle.w %s", battle));
+            addr = addr+2;
+            
+            /* Calculate offset to next terminator word */
+            offset = 8;
+            while(Word(addr+offset)!=0xFFFF){
+                offset = offset+8;
+            }
+            
+            for(j=addr;j<addr+offset;j=j+8){
+                /* Position */
+                undefineByte(j);
+                undefineByte(j+1);
+                MakeData(j,FF_BYTE,2,1);
+                position = form("%d,%d", Byte(j), Byte(j+1));
+                SetManualInsn(j, form("position %s", position));
+                
+                /* Facing direction */
+                undefineByte(j+2);
+                MakeByte(j+2);
+                facing = getDirection(Byte(j+2));
+                SetManualInsn(j+2, form("facing %s", facing));
+                
+                /* Mapsprite */
+                undefineByte(j+3);
+                MakeByte(j+3);
+                mapsprite = getMapspriteShorthand(Byte(j+3));
+                SetManualInsn(j+3, form("mapsprite %s", mapsprite));
+                
+                MakeDword(j+4);
+            }
+            addr = addr+offset;
+            //MakeWord(addr);
+            addr = addr+2;
+        }
+    }
+}
+
+static parseAllyMapsprites(){
     auto addr, sprite, index, allyName;
     addr = 0x44A5E;
     while(addr<0x44A7C){
         undefineByte(addr);
         MakeByte(addr);
         sprite = getMapspriteShorthand(Byte(addr));
-        SetManualInsn(addr, form("mapSprite %s", sprite));
+        SetManualInsn(addr, form("mapsprite %s", sprite));
         
         /* Provide ally's name as a comment */
         allyName = getAllyName(index);
@@ -1217,14 +1251,14 @@ static parseAllyMapSprites(){
     }
 }
 
-static parseEnemyMapSprites(){
+static parseEnemyMapsprites(){
     auto addr, sprite, index, enemyName;
     addr = 0x44AA4;
     while(addr<0x44B4A){
         undefineByte(addr);
         MakeByte(addr);
         sprite = getMapspriteShorthand(Byte(addr));
-        SetManualInsn(addr, form("mapSprite %s", sprite));
+        SetManualInsn(addr, form("mapsprite %s", sprite));
         
         /* Provide enemy's name as a comment */
         if(index<103){
@@ -1236,23 +1270,23 @@ static parseEnemyMapSprites(){
     }
 }
 
-static parseSpriteDialogProperties(){
+static parseMapspriteDialogueProperties(){
     auto addr, j, sprite, portrait, sfx;
     addr = 0x4567A;
     while(addr<0x45856){
         for(j=addr;j<addr+4;j++){undefineByte(j);}
         
-        /* Map sprite */
+        /* Mapsprite */
         MakeByte(addr);
         sprite = getMapspriteShorthand(Byte(addr));
-        SetManualInsn(addr, form("mapSprite %s", sprite));
+        SetManualInsn(addr, form("mapsprite %s", sprite));
         
         /* Portrait */
         MakeByte(addr+1);
         portrait = getPortraitShorthand(Byte(addr+1));
         SetManualInsn(addr+1, form("portrait  %s", portrait));
         
-        /* Speech sfx */
+        /* Speech SFX */
         MakeData(addr+2,FF_BYTE,2,1);
         sfx = getSfxShorthand(Byte(addr+2));
         SetManualInsn(addr+2, form("speechSfx %s\n", sfx));
@@ -1263,24 +1297,8 @@ static parseSpriteDialogProperties(){
     /* Terminator word at address 0x45856 */
     for(j=addr;j<addr+2;j++){undefineByte(j);}
     MakeWord(addr);
-    SetManualInsn(addr, "tableEnd");
+    SetManualInsn(addr, "tableEnd.w");
 }
-
-/*
-static parseEnemyLeaderPresence(){
-    auto addr, i, j;
-    addr = 0x47C8E;
-    while(addr<0x47CBC){
-        undefineByte(addr);
-        MakeByte(addr);
-        OpDecimal(addr,0);
-        // Provide battle index as a comment
-        MakeRptCmt(addr, form("Battle %s", ltoa(i,10)));
-        i++;
-        addr++;
-    }
-}
-*/
 
 static parseBattlesWithLasers(){
     auto addr, j, len, battles, next;
@@ -1423,7 +1441,7 @@ static parseBattleSpritesets(){
     }
 }
 
-static parseEnemyDefs(){
+static parseEnemyDefinitions(){
     auto addr, j, unknownByte, spellPower, level, maxHp, maxMp, baseAtt, baseDef, baseAgi, baseMov;
     auto baseResistance, baseProwess, items, spells, initialStatus, moveType, unknownWord, next, index, enemyName;
     addr = 0x1B1A66;
@@ -1563,7 +1581,7 @@ static parseRandomBattles(){
     }
 }
 
-static parseEnemyUpgradeDefs(){
+static parseEnemyUpgradeDefinitions(){
     auto addr, j, len, range, firstEnemy, lastEnemy, excludedEnemies, next;
     addr = 0x1B6DBC;
     while(addr<0x1B6DDA){
@@ -1701,7 +1719,7 @@ static parseAllyStats(){
     }
 }
 
-static parseAllyStartDefs(){
+static parseAllyStartDefinitions(){
     auto addr, j, startClass, startLevel, startItems, next, index, allyName;
     addr = 0x1EE7D0;
     while(addr<0x1EE890){
@@ -1740,7 +1758,7 @@ static parseAllyStartDefs(){
     }
 }
 
-static parseClassDefs(){
+static parseClassDefinitions(){
     auto addr, j, mov, resistance, moveType, prowess, index, className;
     addr = 0x1EE890;
     while(addr<0x1EE930){
@@ -2120,6 +2138,34 @@ static parseMapData(){
         i++;
     }
     
+}
+
+
+
+static parseTitleScreenLayoutA(){
+    auto addr, j, vdpTile;
+    addr = 0x1014E0;
+    while(addr<0x101BE0){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
+        addr = addr+2;
+    }
+}
+
+
+
+static parseTitleScreenLayoutB(){
+    auto addr, j, vdpTile;
+    addr = 0x101BE0;
+    while(addr<0x101EE0){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
+        addr = addr+2;
+    }
 }
 
 

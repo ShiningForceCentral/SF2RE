@@ -191,7 +191,7 @@ static fixSingleInstructions(){
     //SetManualInsn(0x1A4,"declareRomEnd");
     //SetManualInsn(0x1F0,"headerRegion");
     //SetManualInsn(0x279D8,"enableSram"); 
-    SetManualInsn(0x7626,"lea RaftResetMapCoordinates-4(pc),a0");   
+    SetManualInsn(0x7626,"lea table_RaftResetMapCoordinates-4(pc),a0");   
     
     /* Lost align directives */
     SetManualInsn(0x107E9,"wordAlign"); 
@@ -300,18 +300,30 @@ static fixUnwantedNames(){
     MakeNameEx(0x20,"",0);
     MakeNameEx(0x3C,"",0);
     MakeNameEx(0xFC,"",0);
+    MakeNameEx(0x3FA,"",0);
     MakeNameEx(0x91E,"",0);
     MakeNameEx(0x2AD4,"",0);
+    MakeNameEx(0x4E7E,"",0);
+    MakeNameEx(0x4FC6,"",0);
     MakeNameEx(0x5018,"",0);
     MakeNameEx(0x651C,"",0);
     MakeNameEx(0x658C,"",0);
     MakeNameEx(0x6606,"",0);
     MakeNameEx(0x6644,"",0);
+    MakeNameEx(0x6784,"",0);
+    MakeNameEx(0x6862,"",0);
+    MakeNameEx(0x687C,"",0);
+    MakeNameEx(0x68A8,"",0);
     MakeNameEx(0x6EDE,"",0);
     MakeNameEx(0x6F56,"",0);
     MakeNameEx(0x6FBA,"",0);
     MakeNameEx(0x702E,"",0);
+    MakeNameEx(0x729C,"",0);
+    MakeNameEx(0x737C,"",0);
+    MakeNameEx(0x7428,"",0);
     MakeNameEx(0x743E,"",0);
+    MakeNameEx(0x74B4,"",0);
+    MakeNameEx(0x74DE,"",0);
     MakeNameEx(0x7A4B,"",0);
     MakeNameEx(0x7E44,"",0);
     MakeNameEx(0x843C,"",0);

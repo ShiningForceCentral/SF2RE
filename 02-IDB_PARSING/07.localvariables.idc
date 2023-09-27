@@ -58,8 +58,8 @@ static defineLocalVariables(){
     makeLocalVariables(0x1E48,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,2,"var_2");
+    /* Vertical interrupt : Scrolling data update */
+    SetArrayString(variables,2,"distance");
     makeLocalVariables(0x3930,variables);
     deleteArrayStrings(variables);
     
@@ -114,7 +114,7 @@ static defineLocalVariables(){
     SetArrayString(variables,11,"silencedActor");
     SetArrayString(variables,12,"counterAttack");
     SetArrayString(variables,13,"doubleAttack");
-    SetArrayString(variables,14,"ineffectiveAttack");
+    SetArrayString(variables,14,"ineffectiveAttackToggle");
     SetArrayString(variables,15,"specialCritical");
     SetArrayString(variables,16,"explode");
     SetArrayString(variables,17,"explodingActor");
@@ -211,9 +211,9 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
+    SetArrayString(variables,1,"startingX");
+    SetArrayString(variables,2,"startingY");
+    SetArrayString(variables,3,"attacker");
     SetArrayString(variables,4,"var_4");
     makeLocalVariables(0xF522,variables);
     deleteArrayStrings(variables);
@@ -263,13 +263,13 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,4,"windowTilesAddress");
+    SetArrayString(variables,4,"windowLayoutStartAddress");
     makeLocalVariables(0x11442,variables);
     deleteArrayStrings(variables);
     
     /*  */
     SetArrayString(variables,2,"combatant");
-    SetArrayString(variables,8,"windowTilesAddress");
+    SetArrayString(variables,8,"windowLayoutStartAddress");
     makeLocalVariables(0x118BE,variables);
     deleteArrayStrings(variables);
     
@@ -286,14 +286,14 @@ static defineLocalVariables(){
     
     /* Member status window */
     SetArrayString(variables,2,"member");
-    SetArrayString(variables,6,"windowTilesAddress");
+    SetArrayString(variables,6,"windowLayoutStartAddress");
     makeLocalVariables(0x11EEA,variables);
     makeLocalVariables(0x11FF0,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,6,"var_6");
+    /* Build minimap screen */
+    SetArrayString(variables,2,"windowSlot");
+    SetArrayString(variables,6,"windowLayoutEndAddress");
     SetArrayString(variables,8,"var_8");
     SetArrayString(variables,10,"var_10");
     SetArrayString(variables,12,"var_12");
@@ -310,18 +310,18 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Gold window */
-    SetArrayString(variables,18,"goldWindowTilesEnd");
+    SetArrayString(variables,18,"goldWindowLayoutEndAddress");
     makeLocalVariables(0x12F12,variables);
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,18,"goldWindowTilesEnd");
+    SetArrayString(variables,18,"goldWindowLayoutEndAddress");
     makeLocalVariables(0x12F5E,variables);
     deleteArrayStrings(variables);
     
     /* Member list screen */
     SetArrayString(variables,2,"selectedMember");
-    SetArrayString(variables,4,"memberListWindow");
+    SetArrayString(variables,4,"membersListWindow");
     SetArrayString(variables,6,"portraitWindow");
     SetArrayString(variables,8,"memberSummaryWindow");
     SetArrayString(variables,10,"statusEffects");
@@ -340,14 +340,14 @@ static defineLocalVariables(){
     
     /* Member list text */
     SetArrayString(variables,2,"selectedMember");
-    SetArrayString(variables,6,"windowTilesAddress");
+    SetArrayString(variables,6,"windowLayoutStartAddress");
     SetArrayString(variables,16,"currentMember");
     makeLocalVariables(0x135A6,variables);
     deleteArrayStrings(variables);
     
     /* Mini status window */
     SetArrayString(variables,2,"combatant");
-    SetArrayString(variables,6,"windowTilesAddress");
+    SetArrayString(variables,6,"windowLayoutStartAddress");
     makeLocalVariables(0x137BC,variables);
     makeLocalVariables(0x13902,variables);
     makeLocalVariables(0x13930,variables);
@@ -361,12 +361,12 @@ static defineLocalVariables(){
     
     /* Shop inventory screen */
     SetArrayString(variables,2,"inventoryWindowSlot");
-    SetArrayString(variables,6,"inventoryWindowTilesEnd");
+    SetArrayString(variables,6,"inventoryWindowLayoutEndAddress");
     SetArrayString(variables,8,"itemNameAndPriceWindowSlot");
-    SetArrayString(variables,12,"itemNameAndPriceWindowTilesEnd");
+    SetArrayString(variables,12,"itemNameAndPriceWindowLayoutEndAddress");
     SetArrayString(variables,14,"goldWindowSlot");
-    SetArrayString(variables,18,"goldWindowTilesEnd");
-    SetArrayString(variables,240,"inventoryWindowTilesLoadingSpace");
+    SetArrayString(variables,18,"goldWindowLayoutEndAddress");
+    SetArrayString(variables,240,"inventoryWindowLayoutLoadingSpace");
     //makeLocalVariables(0x12F12,variables);
     //makeLocalVariables(0x12F5E,variables);
     makeLocalVariables(0x147FA,variables);
@@ -384,24 +384,24 @@ static defineLocalVariables(){
     
     /* Yes/No prompt */
     SetArrayString(variables,2,"windowSlot");
-    SetArrayString(variables,6,"windowTilesEnd");
+    SetArrayString(variables,6,"windowLayoutEndAddress");
     makeLocalVariables(0x1528C,variables);
     makeLocalVariables(0x1546A,variables);
     deleteArrayStrings(variables);
     
     /* Battlefield options window */
-    SetArrayString(variables,4,"windowTilesEnd");
+    SetArrayString(variables,4,"windowLayoutEndAddress");
     SetArrayString(variables,6,"windowSlot");
-    SetArrayString(variables,8,"displayBattleMessage");
+    SetArrayString(variables,8,"noBattleMessagesToggle");
     SetArrayString(variables,10,"messageSpeed");
     makeLocalVariables(0x1586E,variables);
     makeLocalVariables(0x1597C,variables);
     deleteArrayStrings(variables);
     
     /* Name ally screen */
-    SetArrayString(variables,4,"portraitWindowTilesEnd");
-    SetArrayString(variables,8,"entryWindowTilesEnd");
-    SetArrayString(variables,12,"alphabetWindowTilesEnd");
+    SetArrayString(variables,4,"portraitWindowLayoutEndAddress");
+    SetArrayString(variables,8,"entryWindowLayoutEndAddress");
+    SetArrayString(variables,12,"alphabetWindowLayoutEndAddress");
     SetArrayString(variables,14,"portraitWindowSlot");
     SetArrayString(variables,16,"entryWindowSlot");
     SetArrayString(variables,18,"alphabetWindowSlot");
@@ -418,7 +418,7 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Number prompt */
-    SetArrayString(variables,4,"windowTilesEnd");
+    SetArrayString(variables,4,"windowLayoutEndAddress");
     SetArrayString(variables,6,"windowSlot");
     SetArrayString(variables,8,"numberEntry");
     SetArrayString(variables,10,"numberMin");
@@ -429,9 +429,9 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Debug flag setter */
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
-    SetArrayString(variables,8,"var_8");
+    SetArrayString(variables,4,"windowLayoutEndAddress");
+    SetArrayString(variables,6,"windowSlot");
+    SetArrayString(variables,8,"flag");
     makeLocalVariables(0x163BC,variables);
     makeLocalVariables(0x164AC,variables);
     makeLocalVariables(0x164E8,variables);
@@ -439,7 +439,7 @@ static defineLocalVariables(){
     
     /* Witch main menu */
     SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,6,"var_6");
+    SetArrayString(variables,6,"windowSlot");
     SetArrayString(variables,8,"var_8");
     SetArrayString(variables,10,"var_10");
     SetArrayString(variables,12,"var_12");
@@ -501,7 +501,7 @@ static defineLocalVariables(){
     
     /* Blacksmith menu actions */
     SetArrayString(variables,4,"currentGold");
-    SetArrayString(variables,6,"member");
+    SetArrayString(variables,6,"clientMember");
     SetArrayString(variables,8,"targetMember");
     SetArrayString(variables,10,"itemIndex");
     SetArrayString(variables,12,"itemSlot");
@@ -510,7 +510,7 @@ static defineLocalVariables(){
     SetArrayString(variables,18,"readyToFulfillOrdersNumber");
     SetArrayString(variables,20,"fulfillOrdersFlag");
     SetArrayString(variables,22,"ordersCounter");
-    SetArrayString(variables,24,"characterClass");
+    SetArrayString(variables,24,"clientClass");
     makeLocalVariables(0x21A3A,variables);
     makeLocalVariables(0x21A92,variables);
     makeLocalVariables(0x21B42,variables);
@@ -571,8 +571,8 @@ static defineLocalVariables(){
     makeLocalVariables(0x24490,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,2,"var_2");
+    /* VInt_WitchEndBlink */
+    SetArrayString(variables,2,"updateLayoutToggle");
     makeLocalVariables(0x27CA4,variables);
     deleteArrayStrings(variables);
     
@@ -584,7 +584,7 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /* Discard item */
-    SetArrayString(variables,2,"character");
+    SetArrayString(variables,2,"member");
     SetArrayString(variables,4,"itemEntry");
     SetArrayString(variables,6,"itemSlot");
     SetArrayString(variables,10,"itemTypeBitfield");

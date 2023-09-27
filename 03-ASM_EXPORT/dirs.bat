@@ -19,6 +19,7 @@ mkdir disasm\code\common\tech\sound
 mkdir disasm\code\common\tech\graphics
 mkdir disasm\code\common\tech\pointers
 mkdir disasm\code\common\tech\jumpinterfaces
+mkdir disasm\code\common\tech\incbins
 mkdir disasm\code\common\maps
 mkdir disasm\code\common\stats
 mkdir disasm\code\common\stats\items
@@ -99,5 +100,6 @@ mkdir disasm\data\graphics\tech\windowlayouts\
 mkdir disasm\data\graphics\tech\unusedbasepalettes\
 mkdir disasm\data\graphics\tech\basetiles\
 mkdir disasm\data\graphics\tech\alphabethighlight\
+mkdir disasm\data\graphics\specialscreens\titlescreen\
 mkdir disasm\data\tech
 pause
