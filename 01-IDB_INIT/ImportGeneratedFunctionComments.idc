@@ -26,6 +26,10 @@ static main()
 \n\
 VDP Reg Status -> d0.w", 1);
 
+    // ActivateVIntDmaQueueProcessing
+    SetFunctionCmt(0xc4e, 
+        "unused", 1);
+
     // DeactivateVIntDmaQueueProcessing
     SetFunctionCmt(0xc58, 
         "unused", 1);
@@ -207,10 +211,6 @@ VDP Reg Status -> d0.w", 1);
     // sub_19B0
     SetFunctionCmt(0x19b0, 
         "clear table related to sprites", 1);
-
-    // UpdateFadingPalette
-    SetFunctionCmt(0x19f8, 
-        "related to palette updating during fading", 1);
 
     // LoadBasicCompressedData
     SetFunctionCmt(0x1a84, 
@@ -538,13 +538,22 @@ Otherwise, if an enemy, return the enemy index.", 1);
     SetFunctionCmt(0x855a, 
         "In: a0 = pointer to temporarily loaded name in RAM", 1);
 
+    // DecreaseBaseDef
+    SetFunctionCmt(0x88ec, 
+        "unused", 1);
+
+    // DecreaseBaseAgi
+    SetFunctionCmt(0x8918, 
+        "unused", 1);
+
+    // DecreaseBaseMov
+    SetFunctionCmt(0x8944, 
+        "unused", 1);
+
     // FindName
     SetFunctionCmt(0x8976, 
-        "In: A0 = address of names list\n\
-    D1 = name index\n\
-\n\
-Out: A0 = address of entry in names list\n\
-     D7 = length of name", 1);
+        "In: a0 = names list pointer, d1.w = name index\n\
+Out: a0 = pointer to name entry, d7.w = name length", 1);
 
     // ApplyStatusEffectsAndItemsOnStats
     SetFunctionCmt(0x89ce, 
@@ -552,8 +561,8 @@ Out: A0 = address of entry in names list\n\
 
     // ApplyStatusEffectsOnStats
     SetFunctionCmt(0x8a26, 
-        "In: D0 = combatant index\n\
-    D3 = status effects bitfield", 1);
+        "In: d0.w = combatant index\n\
+    d3.w = status effects bitfield", 1);
 
     // ApplyItemOnStats
     SetFunctionCmt(0x8a90, 
@@ -1075,7 +1084,7 @@ Out: d6.w = damage", 1);
     SetFunctionCmt(0xb57e, 
         "In: d2.w = target's resistance setting", 1);
 
-    // DetermineSpellEffectiveness
+    // battlesceneScript_DetermineSpellEffectiveness
     SetFunctionCmt(0xba98, 
         "In: a2 = battlescene script stack frame\n\
     d2.w = resistance setting (0=none, 1=minor, 2=major, 3=immunity)", 1);
@@ -1618,6 +1627,14 @@ Out: d1.w = target priority", 1);
     SetFunctionCmt(0xe0b6, 
         "Out: d1.w = defeated enemies count", 1);
 
+    // ProcessLineAttackerAi
+    SetFunctionCmt(0xe0ee, 
+        "In: d0.w = attacker index", 1);
+
+    // ProcessExploderAi
+    SetFunctionCmt(0xe144, 
+        "In: d0.w = attacker index", 1);
+
     // ExecuteAiCommand
     SetFunctionCmt(0xe294, 
         "In: d0.b = combatant index\n\
@@ -1665,14 +1682,21 @@ If no targets in range then d0.w = -1, d1.w = 0, d2.b = 3", 1);
         "In: D0 = character index (mover)\n\
     D1 = extra AI variable (values of 0-2)", 1);
 
-    // sub_F522
+    // DetermineStandbyAiMovement
     SetFunctionCmt(0xf522, 
-        "In: d0.w = attacker combatant", 1);
+        "Randomly move an AI controlled combatant around a designated position when not activated.\n\
+\n\
+In: d0.w = attacker combatant", 1);
 
     // sub_F7A0
     SetFunctionCmt(0xf7a0, 
         "In: d0.b = moving combatant index\n\
     d1.b = teammate to follow combatant index", 1);
+
+    // sub_F8EA
+    SetFunctionCmt(0xf8ea, 
+        "Out: d1.w = 0 if allowed to move\n\
+     d2.w != 0 if combatant is set to perform a special move order", 1);
 
     // WriteTilesFromAsciiWithOrangeFont
     SetFunctionCmt(0x100c8, 
@@ -1781,16 +1805,16 @@ If no targets in range then d0.w = -1, d1.w = 0, d2.b = 3", 1);
     SetFunctionCmt(0x11572, 
         "In: d0.w = combatant index", 1);
 
-    // CloseMiniStatusWindow
+    // CloseBattlefieldMiniStatusWindow
     SetFunctionCmt(0x115e0, 
-        "Move window offscreen, then clear it from memory.", 1);
+        "Move window off screen, then clear it from memory.", 1);
 
-    // ShowAllyBattlesceneWindow
+    // OpenAllyBattlesceneMiniStatusWindow
     SetFunctionCmt(0x11638, 
         "In: d0.b = ally index\n\
     d1.w = ?", 1);
 
-    // ShowEnemyBattlesceneWindow
+    // OpenEnemyBattlesceneMiniStatusWindow
     SetFunctionCmt(0x116b8, 
         "In: d0.b = enemy index\n\
     d1.w = ?", 1);
@@ -1813,7 +1837,7 @@ In: A0 = loading space address\n\
 
     // AdjustStringLengthForSpecialCharacters
     SetFunctionCmt(0x11898, 
-        "Check ASCII name at A0 for two special characters", 1);
+        "; Check ASCII name at a0 for two special characters.", 1);
 
     // BuildMiniStatusWindow
     SetFunctionCmt(0x118be, 
@@ -1839,7 +1863,8 @@ In: A0 = loading space address\n\
 
     // WriteStatusEffectTiles
     SetFunctionCmt(0x11eea, 
-        "In: a1 = current cursor position in the layout", 1);
+        "In: a1 = current cursor position in the layout\n\
+    d0.l = VDP tile entries", 1);
 
     // BuildMemberStatusWindow
     SetFunctionCmt(0x11ff0, 
@@ -2068,11 +2093,11 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1922a, 
         "same parameters as previous command", 1);
 
-    // sub_193B2
+    // LoadBattlesceneAllyAndWeaponVdpSprites
     SetFunctionCmt(0x193b2, 
         "related to battlescene ally and weapon VDP sprites", 1);
 
-    // sub_193C4
+    // LoadBattlesceneAllyVdpSprites
     SetFunctionCmt(0x193c4, 
         "related to battlescene ally VDP sprites", 1);
 
@@ -2080,11 +2105,11 @@ Byte 06-07      Flags - 0x0001 enemy flash/sound", 1);
     SetFunctionCmt(0x1942c, 
         "In: d0.w = frame index", 1);
 
-    // sub_19504
+    // LoadBattlesceneGroundVdpSprites
     SetFunctionCmt(0x19504, 
         "related to battlescene ground VDP sprites", 1);
 
-    // sub_19564
+    // LoadBattlesceneWeaponVdpSprites
     SetFunctionCmt(0x19564, 
         "related to battlescene weapon VDP sprites", 1);
 
@@ -2514,7 +2539,7 @@ Out: D0 = entity event index", 1);
 
     // UpdateAllEnemiesAi
     SetFunctionCmt(0x2550c, 
-        "<BUG> A Goddess Staff is added to the deals section in shops whenever a DEF-CON switch \n\
+        "BUG -- A Goddess Staff is added to the deals section in shops whenever a DEF-CON switch \n\
       is activated, and if one of the following items is also present :\n\
       - Quick Ring\n\
       - Protect Ring\n\
@@ -2534,9 +2559,8 @@ End function with a RTS intruction to fix", 1);
 
     // GetEntityPositionAfterApplyingFacing
     SetFunctionCmt(0x256b2, 
-        "In: D0 = combatant index\n\
-Out: D0 = new X\n\
-     D1 = new Y", 1);
+        "In: d0.w = combatant index\n\
+Out: d0.w, d1.w = new X, Y", 1);
 
     // PrintActivatedDefCon
     SetFunctionCmt(0x25772, 
@@ -2901,10 +2925,6 @@ Out: d0.w = 0 if item was received, 1 if there was no room, or 2 if another item
     SetFunctionCmt(0x1ac028, 
         "AI-related", 1);
 
-    // sub_1AC030
-    SetFunctionCmt(0x1ac030, 
-        "AI-related", 1);
-
     // sub_1AC038
     SetFunctionCmt(0x1ac038, 
         "AI-related", 1);
@@ -2923,17 +2943,17 @@ Also creates a shadow effect using palette index 2.", 1);
     SetFunctionCmt(0x1ac38e, 
         "AI-related", 1);
 
-    // GetMoveListForEnemyTarget
+    // AdjustObstructionFlagsForAiWithSecondaryCharacteristic1
     SetFunctionCmt(0x1ac43c, 
-        "used by AI", 1);
+        "In: d0.w = combatant index", 1);
 
-    // sub_1AC4F0
+    // AdjustObstructionFlagsForAiWithSecondaryCharacteristic2
     SetFunctionCmt(0x1ac4f0, 
-        "something with targetting grid or ???", 1);
+        "In: d0.w = combatant index", 1);
 
-    // sub_1AC5AA
+    // AdjustObstructionFlagsForAiTetheredToLastTarget
     SetFunctionCmt(0x1ac5aa, 
-        "AI-related", 1);
+        "In: d0.w = combatant index", 1);
 
     // ClearBattleTerrainArrayObstructionFlags
     SetFunctionCmt(0x1ac654, 

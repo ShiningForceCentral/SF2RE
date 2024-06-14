@@ -183,9 +183,9 @@ static defineLocalVariables(){
     
     /* AI Command: Special Move */
     SetArrayString(variables,1,"movingCombatant");
-    SetArrayString(variables,2,"teammateToFollow");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
+    SetArrayString(variables,2,"var_2");
+    SetArrayString(variables,3,"teammateToFollow");
+    SetArrayString(variables,4,"secondaryCharacteristic");
     makeLocalVariables(0xE98C,variables);
     deleteArrayStrings(variables);
     
@@ -210,11 +210,11 @@ static defineLocalVariables(){
     makeLocalVariables(0xF1D4,variables);
     deleteArrayStrings(variables);
     
-    /*  */
+    /* Standby AI movement */
     SetArrayString(variables,1,"startingX");
     SetArrayString(variables,2,"startingY");
     SetArrayString(variables,3,"attacker");
-    SetArrayString(variables,4,"var_4");
+    SetArrayString(variables,4,"moveCount");
     makeLocalVariables(0xF522,variables);
     deleteArrayStrings(variables);
     
@@ -227,10 +227,10 @@ static defineLocalVariables(){
     deleteArrayStrings(variables);
     
     /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
+    SetArrayString(variables,1,"aiActivationRegion1");
+    SetArrayString(variables,2,"aiActivationRegion2");
+    SetArrayString(variables,3,"combatantToFollow");
+    SetArrayString(variables,4,"secondAiPoint");
     makeLocalVariables(0xF8EA,variables);
     deleteArrayStrings(variables);
     

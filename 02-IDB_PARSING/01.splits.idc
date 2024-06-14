@@ -157,7 +157,7 @@ static splitPTs(file){
     splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AllyAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allyanimation", 3, 0, file);
     splitPT(0x1AB79E, 0x1AB982, 0x1ABE52, 0x1AC000, "pt_EnemyAnimations", "EnemyAnimation", "data/graphics/battles/battlesprites/enemies/animations/", 0, "enemyanimation", 3, 14, file);
     splitPT(0x1AD104, 0x1AD1B8, 0x1B120A, 0x1B120A, "pt_BattleTerrainData", "BattleTerrain", "data/battles/entries/battle", 1, "/terrain", 2, 0, file);
-    splitPT(0x1B30EE, 0x1B31A2, 0x1B6DB0, 0x1B6DB0, "pt_BattleSpritesets", "BattleSpriteset", "data/battles/entries/battle", 1, "/spriteset", 2, 0, file);
+    //splitPT(0x1B30EE, 0x1B31A2, 0x1B6DB0, 0x1B6DB0, "pt_BattleSpritesets", "BattleSpriteset", "data/battles/entries/battle", 1, "/spriteset", 2, 0, file);
     splitPT(0x1B9A9A, 0x1B9AF6, 0x1BEE38, 0x1BEE38, "pt_Weaponsprites", "Weaponsprite", "data/graphics/battles/weapons/", 0, "weaponsprite", 2, 0, file);                    
     splitPT(0x1BEEE0, 0x1BEF3C, 0x1C46C2, 0x1C46C2, "pt_SpellGraphics", "SpellGraphics", "data/graphics/battles/spells/", 0, "spellgraphics", 2, 0, file);
     splitPT(0x1C8004, 0x1C80E4, 0x1D7E26, 0x1D8000, "pt_Portraits", "Portrait", "data/graphics/portraits/", 0, "portrait", 2, 15, file);
@@ -302,7 +302,7 @@ static splitSingleChunks(file) {
     splitSingleChunk(0x2BAE8,0x2BE2C,"tiles_DepotMenu","data/graphics/tech/menus/depotmenutiles.bin",file);
     splitSingleChunk(0x2BE2C,0x2C01E,"tiles_YesNoPrompt","data/graphics/tech/menus/yesnoprompttiles.bin",file);
     splitSingleChunk(0x2C01E,0x2C03E,"palette_WitchChoice","data/graphics/specialscreens/witchscreen/witchchoicepalette.bin",file);
-    splitSingleChunk(0x2C03E,0x2C3FE,"WitchBubbleAnimation","data/graphics/specialscreens/witchscreen/witchbubbleanimation.bin",file);
+    splitSingleChunk(0x2C03E,0x2C3FE,"table_WitchBubbleAnimation","data/graphics/specialscreens/witchscreen/witchbubbleanimation.bin",file);
     splitSingleChunk(0x2C3FE,0x2C576,"tiles_SpeechBalloon","data/graphics/specialscreens/witchscreen/speechballoontiles.bin",file);
     
     splitSingleChunk(0x2C7A0,0x2DDDE,"tiles_UnusedCloud","data/graphics/tech/unusedcloudtiles.bin",file);
