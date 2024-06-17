@@ -1302,6 +1302,46 @@ static getDirection(cmd){
     return form("%s",ltoa(cmd,10));
 }
 
+static getItem(cmd){
+    auto enumName, id, bitmask, output, value, next;
+    enumName = "Items";
+    id = GetEnum(enumName);
+    bitmask = GetFirstBmask(id);
+    output = "";
+    while(bitmask!=-1){
+        value = cmd & bitmask;
+        next = getBitfieldEnumMember(value,enumName,bitmask);
+        if(next!=""&&next!="0"){
+            if(output==""){
+                output = next;
+            }else{
+                output = form("%s|%s",output,next);
+            }
+        }
+        bitmask = GetNextBmask(id,bitmask);
+    }
+    return output;
+}
+
+static getBitfieldEnumMember(cmd,enumName,bitmask){
+    auto id, constant, j, constId;
+    id = GetEnum(enumName);
+    constant = GetFirstConst(id,bitmask);
+    while(constant!=-1){
+        j=0;
+        constId = GetConstEx(id,constant,j,bitmask);
+        while(constId!=-1){
+            if(constant==cmd){
+                return GetConstName(constId);
+            }
+            j++;
+            constId = GetConstEx(id,constant,j,bitmask);
+        }
+        constant = GetNextConst(id,constant,bitmask);
+    }
+    return form("%d",cmd);
+}
+
 static getMap(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Maps");

@@ -143,7 +143,7 @@ static parseMapSetupSection2(ea,map,flag){
             for(j=ea;j<ea+4;j++){undefineByte(j);}
             MakeData(ea,FF_BYTE,4,1);
             entity = Byte(ea);
-            facing = getDirection(Byte(ea+1));
+            facing = Byte(ea+1);
             offset = Word(ea+2);
             functionName = form("Map%s%s_EntityEvent%s",ltoa(map,10),flagName,ltoa(index,10));
             if(offset>0x7FFF){
@@ -161,7 +161,7 @@ static parseMapSetupSection2(ea,map,flag){
             }else{
                 functionRef = form("%s-%s",functionName,GetTrueName(base));
             }
-            SetManualInsn   (ea, form("msEntityEvent %d, %s, %s", entity, facing, functionRef));    
+            SetManualInsn   (ea, form("msEntityEvent %s, %s, %s", getCharacter(entity), getDirection(facing), functionRef));    
             ea = ea+4;
             index = index+1;
         }
@@ -364,7 +364,7 @@ static parseMapSetupSection5(ea,map,flag){
         }else{
             functionRef = form("%s-%s",functionName,GetTrueName(base));
         }
-        SetManualInsn   (ea, form("msItemEvent %d, %d, %s, %d, %s", x, y, getDirection(facing), item, functionRef));
+        SetManualInsn   (ea, form("msItemEvent %d, %d, %s, %s, %s", x, y, getDirection(facing), getItem(item), functionRef));
         //Message(form("0x%s: %s\n",ltoa(ea,16),functionName));    
         ea = ea+6;
         index = index+1;
@@ -418,6 +418,30 @@ static undefineByte(addr){
         SetManualInsn(addr,"");
 }
 
+static getCharacter(cmd){
+    auto id,enumSize,constant,j,constId,output;
+    if(cmd<0x1E){
+        id = GetEnum("Allies");
+    }else if(cmd>0x1D&&cmd<0x20){
+        id = GetEnum("Followers");
+    }
+    enumSize = GetEnumSize(id);
+    constant = GetFirstConst(id,-1);
+    while(constant!=-1){
+            j=0;
+            constId = GetConstEx(id,constant,j,-1);
+            while(constId != -1){
+                if(constant==cmd){
+                    return GetConstName(constId);
+                }
+                j++;
+                constId = GetConstEx(id,constant,j,-1);
+            }
+            constant = GetNextConst(id,constant,-1);
+    }
+    return form("%s",ltoa(cmd,10));
+}
+
 static getDirection(cmd){
     auto id,enumSize,constant,j,constId,output;
     id = GetEnum("Direction");
@@ -456,6 +480,46 @@ static getDirectionAsMacro(cmd){
             constant = GetNextConst(id,constant,-1);
     }
     return form("%s",ltoa(cmd,10));
+}
+
+static getItem(cmd){
+    auto enumName, id, bitmask, output, value, next;
+    enumName = "Items";
+    id = GetEnum(enumName);
+    bitmask = GetFirstBmask(id);
+    output = "";
+    while(bitmask!=-1){
+        value = cmd & bitmask;
+        next = getBitfieldEnumMember(value,enumName,bitmask);
+        if(next!=""&&next!="0"){
+            if(output==""){
+                output = next;
+            }else{
+                output = form("%s|%s",output,next);
+            }
+        }
+        bitmask = GetNextBmask(id,bitmask);
+    }
+    return output;
+}
+
+static getBitfieldEnumMember(cmd,enumName,bitmask){
+    auto id, constant, j, constId;
+    id = GetEnum(enumName);
+    constant = GetFirstConst(id,bitmask);
+    while(constant!=-1){
+        j=0;
+        constId = GetConstEx(id,constant,j,bitmask);
+        while(constId!=-1){
+            if(constant==cmd){
+                return GetConstName(constId);
+            }
+            j++;
+            constId = GetConstEx(id,constant,j,bitmask);
+        }
+        constant = GetNextConst(id,constant,bitmask);
+    }
+    return form("%d",cmd);
 }
 
 static getMapsprite(cmd){
