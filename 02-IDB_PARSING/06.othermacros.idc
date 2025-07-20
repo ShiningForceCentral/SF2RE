@@ -34,6 +34,7 @@ static main(void){
     parseSpellLevelTilesLayouts();
     parseBattleEquipWindowLayout();
     parsePortraitWindowLayout();
+    parseMirroredPortraitWindowLayout();
     parseAllyKillDefeatWindowLayout();
     parseGoldWindowLayout();
     parseMemberListTextHighlightVdpSprite();
@@ -485,6 +486,18 @@ static parseMiniStatusWindowLayout(){
 }
 
 static parsePortraitWindowLayout(){
+    auto addr, j, vdpTile;
+    addr = 0x1264E;
+    while(addr<0x126EE){
+        for(j=addr;j<addr+2;j++){undefineByte(j);}
+        MakeWord(addr);
+        vdpTile = getVdpTileShorthand(Word(addr));
+        SetManualInsn(addr, form("vdpTile %s", vdpTile));
+        addr = addr+2;
+    }
+}
+
+static parseMirroredPortraitWindowLayout(){
     auto addr, j, vdpTile;
     addr = 0x126EE;
     while(addr<0x1278E){

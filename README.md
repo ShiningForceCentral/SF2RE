@@ -12,10 +12,10 @@ The main purposes of SF2RE are :
 Usage workflow :
 1. IDB Initialization
     1. Open "Shining Force II (USA)" ROM in IDA Pro to create a new IDB.
-    2. Execute initialization scripts from ./10-IDB_INIT/ folder : 
-        1. init.idc
+    2. Execute initialization scripts from ./01-IDB_INIT/ folder : 
+        1. sf2.idc
         2. ImportGeneratedFunctionComments.idc
-    3. Execute parsing scripts from ./20-IDB_PARSING/ folder :
+    3. Execute parsing scripts from ./02-IDB_PARSING/ folder :
         1. 00.ram-migration.idc
         2. 01.splits.idc
         3. 02.traps.idc : copy flags.txt and text.txt files in IDB folder first
@@ -27,12 +27,12 @@ Usage workflow :
         9. 08.fixes.idc\
         At this point, the IDB represents the current state of disassembly, with the ability to further format and document content.
 2. Export the disassembly :
-    1. In IDB folder, copy and execute ./30-ASM_EXPORT/dirs.bat, which will create ./disasm/ folder
-    2. Execute ./30-ASM_EXPORT/produce.idc
-    3. Copy disasm folder into SF2SDISASM project folder, in which you can build the ROM and check that a vanilla build still is bit-perfect.
+    1. In IDB folder, copy and execute ./03-ASM_EXPORT/dirs.bat, which will create ./disasm/ folder
+    2. Execute ./03-ASM_EXPORT/produce.idc
+    3. Copy disasm folder into SF2DISASM project folder, in which you can build the ROM and check that a vanilla build still is bit-perfect.
 3. Export IDB updates :
-    1. File > Produce file > Dump database to IDC file ... and overwrite ./10-IDB_INIT/init.idc
-    2. Optional : if function header comments have been updated, execute ./00-TOOLS/ExportFunctionComments.idc, which produces ImportGeneratedFunctionComments.idc in IDB folder, and then copy it into 10-IDB_INIT folder.
+    1. File > Produce file > Dump database to IDC file ... and overwrite ./01-IDB_INIT/sf2.idc
+    2. Optional : if function header comments have been updated, execute ./00-TOOLS/ExportFunctionComments.idc, which produces ImportGeneratedFunctionComments.idc in IDB folder, and then copy it into 01-IDB_INIT folder.
 
 
 Naming conventions :

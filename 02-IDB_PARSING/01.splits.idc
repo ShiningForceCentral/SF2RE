@@ -33,6 +33,12 @@ static splitAll(){
 
     Message("Pointer Tables...");
     splitPTs(file);
+    Message(" DONE.\nItemIcons...");    
+    splitItemIcons(file);
+    Message(" DONE.\nOtherIcons...");
+    splitOtherIcons(file);
+    Message(" DONE.\nSpellIcons...");
+    splitSpellIcons(file);
     Message(" DONE.\nSingle Chunks...");    
     splitSingleChunks(file);    
     Message(" DONE.\nMapsprites ...");
@@ -45,9 +51,7 @@ static splitAll(){
     splitTextbanks(file);
     Message(" DONE.\nWeaponPalettes...");    
     splitWeaponPalettes(file);
-    Message(" DONE.\nIcons...");    
-    splitIcons(file);
-    Message(" DONE.\n");    
+    Message(" DONE.\n");
     
     writestr(file,"\nsplit    0x0,0x0,\\0x0 - .bin\n");
     fclose(file);
@@ -89,6 +93,9 @@ writestr(file,"#dir    data/graphics/maps\n");
 writestr(file,"#dir    data/graphics/maps/maptilesets\n");
 writestr(file,"#dir    data/graphics/maps/mappalettes\n");
 writestr(file,"#dir    data/graphics/icons\n");
+writestr(file,"#dir    data/graphics/icons/item\n");
+writestr(file,"#dir    data/graphics/icons/other\n");
+writestr(file,"#dir    data/graphics/icons/spell\n");
 writestr(file,"#dir    data/graphics/tech\n");
 writestr(file,"#dir    data/graphics/tech/alphabethighlight\n");
 writestr(file,"#dir    data/graphics/tech/battlescenetransition\n");
@@ -151,7 +158,7 @@ static splitPTs(file){
     splitPT(0x9494A, 0x9498A, 0x94B8A, 0x94B8A, "pt_MapPalettes", "MapPalette", "data/graphics/maps/mappalettes/", 0, "mappalette", 2, 0, file);        
     //splitPT(0xC8000, 0xC8B40, 0xFFC48, 0x100000, "pt_Mapsprites", "Mapsprite", "data/graphics/mapsprites/", 0, "mapsprite", 3, 15, file);    
     splitPT(0x101EE0, 0x101F58, 0x12A2F8, 0x12A2F8, "pt_Backgrounds", "Background", "data/graphics/battles/backgrounds/", 0, "background", 2, 0, file);
-    splitPT(0x130004, 0x1300DC, 0x17FE4F, 0x180000, "pt_EnemyBattlesprites", "EnemyBattlesprite", "data/graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
+    splitPT(0x130004, 0x1300DC, 0x17FE50, 0x180000, "pt_EnemyBattlesprites", "EnemyBattlesprite", "data/graphics/battles/battlesprites/enemies/", 0, "enemybattlesprite", 2, 15, file);
     splitPT(0x18001C, 0x18009C, 0x1AA16E, 0x1AA16E, "pt_AllyBattlesprites", "AllyBattlesprite", "data/graphics/battles/battlesprites/allies/", 0, "allybattlesprite", 2, 0, file);
     splitPT(0x1AA316, 0x1AA31E, 0x1AA8CA, 0x1AA8CA, "pt_BattlesceneTransitionTiles", "BattlesceneTransitionTiles", "data/graphics/battles/tech/battlescenetransition/", 0, "battlescenetransitiontiles", 1, 0, file);
     splitPT(0x1AAC3A, 0x1AAD96, 0x1AB79E, 0x1AB79E, "pt_AllyAnimations", "AllyAnimation", "data/graphics/battles/battlesprites/allies/animations/", 0, "allyanimation", 3, 0, file);
@@ -214,7 +221,7 @@ static splitSingleChunks(file) {
     
     //splitSingleChunk(0x114BE,0x11572,"BattleEquipWindowLayout","data/graphics/tech/windowlayouts/battleequipwindowlayout.bin",file);
     
-    splitSingleChunk(0x1264E,0x126EE,"tiles_WindowBorder","data/graphics/tech/windowborder/windowbordertiles.bin",file);
+    //splitSingleChunk(0x1264E,0x126EE,"tiles_WindowBorder","data/graphics/tech/windowborder/windowbordertiles.bin",file);
     //splitSingleChunk(0x126EE,0x1278E,"PortraitWindowLayout","data/graphics/tech/windowlayouts/portraitwindowlayout.bin",file);
     //splitSingleChunk(0x1278E,0x1284E,"AllyKillDefeatWindowLayout","data/graphics/tech/windowlayouts/allykilldefeatwindowlayout.bin",file);
     //splitSingleChunk(0x1284E,0x1288E,"CharacterStatsWindowLayout","data/graphics/tech/windowlayouts/characterstatsdefeatwindowlayout.bin",file);
@@ -364,6 +371,9 @@ static splitSingleChunks(file) {
     MakeAlign(0x1C7F7C, 0x1C8000-0x1C7F7C,15);    
 
     //splitSingleChunk(0x1D8004,0x1DFA46,"Icons","data/graphics/icons/icons.bin",file);
+    splitSingleChunk(0x1DED84,0x1DEE44,"OtherIcon003","data/graphics/icons/other/icon003.bin",file);
+    splitSingleChunk(0x1DEE44,0x1DEF04,"OtherIcon004","data/graphics/icons/other/icon004.bin",file);
+    splitSingleChunk(0x1DEF04,0x1DEFC4,"OtherIcon005","data/graphics/icons/other/icon005.bin",file);
     MakeAlign(0x1DFA44, 0x1E0000-0x1DFA44,15);    
 
     splitSingleChunk(0x1E0000,0x1E8000,"","data/sound/pcmbank0.bin",file);
@@ -841,12 +851,58 @@ static splitWeaponPalettes(file) {
 
 //splitSingleChunk(0x1D8004,0x1DFA46,"Icons","data/graphics/icons/icons.bin",file);
 
-static splitIcons(file) {
+static splitItemIcons(file) {
 
     auto i,j,x,s,index;
     auto start,end,addr,base;
     i = 0;
     start = 0x1D8004;
+    end = 0x1DE004;
+    addr = start;  
+    for(j=start;j<end;j++){undefineByte(j);}
+    while(addr<end){
+        MakeData(addr,FF_BYTE,192,1);
+        index = ltoa(i,10);
+        while(strlen(index)<3){index=form("0%s",index);}
+        MakeNameEx(addr,form("ItemIcon%s",index),0);
+        SetManualInsn(addr, form("incbin \"data/graphics/icons/item/icon%s.bin\"",index));
+        writestr(file,form("#split\t0x%s,0x%s,data/graphics/icons/item/icon%s.bin\n",ltoa(addr,16),ltoa(addr+192,16),index));
+        addr=addr+192;
+        i++;
+    }
+
+}
+
+
+static splitOtherIcons(file) {
+
+    auto i,j,x,s,index;
+    auto start,end,addr,base;
+    i = 0;
+    start = 0x1DDF44;
+    end = 0x1DE184;
+    addr = start;  
+    for(j=start;j<end;j++){undefineByte(j);}
+    while(addr<end){
+        MakeData(addr,FF_BYTE,192,1);
+        index = ltoa(i,10);
+        while(strlen(index)<3){index=form("0%s",index);}
+        MakeNameEx(addr,form("OtherIcon%s",index),0);
+        SetManualInsn(addr, form("incbin \"data/graphics/icons/other/icon%s.bin\"",index));
+        writestr(file,form("#split\t0x%s,0x%s,data/graphics/icons/other/icon%s.bin\n",ltoa(addr,16),ltoa(addr+192,16),index));
+        addr=addr+192;
+        i++;
+    }
+
+}
+
+
+static splitSpellIcons(file) {
+
+    auto i,j,x,s,index;
+    auto start,end,addr,base;
+    i = 0;
+    start = 0x1DE184;
     end = 0x1DFA44;
     addr = start;  
     for(j=start;j<end;j++){undefineByte(j);}
@@ -854,9 +910,9 @@ static splitIcons(file) {
         MakeData(addr,FF_BYTE,192,1);
         index = ltoa(i,10);
         while(strlen(index)<3){index=form("0%s",index);}
-        MakeNameEx(addr,form("Icon%s",index),0);
-        SetManualInsn(addr, form("incbin \"data/graphics/icons/icon%s.bin\"",index));
-        writestr(file,form("#split\t0x%s,0x%s,data/graphics/icons/icon%s.bin\n",ltoa(addr,16),ltoa(addr+192,16),index));
+        MakeNameEx(addr,form("SpellIcon%s",index),0);
+        SetManualInsn(addr, form("incbin \"data/graphics/icons/spell/icon%s.bin\"",index));
+        writestr(file,form("#split\t0x%s,0x%s,data/graphics/icons/spell/icon%s.bin\n",ltoa(addr,16),ltoa(addr+192,16),index));
         addr=addr+192;
         i++;
     }

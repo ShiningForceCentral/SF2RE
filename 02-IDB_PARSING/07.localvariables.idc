@@ -599,26 +599,26 @@ static defineLocalVariables(){
     makeLocalVariables(0x1AC728,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,5,"var_5");
-    SetArrayString(variables,6,"var_6");
-    SetArrayString(variables,7,"var_7");
-    SetArrayString(variables,8,"var_8");
-    SetArrayString(variables,9,"var_9");
+    /* AI region and combatant position coordinates */
+    SetArrayString(variables,1,"regionX1");
+    SetArrayString(variables,2,"regionY1");
+    SetArrayString(variables,3,"regionX2");
+    SetArrayString(variables,4,"regionY2");
+    SetArrayString(variables,5,"regionX3");
+    SetArrayString(variables,6,"regionY3");
+    SetArrayString(variables,7,"combatantX");
+    SetArrayString(variables,8,"combatantY");
+    SetArrayString(variables,9,"positionFlags");
     makeLocalVariables(0x1ACAD6,variables);
     deleteArrayStrings(variables);
     
-    /*  */
-    SetArrayString(variables,1,"var_1");
-    SetArrayString(variables,2,"var_2");
-    SetArrayString(variables,3,"var_3");
-    SetArrayString(variables,4,"var_4");
-    SetArrayString(variables,5,"var_5");
-    SetArrayString(variables,6,"var_6");
+    /* AI region coordinates */
+    SetArrayString(variables,1,"X1");
+    SetArrayString(variables,2,"Y1");
+    SetArrayString(variables,3,"X2");
+    SetArrayString(variables,4,"Y2");
+    SetArrayString(variables,5,"X3");
+    SetArrayString(variables,6,"Y3");
     makeLocalVariables(0x1ACC26,variables);
     deleteArrayStrings(variables);
     

@@ -9,7 +9,11 @@ mkdir disasm\code\gameflow\battle\ai
 mkdir disasm\code\gameflow\battle\battleactions
 mkdir disasm\code\gameflow\battle\battlefield
 mkdir disasm\code\gameflow\battle\battlefunctions
+mkdir disasm\code\gameflow\battle\battleloop
 mkdir disasm\code\gameflow\battle\battlescenes
+mkdir disasm\code\gameflow\battle\battlescenes\animation
+mkdir disasm\code\gameflow\battle\battlescenes\animation\update
+mkdir disasm\code\gameflow\battle\cutscenes
 mkdir disasm\code\gameflow\special
 mkdir disasm\code\common
 mkdir disasm\code\common\tech
@@ -25,6 +29,7 @@ mkdir disasm\code\common\stats
 mkdir disasm\code\common\stats\items
 mkdir disasm\code\common\menus\
 mkdir disasm\code\common\menus\main
+mkdir disasm\code\common\menus\item
 mkdir disasm\code\common\menus\shop
 mkdir disasm\code\common\menus\church
 mkdir disasm\code\common\menus\caravan
@@ -65,6 +70,8 @@ mkdir disasm\data\scripting\map
 
 mkdir disasm\layout
 
+mkdir disasm\data\battles
+mkdir disasm\data\battles\cutscenes
 mkdir disasm\data\stats
 mkdir disasm\data\stats\items
 mkdir disasm\data\stats\spells
