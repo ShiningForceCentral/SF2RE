@@ -440,7 +440,7 @@ static produceSpecificSectionTwo(mainFile,sectionName,start,end,fs,sectionCommen
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\determineaibattleaction",0xEDD6,0xF1D4,"Determine AI Battleaction function");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aicommandmove",0xF1D4,0xF522,"AI command : Move");
     produceAsmScript(file,"code\\gameflow\\battle\\ai\\aistandby",0xF522,0xF9B4,"AI engine : standby movement");
-    produceAsmScript(file,"data\\battles\\global\\krakenmovecosts",0xF9B4,0xF9C4,"Kraken move costs table");
+    produceAsmScript(file,"data\\stats\\enemies\\krakenmovecosts",0xF9B4,0xF9C4,"Kraken move costs table");
     writestr(file,"                \n");
     produceAsmScript(file,"data\\stats\\spells\\spellnames",0xF9C4,0xFAD6,"Spell names");
     produceAsmScript(file,"data\\stats\\allies\\allynames",0xFAD6,0xFB8A,"Ally names");
@@ -577,7 +577,7 @@ static produceSpecificSectionFour(mainFile,sectionName,start,end,fs,sectionComme
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\atlas",0x1B37C,0x1B406,"");
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\prismlaser",0x1B406,0x1B488,"");
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\bubblebreath",0x1B488,0x1B4F6,"");
-    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\cutoff",0x1B4F6,0x1B618,"");
+    produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\cutoffanddodge",0x1B4F6,0x1B618,"");
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\attackspell",0x1B618,0x1B660,"");
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\snowbreath",0x1B660,0x1B6A8,"");
     produceAsmScript(file,"code\\gameflow\\battle\\battlescenes\\animation\\phoenixattack",0x1B6A8,0x1B6EA,"");

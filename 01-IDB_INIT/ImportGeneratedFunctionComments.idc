@@ -2513,7 +2513,7 @@ Out: d1.w = battlescene ground index (-1 if skipped)", 1);
 
     // spellanimationSetup_OddEyeBeam
     SetFunctionCmt(0x1b716, 
-        "and maybe Zynk's beam too ?", 1);
+        "Is also used as Zynk's beam.", 1);
 
     // sub_1B90C
     SetFunctionCmt(0x1b90c, 
@@ -3057,7 +3057,7 @@ Out: d4.w = map sprite index", 1);
     SetFunctionCmt(0x4779e, 
         "Returns map setup address in a0.", 1);
 
-    // sub_4781A
+    // ChangeEntityFacing
     SetFunctionCmt(0x4781a, 
         "reset entity flags and sprite", 1);
 
@@ -3282,7 +3282,7 @@ Out: a0 = subsection address, d1.w = subsection size", 1);
     SetFunctionCmt(0x1b169e, 
         "Get starting X, Y for combatant d0.b -> d1.w, d2.w", 1);
 
-    // RegionTriggeredSpawn
+    // CheckForTrappedChest
     SetFunctionCmt(0x1b16fe, 
         "related to player controlled movement on the battlefield\n\
 \n\
